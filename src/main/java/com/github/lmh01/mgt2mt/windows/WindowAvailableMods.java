@@ -27,27 +27,54 @@ public class WindowAvailableMods extends JFrame {
 
     public WindowAvailableMods(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 400, 400);
+        setBounds(100, 100, 200, 200);
         setResizable(false);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 100, 89, 23);
-        btnBack.addActionListener(ignored -> {
-            MadGamesTycoon2ModTool.createFrame();
-            frame.dispose();
-        });
-        contentPane.add(btnBack);
+        JLabel SettingsText = new JLabel("Available Mods");
+        SettingsText.setFont(new Font("Tahoma", 0, 15));
+        SettingsText.setBounds(50, 11, 150, 19);
+        this.contentPane.add(SettingsText);
 
         JButton buttonOpenAddGenreToGamesWindow = new JButton("Add genre to NPC_Games");
-        buttonOpenAddGenreToGamesWindow.setBounds(10, 50, 200, 23);
+        buttonOpenAddGenreToGamesWindow.setBounds(10, 80, 175, 23);
+        buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
             WindowAddGenreToGames.createFrame();
             frame.dispose();
         });
         contentPane.add(buttonOpenAddGenreToGamesWindow);
+
+        JButton buttonAddGenreWindow = new JButton("Add genre");
+        buttonAddGenreWindow.setBounds(10, 50, 175, 23);
+        buttonAddGenreWindow.setToolTipText("Click to add a new genre to Mad Games Tycoon 2");
+        buttonAddGenreWindow.addActionListener((ignored) -> {
+            WindowAddGenreToGames.createFrame();
+            frame.dispose();
+        });
+        contentPane.add(buttonAddGenreWindow);
+
+        JButton buttonSettings = new JButton("Settings");
+        buttonSettings.setBounds(100, 140, 85, 23);
+        buttonSettings.addActionListener(e -> {
+            WindowSettings.createFrame();
+        });
+        contentPane.add(buttonSettings);
+
+        JButton btnBack = new JButton("Back");
+        btnBack.addActionListener((ignored) -> {
+            MadGamesTycoon2ModTool.createFrame();
+            frame.dispose();
+        });
+        btnBack.setBounds(10, 112, 80, 23);
+        contentPane.add(btnBack);
+
+        JButton btnQuit = new JButton("Quit");
+        btnQuit.addActionListener((ignored) -> System.exit(0));
+        btnQuit.setBounds(10, 140, 80, 23);
+        contentPane.add(btnQuit);
     }
 }

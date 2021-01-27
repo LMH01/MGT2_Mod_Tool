@@ -63,9 +63,9 @@ public class WindowBackup extends JFrame {
         contentPane.add(buttonOpenBackupFolder);
 
         JButton buttonCreateBackup = new JButton("Create Backup");
-        buttonCreateBackup.setBounds(10, 45, 175, 23);
+        buttonCreateBackup.setBounds(10, 40, 175, 23);
         buttonCreateBackup.addActionListener(ignored -> {
-            Backup.createBackup();
+            Backup.createBackup(true);
         });
         contentPane.add(buttonCreateBackup);
     }

@@ -23,7 +23,7 @@ public class Backup {
     private static boolean backupSuccessful = false;
     private static String backupFailedException = "";
 
-    public static void createBackup(){
+    public static void createBackup(boolean showSuccessDialog){
             backupSuccessful = false;
             createCurrentTime();
             createListOfFilesToBackup();
@@ -37,7 +37,9 @@ public class Backup {
                 backupSuccessful = true;
             }
             if(backupSuccessful){
-                JOptionPane.showMessageDialog(new Frame(), "The backup has been successfully created.");
+                if(showSuccessDialog){
+                    JOptionPane.showMessageDialog(new Frame(), "The backup has been successfully created.");
+                }
             }else{
                 JOptionPane.showMessageDialog(new Frame(), "The backup could not be created:\n" + backupFailedException);
             }
