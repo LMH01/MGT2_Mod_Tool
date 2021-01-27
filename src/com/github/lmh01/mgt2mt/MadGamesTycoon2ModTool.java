@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt;
 
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import com.github.lmh01.mgt2mt.windows.WindowBackup;
 import com.github.lmh01.mgt2mt.windows.WindowChangelog;
@@ -16,8 +17,13 @@ public class MadGamesTycoon2ModTool {
         MadGamesTycoon2ModTool window = new MadGamesTycoon2ModTool();
     }
     public MadGamesTycoon2ModTool(){
+        if(!settingsImported){
+            Settings.importSettings();
+            settingsImported = true;
+        }
         this.initialize();
     }
+    private static boolean settingsImported = false;
 
     public static void createFrame(){
         EventQueue.invokeLater(new Runnable() {
@@ -74,7 +80,6 @@ public class MadGamesTycoon2ModTool {
         buttonSettings.setBounds(230, 70, 90, 23);
         buttonSettings.addActionListener(e -> {
             WindowSettings.createFrame();
-            frame.dispose();
         });
         frame.getContentPane().add(buttonSettings);
 
