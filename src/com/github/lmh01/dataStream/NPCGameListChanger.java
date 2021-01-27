@@ -22,7 +22,6 @@ public class NPCGameListChanger {
     public static void apply(String filePath, int genreID, String operation, int chance){
         DebugHelper.sendInfo("Beginning file-process...\nusing following arguments:\nFile Path: " + filePath + "\nGenreID: " + genreID);
         File npcGameListFile = new File(filePath);
-        //File npcGameListFile = new File("F:\\Temp\\Test.txt");
         try {
             DebugHelper.sendInfo("Scanning file...");
             Scanner scanner = new Scanner(npcGameListFile);
@@ -38,8 +37,8 @@ public class NPCGameListChanger {
             e.printStackTrace();
         }
         DebugHelper.sendInfo("Backing up old file before deletion...");
-        File backupFile = new File(filePath + ".backup");
-        //File backupFile = new File("F:\\Temp\\NpcGames.txt" + ".backup");
+        File backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.backup");
+        backupFile.mkdirs();
         try {
             if(backupFile.exists()){
                 if(JOptionPane.showConfirmDialog(null, "A backup file already exists.\nReplace?", "A backup file already exists", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -48,9 +47,9 @@ public class NPCGameListChanger {
                     backupFile.createNewFile();
                     DebugHelper.sendInfo("Deleting old file...");
                     npcGameListFile.delete();
-                    DebugHelper.sendInfo("Deleted old backup file...");
+                    DebugHelper.sendInfo("Deleted old file...");
                 }else{
-                    File backupFile2 = new File(filePath + ".backup" + "(" + LocalDateTime.now().toString().replace(":", "-") + ")");
+                    File backupFile2 = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.backup" + "(" + LocalDateTime.now().toString().replace(":", "-") + ")");
                     createBackup(new PrintWriter(backupFile2));
                     backupFile2.createNewFile();
                     DebugHelper.sendInfo("Deleting old file...");
@@ -59,6 +58,7 @@ public class NPCGameListChanger {
                 }
 
             }else{
+                backupFile.createNewFile();
                 createBackup(new PrintWriter(backupFile));
                 DebugHelper.sendInfo("Deleting old file...");
                 npcGameListFile.delete();

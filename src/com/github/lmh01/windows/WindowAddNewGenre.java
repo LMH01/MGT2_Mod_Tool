@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 
 public class WindowAddNewGenre extends JFrame {
 
+    /*TODO Make Add New Genre feature working
+    *
+    * */
     private JPanel contentPane;
     static WindowAddNewGenre frame = new WindowAddNewGenre();
     private String genreName = "";
