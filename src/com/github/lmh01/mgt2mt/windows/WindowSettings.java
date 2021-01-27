@@ -10,10 +10,6 @@ import java.awt.event.ActionListener;
 
 public class WindowSettings extends JFrame {
 
-    /*TODO Make this Settings Window work properly: Add feature to change path name
-    *  This window should be also called when adding a new Mod (Just a button that sais settings)
-    *   Settings will be saved to file to reload on startup.
-    * */
     private JPanel contentPane;
     static WindowSettings frame = new WindowSettings();
 
@@ -48,7 +44,7 @@ public class WindowSettings extends JFrame {
         this.contentPane.add(lblMinecraftLocation);
 
         JTextField textFieldMGT2Folder = new JTextField();
-        textFieldMGT2Folder.setEditable(false);
+        //textFieldMGT2Folder.setEditable(false);
         textFieldMGT2Folder.setText(Settings.mgt2FilePath);
         textFieldMGT2Folder.setBounds(147, 61, 246, 20);
         textFieldMGT2Folder.setColumns(10);
@@ -78,6 +74,7 @@ public class WindowSettings extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (JOptionPane.showConfirmDialog((Component)null, "Are you sure?", "Reset Settings", 0) == 0) {
                     Settings.resetSettings();
+                    textFieldMGT2Folder.setText(Settings.mgt2FilePath);
                 }
 
             }

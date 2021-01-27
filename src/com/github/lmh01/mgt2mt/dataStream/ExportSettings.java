@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 public class ExportSettings {
     public static void export() {
         try {
-            DebugHelper.sendInfo("Creating LMH01ModsUpdaterSettings.txt");
+
             String directoryName = System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//";
             File directory = new File(directoryName);
             if (!directory.exists()) {
@@ -18,13 +18,16 @@ public class ExportSettings {
             }
 
             File file = new File(directoryName + "/" + "settings.txt");
-            DebugHelper.sendInfo(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//LMH01ModsUpdaterSettings.txt");
+            DebugHelper.sendInfo("Creating settings.txt");
+            DebugHelper.sendInfo(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
             file.createNewFile();
-            DebugHelper.sendInfo("Successfully created the file LMH01UpdateHelperError.txt");
+            DebugHelper.sendInfo("Successfully created the file settings.txt");
             PrintWriter pw = new PrintWriter(new FileWriter(file));
             DebugHelper.sendInfo("Writing to file...");
-            pw.print(Settings.mgt2FilePath + "\n" + Settings.languageToAdd);
+            pw.print(Settings.mgt2FilePath + "\n" +
+                    Settings.languageToAdd);
             pw.close();
+            DebugHelper.sendInfo(Settings.mgt2FilePath + "\n" + Settings.languageToAdd);
             DebugHelper.sendInfo("Writing to file successfull!");
         } catch (Exception var4) {
             var4.printStackTrace();

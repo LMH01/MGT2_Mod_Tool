@@ -60,13 +60,12 @@ public class WindowBackup extends JFrame {
         contentPane.add(btnBack);
 
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
-        buttonOpenBackupFolder.setBounds(10, 50, 89, 23);
+        buttonOpenBackupFolder.setBounds(10, 50, 175, 23);
         buttonOpenBackupFolder.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                MadGamesTycoon2ModTool.createFrame();
-                try {
+                 try {
                     Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//"));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();

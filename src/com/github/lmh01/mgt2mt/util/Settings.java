@@ -2,7 +2,9 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.dataStream.ExportSettings;
 import com.github.lmh01.mgt2mt.dataStream.ImportSettings;
+import com.github.lmh01.mgt2mt.helpers.DebugHelper;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Settings {
@@ -12,6 +14,7 @@ public class Settings {
     public static void resetSettings(){
         mgt2FilePath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
         languageToAdd = "English";
+        DebugHelper.sendInfo("Settings reset.");
     }
     public static void importCustomSettings(String filePath){
         ImportSettings.Import(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//settings.txt", true);
@@ -23,6 +26,24 @@ public class Settings {
         ExportSettings.export();
     }
     public static void setMgt2FilePath(){
-        new FileDialog((java.awt.Frame) null).setVisible(true);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+            int return_value = fileChooser.showOpenDialog((Component)null);
+            if(return_value == 0){
+                mgt2FilePath = fileChooser.getSelectedFile().getPath();
+                DebugHelper.sendInfo("File path: " + mgt2FilePath);
+            }
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
     }
 }
