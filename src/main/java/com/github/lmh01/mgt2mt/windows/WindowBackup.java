@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.util.Backup;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -51,7 +52,7 @@ public class WindowBackup extends JFrame {
         contentPane.add(btnBack);
 
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
-        buttonOpenBackupFolder.setBounds(10, 50, 89, 23);
+        buttonOpenBackupFolder.setBounds(10, 70, 175, 23);
         buttonOpenBackupFolder.addActionListener(ignored -> {
             try {
                 Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//"));
@@ -60,5 +61,12 @@ public class WindowBackup extends JFrame {
             }
         });
         contentPane.add(buttonOpenBackupFolder);
+
+        JButton buttonCreateBackup = new JButton("Create Backup");
+        buttonCreateBackup.setBounds(10, 45, 175, 23);
+        buttonCreateBackup.addActionListener(ignored -> {
+            Backup.createBackup();
+        });
+        contentPane.add(buttonCreateBackup);
     }
 }

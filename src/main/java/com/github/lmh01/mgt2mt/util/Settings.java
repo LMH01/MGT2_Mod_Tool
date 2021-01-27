@@ -31,7 +31,10 @@ public class Settings {
     public static void setMgt2FilePath(boolean retry){
         boolean correctFolder = false;
         boolean breakLoop = false;
-        while(!correctFolder && retry && !breakLoop){
+        while(!correctFolder && !breakLoop){
+            if(!retry){
+                breakLoop = true;
+            }
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
                 JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
