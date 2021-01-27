@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Objects;
 
 public class WindowAddGenreToGames extends JFrame {
 
@@ -71,7 +72,7 @@ public class WindowAddGenreToGames extends JFrame {
         labelOperation.setBounds(10, 75, 70, 23);
         contentPane.add(labelOperation);
 
-        JComboBox<String> comboBoxOperation = new JComboBox();
+        JComboBox comboBoxOperation = new JComboBox();
         comboBoxOperation.setBounds(100,75,80,23);
         comboBoxOperation.setToolTipText("Add = Adds said genre id to the list; Remove = Removes the genre id from the list");
         comboBoxOperation.setModel(new DefaultComboBoxModel(new String[]{"Add", "Remove"}));
@@ -90,12 +91,12 @@ public class WindowAddGenreToGames extends JFrame {
         JButton buttonApply = new JButton("Apply");
         buttonApply.setBounds(95,240,80,23);
         buttonApply.addActionListener((ignored) -> {
-            if(comboBoxOperation.getSelectedItem().equals("Add")){
+            if(Objects.equals(comboBoxOperation.getSelectedItem(), "Add")) {
                 operation = "add";
             }else{
                 operation = "remove";
             }
-            logger.debug("operation: " + operation);
+            logger.info("operation: " + operation);
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to " + operation + " genre id " + spinnerGenreID.getValue().toString() + " to/from the NPC-Game list?", "Continue?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 if(npcGameListFilePath.length()<1 && textFieldFilePath.getText().length()<1){
                     if(choseFile()){

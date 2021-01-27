@@ -14,13 +14,13 @@ public class ImportSettings{
     private static Logger logger = LoggerFactory.getLogger(ImportSettings.class);
 
     public static void Import(String fileLocation, boolean importCustomSettings) {
-        logger.debug("Starting settings import process...");
+        logger.info("Starting settings import process...");
 
         try {
-            logger.debug("Scanning for File '" + fileLocation + "'...");
+            logger.info("Scanning for File '" + fileLocation + "'...");
             File file = new File(fileLocation);
             Scanner scanner = new Scanner(file);
-            logger.debug("Beginning to import settings from file: " + file);
+            logger.info("Beginning to import settings from file: " + file);
             int setting = 1;
 
             while(scanner.hasNextLine()) {
@@ -31,11 +31,11 @@ public class ImportSettings{
                     case 2:
                         Settings.languageToAdd = line; break;
                 }
-                logger.debug("Imported Setting (" + setting + "): " + line);
+                logger.info("Imported Setting (" + setting + "): " + line);
                 ++setting;
             }
 
-            logger.debug("Import Complete!");
+            logger.info("Import Complete!");
             if (importCustomSettings) {
                 JOptionPane.showMessageDialog(new Frame(), "Settings loaded Successfully!");
             }
@@ -43,7 +43,7 @@ public class ImportSettings{
             scanner.close();
         } catch (FileNotFoundException var6) {
             var6.printStackTrace();
-            logger.debug("Unable to import settings: File not found! Using default settings!");
+            logger.info("Unable to import settings: File not found! Using default settings!");
             Settings.resetSettings();
         }
 

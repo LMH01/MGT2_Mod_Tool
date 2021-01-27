@@ -19,23 +19,23 @@ public class NPCGameListChanger {
     private static Logger logger = LoggerFactory.getLogger(NPCGameListChanger.class);
 
     public static void apply(String filePath, int genreID, String operation, int chance){
-        logger.debug("Beginning file-process...\nusing following arguments:\nFile Path: " + filePath + "\nGenreID: " + genreID);
+        logger.info("Beginning file-process...\nusing following arguments:\nFile Path: " + filePath + "\nGenreID: " + genreID);
         File npcGameListFile = new File(filePath);
         try {
-            logger.debug("Scanning file...");
+            logger.info("Scanning file...");
             Scanner scanner = new Scanner(npcGameListFile);
             while(scanner.hasNextLine()){
                 String currentLine = scanner.nextLine();
                 npcGameList.add(currentLine);
-                logger.debug("Current line: " + currentLine);
+                logger.info("Current line: " + currentLine);
             }
-            logger.debug("File scanned.");
+            logger.info("File scanned.");
             scanner.close();
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(new Frame(), "The chosen file does not exist!\nPlease try again!");
             e.printStackTrace();
         }
-        logger.debug("Backing up old file before deletion...");
+        logger.info("Backing up old file before deletion...");
         File backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.backup");
         backupFile.mkdirs();
         try {
@@ -44,35 +44,35 @@ public class NPCGameListChanger {
                     backupFile.delete();
                     createBackup(new PrintWriter(backupFile));
                     backupFile.createNewFile();
-                    logger.debug("Deleting old file...");
+                    logger.info("Deleting old file...");
                     npcGameListFile.delete();
-                    logger.debug("Deleted old file...");
+                    logger.info("Deleted old file...");
                 }else{
                     File backupFile2 = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.backup" + "(" + LocalDateTime.now().toString().replace(":", "-") + ")");
                     createBackup(new PrintWriter(backupFile2));
                     backupFile2.createNewFile();
-                    logger.debug("Deleting old file...");
+                    logger.info("Deleting old file...");
                     npcGameListFile.delete();
-                    logger.debug("Created new backup file.");
+                    logger.info("Created new backup file.");
                 }
 
             }else{
                 backupFile.createNewFile();
                 createBackup(new PrintWriter(backupFile));
-                logger.debug("Deleting old file...");
+                logger.info("Deleting old file...");
                 npcGameListFile.delete();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        logger.debug("Creating new file...");
+        logger.info("Creating new file...");
         if(operation.equals("add")){
             try {
                 npcGameListFile.createNewFile();
-                logger.debug("File created.\nWriting to file...");
-                PrintWriter pw = null;
+                logger.info("File created.\nWriting to file...");
                 try {
+                    PrintWriter pw;
                     pw = new PrintWriter(npcGameListFile);
                     for(int i = 0; npcGameList.size()>i; i++){
                         int randomNum = ThreadLocalRandom.current().nextInt(1, 100);
@@ -93,7 +93,7 @@ public class NPCGameListChanger {
         }else{
             try {
                 npcGameListFile.createNewFile();
-                logger.debug("File created.\nWriting to file...");
+                logger.info("File created.\nWriting to file...");
                 PrintWriter pw;
                 try {
                     pw = new PrintWriter(npcGameListFile);
@@ -118,6 +118,6 @@ public class NPCGameListChanger {
             pw.print(s + "\n");
         }
         pw.close();
-        logger.debug("Backup file created.");
+        logger.info("Backup file created.");
     }
 }

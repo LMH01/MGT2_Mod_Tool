@@ -20,17 +20,17 @@ public class ExportSettings {
             }
 
             File file = new File(directoryName + "/" + "settings.txt");
-            logger.debug("Creating settings.txt");
-            logger.debug(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+            logger.info("Creating settings.txt");
+            logger.info(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
             file.createNewFile();
-            logger.debug("Successfully created the file settings.txt");
+            logger.info("Successfully created the file settings.txt");
             PrintWriter pw = new PrintWriter(new FileWriter(file));
-            logger.debug("Writing to file...");
+            logger.info("Writing to file...");
             pw.print(Settings.mgt2FilePath + "\n" +
                     Settings.languageToAdd);
             pw.close();
-            logger.debug(Settings.mgt2FilePath + "\n" + Settings.languageToAdd);
-            logger.debug("Writing to file successfull!");
+            logger.info(Settings.mgt2FilePath + "\n" + Settings.languageToAdd);
+            logger.info("Writing to file successfull!");
         } catch (Exception var4) {
             var4.printStackTrace();
         }
