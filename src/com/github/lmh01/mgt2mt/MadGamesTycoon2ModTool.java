@@ -1,12 +1,13 @@
-package com.github.lmh01;
+package com.github.lmh01.mgt2mt;
 
-import com.github.lmh01.windows.*;
+import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+import com.github.lmh01.mgt2mt.windows.WindowBackup;
+import com.github.lmh01.mgt2mt.windows.WindowChangelog;
+import com.github.lmh01.mgt2mt.windows.WindowSettings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MadGamesTycoon2ModTool {
     private static JFrame frame;

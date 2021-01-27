@@ -1,6 +1,6 @@
-package com.github.lmh01.windows;
+package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

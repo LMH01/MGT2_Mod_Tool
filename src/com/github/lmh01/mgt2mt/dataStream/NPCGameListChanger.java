@@ -1,6 +1,6 @@
-package com.github.lmh01.dataStream;
+package com.github.lmh01.mgt2mt.dataStream;
 
-import com.github.lmh01.helpers.DebugHelper;
+import com.github.lmh01.mgt2mt.helpers.DebugHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,14 +8,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.SimpleTimeZone;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.SimpleFormatter;
 
 public class NPCGameListChanger {
     private static ArrayList<String> npcGameList = new ArrayList<>();

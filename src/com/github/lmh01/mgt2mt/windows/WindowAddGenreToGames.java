@@ -1,8 +1,7 @@
-package com.github.lmh01.windows;
+package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.dataStream.NPCGameListChanger;
-import com.github.lmh01.helpers.DebugHelper;
-import javafx.stage.FileChooser;
+import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
+import com.github.lmh01.mgt2mt.helpers.DebugHelper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

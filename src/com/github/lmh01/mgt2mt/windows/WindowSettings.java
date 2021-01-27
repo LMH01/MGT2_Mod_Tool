@@ -1,4 +1,4 @@
-package com.github.lmh01.windows;
+package com.github.lmh01.mgt2mt.windows;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -6,6 +6,10 @@ import java.awt.*;
 
 public class WindowSettings extends JFrame {
 
+    /*TODO Make this Settings Window work properly: Add feature to change path name
+    *  This window should be also called when adding a new Mod (Just a button that sais settings)
+    *   Settings will be saved to file to reload on startup.
+    * */
     private JPanel contentPane;
     static WindowSettings frame = new WindowSettings();
 

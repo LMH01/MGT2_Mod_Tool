@@ -1,4 +1,4 @@
-package com.github.lmh01.windows;
+package com.github.lmh01.mgt2mt.windows;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,7 +9,14 @@ import java.awt.event.ActionListener;
 public class WindowAddNewGenre extends JFrame {
 
     /*TODO Make Add New Genre feature working
-    *
+    *  When a new genre has been added the programms hould ask the user if he wants to implemet it into the NPC_Games list
+    *  So basically like in WindowAddGenreToGames,
+    *   The feature should either: Be a step by step "click" through process or direktly in one window.
+    *   Using variant one would mean that you will get a summary at the end and that you can click if you want to change something.
+    *   When you are satisfied you can click one button to apply the new genre
+    *   When you complete one step you should be able to jump back and forth.
+    *   Button could be "Add new genre (step by step)" -> I think that this is the better way to go.
+    *   Each of those steps will get a own Window.jar file
     * */
     private JPanel contentPane;
     static WindowAddNewGenre frame = new WindowAddNewGenre();
