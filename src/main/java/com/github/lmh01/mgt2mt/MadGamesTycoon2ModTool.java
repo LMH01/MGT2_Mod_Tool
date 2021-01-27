@@ -18,11 +18,14 @@ public class MadGamesTycoon2ModTool {
     }
 
     public MadGamesTycoon2ModTool(){
-        if(!settingsImported){
-            Settings.importSettings();
-            settingsImported = true;
-        }
         this.initialize();
+        if(!settingsImported){
+            if(Settings.importSettings()){
+                settingsImported = true;
+            }else{
+                Settings.setMgt2FilePath(true);
+            }
+        }
     }
     private static boolean settingsImported = false;
 
@@ -70,6 +73,7 @@ public class MadGamesTycoon2ModTool {
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(10, 100, 100, 23);
         buttonQuit.addActionListener(e -> {
+            Settings.exportSettings();
             System.exit(0);
         });
         frame.getContentPane().add(buttonQuit);

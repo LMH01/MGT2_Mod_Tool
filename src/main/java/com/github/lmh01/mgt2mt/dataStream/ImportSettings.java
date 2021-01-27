@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class ImportSettings{
     private static Logger logger = LoggerFactory.getLogger(ImportSettings.class);
 
-    public static void Import(String fileLocation, boolean importCustomSettings) {
+    public static boolean Import(String fileLocation, boolean importCustomSettings) {
         logger.info("Starting settings import process...");
 
         try {
@@ -39,12 +39,13 @@ public class ImportSettings{
             if (importCustomSettings) {
                 JOptionPane.showMessageDialog(new Frame(), "Settings loaded Successfully!");
             }
-
             scanner.close();
+            return true;
         } catch (FileNotFoundException var6) {
             var6.printStackTrace();
             logger.info("Unable to import settings: File not found! Using default settings!");
             Settings.resetSettings();
+            return false;
         }
 
     }

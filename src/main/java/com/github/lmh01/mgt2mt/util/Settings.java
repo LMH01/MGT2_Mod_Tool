@@ -7,38 +7,63 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class Settings {
     public static String mgt2FilePath = "";
+    public static String mgt2DefaultFilePath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
     public static String languageToAdd = "";
     private static final Logger logger = LoggerFactory.getLogger(Settings.class);
     public static void resetSettings(){
-        mgt2FilePath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
+        mgt2FilePath = mgt2DefaultFilePath;
         languageToAdd = "English";
         logger.info("Settings reset.");
     }
     public static void importCustomSettings(String filePath){
         ImportSettings.Import(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//settings.txt", true);
     }
-    public static void importSettings(){
-        ImportSettings.Import(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//settings.txt", false);
+    public static boolean importSettings(){
+        return ImportSettings.Import(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//settings.txt", false);
     }
     public static  void exportSettings(){
         ExportSettings.export();
     }
-    public static void setMgt2FilePath(){
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-            int return_value = fileChooser.showOpenDialog(null);
-            if(return_value == 0){
-                mgt2FilePath = fileChooser.getSelectedFile().getPath();
-                logger.info("File path: " + mgt2FilePath);
+    public static void setMgt2FilePath(boolean retry){
+        boolean correctFolder = false;
+        boolean breakLoop = false;
+        while(!correctFolder && retry && !breakLoop){
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+                JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+                fileChooser.setDialogTitle("Choose Mad Games Tycoon 2 main folder:");
+                fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+                int return_value = fileChooser.showOpenDialog(null);
+                if(return_value == 0){
+                    mgt2FilePath = fileChooser.getSelectedFile().getPath();
+                    File mgt2FilePathAsFile = new File(mgt2FilePath);
+                    File[] filesInFolder = mgt2FilePathAsFile.listFiles();
+                    for (int i = 0; i < filesInFolder.length; i++) {
+                        if(filesInFolder[i].getName().equals("Mad Games Tycoon 2.exe")){
+                            correctFolder = true;
+                        }
+                        System.out.println(filesInFolder[i].getName());
+                    }
+                    if(correctFolder){
+                        logger.info("File path: " + mgt2FilePath);
+                        JOptionPane.showMessageDialog(new Frame(), "Folder set.");
+                    }else{
+                        JOptionPane.showMessageDialog(new Frame(), "This is not the MGT2 main folder!\nPlease select the correct folder!\nTipp: go into steam -> left click MGT2 -> Manage -> Browse local files.");
+                        mgt2FilePath = mgt2DefaultFilePath;
+                    }
+
+                }else if(return_value == JFileChooser.CANCEL_OPTION){
+                    mgt2FilePath = mgt2DefaultFilePath;
+                    breakLoop = true;
+                }
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+            } catch (ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
             }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-        } catch (ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
         }
     }
 }

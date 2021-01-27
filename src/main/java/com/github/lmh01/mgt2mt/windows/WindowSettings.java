@@ -61,7 +61,7 @@ public class WindowSettings extends JFrame {
         JButton btnBrowseMinecraftFolder = new JButton("Browse");
         btnBrowseMinecraftFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Settings.setMgt2FilePath();
+                Settings.setMgt2FilePath(false);
                 textFieldMGT2Folder.setText(Settings.mgt2FilePath);
             }
         });
@@ -74,6 +74,7 @@ public class WindowSettings extends JFrame {
                 if (JOptionPane.showConfirmDialog((Component)null, "Are you sure?", "Reset Settings", 0) == 0) {
                     Settings.resetSettings();
                     textFieldMGT2Folder.setText(Settings.mgt2FilePath);
+                    JOptionPane.showMessageDialog(new Frame(), "Settings have been restored to default.");
                 }
 
             }
@@ -85,7 +86,7 @@ public class WindowSettings extends JFrame {
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Settings.exportSettings();
-                WindowSettings.frame.dispose();
+                JOptionPane.showMessageDialog(new Frame(), "Settings saved.");
             }
         });
         btnSave.setBounds(443, 92, 89, 23);
