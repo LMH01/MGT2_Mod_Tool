@@ -3,15 +3,13 @@ package com.github.lmh01.mgt2mt.windows;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class WindowAddNewGenre extends JFrame {
 
     /*TODO Make Add New Genre feature working
-    *  When a new genre has been added the programms hould ask the user if he wants to implemet it into the NPC_Games list
+    *  When a new genre has been added the programs should ask the user if he wants to implement it into the NPC_Games list
     *  So basically like in WindowAddGenreToGames,
-    *   The feature should either: Be a step by step "click" through process or direktly in one window.
+    *   The feature should either: Be a step by step "click" through process or directly in one window.
     *   Using variant one would mean that you will get a summary at the end and that you can click if you want to change something.
     *   When you are satisfied you can click one button to apply the new genre
     *   When you complete one step you should be able to jump back and forth.
@@ -24,15 +22,12 @@ public class WindowAddNewGenre extends JFrame {
     private String genreDescription = "";
 
     public static void createFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    frame.setVisible(true);
-                    frame.setLocationRelativeTo(null);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
@@ -51,11 +46,7 @@ public class WindowAddNewGenre extends JFrame {
         contentPane.add(labelAddNewGenre);
 
         JButton btnBack = new JButton("Back");
-        btnBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        btnBack.addActionListener(ignored -> frame.dispose());
         btnBack.setBounds(10, 331, 89, 23);
         contentPane.add(btnBack);
 
@@ -63,7 +54,7 @@ public class WindowAddNewGenre extends JFrame {
         labelLanguage.setBounds(10,40,70,23);
         contentPane.add(labelLanguage);
 
-        JComboBox comboBoxLanguage = new JComboBox();
+        JComboBox<String> comboBoxLanguage = new JComboBox();
         comboBoxLanguage.setToolTipText("Choose in what language the new genre should be added");
         comboBoxLanguage.setModel(new DefaultComboBoxModel(new String[]{"English", "Deutsch"}));
         comboBoxLanguage.setBounds(80,40,100,23);
@@ -105,17 +96,11 @@ public class WindowAddNewGenre extends JFrame {
 
         JButton buttonSetGenreDescription = new JButton("Set description");
         buttonSetGenreDescription.setBounds(10,95,120,23);
-        buttonSetGenreDescription.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                genreDescription = JOptionPane.showInputDialog("Enter genre description: ");
-                textFieldDescription.setText("Description saved!");
-                JOptionPane.showMessageDialog(new Frame(), "Description saved!");
-            }
+        buttonSetGenreDescription.addActionListener(ignored -> {
+            genreDescription = JOptionPane.showInputDialog("Enter genre description: ");
+            textFieldDescription.setText("Description saved!");
+            JOptionPane.showMessageDialog(new Frame(), "Description saved!");
         });
         contentPane.add(buttonSetGenreDescription);
-
-
-
     }
 }

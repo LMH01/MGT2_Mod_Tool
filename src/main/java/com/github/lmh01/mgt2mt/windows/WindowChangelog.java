@@ -5,8 +5,6 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class WindowChangelog extends JFrame {
 
@@ -14,15 +12,12 @@ public class WindowChangelog extends JFrame {
     static WindowChangelog frame = new WindowChangelog();
 
     public static void createFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    frame.setVisible(true);
-                    frame.setLocationRelativeTo(null);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
@@ -60,13 +55,9 @@ public class WindowChangelog extends JFrame {
 
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 260, 89, 23);
-        btnBack.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MadGamesTycoon2ModTool.createFrame();
-                frame.dispose();
-            }
+        btnBack.addActionListener(ignored -> {
+            MadGamesTycoon2ModTool.createFrame();
+            frame.dispose();
         });
         contentPane.add(btnBack);
     }

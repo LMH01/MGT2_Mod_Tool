@@ -1,31 +1,28 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
-import com.github.lmh01.mgt2mt.helpers.DebugHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class WindowAddGenreToGames extends JFrame {
 
     static WindowAddGenreToGames frame = new WindowAddGenreToGames();
     private JPanel contentPane;
     private static String npcGameListFilePath = "";
+    private static Logger logger = LoggerFactory.getLogger(WindowAddGenreToGames.class);
     public static String operation = "";
 
     public static void createFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    frame.setVisible(true);
-                    frame.setLocationRelativeTo(null);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
@@ -56,12 +53,12 @@ public class WindowAddGenreToGames extends JFrame {
         JButton buttonBrowseForRandomGameList = new JButton("Browse");
         buttonBrowseForRandomGameList.setBounds(10,145,80,23);
         buttonBrowseForRandomGameList.setToolTipText("Chose the NpcGames.txt file to add/remove your id.");
-        buttonBrowseForRandomGameList.addActionListener(new ActionListener() {
+        /*buttonBrowseForRandomGameList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
-        });
+        });*/
         contentPane.add(buttonBrowseForRandomGameList);
 
 
@@ -74,7 +71,7 @@ public class WindowAddGenreToGames extends JFrame {
         labelOperation.setBounds(10, 75, 70, 23);
         contentPane.add(labelOperation);
 
-        JComboBox comboBoxOperation = new JComboBox();
+        JComboBox<String> comboBoxOperation = new JComboBox();
         comboBoxOperation.setBounds(100,75,80,23);
         comboBoxOperation.setToolTipText("Add = Adds said genre id to the list; Remove = Removes the genre id from the list");
         comboBoxOperation.setModel(new DefaultComboBoxModel(new String[]{"Add", "Remove"}));
@@ -92,26 +89,23 @@ public class WindowAddGenreToGames extends JFrame {
 
         JButton buttonApply = new JButton("Apply");
         buttonApply.setBounds(95,240,80,23);
-        buttonApply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(comboBoxOperation.getSelectedItem().equals("Add")){
-                    operation = "add";
+        buttonApply.addActionListener((ignored) -> {
+            if(comboBoxOperation.getSelectedItem().equals("Add")){
+                operation = "add";
+            }else{
+                operation = "remove";
+            }
+            logger.debug("operation: " + operation);
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to " + operation + " genre id " + spinnerGenreID.getValue().toString() + " to/from the NPC-Game list?", "Continue?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                if(npcGameListFilePath.length()<1 && textFieldFilePath.getText().length()<1){
+                    if(choseFile()){
+                        NPCGameListChanger.apply(npcGameListFilePath, Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
+                    }
                 }else{
-                    operation = "remove";
-                }
-                DebugHelper.sendInfo("operation: " + operation);
-                if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to " + operation + " genre id " + spinnerGenreID.getValue().toString() + " to/from the NPC-Game list?", "Continue?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                    if(npcGameListFilePath.length()<1 && textFieldFilePath.getText().length()<1){
-                        if(choseFile()){
-                            NPCGameListChanger.apply(npcGameListFilePath, Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
-                        }
+                    if(npcGameListFilePath.length()<1){
+                        NPCGameListChanger.apply(textFieldFilePath.getText(), Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
                     }else{
-                        if(npcGameListFilePath.length()<1){
-                            NPCGameListChanger.apply(textFieldFilePath.getText(), Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
-                        }else{
-                            NPCGameListChanger.apply(npcGameListFilePath, Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
-                        }
+                        NPCGameListChanger.apply(npcGameListFilePath, Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
                     }
                 }
             }
@@ -119,20 +113,12 @@ public class WindowAddGenreToGames extends JFrame {
         contentPane.add(buttonApply);
 
         JButton btnBack = new JButton("Back");
-        btnBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        btnBack.addActionListener(ignored -> frame.dispose());
         btnBack.setBounds(10, 212, 80, 23);
         contentPane.add(btnBack);
 
         JButton btnQuit = new JButton("Quit");
-        btnQuit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        btnQuit.addActionListener((ignored) -> System.exit(0));
         btnQuit.setBounds(10, 240, 80, 23);
         contentPane.add(btnQuit);
     }

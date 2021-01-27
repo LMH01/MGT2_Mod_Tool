@@ -14,15 +14,12 @@ public class WindowSettings extends JFrame {
     static WindowSettings frame = new WindowSettings();
 
     public static void createFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    frame.setVisible(true);
-                    frame.setLocationRelativeTo(null);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
