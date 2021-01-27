@@ -5,6 +5,8 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
