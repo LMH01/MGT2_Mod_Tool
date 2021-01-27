@@ -1,7 +1,8 @@
 package com.github.lmh01.mgt2mt.dataStream;
 
-import com.github.lmh01.mgt2mt.helpers.DebugHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,15 +10,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class ImportSettings {
+public class ImportSettings{
+    private static Logger logger = LoggerFactory.getLogger(ImportSettings.class);
+
     public static void Import(String fileLocation, boolean importCustomSettings) {
-        DebugHelper.sendInfo("Starting settings import process...");
+        logger.debug("Starting settings import process...");
 
         try {
-            DebugHelper.sendInfo("Scanning for File '" + fileLocation + "'...");
+            logger.debug("Scanning for File '" + fileLocation + "'...");
             File file = new File(fileLocation);
             Scanner scanner = new Scanner(file);
-            DebugHelper.sendInfo("Beginning to import settings from file: " + file);
+            logger.debug("Beginning to import settings from file: " + file);
             int setting = 1;
 
             while(scanner.hasNextLine()) {
@@ -28,11 +31,11 @@ public class ImportSettings {
                     case 2:
                         Settings.languageToAdd = line; break;
                 }
-                DebugHelper.sendInfo("Imported Setting (" + setting + "): " + line);
+                logger.debug("Imported Setting (" + setting + "): " + line);
                 ++setting;
             }
 
-            DebugHelper.sendInfo("Import Complete!");
+            logger.debug("Import Complete!");
             if (importCustomSettings) {
                 JOptionPane.showMessageDialog(new Frame(), "Settings loaded Successfully!");
             }
@@ -40,7 +43,7 @@ public class ImportSettings {
             scanner.close();
         } catch (FileNotFoundException var6) {
             var6.printStackTrace();
-            DebugHelper.sendInfo("Unable to import settings: File not found! Using default settings!");
+            logger.debug("Unable to import settings: File not found! Using default settings!");
             Settings.resetSettings();
         }
 

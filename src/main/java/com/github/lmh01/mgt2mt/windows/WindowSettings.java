@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class WindowSettings extends JFrame {
 
+    //TODO Lambda expressions
     private JPanel contentPane;
     static WindowSettings frame = new WindowSettings();
 
@@ -50,6 +51,7 @@ public class WindowSettings extends JFrame {
         JButton btnBack = new JButton("Back");
         btnBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Settings.exportSettings();
                 WindowSettings.frame.dispose();
             }
         });
