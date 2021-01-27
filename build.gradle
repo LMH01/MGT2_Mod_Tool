@@ -1,0 +1,19 @@
+plugins {
+    id "java"
+    id "application"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.slf4j:slf4j-simple:1.7.30"
+    //implementation "org.slf4j:slf4j-api:1.7.30"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "com.github.lmh01"
+application.mainClassName = "com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool"

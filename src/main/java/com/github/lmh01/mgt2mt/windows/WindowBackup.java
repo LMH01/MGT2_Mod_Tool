@@ -5,29 +5,22 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 public class WindowBackup extends JFrame {
 
-    /*TODO Create possibility to restore backups and to make backups manually
-    *
-    * */
+    // TODO Create possibility to restore backups and to make backups manually
     private JPanel contentPane;
     static WindowBackup frame = new WindowBackup();
 
     public static void createFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    frame.setVisible(true);
-                    frame.setLocationRelativeTo(null);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                frame.setVisible(true);
+                frame.setLocationRelativeTo(null);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
@@ -49,28 +42,20 @@ public class WindowBackup extends JFrame {
 
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 100, 89, 23);
-        btnBack.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MadGamesTycoon2ModTool.createFrame();
-                frame.dispose();
-            }
+        btnBack.addActionListener(ignored -> {
+            MadGamesTycoon2ModTool.createFrame();
+            frame.dispose();
         });
         contentPane.add(btnBack);
 
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
         buttonOpenBackupFolder.setBounds(10, 50, 89, 23);
-        buttonOpenBackupFolder.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MadGamesTycoon2ModTool.createFrame();
-                try {
-                    Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//"));
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+        buttonOpenBackupFolder.addActionListener(ignored -> {
+            MadGamesTycoon2ModTool.createFrame();
+            try {
+                Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//"));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         });
         contentPane.add(buttonOpenBackupFolder);
