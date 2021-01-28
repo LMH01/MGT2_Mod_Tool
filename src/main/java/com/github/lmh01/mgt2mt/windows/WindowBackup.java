@@ -13,7 +13,6 @@ import java.io.IOException;
 
 public class WindowBackup extends JFrame {
 
-    // TODO Create possibility to restore backups and to make backups manually
     private JPanel contentPane;
     static WindowBackup frame = new WindowBackup();
 

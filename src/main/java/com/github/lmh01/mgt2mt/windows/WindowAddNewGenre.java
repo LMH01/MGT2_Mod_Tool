@@ -1,5 +1,10 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -15,11 +20,11 @@ public class WindowAddNewGenre extends JFrame {
     *   When you complete one step you should be able to jump back and forth.
     *   Button could be "Add new genre (step by step)" -> I think that this is the better way to go.
     *   Each of those steps will get a own Window.jar file
+    *       Currently working on this! Top Priority to get it working -> then commit
+    *
     * */
     private JPanel contentPane;
     static WindowAddNewGenre frame = new WindowAddNewGenre();
-    private String genreName = "";
-    private String genreDescription = "";
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -32,75 +37,48 @@ public class WindowAddNewGenre extends JFrame {
         });
     }
 
-    public WindowAddNewGenre(){
+    public WindowAddNewGenre() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 400, 400);
+        setBounds(100, 100, 200, 170);
         setResizable(false);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel labelAddNewGenre = new JLabel("Add new genre");
-        labelAddNewGenre.setBounds(150, 10, 250, 23);
-        contentPane.add(labelAddNewGenre);
+        JLabel SettingsText = new JLabel("Add genre");
+        SettingsText.setFont(new Font("Tahoma", 0, 15));
+        SettingsText.setBounds(60, 11, 150, 19);
+        contentPane.add(SettingsText);
+
+        JButton buttonOpenAddGenreToGamesWindow = new JButton("Start step by step guide");
+        buttonOpenAddGenreToGamesWindow.setBounds(10, 50, 175, 23);
+        buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre to MGT2 by using a step by step guide.");
+        buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
+            AnalyzeExistingGenres.analyzeExistingGenres();
+            NewGenreManager.addGenre();
+            frame.dispose();
+        });
+        contentPane.add(buttonOpenAddGenreToGamesWindow);
+
+        JButton buttonSettings = new JButton("Settings");
+        buttonSettings.setBounds(100, 110, 85, 23);
+        buttonSettings.addActionListener(e -> {
+            WindowSettings.createFrame();
+        });
+        contentPane.add(buttonSettings);
 
         JButton btnBack = new JButton("Back");
-        btnBack.addActionListener(ignored -> frame.dispose());
-        btnBack.setBounds(10, 331, 89, 23);
+        btnBack.addActionListener((ignored) -> {
+            WindowAvailableMods.createFrame();
+            frame.dispose();
+        });
+        btnBack.setBounds(10, 82, 80, 23);
         contentPane.add(btnBack);
 
-        JLabel labelLanguage = new JLabel("Language: ");
-        labelLanguage.setBounds(10,40,70,23);
-        contentPane.add(labelLanguage);
-
-        JComboBox<String> comboBoxLanguage = new JComboBox();
-        comboBoxLanguage.setToolTipText("Choose in what language the new genre should be added");
-        comboBoxLanguage.setModel(new DefaultComboBoxModel(new String[]{"English", "Deutsch"}));
-        comboBoxLanguage.setBounds(80,40,100,23);
-        contentPane.add(comboBoxLanguage);
-
-        JCheckBox checkBoxID = new JCheckBox("Enable custom id ");
-        checkBoxID.setBounds(200,40,130,23);
-        checkBoxID.setToolTipText("If enabled the genre id will have to be entered manually");
-        contentPane.add(checkBoxID);
-
-        JSpinner spinnerCustomID = new JSpinner();
-        spinnerCustomID.setBounds(330,40,40,23);
-        spinnerCustomID.setModel(new SpinnerNumberModel(18, 18, 999, 1));
-        spinnerCustomID.setToolTipText("If checkbox is enabled enter here the custom id");
-        contentPane.add(spinnerCustomID);
-
-        JTextField textFieldName = new JTextField("");
-        textFieldName.setBounds(80,70,80,23);
-        contentPane.add(textFieldName);
-
-        /*JButton buttonSetGenreName = new JButton("Set name");
-        buttonSetGenreName.setBounds(10,70,120,23);
-        buttonSetGenreName.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                genreName = JOptionPane.showInputDialog("Enter genre name: ");
-                textFieldName.setText(genreName);
-            }
-        });
-        contentPane.add(buttonSetGenreName);*/
-
-        JLabel labelGenreName = new JLabel("Name: ");
-        labelGenreName.setBounds(10,70,40,23);
-        contentPane.add(labelGenreName);
-
-        JTextField textFieldDescription = new JTextField("Set Description");
-        textFieldDescription.setBounds(140,95,120,23);
-        contentPane.add(textFieldDescription);
-
-        JButton buttonSetGenreDescription = new JButton("Set description");
-        buttonSetGenreDescription.setBounds(10,95,120,23);
-        buttonSetGenreDescription.addActionListener(ignored -> {
-            genreDescription = JOptionPane.showInputDialog("Enter genre description: ");
-            textFieldDescription.setText("Description saved!");
-            JOptionPane.showMessageDialog(new Frame(), "Description saved!");
-        });
-        contentPane.add(buttonSetGenreDescription);
+        JButton btnQuit = new JButton("Quit");
+        btnQuit.addActionListener((ignored) -> System.exit(0));
+        btnQuit.setBounds(10, 110, 80, 23);
+        contentPane.add(btnQuit);
     }
 }

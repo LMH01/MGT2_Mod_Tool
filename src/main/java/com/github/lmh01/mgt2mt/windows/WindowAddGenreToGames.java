@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +48,8 @@ public class WindowAddGenreToGames extends JFrame {
         contentPane.add(labelGenreID);
 
         JSpinner spinnerGenreID = new JSpinner();
-        spinnerGenreID.setBounds(100,40,80,23);
-        spinnerGenreID.setModel(new SpinnerNumberModel(18, 18, 999, 1));
+        spinnerGenreID.setBounds(100,40,80,23);//TODO Decide if i want to make the spinner values dependent on the detected genres. If not set fix values in the line below. -> baybe option in settings window: "Enable safety features" (=Id of new genre is predetermined, Spinners will have a max value) Standard = Enabled
+        spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.genreIDsInUse.size(), 0, AnalyzeExistingGenres.genreIDsInUse.size(), 1));
         spinnerGenreID.setToolTipText("Enter the ID to add to the games");
         contentPane.add(spinnerGenreID);
 

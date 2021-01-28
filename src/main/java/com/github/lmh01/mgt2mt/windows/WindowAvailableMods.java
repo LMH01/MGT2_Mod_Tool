@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,9 +10,6 @@ import java.awt.*;
 
 public class WindowAvailableMods extends JFrame {
 
-    //TODO Make this panel look good and add the correct buttons (Back, Exit, Settings and the two "Mod" Buttons)
-
-    //TODO maybe make it possible to add a new feature fia a step by step wizard.
     private JPanel contentPane;
     static WindowAvailableMods frame = new WindowAvailableMods();
 
@@ -39,7 +38,7 @@ public class WindowAvailableMods extends JFrame {
         SettingsText.setBounds(50, 11, 150, 19);
         this.contentPane.add(SettingsText);
 
-        JButton buttonOpenAddGenreToGamesWindow = new JButton("Add genre to NPC_Games");
+        JButton buttonOpenAddGenreToGamesWindow = new JButton("NPC_Games_list");
         buttonOpenAddGenreToGamesWindow.setBounds(10, 80, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
@@ -49,13 +48,35 @@ public class WindowAvailableMods extends JFrame {
         contentPane.add(buttonOpenAddGenreToGamesWindow);
 
         JButton buttonAddGenreWindow = new JButton("Add genre");
-        buttonAddGenreWindow.setBounds(10, 50, 175, 23);
+        buttonAddGenreWindow.setBounds(10, 30, 175, 23);
         buttonAddGenreWindow.setToolTipText("Click to add a new genre to Mad Games Tycoon 2");
         buttonAddGenreWindow.addActionListener((ignored) -> {
-            WindowAddGenreToGames.createFrame();
+            WindowAddNewGenre.createFrame();
             frame.dispose();
         });
         contentPane.add(buttonAddGenreWindow);
+
+        JButton buttonRemoveGenreWindow = new JButton("Remove genre");
+        buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
+        buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
+        buttonRemoveGenreWindow.addActionListener((ignored) -> {
+            SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1);
+            JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
+            int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (option == JOptionPane.CANCEL_OPTION) {
+                // user hit cancel
+            } else if (option == JOptionPane.OK_OPTION) {
+                if(JOptionPane.showConfirmDialog((Component)null, "Are you sure that you wan't to delete the genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", 0) == 0){
+                    String returnValue = EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
+                    if(returnValue.equals("success")){
+                        JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] has been removed successfully.");
+                    }else{
+                        JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + returnValue);
+                    }
+                }
+            }
+        });
+        contentPane.add(buttonRemoveGenreWindow);
 
         JButton buttonSettings = new JButton("Settings");
         buttonSettings.setBounds(100, 140, 85, 23);

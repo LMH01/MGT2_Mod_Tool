@@ -1,5 +1,8 @@
 package com.github.lmh01.mgt2mt;
 
+import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import com.github.lmh01.mgt2mt.windows.WindowBackup;
@@ -14,6 +17,11 @@ public class MadGamesTycoon2ModTool {
     private static JFrame frame;
     private static ArrayList<String> importedGameNames = new ArrayList();
     public static void main(String[] args) {
+        //NewGenreManager.resetVariablesToDefault();
+        //Settings.importSettings();
+        //NewGenreManager.openStepWindow(9);
+        //AnalyzeFreeGenreIDs.analyzeIDs();
+        //EditGenreFile.addGenre();
         MadGamesTycoon2ModTool window = new MadGamesTycoon2ModTool();
     }
 
@@ -40,7 +48,7 @@ public class MadGamesTycoon2ModTool {
         });
     }
 
-    private void initialize(){
+     private void initialize(){
         frame = new JFrame();
         frame.setBounds(100, 100, 335, 160);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -48,6 +56,7 @@ public class MadGamesTycoon2ModTool {
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+
         JLabel labelTitle = new JLabel("Mad Games Tycoon 2 Mod Tool");
         labelTitle.setBounds(60, 0, 260, 23);
         labelTitle.setForeground(Color.BLACK);
