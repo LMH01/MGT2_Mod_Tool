@@ -71,7 +71,7 @@ public class EditGenreFile {
             fileTempGenreFile.renameTo(fileGenres);
 
             ImageIcon iconGenre = new ImageIcon(NewGenreManager.imageFile.getPath());
-            JOptionPane.showMessageDialog(new Frame(), "Genre " + NewGenreManager.name + " with id [" + NewGenreManager.id + "]\nhas been added successfully.", "Genre added", JOptionPane.INFORMATION_MESSAGE, iconGenre);
+            NewGenreManager.genreAdded();
             WindowAddNewGenre.createFrame();
         } catch (IOException e) {
             e.printStackTrace();
