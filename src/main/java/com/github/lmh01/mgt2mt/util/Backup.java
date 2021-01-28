@@ -1,18 +1,12 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.windows.WindowAddGenreToGames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Backup {
     private static ArrayList<String> listOfFilesToBackup = new ArrayList<>();
@@ -62,16 +56,21 @@ public class Backup {
         try {
             logger.info("reading contents of file: " + fileToBackup);
             contentsOfFileToBackup.clear();
-            Scanner scanner = new Scanner(fileToBackup, "utf-8");
-            while(scanner.hasNextLine()){
-                String currentLine = scanner.nextLine();
+            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileToBackup), "utf-8");
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String currentLine;
+            while((currentLine = reader.readLine()) != null){
                 contentsOfFileToBackup.add(currentLine);
                 logger.info("contents of file: " + currentLine);
             }
-            scanner.close();
+            reader.close();
             logger.info("content has been read.");
         } catch (FileNotFoundException e) {
             backupFailedException = "The file to backup could not be found:\n" + fileToBackup;
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

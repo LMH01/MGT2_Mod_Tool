@@ -5,16 +5,12 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class EditGenreFile {
     private static Logger logger = LoggerFactory.getLogger(EditGenreFile.class);
-    private static ArrayList<String> arrayListCurrentGenres = new ArrayList<>();
     private static File fileTempGenreFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt.temp");
     private static File fileGenres = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
     public static String removeGenre(int genreId){
@@ -25,9 +21,10 @@ public class EditGenreFile {
             logger.info("Editing Genres.txt and adding new genre...");
             fileTempGenreFile.createNewFile();
             PrintWriter pw = new PrintWriter(fileTempGenreFile);
-            Scanner scanner = new Scanner(fileGenres, "utf-8");
-            while(scanner.hasNextLine()){
-                String currentLine = scanner.nextLine();
+            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileGenres), "utf-8");
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String currentLine;
+            while((currentLine = reader.readLine()) != null){
                 if(currentLine.equals("[EOF]")
                         || currentLine.contains("[NAME CH]")
                         || currentLine.contains("[NAME TU]")
@@ -43,8 +40,7 @@ public class EditGenreFile {
                     logger.info("Current line: " + currentLine);
                 }
             }
-            scanner.close();
-            JOptionPane.showMessageDialog(null, "Delete genres.txt");
+            reader.close();
             logger.info("Content of old file has been written to temp file.");
             logger.info("Deleting old file...");
             fileGenres.delete();
@@ -78,35 +74,6 @@ public class EditGenreFile {
             JOptionPane.showMessageDialog(new Frame(), "Genre " + NewGenreManager.name + " with id [" + NewGenreManager.id + "]\nhas been added successfully.", "Genre added", JOptionPane.INFORMATION_MESSAGE, iconGenre);
             WindowAddNewGenre.createFrame();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void scanContentOfFile(File genresFile){
-        logger.info("reading contents of file: " + genresFile);
-        arrayListCurrentGenres.clear();
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(genresFile, "utf-8");
-            String currentGenre = "";
-            while(scanner.hasNextLine()){
-                String currentLine = scanner.nextLine();
-                if(currentLine.contains("[ID]")){
-                    logger.info("Found new genre...");
-                    currentGenre = currentLine + "\n";
-                }else if(currentLine.contains("[DESIGN5]")){
-                    logger.info("Genre complete.");
-                    currentGenre = currentLine + "\n";
-                    arrayListCurrentGenres.add(currentGenre);
-                }else{
-                    currentGenre = currentLine + "\n";
-                }
-                arrayListCurrentGenres.add(currentLine);
-                logger.info("contents of file: " + currentLine);
-                scanner.close();
-                logger.info("content has been read.");
-            }
-            logger.info("Genres.txt has been scanned.");
-        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }

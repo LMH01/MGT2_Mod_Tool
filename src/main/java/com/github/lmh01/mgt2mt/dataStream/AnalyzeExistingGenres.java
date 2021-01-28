@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class AnalyzeExistingGenres {
     public static ArrayList<Integer> genreIDsInUse = new ArrayList<>();
@@ -20,7 +19,6 @@ public class AnalyzeExistingGenres {
         try {
             File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
             logger.info("Scanning for genre id's and names in file: " + genresFile);
-            //Scanner scanner = new Scanner(genresFile, "utf-8");
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(genresFile), "utf-8");
             BufferedReader reader = new BufferedReader(inputStreamReader);
             int currentID;
