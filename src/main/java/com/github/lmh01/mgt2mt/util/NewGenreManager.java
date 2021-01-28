@@ -178,9 +178,9 @@ public class NewGenreManager {
                 if(AnalyzeExistingGenres.genreNamesByIdSorted.get(i).contains(arrayListCompatibleGenres.get(n))){
                     logger.info("genreNamesByIdSorted: " + AnalyzeExistingGenres.genreNamesByIdSorted.get(i));
                     logger.info("arrayListCompatibleGenres: " + arrayListCompatibleGenres.get(n));
-                    logger.info("This should only be an id: " + AnalyzeExistingGenres.genreNamesByIdSorted.get(i).replace(arrayListCompatibleGenres.get(n) + " - ", ""));
-                    arrayListGenreIDs.add(Integer.parseInt(AnalyzeExistingGenres.genreNamesByIdSorted.get(i).replace(arrayListCompatibleGenres.get(n) + " - ", "")));
-                    logger.info("compatible genre ids: " + Integer.parseInt(AnalyzeExistingGenres.genreNamesByIdSorted.get(i).replace(arrayListCompatibleGenres.get(n) + " - ", "")));
+                    logger.info("This should only be an id: " + AnalyzeExistingGenres.genreNamesByIdSorted.get(i).replaceAll("[^0-9]",""));
+                    arrayListGenreIDs.add(Integer.parseInt(AnalyzeExistingGenres.genreNamesByIdSorted.get(i).replaceAll("[^0-9]","")));
+                    logger.info("compatible genre ids: " + Integer.parseInt(AnalyzeExistingGenres.genreNamesByIdSorted.get(i).replaceAll("[^0-9]","")));
                 }
             }
         }
