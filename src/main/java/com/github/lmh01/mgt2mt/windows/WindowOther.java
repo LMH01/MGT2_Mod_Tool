@@ -3,18 +3,13 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.ChangeLog;
-import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.windows.genre.WindowAddGenrePage3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 

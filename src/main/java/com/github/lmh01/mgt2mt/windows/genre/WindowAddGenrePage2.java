@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
@@ -29,59 +28,51 @@ public class WindowAddGenrePage2 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 2] Text and id");
+        setTitle("[Page 2] Date");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelGenreName = new JLabel("Genre name: ");
-        labelGenreName.setBounds(10, 10, 100, 23);
-        contentPane.add(labelGenreName);
+        JLabel labelGenreUnlockDate = new JLabel("Select the unlock date");
+        labelGenreUnlockDate.setBounds(100, 5, 130, 23);
+        contentPane.add(labelGenreUnlockDate);
 
-        JTextField textFieldGenreName = new JTextField();
-        textFieldGenreName.setBounds(120, 10, 100, 23);
-        textFieldGenreName.setText(NewGenreManager.name);
-        contentPane.add(textFieldGenreName);
+        JLabel labelGenreUnlockMonth = new JLabel("Month: ");
+        labelGenreUnlockMonth.setBounds(10, 35, 120, 23);
+        contentPane.add(labelGenreUnlockMonth);
 
-        JLabel labelGenreDescription = new JLabel("Genre description: ");
-        labelGenreDescription.setBounds(10, 35, 120, 23);
-        contentPane.add(labelGenreDescription);
+        JComboBox comboBoxGenreUnlockMonth = new JComboBox();
+        comboBoxGenreUnlockMonth.setBounds(120, 35, 100, 23);
+        comboBoxGenreUnlockMonth.setModel(new DefaultComboBoxModel(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
+        contentPane.add(comboBoxGenreUnlockMonth);
 
-        JTextField textFieldGenreDescription = new JTextField();
-        textFieldGenreDescription.setBounds(120, 35, 100, 23);
-        textFieldGenreDescription.setText(NewGenreManager.description);
-        textFieldGenreDescription.setToolTipText("Enter the genre description that should be shown in game. Hint: use <br> in your description to make a new line.");
-        contentPane.add(textFieldGenreDescription);
-
-        JLabel labelGenreID = new JLabel("Genre id: ");
+        JLabel labelGenreID = new JLabel("Unlock year: ");
         labelGenreID.setBounds(10, 60, 120, 23);
         contentPane.add(labelGenreID);
 
-        JSpinner spinnerId = new JSpinner();
-        spinnerId.setBounds(120, 60, 100, 23);
-        spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, 999, 1));
-        spinnerId.setToolTipText("This is the unique id with which your genre can be found. It is recommended to leave this setting alone. Do only change it when you get an error.");
-        contentPane.add(spinnerId);
+        JSpinner spinnerUnlockYear = new JSpinner();
+        spinnerUnlockYear.setBounds(120, 60, 100, 23);
+        spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
+        spinnerUnlockYear.setToolTipText("This is the year when you genre will be unlocked.");
+        contentPane.add(spinnerUnlockYear);
 
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener((ignored) -> {
-            if(saveInputs(true, spinnerId, textFieldGenreName, textFieldGenreDescription)){
-                NewGenreManager.openStepWindow(3);
-                frame.dispose();
-            }
+            saveInputs(spinnerUnlockYear, comboBoxGenreUnlockMonth);
+            NewGenreManager.openStepWindow(3);
+            frame.dispose();
         });
         contentPane.add(buttonNext);
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 100, 100, 23);
         buttonPrevious.addActionListener((ignored) -> {
-            if(saveInputs(false, spinnerId, textFieldGenreName, textFieldGenreDescription)){
-                NewGenreManager.openStepWindow(1);
-                frame.dispose();
-            }
+            saveInputs(spinnerUnlockYear, comboBoxGenreUnlockMonth);
+            NewGenreManager.openStepWindow(1);
+            frame.dispose();
 
         });
         contentPane.add(buttonPrevious);
@@ -96,36 +87,10 @@ public class WindowAddGenrePage2 extends JFrame{
         });
         contentPane.add(buttonQuit);
     }
-    private static boolean saveInputs(boolean calledFromNext, JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeExistingGenres.genreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
-            JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
-            return false;
-        }else{
-            NewGenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
-            logger.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
-            try{
-                if(textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
-                    if(calledFromNext){
-                        JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
-                        return false;
-                    }else{
-                        return true;
-                    }
-
-                }else{
-                    NewGenreManager.name = textFieldGenreName.getText();
-                    logger.info("genre name: " + textFieldGenreName.getText());
-                    NewGenreManager.description = textFieldGenreDescription.getText();
-                    logger.info("genre description: " + textFieldGenreDescription.getText());
-                    return true;
-                }
-            }catch (NullPointerException e){
-                logger.info("Something went wrong.");
-                if(calledFromNext){
-                    JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
-                }
-                return false;
-            }
-        }
+    private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox comboBoxGenreUnlockMonth){
+        NewGenreManager.unlockYear = Integer.parseInt(spinnerUnlockYear.getValue().toString());
+        logger.info("genre unlock year: " +  Integer.parseInt(spinnerUnlockYear.getValue().toString()));
+        NewGenreManager.unlockMonth = comboBoxGenreUnlockMonth.getSelectedItem().toString();
+        logger.info("Genre unlock month: " + comboBoxGenreUnlockMonth.getSelectedItem().toString());
     }
 }

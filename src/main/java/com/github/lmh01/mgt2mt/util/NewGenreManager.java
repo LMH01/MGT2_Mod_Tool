@@ -59,7 +59,6 @@ public class NewGenreManager {
             case 6: WindowAddGenrePage6.createFrame(); break;
             case 7: WindowAddGenrePage7.createFrame(); break;
             case 8: WindowAddGenrePage8.createFrame(); break;
-            case 9: WindowAddGenrePage9.createFrame(); break;
         }
     }
     public static void showSummary(){
@@ -101,21 +100,21 @@ public class NewGenreManager {
         if(JOptionPane.showConfirmDialog((Component)null, "Your genre is ready:\n" +
                 "Id:" + id + "\n" +
                 "Name: " + name + "\n" +
-                "Description:" + description + "\n" +
+                "Description: " + description + "\n" +
                 "Unlock date: " + unlockMonth + " " + unlockYear + "\n" +
                 "Research point cost: " + researchPoints + "\n" +
                 "Research cost " + price + "\n" +
                 "Development cost: " + devCost + "\n" +
                 "Pic: see top left\n" +
                 "Target group: " + targetGroups + "\n" +
-                "\nDesign Priority:" +
+                "\nDesign Priority:\n" +
                 "Gameplay/Visuals: " + design1 + "\n" +
                 "Story/Game length: " + design2 + "\n" +
                 "Atmosphere/Content: " + design3 + "\n" +
                 "Game depth/Beginner-friendly: " + design4 + "\n" +
                 "Core Gamers/Casual Gamer: " + design5 + "\n" +
                 "\nCompatible genres: " + compatibleGenres + "\n" +
-                "\nWorkPriority:" +
+                "\nWorkPriority:\n" +
                 "Gameplay: " + gameplay + "%\n" +
                 "Graphic: " + graphic + "%\n" +
                 "Sound: " + sound + "%\n" +
@@ -125,7 +124,7 @@ public class NewGenreManager {
             ImageFileHandler.moveImage(imageFile);
             EditGenreFile.addGenre();
         }else{
-            WindowAddGenrePage9.createFrame();
+            WindowAddGenrePage8.createFrame();
         }
     }
     public static void resetVariablesToDefault(){
@@ -161,14 +160,6 @@ public class NewGenreManager {
         if(JOptionPane.showConfirmDialog((Component)null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
             NPCGameListChanger.editNPCGameList(id, "add", 20);
         }
-    }
-    public static String getLanguageAbbreviation(){
-        if(language.equals("English")){
-            return "EN";
-        }else if(language.equals("Deutsch")){
-            return "GE";
-        }
-        return "";
     }
     public static String getCompatibleGenresByID(){
         ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
@@ -23,81 +24,64 @@ public class WindowAddGenrePage5 extends JFrame{
             }
         });
     }
-
     public WindowAddGenrePage5() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 335, 160);
+        setBounds(100, 100, 335, 260);
         setResizable(false);
-        setTitle("[Page 5] Target Group");
+        setTitle("[Page 5] Genre combinations");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelTargetGroup = new JLabel("Select the genre target group");
-        labelTargetGroup.setBounds(70,5, 200, 23);
-        contentPane.add(labelTargetGroup);
+        JLabel labelSelectGenre1 = new JLabel("Select what genres should be compatible");
+        labelSelectGenre1.setBounds(10, 0, 300, 23);
+        contentPane.add(labelSelectGenre1);
 
-        JCheckBox checkBoxTargetGroupKid = new JCheckBox("Kid");
-        checkBoxTargetGroupKid.setBounds(80, 30, 100, 23);
-        if(NewGenreManager.targetGroupKid){
-            checkBoxTargetGroupKid.setSelected(true);
-        }else{
-            checkBoxTargetGroupKid.setSelected(false);
-        }
-        contentPane.add(checkBoxTargetGroupKid);
+        JLabel labelSelectGenre2 = new JLabel("to your genre. (Tip: Use STRG)");
+        labelSelectGenre2.setBounds(10, 15, 300, 23);
+        contentPane.add(labelSelectGenre2);
 
-        JCheckBox checkBoxTargetGroupTeen = new JCheckBox("Teen");
-        checkBoxTargetGroupTeen.setBounds(180, 30, 100, 23);
-        if(NewGenreManager.targetGroupTeen){
-            checkBoxTargetGroupTeen.setSelected(true);
-        }else{
-            checkBoxTargetGroupTeen.setSelected(false);
-        }
-        contentPane.add(checkBoxTargetGroupTeen);
+        String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
 
-        JCheckBox checkBoxTargetGroupAdult = new JCheckBox("Adult");
-        checkBoxTargetGroupAdult.setBounds(80, 65, 100, 23);
-        if(NewGenreManager.targetGroupAdult){
-            checkBoxTargetGroupAdult.setSelected(true);
-        }else{
-            checkBoxTargetGroupAdult.setSelected(false);
-        }
-        contentPane.add(checkBoxTargetGroupAdult);
+        JList listAvailableGenres = new JList(string);
+        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+        listAvailableGenres.setVisibleRowCount(-1);
 
-        JCheckBox checkBoxTargetGroupSenior = new JCheckBox("Senior");
-        checkBoxTargetGroupSenior.setBounds(180, 65, 100, 23);
-        if(NewGenreManager.targetGroupSenior){
-            checkBoxTargetGroupSenior.setSelected(true);
-        }else{
-            checkBoxTargetGroupSenior.setSelected(false);
-        }
-        contentPane.add(checkBoxTargetGroupSenior);
+        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
+        scrollPaneAvailableGenres.setBounds(10,45, 315,140);
+        contentPane.add(scrollPaneAvailableGenres);
 
         JButton buttonNext = new JButton("Next");
-        buttonNext.setBounds(220, 100, 100, 23);
+        buttonNext.setBounds(220, 200, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener((ignored) -> {
-            if(saveInputs(checkBoxTargetGroupKid, checkBoxTargetGroupTeen, checkBoxTargetGroupAdult, checkBoxTargetGroupSenior)){
-                NewGenreManager.openStepWindow(6);
+            if(saveInputs(listAvailableGenres)){
+                NewGenreManager.openStepWindow(7);
                 frame.dispose();
             }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select at least one target group!");
+                if(JOptionPane.showConfirmDialog((Component)null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", 0) == 0){
+                    logger.info("Cleared array list with compatible genres.");
+                    NewGenreManager.arrayListCompatibleGenres.clear();
+                    NewGenreManager.openStepWindow(6);
+                    frame.dispose();
+                }
             }
         });
         contentPane.add(buttonNext);
 
         JButton buttonPrevious = new JButton("Previous");
-        buttonPrevious.setBounds(10, 100, 100, 23);
+        buttonPrevious.setBounds(10, 200, 100, 23);
         buttonPrevious.addActionListener((ignored) -> {
-            saveInputs(checkBoxTargetGroupKid, checkBoxTargetGroupTeen, checkBoxTargetGroupAdult, checkBoxTargetGroupSenior);
-            NewGenreManager.openStepWindow(4);
+            saveInputs(listAvailableGenres);
+            NewGenreManager.openStepWindow(7);
             frame.dispose();
         });
         contentPane.add(buttonPrevious);
 
         JButton buttonQuit = new JButton("Quit");
-        buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setBounds(120, 200, 90, 23);
         buttonQuit.addActionListener((ignored) -> {
             if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
                 WindowAddNewGenre.createFrame();
@@ -106,19 +90,17 @@ public class WindowAddGenrePage5 extends JFrame{
         });
         contentPane.add(buttonQuit);
     }
-    private static boolean saveInputs(JCheckBox checkBoxTargetGroupKid, JCheckBox checkBoxTargetGroupTeen, JCheckBox checkBoxTargetGroupAdult, JCheckBox checkBoxTargetGroupSenior){
-        if(!checkBoxTargetGroupKid.isSelected() && !checkBoxTargetGroupTeen.isSelected() && !checkBoxTargetGroupAdult.isSelected() && !checkBoxTargetGroupSenior.isSelected()){
-            return false;
+    private static boolean saveInputs(JList listAvailableGenres){
+        logger.info("Cleared array list with compatible genres.");
+        NewGenreManager.arrayListCompatibleGenres.clear();
+        if(listAvailableGenres.getSelectedValuesList().size() != 0){
+            for(int i = 0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
+                NewGenreManager.arrayListCompatibleGenres.add(listAvailableGenres.getSelectedValuesList().get(i).toString());
+                logger.info("Added selected genre to array list: " + listAvailableGenres.getSelectedValuesList().get(i).toString());
+            }
+            return  true;
         }else{
-            NewGenreManager.targetGroupKid = checkBoxTargetGroupKid.isSelected();
-            logger.info("target group kid: " + checkBoxTargetGroupKid.isSelected());
-            NewGenreManager.targetGroupTeen = checkBoxTargetGroupTeen.isSelected();
-            logger.info("target group teen: " + checkBoxTargetGroupTeen.isSelected());
-            NewGenreManager.targetGroupAdult = checkBoxTargetGroupAdult.isSelected();
-            logger.info("target group adult: " + checkBoxTargetGroupAdult.isSelected());
-            NewGenreManager.targetGroupSenior = checkBoxTargetGroupSenior.isSelected();
-            logger.info("target group senior: " + checkBoxTargetGroupSenior.isSelected());
-            return true;
+            return false;
         }
     }
 }

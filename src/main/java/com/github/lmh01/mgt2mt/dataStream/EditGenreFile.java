@@ -42,9 +42,7 @@ public class EditGenreFile {
             fileGenres.delete();
             //Print new genre:
             pw.print("[ID]" + NewGenreManager.id + "\n");
-            pw.print("[NAME GE]" + NewGenreManager.name + "\n");
-            pw.print("[NAME EN]" + NewGenreManager.name + "\n");
-            pw.print("[DESC " + NewGenreManager.getLanguageAbbreviation() + "]" + NewGenreManager.description + "\n");
+            printLanguages(pw);
             pw.print("[DATE]" + NewGenreManager.unlockMonth + " " + NewGenreManager.unlockYear + "\n");
             pw.print("[RES POINTS]" + NewGenreManager.researchPoints + "\n");
             pw.print("[PRICE]" + NewGenreManager.price + "\n");
@@ -82,9 +80,9 @@ public class EditGenreFile {
             PrintWriter pw = new PrintWriter(fileTempGenreFile);
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenres), "utf-8"));
             String currentLine;
-            int linesToSkip = 21;
+            int linesToSkip = 26;
             while((currentLine = reader.readLine()) != null){
-                while(linesToSkip<21){
+                while(linesToSkip<25){
                     currentLine = reader.readLine();
                     linesToSkip++;
                 }
@@ -118,6 +116,16 @@ public class EditGenreFile {
             return "failed: IOException";
         }
 
+    }
+    private static void printLanguages(PrintWriter pw){
+        pw.print("[NAME EN]" + NewGenreManager.name + "\n");
+        pw.print("[NAME GE]" + NewGenreManager.name + "\n");
+        pw.print("[NAME FR]" + NewGenreManager.name + "\n");
+        pw.print("[NAME PB]" + NewGenreManager.name + "\n");
+        pw.print("[DESC EN]" + NewGenreManager.description + "\n");
+        pw.print("[DESC GE]" + NewGenreManager.description + "\n");
+        pw.print("[DESC FR]" + NewGenreManager.description + "\n");
+        pw.print("[DESC PB]" + NewGenreManager.description + "\n");
     }
     private static String getTargetGroup(){
         String targetGroups = "";
