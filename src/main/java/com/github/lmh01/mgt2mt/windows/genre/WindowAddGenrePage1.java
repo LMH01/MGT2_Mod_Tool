@@ -98,7 +98,7 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(spinnerId);
     }
     private static boolean saveInputs(boolean calledFromNext, JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeExistingGenres.genreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
+        if(AnalyzeExistingGenres.arrayListGenreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
         }else{

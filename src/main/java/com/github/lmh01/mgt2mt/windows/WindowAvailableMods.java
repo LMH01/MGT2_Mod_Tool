@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 
 import javax.swing.*;
@@ -45,7 +44,7 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
             AnalyzeExistingGenres.analyzeExistingGenres();
-            if(AnalyzeExistingGenres.genreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
+            if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                 WindowAddGenreToGames.createFrame();
                 frame.dispose();
             }else{
@@ -68,12 +67,12 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
         buttonRemoveGenreWindow.addActionListener((ignored) -> {
             AnalyzeExistingGenres.analyzeExistingGenres();
-            if(AnalyzeExistingGenres.genreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
+            if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                 SpinnerNumberModel sModel;
                 if(Settings.disableSafetyFeatures){
                     sModel = new SpinnerNumberModel(0, 0, 999, 1);
                 }else{
-                    sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1);
+                    sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1);
                 }
                 JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
                 int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);

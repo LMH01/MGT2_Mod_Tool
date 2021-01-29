@@ -14,9 +14,12 @@ public class WindowAddGenrePage5 extends JFrame{
     private JPanel contentPane;
     static WindowAddGenrePage5 frame = new WindowAddGenrePage5();
     private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage5.class);
+    JList listAvailableGenres = new JList();
+    JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                frame.setGenreList();
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -42,7 +45,7 @@ public class WindowAddGenrePage5 extends JFrame{
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
-        String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
+        /*String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
 
         JList listAvailableGenres = new JList(string);
         listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -51,14 +54,14 @@ public class WindowAddGenrePage5 extends JFrame{
 
         JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
         scrollPaneAvailableGenres.setBounds(10,45, 315,140);
-        contentPane.add(scrollPaneAvailableGenres);
+        contentPane.add(scrollPaneAvailableGenres);*/
 
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 200, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener((ignored) -> {
             if(saveInputs(listAvailableGenres)){
-                NewGenreManager.openStepWindow(7);
+                NewGenreManager.openStepWindow(6);
                 frame.dispose();
             }else{
                 if(JOptionPane.showConfirmDialog((Component)null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", 0) == 0){
@@ -75,7 +78,7 @@ public class WindowAddGenrePage5 extends JFrame{
         buttonPrevious.setBounds(10, 200, 100, 23);
         buttonPrevious.addActionListener((ignored) -> {
             saveInputs(listAvailableGenres);
-            NewGenreManager.openStepWindow(7);
+            NewGenreManager.openStepWindow(4);
             frame.dispose();
         });
         contentPane.add(buttonPrevious);
@@ -89,6 +92,24 @@ public class WindowAddGenrePage5 extends JFrame{
             }
         });
         contentPane.add(buttonQuit);
+    }
+    private void setGenreList(){
+        DefaultListModel listModel = new DefaultListModel();
+
+        listAvailableGenres.removeAll();
+        listModel.clear();
+        for(int i = 0; i<AnalyzeExistingGenres.arrayListGenreIDsInUse.size(); i++){
+            listModel.addElement(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+            logger.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+        }
+
+        listAvailableGenres.setModel(listModel);
+        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+        listAvailableGenres.setVisibleRowCount(-1);
+
+        scrollPaneAvailableGenres.setBounds(10,45, 315,140);
+        contentPane.add(scrollPaneAvailableGenres);
     }
     private static boolean saveInputs(JList listAvailableGenres){
         logger.info("Cleared array list with compatible genres.");

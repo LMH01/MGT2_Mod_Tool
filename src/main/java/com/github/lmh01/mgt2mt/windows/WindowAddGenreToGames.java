@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +103,7 @@ public class WindowAddGenreToGames extends JFrame {
         if(Settings.disableSafetyFeatures){
             spinnerGenreID.setModel(new SpinnerNumberModel(0, 0, 999, 1));
         }else{
-            spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.genreIDsInUse.size()-1, 0, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1));
+            spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 0, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1));
         }
         spinnerGenreID.setToolTipText("Enter the ID to add to the games");
         contentPane.add(spinnerGenreID);
