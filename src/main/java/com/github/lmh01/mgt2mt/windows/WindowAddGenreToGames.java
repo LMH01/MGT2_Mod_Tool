@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,10 +19,12 @@ public class WindowAddGenreToGames extends JFrame {
     private static String npcGameListFilePath = "";
     private static Logger logger = LoggerFactory.getLogger(WindowAddGenreToGames.class);
     public static String operation = "";
+    JSpinner spinnerGenreID = new JSpinner();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                frame.setSpinner();
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -46,12 +49,6 @@ public class WindowAddGenreToGames extends JFrame {
         JLabel labelGenreID = new JLabel("Genre ID: ");
         labelGenreID.setBounds(10, 40, 70, 23);
         contentPane.add(labelGenreID);
-
-        JSpinner spinnerGenreID = new JSpinner();
-        spinnerGenreID.setBounds(100,40,80,23);//TODO Decide if i want to make the spinner values dependent on the detected genres. If not set fix values in the line below. -> baybe option in settings window: "Enable safety features" (=Id of new genre is predetermined, Spinners will have a max value) Standard = Enabled
-        spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.genreIDsInUse.size()-1, 0, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1));
-        spinnerGenreID.setToolTipText("Enter the ID to add to the games");
-        contentPane.add(spinnerGenreID);
 
         JLabel labelOperation = new JLabel("Operation: ");
         labelOperation.setToolTipText("Add = Adds said genre id to the list; Remove = Removes the genre id from the list");
@@ -101,5 +98,15 @@ public class WindowAddGenreToGames extends JFrame {
         btnQuit.addActionListener((ignored) -> System.exit(0));
         btnQuit.setBounds(10, 170, 80, 23);
         contentPane.add(btnQuit);
+    }
+    private void setSpinner(){
+        spinnerGenreID.setBounds(100,40,80,23);//TODO Decide if i want to make the spinner values dependent on the detected genres. If not set fix values in the line below. -> baybe option in settings window: "Enable safety features" (=Id of new genre is predetermined, Spinners will have a max value) Standard = Enabled
+        if(Settings.disableSafetyFeatures){
+            spinnerGenreID.setModel(new SpinnerNumberModel(0, 0, 999, 1));
+        }else{
+            spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.genreIDsInUse.size()-1, 0, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1));
+        }
+        spinnerGenreID.setToolTipText("Enter the ID to add to the games");
+        contentPane.add(spinnerGenreID);
     }
 }

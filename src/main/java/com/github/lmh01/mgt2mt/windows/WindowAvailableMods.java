@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -44,7 +45,7 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
             AnalyzeExistingGenres.analyzeExistingGenres();
-            if(AnalyzeExistingGenres.genreIDsInUse.size()-1 > 17){
+            if(AnalyzeExistingGenres.genreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                 WindowAddGenreToGames.createFrame();
                 frame.dispose();
             }else{
@@ -67,20 +68,29 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
         buttonRemoveGenreWindow.addActionListener((ignored) -> {
             AnalyzeExistingGenres.analyzeExistingGenres();
-            SpinnerNumberModel sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1);
-            JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
-            int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-            if (option == JOptionPane.CANCEL_OPTION) {
-                // user hit cancel
-            } else if (option == JOptionPane.OK_OPTION) {
-                if(JOptionPane.showConfirmDialog((Component)null, "Are you sure that you wan't to delete the genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", 0) == 0){
-                    String returnValue = EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
-                    if(returnValue.equals("success")){
-                        JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] has been removed successfully.");
-                    }else{
-                        JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + returnValue);
+            if(AnalyzeExistingGenres.genreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
+                SpinnerNumberModel sModel;
+                if(Settings.disableSafetyFeatures){
+                    sModel = new SpinnerNumberModel(0, 0, 999, 1);
+                }else{
+                    sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1);
+                }
+                JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
+                int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (option == JOptionPane.CANCEL_OPTION) {
+                    // user hit cancel
+                } else if (option == JOptionPane.OK_OPTION) {
+                    if(JOptionPane.showConfirmDialog((Component)null, "Are you sure that you wan't to delete the genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", 0) == 0){
+                        String returnValue = EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
+                        if(returnValue.equals("success")){
+                            JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] has been removed successfully.");
+                        }else{
+                            JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + returnValue);
+                        }
                     }
                 }
+            }else{
+                JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
             }
         });
         contentPane.add(buttonRemoveGenreWindow);

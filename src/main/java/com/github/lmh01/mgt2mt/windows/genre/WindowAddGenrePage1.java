@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +15,11 @@ public class WindowAddGenrePage1 extends JFrame{
     private JPanel contentPane;
     static WindowAddGenrePage1 frame = new WindowAddGenrePage1();
     private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage1.class);
+    JSpinner spinnerId = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                frame.setSpinnerId();
                 frame.setVisible(true);
                 frame.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -60,12 +63,6 @@ public class WindowAddGenrePage1 extends JFrame{
         labelGenreID.setBounds(10, 60, 120, 23);
         contentPane.add(labelGenreID);
 
-        JSpinner spinnerId = new JSpinner();
-        spinnerId.setBounds(120, 60, 100, 23);
-        spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, 999, 1));
-        spinnerId.setToolTipText("This is the unique id with which your genre can be found. It is recommended to leave this setting alone. Do only change it when you get an error.");
-        contentPane.add(spinnerId);
-
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
@@ -86,6 +83,19 @@ public class WindowAddGenrePage1 extends JFrame{
             }
         });
         contentPane.add(buttonQuit);
+    }
+    private void setSpinnerId(){
+        if(Settings.disableSafetyFeatures){
+            spinnerId.setModel(new SpinnerNumberModel(0, 0, 999, 1));
+            spinnerId.setToolTipText("This is the unique id for your genre. Do not change it unless you have your own genre id system.");
+            spinnerId.setEnabled(true);
+        }else{
+            spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, NewGenreManager.id, 1));
+            spinnerId.setEnabled(false);
+        }
+        spinnerId.setBounds(120, 60, 100, 23);
+        spinnerId.setToolTipText("This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
+        contentPane.add(spinnerId);
     }
     private static boolean saveInputs(boolean calledFromNext, JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
         if(AnalyzeExistingGenres.genreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
