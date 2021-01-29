@@ -2,18 +2,13 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 
 public class WindowAddGenrePage8 extends JFrame{
-    private JPanel contentPane;
     static WindowAddGenrePage8 frame = new WindowAddGenrePage8();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage8.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
@@ -30,7 +25,8 @@ public class WindowAddGenrePage8 extends JFrame{
         setBounds(100, 100, 335, 160);
         setResizable(false);
         setTitle("[Page 8] Image");
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -49,11 +45,10 @@ public class WindowAddGenrePage8 extends JFrame{
 
         JButton buttonBrowse = new JButton("Browse");
         buttonBrowse.setBounds(240, 40, 80, 23);
+        buttonBrowse.setToolTipText("Click here to select an image file that should be used as your genre image.");
         buttonBrowse.addActionListener(e -> {
             String imageFilePath = getGenreImageFilePath();
-            if(imageFilePath.equals("error")){
-
-            }else{
+            if(!imageFilePath.equals("error")){
                 NewGenreManager.imageFile = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
             }
@@ -72,6 +67,7 @@ public class WindowAddGenrePage8 extends JFrame{
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 100, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener((ignored) -> {
             NewGenreManager.openStepWindow(7);
             frame.dispose();
@@ -80,8 +76,9 @@ public class WindowAddGenrePage8 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -104,13 +101,7 @@ public class WindowAddGenrePage8 extends JFrame{
                 }
             }
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
         return imageFilePath;

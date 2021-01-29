@@ -11,10 +11,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage5 extends JFrame{
-    private JPanel contentPane;
+    private final JPanel contentPane;
     static WindowAddGenrePage5 frame = new WindowAddGenrePage5();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage5.class);
-    JList listAvailableGenres = new JList();
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage5.class);
+    JList<String> listAvailableGenres = new JList<>();
     JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -32,29 +32,19 @@ public class WindowAddGenrePage5 extends JFrame{
         setBounds(100, 100, 335, 260);
         setResizable(false);
         setTitle("[Page 5] Genre combinations");
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelSelectGenre1 = new JLabel("Select what genres should be compatible");
+        JLabel labelSelectGenre1 = new JLabel("Select what genres work good together");
         labelSelectGenre1.setBounds(10, 0, 300, 23);
         contentPane.add(labelSelectGenre1);
 
-        JLabel labelSelectGenre2 = new JLabel("to your genre. (Tip: Use STRG)");
+        JLabel labelSelectGenre2 = new JLabel("with your genre. (Tip: Hold STRG and click with your mouse)");
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
-
-        /*String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
-
-        JList listAvailableGenres = new JList(string);
-        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-        listAvailableGenres.setVisibleRowCount(-1);
-
-        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-        scrollPaneAvailableGenres.setBounds(10,45, 315,140);
-        contentPane.add(scrollPaneAvailableGenres);*/
 
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 200, 100, 23);
@@ -64,8 +54,8 @@ public class WindowAddGenrePage5 extends JFrame{
                 NewGenreManager.openStepWindow(6);
                 frame.dispose();
             }else{
-                if(JOptionPane.showConfirmDialog((Component)null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", 0) == 0){
-                    logger.info("Cleared array list with compatible genres.");
+                if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", JOptionPane.YES_NO_OPTION) == 0){
+                    LOGGER.info("Cleared array list with compatible genres.");
                     NewGenreManager.arrayListCompatibleGenres.clear();
                     NewGenreManager.openStepWindow(6);
                     frame.dispose();
@@ -76,6 +66,7 @@ public class WindowAddGenrePage5 extends JFrame{
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 200, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener((ignored) -> {
             saveInputs(listAvailableGenres);
             NewGenreManager.openStepWindow(4);
@@ -85,8 +76,9 @@ public class WindowAddGenrePage5 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 200, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -94,13 +86,12 @@ public class WindowAddGenrePage5 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private void setGenreList(){
-        DefaultListModel listModel = new DefaultListModel();
-
+        DefaultListModel<String> listModel = new DefaultListModel<>();
         listAvailableGenres.removeAll();
         listModel.clear();
         for(int i = 0; i<AnalyzeExistingGenres.arrayListGenreIDsInUse.size(); i++){
             listModel.addElement(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
-            logger.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+            LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
         }
 
         listAvailableGenres.setModel(listModel);
@@ -111,13 +102,13 @@ public class WindowAddGenrePage5 extends JFrame{
         scrollPaneAvailableGenres.setBounds(10,45, 315,140);
         contentPane.add(scrollPaneAvailableGenres);
     }
-    private static boolean saveInputs(JList listAvailableGenres){
-        logger.info("Cleared array list with compatible genres.");
+    private static boolean saveInputs(JList<String> listAvailableGenres){
+        LOGGER.info("Cleared array list with compatible genres.");
         NewGenreManager.arrayListCompatibleGenres.clear();
         if(listAvailableGenres.getSelectedValuesList().size() != 0){
             for(int i = 0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
-                NewGenreManager.arrayListCompatibleGenres.add(listAvailableGenres.getSelectedValuesList().get(i).toString());
-                logger.info("Added selected genre to array list: " + listAvailableGenres.getSelectedValuesList().get(i).toString());
+                NewGenreManager.arrayListCompatibleGenres.add(listAvailableGenres.getSelectedValuesList().get(i));
+                LOGGER.info("Added selected genre to array list: " + listAvailableGenres.getSelectedValuesList().get(i));
             }
             return  true;
         }else{

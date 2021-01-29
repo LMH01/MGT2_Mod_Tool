@@ -10,9 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage4 extends JFrame{
-    private JPanel contentPane;
     static WindowAddGenrePage4 frame = new WindowAddGenrePage4();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage4.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage4.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
@@ -29,7 +28,8 @@ public class WindowAddGenrePage4 extends JFrame{
         setBounds(100, 100, 335, 160);
         setResizable(false);
         setTitle("[Page 4] Target Group");
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -40,38 +40,26 @@ public class WindowAddGenrePage4 extends JFrame{
 
         JCheckBox checkBoxTargetGroupKid = new JCheckBox("Kid");
         checkBoxTargetGroupKid.setBounds(80, 30, 100, 23);
-        if(NewGenreManager.targetGroupKid){
-            checkBoxTargetGroupKid.setSelected(true);
-        }else{
-            checkBoxTargetGroupKid.setSelected(false);
-        }
+        checkBoxTargetGroupKid.setToolTipText("Select Kid as target group.");
+        checkBoxTargetGroupKid.setSelected(NewGenreManager.targetGroupKid);
         contentPane.add(checkBoxTargetGroupKid);
 
         JCheckBox checkBoxTargetGroupTeen = new JCheckBox("Teen");
         checkBoxTargetGroupTeen.setBounds(180, 30, 100, 23);
-        if(NewGenreManager.targetGroupTeen){
-            checkBoxTargetGroupTeen.setSelected(true);
-        }else{
-            checkBoxTargetGroupTeen.setSelected(false);
-        }
+        checkBoxTargetGroupTeen.setToolTipText("Select Teen as target group.");
+        checkBoxTargetGroupTeen.setSelected(NewGenreManager.targetGroupTeen);
         contentPane.add(checkBoxTargetGroupTeen);
 
         JCheckBox checkBoxTargetGroupAdult = new JCheckBox("Adult");
         checkBoxTargetGroupAdult.setBounds(80, 65, 100, 23);
-        if(NewGenreManager.targetGroupAdult){
-            checkBoxTargetGroupAdult.setSelected(true);
-        }else{
-            checkBoxTargetGroupAdult.setSelected(false);
-        }
+        checkBoxTargetGroupAdult.setToolTipText("Select Adult as target group.");
+        checkBoxTargetGroupAdult.setSelected(NewGenreManager.targetGroupAdult);
         contentPane.add(checkBoxTargetGroupAdult);
 
         JCheckBox checkBoxTargetGroupSenior = new JCheckBox("Senior");
         checkBoxTargetGroupSenior.setBounds(180, 65, 100, 23);
-        if(NewGenreManager.targetGroupSenior){
-            checkBoxTargetGroupSenior.setSelected(true);
-        }else{
-            checkBoxTargetGroupSenior.setSelected(false);
-        }
+        checkBoxTargetGroupSenior.setToolTipText("Select Senior as target group.");
+        checkBoxTargetGroupSenior.setSelected(NewGenreManager.targetGroupSenior);
         contentPane.add(checkBoxTargetGroupSenior);
 
         JButton buttonNext = new JButton("Next");
@@ -89,6 +77,7 @@ public class WindowAddGenrePage4 extends JFrame{
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 100, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener((ignored) -> {
             saveInputs(checkBoxTargetGroupKid, checkBoxTargetGroupTeen, checkBoxTargetGroupAdult, checkBoxTargetGroupSenior);
             NewGenreManager.openStepWindow(3);
@@ -98,8 +87,9 @@ public class WindowAddGenrePage4 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -111,13 +101,13 @@ public class WindowAddGenrePage4 extends JFrame{
             return false;
         }else{
             NewGenreManager.targetGroupKid = checkBoxTargetGroupKid.isSelected();
-            logger.info("target group kid: " + checkBoxTargetGroupKid.isSelected());
+            LOGGER.info("target group kid: " + checkBoxTargetGroupKid.isSelected());
             NewGenreManager.targetGroupTeen = checkBoxTargetGroupTeen.isSelected();
-            logger.info("target group teen: " + checkBoxTargetGroupTeen.isSelected());
+            LOGGER.info("target group teen: " + checkBoxTargetGroupTeen.isSelected());
             NewGenreManager.targetGroupAdult = checkBoxTargetGroupAdult.isSelected();
-            logger.info("target group adult: " + checkBoxTargetGroupAdult.isSelected());
+            LOGGER.info("target group adult: " + checkBoxTargetGroupAdult.isSelected());
             NewGenreManager.targetGroupSenior = checkBoxTargetGroupSenior.isSelected();
-            logger.info("target group senior: " + checkBoxTargetGroupSenior.isSelected());
+            LOGGER.info("target group senior: " + checkBoxTargetGroupSenior.isSelected());
             return true;
         }
     }

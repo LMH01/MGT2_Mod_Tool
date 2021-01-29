@@ -10,9 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage3 extends JFrame{
-    private JPanel contentPane;
     static WindowAddGenrePage3 frame = new WindowAddGenrePage3();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage3.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage3.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
@@ -29,7 +28,8 @@ public class WindowAddGenrePage3 extends JFrame{
         setBounds(100, 100, 335, 160);
         setResizable(false);
         setTitle("[Page 3] Research/Price");
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -40,8 +40,8 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JSpinner spinnerResearchPoints = new JSpinner();
         spinnerResearchPoints.setBounds(120, 10, 100, 23);
-        spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 100000, 1));
         spinnerResearchPoints.setToolTipText("Number of required research points to research that genre.");
+        spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 100000, 1));
         contentPane.add(spinnerResearchPoints);
 
         JLabel labelGenreDevelopmentCost = new JLabel("Development cost: ");
@@ -50,8 +50,8 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JSpinner spinnerDevelopmentCost = new JSpinner();
         spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
+        spinnerDevelopmentCost.setToolTipText("Set the development cost for a game with your genre. This cost will be added when developing a game with this genre.");
         spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000, 1));
-        spinnerDevelopmentCost.setToolTipText("Set the development cost for a game with your genre.");
         contentPane.add(spinnerDevelopmentCost);
 
         JLabel labelGenrePrice = new JLabel("Price: ");
@@ -60,8 +60,8 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JSpinner spinnerGenrePrice = new JSpinner();
         spinnerGenrePrice.setBounds(120, 60, 100, 23);
+        spinnerGenrePrice.setToolTipText("This is the research cost, it is being payed when researching this genre.");
         spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 10000000, 1));
-        spinnerGenrePrice.setToolTipText("This is the research cost.");
         contentPane.add(spinnerGenrePrice);
 
         JButton buttonNext = new JButton("Next");
@@ -76,6 +76,7 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 100, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener((ignored) -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
             NewGenreManager.openStepWindow(2);
@@ -85,8 +86,9 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -95,10 +97,10 @@ public class WindowAddGenrePage3 extends JFrame{
     }
     private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){
         NewGenreManager.researchPoints = Integer.parseInt(spinnerResearchPoints.getValue().toString());
-        logger.info("genre research points: " + Integer.parseInt(spinnerResearchPoints.getValue().toString()));
+        LOGGER.info("genre research points: " + Integer.parseInt(spinnerResearchPoints.getValue().toString()));
         NewGenreManager.devCost = Integer.parseInt(spinnerDevelopmentCost.getValue().toString());
-        logger.info("genre development cost: " + Integer.parseInt(spinnerDevelopmentCost.getValue().toString()));
+        LOGGER.info("genre development cost: " + Integer.parseInt(spinnerDevelopmentCost.getValue().toString()));
         NewGenreManager.price = Integer.parseInt(spinnerGenrePrice.getValue().toString());
-        logger.info("genre price: " + Integer.parseInt(spinnerGenrePrice.getValue().toString()));
+        LOGGER.info("genre price: " + Integer.parseInt(spinnerGenrePrice.getValue().toString()));
     }
 }

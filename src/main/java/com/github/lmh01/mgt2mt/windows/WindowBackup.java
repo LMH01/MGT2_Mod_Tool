@@ -1,19 +1,14 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.Backup;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 public class WindowBackup extends JFrame {
 
-    private JPanel contentPane;
     static WindowBackup frame = new WindowBackup();
 
     public static void createFrame(){
@@ -31,7 +26,8 @@ public class WindowBackup extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 200, 160);
         setResizable(false);
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -42,16 +38,15 @@ public class WindowBackup extends JFrame {
         labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(labelTitle);
 
-        JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 100, 89, 23);
-        btnBack.addActionListener(ignored -> {
-            MadGamesTycoon2ModTool.createFrame();
-            frame.dispose();
-        });
-        contentPane.add(btnBack);
+        JButton buttonCreateBackup = new JButton("Create Backup");
+        buttonCreateBackup.setBounds(10, 40, 175, 23);
+        buttonCreateBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
+        buttonCreateBackup.addActionListener(ignored -> Backup.createBackup(true));
+        contentPane.add(buttonCreateBackup);
 
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
         buttonOpenBackupFolder.setBounds(10, 70, 175, 23);
+        buttonOpenBackupFolder.setToolTipText("Click to open the backup folder.");
         buttonOpenBackupFolder.addActionListener(ignored -> {
             try {
                 Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//"));
@@ -61,11 +56,13 @@ public class WindowBackup extends JFrame {
         });
         contentPane.add(buttonOpenBackupFolder);
 
-        JButton buttonCreateBackup = new JButton("Create Backup");
-        buttonCreateBackup.setBounds(10, 40, 175, 23);
-        buttonCreateBackup.addActionListener(ignored -> {
-            Backup.createBackup(true);
+        JButton btnBack = new JButton("Back");
+        btnBack.setBounds(10, 100, 89, 23);
+        btnBack.setToolTipText("Click to get to the main page.");
+        btnBack.addActionListener(ignored -> {
+            MainWindow.createFrame();
+            frame.dispose();
         });
-        contentPane.add(buttonCreateBackup);
+        contentPane.add(btnBack);
     }
 }

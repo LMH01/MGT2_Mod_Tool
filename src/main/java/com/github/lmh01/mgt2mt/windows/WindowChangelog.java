@@ -1,14 +1,11 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowChangelog extends JFrame {
 
-    private JPanel contentPane;
     static WindowChangelog frame = new WindowChangelog();
 
     public static void createFrame(){
@@ -26,7 +23,8 @@ public class WindowChangelog extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 318);
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -49,14 +47,15 @@ public class WindowChangelog extends JFrame {
         contentPane.add(dtrpnX);
 
         JLabel lblChangelog = new JLabel("Changelog");
-        lblChangelog.setFont(new Font("Tahoma", Font.PLAIN, 13));
         lblChangelog.setBounds(175, 0, 105, 24);
+        lblChangelog.setFont(new Font("Tahoma", Font.PLAIN, 13));
         contentPane.add(lblChangelog);
 
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 260, 89, 23);
+        btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(ignored -> {
-            MadGamesTycoon2ModTool.createFrame();
+            MainWindow.createFrame();
             frame.dispose();
         });
         contentPane.add(btnBack);

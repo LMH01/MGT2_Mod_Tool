@@ -10,9 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage7 extends JFrame{
-    private JPanel contentPane;
     static WindowAddGenrePage7 frame = new WindowAddGenrePage7();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage7.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
@@ -29,7 +28,8 @@ public class WindowAddGenrePage7 extends JFrame{
         setBounds(100, 100, 335, 185);
         setResizable(false);
         setTitle("[Page 7] Work Priority");
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -89,6 +89,7 @@ public class WindowAddGenrePage7 extends JFrame{
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 125, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener((ignored) -> {
             saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
             NewGenreManager.openStepWindow(6);
@@ -99,8 +100,9 @@ public class WindowAddGenrePage7 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 125, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -112,16 +114,16 @@ public class WindowAddGenrePage7 extends JFrame{
                 Integer.parseInt(spinnerGraphic.getValue().toString()) +
                 Integer.parseInt(spinnerSound.getValue().toString()) +
                 Integer.parseInt(spinnerControl.getValue().toString());
-        logger.info("combined value: " + combinedValue);
+        LOGGER.info("combined value: " + combinedValue);
         if(combinedValue == 100 && testIfDividableBy5(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
             NewGenreManager.gameplay = Integer.parseInt(spinnerGameplay.getValue().toString());
-            logger.info("Gameplay = " + spinnerGameplay.getValue().toString());
+            LOGGER.info("Gameplay = " + spinnerGameplay.getValue().toString());
             NewGenreManager.graphic = Integer.parseInt(spinnerGraphic.getValue().toString());
-            logger.info("graphic = " + spinnerGraphic.getValue().toString());
+            LOGGER.info("graphic = " + spinnerGraphic.getValue().toString());
             NewGenreManager.sound = Integer.parseInt(spinnerSound.getValue().toString());
-            logger.info("sound = " + spinnerSound.getValue().toString());
+            LOGGER.info("sound = " + spinnerSound.getValue().toString());
             NewGenreManager.control = Integer.parseInt(spinnerControl.getValue().toString());
-            logger.info("control = " + spinnerControl.getValue().toString());
+            LOGGER.info("control = " + spinnerControl.getValue().toString());
             return true;
         }else{
             return false;

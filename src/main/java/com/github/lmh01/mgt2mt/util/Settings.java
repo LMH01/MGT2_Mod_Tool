@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.Objects;
 
 public class Settings {
     public static String mgt2FilePath = "";
@@ -25,7 +26,7 @@ public class Settings {
         disableSafetyFeatures = false;
     }
     public static void importCustomSettings(String filePath){
-        ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt", true);
+        ImportSettings.Import(filePath, true);
     }
     public static boolean importSettings(){
         return ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt", false);
@@ -34,7 +35,7 @@ public class Settings {
         ExportSettings.export();
     }
     public static void setMgt2FilePath(boolean retry){
-        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- Hint 3: If you encounter a bug please submit an issue over on github.\n (Github can be accessed fia the Other menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
         boolean correctFolder = false;
         boolean breakLoop = false;
         File mgt2DefaultFilePathFile = new File(mgt2DefaultFilePath);
@@ -84,7 +85,7 @@ public class Settings {
         File file = new File(mgt2Folder);
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
-            for (int i = 0; i < filesInFolder.length; i++) {
+            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(filesInFolder[i].getName().equals("Mad Games Tycoon 2.exe")){
                     return true;
                 }

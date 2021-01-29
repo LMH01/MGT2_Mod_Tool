@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -14,9 +13,8 @@ import java.util.Objects;
 public class WindowAddGenreToGames extends JFrame {
 
     static WindowAddGenreToGames frame = new WindowAddGenreToGames();
-    private JPanel contentPane;
-    private static String npcGameListFilePath = "";
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenreToGames.class);
+    private final JPanel contentPane;
+    private static final Logger logger = LoggerFactory.getLogger(WindowAddGenreToGames.class);
     public static String operation = "";
     JSpinner spinnerGenreID = new JSpinner();
 
@@ -54,10 +52,10 @@ public class WindowAddGenreToGames extends JFrame {
         labelOperation.setBounds(10, 75, 70, 23);
         contentPane.add(labelOperation);
 
-        JComboBox comboBoxOperation = new JComboBox();
+        JComboBox<String> comboBoxOperation = new JComboBox<>();
         comboBoxOperation.setBounds(100,75,80,23);
         comboBoxOperation.setToolTipText("Add = Adds said genre id to the list; Remove = Removes the genre id from the list");
-        comboBoxOperation.setModel(new DefaultComboBoxModel(new String[]{"Add", "Remove"}));
+        comboBoxOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Add", "Remove"}));
         contentPane.add(comboBoxOperation);
 
         JLabel labelChance = new JLabel("Chance: ");
@@ -67,11 +65,12 @@ public class WindowAddGenreToGames extends JFrame {
         JSpinner spinnerChance = new JSpinner();
         spinnerChance.setBounds(100, 110, 80, 23);
         spinnerChance.setModel(new SpinnerNumberModel(20, 1, 100, 1));
-        spinnerChance.setToolTipText("Determines the chance at which the genre id should be added");
+        spinnerChance.setToolTipText("Determines the chance at which the genre id should be added; 100 = 100% chance.");
         contentPane.add(spinnerChance);
 
         JButton buttonApply = new JButton("Apply");
         buttonApply.setBounds(95,170,80,23);
+        buttonApply.setToolTipText("Click to edit the NpcGames.txt file with your settings.");
         buttonApply.addActionListener((ignored) -> {
             if(Objects.equals(comboBoxOperation.getSelectedItem(), "Add")) {
                 operation = "add";
@@ -84,20 +83,22 @@ public class WindowAddGenreToGames extends JFrame {
         contentPane.add(buttonApply);
 
         JButton btnBack = new JButton("Back");
+        btnBack.setBounds(10, 142, 80, 23);
+        btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener((ignored) -> {
             WindowAvailableMods.createFrame();
             frame.dispose();
         });
-        btnBack.setBounds(10, 142, 80, 23);
         contentPane.add(btnBack);
 
         JButton btnQuit = new JButton("Quit");
-        btnQuit.addActionListener((ignored) -> System.exit(0));
         btnQuit.setBounds(10, 170, 80, 23);
+        btnQuit.setToolTipText("Click to exit the application.");
+        btnQuit.addActionListener((ignored) -> System.exit(0));
         contentPane.add(btnQuit);
     }
     private void setSpinner(){
-        spinnerGenreID.setBounds(100,40,80,23);//TODO Decide if i want to make the spinner values dependent on the detected genres. If not set fix values in the line below. -> baybe option in settings window: "Enable safety features" (=Id of new genre is predetermined, Spinners will have a max value) Standard = Enabled
+        spinnerGenreID.setBounds(100,40,80,23);
         if(Settings.disableSafetyFeatures){
             spinnerGenreID.setModel(new SpinnerNumberModel(0, 0, 999, 1));
         }else{

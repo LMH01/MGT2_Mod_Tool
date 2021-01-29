@@ -12,9 +12,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage1 extends JFrame{
-    private JPanel contentPane;
+    private final JPanel contentPane;
     static WindowAddGenrePage1 frame = new WindowAddGenrePage1();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage1.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage1.class);
     JSpinner spinnerId = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -33,6 +33,7 @@ public class WindowAddGenrePage1 extends JFrame{
         setBounds(100, 100, 335, 160);
         setResizable(false);
         setTitle("[Page 1] Text and id");
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
@@ -45,6 +46,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
         JTextField textFieldGenreName = new JTextField();
         textFieldGenreName.setBounds(120, 10, 100, 23);
+        textFieldGenreName.setToolTipText("This is the global genre name. This name is being displayed in every translation.");
         textFieldGenreName.setText(NewGenreManager.name);
         contentPane.add(textFieldGenreName);
 
@@ -76,8 +78,9 @@ public class WindowAddGenrePage1 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -106,7 +109,7 @@ public class WindowAddGenrePage1 extends JFrame{
             return false;
         }else{
             NewGenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
-            logger.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
+            LOGGER.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
             try{
                 if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*") || textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
                     if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*")){
@@ -117,13 +120,13 @@ public class WindowAddGenrePage1 extends JFrame{
                     return false;
                 }else{
                     NewGenreManager.name = textFieldGenreName.getText();
-                    logger.info("genre name: " + textFieldGenreName.getText());
+                    LOGGER.info("genre name: " + textFieldGenreName.getText());
                     NewGenreManager.description = textFieldGenreDescription.getText();
-                    logger.info("genre description: " + textFieldGenreDescription.getText());
+                    LOGGER.info("genre description: " + textFieldGenreDescription.getText());
                     return true;
                 }
             }catch (NullPointerException e){
-                logger.info("Something went wrong.");
+                LOGGER.info("Something went wrong.");
                 JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
                 return false;
             }

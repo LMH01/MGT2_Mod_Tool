@@ -10,9 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage6 extends JFrame{
-    private JPanel contentPane;
     static WindowAddGenrePage6 frame = new WindowAddGenrePage6();
-    private static Logger logger = LoggerFactory.getLogger(WindowAddGenrePage6.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
@@ -29,7 +28,8 @@ public class WindowAddGenrePage6 extends JFrame{
         setBounds(100, 100, 335, 210);
         setResizable(false);
         setTitle("[Page 6] Design Priority");
-        contentPane = new JPanel();
+
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -41,7 +41,7 @@ public class WindowAddGenrePage6 extends JFrame{
 
         JSpinner spinnerDesign1 = new JSpinner();
         spinnerDesign1.setBounds(120, 10, 100, 23);
-        spinnerDesign1.setToolTipText("Design Priority: If gameplay is favoured type value smaller 5. If Visual are favoured type value bigger 5.");
+        spinnerDesign1.setToolTipText("Design Priority: If gameplay is favoured type value smaller 5. If Visuals are favoured type value bigger 5.");
         spinnerDesign1.setModel(new SpinnerNumberModel(5, 0, 10, 1));
         contentPane.add(spinnerDesign1);
 
@@ -97,6 +97,7 @@ public class WindowAddGenrePage6 extends JFrame{
 
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 150, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener((ignored) -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             NewGenreManager.openStepWindow(5);
@@ -106,8 +107,9 @@ public class WindowAddGenrePage6 extends JFrame{
 
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(120, 150, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog((Component)null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", 0) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }
@@ -116,14 +118,14 @@ public class WindowAddGenrePage6 extends JFrame{
     }
     private static void saveInputs(JSpinner spinnerDesign1, JSpinner spinnerDesign2, JSpinner spinnerDesign3, JSpinner spinnerDesign4, JSpinner spinnerDesign5){
         NewGenreManager.design1 = Integer.parseInt(spinnerDesign1.getValue().toString());
-        logger.info("Design 1 = " + spinnerDesign1.getValue().toString());
+        LOGGER.info("Design 1 = " + spinnerDesign1.getValue().toString());
         NewGenreManager.design2 = Integer.parseInt(spinnerDesign2.getValue().toString());
-        logger.info("Design 2 = " + spinnerDesign2.getValue().toString());
+        LOGGER.info("Design 2 = " + spinnerDesign2.getValue().toString());
         NewGenreManager.design3 = Integer.parseInt(spinnerDesign3.getValue().toString());
-        logger.info("Design 3 = " + spinnerDesign3.getValue().toString());
+        LOGGER.info("Design 3 = " + spinnerDesign3.getValue().toString());
         NewGenreManager.design4 = Integer.parseInt(spinnerDesign4.getValue().toString());
-        logger.info("Design 4 = " + spinnerDesign4.getValue().toString());
+        LOGGER.info("Design 4 = " + spinnerDesign4.getValue().toString());
         NewGenreManager.design5 = Integer.parseInt(spinnerDesign5.getValue().toString());
-        logger.info("Design 5 = " + spinnerDesign5.getValue().toString());
+        LOGGER.info("Design 5 = " + spinnerDesign5.getValue().toString());
     }
 }
