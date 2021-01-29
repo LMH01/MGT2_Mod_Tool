@@ -42,6 +42,7 @@ public class NPCGameListChanger {
                     }
                     pw.close();
                     JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen added to the NpcGame list.");
+                    ChangeLog.addLogEntry(2, genreID + "");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -60,6 +61,7 @@ public class NPCGameListChanger {
                     }
                     pw.close();
                     JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen removed from the NpcGame list.");
+                    ChangeLog.addLogEntry(3, genreID + "");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

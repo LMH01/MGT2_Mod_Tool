@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Backup {
@@ -19,7 +18,7 @@ public class Backup {
 
     public static void createBackup(boolean showSuccessDialog){
             backupSuccessful = false;
-            createCurrentTime();
+            currentTimeAndDay = Utils.getCurrentDateTime();
             createListOfFilesToBackup();
             for(int n = 0; n < listOfFilesToBackup.size(); n++){
                 logger.info("Backing up file: " + listOfFilesToBackup.get(n));
@@ -98,12 +97,5 @@ public class Backup {
             backupFailedException = "Unknown.";
             e.printStackTrace();
         }
-    }
-    private static void createCurrentTime(){
-        currentTimeAndDay = LocalDateTime.now().getYear() + "_" +
-                LocalDateTime.now().getMonth() + "_"+
-                LocalDateTime.now().getDayOfMonth() + "_" +
-                LocalDateTime.now().getHour() + "_" +
-                LocalDateTime.now().getMinute();
     }
 }

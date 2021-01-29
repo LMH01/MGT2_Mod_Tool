@@ -42,6 +42,7 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.setBounds(10, 80, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
+            AnalyzeExistingGenres.analyzeExistingGenres();
             WindowAddGenreToGames.createFrame();
             frame.dispose();
         });

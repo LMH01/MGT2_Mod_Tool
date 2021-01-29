@@ -1,9 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
-import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
-import com.github.lmh01.mgt2mt.dataStream.ImageFileHandler;
-import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
+import com.github.lmh01.mgt2mt.dataStream.*;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
@@ -159,6 +156,7 @@ public class NewGenreManager {
         imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
     }
     public static void genreAdded(){
+        ChangeLog.addLogEntry(1, name);
         ImageIcon iconGenre = new ImageIcon(NewGenreManager.imageFile.getPath());
         if(JOptionPane.showConfirmDialog((Component)null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
             NPCGameListChanger.editNPCGameList(id, "add", 20);
