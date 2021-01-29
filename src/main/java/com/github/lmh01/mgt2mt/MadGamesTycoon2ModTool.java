@@ -30,6 +30,10 @@ public class MadGamesTycoon2ModTool {
         if(!settingsImported){
             if(Settings.importSettings()){
                 logger.info("Settings have been imported.");
+                if(!Settings.testFolderForMGT2Exe(Settings.mgt2FilePath)){
+                    logger.info("The MGT2 file path is invalid.");
+                    Settings.setMgt2FilePath(true);
+                }
                 settingsImported = true;
             }else{
                 logger.info("Settings where not imported.");
