@@ -5,6 +5,8 @@ import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.windows.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 public class MadGamesTycoon2ModTool {
     private static JFrame frame;
     private static ArrayList<String> importedGameNames = new ArrayList();
+    private static final Logger logger = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static void main(String[] args) {
         //NewGenreManager.resetVariablesToDefault();
         //Settings.importSettings();
@@ -26,8 +29,10 @@ public class MadGamesTycoon2ModTool {
         this.initialize();
         if(!settingsImported){
             if(Settings.importSettings()){
+                logger.info("Settings have been imported.");
                 settingsImported = true;
             }else{
+                logger.info("Settings where not imported.");
                 Settings.setMgt2FilePath(true);
             }
         }
