@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NewGenreManager {
     public static String language = "English";
@@ -164,9 +165,20 @@ public class NewGenreManager {
     public static String getCompatibleGenresByID(){
         ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();
         String compatibleGenresByID = "";
+        logger.info("arrayListGenreNamesByIdSorted.size: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.size());
         for(int i = 0; i<AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.size(); i++){
+            if(Settings.enableDebugLogging){
+                logger.info("current i: " + i);
+            }
             for(int n = 0; n<arrayListCompatibleGenres.size(); n++){
-                if(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).contains(arrayListCompatibleGenres.get(n))){
+                String number = AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]","");
+                if(Settings.enableDebugLogging){
+                    logger.info("current n: " + i);
+                    logger.info("current number: " + number);
+                    logger.info("arrayListGenreNamesByIdSorted [i]: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replace(" - " + number,""));
+                    logger.info("Does it equal that: " + arrayListCompatibleGenres.get(n));
+                }
+                if(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replace(" - " + number,"").equals(arrayListCompatibleGenres.get(n))){
                     if(Settings.enableDebugLogging){
                         logger.info("genreNamesByIdSorted: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i));
                         logger.info("arrayListCompatibleGenres: " + arrayListCompatibleGenres.get(n));
@@ -177,6 +189,7 @@ public class NewGenreManager {
                 }
             }
         }
+        Collections.sort(arrayListGenreIDs);
         for(int n = 0; n<arrayListGenreIDs.size(); n++){
             compatibleGenresByID = compatibleGenresByID + "<" + arrayListGenreIDs.get(n) + ">";
         }

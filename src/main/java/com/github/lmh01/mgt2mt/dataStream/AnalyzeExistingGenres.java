@@ -17,6 +17,7 @@ public class AnalyzeExistingGenres {
         arrayListGenreIDsInUse.clear();
         arrayListGenreNamesInUse.clear();
         arrayListGenreNamesSorted.clear();
+        arrayListGenreNamesByIdSorted.clear();
         try {
             File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
             logger.info("Scanning for genre id's and names in file: " + genresFile);

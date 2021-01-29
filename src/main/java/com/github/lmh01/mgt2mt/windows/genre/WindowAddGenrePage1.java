@@ -67,7 +67,7 @@ public class WindowAddGenrePage1 extends JFrame{
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener((ignored) -> {
-            if(saveInputs(true, spinnerId, textFieldGenreName, textFieldGenreDescription)){
+            if(saveInputs(spinnerId, textFieldGenreName, textFieldGenreDescription)){
                 NewGenreManager.openStepWindow(2);
                 frame.dispose();
             }
@@ -97,7 +97,7 @@ public class WindowAddGenrePage1 extends JFrame{
         spinnerId.setToolTipText("This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
         contentPane.add(spinnerId);
     }
-    private static boolean saveInputs(boolean calledFromNext, JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
+    private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
         if(AnalyzeExistingGenres.arrayListGenreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
@@ -105,14 +105,13 @@ public class WindowAddGenrePage1 extends JFrame{
             NewGenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
             logger.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
             try{
-                if(textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
-                    if(calledFromNext){
-                        JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
-                        return false;
+                if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*") || textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
+                    if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*")){
+                        JOptionPane.showMessageDialog(new Frame(), "Name and description may not contain numbers.\nPlease enter another name/description.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     }else{
-                        return true;
+                        JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     }
-
+                    return false;
                 }else{
                     NewGenreManager.name = textFieldGenreName.getText();
                     logger.info("genre name: " + textFieldGenreName.getText());
@@ -122,9 +121,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 }
             }catch (NullPointerException e){
                 logger.info("Something went wrong.");
-                if(calledFromNext){
-                    JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
-                }
+                JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
                 return false;
             }
         }

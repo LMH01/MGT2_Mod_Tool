@@ -64,7 +64,6 @@ public class EditGenreFile {
             logger.info("Temp file has been filled. Renaming...");
             fileTempGenreFile.renameTo(fileGenres);
 
-            ImageIcon iconGenre = new ImageIcon(NewGenreManager.imageFile.getPath());
             NewGenreManager.genreAdded();
             WindowAddNewGenre.createFrame();
         } catch (IOException e) {
