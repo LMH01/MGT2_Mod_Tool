@@ -40,7 +40,7 @@ public class NewGenreManager {
 
 
     public static void addGenre(){
-        if(JOptionPane.showConfirmDialog((Component)null, "Warning:\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\nUsing this feature will unfortunately remove all other translations.\nAdd new genre?", "Add genre", 0) == 0){
+        if(JOptionPane.showConfirmDialog((Component)null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nUsing this feature will unfortunately remove the following Translations:\nChinese (Simplified)\nChinese (Traditional\nHungarian\nTurkish\n\nAdd new genre?", "Add genre?", 0, JOptionPane.QUESTION_MESSAGE) == 0){
             Backup.createBackup(false);
             resetVariablesToDefault();
             logger.info("Adding new genre");

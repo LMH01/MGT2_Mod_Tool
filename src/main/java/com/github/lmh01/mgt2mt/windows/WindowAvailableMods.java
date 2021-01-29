@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -43,8 +44,12 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
             AnalyzeExistingGenres.analyzeExistingGenres();
-            WindowAddGenreToGames.createFrame();
-            frame.dispose();
+            if(AnalyzeExistingGenres.genreIDsInUse.size()-1 > 17){
+                WindowAddGenreToGames.createFrame();
+                frame.dispose();
+            }else{
+                JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
+            }
         });
         contentPane.add(buttonOpenAddGenreToGamesWindow);
 

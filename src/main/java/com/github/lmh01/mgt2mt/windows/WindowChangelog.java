@@ -33,8 +33,8 @@ public class WindowChangelog extends JFrame {
 
         JEditorPane dtrpnX = new JEditorPane();
         dtrpnX.setText("Version 1.0"
-                + "\n - You can add/remove a custom genre id to the npc_games list."
-                + "\n"
+                + "\n - You can add/remove a custom genre id to/from the npc_games list."
+                + "\n - You can add/remove a genre to/from the game."
                 + "\n"
                 + "\n"
                 + "\n"

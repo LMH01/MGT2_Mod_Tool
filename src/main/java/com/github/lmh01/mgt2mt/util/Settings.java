@@ -39,7 +39,7 @@ public class Settings {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
                 JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                fileChooser.setDialogTitle("Choose Mad Games Tycoon 2 main folder:");
+                fileChooser.setDialogTitle("Welcome to MGT2 Mod Tool. Please choose the MGT2 main folder (the folder that contains the .exe):");
                 fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
                 int return_value = fileChooser.showOpenDialog(null);
                 if(return_value == 0){

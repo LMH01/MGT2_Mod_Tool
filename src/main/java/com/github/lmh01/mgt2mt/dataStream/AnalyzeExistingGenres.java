@@ -82,4 +82,18 @@ public class AnalyzeExistingGenres {
         }
         Collections.sort(genreNamesByIdSorted);
     }
+    public static String[] getGenresByAlphabetWithoutID(){
+        ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.genreNamesInUse;
+        Collections.sort(arrayListAvailableGenreNamesSorted);
+        ArrayList<String> arrayListAvailableGenreNamesToDisplay = new ArrayList<>();
+        for(int i = 0; i<AnalyzeExistingGenres.genreIDsInUse.size(); i++){
+            arrayListAvailableGenreNamesToDisplay.add(
+                    AnalyzeExistingGenres.genreNamesByIdSorted.get(i)
+                            .replace(AnalyzeExistingGenres.genreNamesByIdSorted.get(i)
+                                    .replace(arrayListAvailableGenreNamesSorted.get(i), ""), ""));
+        }
+        String[] string = new String[arrayListAvailableGenreNamesToDisplay.size()];
+        arrayListAvailableGenreNamesToDisplay.toArray(string);
+        return string;
+    }
 }

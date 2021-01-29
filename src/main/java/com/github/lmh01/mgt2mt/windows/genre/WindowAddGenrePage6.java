@@ -46,18 +46,7 @@ public class WindowAddGenrePage6 extends JFrame{
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
-        ArrayList<String> arrayListAvailableGenreNamesSorted = new ArrayList<>();
-        arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.genreNamesInUse;
-        Collections.sort(arrayListAvailableGenreNamesSorted);
-        ArrayList<String> arrayListAvailableGenreNamesToDisplay = new ArrayList<>();
-        for(int i = 0; i<AnalyzeExistingGenres.genreIDsInUse.size(); i++){
-            arrayListAvailableGenreNamesToDisplay.add(
-                    AnalyzeExistingGenres.genreNamesByIdSorted.get(i)
-                            .replace(AnalyzeExistingGenres.genreNamesByIdSorted.get(i)
-                                    .replace(arrayListAvailableGenreNamesSorted.get(i), ""), ""));
-        }
-        String[] string = new String[arrayListAvailableGenreNamesToDisplay.size()];
-        arrayListAvailableGenreNamesToDisplay.toArray(string);
+        String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
 
         JList listAvailableGenres = new JList(string);
         listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);

@@ -9,17 +9,17 @@ import java.io.*;
 
 public class ChangeLog {
     private static Logger logger = LoggerFactory.getLogger(ChangeLog.class);
+    public static final File FILE_CHANGES_LOG = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log");
+    public static final File FILE_CHANGES_LOG_TEMP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log.temp");
     public static void addLogEntry(int operation, String textBody){
         try {
             logger.info("Adding new log entry...");
             String currentSystemTime = Utils.getCurrentDateTime();
-            File fileChangesLog = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log");
-            File fileChangesLogTemp = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log.temp");
             PrintWriter pw;
-            if(fileChangesLog.exists()){
+            if(FILE_CHANGES_LOG.exists()){
                 logger.info("changes.log already exists. Reading contents and writing to temp file.");
-                pw = new PrintWriter(fileChangesLogTemp);
-                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileChangesLog)));
+                pw = new PrintWriter(FILE_CHANGES_LOG_TEMP);
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_CHANGES_LOG)));
                 String currentLine;
                 while((currentLine = br.readLine()) != null){
                     pw.print(currentLine + "\n");
@@ -29,11 +29,11 @@ public class ChangeLog {
                 logger.info("Deleting old file and renaming changes.log.temp to changes.log");
                 printNewLogEntry(operation, textBody, pw, currentSystemTime);
                 pw.close();
-                fileChangesLog.delete();
-                fileChangesLogTemp.renameTo(fileChangesLog);
+                FILE_CHANGES_LOG.delete();
+                FILE_CHANGES_LOG_TEMP.renameTo(FILE_CHANGES_LOG);
             }else{
-                pw = new PrintWriter(fileChangesLog);
-                fileChangesLog.createNewFile();
+                pw = new PrintWriter(FILE_CHANGES_LOG);
+                FILE_CHANGES_LOG.createNewFile();
                 printNewLogEntry(operation, textBody, pw, currentSystemTime);
                 pw.close();
             }

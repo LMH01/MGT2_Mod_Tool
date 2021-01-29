@@ -4,10 +4,7 @@ import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
-import com.github.lmh01.mgt2mt.windows.WindowBackup;
-import com.github.lmh01.mgt2mt.windows.WindowChangelog;
-import com.github.lmh01.mgt2mt.windows.WindowSettings;
+import com.github.lmh01.mgt2mt.windows.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,12 +84,20 @@ public class MadGamesTycoon2ModTool {
         frame.getContentPane().add(buttonChangelog);
 
         JButton buttonBackup = new JButton("Backup");
-        buttonBackup.setBounds(10, 70, 210, 23);
+        buttonBackup.setBounds(10, 70, 100, 23);
         buttonBackup.addActionListener(e -> {
             WindowBackup.createFrame();
             frame.dispose();
         });
         frame.getContentPane().add(buttonBackup);
+
+         JButton buttonOther = new JButton("Other");
+         buttonOther.setBounds(120, 70, 100, 23);
+         buttonOther.addActionListener(e -> {
+             WindowOther.createFrame();
+             frame.dispose();
+         });
+         frame.getContentPane().add(buttonOther);
 
         JButton buttonAvailableMods = new JButton("Begin");
         buttonAvailableMods.setBounds(10, 40, 310, 23);
