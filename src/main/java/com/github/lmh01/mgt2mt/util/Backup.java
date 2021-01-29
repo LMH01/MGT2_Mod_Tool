@@ -60,7 +60,7 @@ public class Backup {
             String currentLine;
             while((currentLine = reader.readLine()) != null){
                 contentsOfFileToBackup.add(currentLine);
-                logger.info("contents of file: " + currentLine);
+                if(Settings.enableDebugLogging){logger.info("contents of file: " + currentLine);}
             }
             reader.close();
             logger.info("content has been read.");

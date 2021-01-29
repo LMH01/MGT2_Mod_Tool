@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.dataStream;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,21 +28,23 @@ public class AnalyzeExistingGenres {
                 if(currentLine.contains("[ID]")){
                     currentIDAsString = currentLine;
                     currentID = Integer.parseInt(currentIDAsString.replace("[ID]", ""));
-                    logger.info("found id: " + currentID);
+                    if(Settings.enableDebugLogging){logger.info("found id: " + currentID);}
                     genreIDsInUse.add(currentID);
                     nameAdded = false;
                 }else if(currentLine.contains("[NAME EN]")){
+                    //TODO Remove this if clause and the nameAdded variable
                     if(!nameAdded){
                         String currentName = currentLine.replace("[NAME EN]", "");
                         genreNamesInUse.add(currentName);
-                        logger.info("found name: " + currentName);
+                        if(Settings.enableDebugLogging){logger.info("found name: " + currentName);}
                         nameAdded = true;
                     }
                 }
             }
             inputStreamReader.close();
             reader.close();
-            logger.info("Analyzing of genre ids and names complete. Found: " + genreIDsInUse.size() + "\nWriting to file...");
+            logger.info("Analyzing of genre ids and names complete. Found: " + genreIDsInUse.size());
+            if(Settings.enableDebugLogging){logger.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");}
             writeHelpFile();
             fillGenresByIdListSorted();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {

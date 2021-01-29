@@ -14,11 +14,15 @@ public class Settings {
     public static String mgt2DefaultFilePath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
     public static String languageToAdd = "";
     public static final String MGT2_MOD_MANAGER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//";
+    public static boolean enableDebugLogging = false;
+    public static boolean disableSafetyFeatures = false;
     private static final Logger logger = LoggerFactory.getLogger(Settings.class);
     public static void resetSettings(){
         mgt2FilePath = mgt2DefaultFilePath;
         languageToAdd = "English";
         logger.info("Settings reset.");
+        enableDebugLogging = false;
+        disableSafetyFeatures = false;
     }
     public static void importCustomSettings(String filePath){
         ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt", true);

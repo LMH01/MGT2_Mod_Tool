@@ -33,7 +33,7 @@ public class EditGenreFile {
 
                 }else{
                     pw.print(currentLine + "\n");
-                    logger.info("Current line: " + currentLine);
+                    if(Settings.enableDebugLogging){logger.info("Current line: " + currentLine);}
                 }
             }
             reader.close();

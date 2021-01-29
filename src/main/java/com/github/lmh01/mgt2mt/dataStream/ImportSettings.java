@@ -27,6 +27,18 @@ public class ImportSettings{
                         Settings.mgt2FilePath = currentLine; break;
                     case 2:
                         Settings.languageToAdd = currentLine; break;
+                    case 3:
+                        if(currentLine.equals("true")){
+                            Settings.enableDebugLogging = true;
+                        }else{
+                            Settings.enableDebugLogging = false;
+                        }
+                    case 4:
+                        if(currentLine.equals("true")){
+                            Settings.disableSafetyFeatures = true;
+                        }else{
+                            Settings.disableSafetyFeatures = false;
+                        }
                 }
                 logger.info("Imported Setting (" + setting + "): " + currentLine);
                 ++setting;

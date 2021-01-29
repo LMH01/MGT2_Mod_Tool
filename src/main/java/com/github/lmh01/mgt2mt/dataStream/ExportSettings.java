@@ -20,19 +20,30 @@ public class ExportSettings {
             }
 
             File file = new File(directoryName + "/" + "settings.txt");
-            logger.info("Creating settings.txt");
-            logger.info(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+            logger.info("Saving settings...");
+            if(Settings.enableDebugLogging){
+                logger.info("Creating settings.txt");
+                logger.info(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+            }
             file.createNewFile();
-            logger.info("Successfully created the file settings.txt");
+            if(Settings.enableDebugLogging){ logger.info("Successfully created the file settings.txt"); }
             PrintWriter pw = new PrintWriter(new FileWriter(file));
-            logger.info("Writing to file...");
+            if(Settings.enableDebugLogging){ logger.info("Writing to file..."); }
             pw.print(Settings.mgt2FilePath + "\n" +
-                    Settings.languageToAdd);
+                    Settings.languageToAdd + "\n" +
+                    Settings.enableDebugLogging + "\n" +
+                    Settings.disableSafetyFeatures);
             pw.close();
-            logger.info(Settings.mgt2FilePath + "\n" + Settings.languageToAdd);
-            logger.info("Writing to file successfull!");
-        } catch (Exception var4) {
-            var4.printStackTrace();
+            if(Settings.enableDebugLogging){
+                logger.info(Settings.mgt2FilePath);
+                logger.info(Settings.languageToAdd);
+                logger.info(Settings.enableDebugLogging + "");
+                logger.info(Settings.disableSafetyFeatures + "");
+                logger.info("Writing to file successfull!");
+            }
+            logger.info("Settings have been saved.");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
