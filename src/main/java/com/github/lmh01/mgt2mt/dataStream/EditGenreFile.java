@@ -13,16 +13,12 @@ public class EditGenreFile {
     private static Logger logger = LoggerFactory.getLogger(EditGenreFile.class);
     private static File fileTempGenreFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt.temp");
     private static File fileGenres = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
-    public static String removeGenre(int genreId){
-        return "success";
-    }
     public static void addGenre(){
         try {
             logger.info("Editing Genres.txt and adding new genre...");
             fileTempGenreFile.createNewFile();
             PrintWriter pw = new PrintWriter(fileTempGenreFile);
-            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileGenres), "utf-8");
-            BufferedReader reader = new BufferedReader(inputStreamReader);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenres), "utf-8"));
             String currentLine;
             while((currentLine = reader.readLine()) != null){
                 if(currentLine.equals("[EOF]")
@@ -76,6 +72,52 @@ public class EditGenreFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static String removeGenre(int genreId){
+        logger.info("Editing Genres.txt and removing genre with id [" + genreId + "]");
+        try {
+            fileTempGenreFile.createNewFile();
+            logger.info("Genres.txt.temp has been created.");
+            logger.info("Writing content of Genres.txt except for genre with id + [" + genreId + "] to this file");
+            PrintWriter pw = new PrintWriter(fileTempGenreFile);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenres), "utf-8"));
+            String currentLine;
+            int linesToSkip = 21;
+            while((currentLine = reader.readLine()) != null){
+                while(linesToSkip<21){
+                    currentLine = reader.readLine();
+                    linesToSkip++;
+                }
+                if(currentLine.equals("[EOF]")
+                        || currentLine.contains("[NAME CH]")
+                        || currentLine.contains("[NAME TU]")
+                        || currentLine.contains("[NAME CT]")
+                        || currentLine.contains("[NAME HU]")
+                        || currentLine.contains("[DESC CH]")
+                        || currentLine.contains("[DESC TU]")
+                        || currentLine.contains("[DESC CT]")
+                        || currentLine.contains("[DESC HU]")){
+                }else if(currentLine.equals("[ID]" + genreId)){
+                    linesToSkip = 0;
+                }else{
+                    pw.print(currentLine + "\n");
+                    logger.info("Current line: " + currentLine);
+                }
+            }
+            pw.print("[EOF]");
+            pw.close();
+            reader.close();
+            logger.info("Genres.txt.temp has been completed.");
+            logger.info("Deleting old file and renaming Genres.txt.temp to Genres.txt");
+            fileGenres.delete();
+            fileTempGenreFile.renameTo(fileGenres);
+            ChangeLog.addLogEntry(4, genreId + "");
+            return "success";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "failed: IOException";
+        }
+
     }
     private static String getTargetGroup(){
         String targetGroups = "";

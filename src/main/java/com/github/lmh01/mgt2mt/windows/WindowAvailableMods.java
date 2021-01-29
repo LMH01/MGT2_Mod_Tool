@@ -61,7 +61,8 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
         buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
         buttonRemoveGenreWindow.addActionListener((ignored) -> {
-            SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1);
+            AnalyzeExistingGenres.analyzeExistingGenres();
+            SpinnerNumberModel sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1);
             JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
             int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
             if (option == JOptionPane.CANCEL_OPTION) {

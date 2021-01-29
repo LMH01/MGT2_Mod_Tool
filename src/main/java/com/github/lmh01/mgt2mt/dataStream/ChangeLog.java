@@ -25,7 +25,8 @@ public class ChangeLog {
                     pw.print(currentLine + "\n");
                 }
                 br.close();
-                logger.info("changes.log.temp has been created.\nDeleting old file and renaming changes.log.temp to changes.log");
+                logger.info("changes.log.temp has been created.");
+                logger.info("Deleting old file and renaming changes.log.temp to changes.log");
                 printNewLogEntry(operation, textBody, pw, currentSystemTime);
                 pw.close();
                 fileChangesLog.delete();
@@ -55,6 +56,7 @@ public class ChangeLog {
             case 1: pw.print(currentSystemTime + ": Added genre [" + textBody + "]\n"); break;
             case 2: pw.print(currentSystemTime + ": Added genre with id [" + textBody + "] to the npc games list \n"); break;
             case 3: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list \n"); break;
+            case 4: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "]\n"); break;
         }
     }
 }

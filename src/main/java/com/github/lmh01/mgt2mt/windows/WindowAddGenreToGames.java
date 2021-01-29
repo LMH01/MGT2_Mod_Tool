@@ -49,7 +49,7 @@ public class WindowAddGenreToGames extends JFrame {
 
         JSpinner spinnerGenreID = new JSpinner();
         spinnerGenreID.setBounds(100,40,80,23);//TODO Decide if i want to make the spinner values dependent on the detected genres. If not set fix values in the line below. -> baybe option in settings window: "Enable safety features" (=Id of new genre is predetermined, Spinners will have a max value) Standard = Enabled
-        spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.genreIDsInUse.size(), 0, AnalyzeExistingGenres.genreIDsInUse.size(), 1));
+        spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.genreIDsInUse.size(), 0, AnalyzeExistingGenres.genreIDsInUse.size()-1, 1));
         spinnerGenreID.setToolTipText("Enter the ID to add to the games");
         contentPane.add(spinnerGenreID);
 
