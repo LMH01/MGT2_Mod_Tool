@@ -3,6 +3,8 @@ package com.github.lmh01.mgt2mt.dataStream;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +15,12 @@ public class AnalyzeExistingGenres {
     public static ArrayList<String> arrayListGenreNamesByIdSorted = new ArrayList<>();
     public static ArrayList<String> arrayListGenreNamesSorted = new ArrayList<>();
     private static Logger logger = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
-    public static void analyzeExistingGenres(){
+
+    /**
+     *
+     * @return Returns true when the Genres.txt file has been analyzed successfully. When an exception occurs it will return false.
+     */
+    public static boolean analyzeExistingGenres(){
         arrayListGenreIDsInUse.clear();
         arrayListGenreNamesInUse.clear();
         arrayListGenreNamesSorted.clear();
@@ -51,10 +58,15 @@ public class AnalyzeExistingGenres {
             writeHelpFile();
             fillGenresByIdListSorted();
             sortGenreNames();
+            return true;
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to continue:\nError while accessing Genres.txt file.\nThe file does not exist.\nPlease check in the settings if your MGT2 path is set correctly.", "Unable to access Genres.txt", JOptionPane.ERROR_MESSAGE);
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to continue:\nError while accessing Genres.txt file.\nPlease try again with administrator rights.", "Unable to access Genres.txt", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 

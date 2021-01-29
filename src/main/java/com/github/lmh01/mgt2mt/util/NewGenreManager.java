@@ -63,9 +63,8 @@ public class NewGenreManager {
         }
     }
     public static void showSummary(){
-        //TODO Write summary
         String targetGroups = "";
-        if(targetGroupKid){
+        if(targetGroupKid){//TODO Move this to own little function
             if(targetGroupTeen || targetGroupAdult || targetGroupSenior){
                 targetGroups = targetGroups + "Kid, ";
             }else{
@@ -98,7 +97,7 @@ public class NewGenreManager {
             }
         }
         ImageIcon iconGenre = new ImageIcon(imageFile.getPath());
-        if(JOptionPane.showConfirmDialog((Component)null, "Your genre is ready:\n" +
+        if(JOptionPane.showConfirmDialog(null, "Your genre is ready:\n" +
                 "Id:" + id + "\n" +
                 "Name: " + name + "\n" +
                 "Description: " + description + "\n" +
@@ -122,9 +121,23 @@ public class NewGenreManager {
                 "Control: " + control + "%\n" +
                 "\nClick yes to add this genre.\nClick no if you wan't to make changes\nand return to the step by step guide.", "Add this genre?", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0)
         {
-            ImageFileHandler.moveImage(imageFile);
-            EditGenreFile.addGenre();
+            //click yes
+            boolean continueAnyway = false;
+            boolean imageFileAccessedSuccess = ImageFileHandler.moveImage(imageFile);
+            if(imageFileAccessedSuccess){
+                if(JOptionPane.showConfirmDialog(null, "Error while processing image files.\nDo you wan't to add you new genre anyway?", "Continue anyway?", JOptionPane.ERROR_MESSAGE) == 0){
+                    //click yes
+                    continueAnyway = true;
+                }
+            }
+            if(continueAnyway || imageFileAccessedSuccess){
+                if(EditGenreFile.addGenre()){
+                    NewGenreManager.genreAdded();
+                    WindowAddNewGenre.createFrame();
+                }
+            }
         }else{
+            //click no
             WindowAddGenrePage8.createFrame();
         }
     }

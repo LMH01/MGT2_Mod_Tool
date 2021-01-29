@@ -18,7 +18,14 @@ public class NPCGameListChanger {
     private static ArrayList<String> npcGameList;
     private static Logger logger = LoggerFactory.getLogger(NPCGameListChanger.class);
 
-    public static void editNPCGameList(int genreID, String operation, int chance){
+    /**
+     *
+     * @param genreID The genre id that should be added/removed
+     * @param operation The operation [add/remove]
+     * @param chance The chance with which the genre should be added to the npc game list 100 = 100%
+     * @return Returns true when process was successful. Returns false if an exception occurred.
+     */
+    public static boolean editNPCGameList(int genreID, String operation, int chance){
         logger.info("Beginning file-process...\nusing following arguments:\n" + "\nGenreID: " + genreID + "\nchange: " + chance);
         File npcGameListFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\NpcGames.txt");
         Backup.createBackup(false);
@@ -43,11 +50,15 @@ public class NPCGameListChanger {
                     pw.close();
                     JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen added to the NpcGame list.");
                     ChangeLog.addLogEntry(2, genreID + "");
+                    return true;
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nThe file does not exist.\nPlease check in the settings if your MGT2 path is set correctly.", "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                    return false;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nPlease try again with administrator rights.", "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }else{
             try {
@@ -62,13 +73,16 @@ public class NPCGameListChanger {
                     pw.close();
                     JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen removed from the NpcGame list.");
                     ChangeLog.addLogEntry(3, genreID + "");
+                    return true;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nThe file does not exist.\nPlease check in the settings if your MGT2 path is set correctly.", "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                    return false;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nPlease try again with administrator rights.", "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
-        npcGameList.clear();
     }
 }

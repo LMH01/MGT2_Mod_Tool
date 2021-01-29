@@ -5,6 +5,8 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,23 +19,36 @@ public class ImageFileHandler {
     /**
      * Moves the given file to \\Mad Games Tycoon 2_Data\Extern\Icons_Genres
      * and adds a genreIcon.png.meta file.
+     * @return Returns true when process was successful. Returns false if an exception occurred.
      */
-    public static void moveImage(File imageFile){
+    public static boolean moveImage(File imageFile){//The JOptionPanes are disabled because an exception is shown outside of this class.
         if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
             logger.info("The default image file is in use. No need to copy a new one.");
+            return true;
         }else{
             try {
                 logger.info("Copying this file to Incons_Genres: " + imageFile);
                 File genreIconInFolder = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + NewGenreManager.name + ".png");
                 Files.copy(Paths.get(imageFile.getPath()), Paths.get(genreIconInFolder.getPath()));
                 logger.info("File copied.");
-                createMetaFile();
+                if(!createMetaFile()){
+                    return false;
+                }else{
+                    return true;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
+                //JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nPlease try again with administrator rights.", "Unable to edit *png.", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
     }
-    private static void createMetaFile(){
+
+    /**
+     *
+     * @return Returns true when process was successful. Returns false if an exception occurred.
+     */
+    private static boolean createMetaFile(){
         try {
             File filePngMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + NewGenreManager.name + ".png.meta");
             filePngMeta.createNewFile();
@@ -153,10 +168,15 @@ public class ImageFileHandler {
                     "  assetBundleVariant: \n");
             pw.close();
             logger.info("png.meta file has been created.");
+            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            //JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nThe file does not exist.", "Unable to edit *png.meta", JOptionPane.ERROR_MESSAGE);
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            //JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nPlease try again with administrator rights.", "Unable to edit *png.meta", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 }

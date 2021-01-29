@@ -79,9 +79,7 @@ public class WindowAddGenreToGames extends JFrame {
                 operation = "remove";
             }
             logger.info("operation: " + operation);
-            if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to " + operation + " genre id " + spinnerGenreID.getValue().toString() + " to/from the NPC-Game list?", "Continue?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                NPCGameListChanger.editNPCGameList(Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
-            }
+            NPCGameListChanger.editNPCGameList(Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
         });
         contentPane.add(buttonApply);
 

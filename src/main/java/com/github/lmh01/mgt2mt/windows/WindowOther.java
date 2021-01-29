@@ -74,19 +74,19 @@ public class WindowOther extends JFrame {
         JButton buttonShowGenres = new JButton("Show active genres");
         buttonShowGenres.setBounds(10, 100, 175, 23);
         buttonShowGenres.addActionListener(ignored -> {
-            AnalyzeExistingGenres.analyzeExistingGenres();
+            if(AnalyzeExistingGenres.analyzeExistingGenres()){
+                String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
 
-            String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
+                JList listAvailableGenres = new JList(string);
+                listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+                listAvailableGenres.setVisibleRowCount(-1);
 
-            JList listAvailableGenres = new JList(string);
-            listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-            listAvailableGenres.setVisibleRowCount(-1);
+                JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
+                scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
-
-            JOptionPane.showMessageDialog(null, scrollPaneAvailableGenres, "The following genres are currently active.", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, scrollPaneAvailableGenres, "The following genres are currently active.", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         contentPane.add(buttonShowGenres);
 

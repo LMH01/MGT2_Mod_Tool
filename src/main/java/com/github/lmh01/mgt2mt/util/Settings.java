@@ -57,6 +57,7 @@ public class Settings {
                         File mgt2FilePathAsFile = new File(mgt2FilePath);
                         if(testFolderForMGT2Exe(mgt2FilePathAsFile)){
                             logger.info("File path: " + mgt2FilePath);
+                            correctFolder = true;
                             JOptionPane.showMessageDialog(new Frame(), "Folder set.");
                         }else{
                             JOptionPane.showMessageDialog(new Frame(), "This is not the MGT2 main folder!\nPlease select the correct folder!\nTipp: go into steam -> left click MGT2 -> Manage -> Browse local files.");

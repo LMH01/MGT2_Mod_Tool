@@ -13,7 +13,12 @@ public class EditGenreFile {
     private static Logger logger = LoggerFactory.getLogger(EditGenreFile.class);
     private static File fileTempGenreFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt.temp");
     private static File fileGenres = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
-    public static void addGenre(){
+
+    /**
+     *
+     * @return Returns true when process was successful. Returns false if an exception occurred.
+     */
+    public static boolean addGenre(){
         try {
             logger.info("Editing Genres.txt and adding new genre...");
             fileTempGenreFile.createNewFile();
@@ -30,7 +35,6 @@ public class EditGenreFile {
                         || currentLine.contains("[DESC TU]")
                         || currentLine.contains("[DESC CT]")
                         || currentLine.contains("[DESC HU]")){
-
                 }else{
                     pw.print(currentLine + "\n");
                     if(Settings.enableDebugLogging){logger.info("Current line: " + currentLine);}
@@ -63,11 +67,11 @@ public class EditGenreFile {
             pw.close();
             logger.info("Temp file has been filled. Renaming...");
             fileTempGenreFile.renameTo(fileGenres);
-
-            NewGenreManager.genreAdded();
-            WindowAddNewGenre.createFrame();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
     public static String removeGenre(int genreId){
