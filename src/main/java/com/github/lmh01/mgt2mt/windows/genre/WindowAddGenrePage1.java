@@ -101,6 +101,9 @@ public class WindowAddGenrePage1 extends JFrame{
         if(AnalyzeExistingGenres.arrayListGenreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
+        }else if(AnalyzeExistingGenres.arrayListGenreNamesInUse.contains(textFieldGenreName.getText())){
+            JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
+            return false;
         }else{
             NewGenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
             logger.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
