@@ -38,6 +38,7 @@ public class NewGenreManager {
     public static int design5;
     public static File imageFile;
     public static String imageFileName;
+    public static boolean useDefaultImageFile;
     private static Logger logger = LoggerFactory.getLogger(NewGenreManager.class);
 
 
@@ -171,6 +172,7 @@ public class NewGenreManager {
         design5 = 5;
         imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
         imageFileName = "iconSkill";
+        useDefaultImageFile = true;
     }
     public static void genreAdded(){
         ChangeLog.addLogEntry(1, name);

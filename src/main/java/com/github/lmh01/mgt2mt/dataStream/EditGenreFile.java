@@ -48,7 +48,11 @@ public class EditGenreFile {
             bw.write("[RES POINTS]" + NewGenreManager.researchPoints + System.getProperty("line.separator"));
             bw.write("[PRICE]" + NewGenreManager.price + System.getProperty("line.separator"));
             bw.write("[DEV COSTS]" + NewGenreManager.devCost + System.getProperty("line.separator"));
-            bw.write("[PIC]" + NewGenreManager.imageFileName + ".png" + System.getProperty("line.separator"));
+            if(NewGenreManager.useDefaultImageFile){
+                bw.write("[PIC]iconSkill.png" + System.getProperty("line.separator"));
+            }else{
+                bw.write("[PIC]" + NewGenreManager.imageFileName + ".png" + System.getProperty("line.separator"));
+            }
             bw.write("[TGROUP]" + getTargetGroup() + System.getProperty("line.separator"));
             bw.write("[GAMEPLAY]" + NewGenreManager.gameplay + System.getProperty("line.separator"));
             bw.write("[GRAPHIC]" + NewGenreManager.graphic + System.getProperty("line.separator"));

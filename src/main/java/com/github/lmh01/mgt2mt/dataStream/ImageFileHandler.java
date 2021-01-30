@@ -28,6 +28,7 @@ public class ImageFileHandler {
         }else{
             try {
                 logger.info("Copying this file to Incons_Genres: " + imageFile);
+                NewGenreManager.useDefaultImageFile = false;
                 File genreIconInFolder = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png");
                 if(genreIconInFolder.exists()){
                     genreIconInFolder.delete();
