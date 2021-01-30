@@ -1,9 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.Utils;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
