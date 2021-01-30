@@ -37,6 +37,7 @@ public class NewGenreManager {
     public static int design4;
     public static int design5;
     public static File imageFile;
+    public static String imageFileName;
     private static Logger logger = LoggerFactory.getLogger(NewGenreManager.class);
 
 
@@ -124,7 +125,7 @@ public class NewGenreManager {
             //click yes
             boolean continueAnyway = false;
             boolean imageFileAccessedSuccess = ImageFileHandler.moveImage(imageFile);
-            if(imageFileAccessedSuccess){
+            if(!imageFileAccessedSuccess){
                 if(JOptionPane.showConfirmDialog(null, "Error while processing image files.\nDo you wan't to add you new genre anyway?", "Continue anyway?", JOptionPane.ERROR_MESSAGE) == 0){
                     //click yes
                     continueAnyway = true;
@@ -167,6 +168,7 @@ public class NewGenreManager {
         design4 = 5;
         design5 = 5;
         imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+        imageFileName = "iconSkill";
     }
     public static void genreAdded(){
         ChangeLog.addLogEntry(1, name);

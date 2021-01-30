@@ -28,7 +28,10 @@ public class ImageFileHandler {
         }else{
             try {
                 logger.info("Copying this file to Incons_Genres: " + imageFile);
-                File genreIconInFolder = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + NewGenreManager.name + ".png");
+                File genreIconInFolder = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png");
+                if(genreIconInFolder.exists()){
+                    genreIconInFolder.delete();
+                }
                 Files.copy(Paths.get(imageFile.getPath()), Paths.get(genreIconInFolder.getPath()));
                 logger.info("File copied.");
                 if(!createMetaFile()){
@@ -50,7 +53,10 @@ public class ImageFileHandler {
      */
     private static boolean createMetaFile(){
         try {
-            File filePngMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + NewGenreManager.name + ".png.meta");
+            File filePngMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png.meta");
+            if(filePngMeta.exists()){
+                filePngMeta.delete();
+            }
             filePngMeta.createNewFile();
             logger.info("Creating png.meta file.");
             PrintWriter pw = new PrintWriter(filePngMeta);

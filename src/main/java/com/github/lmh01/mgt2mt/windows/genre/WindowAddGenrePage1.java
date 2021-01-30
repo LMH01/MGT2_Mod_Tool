@@ -123,6 +123,7 @@ public class WindowAddGenrePage1 extends JFrame{
                     LOGGER.info("genre name: " + textFieldGenreName.getText());
                     NewGenreManager.description = textFieldGenreDescription.getText();
                     LOGGER.info("genre description: " + textFieldGenreDescription.getText());
+                    NewGenreManager.imageFileName = "icon" + textFieldGenreName.getText().replace(" ", "");
                     return true;
                 }
             }catch (NullPointerException e){
