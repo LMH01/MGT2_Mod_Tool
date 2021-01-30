@@ -42,8 +42,8 @@ public class NewGenreManager {
 
 
     public static void addGenre(){
-        if(JOptionPane.showConfirmDialog((Component)null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nUsing this feature will unfortunately remove the following Translations:\nChinese (Simplified)\nChinese (Traditional\nHungarian\nTurkish\n\nAdd new genre?", "Add genre?", 0, JOptionPane.QUESTION_MESSAGE) == 0){
-            Backup.createBackup(false);
+        if(JOptionPane.showConfirmDialog((Component)null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nAdd new genre?", "Add genre?", 0, JOptionPane.QUESTION_MESSAGE) == 0){
+            Backup.createBackup(Utils.fileGenres);
             resetVariablesToDefault();
             logger.info("Adding new genre");
             openStepWindow(1);
@@ -135,6 +135,8 @@ public class NewGenreManager {
                 if(EditGenreFile.addGenre()){
                     NewGenreManager.genreAdded();
                     WindowAddNewGenre.createFrame();
+                }else{
+                    JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }else{
@@ -174,7 +176,7 @@ public class NewGenreManager {
         ChangeLog.addLogEntry(1, name);
         ImageIcon iconGenre = new ImageIcon(NewGenreManager.imageFile.getPath());
         if(JOptionPane.showConfirmDialog((Component)null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
-            NPCGameListChanger.editNPCGameList(id, "add", 20);
+            NPCGameListChanger.editNPCGames(id, true, 20);
         }
     }
     public static String getCompatibleGenresByID(){

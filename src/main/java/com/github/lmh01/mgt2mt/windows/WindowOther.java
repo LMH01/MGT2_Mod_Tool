@@ -72,7 +72,7 @@ public class WindowOther extends JFrame {
         buttonShowGenres.setBounds(10, 100, 175, 23);
         buttonShowGenres.setToolTipText("Click to see a list of currently active genres.");
         buttonShowGenres.addActionListener(ignored -> {
-            if(AnalyzeExistingGenres.analyzeExistingGenres()){
+            if(AnalyzeExistingGenres.analyzeGenreFile()){
                 String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
 
                 JList<String> listAvailableGenres = new JList<>(string);

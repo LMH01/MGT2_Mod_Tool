@@ -5,6 +5,8 @@ import com.github.lmh01.mgt2mt.windows.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
+
 public class MadGamesTycoon2ModTool {
     private static final Logger logger = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     private static boolean settingsImported = false;
@@ -22,6 +24,8 @@ public class MadGamesTycoon2ModTool {
                 Settings.setMgt2FilePath(true);
             }
         }
+        ToolTipManager.sharedInstance().setDismissDelay(30000);
+        ToolTipManager.sharedInstance().setInitialDelay(500);
         MainWindow.createFrame();
     }
 }

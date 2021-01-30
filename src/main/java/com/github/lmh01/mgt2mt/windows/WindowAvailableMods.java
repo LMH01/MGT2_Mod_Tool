@@ -41,7 +41,7 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.setBounds(10, 80, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
-            if(AnalyzeExistingGenres.analyzeExistingGenres()){
+            if(AnalyzeExistingGenres.analyzeGenreFile()){
                 if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                     WindowAddGenreToGames.createFrame();
                     frame.dispose();
@@ -65,11 +65,11 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
         buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
         buttonRemoveGenreWindow.addActionListener((ignored) -> {
-            if(AnalyzeExistingGenres.analyzeExistingGenres()){
+            if(AnalyzeExistingGenres.analyzeGenreFile()){
                 if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                     SpinnerNumberModel sModel;
                     if(Settings.disableSafetyFeatures){
-                        sModel = new SpinnerNumberModel(0, 0, 999, 1);
+                        sModel = new SpinnerNumberModel(18, 18, 999, 1);
                     }else{
                         sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1);
                     }

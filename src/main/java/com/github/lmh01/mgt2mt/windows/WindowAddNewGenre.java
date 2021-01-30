@@ -41,7 +41,7 @@ public class WindowAddNewGenre extends JFrame {
         buttonOpenAddGenreToGamesWindow.setBounds(10, 50, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a new genre to MGT2 by using a step by step guide.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
-            if(AnalyzeExistingGenres.analyzeExistingGenres()){
+            if(AnalyzeExistingGenres.analyzeGenreFile()){
                 NewGenreManager.addGenre();
                 frame.dispose();
             }

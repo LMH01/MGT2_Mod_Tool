@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.dataStream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.Utils;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -41,7 +44,13 @@ public class WindowBackup extends JFrame {
         JButton buttonCreateBackup = new JButton("Create Backup");
         buttonCreateBackup.setBounds(10, 40, 175, 23);
         buttonCreateBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
-        buttonCreateBackup.addActionListener(ignored -> Backup.createBackup(true));
+        buttonCreateBackup.addActionListener(ignored -> {
+           if(Backup.createFullBackup()){
+               JOptionPane.showMessageDialog(new Frame(), "The backup has been successfully created.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+           }else{
+               JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nPlease try again with administrator rights.", "Backup failed", JOptionPane.ERROR_MESSAGE);
+           }
+        });
         contentPane.add(buttonCreateBackup);
 
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");

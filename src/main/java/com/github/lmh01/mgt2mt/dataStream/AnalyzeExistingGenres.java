@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,10 +18,10 @@ public class AnalyzeExistingGenres {
     private static Logger logger = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
 
     /**
-     *
+     * Analyzes the Genres.txt file.
      * @return Returns true when the Genres.txt file has been analyzed successfully. When an exception occurs it will return false.
      */
-    public static boolean analyzeExistingGenres(){
+    public static boolean analyzeGenreFile(){
         arrayListGenreIDsInUse.clear();
         arrayListGenreNamesInUse.clear();
         arrayListGenreNamesSorted.clear();
@@ -28,30 +29,22 @@ public class AnalyzeExistingGenres {
         try {
             File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
             logger.info("Scanning for genre id's and names in file: " + genresFile);
-            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(genresFile), "utf-8");
-            BufferedReader reader = new BufferedReader(inputStreamReader);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(genresFile), StandardCharsets.UTF_8));
             int currentID;
             String currentIDAsString;
             String currentLine;
             while((currentLine = reader.readLine()) != null){
-                boolean nameAdded = false;
                 if(currentLine.contains("[ID]")){
                     currentIDAsString = currentLine;
-                    currentID = Integer.parseInt(currentIDAsString.replace("[ID]", ""));
+                    currentID = Integer.parseInt(currentIDAsString.replace("[ID]", "").replaceAll("\\uFEFF", ""));//replaceAll("\\uFEFF", "") is used for the correct formatting
                     if(Settings.enableDebugLogging){logger.info("found id: " + currentID);}
                     arrayListGenreIDsInUse.add(currentID);
-                    nameAdded = false;
                 }else if(currentLine.contains("[NAME EN]")){
-                    //TODO Remove this if clause and the nameAdded variable
-                    if(!nameAdded){
-                        String currentName = currentLine.replace("[NAME EN]", "");
-                        arrayListGenreNamesInUse.add(currentName);
-                        if(Settings.enableDebugLogging){logger.info("found name: " + currentName);}
-                        nameAdded = true;
-                    }
+                    String currentName = currentLine.replace("[NAME EN]", "");
+                    arrayListGenreNamesInUse.add(currentName);
+                    if(Settings.enableDebugLogging){logger.info("found name: " + currentName);}
                 }
             }
-            inputStreamReader.close();
             reader.close();
             logger.info("Analyzing of genre ids and names complete. Found: " + arrayListGenreIDsInUse.size());
             if(Settings.enableDebugLogging){logger.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");}

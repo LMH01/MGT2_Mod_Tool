@@ -15,7 +15,6 @@ public class WindowAddGenreToGames extends JFrame {
     static WindowAddGenreToGames frame = new WindowAddGenreToGames();
     private final JPanel contentPane;
     private static final Logger logger = LoggerFactory.getLogger(WindowAddGenreToGames.class);
-    public static String operation = "";
     JSpinner spinnerGenreID = new JSpinner();
 
     public static void createFrame(){
@@ -72,13 +71,23 @@ public class WindowAddGenreToGames extends JFrame {
         buttonApply.setBounds(95,170,80,23);
         buttonApply.setToolTipText("Click to edit the NpcGames.txt file with your settings.");
         buttonApply.addActionListener((ignored) -> {
+            boolean addGenreID;
+            String messageOperation = "";
             if(Objects.equals(comboBoxOperation.getSelectedItem(), "Add")) {
-                operation = "add";
+                addGenreID = true;
+                messageOperation = "added to";
+                logger.info("operation: add genre id");
             }else{
-                operation = "remove";
+                addGenreID = false;
+                messageOperation = "removed from";
+                logger.info("operation: remove genre id");
             }
-            logger.info("operation: " + operation);
-            NPCGameListChanger.editNPCGameList(Integer.parseInt(spinnerGenreID.getValue().toString()), operation, Integer.parseInt(spinnerChance.getValue().toString()));
+            int genreID = Integer.parseInt(spinnerGenreID.getValue().toString());
+            if(NPCGameListChanger.editNPCGames(genreID, addGenreID, Integer.parseInt(spinnerChance.getValue().toString()))){
+                JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen " + messageOperation + " the NpcGame list.");
+            }else{
+                JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nPlease try again with administrator rights.", "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+            }
         });
         contentPane.add(buttonApply);
 

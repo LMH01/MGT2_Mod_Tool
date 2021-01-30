@@ -1,101 +1,110 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.dataStream.ChangeLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
-import java.awt.*;
+
 import java.io.*;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Backup {
-    private static ArrayList<String> listOfFilesToBackup = new ArrayList<>();
-    private static ArrayList<String> listOfFileNamesToBackup = new ArrayList<>();
-    private static ArrayList<String> contentsOfFileToBackup = new ArrayList<>();
     private static Logger logger = LoggerFactory.getLogger(Backup.class);
     private static String currentTimeAndDay;
-    private static boolean backupSuccessful = false;
-    private static String backupFailedException = "";
 
-    public static void createBackup(boolean showSuccessDialog){
-            backupSuccessful = false;
-            currentTimeAndDay = Utils.getCurrentDateTime();
-            createListOfFilesToBackup();
-            for(int n = 0; n < listOfFilesToBackup.size(); n++){
-                logger.info("Backing up file: " + listOfFilesToBackup.get(n));
-                File backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//" + listOfFileNamesToBackup.get(n) + ".backup");
-                File backupFileFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//");
-                readContentToBackup(new File(listOfFilesToBackup.get(n)));
-                logger.info("Creating backup...");
-                writeBackup(backupFile, backupFileFolder);
-                backupSuccessful = true;
+    /**
+     * Creates a backup from each of the files that could be modified with this tool
+     * @param fileToBackup This is the file from which a backup should be created.
+     * @return Returns true when process was successful. Returns false if an exception occurred.
+     */
+    public static boolean createBackup(File fileToBackup) {
+        currentTimeAndDay = Utils.getCurrentDateTime();
+        ChangeLog.addLogEntry(5, fileToBackup.getName());
+        File backupFileFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//");
+        File fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
+        if(fileLatestBackupOfInputFile.exists()){
+            if(!backupFileFolder.exists()){//Creates directory if backup directory for specified time does not exist
+                backupFileFolder.mkdirs();
             }
-            if(backupSuccessful){
-                if(showSuccessDialog){
-                    JOptionPane.showMessageDialog(new Frame(), "The backup has been successfully created.");
-                }
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "The backup could not be created:\n" + backupFailedException);
+            logger.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
+            File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
+            if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
+                fileBackupSaved.delete();
             }
-
-    }
-
-    private static void createListOfFilesToBackup(){
-        logger.info("creating list of files to backup...");
-        listOfFilesToBackup.clear();
-        listOfFileNamesToBackup.clear();
-        addEntryToArray("Genres.txt");
-        addEntryToArray("NpcGames.txt");
-        logger.info("list created.");
-    }
-    private static void addEntryToArray(String fileName){
-        listOfFilesToBackup.add(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\" + fileName);
-        listOfFileNamesToBackup.add(fileName);
-    }
-    private static void readContentToBackup(File fileToBackup){
+            fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
+        }
+        File fileBackupFile = new File(Utils.getMGT2DataPath() + fileToBackup.getName());
         try {
-            logger.info("reading contents of file: " + fileToBackup);
-            contentsOfFileToBackup.clear();
-            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(fileToBackup), "utf-8");
-            BufferedReader reader = new BufferedReader(inputStreamReader);
-            String currentLine;
-            while((currentLine = reader.readLine()) != null){
-                contentsOfFileToBackup.add(currentLine);
-                if(Settings.enableDebugLogging){logger.info("contents of file: " + currentLine);}
-            }
-            reader.close();
-            logger.info("content has been read.");
-        } catch (FileNotFoundException e) {
-            backupFailedException = "The file to backup could not be found:\n" + fileToBackup;
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-
+        return true;
     }
-    private static void writeBackup(File backupFile, File backupFileFolder){
-        try {
+
+    /**
+     * Creates a backup of each file that can be edited with this tool.
+     * @return Returns true when process was successful. Returns false if an exception occurred.
+     */
+    public static boolean createFullBackup(){
+        if(Backup.createBackup(Utils.fileGenres) && Backup.createBackup(Utils.fileNpcGames)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param backupFile This is the file that contains the backup.
+     * @param backupFileFolder This is the folder where the backup should be placed.
+     * @param fileToBackup This is the file from which a backup should be created.
+     * @param formatting The formatting that should be used [UTF8 BOM] or [UTF-16]
+     * @return Returns true when process was successful. Returns false if an exception occurred.
+     */
+    private static boolean readAndWrite(File backupFile, File backupFileFolder, File fileToBackup, String formatting){
+        try {//TODO Remove this function
+            logger.info("Reading contents of file: " + fileToBackup + " and writing to backup file: " + backupFile);
             if(!backupFileFolder.exists()){
                 backupFileFolder.mkdirs();
-
             }
             if(!backupFile.exists()){
                 backupFile.createNewFile();
             }
-            PrintWriter pw = new PrintWriter(backupFile);
-            for (String s : contentsOfFileToBackup) {
-                pw.print(s + "\n");
+            BufferedWriter bw;
+            BufferedReader br;
+            if(formatting.equals("UTF8-BOM")){
+                logger.info("formatting is UTF8-BOM");
+                bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(backupFile), StandardCharsets.UTF_8));
+                br = new BufferedReader(new InputStreamReader(new FileInputStream(fileToBackup), StandardCharsets.UTF_8));
+                bw.write("\ufeff");
+            }else{//formatting.equals("UTF-16LE") would be the condition if i add another backup file with different formatting.
+                logger.info("formatting is UTF-16LE");
+                bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(backupFile), StandardCharsets.UTF_16LE));
+                br = new BufferedReader(new InputStreamReader(new FileInputStream(fileToBackup), StandardCharsets.UTF_16LE));
             }
-            pw.close();
-            logger.info("Backup file created.");
-
-        } catch (FileNotFoundException e) {
-            backupFailedException = "The file to write the backup to could not be found:\n";
-            e.printStackTrace();
+            String currentLine;
+            boolean firstLine = true;
+            while((currentLine = br.readLine()) != null) {
+                if(firstLine) {
+                    //currentLine = removeUTF8BOM(currentLine);
+                    firstLine = false;
+                }
+                if(Settings.enableDebugLogging) {
+                    logger.info("currentLine: " + currentLine);
+                }
+                bw.write(currentLine + System.getProperty("line.separator"));
+                bw.flush();
+            }
+            bw.close();
+            br.close();
+            return  true;
         } catch (IOException e) {
-            backupFailedException = "Unknown.";
             e.printStackTrace();
+            return false;
         }
     }
+
 }

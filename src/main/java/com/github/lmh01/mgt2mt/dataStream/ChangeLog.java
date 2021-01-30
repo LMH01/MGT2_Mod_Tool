@@ -56,6 +56,7 @@ public class ChangeLog {
             case 2: pw.print(currentSystemTime + ": Added genre with id [" + textBody + "] to the npc games list \n"); break;
             case 3: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list \n"); break;
             case 4: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "]\n"); break;
+            case 5: pw.print(currentSystemTime + ": A backup of file " + textBody + " has been created."); break;
         }
     }
 }
