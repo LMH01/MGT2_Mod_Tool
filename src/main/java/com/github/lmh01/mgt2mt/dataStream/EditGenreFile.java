@@ -100,7 +100,15 @@ public class EditGenreFile {
                 }
                 if(linesToSkip>0){
                     while(linesToSkip>0){
-                        br.readLine();
+                        currentLine = br.readLine();
+                        if(currentLine.contains("[NAME EN]")){
+                            logger.info("Found [NAME EN] for genre to remove. Trying to remove image files.");
+                            String genreName = currentLine.replace("[NAME EN]", "");
+                            ImageFileHandler.removeImageFiles(genreName);
+                        }
+                        if(Settings.enableDebugLogging){
+                            logger.info("CurrentLines for genre that should be removed: " + currentLine);
+                        }
                         linesToSkip--;
                     }
                 }else{
