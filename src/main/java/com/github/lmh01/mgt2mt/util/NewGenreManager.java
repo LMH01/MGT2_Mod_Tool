@@ -41,6 +41,7 @@ public class NewGenreManager {
     public static String imageFileName;
     public static boolean useDefaultImageFile;
     private static final Logger LOGGER = LoggerFactory.getLogger(NewGenreManager.class);
+    public static final String FORBIDDEN_GENRE_NAMES = "[ID], [NAME EN], [NAME GE], [NAME CH], [NAME TU], [NAME FR], [DESC EN], [DESC GE], [DESC CH], [DESC TU], [DESC FR], [NAME PB], [DESC PB], [NAME HU], [DESC HU], [NAME CT], [DESC CT], [NAME ES], [DESC ES], [NAME PL], [DESC PL], [DATE], [RES POINTS], [PRICE], [DEV COSTS], [PIC], [TGROUP], [GAMEPLAY], [GRAPHIC], [SOUND], [CONTROL], [GENRE COMB], [DESIGN1], [DESIGN2], [DESIGN3], [DESIGN4], [DESIGN5]";
 
 
     public static void addGenre(){

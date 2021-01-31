@@ -121,9 +121,13 @@ public class WindowAddGenrePage1 extends JFrame{
                 if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*") || textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
                     if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*")){
                         JOptionPane.showMessageDialog(new Frame(), "Name and description may not contain numbers.\nPlease enter another name/description.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
+
                     }else{
                         JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     }
+                    return false;
+                }else if(NewGenreManager.FORBIDDEN_GENRE_NAMES.contains(textFieldGenreName.getText())){
+                    JOptionPane.showMessageDialog(new Frame(), "This genre name is forbidden.\nPlease enter another name.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     return false;
                 }else{
                     NewGenreManager.name = textFieldGenreName.getText();
