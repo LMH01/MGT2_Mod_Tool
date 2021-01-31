@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 
@@ -74,6 +75,7 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.addActionListener((ignored) -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
+                Backup.createBackup(Utils.fileGenres);
                 if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                     SpinnerNumberModel sModel;
                     if(Settings.disableSafetyFeatures){
