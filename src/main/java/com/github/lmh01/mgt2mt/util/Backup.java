@@ -17,12 +17,36 @@ public class Backup {
      * Creates a backup of a given file.
      * @param fileToBackup This is the file from which a backup should be created.
      * @return Returns true if backup was successful or when the user decided to continue anyway.
+     * @throws IOException Throws IOException when backup was not successful.
      */
-    public static boolean createBackup(File fileToBackup){
+    public static void createBackup(File fileToBackup) throws IOException {
+        createBackup(fileToBackup, false);
+    }
+    /**
+     * Creates a backup of a given file. And sets it was initial backup
+     * @param fileToBackup This is the file from which a backup should be created.
+     * @param initialBackup Set true when this is the initial backup.
+     * @throws IOException Throws IOException when backup was not successful.
+     */
+    public static void createBackup(File fileToBackup, boolean initialBackup) throws IOException {
         currentTimeAndDay = Utils.getCurrentDateTime();
         ChangeLog.addLogEntry(5, fileToBackup.getName());
         File backupFileFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//");
-        File fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
+        File directoryBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
+        if(!directoryBackup.exists()){
+            directoryBackup.mkdirs();
+        }
+        File fileLatestBackupOfInputFile;
+        if(initialBackup){
+            fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".initialBackup");
+            if(fileLatestBackupOfInputFile.exists()){
+                if(JOptionPane.showConfirmDialog(null, "The initial backup of " + fileToBackup.getName() + " already exists.\nDo you want to replace it?", "Initial backup already exists", JOptionPane.YES_NO_OPTION) == 0){
+                    fileLatestBackupOfInputFile.delete();
+                }
+            }
+        }else{
+            fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
+        }
         if(fileLatestBackupOfInputFile.exists()){
             if(!backupFileFolder.exists()){//Creates directory if backup directory for specified time does not exist
                 backupFileFolder.mkdirs();
@@ -31,32 +55,27 @@ public class Backup {
             File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
             if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
                 fileBackupSaved.delete();
+                fileBackupSaved.createNewFile();
             }
             fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
         }
         File fileBackupFile = new File(Utils.getMGT2DataPath() + fileToBackup.getName());
-        try {
-            Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            if(JOptionPane.showConfirmDialog(null, "Backup of file " + fileToBackup.getName() + " was unsuccessful.\nDo you want to continue anyway?", "Unable to backup file", JOptionPane.YES_NO_OPTION) == 0){
-                return true;
-            }else{
-                return false;
-            }
-        }
+        Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
     }
 
     /**
      * Creates a backup of each file that can be edited with this tool.
-     * @return Returns true when process was successful. Returns false if an exception occurred.
+     * @param initialBackup Set true when this is the initial backup.
+     * @throws IOException Throws IOException when backup was not successful.
      */
-    public static boolean createFullBackup(){
-        if(Backup.createBackup(Utils.fileGenres) && Backup.createBackup(Utils.fileNpcGames)){
-            return true;
+    public static void createFullBackup(boolean initialBackup) throws IOException {
+        if(initialBackup){
+            Backup.createBackup(Utils.fileGenres, true);
+            Backup.createBackup(Utils.fileNpcGames, true);
+            ChangeLog.addLogEntry(6, "");
         }else{
-            return false;
+            Backup.createBackup(Utils.fileGenres);
+            Backup.createBackup(Utils.fileNpcGames);
         }
     }
 }

@@ -42,11 +42,13 @@ public class WindowBackup extends JFrame {
         buttonCreateBackup.setBounds(10, 40, 175, 23);
         buttonCreateBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
         buttonCreateBackup.addActionListener(ignored -> {
-           if(Backup.createFullBackup()){
-               JOptionPane.showMessageDialog(new Frame(), "The backup has been successfully created.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-           }else{
-               JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nPlease try again with administrator rights.", "Backup failed", JOptionPane.ERROR_MESSAGE);
-           }
+            try {
+                Backup.createFullBackup(false);
+                JOptionPane.showMessageDialog(new Frame(), "The backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
         });
         contentPane.add(buttonCreateBackup);
 

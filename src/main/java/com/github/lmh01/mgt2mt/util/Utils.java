@@ -47,7 +47,23 @@ public class Utils {
     public static void showErrorMessage(int errorMessageKey, Exception e){
         switch(errorMessageKey){
             // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() throws an exception.
-            case 1: JOptionPane.showMessageDialog(null, "The Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+            case 1: JOptionPane.showMessageDialog(null, "The Genres.txt file could not be analyzed.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    /**
+     * Opens a message dialog with a specified error message.
+     * @param confirmMessageKey the confirm message key. see this functions for meanings
+     * @param e The exception
+     * @return Returns true when the user clicks yes. Returns false when the user clicks no.
+     */
+    public static boolean showConfirmDialog(int confirmMessageKey, Exception e){
+        if(confirmMessageKey == 1){
+            if(JOptionPane.showConfirmDialog(null, "The backup could not be created.\n\nException:\n" + e.getMessage() + "\nDo you want to continue anyway?", "Unable to backup file", JOptionPane.YES_NO_OPTION) == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return true;
     }
 }

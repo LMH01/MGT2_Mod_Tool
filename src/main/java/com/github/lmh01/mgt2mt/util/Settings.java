@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.dataStream.ChangeLog;
 import com.github.lmh01.mgt2mt.dataStream.ExportSettings;
 import com.github.lmh01.mgt2mt.dataStream.ImportSettings;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class Settings {
@@ -24,6 +26,7 @@ public class Settings {
         logger.info("Settings reset.");
         enableDebugLogging = false;
         disableSafetyFeatures = false;
+        exportSettings();
     }
     public static void importCustomSettings(String filePath){
         ImportSettings.Import(filePath, true);
@@ -35,7 +38,7 @@ public class Settings {
         ExportSettings.export();
     }
     public static void setMgt2FilePath(boolean retry){
-        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- Hint 3: If you encounter a bug please submit an issue over on github.\n (Github can be accessed fia the Other menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- If you encounter a bug please report it over on github.\n (Github can be accessed fia the Other menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
         boolean correctFolder = false;
         boolean breakLoop = false;
         File mgt2DefaultFilePathFile = new File(mgt2DefaultFilePath);
@@ -60,11 +63,17 @@ public class Settings {
                             logger.info("File path: " + mgt2FilePath);
                             correctFolder = true;
                             JOptionPane.showMessageDialog(new Frame(), "Folder set.");
+                            try{
+                                Backup.createFullBackup(true);
+                                JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
+                            }catch(IOException e){
+                                JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to backup file", JOptionPane.ERROR_MESSAGE);
+                                ChangeLog.addLogEntry(7, e.getMessage());
+                            }
                         }else{
                             JOptionPane.showMessageDialog(new Frame(), "This is not the MGT2 main folder!\nPlease select the correct folder!\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.");
                             mgt2FilePath = mgt2DefaultFilePath;
                         }
-
                     }else if(return_value == JFileChooser.CANCEL_OPTION){
                         mgt2FilePath = mgt2DefaultFilePath;
                         breakLoop = true;

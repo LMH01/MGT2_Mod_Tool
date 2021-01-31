@@ -45,10 +45,22 @@ public class NewGenreManager {
 
     public static void addGenre(){
         if(JOptionPane.showConfirmDialog((Component)null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nAdd new genre?", "Add genre?", 0, JOptionPane.QUESTION_MESSAGE) == 0){
-            Backup.createBackup(Utils.fileGenres);
-            resetVariablesToDefault();
-            logger.info("Adding new genre");
-            openStepWindow(1);
+            try {
+                Backup.createBackup(Utils.fileGenres);
+                resetVariablesToDefault();
+                logger.info("Adding new genre");
+                openStepWindow(1);
+            } catch (IOException e) {
+                if(Utils.showConfirmDialog(1, e)){
+                    resetVariablesToDefault();
+                    logger.info("Adding new genre");
+                    openStepWindow(1);
+                }else{
+                    WindowAddNewGenre.createFrame();
+                }
+                e.printStackTrace();
+            }
+
         }else{
             WindowAddNewGenre.createFrame();
         }
