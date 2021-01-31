@@ -30,7 +30,7 @@ public class WindowBackup extends JFrame {
 
     public WindowBackup(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 220);
+        setBounds(100, 100, 200, 250);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -100,8 +100,24 @@ public class WindowBackup extends JFrame {
         });
         contentPane.add(buttonRestoreLatestBackup);
 
+        JButton buttonDeleteBackups = new JButton("Delete all backups");
+        buttonDeleteBackups.setBounds(10, 130, 175, 23);
+        buttonDeleteBackups.setToolTipText("Click to delete all backups that have been created.");
+        buttonDeleteBackups.addActionListener(actionEvent ->{
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all backups?", "Delete backup?", JOptionPane.YES_NO_OPTION) == 0){
+                try {
+                    Backup.deleteAllBackups();
+                    JOptionPane.showMessageDialog(null, "All backups have been deleted.", "Backups deleted", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Unable to delete all backups. \n\nException:\n" + e.getMessage(), "Unable to delete backups", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        contentPane.add(buttonDeleteBackups);
+
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
-        buttonOpenBackupFolder.setBounds(10, 130, 175, 23);
+        buttonOpenBackupFolder.setBounds(10, 160, 175, 23);
         buttonOpenBackupFolder.setToolTipText("Click to open the backup folder. All backups that have been created are located here. Use this if you do want to restore a backup manually.");
         buttonOpenBackupFolder.addActionListener(ignored -> {
             try {
@@ -118,7 +134,7 @@ public class WindowBackup extends JFrame {
         contentPane.add(buttonOpenBackupFolder);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 160, 89, 23);
+        btnBack.setBounds(10, 190, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(ignored -> {
             MainWindow.createFrame();

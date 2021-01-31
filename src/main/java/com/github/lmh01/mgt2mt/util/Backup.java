@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 
 public class Backup {
     private static Logger logger = LoggerFactory.getLogger(Backup.class);
@@ -104,6 +106,14 @@ public class Backup {
             }
 
         }
+    }
+
+    public static void deleteAllBackups() throws IOException {
+        File backupFolder = new File(BACKUP_FOLDER_PATH);
+        Files.walk(Paths.get(backupFolder.getPath()))
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
     }
 
     /**
