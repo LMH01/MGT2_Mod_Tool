@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
+import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -71,7 +72,7 @@ public class WindowAvailableMods extends JFrame {
 
         JButton buttonRemoveGenreWindow = new JButton("Remove genre");
         buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
-        buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
+        buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2. This will also remove the genre from the NpcGames.txt file.");
         buttonRemoveGenreWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
@@ -89,6 +90,7 @@ public class WindowAvailableMods extends JFrame {
                         if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete the genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", JOptionPane.YES_NO_OPTION) == 0){
                             try{
                                 EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
+                                NPCGameListChanger.editNPCGames(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()), false, 0);
                                 JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] has been removed successfully.");
                             }catch (IOException e){
                                 JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + e.getMessage());
