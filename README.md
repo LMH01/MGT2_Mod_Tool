@@ -4,6 +4,8 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 
 **If you encounter an error please submit an issue, so it can be fixed**
 
+**If you have any suggestions for this project feel free to submit a feature or pull request**
+
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 ### Download: *coming soon*
 #### Getting started:
