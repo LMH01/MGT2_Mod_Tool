@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,11 +106,11 @@ public class WindowAddGenrePage6 extends JFrame{
         });
         contentPane.add(buttonPrevious);
 
-        JButton buttonQuit = new JButton("Quit");
+        JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 150, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener((ignored) -> {
-            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
+            if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();
             }

@@ -62,7 +62,7 @@ public class Utils {
     }
     /**
      * Opens a message dialog with a specified error message.
-     * @param confirmMessageKey the confirm message key. see this functions for meanings
+     * @param confirmMessageKey The confirm message key. See this functions for meanings.
      * @param e The exception
      * @return Returns true when the user clicks yes. Returns false when the user clicks no.
      */
@@ -77,6 +77,21 @@ public class Utils {
         return true;
     }
 
+    /**
+     * Opens a confirm dialog with a specified message.
+     * @param confirmMessageKey The confirm message key. See this function for meanings.
+     * @return Returns true when the user clicks yes. Returns false when the user clicks no.
+     */
+    public static boolean showConfirmDialog(int confirmMessageKey){
+        if(confirmMessageKey == 1){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be saved until you close the program.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * Opens the Github page for MGT2MT in the default browser.
      */
