@@ -31,6 +31,5 @@ public class MadGamesTycoon2ModTool {
                 Settings.setMgt2FilePath(true);
             }
         }
-
     }
 }

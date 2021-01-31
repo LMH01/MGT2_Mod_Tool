@@ -13,17 +13,17 @@ import java.util.Objects;
 
 public class WindowAddGenreToGames extends JFrame {
 
-    static WindowAddGenreToGames frame = new WindowAddGenreToGames();
+    static final WindowAddGenreToGames FRAME = new WindowAddGenreToGames();
     private final JPanel contentPane;
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenreToGames.class);
-    JSpinner spinnerGenreID = new JSpinner();
+    final JSpinner SPINNER_GENRE_ID = new JSpinner();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setSpinner();
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setSpinner();
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class WindowAddGenreToGames extends JFrame {
         buttonApply.setToolTipText("Click to edit the NpcGames.txt file with your settings.");
         buttonApply.addActionListener(actionEvent -> {
             boolean addGenreID;
-            String messageOperation = "";
+            String messageOperation;
             if(Objects.equals(comboBoxOperation.getSelectedItem(), "Add")) {
                 addGenreID = true;
                 messageOperation = "added to";
@@ -83,7 +83,7 @@ public class WindowAddGenreToGames extends JFrame {
                 messageOperation = "removed from";
                 LOGGER.info("operation: remove genre id");
             }
-            int genreID = Integer.parseInt(spinnerGenreID.getValue().toString());
+            int genreID = Integer.parseInt(SPINNER_GENRE_ID.getValue().toString());
 
             try {
                 NPCGameListChanger.editNPCGames(genreID, addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
@@ -100,7 +100,7 @@ public class WindowAddGenreToGames extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(btnBack);
 
@@ -111,13 +111,13 @@ public class WindowAddGenreToGames extends JFrame {
         contentPane.add(btnQuit);
     }
     private void setSpinner(){
-        spinnerGenreID.setBounds(100,40,80,23);
+        SPINNER_GENRE_ID.setBounds(100,40,80,23);
         if(Settings.disableSafetyFeatures){
-            spinnerGenreID.setModel(new SpinnerNumberModel(0, 0, 999, 1));
+            SPINNER_GENRE_ID.setModel(new SpinnerNumberModel(0, 0, 999, 1));
         }else{
-            spinnerGenreID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 0, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1));
+            SPINNER_GENRE_ID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 0, AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 1));
         }
-        spinnerGenreID.setToolTipText("Enter the ID to add to the games");
-        contentPane.add(spinnerGenreID);
+        SPINNER_GENRE_ID.setToolTipText("Enter the ID to add to the games");
+        contentPane.add(SPINNER_GENRE_ID);
     }
 }

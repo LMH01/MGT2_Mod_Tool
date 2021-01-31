@@ -13,14 +13,14 @@ import java.io.IOException;
 
 public class Settings {
     public static String mgt2FilePath = "";
-    public static String mgt2DefaultFilePath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
+    public static final String MGT_2_DEFAULT_FILE_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
     public static String languageToAdd = "";
     public static final String MGT2_MOD_MANAGER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//";
     public static boolean enableDebugLogging = false;
     public static boolean disableSafetyFeatures = false;
     private static final Logger LOGGER = LoggerFactory.getLogger(Settings.class);
     public static void resetSettings(){
-        mgt2FilePath = mgt2DefaultFilePath;
+        mgt2FilePath = MGT_2_DEFAULT_FILE_PATH;
         languageToAdd = "English";
         LOGGER.info("Settings reset.");
         enableDebugLogging = false;
@@ -52,7 +52,7 @@ public class Settings {
         JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- If you encounter a bug please report it over on github.\n (Github can be accessed fia the Other menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
         boolean correctFolder = false;
         boolean breakLoop = false;
-        File mgt2DefaultFilePathFile = new File(mgt2DefaultFilePath);
+        File mgt2DefaultFilePathFile = new File(MGT_2_DEFAULT_FILE_PATH);
         if(mgt2DefaultFilePathFile.exists()){
             if(Utils.doesFoldercontainFile(mgt2FilePath, "Mad Games Tycoon 2.exe")){
                 JOptionPane.showMessageDialog(new Frame(), "MGT2 folder has been detected.");
@@ -83,10 +83,10 @@ public class Settings {
                             }
                         }else{
                             JOptionPane.showMessageDialog(new Frame(), "This is not the MGT2 main folder!\nPlease select the correct folder!\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.");
-                            mgt2FilePath = mgt2DefaultFilePath;
+                            mgt2FilePath = MGT_2_DEFAULT_FILE_PATH;
                         }
                     }else if(return_value == JFileChooser.CANCEL_OPTION){
-                        mgt2FilePath = mgt2DefaultFilePath;
+                        mgt2FilePath = MGT_2_DEFAULT_FILE_PATH;
                         breakLoop = true;
                     }
                     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing

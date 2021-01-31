@@ -14,15 +14,15 @@ import java.awt.*;
 
 public class WindowAddGenrePage1 extends JFrame{
     private final JPanel contentPane;
-    static WindowAddGenrePage1 frame = new WindowAddGenrePage1();
+    static final WindowAddGenrePage1 FRAME = new WindowAddGenrePage1();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage1.class);
-    JSpinner spinnerId = new JSpinner();
+    final JSpinner spinnerId = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setSpinnerId();
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setSpinnerId();
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -72,7 +72,7 @@ public class WindowAddGenrePage1 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(spinnerId, textFieldGenreName, textFieldGenreDescription)){
                 NewGenreManager.openStepWindow(2);
-                frame.dispose();
+                FRAME.dispose();
             }
         });
         contentPane.add(buttonNext);
@@ -83,7 +83,7 @@ public class WindowAddGenrePage1 extends JFrame{
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
-                frame.dispose();
+                FRAME.dispose();
             }
         });
         contentPane.add(buttonQuit);
@@ -102,10 +102,10 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(spinnerId);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeExistingGenres.arrayListGenreIDsInUse.contains(Integer.parseInt(spinnerId.getValue().toString()))){
+        if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.contains(Integer.parseInt(spinnerId.getValue().toString()))){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
-        }else if(AnalyzeExistingGenres.arrayListGenreNamesInUse.contains(textFieldGenreName.getText())){
+        }else if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE.contains(textFieldGenreName.getText())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
             return false;
         }else{

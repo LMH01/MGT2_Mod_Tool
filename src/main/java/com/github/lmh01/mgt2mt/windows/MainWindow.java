@@ -9,13 +9,13 @@ import java.awt.*;
 
 public class MainWindow extends JFrame {
 
-    static MainWindow frame = new MainWindow();
+    static final MainWindow FRAME = new MainWindow();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -41,6 +41,7 @@ public class MainWindow extends JFrame {
         JLabel labelTitle = new JLabel("Mad Games Tycoon 2 Mod Tool");
         labelTitle.setBounds(60, 0, 260, 23);
         labelTitle.setForeground(Color.BLACK);
+        //noinspection SpellCheckingInspection
         labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
         getContentPane().add(labelTitle);
 
@@ -77,7 +78,7 @@ public class MainWindow extends JFrame {
         buttonBackup.setToolTipText("Click to open the backup page.");
         buttonBackup.addActionListener(actionEvent -> {
             WindowBackup.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         getContentPane().add(buttonBackup);
 
@@ -86,7 +87,7 @@ public class MainWindow extends JFrame {
         buttonOther.setToolTipText("Click to open the other page.");
         buttonOther.addActionListener(actionEvent -> {
             WindowOther.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         getContentPane().add(buttonOther);
 
@@ -95,7 +96,7 @@ public class MainWindow extends JFrame {
         buttonAvailableMods.setToolTipText("Click to open the page with the available modifications");
         buttonAvailableMods.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         getContentPane().add(buttonAvailableMods);
 

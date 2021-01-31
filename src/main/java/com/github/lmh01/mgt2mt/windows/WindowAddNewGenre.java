@@ -10,13 +10,13 @@ import java.io.IOException;
 
 public class WindowAddNewGenre extends JFrame {
 
-    static WindowAddNewGenre frame = new WindowAddNewGenre();
+    static final WindowAddNewGenre FRAME = new WindowAddNewGenre();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -45,7 +45,7 @@ public class WindowAddNewGenre extends JFrame {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 NewGenreManager.addGenre();
-                frame.dispose();
+                FRAME.dispose();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
@@ -64,7 +64,7 @@ public class WindowAddNewGenre extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(btnBack);
 

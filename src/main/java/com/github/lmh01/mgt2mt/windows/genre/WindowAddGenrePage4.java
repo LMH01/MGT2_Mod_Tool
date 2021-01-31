@@ -11,13 +11,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage4 extends JFrame{
-    static WindowAddGenrePage4 frame = new WindowAddGenrePage4();
+    static final WindowAddGenrePage4 FRAME = new WindowAddGenrePage4();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage4.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -69,7 +69,7 @@ public class WindowAddGenrePage4 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(checkBoxTargetGroupKid, checkBoxTargetGroupTeen, checkBoxTargetGroupAdult, checkBoxTargetGroupSenior)){
                 NewGenreManager.openStepWindow(5);
-                frame.dispose();
+                FRAME.dispose();
             }else{
                 JOptionPane.showMessageDialog(new Frame(), "Please select at least one target group!");
             }
@@ -82,7 +82,7 @@ public class WindowAddGenrePage4 extends JFrame{
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(checkBoxTargetGroupKid, checkBoxTargetGroupTeen, checkBoxTargetGroupAdult, checkBoxTargetGroupSenior);
             NewGenreManager.openStepWindow(3);
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(buttonPrevious);
 
@@ -92,7 +92,7 @@ public class WindowAddGenrePage4 extends JFrame{
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
-                frame.dispose();
+                FRAME.dispose();
             }
         });
         contentPane.add(buttonQuit);

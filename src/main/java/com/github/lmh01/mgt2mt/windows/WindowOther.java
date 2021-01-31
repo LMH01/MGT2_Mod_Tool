@@ -14,13 +14,13 @@ import java.io.IOException;
 
 public class WindowOther extends JFrame {
 
-    static WindowOther frame = new WindowOther();
+    static final WindowOther FRAME = new WindowOther();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -100,10 +100,10 @@ public class WindowOther extends JFrame {
         buttonOpenGenresTxtFile.setToolTipText("Click to open the MGT2 main folder.");
         buttonOpenGenresTxtFile.addActionListener(actionEvent -> {
             try {
-                if(!Utils.fileGenres.exists()){
+                if(!Utils.FILE_GENRES.exists()){
                     JOptionPane.showMessageDialog(null, "The Genres.txt file could not be opened.\nFile not found: Please check if your mgt2 folder is set correctly", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    Desktop.getDesktop().open(Utils.fileGenres);
+                    Desktop.getDesktop().open(Utils.FILE_GENRES);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -114,9 +114,7 @@ public class WindowOther extends JFrame {
         JButton buttonCheckForUpdates = new JButton("Check for updates");
         buttonCheckForUpdates.setBounds(10, 160, 175, 23);
         buttonCheckForUpdates.setToolTipText("Click to check this tool for updates.");
-        buttonCheckForUpdates.addActionListener(actionEvent -> {
-            UpdateChecker.checkForUpdates(true);
-        });
+        buttonCheckForUpdates.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         contentPane.add(buttonCheckForUpdates);
 
         JButton btnBack = new JButton("Back");
@@ -124,7 +122,7 @@ public class WindowOther extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(btnBack);
     }

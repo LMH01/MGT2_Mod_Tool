@@ -7,13 +7,13 @@ import java.awt.*;
 
 public class WindowSettings extends JFrame {
 
-    static WindowSettings frame = new WindowSettings();
+    static final WindowSettings FRAME = new WindowSettings();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -70,7 +70,7 @@ public class WindowSettings extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             Settings.exportSettings();
-            WindowSettings.frame.dispose();
+            WindowSettings.FRAME.dispose();
         });
         contentPane.add(btnBack);
 

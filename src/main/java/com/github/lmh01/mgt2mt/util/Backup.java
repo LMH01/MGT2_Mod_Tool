@@ -11,16 +11,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class Backup {
     private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
-    private static String currentTimeAndDay;
     private static String latestBackupFolderName = "";
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
 
     /**
      * Creates a backup of a given file.
      * @param fileToBackup This is the file from which a backup should be created.
-     * @return Returns true if backup was successful or when the user decided to continue anyway.
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup) throws IOException {
@@ -33,7 +32,7 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup, boolean initialBackup) throws IOException {
-        currentTimeAndDay = Utils.getCurrentDateTime();
+        String currentTimeAndDay = Utils.getCurrentDateTime();
         latestBackupFolderName = currentTimeAndDay;
         ChangeLog.addLogEntry(5, fileToBackup.getName());
         File backupFileFolder = new File(BACKUP_FOLDER_PATH + currentTimeAndDay + "//");
@@ -84,10 +83,10 @@ public class Backup {
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
             }
-            Utils.fileGenres.delete();
-            Utils.fileNpcGames.delete();
-            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.fileGenres.getPath()));
-            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.fileNpcGames.getPath()));
+            Utils.FILE_GENRES.delete();
+            Utils.FILE_NPC_GAMES.delete();
+            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.FILE_GENRES.getPath()));
+            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.FILE_NPC_GAMES.getPath()));
             if(initialBackup){
                 ChangeLog.addLogEntry(8, "");
                 JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
@@ -125,12 +124,12 @@ public class Backup {
      */
     public static void createFullBackup(boolean initialBackup) throws IOException {
         if(initialBackup){
-            Backup.createBackup(Utils.fileGenres, true);
-            Backup.createBackup(Utils.fileNpcGames, true);
+            Backup.createBackup(Utils.FILE_GENRES, true);
+            Backup.createBackup(Utils.FILE_NPC_GAMES, true);
             ChangeLog.addLogEntry(6, "");
         }else{
-            Backup.createBackup(Utils.fileGenres);
-            Backup.createBackup(Utils.fileNpcGames);
+            Backup.createBackup(Utils.FILE_GENRES);
+            Backup.createBackup(Utils.FILE_NPC_GAMES);
         }
     }
 }

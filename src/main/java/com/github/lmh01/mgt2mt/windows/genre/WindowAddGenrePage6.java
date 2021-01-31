@@ -11,13 +11,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage6 extends JFrame{
-    static WindowAddGenrePage6 frame = new WindowAddGenrePage6();
+    static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -92,7 +92,7 @@ public class WindowAddGenrePage6 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             NewGenreManager.openStepWindow(7);
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(buttonNext);
 
@@ -102,7 +102,7 @@ public class WindowAddGenrePage6 extends JFrame{
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             NewGenreManager.openStepWindow(5);
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(buttonPrevious);
 
@@ -112,7 +112,7 @@ public class WindowAddGenrePage6 extends JFrame{
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
-                frame.dispose();
+                FRAME.dispose();
             }
         });
         contentPane.add(buttonQuit);

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ChangeLog {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChangeLog.class);
     public static final File FILE_CHANGES_LOG = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log");
@@ -42,8 +43,6 @@ public class ChangeLog {
                 printNewLogEntry(operation, textBody, pw, currentSystemTime);
                 pw.close();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

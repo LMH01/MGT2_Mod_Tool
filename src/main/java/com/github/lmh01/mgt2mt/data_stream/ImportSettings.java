@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class ImportSettings{
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
@@ -16,7 +17,7 @@ public class ImportSettings{
         try {
             LOGGER.info("Scanning for File '" + fileLocation + "'...");
             File file = new File(fileLocation);
-            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "utf-8");
+            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             LOGGER.info("Beginning to import settings from file: " + file);
             int setting = 1;
@@ -30,13 +31,13 @@ public class ImportSettings{
                     case 3:
                         if(currentLine.equals("true")){
                             Settings.enableDebugLogging = true;
-                        }else{
+                        }else if(currentLine.equals("false")){
                             Settings.enableDebugLogging = false;
                         }
                     case 4:
                         if(currentLine.equals("true")){
                             Settings.disableSafetyFeatures = true;
-                        }else{
+                        }else if(currentLine.equals("false")){
                             Settings.disableSafetyFeatures = false;
                         }
                 }

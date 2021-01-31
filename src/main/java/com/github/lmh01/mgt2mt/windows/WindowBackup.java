@@ -13,16 +13,17 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class WindowBackup extends JFrame {
 
-    static WindowBackup frame = new WindowBackup();
+    static final WindowBackup FRAME = new WindowBackup();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage2.class);
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -150,7 +151,7 @@ public class WindowBackup extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(btnBack);
     }

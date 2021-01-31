@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+@SuppressWarnings("ALL")
 public class ImageFileHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageFileHandler.class);
     /**

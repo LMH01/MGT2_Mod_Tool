@@ -11,13 +11,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage7 extends JFrame{
-    static WindowAddGenrePage7 frame = new WindowAddGenrePage7();
+    static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -81,7 +81,7 @@ public class WindowAddGenrePage7 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
                 NewGenreManager.openStepWindow(8);
-                frame.dispose();
+                FRAME.dispose();
             }else{
                 JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100 and dividable by 5.");
             }
@@ -94,7 +94,7 @@ public class WindowAddGenrePage7 extends JFrame{
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
             NewGenreManager.openStepWindow(6);
-            frame.dispose();
+            FRAME.dispose();
 
         });
         contentPane.add(buttonPrevious);
@@ -105,7 +105,7 @@ public class WindowAddGenrePage7 extends JFrame{
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
-                frame.dispose();
+                FRAME.dispose();
             }
         });
         contentPane.add(buttonQuit);

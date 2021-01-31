@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ExportSettings {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExportSettings.class);
     public static void export() {

@@ -12,13 +12,13 @@ import java.awt.*;
 import java.util.Objects;
 
 public class WindowAddGenrePage2 extends JFrame{
-    static WindowAddGenrePage2 frame = new WindowAddGenrePage2();
+    static final WindowAddGenrePage2 FRAME = new WindowAddGenrePage2();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage2.class);
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -66,7 +66,7 @@ public class WindowAddGenrePage2 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerUnlockYear, comboBoxGenreUnlockMonth);
             NewGenreManager.openStepWindow(3);
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(buttonNext);
 
@@ -76,7 +76,7 @@ public class WindowAddGenrePage2 extends JFrame{
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerUnlockYear, comboBoxGenreUnlockMonth);
             NewGenreManager.openStepWindow(1);
-            frame.dispose();
+            FRAME.dispose();
 
         });
         contentPane.add(buttonPrevious);
@@ -87,7 +87,7 @@ public class WindowAddGenrePage2 extends JFrame{
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
-                frame.dispose();
+                FRAME.dispose();
             }
         });
         contentPane.add(buttonQuit);

@@ -13,13 +13,13 @@ import java.io.IOException;
 
 public class WindowAvailableMods extends JFrame {
 
-    static WindowAvailableMods frame = new WindowAvailableMods();
+    static final WindowAvailableMods FRAME = new WindowAvailableMods();
 
     public static void createFrame(){
         EventQueue.invokeLater(() ->{
             try {
-                frame.setVisible(true);
-                frame.setLocationRelativeTo(null);
+                FRAME.setVisible(true);
+                FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -47,9 +47,9 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
-                if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
+                if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
                     WindowAddGenreToGames.createFrame();
-                    frame.dispose();
+                    FRAME.dispose();
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
                 }
@@ -65,7 +65,7 @@ public class WindowAvailableMods extends JFrame {
         buttonAddGenreWindow.setToolTipText("Click to add a new genre to Mad Games Tycoon 2");
         buttonAddGenreWindow.addActionListener(actionEvent -> {
             WindowAddNewGenre.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(buttonAddGenreWindow);
 
@@ -75,13 +75,13 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
-                Backup.createBackup(Utils.fileGenres);
-                if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
+                Backup.createBackup(Utils.FILE_GENRES);
+                if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
                     SpinnerNumberModel sModel;
                     if(Settings.disableSafetyFeatures){
                         sModel = new SpinnerNumberModel(18, 18, 999, 1);
                     }else{
-                        sModel = new SpinnerNumberModel(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 18, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1);
+                        sModel = new SpinnerNumberModel(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 18, AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 1);
                     }
                     JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
                     int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
@@ -116,7 +116,7 @@ public class WindowAvailableMods extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
-            frame.dispose();
+            FRAME.dispose();
         });
         contentPane.add(btnBack);
 

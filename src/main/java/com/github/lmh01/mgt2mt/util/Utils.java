@@ -3,9 +3,6 @@ package com.github.lmh01.mgt2mt.util;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -13,20 +10,19 @@ import java.util.Objects;
 public class Utils {
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
-    public static File fileGenres = new File(Utils.getMGT2DataPath() + "\\Genres.txt");
-    public static File fileNpcGames = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
+    public static final File FILE_GENRES = new File(Utils.getMGT2DataPath() + "\\Genres.txt");
+    public static final File FILE_NPC_GAMES = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
 
     /**
      * @return returns the current date time in format: YYYY-MM-DD-HH-MM
      */
     public static String getCurrentDateTime(){
-        String currentDateTime = LocalDateTime.now().getYear() + "-" +
+        return LocalDateTime.now().getYear() + "-" +
                 LocalDateTime.now().getMonth() + "-"+
                 LocalDateTime.now().getDayOfMonth() + "-" +
                 LocalDateTime.now().getHour() + "-" +
                 LocalDateTime.now().getMinute();
-        return currentDateTime;
     }
     /**
      * @return Returns the path to \Mad Games Tycoon 2_Data\Extern\Text\DATA\
@@ -56,7 +52,7 @@ public class Utils {
             // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() throws an exception.
             case 1: JOptionPane.showMessageDialog(null, "The Genres.txt file could not be analyzed.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
             // 2 = When it is unsuccessful to open the github repository.
-            case 2: JOptionPane.showConfirmDialog(null, "Unable to open Github repository:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE);
+            case 2: JOptionPane.showMessageDialog(null, "Unable to open Github repository:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE);
         }
     }
     /**
@@ -67,11 +63,7 @@ public class Utils {
      */
     public static boolean showConfirmDialog(int confirmMessageKey, Exception e){
         if(confirmMessageKey == 1){
-            if(JOptionPane.showConfirmDialog(null, "The backup could not be created.\n\nException:\n" + e.getMessage() + "\nDo you want to continue anyway?", "Unable to backup file", JOptionPane.YES_NO_OPTION) == 0){
-                return true;
-            }else{
-                return false;
-            }
+            return JOptionPane.showConfirmDialog(null, "The backup could not be created.\n\nException:\n" + e.getMessage() + "\nDo you want to continue anyway?", "Unable to backup file", JOptionPane.YES_NO_OPTION) == 0;
         }
         return true;
     }
@@ -83,11 +75,7 @@ public class Utils {
      */
     public static boolean showConfirmDialog(int confirmMessageKey){
         if(confirmMessageKey == 1){
-            if(JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be saved until you close the program.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0){
-                return true;
-            }else{
-                return false;
-            }
+            return JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be saved until you close the program.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0;
         }
         return true;
     }

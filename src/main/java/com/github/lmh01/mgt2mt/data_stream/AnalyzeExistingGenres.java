@@ -9,22 +9,22 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class AnalyzeExistingGenres {
-    public static ArrayList<Integer> arrayListGenreIDsInUse = new ArrayList<>();
-    public static ArrayList<String> arrayListGenreNamesInUse = new ArrayList<>();
-    public static ArrayList<String> arrayListGenreNamesByIdSorted = new ArrayList<>();
+    public static final ArrayList<Integer> ARRAY_LIST_GENRE_IDS_IN_USE = new ArrayList<>();
+    public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_IN_USE = new ArrayList<>();
+    public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED = new ArrayList<>();
     public static ArrayList<String> arrayListGenreNamesSorted = new ArrayList<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
 
     /**
      * Analyzes the Genres.txt file.
-     * @return Returns true when the Genres.txt file has been analyzed successfully. When an exception occurs it will return false.
      */
     public static void analyzeGenreFile() throws IOException {
-        arrayListGenreIDsInUse.clear();
-        arrayListGenreNamesInUse.clear();
+        ARRAY_LIST_GENRE_IDS_IN_USE.clear();
+        ARRAY_LIST_GENRE_NAMES_IN_USE.clear();
         arrayListGenreNamesSorted.clear();
-        arrayListGenreNamesByIdSorted.clear();
+        ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.clear();
 
         File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
         LOGGER.info("Scanning for genre id's and names in file: " + genresFile);
@@ -35,24 +35,25 @@ public class AnalyzeExistingGenres {
         while((currentLine = reader.readLine()) != null){
             if(currentLine.contains("[ID]")){
                 currentIDAsString = currentLine;
+                //noinspection SpellCheckingInspection
                 currentID = Integer.parseInt(currentIDAsString.replace("[ID]", "").replaceAll("\\uFEFF", ""));//replaceAll("\\uFEFF", "") is used for the correct formatting
                 if(Settings.enableDebugLogging){
                     LOGGER.info("found id: " + currentID);}
-                arrayListGenreIDsInUse.add(currentID);
+                ARRAY_LIST_GENRE_IDS_IN_USE.add(currentID);
             }else if(currentLine.contains("[NAME EN]")){
                 String currentName = currentLine.replace("[NAME EN]", "");
-                arrayListGenreNamesInUse.add(currentName);
+                ARRAY_LIST_GENRE_NAMES_IN_USE.add(currentName);
                 if(Settings.enableDebugLogging){
                     LOGGER.info("found name: " + currentName);}
             }
         }
         reader.close();
-        LOGGER.info("Analyzing of genre ids and names complete. Found: " + arrayListGenreIDsInUse.size());
+        LOGGER.info("Analyzing of genre ids and names complete. Found: " + ARRAY_LIST_GENRE_IDS_IN_USE.size());
         if(Settings.enableDebugLogging){
             LOGGER.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");}
         writeHelpFile();
         fillGenresByIdListSorted();
-        sortGenreNames();;
+        sortGenreNames();
     }
 
     /**
@@ -65,26 +66,26 @@ public class AnalyzeExistingGenres {
         }
         file.createNewFile();
         PrintWriter pw = new PrintWriter(file);
-        for(int i = 0; i< arrayListGenreIDsInUse.size(); i++){
-            pw.print(arrayListGenreIDsInUse.get(i) + " - " + arrayListGenreNamesInUse.get(i) + "\n");
+        for(int i = 0; i< ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
+            pw.print(ARRAY_LIST_GENRE_IDS_IN_USE.get(i) + " - " + ARRAY_LIST_GENRE_NAMES_IN_USE.get(i) + "\n");
         }
         pw.close();
         LOGGER.info("file created.");
     }
     private static void fillGenresByIdListSorted(){
-        for(int i = 0; i< arrayListGenreIDsInUse.size(); i++){
-            arrayListGenreNamesByIdSorted.add(arrayListGenreNamesInUse.get(i) + " - " + arrayListGenreIDsInUse.get(i));
+        for(int i = 0; i< ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
+            ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.add(ARRAY_LIST_GENRE_NAMES_IN_USE.get(i) + " - " + ARRAY_LIST_GENRE_IDS_IN_USE.get(i));
         }
-        Collections.sort(arrayListGenreNamesByIdSorted);
+        Collections.sort(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED);
     }
     public static String[] getGenresByAlphabetWithoutId(){
-        ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.arrayListGenreNamesInUse;
+        ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE;
         Collections.sort(arrayListAvailableGenreNamesSorted);
         ArrayList<String> arrayListAvailableGenreNamesToDisplay = new ArrayList<>();
-        for(int i = 0; i<AnalyzeExistingGenres.arrayListGenreIDsInUse.size(); i++){
+        for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
             arrayListAvailableGenreNamesToDisplay.add(
-                    AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i)
-                            .replace(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i)
+                    AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i)
+                            .replace(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i)
                                     .replace(arrayListAvailableGenreNamesSorted.get(i), ""), ""));
         }
         String[] string = new String[arrayListAvailableGenreNamesToDisplay.size()];
@@ -93,7 +94,7 @@ public class AnalyzeExistingGenres {
     }
 
     private static void sortGenreNames(){
-        arrayListGenreNamesSorted = arrayListGenreNamesInUse;
+        arrayListGenreNamesSorted = ARRAY_LIST_GENRE_NAMES_IN_USE;
         Collections.sort(arrayListGenreNamesSorted);
     }
 }

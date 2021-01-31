@@ -8,9 +8,10 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class EditGenreFile {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditGenreFile.class);
-    private static File fileTempGenreFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt.temp");
+    private static final File FILE_TEMP_GENRE_FILE = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt.temp");
 
     /**
      * Adds a new genre to the Genres.txt file with the current values that stand in {@link NewGenreManager}
@@ -19,10 +20,10 @@ public class EditGenreFile {
         LOGGER.info("Adding new genre...");
         createTempFile();
         LOGGER.info("Deleting old Genres.txt file and writing new file.");
-        Utils.fileGenres.delete();
-        Utils.fileGenres.createNewFile();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.fileGenres), StandardCharsets.UTF_8));
+        Utils.FILE_GENRES.delete();
+        Utils.FILE_GENRES.createNewFile();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
 
         String currentLine;
         boolean firstLine = true;
@@ -38,7 +39,7 @@ public class EditGenreFile {
             bw.write(currentLine + System.getProperty("line.separator"));
         }
         br.close();
-        fileTempGenreFile.delete();
+        FILE_TEMP_GENRE_FILE.delete();
         LOGGER.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
         //Print new genre:
         bw.write("[ID]" + NewGenreManager.id + System.getProperty("line.separator"));
@@ -52,6 +53,7 @@ public class EditGenreFile {
         }else{
             bw.write("[PIC]" + NewGenreManager.imageFileName + ".png" + System.getProperty("line.separator"));
         }
+        //noinspection SpellCheckingInspection
         bw.write("[TGROUP]" + getTargetGroup() + System.getProperty("line.separator"));
         bw.write("[GAMEPLAY]" + NewGenreManager.gameplay + System.getProperty("line.separator"));
         bw.write("[GRAPHIC]" + NewGenreManager.graphic + System.getProperty("line.separator"));
@@ -75,10 +77,10 @@ public class EditGenreFile {
         LOGGER.info("Removing genre with id [" + genreId + "] from Genres.txt");
         createTempFile();
         LOGGER.info("Deleting old Genres.txt file and writing new file.");
-        Utils.fileGenres.delete();
-        Utils.fileGenres.createNewFile();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.fileGenres), StandardCharsets.UTF_8));
+        Utils.FILE_GENRES.delete();
+        Utils.FILE_GENRES.createNewFile();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
 
         String currentLine;
         boolean firstLine = true;
@@ -112,7 +114,7 @@ public class EditGenreFile {
         bw.write("[EOF]");
         br.close();
         bw.close();
-        fileTempGenreFile.delete();
+        FILE_TEMP_GENRE_FILE.delete();
         LOGGER.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
     }
 
@@ -120,12 +122,12 @@ public class EditGenreFile {
      * Creates the temp file Genres.txt.temp which will be read later to add a new genre
      */
     private static void createTempFile() throws IOException {
-        if(fileTempGenreFile.exists()){
-            fileTempGenreFile.delete();
+        if(FILE_TEMP_GENRE_FILE.exists()){
+            FILE_TEMP_GENRE_FILE.delete();
         }
-        fileTempGenreFile.createNewFile();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.fileGenres), StandardCharsets.UTF_8));
-        PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileTempGenreFile), StandardCharsets.UTF_8));
+        FILE_TEMP_GENRE_FILE.createNewFile();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
+        PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
         LOGGER.info("Writing current content to temp file.");
         String currentLine;
         boolean firstLine = true;
