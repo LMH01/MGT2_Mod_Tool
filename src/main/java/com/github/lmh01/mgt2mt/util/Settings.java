@@ -25,7 +25,7 @@ public class Settings {
         LOGGER.info("Settings reset.");
         enableDebugLogging = false;
         disableSafetyFeatures = false;
-        exportSettings();
+        saveSettings();
     }
 
     /**
@@ -36,7 +36,7 @@ public class Settings {
     public static void setSettings(JCheckBox checkBoxDebugMode, JCheckBox checkBoxDisableSafety){
         Settings.enableDebugLogging = checkBoxDebugMode.isSelected();
         Settings.disableSafetyFeatures = checkBoxDisableSafety.isSelected();
-        Settings.exportSettings();
+        Settings.saveSettings();
         JOptionPane.showMessageDialog(new Frame(), "Settings saved.");
     }
     public static void importCustomSettings(String filePath){
@@ -45,7 +45,11 @@ public class Settings {
     public static boolean importSettings(){
         return ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt", false);
     }
-    public static  void exportSettings(){
+
+    /**
+     * Saves the current settings to file.
+     */
+    public static  void saveSettings(){
         ExportSettings.export();
     }
     public static void setMgt2FilePath(boolean retry){

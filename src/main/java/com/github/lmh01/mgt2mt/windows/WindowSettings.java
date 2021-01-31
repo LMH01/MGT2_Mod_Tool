@@ -69,7 +69,7 @@ public class WindowSettings extends JFrame {
         btnBack.setBounds(10, 132, 69, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
-            Settings.exportSettings();
+            Settings.saveSettings();
             WindowSettings.FRAME.dispose();
         });
         contentPane.add(btnBack);
@@ -112,7 +112,7 @@ public class WindowSettings extends JFrame {
             if (return_value == 0) {
                 Settings.importCustomSettings(fileChooser.getSelectedFile().getPath());
             }
-            Settings.exportSettings();
+            Settings.saveSettings();
         });
         contentPane.add(btnLoadSettings);
     }

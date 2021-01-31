@@ -49,7 +49,7 @@ public class MainWindow extends JFrame {
         buttonQuit.setBounds(10, 100, 100, 23);
         buttonQuit.setToolTipText("Click to exit the application.");
         buttonQuit.addActionListener(e -> {
-            Settings.exportSettings();
+            Settings.saveSettings();
             System.exit(0);
         });
         getContentPane().add(buttonQuit);
