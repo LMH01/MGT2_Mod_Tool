@@ -1,7 +1,12 @@
 package com.github.lmh01.mgt2mt.util;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.time.LocalDateTime;
 
 public class Utils {
@@ -9,6 +14,8 @@ public class Utils {
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static File fileGenres = new File(Utils.getMGT2DataPath() + "\\Genres.txt");
     public static File fileNpcGames = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
+
+    public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
 
     /**
      * @return returns the current date time in format: YYYY-MM-DD-HH-MM
@@ -65,5 +72,12 @@ public class Utils {
             }
         }
         return true;
+    }
+
+    /**
+     * Opens the Github page for MGT2MT in the default browser.
+     */
+    public static void openGithubPage() throws Exception {
+        Desktop.getDesktop().browse(new URL(GITHUB_URL).toURI());
     }
 }

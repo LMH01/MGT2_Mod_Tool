@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.Settings;
 
 import javax.swing.*;
@@ -94,7 +95,7 @@ public class MainWindow extends JFrame {
         });
         getContentPane().add(buttonAvailableMods);
 
-        JLabel labelVersion = new JLabel("V1.0");
+        JLabel labelVersion = new JLabel(MadGamesTycoon2ModTool.VERSION);
         labelVersion.setBounds(268, 100, 150, 23);
         getContentPane().add(labelVersion);
 

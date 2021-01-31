@@ -1,5 +1,7 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -30,7 +32,7 @@ public class WindowChangelog extends JFrame {
         contentPane.setLayout(null);
 
         JEditorPane dtrpnX = new JEditorPane();
-        dtrpnX.setText("Version 1.0"
+        dtrpnX.setText(MadGamesTycoon2ModTool.VERSION + "\n"
                 + "\n - You can add/remove a custom genre id to/from the npc_games list."
                 + "\n - You can add/remove a genre to/from the game."
                 + "\n"
