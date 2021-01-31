@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.Settings;
-
+import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -59,14 +59,18 @@ public class MainWindow extends JFrame {
         buttonSettings.addActionListener(e -> WindowSettings.createFrame());
         getContentPane().add(buttonSettings);
 
-        JButton buttonChangelog = new JButton("Changelog");
-        buttonChangelog.setBounds(120, 100, 100, 23);
-        buttonChangelog.setToolTipText("Click to open the changelog and feature page.");
-        buttonChangelog.addActionListener(e -> {
-            WindowChangelog.createFrame();
-            frame.dispose();
+        JButton buttonGithub = new JButton("Github");
+        buttonGithub.setBounds(120, 100, 100, 23);
+        buttonGithub.setToolTipText("Click to open the Github repository for this project.");
+        buttonGithub.addActionListener(actionEvent -> {
+            try {
+                Utils.openGithubPage();
+            } catch (Exception e) {
+                Utils.showErrorMessage(2, e);
+                e.printStackTrace();
+            }
         });
-        getContentPane().add(buttonChangelog);
+        getContentPane().add(buttonGithub);
 
         JButton buttonBackup = new JButton("Backup");
         buttonBackup.setBounds(10, 70, 100, 23);

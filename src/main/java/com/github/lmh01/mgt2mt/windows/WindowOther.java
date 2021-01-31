@@ -29,7 +29,7 @@ public class WindowOther extends JFrame {
 
     public WindowOther(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 280);
+        setBounds(100, 100, 200, 250);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -111,21 +111,8 @@ public class WindowOther extends JFrame {
         });
         contentPane.add(buttonOpenGenresTxtFile);
 
-        JButton buttonOpenGithubPage = new JButton("Open Github");
-        buttonOpenGithubPage.setBounds(10, 160, 175, 23);
-        buttonOpenGithubPage.setToolTipText("Click to open the Github repository for this project.");
-        buttonOpenGithubPage.addActionListener(ignored -> {
-            try {
-                Utils.openGithubPage();
-            } catch (Exception e) {
-                Utils.showErrorMessage(2, e);
-                e.printStackTrace();
-            }
-        });
-        contentPane.add(buttonOpenGithubPage);
-
         JButton buttonCheckForUpdates = new JButton("Check for updates");
-        buttonCheckForUpdates.setBounds(10, 190, 175, 23);
+        buttonCheckForUpdates.setBounds(10, 160, 175, 23);
         buttonCheckForUpdates.setToolTipText("Click to check this tool for updates.");
         buttonCheckForUpdates.addActionListener(ignored -> {
             UpdateChecker.checkForUpdates(true);
@@ -133,7 +120,7 @@ public class WindowOther extends JFrame {
         contentPane.add(buttonCheckForUpdates);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 220, 89, 23);
+        btnBack.setBounds(10, 190, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(ignored -> {
             MainWindow.createFrame();
