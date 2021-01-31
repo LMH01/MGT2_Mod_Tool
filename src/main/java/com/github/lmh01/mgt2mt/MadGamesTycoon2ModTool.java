@@ -13,6 +13,10 @@ public class MadGamesTycoon2ModTool {
     public static final String VERSION = "1.0.0";
     private static boolean settingsImported = false;
     public static void main(String[] args) {
+        ToolTipManager.sharedInstance().setDismissDelay(30000);
+        ToolTipManager.sharedInstance().setInitialDelay(500);
+        UpdateChecker.checkForUpdates(false);
+        MainWindow.createFrame();
         if(!settingsImported){
             if(Settings.importSettings()){
                 logger.info("Settings have been imported.");
@@ -27,9 +31,6 @@ public class MadGamesTycoon2ModTool {
                 Settings.setMgt2FilePath(true);
             }
         }
-        ToolTipManager.sharedInstance().setDismissDelay(30000);
-        ToolTipManager.sharedInstance().setInitialDelay(500);
-        UpdateChecker.checkForUpdates(false);
-        MainWindow.createFrame();
+
     }
 }
