@@ -59,6 +59,7 @@ public class ChangeLog {
             case 5: pw.print(currentSystemTime + ": A backup of file " + textBody + " has been created."); break;
             case 6: pw.print(currentSystemTime + ": The initial backup has been created."); break;
             case 7: pw.print(currentSystemTime + ": The initial backup failed. Exception: " + textBody); break;
+            case 8: pw.print(currentSystemTime + ": The initial backup has been restored."); break;
         }
     }
 }

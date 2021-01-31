@@ -1,6 +1,11 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.genre.WindowAddGenrePage2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -10,6 +15,7 @@ import java.io.IOException;
 public class WindowBackup extends JFrame {
 
     static WindowBackup frame = new WindowBackup();
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage2.class);
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -24,7 +30,7 @@ public class WindowBackup extends JFrame {
 
     public WindowBackup(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 160);
+        setBounds(100, 100, 200, 190);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -52,9 +58,30 @@ public class WindowBackup extends JFrame {
         });
         contentPane.add(buttonCreateBackup);
 
+        JButton buttonRestoreInitialBackup = new JButton("Restore initial backup");
+        buttonRestoreInitialBackup.setBounds(10, 70, 175, 23);
+        buttonRestoreInitialBackup.setToolTipText("Click to restore the initial backup that has been created when the mod tool was started for the first time.");
+        buttonRestoreInitialBackup.addActionListener(actionEvent ->{
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+                try {
+                    LOGGER.info("Creating backup beforehand.");
+                    Backup.createFullBackup(false);
+                    Backup.restoreInitialBackup();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if(Utils.showConfirmDialog(1, e)){
+                        Backup.restoreInitialBackup();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The initial backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        contentPane.add(buttonRestoreInitialBackup);
+
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
-        buttonOpenBackupFolder.setBounds(10, 70, 175, 23);
-        buttonOpenBackupFolder.setToolTipText("Click to open the backup folder.");
+        buttonOpenBackupFolder.setBounds(10, 100, 175, 23);
+        buttonOpenBackupFolder.setToolTipText("Click to open the backup folder. All backups that have been created are located here. Use this if you do want to restore a backup manually.");
         buttonOpenBackupFolder.addActionListener(ignored -> {
             try {
                 File fileBackFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
@@ -70,7 +97,7 @@ public class WindowBackup extends JFrame {
         contentPane.add(buttonOpenBackupFolder);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 100, 89, 23);
+        btnBack.setBounds(10, 130, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(ignored -> {
             MainWindow.createFrame();

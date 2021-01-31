@@ -63,6 +63,23 @@ public class Backup {
         Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
     }
 
+    public static void restoreInitialBackup(){
+        try {
+            logger.info("Restoring initial backup.");
+            File fileGenresInitialBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
+            File fileNpcGamesInitialBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+            Utils.fileGenres.delete();
+            Utils.fileNpcGames.delete();
+            Files.copy(Paths.get(fileGenresInitialBackup.getPath()), Paths.get(Utils.fileGenres.getPath()));
+            Files.copy(Paths.get(fileNpcGamesInitialBackup.getPath()), Paths.get(Utils.fileNpcGames.getPath()));
+            ChangeLog.addLogEntry(8, "");
+            JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            JOptionPane.showMessageDialog(null, "The initial backup could not be restored.\nThe initial backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /**
      * Creates a backup of each file that can be edited with this tool.
      * @param initialBackup Set true when this is the initial backup.
