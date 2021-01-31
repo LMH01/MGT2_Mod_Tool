@@ -1,12 +1,12 @@
-#Welcome to the Mad Games Tycoon 2 Mod Tool
+# Welcome to the Mad Games Tycoon 2 Mod Tool
 
 This is a little program that can modify some files from Mad Games Tycoon 2. 
 
 **If you encounter an error please submit an issue, so it can be fixed**
 
 **Because Mad Games Tycoon 2 is in early access I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
-###Download: *comming soon*
-####Getting started:
+### Download: *comming soon*
+#### Getting started:
 - Install Java 8 (if not already installed)
 - Download this tool (.jar file)
 - Run the .jar file
