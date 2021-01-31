@@ -110,10 +110,12 @@ public class Backup {
 
     public static void deleteAllBackups() throws IOException {
         File backupFolder = new File(BACKUP_FOLDER_PATH);
-        Files.walk(Paths.get(backupFolder.getPath()))
-                .sorted(Comparator.reverseOrder())
-                .map(Path::toFile)
-                .forEach(File::delete);
+        if(backupFolder.exists()){
+            Files.walk(Paths.get(backupFolder.getPath()))
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        }
     }
 
     /**

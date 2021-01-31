@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.genre.WindowAddGenrePage2;
@@ -88,10 +89,12 @@ public class WindowBackup extends JFrame {
                     LOGGER.info("Creating backup beforehand.");
                     Backup.createFullBackup(false);
                     Backup.restoreBackup(false);
+                    ChangeLog.addLogEntry(9, "");
                 } catch (IOException e) {
                     e.printStackTrace();
                     if(Utils.showConfirmDialog(1, e)){
                         Backup.restoreBackup(false);
+                        ChangeLog.addLogEntry(9, "");
                     }else{
                         JOptionPane.showMessageDialog(null, "The latest backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
                     }
@@ -107,7 +110,16 @@ public class WindowBackup extends JFrame {
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all backups?", "Delete backup?", JOptionPane.YES_NO_OPTION) == 0){
                 try {
                     Backup.deleteAllBackups();
-                    JOptionPane.showMessageDialog(null, "All backups have been deleted.", "Backups deleted", JOptionPane.INFORMATION_MESSAGE);
+                    if(JOptionPane.showConfirmDialog(null, "All backups have been deleted.\nDo you wan't to create a new initial backup?", "Backups deleted", JOptionPane.YES_NO_OPTION) == 0){
+                        try{
+                            Backup.createFullBackup(true);
+                            ChangeLog.addLogEntry(6, "");
+                            JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
+                        }catch(IOException e){
+                            JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to backup file", JOptionPane.ERROR_MESSAGE);
+                            ChangeLog.addLogEntry(7, e.getMessage());
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Unable to delete all backups. \n\nException:\n" + e.getMessage(), "Unable to delete backups", JOptionPane.ERROR_MESSAGE);
