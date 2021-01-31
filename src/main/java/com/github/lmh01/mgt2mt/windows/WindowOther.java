@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
+import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 
@@ -122,6 +123,14 @@ public class WindowOther extends JFrame {
             }
         });
         contentPane.add(buttonOpenGithubPage);
+
+        JButton buttonCheckForUpdates = new JButton("Check for updates");
+        buttonCheckForUpdates.setBounds(10, 190, 175, 23);
+        buttonCheckForUpdates.setToolTipText("Click to check this tool for updates.");
+        buttonCheckForUpdates.addActionListener(ignored -> {
+            UpdateChecker.checkForUpdates(true);
+        });
+        contentPane.add(buttonCheckForUpdates);
 
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 220, 89, 23);
