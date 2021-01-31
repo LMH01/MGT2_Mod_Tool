@@ -25,6 +25,7 @@ public class EditGenreFile {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
 
+        int currentid = 0;
         String currentLine;
         boolean firstLine = true;
         bw.write("\ufeff");
@@ -36,7 +37,19 @@ public class EditGenreFile {
             if(Settings.enableDebugLogging) {
                 LOGGER.info("currentLine: " + currentLine);
             }
-            bw.write(currentLine + System.getProperty("line.separator"));
+            if(currentLine.contains("[ID]")){
+                currentid = Integer.parseInt(currentLine.replace("[ID]", ""));
+                bw.write(currentLine + System.getProperty("line.separator"));
+            }else if(currentLine.contains("[GENRE COMB]")){
+                if(NewGenreManager.getCompatibleGenresByID().contains(Integer.toString(currentid))){
+                    bw.write(currentLine + "<" + NewGenreManager.id + ">" + System.getProperty("line.separator"));
+                    LOGGER.info("Found compatible genre id in file to write: " + currentid);
+                }else{
+                    bw.write(currentLine + System.getProperty("line.separator"));
+                }
+            }else{
+                bw.write(currentLine + System.getProperty("line.separator"));
+            }
         }
         br.close();
         FILE_TEMP_GENRE_FILE.delete();
@@ -87,12 +100,18 @@ public class EditGenreFile {
         int linesToSkip = 0;
         bw.write("\ufeff");
         while((currentLine = br.readLine()) != null){
+            boolean skipNormalWrite = false;
             if(firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);
                 firstLine = false;
             }
             if(currentLine.equals("[ID]" + genreId)){
                 linesToSkip = 36;//This is how many line the genre has that should be removed
+            }else if(currentLine.contains("[GENRE COMB]")){
+                if(currentLine.contains("<" + genreId + ">")){
+                    bw.write(currentLine.replace("<" + genreId + ">", "" + System.getProperty("line.separator")));
+                    skipNormalWrite = true;
+                }
             }
             if(linesToSkip>0){
                 while(linesToSkip>0){
@@ -108,7 +127,9 @@ public class EditGenreFile {
                     linesToSkip--;
                 }
             }else{
-                bw.write(currentLine + System.getProperty("line.separator"));
+                if(!skipNormalWrite){
+                    bw.write(currentLine + System.getProperty("line.separator"));
+                }
             }
         }
         bw.write("[EOF]");
