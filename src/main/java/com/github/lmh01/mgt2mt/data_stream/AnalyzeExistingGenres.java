@@ -74,7 +74,7 @@ public class AnalyzeExistingGenres {
         }
         Collections.sort(arrayListGenreNamesByIdSorted);
     }
-    public static String[] getGenresByAlphabetWithoutID(){
+    public static String[] getGenresByAlphabetWithoutId(){
         ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.arrayListGenreNamesInUse;
         Collections.sort(arrayListAvailableGenreNamesSorted);
         ArrayList<String> arrayListAvailableGenreNamesToDisplay = new ArrayList<>();
@@ -88,6 +88,7 @@ public class AnalyzeExistingGenres {
         arrayListAvailableGenreNamesToDisplay.toArray(string);
         return string;
     }
+
     private static void sortGenreNames(){
         arrayListGenreNamesSorted = arrayListGenreNamesInUse;
         Collections.sort(arrayListGenreNamesSorted);

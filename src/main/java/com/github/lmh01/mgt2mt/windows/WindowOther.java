@@ -28,7 +28,7 @@ public class WindowOther extends JFrame {
 
     public WindowOther(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 190);
+        setBounds(100, 100, 200, 280);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -72,11 +72,11 @@ public class WindowOther extends JFrame {
 
         JButton buttonShowGenres = new JButton("Show active genres");
         buttonShowGenres.setBounds(10, 100, 175, 23);
-        buttonShowGenres.setToolTipText("Click to see a list of currently active genres.");
+        buttonShowGenres.setToolTipText("Click to see a list of currently active genres. The number behind the genre number is the genre id.");
         buttonShowGenres.addActionListener(ignored -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
-                String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
+                String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
 
                 JList<String> listAvailableGenres = new JList<>(string);
                 listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -94,8 +94,24 @@ public class WindowOther extends JFrame {
         });
         contentPane.add(buttonShowGenres);
 
+        JButton buttonOpenGenresTxtFile = new JButton("Open genres.txt");
+        buttonOpenGenresTxtFile.setBounds(10, 130, 175, 23);
+        buttonOpenGenresTxtFile.setToolTipText("Click to open the MGT2 main folder.");
+        buttonOpenGenresTxtFile.addActionListener(ignored -> {
+            try {
+                if(!Utils.fileGenres.exists()){
+                    JOptionPane.showMessageDialog(null, "The Genres.txt file could not be opened.\nFile not found: Please check if your mgt2 folder is set correctly", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    Desktop.getDesktop().open(Utils.fileGenres);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        contentPane.add(buttonOpenGenresTxtFile);
+
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 130, 89, 23);
+        btnBack.setBounds(10, 220, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(ignored -> {
             MainWindow.createFrame();
