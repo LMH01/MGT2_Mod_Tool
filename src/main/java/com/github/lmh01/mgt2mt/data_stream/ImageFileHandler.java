@@ -37,8 +37,12 @@ public class ImageFileHandler {
      * Removes the image(.png) and meta-file(.png.meta) from the folder \Mad Games Tycoon 2_Data\Extern\Icons_Genres\
      */
     public static void removeImageFiles(String genreName){
-        File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName + ".png");
-        File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName + ".png.meta");
+        File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
+        File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
+        logger.info("imageFile: " + imageFile.getPath());
+        logger.info("imageFile name: " + imageFile.getName());
+        logger.info("imageFileMeta: " + imageFileMeta.getPath());
+        logger.info("imageFileMeta name: " + imageFileMeta.getName());
         if(imageFile.exists() && imageFileMeta.exists()){
             imageFile.delete();
             imageFileMeta.delete();
