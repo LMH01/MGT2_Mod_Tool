@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.windows.MainWindow;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
@@ -153,7 +154,6 @@ public class NewGenreManager {
                 try {
                     EditGenreFile.addGenre();
                     NewGenreManager.genreAdded();
-                    WindowAddNewGenre.createFrame();
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
@@ -199,9 +199,22 @@ public class NewGenreManager {
         if(JOptionPane.showConfirmDialog((Component)null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);
+                JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
+                if(JOptionPane.showConfirmDialog((Component)null, "Do you wan't to add another genre?", "Add another genre?", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
+                    openStepWindow(1);
+                }else{
+                    MainWindow.createFrame();
+                }
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                MainWindow.createFrame();
+            }
+        }else{
+            if(JOptionPane.showConfirmDialog((Component)null, "Do you wan't to add another genre?", "Add another genre?", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
+                openStepWindow(1);
+            }else{
+                MainWindow.createFrame();
             }
         }
     }

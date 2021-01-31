@@ -87,7 +87,7 @@ public class WindowAddGenrePage8 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static String getGenreImageFilePath() {
-        String imageFilePath = "error";
+        String imageFilePath = "";
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel

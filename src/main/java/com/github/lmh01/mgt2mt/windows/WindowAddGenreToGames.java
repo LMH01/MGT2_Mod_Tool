@@ -87,7 +87,7 @@ public class WindowAddGenreToGames extends JFrame {
 
             try {
                 NPCGameListChanger.editNPCGames(genreID, addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
-                JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen " + messageOperation + " the NpcGame list.");
+                JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen " + messageOperation + " the NpcGames list.");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + genreID + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
