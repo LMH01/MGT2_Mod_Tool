@@ -81,7 +81,7 @@ public class WindowAvailableMods extends JFrame {
                     if(Settings.disableSafetyFeatures){
                         sModel = new SpinnerNumberModel(18, 18, 999, 1);
                     }else{
-                        sModel = new SpinnerNumberModel(18, 18, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1);
+                        sModel = new SpinnerNumberModel(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 18, AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1, 1);
                     }
                     JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
                     int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
