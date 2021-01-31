@@ -110,6 +110,19 @@ public class WindowOther extends JFrame {
         });
         contentPane.add(buttonOpenGenresTxtFile);
 
+        JButton buttonOpenGithubPage = new JButton("Open Github");
+        buttonOpenGithubPage.setBounds(10, 160, 175, 23);
+        buttonOpenGithubPage.setToolTipText("Click to open the Github repository for this project.");
+        buttonOpenGithubPage.addActionListener(ignored -> {
+            try {
+                Utils.openGithubPage();
+            } catch (Exception e) {
+                Utils.showErrorMessage(2, e);
+                e.printStackTrace();
+            }
+        });
+        contentPane.add(buttonOpenGithubPage);
+
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 220, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");

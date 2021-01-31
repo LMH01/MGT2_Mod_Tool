@@ -56,6 +56,8 @@ public class Utils {
         switch(errorMessageKey){
             // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() throws an exception.
             case 1: JOptionPane.showMessageDialog(null, "The Genres.txt file could not be analyzed.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+            // 2 = When it is unsuccessful to open the github repository.
+            case 2: JOptionPane.showConfirmDialog(null, "Unable to open Github repository:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE);
         }
     }
     /**

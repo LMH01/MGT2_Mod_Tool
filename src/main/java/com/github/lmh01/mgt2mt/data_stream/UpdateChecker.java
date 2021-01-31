@@ -24,11 +24,11 @@ public class UpdateChecker {
                     newestVersion = scanner.nextLine();
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
                         logger.info("New version found: " + newestVersion);
-                        if(JOptionPane.showConfirmDialog(null, "A new version is available: " + newestVersion + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github page to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
+                        if(JOptionPane.showConfirmDialog(null, "A new version is available: " + newestVersion + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
                             try {
                                 Utils.openGithubPage();
                             } catch (Exception e) {
-                                JOptionPane.showConfirmDialog(null, "Unable to open Github page:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE);
+                                Utils.showErrorMessage(2, e);
                                 e.printStackTrace();
                             }
                         }
