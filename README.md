@@ -4,20 +4,21 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 
 **If you encounter an error please submit an issue, so it can be fixed**
 
-**Because Mad Games Tycoon 2 is in early access I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
+**Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 ### Download: *coming soon*
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download this tool (.jar file)
-- Run the .jar file
+- Run the .jar file with "java -jar jar_name.jar"
 - Choose the main folder of Mad Games Tycoon 2 (the folder that contains the .exe file)
 ## These are the current features:
 - **Add and remove genres**
-    - You can easily add a new genre to Mad Games Tycoon 2 with the help of a step by step guide.
-    - When all parameters have been collected a summary is being displayed. You can then decide if you do wan't to add that genre or make changes.
-    - You can remove a genre simply with a button.
+    - You can easily add a new genre to Mad Games Tycoon 2 with the help of a step by step guide
+    - When all parameters have been collected a summary is being displayed. You can then decide if you do want to add that genre or make change.
+    - You can remove a genre simply by pressing a button
     - It is supported to add a **custom image as genre icon**. This has to be a .png file.
-    - **Note: When a genre has been added and a save game has been loaded it can not be removed from that save game later!**
+   
+    **Note: When a genre has been added and a save game has been loaded it can not be removed from that save game later!**
 - **Edit the NpcGames.txt file**
     - You can add or remove a genre id to/from this file. This has the effect that games released by NPC-Companies can have the specified genre.
     - Additionally, you can change the chance with which the genre id should be added to the file. (100% = All games will have the corresponding genre as genre)
