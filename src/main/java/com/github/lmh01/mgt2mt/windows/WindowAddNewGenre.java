@@ -1,8 +1,7 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
-import com.github.lmh01.mgt2mt.util.Utils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

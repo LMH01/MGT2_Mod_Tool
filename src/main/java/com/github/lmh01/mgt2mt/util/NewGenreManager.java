@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.dataStream.*;
+import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;

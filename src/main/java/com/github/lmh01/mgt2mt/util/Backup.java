@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.dataStream.ChangeLog;
+import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
