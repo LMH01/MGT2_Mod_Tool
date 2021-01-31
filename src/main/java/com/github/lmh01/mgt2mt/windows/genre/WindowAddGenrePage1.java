@@ -56,15 +56,21 @@ public class WindowAddGenrePage1 extends JFrame{
         labelGenreDescription.setToolTipText("This description will be used for every translation.");
         contentPane.add(labelGenreDescription);
 
+        JLabel labelGenreID = new JLabel("Genre id: ");
+        labelGenreID.setBounds(10, 60, 120, 23);
+        contentPane.add(labelGenreID);
+
         JTextField textFieldGenreDescription = new JTextField();
         textFieldGenreDescription.setBounds(120, 35, 100, 23);
         textFieldGenreDescription.setText(NewGenreManager.description);
         textFieldGenreDescription.setToolTipText("Enter the genre description that should be shown in game. Hint: use <br> in your description to make a new line.");
         contentPane.add(textFieldGenreDescription);
 
-        JLabel labelGenreID = new JLabel("Genre id: ");
-        labelGenreID.setBounds(10, 60, 120, 23);
-        contentPane.add(labelGenreID);
+        JButton buttonExplainGenreID = new JButton("id?");
+        buttonExplainGenreID.setBounds(230, 60, 80, 23);
+        buttonExplainGenreID.setToolTipText("Click to learn what the genre id is");
+        buttonExplainGenreID.addActionListener(actionEvent -> JOptionPane.showMessageDialog(null, "The genre id is the unique id under which your genre can be found.\nWhenever a game file is modified that should reference your genre this genre id is used.", "Genre id", JOptionPane.INFORMATION_MESSAGE));
+        contentPane.add(buttonExplainGenreID);
 
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 100, 100, 23);
