@@ -15,7 +15,7 @@ public class WindowAddGenreToGames extends JFrame {
 
     static WindowAddGenreToGames frame = new WindowAddGenreToGames();
     private final JPanel contentPane;
-    private static final Logger logger = LoggerFactory.getLogger(WindowAddGenreToGames.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenreToGames.class);
     JSpinner spinnerGenreID = new JSpinner();
 
     public static void createFrame(){
@@ -77,11 +77,11 @@ public class WindowAddGenreToGames extends JFrame {
             if(Objects.equals(comboBoxOperation.getSelectedItem(), "Add")) {
                 addGenreID = true;
                 messageOperation = "added to";
-                logger.info("operation: add genre id");
+                LOGGER.info("operation: add genre id");
             }else{
                 addGenreID = false;
                 messageOperation = "removed from";
-                logger.info("operation: remove genre id");
+                LOGGER.info("operation: remove genre id");
             }
             int genreID = Integer.parseInt(spinnerGenreID.getValue().toString());
 

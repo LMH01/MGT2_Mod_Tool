@@ -15,7 +15,6 @@ public class Utils {
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static File fileGenres = new File(Utils.getMGT2DataPath() + "\\Genres.txt");
     public static File fileNpcGames = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
-
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
 
     /**

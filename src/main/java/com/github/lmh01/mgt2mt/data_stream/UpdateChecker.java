@@ -13,17 +13,17 @@ import java.util.Scanner;
 public class UpdateChecker {
     public static String newestVersion = "";
     private static final String UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
-    private static final Logger logger = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static void checkForUpdates(boolean showNoUpdateAvailableDialog){
         new Thread("UpdateChecker"){
             public void run(){
                 try {
-                    logger.info("Checking for updates...");
+                    LOGGER.info("Checking for updates...");
                     java.net.URL url = new URL(UPDATE_URL);
                     Scanner scanner = new Scanner(url.openStream());
                     newestVersion = scanner.nextLine();
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
-                        logger.info("New version found: " + newestVersion);
+                        LOGGER.info("New version found: " + newestVersion);
                         if(JOptionPane.showConfirmDialog(null, "A new version is available: " + newestVersion + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
                             try {
                                 Utils.openGithubPage();
@@ -33,7 +33,7 @@ public class UpdateChecker {
                             }
                         }
                     }else{
-                        logger.info("You are using the newest version");
+                        LOGGER.info("You are using the newest version");
                         if(showNoUpdateAvailableDialog){
                             JOptionPane.showMessageDialog(null, "You are using the newest version.\nNo update available.", "No update available", JOptionPane.INFORMATION_MESSAGE);
                         }

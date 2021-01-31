@@ -8,17 +8,17 @@ import java.awt.*;
 import java.io.*;
 
 public class ImportSettings{
-    private static Logger logger = LoggerFactory.getLogger(ImportSettings.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
 
     public static boolean Import(String fileLocation, boolean importCustomSettings) {
-        logger.info("Starting settings import process...");
+        LOGGER.info("Starting settings import process...");
 
         try {
-            logger.info("Scanning for File '" + fileLocation + "'...");
+            LOGGER.info("Scanning for File '" + fileLocation + "'...");
             File file = new File(fileLocation);
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "utf-8");
             BufferedReader reader = new BufferedReader(inputStreamReader);
-            logger.info("Beginning to import settings from file: " + file);
+            LOGGER.info("Beginning to import settings from file: " + file);
             int setting = 1;
             String currentLine;
             while((currentLine = reader.readLine()) != null) {
@@ -40,11 +40,11 @@ public class ImportSettings{
                             Settings.disableSafetyFeatures = false;
                         }
                 }
-                logger.info("Imported Setting (" + setting + "): " + currentLine);
+                LOGGER.info("Imported Setting (" + setting + "): " + currentLine);
                 ++setting;
             }
 
-            logger.info("Import Complete!");
+            LOGGER.info("Import Complete!");
             if (importCustomSettings) {
                 JOptionPane.showMessageDialog(new Frame(), "Settings loaded Successfully!");
             }
@@ -52,7 +52,7 @@ public class ImportSettings{
             return true;
         } catch (FileNotFoundException | UnsupportedEncodingException var6) {
             var6.printStackTrace();
-            logger.info("Unable to import settings: File not found! Using default settings!");
+            LOGGER.info("Unable to import settings: File not found! Using default settings!");
             Settings.resetSettings();
             return false;
         } catch (IOException e) {

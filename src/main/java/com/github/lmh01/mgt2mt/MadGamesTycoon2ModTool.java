@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 public class MadGamesTycoon2ModTool {
-    private static final Logger logger = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static final String VERSION = "1.0.0";
     private static boolean settingsImported = false;
     public static void main(String[] args) {
@@ -19,15 +19,15 @@ public class MadGamesTycoon2ModTool {
         MainWindow.createFrame();
         if(!settingsImported){
             if(Settings.importSettings()){
-                logger.info("Settings have been imported.");
+                LOGGER.info("Settings have been imported.");
                 if(!Utils.doesFoldercontainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
 
-                    logger.info("The MGT2 file path is invalid.");
+                    LOGGER.info("The MGT2 file path is invalid.");
                     Settings.setMgt2FilePath(true);
                 }
                 settingsImported = true;
             }else{
-                logger.info("Settings where not imported.");
+                LOGGER.info("Settings where not imported.");
                 Settings.setMgt2FilePath(true);
             }
         }

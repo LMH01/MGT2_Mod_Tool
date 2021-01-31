@@ -18,11 +18,11 @@ public class Settings {
     public static final String MGT2_MOD_MANAGER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//";
     public static boolean enableDebugLogging = false;
     public static boolean disableSafetyFeatures = false;
-    private static final Logger logger = LoggerFactory.getLogger(Settings.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Settings.class);
     public static void resetSettings(){
         mgt2FilePath = mgt2DefaultFilePath;
         languageToAdd = "English";
-        logger.info("Settings reset.");
+        LOGGER.info("Settings reset.");
         enableDebugLogging = false;
         disableSafetyFeatures = false;
         exportSettings();
@@ -71,7 +71,7 @@ public class Settings {
                     if(return_value == 0){
                         mgt2FilePath = fileChooser.getSelectedFile().getPath();
                         if(Utils.doesFoldercontainFile(mgt2FilePath, "Mad Games Tycoon 2.exe")){
-                            logger.info("File path: " + mgt2FilePath);
+                            LOGGER.info("File path: " + mgt2FilePath);
                             correctFolder = true;
                             JOptionPane.showMessageDialog(new Frame(), "Folder set.");
                             try{

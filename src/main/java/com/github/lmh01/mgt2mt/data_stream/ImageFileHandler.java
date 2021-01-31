@@ -12,23 +12,23 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ImageFileHandler {
-    private static Logger logger = LoggerFactory.getLogger(ImageFileHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImageFileHandler.class);
     /**
      * Moves the given file to \\Mad Games Tycoon 2_Data\Extern\Icons_Genres
      * and adds a genreIcon.png.meta file.
      */
     public static void moveImage(File imageFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
         if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
-            logger.info("The default image file is in use. No need to copy a new one.");
+            LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
-            logger.info("Copying this file to Incons_Genres: " + imageFile);
+            LOGGER.info("Copying this file to Incons_Genres: " + imageFile);
             NewGenreManager.useDefaultImageFile = false;
             File genreIconInFolder = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png");
             if(genreIconInFolder.exists()){
                 genreIconInFolder.delete();
             }
             Files.copy(Paths.get(imageFile.getPath()), Paths.get(genreIconInFolder.getPath()));
-            logger.info("File copied.");
+            LOGGER.info("File copied.");
             createMetaFile();
         }
     }
@@ -39,16 +39,16 @@ public class ImageFileHandler {
     public static void removeImageFiles(String genreName){
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
-        logger.info("imageFile: " + imageFile.getPath());
-        logger.info("imageFile name: " + imageFile.getName());
-        logger.info("imageFileMeta: " + imageFileMeta.getPath());
-        logger.info("imageFileMeta name: " + imageFileMeta.getName());
+        LOGGER.info("imageFile: " + imageFile.getPath());
+        LOGGER.info("imageFile name: " + imageFile.getName());
+        LOGGER.info("imageFileMeta: " + imageFileMeta.getPath());
+        LOGGER.info("imageFileMeta name: " + imageFileMeta.getName());
         if(imageFile.exists() && imageFileMeta.exists()){
             imageFile.delete();
             imageFileMeta.delete();
-            logger.info("Deleted the image files for genre: " + genreName);
+            LOGGER.info("Deleted the image files for genre: " + genreName);
         }else{
-            logger.info("Image files for genre [" + genreName + "] could not be removed.");
+            LOGGER.info("Image files for genre [" + genreName + "] could not be removed.");
         }
     }
 
@@ -61,7 +61,7 @@ public class ImageFileHandler {
             filePngMeta.delete();
         }
         filePngMeta.createNewFile();
-        logger.info("Creating png.meta file.");
+        LOGGER.info("Creating png.meta file.");
         PrintWriter pw = new PrintWriter(filePngMeta);
         pw.print("fileFormatVersion: 2\n" +
                 "guid: 14dee014499280641aceb957b082a0c5\n" +
@@ -176,6 +176,6 @@ public class ImageFileHandler {
                 "  assetBundleName: \n" +
                 "  assetBundleVariant: \n");
         pw.close();
-        logger.info("png.meta file has been created.");
+        LOGGER.info("png.meta file has been created.");
     }
 }

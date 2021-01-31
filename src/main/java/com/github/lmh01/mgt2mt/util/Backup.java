@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 public class Backup {
-    private static Logger logger = LoggerFactory.getLogger(Backup.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
     private static String currentTimeAndDay;
     private static String latestBackupFolderName = "";
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
@@ -56,10 +56,10 @@ public class Backup {
             if(!backupFileFolder.exists()){//Creates directory if backup directory for specified time does not exist
                 backupFileFolder.mkdirs();
             }
-            logger.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
+            LOGGER.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
             File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
             if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
-                logger.info("The file inside the storage folder does already exist. deleting...");
+                LOGGER.info("The file inside the storage folder does already exist. deleting...");
                 fileBackupSaved.delete();
             }
             fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
@@ -74,7 +74,7 @@ public class Backup {
      */
     public static void restoreBackup(boolean initialBackup){
         try {
-            logger.info("Restoring initial backup.");
+            LOGGER.info("Restoring initial backup.");
             File fileGenresBackup;
             File fileNpcGamesBackup;
             if(initialBackup){

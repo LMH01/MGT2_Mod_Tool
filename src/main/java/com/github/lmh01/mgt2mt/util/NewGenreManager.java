@@ -41,7 +41,7 @@ public class NewGenreManager {
     public static File imageFile;
     public static String imageFileName;
     public static boolean useDefaultImageFile;
-    private static Logger logger = LoggerFactory.getLogger(NewGenreManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NewGenreManager.class);
 
 
     public static void addGenre(){
@@ -49,12 +49,12 @@ public class NewGenreManager {
             try {
                 Backup.createBackup(Utils.fileGenres);
                 resetVariablesToDefault();
-                logger.info("Adding new genre");
+                LOGGER.info("Adding new genre");
                 openStepWindow(1);
             } catch (IOException e) {
                 if(Utils.showConfirmDialog(1, e)){
                     resetVariablesToDefault();
-                    logger.info("Adding new genre");
+                    LOGGER.info("Adding new genre");
                     openStepWindow(1);
                 }else{
                     WindowAddNewGenre.createFrame();
@@ -79,31 +79,6 @@ public class NewGenreManager {
         }
     }
     public static void showSummary(){
-        String targetGroups = "";
-        if(targetGroupKid){//TODO Move this to own little function
-            if(targetGroupTeen || targetGroupAdult || targetGroupSenior){
-                targetGroups = targetGroups + "Kid, ";
-            }else{
-                targetGroups = targetGroups + "Kid";
-            }
-        }
-        if(targetGroupTeen){
-            if(targetGroupAdult || targetGroupSenior){
-                targetGroups = targetGroups + "Teen, ";
-            }else{
-                targetGroups = targetGroups + "Teen";
-            }
-        }
-        if(targetGroupAdult){
-            if(targetGroupSenior){
-                targetGroups = targetGroups + "Adult, ";
-            }else{
-                targetGroups = targetGroups + "Adult";
-            }
-        }
-        if(targetGroupSenior){
-            targetGroups = targetGroups + "Senior";
-        }
         String compatibleGenres = "";
         for(int i=0; i<arrayListCompatibleGenres.size(); i++){
             if(i==arrayListCompatibleGenres.size()-1){
@@ -122,7 +97,7 @@ public class NewGenreManager {
                 "Research cost " + price + "\n" +
                 "Development cost: " + devCost + "\n" +
                 "Pic: see top left\n" +
-                "Target group: " + targetGroups + "\n" +
+                "Target group: " + getTargetGroups() + "\n" +
                 "\nDesign Priority:\n" +
                 "Gameplay/Visuals: " + design1 + "\n" +
                 "Story/Game length: " + design2 + "\n" +
@@ -164,8 +139,41 @@ public class NewGenreManager {
             WindowAddGenrePage8.createFrame();
         }
     }
+
+    /**
+     * @return Returns the compatible target groups in the correct formatting to be put into the Genres.txt file.
+     */
+    public static String getTargetGroups(){
+        String targetGroups = "";
+        if(targetGroupKid){
+            if(targetGroupTeen || targetGroupAdult || targetGroupSenior){
+                targetGroups = targetGroups + "Kid, ";
+            }else{
+                targetGroups = targetGroups + "Kid";
+            }
+        }
+        if(targetGroupTeen){
+            if(targetGroupAdult || targetGroupSenior){
+                targetGroups = targetGroups + "Teen, ";
+            }else{
+                targetGroups = targetGroups + "Teen";
+            }
+        }
+        if(targetGroupAdult){
+            if(targetGroupSenior){
+                targetGroups = targetGroups + "Adult, ";
+            }else{
+                targetGroups = targetGroups + "Adult";
+            }
+        }
+        if(targetGroupSenior){
+            targetGroups = targetGroups + "Senior";
+        }
+        return targetGroups;
+    }
+
     public static void resetVariablesToDefault(){
-        logger.info("resetting genre variables...");
+        LOGGER.info("resetting genre variables...");
         language = "English";
         id = AnalyzeExistingGenres.arrayListGenreIDsInUse.size();
         name = "";
@@ -211,7 +219,7 @@ public class NewGenreManager {
                 MainWindow.createFrame();
             }
         }else{
-            if(JOptionPane.showConfirmDialog((Component)null, "Do you wan't to add another genre?", "Add another genre?", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
+            if(JOptionPane.showConfirmDialog((Component)null, "Do you wan't to add another genre?", "Add another genre?", 0, JOptionPane.QUESTION_MESSAGE) == 0){
                 openStepWindow(1);
             }else{
                 MainWindow.createFrame();
@@ -221,27 +229,27 @@ public class NewGenreManager {
     public static String getCompatibleGenresByID(){
         ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();
         String compatibleGenresByID = "";
-        logger.info("arrayListGenreNamesByIdSorted.size: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.size());
+        LOGGER.info("arrayListGenreNamesByIdSorted.size: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.size());
         for(int i = 0; i<AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.size(); i++){
             if(Settings.enableDebugLogging){
-                logger.info("current i: " + i);
+                LOGGER.info("current i: " + i);
             }
             for(int n = 0; n<arrayListCompatibleGenres.size(); n++){
                 String number = AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]","");
                 if(Settings.enableDebugLogging){
-                    logger.info("current n: " + i);
-                    logger.info("current number: " + number);
-                    logger.info("arrayListGenreNamesByIdSorted [i]: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replace(" - " + number,""));
-                    logger.info("Does it equal that: " + arrayListCompatibleGenres.get(n));
+                    LOGGER.info("current n: " + i);
+                    LOGGER.info("current number: " + number);
+                    LOGGER.info("arrayListGenreNamesByIdSorted [i]: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replace(" - " + number,""));
+                    LOGGER.info("Does it equal that: " + arrayListCompatibleGenres.get(n));
                 }
                 if(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replace(" - " + number,"").equals(arrayListCompatibleGenres.get(n))){
                     if(Settings.enableDebugLogging){
-                        logger.info("genreNamesByIdSorted: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i));
-                        logger.info("arrayListCompatibleGenres: " + arrayListCompatibleGenres.get(n));
-                        logger.info("This should only be an id: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]",""));
+                        LOGGER.info("genreNamesByIdSorted: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i));
+                        LOGGER.info("arrayListCompatibleGenres: " + arrayListCompatibleGenres.get(n));
+                        LOGGER.info("This should only be an id: " + AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]",""));
                     }
                     arrayListGenreIDs.add(Integer.parseInt(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]","")));
-                    logger.info("compatible genre id: " + Integer.parseInt(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]","")));
+                    LOGGER.info("compatible genre id: " + Integer.parseInt(AnalyzeExistingGenres.arrayListGenreNamesByIdSorted.get(i).replaceAll("[^0-9]","")));
                 }
             }
         }

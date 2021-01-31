@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class ExportSettings {
-    private static Logger logger = LoggerFactory.getLogger(ExportSettings.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExportSettings.class);
     public static void export() {
         try {
             String directoryName = System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//";
@@ -19,28 +19,28 @@ public class ExportSettings {
             }
 
             File file = new File(directoryName + "/" + "settings.txt");
-            logger.info("Saving settings...");
+            LOGGER.info("Saving settings...");
             if(Settings.enableDebugLogging){
-                logger.info("Creating settings.txt");
-                logger.info(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+                LOGGER.info("Creating settings.txt");
+                LOGGER.info(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
             }
             file.createNewFile();
-            if(Settings.enableDebugLogging){ logger.info("Successfully created the file settings.txt"); }
+            if(Settings.enableDebugLogging){ LOGGER.info("Successfully created the file settings.txt"); }
             PrintWriter pw = new PrintWriter(new FileWriter(file));
-            if(Settings.enableDebugLogging){ logger.info("Writing to file..."); }
+            if(Settings.enableDebugLogging){ LOGGER.info("Writing to file..."); }
             pw.print(Settings.mgt2FilePath + "\n" +
                     Settings.languageToAdd + "\n" +
                     Settings.enableDebugLogging + "\n" +
                     Settings.disableSafetyFeatures);
             pw.close();
             if(Settings.enableDebugLogging){
-                logger.info(Settings.mgt2FilePath);
-                logger.info(Settings.languageToAdd);
-                logger.info(Settings.enableDebugLogging + "");
-                logger.info(Settings.disableSafetyFeatures + "");
-                logger.info("Writing to file successful!");
+                LOGGER.info(Settings.mgt2FilePath);
+                LOGGER.info(Settings.languageToAdd);
+                LOGGER.info(Settings.enableDebugLogging + "");
+                LOGGER.info(Settings.disableSafetyFeatures + "");
+                LOGGER.info("Writing to file successful!");
             }
-            logger.info("Settings have been saved.");
+            LOGGER.info("Settings have been saved.");
         } catch (Exception e) {
             e.printStackTrace();
         }

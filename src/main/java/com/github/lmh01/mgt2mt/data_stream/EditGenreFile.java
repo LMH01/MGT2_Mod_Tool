@@ -9,16 +9,16 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class EditGenreFile {
-    private static Logger logger = LoggerFactory.getLogger(EditGenreFile.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditGenreFile.class);
     private static File fileTempGenreFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt.temp");
 
     /**
      * Adds a new genre to the Genres.txt file with the current values that stand in {@link NewGenreManager}
      */
     public static void addGenre() throws IOException {
-        logger.info("Adding new genre...");
+        LOGGER.info("Adding new genre...");
         createTempFile();
-        logger.info("Deleting old Genres.txt file and writing new file.");
+        LOGGER.info("Deleting old Genres.txt file and writing new file.");
         Utils.fileGenres.delete();
         Utils.fileGenres.createNewFile();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
@@ -33,13 +33,13 @@ public class EditGenreFile {
                 firstLine = false;
             }
             if(Settings.enableDebugLogging) {
-                logger.info("currentLine: " + currentLine);
+                LOGGER.info("currentLine: " + currentLine);
             }
             bw.write(currentLine + System.getProperty("line.separator"));
         }
         br.close();
         fileTempGenreFile.delete();
-        logger.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
+        LOGGER.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
         //Print new genre:
         bw.write("[ID]" + NewGenreManager.id + System.getProperty("line.separator"));
         printLanguages(bw);
@@ -65,16 +65,16 @@ public class EditGenreFile {
         bw.write("[DESIGN5]" + NewGenreManager.design5 + System.getProperty("line.separator"));
         bw.write(System.getProperty("line.separator") + "[EOF]");
         bw.close();
-        logger.info("Temp file has been filled. Renaming...");
+        LOGGER.info("Temp file has been filled. Renaming...");
     }
 
     /**
      * @param genreId The genre id that should be removed.
      */
     public static void removeGenre(int genreId) throws IOException {
-        logger.info("Removing genre with id [" + genreId + "] from Genres.txt");
+        LOGGER.info("Removing genre with id [" + genreId + "] from Genres.txt");
         createTempFile();
-        logger.info("Deleting old Genres.txt file and writing new file.");
+        LOGGER.info("Deleting old Genres.txt file and writing new file.");
         Utils.fileGenres.delete();
         Utils.fileGenres.createNewFile();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
@@ -96,12 +96,12 @@ public class EditGenreFile {
                 while(linesToSkip>0){
                     currentLine = br.readLine();
                     if(currentLine.contains("[NAME EN]")){
-                        logger.info("Found [NAME EN] for genre to remove. Trying to remove image files.");
+                        LOGGER.info("Found [NAME EN] for genre to remove. Trying to remove image files.");
                         String genreName = currentLine.replace("[NAME EN]", "");
                         ImageFileHandler.removeImageFiles(genreName);
                     }
                     if(Settings.enableDebugLogging){
-                        logger.info("CurrentLines for genre that should be removed: " + currentLine);
+                        LOGGER.info("CurrentLines for genre that should be removed: " + currentLine);
                     }
                     linesToSkip--;
                 }
@@ -113,7 +113,7 @@ public class EditGenreFile {
         br.close();
         bw.close();
         fileTempGenreFile.delete();
-        logger.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
+        LOGGER.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
     }
 
     /**
@@ -126,7 +126,7 @@ public class EditGenreFile {
         fileTempGenreFile.createNewFile();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.fileGenres), StandardCharsets.UTF_8));
         PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileTempGenreFile), StandardCharsets.UTF_8));
-        logger.info("Writing current content to temp file.");
+        LOGGER.info("Writing current content to temp file.");
         String currentLine;
         boolean firstLine = true;
         bw.write("\ufeff");
@@ -136,7 +136,7 @@ public class EditGenreFile {
                 firstLine = false;
             }
             if(Settings.enableDebugLogging) {
-                logger.info("currentLine: " + currentLine);
+                LOGGER.info("currentLine: " + currentLine);
             }
             if(!currentLine.equals("[EOF]")){
                 bw.write(currentLine + System.getProperty("line.separator"));
@@ -144,7 +144,7 @@ public class EditGenreFile {
         }
         br.close();
         bw.close();
-        logger.info("Temp file has been created.");
+        LOGGER.info("Temp file has been created.");
     }
 
     private static void printLanguages(BufferedWriter bw) throws IOException {

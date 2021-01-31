@@ -7,16 +7,22 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 
 public class ChangeLog {
-    private static Logger logger = LoggerFactory.getLogger(ChangeLog.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeLog.class);
     public static final File FILE_CHANGES_LOG = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log");
     public static final File FILE_CHANGES_LOG_TEMP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log.temp");
+
+    /**
+     * Ads an entry to the log file.
+     * @param operation What operation has been performed.
+     * @param textBody The text body.
+     */
     public static void addLogEntry(int operation, String textBody){
         try {
-            logger.info("Adding new log entry...");
+            LOGGER.info("Adding new log entry...");
             String currentSystemTime = Utils.getCurrentDateTime();
             PrintWriter pw;
             if(FILE_CHANGES_LOG.exists()){
-                logger.info("changes.log already exists. Reading contents and writing to temp file.");
+                LOGGER.info("changes.log already exists. Reading contents and writing to temp file.");
                 pw = new PrintWriter(FILE_CHANGES_LOG_TEMP);
                 BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_CHANGES_LOG)));
                 String currentLine;
@@ -24,8 +30,8 @@ public class ChangeLog {
                     pw.print(currentLine + "\n");
                 }
                 br.close();
-                logger.info("changes.log.temp has been created.");
-                logger.info("Deleting old file and renaming changes.log.temp to changes.log");
+                LOGGER.info("changes.log.temp has been created.");
+                LOGGER.info("Deleting old file and renaming changes.log.temp to changes.log");
                 printNewLogEntry(operation, textBody, pw, currentSystemTime);
                 pw.close();
                 FILE_CHANGES_LOG.delete();
@@ -46,7 +52,7 @@ public class ChangeLog {
     /**
      * Prints new log entry into the changes.log file.
      * @param operation What operation has been performed.
-     * @param textBody The genre/genre id.
+     * @param textBody The text body.
      * @param pw PrintWriter of the file.
      * @param currentSystemTime The string that is being printed before the log entry.
      */
