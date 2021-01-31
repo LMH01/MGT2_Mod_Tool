@@ -36,52 +36,52 @@ public class WindowAddGenrePage6 extends JFrame{
         setContentPane(contentPane);
 
         //TODO See how i can replace the spinners with sliders. - Long term
-        JLabel labelDesign1 = new JLabel("Design 1:");
-        labelDesign1.setBounds(10, 10, 100, 23);
+        JLabel labelDesign1 = new JLabel("Gameplay/Visuals: ");
+        labelDesign1.setBounds(10, 10, 180, 23);
         contentPane.add(labelDesign1);
 
         JSpinner spinnerDesign1 = new JSpinner();
-        spinnerDesign1.setBounds(120, 10, 100, 23);
-        spinnerDesign1.setToolTipText("Design Priority: If gameplay is favoured type value smaller 5. If Visuals are favoured type value bigger 5.");
+        spinnerDesign1.setBounds(200, 10, 100, 23);
+        spinnerDesign1.setToolTipText("[Range: 0-10; Default 5] If gameplay is favoured type value smaller 5. If Visuals are favoured type value bigger 5.");
         spinnerDesign1.setModel(new SpinnerNumberModel(5, 0, 10, 1));
         contentPane.add(spinnerDesign1);
 
-        JLabel labelDesign2 = new JLabel("Design 2:");
-        labelDesign2.setBounds(10, 35, 120, 23);
+        JLabel labelDesign2 = new JLabel("Story/Game length: ");
+        labelDesign2.setBounds(10, 35, 180, 23);
         contentPane.add(labelDesign2);
 
         JSpinner spinnerDesign2 = new JSpinner();
-        spinnerDesign2.setBounds(120, 35, 100, 23);
-        spinnerDesign2.setToolTipText("Design Priority: If Story is favoured type value smaller 5. If Game length is favoured type value bigger 5.");
+        spinnerDesign2.setBounds(200, 35, 100, 23);
+        spinnerDesign2.setToolTipText("[Range: 0-10; Default 5] Design Priority: If Story is favoured type value smaller 5. If Game length is favoured type value bigger 5.");
         spinnerDesign2.setModel(new SpinnerNumberModel(5, 0, 10, 1));
         contentPane.add(spinnerDesign2);
 
-        JLabel labelDesign3 = new JLabel("Design 3:");
-        labelDesign3.setBounds(10, 60, 120, 23);
+        JLabel labelDesign3 = new JLabel("Atmosphere/Content: ");
+        labelDesign3.setBounds(10, 60, 180, 23);
         contentPane.add(labelDesign3);
 
         JSpinner spinnerDesign3 = new JSpinner();
-        spinnerDesign3.setBounds(120, 60, 100, 23);
-        spinnerDesign3.setToolTipText("Design Priority: If Atmosphere is favoured type value smaller 5. If Content is favoured type value bigger 5.");
+        spinnerDesign3.setBounds(200, 60, 100, 23);
+        spinnerDesign3.setToolTipText("[Range: 0-10; Default 5] Design Priority: If Atmosphere is favoured type value smaller 5. If Content is favoured type value bigger 5.");
         spinnerDesign3.setModel(new SpinnerNumberModel(5, 0, 10, 1));
         contentPane.add(spinnerDesign3);
 
-        JLabel labelDesign4 = new JLabel("Design 4:");
-        labelDesign4.setBounds(10, 85, 120, 23);
+        JLabel labelDesign4 = new JLabel("Game depth/Beginner-friendly: ");
+        labelDesign4.setBounds(10, 85, 180, 23);
         contentPane.add(labelDesign4);
 
         JSpinner spinnerDesign4 = new JSpinner();
-        spinnerDesign4.setBounds(120, 85, 100, 23);
-        spinnerDesign4.setToolTipText("Design Priority: If Game depth is favoured type value smaller 5. If your genre should be Beginner-friendly type value bigger 5.");
+        spinnerDesign4.setBounds(200, 85, 100, 23);
+        spinnerDesign4.setToolTipText("[Range: 0-10; Default 5] Design Priority: If Game depth is favoured type value smaller 5. If your genre should be Beginner-friendly type value bigger 5.");
         spinnerDesign4.setModel(new SpinnerNumberModel(5, 0, 10, 1));
         contentPane.add(spinnerDesign4);
 
-        JLabel labelDesign5 = new JLabel("Design 5:");
-        labelDesign5.setBounds(10, 110, 120, 23);
+        JLabel labelDesign5 = new JLabel("Core Gamers/Casual Gamer: ");
+        labelDesign5.setBounds(10, 110, 180, 23);
         contentPane.add(labelDesign5);
 
         JSpinner spinnerDesign5 = new JSpinner();
-        spinnerDesign5.setBounds(120, 110, 100, 23);
+        spinnerDesign5.setBounds(200, 110, 100, 23);
         spinnerDesign5.setToolTipText("Design Priority: If Core Gamers are favoured type value smaller 5. If your genre should be for Casual Gamers type value bigger 5.");
         spinnerDesign5.setModel(new SpinnerNumberModel(5, 0, 10, 1));
         contentPane.add(spinnerDesign5);

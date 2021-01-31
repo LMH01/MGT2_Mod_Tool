@@ -91,14 +91,14 @@ public class WindowAddGenrePage1 extends JFrame{
     private void setSpinnerId(){
         if(Settings.disableSafetyFeatures){
             spinnerId.setModel(new SpinnerNumberModel(0, 0, 999, 1));
-            spinnerId.setToolTipText("This is the unique id for your genre. Do not change it unless you have your own genre id system.");
+            spinnerId.setToolTipText("[Range: 0-999] This is the unique id for your genre. Do not change it unless you have your own genre id system.");
             spinnerId.setEnabled(true);
         }else{
             spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, NewGenreManager.id, 1));
             spinnerId.setEnabled(false);
         }
         spinnerId.setBounds(120, 60, 100, 23);
-        spinnerId.setToolTipText("This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
+        spinnerId.setToolTipText("[Range: Automatic] This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
         contentPane.add(spinnerId);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){

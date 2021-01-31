@@ -206,7 +206,7 @@ public class NewGenreManager {
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);
                 JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
-                if(JOptionPane.showConfirmDialog(null, "Do you wan't to add another genre?", "Add another genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
+                if(JOptionPane.showConfirmDialog(null, "Do you wan't to add another genre?", "Add another genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
                     openStepWindow(1);
                 }else{
                     MainWindow.createFrame();

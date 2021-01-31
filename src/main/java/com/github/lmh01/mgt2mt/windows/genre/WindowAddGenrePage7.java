@@ -41,7 +41,7 @@ public class WindowAddGenrePage7 extends JFrame{
 
         JSpinner spinnerGameplay = new JSpinner();
         spinnerGameplay.setBounds(120, 10, 100, 23);
-        spinnerGameplay.setToolTipText("Gameplay priority in % [Steps of 5%]");
+        spinnerGameplay.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Gameplay priority in %");
         spinnerGameplay.setModel(new SpinnerNumberModel(25, 5, 85, 5));
         contentPane.add(spinnerGameplay);
 
@@ -51,7 +51,7 @@ public class WindowAddGenrePage7 extends JFrame{
 
         JSpinner spinnerGraphic = new JSpinner();
         spinnerGraphic.setBounds(120, 35, 100, 23);
-        spinnerGraphic.setToolTipText("Graphic priority in % [Steps of 5%]");
+        spinnerGraphic.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Graphic priority in %");
         spinnerGraphic.setModel(new SpinnerNumberModel(25, 5, 85, 5));
         contentPane.add(spinnerGraphic);
 
@@ -61,7 +61,7 @@ public class WindowAddGenrePage7 extends JFrame{
 
         JSpinner spinnerSound = new JSpinner();
         spinnerSound.setBounds(120, 60, 100, 23);
-        spinnerSound.setToolTipText("Sound priority in % [Steps of 5%]");
+        spinnerSound.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Sound priority in %");
         spinnerSound.setModel(new SpinnerNumberModel(25, 5, 85, 5));
         contentPane.add(spinnerSound);
 
@@ -71,7 +71,7 @@ public class WindowAddGenrePage7 extends JFrame{
 
         JSpinner spinnerControl = new JSpinner();
         spinnerControl.setBounds(120, 85, 100, 23);
-        spinnerControl.setToolTipText("Control priority in % [Steps of 5%]");
+        spinnerControl.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Control priority in %");
         spinnerControl.setModel(new SpinnerNumberModel(25, 5, 85, 5));
         contentPane.add(spinnerControl);
 

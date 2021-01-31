@@ -49,7 +49,7 @@ public class Settings {
         ExportSettings.export();
     }
     public static void setMgt2FilePath(boolean retry){
-        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- If you encounter a bug please report it over on github.\n (Github can be accessed fia the Other menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- If you encounter a bug please report it over on github.\n (Github can be accessed fia the main menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
         boolean correctFolder = false;
         boolean breakLoop = false;
         File mgt2DefaultFilePathFile = new File(MGT_2_DEFAULT_FILE_PATH);
@@ -65,7 +65,7 @@ public class Settings {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
                     JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                    fileChooser.setDialogTitle("Choose 'Mad Games Tycoon 2.exe':");
+                    fileChooser.setDialogTitle("Choose 'Mad Games Tycoon 2' main folder:");
                     fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
                     int return_value = fileChooser.showOpenDialog(null);
                     if(return_value == 0){

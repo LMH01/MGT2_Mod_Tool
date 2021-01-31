@@ -41,7 +41,7 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JSpinner spinnerResearchPoints = new JSpinner();
         spinnerResearchPoints.setBounds(120, 10, 100, 23);
-        spinnerResearchPoints.setToolTipText("Number of required research points to research that genre.");
+        spinnerResearchPoints.setToolTipText("[Range: 1-100000; Default: " + NewGenreManager.researchPoints + "] Number of required research points to research that genre.");
         spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 100000, 1));
         contentPane.add(spinnerResearchPoints);
 
@@ -51,7 +51,7 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JSpinner spinnerDevelopmentCost = new JSpinner();
         spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
-        spinnerDevelopmentCost.setToolTipText("Set the development cost for a game with your genre. This cost will be added when developing a game with this genre.");
+        spinnerDevelopmentCost.setToolTipText("[Range: 1-1000000; Default: " + NewGenreManager.devCost + "] Set the development cost for a game with your genre. This cost will be added when developing a game with this genre.");
         spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000, 1));
         contentPane.add(spinnerDevelopmentCost);
 
@@ -61,7 +61,7 @@ public class WindowAddGenrePage3 extends JFrame{
 
         JSpinner spinnerGenrePrice = new JSpinner();
         spinnerGenrePrice.setBounds(120, 60, 100, 23);
-        spinnerGenrePrice.setToolTipText("This is the research cost, it is being payed when researching this genre.");
+        spinnerGenrePrice.setToolTipText("[Range: 1-10000000; Default: " + NewGenreManager.price + "] This is the research cost, it is being payed when researching this genre.");
         spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 10000000, 1));
         contentPane.add(spinnerGenrePrice);
 

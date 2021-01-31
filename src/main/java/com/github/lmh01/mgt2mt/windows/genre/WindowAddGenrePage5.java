@@ -39,11 +39,11 @@ public class WindowAddGenrePage5 extends JFrame{
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelSelectGenre1 = new JLabel("Select what genres work good together");
+        JLabel labelSelectGenre1 = new JLabel("Select what genres work good together with your");
         labelSelectGenre1.setBounds(10, 0, 300, 23);
         contentPane.add(labelSelectGenre1);
 
-        JLabel labelSelectGenre2 = new JLabel("with your genre. (Tip: Hold STRG and click with your mouse)");
+        JLabel labelSelectGenre2 = new JLabel("genre. (Tip: Hold STRG and click with your mouse)");
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
