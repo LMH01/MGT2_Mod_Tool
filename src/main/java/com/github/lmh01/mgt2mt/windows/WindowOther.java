@@ -46,7 +46,7 @@ public class WindowOther extends JFrame {
         JButton buttonCreateBackup = new JButton("Open log");
         buttonCreateBackup.setBounds(10, 40, 175, 23);
         buttonCreateBackup.setToolTipText("Click to open the change log. Shows all changes that have been made to the game files.");
-        buttonCreateBackup.addActionListener(ignored -> {
+        buttonCreateBackup.addActionListener(actionEvent -> {
             try {
                 if(!ChangeLog.FILE_CHANGES_LOG.exists()){
                     JOptionPane.showMessageDialog(new Frame(), "The file has not been created yet.", "Unable to open log:", JOptionPane.ERROR_MESSAGE);
@@ -62,7 +62,7 @@ public class WindowOther extends JFrame {
         JButton buttonOpenBackupFolder = new JButton("Open MGT2 Folder");
         buttonOpenBackupFolder.setBounds(10, 70, 175, 23);
         buttonOpenBackupFolder.setToolTipText("Click to open the MGT2 main folder.");
-        buttonOpenBackupFolder.addActionListener(ignored -> {
+        buttonOpenBackupFolder.addActionListener(actionEvent -> {
             try {
                 Desktop.getDesktop().open(new File(Settings.mgt2FilePath));
             } catch (IOException ioException) {
@@ -74,7 +74,7 @@ public class WindowOther extends JFrame {
         JButton buttonShowGenres = new JButton("Show active genres");
         buttonShowGenres.setBounds(10, 100, 175, 23);
         buttonShowGenres.setToolTipText("Click to see a list of currently active genres. The number behind the genre number is the genre id.");
-        buttonShowGenres.addActionListener(ignored -> {
+        buttonShowGenres.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
@@ -98,7 +98,7 @@ public class WindowOther extends JFrame {
         JButton buttonOpenGenresTxtFile = new JButton("Open genres.txt");
         buttonOpenGenresTxtFile.setBounds(10, 130, 175, 23);
         buttonOpenGenresTxtFile.setToolTipText("Click to open the MGT2 main folder.");
-        buttonOpenGenresTxtFile.addActionListener(ignored -> {
+        buttonOpenGenresTxtFile.addActionListener(actionEvent -> {
             try {
                 if(!Utils.fileGenres.exists()){
                     JOptionPane.showMessageDialog(null, "The Genres.txt file could not be opened.\nFile not found: Please check if your mgt2 folder is set correctly", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
@@ -114,7 +114,7 @@ public class WindowOther extends JFrame {
         JButton buttonCheckForUpdates = new JButton("Check for updates");
         buttonCheckForUpdates.setBounds(10, 160, 175, 23);
         buttonCheckForUpdates.setToolTipText("Click to check this tool for updates.");
-        buttonCheckForUpdates.addActionListener(ignored -> {
+        buttonCheckForUpdates.addActionListener(actionEvent -> {
             UpdateChecker.checkForUpdates(true);
         });
         contentPane.add(buttonCheckForUpdates);
@@ -122,7 +122,7 @@ public class WindowOther extends JFrame {
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 190, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
-        btnBack.addActionListener(ignored -> {
+        btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
             frame.dispose();
         });

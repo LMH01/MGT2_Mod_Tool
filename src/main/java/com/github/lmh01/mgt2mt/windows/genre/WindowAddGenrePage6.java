@@ -89,7 +89,7 @@ public class WindowAddGenrePage6 extends JFrame{
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 150, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
-        buttonNext.addActionListener((ignored) -> {
+        buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             NewGenreManager.openStepWindow(7);
             frame.dispose();
@@ -99,7 +99,7 @@ public class WindowAddGenrePage6 extends JFrame{
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 150, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
-        buttonPrevious.addActionListener((ignored) -> {
+        buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             NewGenreManager.openStepWindow(5);
             frame.dispose();
@@ -109,7 +109,7 @@ public class WindowAddGenrePage6 extends JFrame{
         JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 150, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
-        buttonQuit.addActionListener((ignored) -> {
+        buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();

@@ -44,7 +44,7 @@ public class WindowAvailableMods extends JFrame {
         JButton buttonOpenAddGenreToGamesWindow = new JButton("NPC_Games_list");
         buttonOpenAddGenreToGamesWindow.setBounds(10, 80, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
-        buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
+        buttonOpenAddGenreToGamesWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
@@ -63,7 +63,7 @@ public class WindowAvailableMods extends JFrame {
         JButton buttonAddGenreWindow = new JButton("Add genre");
         buttonAddGenreWindow.setBounds(10, 30, 175, 23);
         buttonAddGenreWindow.setToolTipText("Click to add a new genre to Mad Games Tycoon 2");
-        buttonAddGenreWindow.addActionListener((ignored) -> {
+        buttonAddGenreWindow.addActionListener(actionEvent -> {
             WindowAddNewGenre.createFrame();
             frame.dispose();
         });
@@ -72,7 +72,7 @@ public class WindowAvailableMods extends JFrame {
         JButton buttonRemoveGenreWindow = new JButton("Remove genre");
         buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
         buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
-        buttonRemoveGenreWindow.addActionListener((ignored) -> {
+        buttonRemoveGenreWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 Backup.createBackup(Utils.fileGenres);
@@ -108,13 +108,13 @@ public class WindowAvailableMods extends JFrame {
         JButton buttonSettings = new JButton("Settings");
         buttonSettings.setBounds(100, 140, 85, 23);
         buttonSettings.setToolTipText("Click to open the settings page.");
-        buttonSettings.addActionListener(e -> WindowSettings.createFrame());
+        buttonSettings.addActionListener(actionEvent -> WindowSettings.createFrame());
         contentPane.add(buttonSettings);
 
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 112, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
-        btnBack.addActionListener((ignored) -> {
+        btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
             frame.dispose();
         });
@@ -123,7 +123,7 @@ public class WindowAvailableMods extends JFrame {
         JButton btnQuit = new JButton("Quit");
         btnQuit.setBounds(10, 140, 80, 23);
         btnQuit.setToolTipText("Click to exit the application.");
-        btnQuit.addActionListener((ignored) -> System.exit(0));
+        btnQuit.addActionListener(actionEvent -> System.exit(0));
         contentPane.add(btnQuit);
     }
 }

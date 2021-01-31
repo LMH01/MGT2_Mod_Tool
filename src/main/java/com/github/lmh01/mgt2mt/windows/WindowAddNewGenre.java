@@ -41,7 +41,7 @@ public class WindowAddNewGenre extends JFrame {
         JButton buttonOpenAddGenreToGamesWindow = new JButton("Start step by step guide");
         buttonOpenAddGenreToGamesWindow.setBounds(10, 50, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a new genre to MGT2 by using a step by step guide.");
-        buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
+        buttonOpenAddGenreToGamesWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 NewGenreManager.addGenre();
@@ -62,7 +62,7 @@ public class WindowAddNewGenre extends JFrame {
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 82, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
-        btnBack.addActionListener((ignored) -> {
+        btnBack.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
             frame.dispose();
         });
@@ -71,7 +71,7 @@ public class WindowAddNewGenre extends JFrame {
         JButton btnQuit = new JButton("Quit");
         btnQuit.setBounds(10, 110, 80, 23);
         btnQuit.setToolTipText("Click to exit the application.");
-        btnQuit.addActionListener((ignored) -> System.exit(0));
+        btnQuit.addActionListener(actionEvent -> System.exit(0));
         contentPane.add(btnQuit);
     }
 }

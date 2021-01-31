@@ -75,7 +75,7 @@ public class MainWindow extends JFrame {
         JButton buttonBackup = new JButton("Backup");
         buttonBackup.setBounds(10, 70, 100, 23);
         buttonBackup.setToolTipText("Click to open the backup page.");
-        buttonBackup.addActionListener(e -> {
+        buttonBackup.addActionListener(actionEvent -> {
             WindowBackup.createFrame();
             frame.dispose();
         });
@@ -84,7 +84,7 @@ public class MainWindow extends JFrame {
         JButton buttonOther = new JButton("Other");
         buttonOther.setBounds(120, 70, 100, 23);
         buttonOther.setToolTipText("Click to open the other page.");
-        buttonOther.addActionListener(e -> {
+        buttonOther.addActionListener(actionEvent -> {
             WindowOther.createFrame();
             frame.dispose();
         });
@@ -93,7 +93,7 @@ public class MainWindow extends JFrame {
         JButton buttonAvailableMods = new JButton("Begin");
         buttonAvailableMods.setBounds(10, 40, 310, 23);
         buttonAvailableMods.setToolTipText("Click to open the page with the available modifications");
-        buttonAvailableMods.addActionListener(e -> {
+        buttonAvailableMods.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
             frame.dispose();
         });

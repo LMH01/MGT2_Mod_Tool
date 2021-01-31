@@ -48,7 +48,7 @@ public class WindowBackup extends JFrame {
         JButton buttonCreateBackup = new JButton("Create Backup");
         buttonCreateBackup.setBounds(10, 40, 175, 23);
         buttonCreateBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
-        buttonCreateBackup.addActionListener(ignored -> {
+        buttonCreateBackup.addActionListener(actionEvent -> {
             try {
                 Backup.createFullBackup(false);
                 JOptionPane.showMessageDialog(new Frame(), "The backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
@@ -131,7 +131,7 @@ public class WindowBackup extends JFrame {
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
         buttonOpenBackupFolder.setBounds(10, 160, 175, 23);
         buttonOpenBackupFolder.setToolTipText("Click to open the backup folder. All backups that have been created are located here. Use this if you do want to restore a backup manually.");
-        buttonOpenBackupFolder.addActionListener(ignored -> {
+        buttonOpenBackupFolder.addActionListener(actionEvent -> {
             try {
                 File fileBackFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
                 if(!fileBackFolder.exists()){
@@ -148,7 +148,7 @@ public class WindowBackup extends JFrame {
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 190, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
-        btnBack.addActionListener(ignored -> {
+        btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
             frame.dispose();
         });

@@ -59,7 +59,7 @@ public class WindowSettings extends JFrame {
         JButton buttonBrowseMGT2Folder = new JButton("Browse");
         buttonBrowseMGT2Folder.setBounds(405, 99, 89, 23);
         buttonBrowseMGT2Folder.setToolTipText("Click to open a folder choosing dialog to change the MGT2 folder.");
-        buttonBrowseMGT2Folder.addActionListener(e -> {
+        buttonBrowseMGT2Folder.addActionListener(actionEvent -> {
             Settings.setMgt2FilePath(false);
             textFieldMGT2Folder.setText(Settings.mgt2FilePath);
         });
@@ -68,7 +68,7 @@ public class WindowSettings extends JFrame {
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 132, 69, 23);
         btnBack.setToolTipText("Click to get to the main page.");
-        btnBack.addActionListener(e -> {
+        btnBack.addActionListener(actionEvent -> {
             Settings.exportSettings();
             WindowSettings.frame.dispose();
         });
@@ -77,7 +77,7 @@ public class WindowSettings extends JFrame {
         JButton btnResetSettings = new JButton("Reset Settings");
         btnResetSettings.setBounds(280, 132, 127, 23);
         btnResetSettings.setToolTipText("Click to reset the settings to default values.");
-        btnResetSettings.addActionListener(e -> {
+        btnResetSettings.addActionListener(actionEvent -> {
             if (JOptionPane.showConfirmDialog(null, "Are you sure?", "Reset Settings", JOptionPane.YES_NO_OPTION) == 0) {
                 Settings.resetSettings();
                 textFieldMGT2Folder.setText(Settings.mgt2FilePath);
@@ -92,7 +92,7 @@ public class WindowSettings extends JFrame {
         JButton btnSave = new JButton("Save");
         btnSave.setBounds(443, 132, 89, 23);
         btnSave.setToolTipText("Click to save the current settings.");
-        btnSave.addActionListener(e -> {
+        btnSave.addActionListener(actionEvent -> {
             if(checkBoxDisableSafety.isSelected()){
                 if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to disable the safety features?\nThis could lead to problems.", "Disable safety features?", JOptionPane.YES_NO_OPTION) == 0){
                     Settings.setSettings(checkBoxDebugMode,checkBoxDisableSafety);
@@ -106,7 +106,7 @@ public class WindowSettings extends JFrame {
         JButton btnLoadSettings = new JButton("Load Settings");
         btnLoadSettings.setBounds(138, 132, 113, 23);
         btnLoadSettings.setToolTipText("Click to load settings from file.");
-        btnLoadSettings.addActionListener(e -> {
+        btnLoadSettings.addActionListener(actionEvent -> {
             JFileChooser fileChooser = new JFileChooser();
             int return_value = fileChooser.showOpenDialog(null);
             if (return_value == 0) {

@@ -47,7 +47,7 @@ public class WindowAddGenrePage8 extends JFrame{
         JButton buttonBrowse = new JButton("Browse");
         buttonBrowse.setBounds(240, 40, 80, 23);
         buttonBrowse.setToolTipText("Click here to select an image file that should be used as your genre image.");
-        buttonBrowse.addActionListener(e -> {
+        buttonBrowse.addActionListener(actionEvent -> {
             String imageFilePath = getGenreImageFilePath();
             if(!imageFilePath.equals("error")){
                 NewGenreManager.imageFile = new File(imageFilePath);
@@ -60,7 +60,7 @@ public class WindowAddGenrePage8 extends JFrame{
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
-        buttonNext.addActionListener((ignored) -> {
+        buttonNext.addActionListener(actionEvent -> {
             NewGenreManager.showSummary();
             frame.dispose();
         });
@@ -69,7 +69,7 @@ public class WindowAddGenrePage8 extends JFrame{
         JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 100, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
-        buttonPrevious.addActionListener((ignored) -> {
+        buttonPrevious.addActionListener(actionEvent -> {
             NewGenreManager.openStepWindow(7);
             frame.dispose();
         });
@@ -78,7 +78,7 @@ public class WindowAddGenrePage8 extends JFrame{
         JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 100, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
-        buttonQuit.addActionListener((ignored) -> {
+        buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
                 frame.dispose();

@@ -71,7 +71,7 @@ public class WindowAddGenreToGames extends JFrame {
         JButton buttonApply = new JButton("Apply");
         buttonApply.setBounds(95,170,80,23);
         buttonApply.setToolTipText("Click to edit the NpcGames.txt file with your settings.");
-        buttonApply.addActionListener((ignored) -> {
+        buttonApply.addActionListener(actionEvent -> {
             boolean addGenreID;
             String messageOperation = "";
             if(Objects.equals(comboBoxOperation.getSelectedItem(), "Add")) {
@@ -98,7 +98,7 @@ public class WindowAddGenreToGames extends JFrame {
         JButton btnBack = new JButton("Back");
         btnBack.setBounds(10, 142, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
-        btnBack.addActionListener((ignored) -> {
+        btnBack.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
             frame.dispose();
         });
@@ -107,7 +107,7 @@ public class WindowAddGenreToGames extends JFrame {
         JButton btnQuit = new JButton("Quit");
         btnQuit.setBounds(10, 170, 80, 23);
         btnQuit.setToolTipText("Click to exit the application.");
-        btnQuit.addActionListener((ignored) -> System.exit(0));
+        btnQuit.addActionListener(actionEvent -> System.exit(0));
         contentPane.add(btnQuit);
     }
     private void setSpinner(){
