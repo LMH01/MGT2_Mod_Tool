@@ -4,8 +4,8 @@ import com.github.lmh01.mgt2mt.dataStream.ChangeLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -14,11 +14,11 @@ public class Backup {
     private static String currentTimeAndDay;
 
     /**
-     * Creates a backup from each of the files that could be modified with this tool
+     * Creates a backup of a given file.
      * @param fileToBackup This is the file from which a backup should be created.
-     * @return Returns true when process was successful. Returns false if an exception occurred.
+     * @return Returns true if backup was successful or when the user decided to continue anyway.
      */
-    public static boolean createBackup(File fileToBackup) {
+    public static boolean createBackup(File fileToBackup){
         currentTimeAndDay = Utils.getCurrentDateTime();
         ChangeLog.addLogEntry(5, fileToBackup.getName());
         File backupFileFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//");
@@ -37,11 +37,15 @@ public class Backup {
         File fileBackupFile = new File(Utils.getMGT2DataPath() + fileToBackup.getName());
         try {
             Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            if(JOptionPane.showConfirmDialog(null, "Backup of file " + fileToBackup.getName() + " was unsuccessful.\nDo you want to continue anyway?", "Unable to backup file", JOptionPane.YES_NO_OPTION) == 0){
+                return true;
+            }else{
+                return false;
+            }
         }
-        return true;
     }
 
     /**

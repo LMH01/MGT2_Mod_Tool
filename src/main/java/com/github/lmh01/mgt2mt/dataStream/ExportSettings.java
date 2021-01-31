@@ -12,7 +12,6 @@ public class ExportSettings {
     private static Logger logger = LoggerFactory.getLogger(ExportSettings.class);
     public static void export() {
         try {
-
             String directoryName = System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//";
             File directory = new File(directoryName);
             if (!directory.exists()) {
@@ -39,7 +38,7 @@ public class ExportSettings {
                 logger.info(Settings.languageToAdd);
                 logger.info(Settings.enableDebugLogging + "");
                 logger.info(Settings.disableSafetyFeatures + "");
-                logger.info("Writing to file successfull!");
+                logger.info("Writing to file successful!");
             }
             logger.info("Settings have been saved.");
         } catch (Exception e) {

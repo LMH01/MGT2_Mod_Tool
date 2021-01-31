@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -125,18 +126,24 @@ public class NewGenreManager {
         {
             //click yes
             boolean continueAnyway = false;
-            boolean imageFileAccessedSuccess = ImageFileHandler.moveImage(imageFile);
-            if(!imageFileAccessedSuccess){
+            boolean imageFileAccessedSuccess = false;
+            try {
+                ImageFileHandler.moveImage(imageFile);
+                imageFileAccessedSuccess = true;
+            } catch (IOException e) {
+                e.printStackTrace();
                 if(JOptionPane.showConfirmDialog(null, "Error while processing image files.\nDo you wan't to add you new genre anyway?", "Continue anyway?", JOptionPane.ERROR_MESSAGE) == 0){
                     //click yes
                     continueAnyway = true;
                 }
             }
             if(continueAnyway || imageFileAccessedSuccess){
-                if(EditGenreFile.addGenre()){
+                try {
+                    EditGenreFile.addGenre();
                     NewGenreManager.genreAdded();
                     WindowAddNewGenre.createFrame();
-                }else{
+                } catch (IOException e) {
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -178,7 +185,12 @@ public class NewGenreManager {
         ChangeLog.addLogEntry(1, name);
         ImageIcon iconGenre = new ImageIcon(NewGenreManager.imageFile.getPath());
         if(JOptionPane.showConfirmDialog((Component)null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", 0, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
-            NPCGameListChanger.editNPCGames(id, true, 20);
+            try {
+                NPCGameListChanger.editNPCGames(id, true, 20);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
         }
     }
     public static String getCompatibleGenresByID(){

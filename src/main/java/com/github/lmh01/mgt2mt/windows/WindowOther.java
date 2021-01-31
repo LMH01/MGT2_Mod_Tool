@@ -2,7 +2,10 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.ChangeLog;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -72,7 +75,8 @@ public class WindowOther extends JFrame {
         buttonShowGenres.setBounds(10, 100, 175, 23);
         buttonShowGenres.setToolTipText("Click to see a list of currently active genres.");
         buttonShowGenres.addActionListener(ignored -> {
-            if(AnalyzeExistingGenres.analyzeGenreFile()){
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
                 String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutID();
 
                 JList<String> listAvailableGenres = new JList<>(string);
@@ -84,6 +88,9 @@ public class WindowOther extends JFrame {
                 scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
                 JOptionPane.showMessageDialog(null, scrollPaneAvailableGenres, "The following genres are currently active.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                Utils.showErrorMessage(1, e);
+                e.printStackTrace();
             }
         });
         contentPane.add(buttonShowGenres);

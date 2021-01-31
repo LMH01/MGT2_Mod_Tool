@@ -21,70 +21,53 @@ public class AnalyzeExistingGenres {
      * Analyzes the Genres.txt file.
      * @return Returns true when the Genres.txt file has been analyzed successfully. When an exception occurs it will return false.
      */
-    public static boolean analyzeGenreFile(){
+    public static void analyzeGenreFile() throws IOException {
         arrayListGenreIDsInUse.clear();
         arrayListGenreNamesInUse.clear();
         arrayListGenreNamesSorted.clear();
         arrayListGenreNamesByIdSorted.clear();
-        try {
-            File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
-            logger.info("Scanning for genre id's and names in file: " + genresFile);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(genresFile), StandardCharsets.UTF_8));
-            int currentID;
-            String currentIDAsString;
-            String currentLine;
-            while((currentLine = reader.readLine()) != null){
-                if(currentLine.contains("[ID]")){
-                    currentIDAsString = currentLine;
-                    currentID = Integer.parseInt(currentIDAsString.replace("[ID]", "").replaceAll("\\uFEFF", ""));//replaceAll("\\uFEFF", "") is used for the correct formatting
-                    if(Settings.enableDebugLogging){logger.info("found id: " + currentID);}
-                    arrayListGenreIDsInUse.add(currentID);
-                }else if(currentLine.contains("[NAME EN]")){
-                    String currentName = currentLine.replace("[NAME EN]", "");
-                    arrayListGenreNamesInUse.add(currentName);
-                    if(Settings.enableDebugLogging){logger.info("found name: " + currentName);}
-                }
+
+        File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
+        logger.info("Scanning for genre id's and names in file: " + genresFile);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(genresFile), StandardCharsets.UTF_8));
+        int currentID;
+        String currentIDAsString;
+        String currentLine;
+        while((currentLine = reader.readLine()) != null){
+            if(currentLine.contains("[ID]")){
+                currentIDAsString = currentLine;
+                currentID = Integer.parseInt(currentIDAsString.replace("[ID]", "").replaceAll("\\uFEFF", ""));//replaceAll("\\uFEFF", "") is used for the correct formatting
+                if(Settings.enableDebugLogging){logger.info("found id: " + currentID);}
+                arrayListGenreIDsInUse.add(currentID);
+            }else if(currentLine.contains("[NAME EN]")){
+                String currentName = currentLine.replace("[NAME EN]", "");
+                arrayListGenreNamesInUse.add(currentName);
+                if(Settings.enableDebugLogging){logger.info("found name: " + currentName);}
             }
-            reader.close();
-            logger.info("Analyzing of genre ids and names complete. Found: " + arrayListGenreIDsInUse.size());
-            if(Settings.enableDebugLogging){logger.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");}
-            writeHelpFile();
-            fillGenresByIdListSorted();
-            sortGenreNames();
-            return true;
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to continue:\nError while accessing Genres.txt file.\nThe file does not exist.\nPlease check in the settings if your MGT2 path is set correctly.", "Unable to access Genres.txt", JOptionPane.ERROR_MESSAGE);
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to continue:\nError while accessing Genres.txt file.\nPlease try again with administrator rights.", "Unable to access Genres.txt", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
+        reader.close();
+        logger.info("Analyzing of genre ids and names complete. Found: " + arrayListGenreIDsInUse.size());
+        if(Settings.enableDebugLogging){logger.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");}
+        writeHelpFile();
+        fillGenresByIdListSorted();
+        sortGenreNames();;
     }
 
     /**
      * Writes a help file with genres by id.
      */
-    private static void writeHelpFile(){
-        try {
-            File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
-            if(file.exists()){
-                file.delete();
-            }
-            file.createNewFile();
-            PrintWriter pw = new PrintWriter(file);
-            for(int i = 0; i< arrayListGenreIDsInUse.size(); i++){
-                pw.print(arrayListGenreIDsInUse.get(i) + " - " + arrayListGenreNamesInUse.get(i) + "\n");
-            }
-            pw.close();
-            logger.info("file created.");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static void writeHelpFile() throws IOException {
+        File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
+        if(file.exists()){
+            file.delete();
         }
+        file.createNewFile();
+        PrintWriter pw = new PrintWriter(file);
+        for(int i = 0; i< arrayListGenreIDsInUse.size(); i++){
+            pw.print(arrayListGenreIDsInUse.get(i) + " - " + arrayListGenreNamesInUse.get(i) + "\n");
+        }
+        pw.close();
+        logger.info("file created.");
     }
     private static void fillGenresByIdListSorted(){
         for(int i = 0; i< arrayListGenreIDsInUse.size(); i++){

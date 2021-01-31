@@ -55,8 +55,13 @@ public class WindowBackup extends JFrame {
         buttonOpenBackupFolder.setToolTipText("Click to open the backup folder.");
         buttonOpenBackupFolder.addActionListener(ignored -> {
             try {
-                Desktop.getDesktop().open(new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//"));
+                File fileBackFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
+                if(!fileBackFolder.exists()){
+                    fileBackFolder.mkdirs();
+                }
+                Desktop.getDesktop().open(fileBackFolder);
             } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + ioException.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
                 ioException.printStackTrace();
             }
         });

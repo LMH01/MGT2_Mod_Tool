@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Objects;
 
 public class WindowAddGenreToGames extends JFrame {
@@ -83,10 +84,13 @@ public class WindowAddGenreToGames extends JFrame {
                 logger.info("operation: remove genre id");
             }
             int genreID = Integer.parseInt(spinnerGenreID.getValue().toString());
-            if(NPCGameListChanger.editNPCGames(genreID, addGenreID, Integer.parseInt(spinnerChance.getValue().toString()))){
+
+            try {
+                NPCGameListChanger.editNPCGames(genreID, addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
                 JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + genreID + "] has successfully\nbeen " + messageOperation + " the NpcGame list.");
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "Error while accessing file.\nPlease try again with administrator rights.", "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + genreID + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
             }
         });
         contentPane.add(buttonApply);

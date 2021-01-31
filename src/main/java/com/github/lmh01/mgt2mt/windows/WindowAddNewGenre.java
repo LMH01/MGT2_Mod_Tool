@@ -2,10 +2,12 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Utils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.IOException;
 
 public class WindowAddNewGenre extends JFrame {
 
@@ -41,9 +43,13 @@ public class WindowAddNewGenre extends JFrame {
         buttonOpenAddGenreToGamesWindow.setBounds(10, 50, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a new genre to MGT2 by using a step by step guide.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
-            if(AnalyzeExistingGenres.analyzeGenreFile()){
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
                 NewGenreManager.addGenre();
                 frame.dispose();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
             }
         });
         contentPane.add(buttonOpenAddGenreToGamesWindow);

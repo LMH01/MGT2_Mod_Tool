@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import javax.swing.*;
 import java.io.File;
 import java.time.LocalDateTime;
 
@@ -36,5 +37,17 @@ public class Utils {
             s = s.substring(1);
         }
         return s;
+    }
+
+    /**
+     * Opens a message dialog with a specified error message.
+     * @param errorMessageKey the error message key. see this functions for meanings
+     * @param e The exception
+     */
+    public static void showErrorMessage(int errorMessageKey, Exception e){
+        switch(errorMessageKey){
+            // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() throws an exception.
+            case 1: JOptionPane.showMessageDialog(null, "The Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

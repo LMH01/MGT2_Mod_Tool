@@ -3,9 +3,12 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.dataStream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.dataStream.EditGenreFile;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.IOException;
 
 public class WindowAvailableMods extends JFrame {
 
@@ -41,13 +44,17 @@ public class WindowAvailableMods extends JFrame {
         buttonOpenAddGenreToGamesWindow.setBounds(10, 80, 175, 23);
         buttonOpenAddGenreToGamesWindow.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         buttonOpenAddGenreToGamesWindow.addActionListener((ignored) -> {
-            if(AnalyzeExistingGenres.analyzeGenreFile()){
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
                 if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                     WindowAddGenreToGames.createFrame();
                     frame.dispose();
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
                 }
+            } catch (IOException e) {
+                Utils.showErrorMessage(1, e);
+                e.printStackTrace();
             }
         });
         contentPane.add(buttonOpenAddGenreToGamesWindow);
@@ -65,7 +72,8 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
         buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2");
         buttonRemoveGenreWindow.addActionListener((ignored) -> {
-            if(AnalyzeExistingGenres.analyzeGenreFile()){
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
                 if(AnalyzeExistingGenres.arrayListGenreIDsInUse.size()-1 > 17 || Settings.disableSafetyFeatures){
                     SpinnerNumberModel sModel;
                     if(Settings.disableSafetyFeatures){
@@ -77,17 +85,20 @@ public class WindowAvailableMods extends JFrame {
                     int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                     if (option == JOptionPane.OK_OPTION) {
                         if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete the genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", JOptionPane.YES_NO_OPTION) == 0){
-                            String returnValue = EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
-                            if(returnValue.equals("success")){
+                            try{
+                                EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
                                 JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] has been removed successfully.");
-                            }else{
-                                JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + returnValue);
+                            }catch (IOException e){
+                                JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + e.getMessage());
                             }
                         }
                     }
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
                 }
+            } catch (IOException e) {
+                Utils.showErrorMessage(1, e);
+                e.printStackTrace();
             }
         });
         contentPane.add(buttonRemoveGenreWindow);

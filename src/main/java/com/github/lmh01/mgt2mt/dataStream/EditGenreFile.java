@@ -15,115 +15,105 @@ public class EditGenreFile {
     /**
      * Adds a new genre to the Genres.txt file with the current values that stand in {@link NewGenreManager}
      */
-    public static boolean addGenre(){
-        try{
-            logger.info("Adding new genre...");
-            createTempFile();
-            logger.info("Deleting old Genres.txt file and writing new file.");
-            Utils.fileGenres.delete();
-            Utils.fileGenres.createNewFile();
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.fileGenres), StandardCharsets.UTF_8));
+    public static void addGenre() throws IOException {
+        logger.info("Adding new genre...");
+        createTempFile();
+        logger.info("Deleting old Genres.txt file and writing new file.");
+        Utils.fileGenres.delete();
+        Utils.fileGenres.createNewFile();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.fileGenres), StandardCharsets.UTF_8));
 
-            String currentLine;
-            boolean firstLine = true;
-            bw.write("\ufeff");
-            while((currentLine = br.readLine()) != null){
-                if(firstLine) {
-                    currentLine = Utils.removeUTF8BOM(currentLine);
-                    firstLine = false;
-                }
-                if(Settings.enableDebugLogging) {
-                    logger.info("currentLine: " + currentLine);
-                }
-                bw.write(currentLine + System.getProperty("line.separator"));
+        String currentLine;
+        boolean firstLine = true;
+        bw.write("\ufeff");
+        while((currentLine = br.readLine()) != null){
+            if(firstLine) {
+                currentLine = Utils.removeUTF8BOM(currentLine);
+                firstLine = false;
             }
-            br.close();
-            fileTempGenreFile.delete();
-            logger.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
-            //Print new genre:
-            bw.write("[ID]" + NewGenreManager.id + System.getProperty("line.separator"));
-            printLanguages(bw);
-            bw.write("[DATE]" + NewGenreManager.unlockMonth + " " + NewGenreManager.unlockYear + System.getProperty("line.separator"));
-            bw.write("[RES POINTS]" + NewGenreManager.researchPoints + System.getProperty("line.separator"));
-            bw.write("[PRICE]" + NewGenreManager.price + System.getProperty("line.separator"));
-            bw.write("[DEV COSTS]" + NewGenreManager.devCost + System.getProperty("line.separator"));
-            if(NewGenreManager.useDefaultImageFile){
-                bw.write("[PIC]iconSkill.png" + System.getProperty("line.separator"));
-            }else{
-                bw.write("[PIC]" + NewGenreManager.imageFileName + ".png" + System.getProperty("line.separator"));
+            if(Settings.enableDebugLogging) {
+                logger.info("currentLine: " + currentLine);
             }
-            bw.write("[TGROUP]" + getTargetGroup() + System.getProperty("line.separator"));
-            bw.write("[GAMEPLAY]" + NewGenreManager.gameplay + System.getProperty("line.separator"));
-            bw.write("[GRAPHIC]" + NewGenreManager.graphic + System.getProperty("line.separator"));
-            bw.write("[SOUND]" + NewGenreManager.sound + System.getProperty("line.separator"));
-            bw.write("[CONTROL]" + NewGenreManager.control + System.getProperty("line.separator"));
-            bw.write("[GENRE COMB]" + NewGenreManager.getCompatibleGenresByID() + System.getProperty("line.separator"));
-            bw.write("[DESIGN1]" + NewGenreManager.design1 + System.getProperty("line.separator"));
-            bw.write("[DESIGN2]" + NewGenreManager.design2 + System.getProperty("line.separator"));
-            bw.write("[DESIGN3]" + NewGenreManager.design3 + System.getProperty("line.separator"));
-            bw.write("[DESIGN4]" + NewGenreManager.design4 + System.getProperty("line.separator"));
-            bw.write("[DESIGN5]" + NewGenreManager.design5 + System.getProperty("line.separator"));
-            bw.write(System.getProperty("line.separator") + "[EOF]");
-            bw.close();
-            logger.info("Temp file has been filled. Renaming...");
-            return true;
-        }catch (IOException e){
-            return false;
+            bw.write(currentLine + System.getProperty("line.separator"));
         }
+        br.close();
+        fileTempGenreFile.delete();
+        logger.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
+        //Print new genre:
+        bw.write("[ID]" + NewGenreManager.id + System.getProperty("line.separator"));
+        printLanguages(bw);
+        bw.write("[DATE]" + NewGenreManager.unlockMonth + " " + NewGenreManager.unlockYear + System.getProperty("line.separator"));
+        bw.write("[RES POINTS]" + NewGenreManager.researchPoints + System.getProperty("line.separator"));
+        bw.write("[PRICE]" + NewGenreManager.price + System.getProperty("line.separator"));
+        bw.write("[DEV COSTS]" + NewGenreManager.devCost + System.getProperty("line.separator"));
+        if(NewGenreManager.useDefaultImageFile){
+            bw.write("[PIC]iconSkill.png" + System.getProperty("line.separator"));
+        }else{
+            bw.write("[PIC]" + NewGenreManager.imageFileName + ".png" + System.getProperty("line.separator"));
+        }
+        bw.write("[TGROUP]" + getTargetGroup() + System.getProperty("line.separator"));
+        bw.write("[GAMEPLAY]" + NewGenreManager.gameplay + System.getProperty("line.separator"));
+        bw.write("[GRAPHIC]" + NewGenreManager.graphic + System.getProperty("line.separator"));
+        bw.write("[SOUND]" + NewGenreManager.sound + System.getProperty("line.separator"));
+        bw.write("[CONTROL]" + NewGenreManager.control + System.getProperty("line.separator"));
+        bw.write("[GENRE COMB]" + NewGenreManager.getCompatibleGenresByID() + System.getProperty("line.separator"));
+        bw.write("[DESIGN1]" + NewGenreManager.design1 + System.getProperty("line.separator"));
+        bw.write("[DESIGN2]" + NewGenreManager.design2 + System.getProperty("line.separator"));
+        bw.write("[DESIGN3]" + NewGenreManager.design3 + System.getProperty("line.separator"));
+        bw.write("[DESIGN4]" + NewGenreManager.design4 + System.getProperty("line.separator"));
+        bw.write("[DESIGN5]" + NewGenreManager.design5 + System.getProperty("line.separator"));
+        bw.write(System.getProperty("line.separator") + "[EOF]");
+        bw.close();
+        logger.info("Temp file has been filled. Renaming...");
     }
 
     /**
      * @param genreId The genre id that should be removed.
      */
-    public static String removeGenre(int genreId){
-        try {
-            logger.info("Removing genre with id [" + genreId + "] from Genres.txt");
-            createTempFile();
-            logger.info("Deleting old Genres.txt file and writing new file.");
-            Utils.fileGenres.delete();
-            Utils.fileGenres.createNewFile();
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.fileGenres), StandardCharsets.UTF_8));
+    public static void removeGenre(int genreId) throws IOException {
+        logger.info("Removing genre with id [" + genreId + "] from Genres.txt");
+        createTempFile();
+        logger.info("Deleting old Genres.txt file and writing new file.");
+        Utils.fileGenres.delete();
+        Utils.fileGenres.createNewFile();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileTempGenreFile), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.fileGenres), StandardCharsets.UTF_8));
 
-            String currentLine;
-            boolean firstLine = true;
-            int linesToSkip = 0;
-            bw.write("\ufeff");
-            while((currentLine = br.readLine()) != null){
-                if(firstLine) {
-                    currentLine = Utils.removeUTF8BOM(currentLine);
-                    firstLine = false;
-                }
-                if(currentLine.equals("[ID]" + genreId)){
-                    linesToSkip = 36;//This is how many line the genre has that should be removed
-                }
-                if(linesToSkip>0){
-                    while(linesToSkip>0){
-                        currentLine = br.readLine();
-                        if(currentLine.contains("[NAME EN]")){
-                            logger.info("Found [NAME EN] for genre to remove. Trying to remove image files.");
-                            String genreName = currentLine.replace("[NAME EN]", "");
-                            ImageFileHandler.removeImageFiles(genreName);
-                        }
-                        if(Settings.enableDebugLogging){
-                            logger.info("CurrentLines for genre that should be removed: " + currentLine);
-                        }
-                        linesToSkip--;
-                    }
-                }else{
-                    bw.write(currentLine + System.getProperty("line.separator"));
-                }
+        String currentLine;
+        boolean firstLine = true;
+        int linesToSkip = 0;
+        bw.write("\ufeff");
+        while((currentLine = br.readLine()) != null){
+            if(firstLine) {
+                currentLine = Utils.removeUTF8BOM(currentLine);
+                firstLine = false;
             }
-            bw.write("[EOF]");
-            br.close();
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if(currentLine.equals("[ID]" + genreId)){
+                linesToSkip = 36;//This is how many line the genre has that should be removed
+            }
+            if(linesToSkip>0){
+                while(linesToSkip>0){
+                    currentLine = br.readLine();
+                    if(currentLine.contains("[NAME EN]")){
+                        logger.info("Found [NAME EN] for genre to remove. Trying to remove image files.");
+                        String genreName = currentLine.replace("[NAME EN]", "");
+                        ImageFileHandler.removeImageFiles(genreName);
+                    }
+                    if(Settings.enableDebugLogging){
+                        logger.info("CurrentLines for genre that should be removed: " + currentLine);
+                    }
+                    linesToSkip--;
+                }
+            }else{
+                bw.write(currentLine + System.getProperty("line.separator"));
+            }
         }
+        bw.write("[EOF]");
+        br.close();
+        bw.close();
         fileTempGenreFile.delete();
-            logger.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
-            return "success";
+        logger.info("All old genres have been copied to new Genres.txt file. Adding new genre to file now...");
     }
 
     /**
