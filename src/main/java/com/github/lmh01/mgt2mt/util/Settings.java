@@ -27,6 +27,18 @@ public class Settings {
         disableSafetyFeatures = false;
         exportSettings();
     }
+
+    /**
+     * Sets the settings
+     * @param checkBoxDebugMode The checkbox that returns if debug mode should be enabled.
+     * @param checkBoxDisableSafety The checkbox that returns if safety features should be disabled.
+     */
+    public static void setSettings(JCheckBox checkBoxDebugMode, JCheckBox checkBoxDisableSafety){
+        Settings.enableDebugLogging = checkBoxDebugMode.isSelected();
+        Settings.disableSafetyFeatures = checkBoxDisableSafety.isSelected();
+        Settings.exportSettings();
+        JOptionPane.showMessageDialog(new Frame(), "Settings saved.");
+    }
     public static void importCustomSettings(String filePath){
         ImportSettings.Import(filePath, true);
     }
@@ -84,4 +96,5 @@ public class Settings {
             }
         }
     }
+
 }

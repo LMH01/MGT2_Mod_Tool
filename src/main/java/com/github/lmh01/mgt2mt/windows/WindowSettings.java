@@ -93,10 +93,13 @@ public class WindowSettings extends JFrame {
         btnSave.setBounds(443, 132, 89, 23);
         btnSave.setToolTipText("Click to save the current settings.");
         btnSave.addActionListener(e -> {
-            Settings.enableDebugLogging = checkBoxDebugMode.isSelected();
-            Settings.disableSafetyFeatures = checkBoxDisableSafety.isSelected();
-            Settings.exportSettings();
-            JOptionPane.showMessageDialog(new Frame(), "Settings saved.");
+            if(checkBoxDisableSafety.isSelected()){
+                if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to disable the safety features?\nThis could lead to problems.", "Disable safety features?", JOptionPane.YES_NO_OPTION) == 0){
+                    Settings.setSettings(checkBoxDebugMode,checkBoxDisableSafety);
+                }
+            }else{
+                Settings.setSettings(checkBoxDebugMode,checkBoxDisableSafety);
+            }
         });
         contentPane.add(btnSave);
 
