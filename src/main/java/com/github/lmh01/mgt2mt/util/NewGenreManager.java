@@ -79,12 +79,19 @@ public class NewGenreManager {
     }
     public static void showSummary(){
         StringBuilder compatibleGenres = new StringBuilder();
+        int n = 0;
         for(int i = 0; i< ARRAY_LIST_COMPATIBLE_GENRES.size(); i++){
             if(i== ARRAY_LIST_COMPATIBLE_GENRES.size()-1){
                 compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i));
             }else{
                 compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i)).append(", ");
+                if(n == 5){
+                    compatibleGenres.append(System.getProperty("line.separator"));
+                    n = 0;
+                }
             }
+            n++;
+
         }
         ImageIcon iconGenre = new ImageIcon(imageFile.getPath());
         if(JOptionPane.showConfirmDialog(null, "Your genre is ready:\n" +
@@ -103,7 +110,7 @@ public class NewGenreManager {
                 "Atmosphere/Content: " + design3 + "\n" +
                 "Game depth/Beginner-friendly: " + design4 + "\n" +
                 "Core Gamers/Casual Gamer: " + design5 + "\n" +
-                "\nCompatible genres: " + compatibleGenres + "\n" +
+                "\nCompatible genres:\n" + compatibleGenres + "\n" +
                 "\nWorkPriority:\n" +
                 "Gameplay: " + gameplay + "%\n" +
                 "Graphic: " + graphic + "%\n" +
