@@ -30,7 +30,7 @@ public class WindowBackup extends JFrame {
 
     public WindowBackup(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 190);
+        setBounds(100, 100, 200, 220);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -62,15 +62,15 @@ public class WindowBackup extends JFrame {
         buttonRestoreInitialBackup.setBounds(10, 70, 175, 23);
         buttonRestoreInitialBackup.setToolTipText("Click to restore the initial backup that has been created when the mod tool was started for the first time.");
         buttonRestoreInitialBackup.addActionListener(actionEvent ->{
-            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will me lost.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
                 try {
                     LOGGER.info("Creating backup beforehand.");
                     Backup.createFullBackup(false);
-                    Backup.restoreInitialBackup();
+                    Backup.restoreBackup(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                     if(Utils.showConfirmDialog(1, e)){
-                        Backup.restoreInitialBackup();
+                        Backup.restoreBackup(true);
                     }else{
                         JOptionPane.showMessageDialog(null, "The initial backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
                     }
@@ -79,8 +79,29 @@ public class WindowBackup extends JFrame {
         });
         contentPane.add(buttonRestoreInitialBackup);
 
+        JButton buttonRestoreLatestBackup = new JButton("Restore latest backup");
+        buttonRestoreLatestBackup.setBounds(10, 100, 175, 23);
+        buttonRestoreLatestBackup.setToolTipText("Click to restore the latest backup that has been created.");
+        buttonRestoreLatestBackup.addActionListener(actionEvent ->{
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the latest backup?\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+                try {
+                    LOGGER.info("Creating backup beforehand.");
+                    Backup.createFullBackup(false);
+                    Backup.restoreBackup(false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if(Utils.showConfirmDialog(1, e)){
+                        Backup.restoreBackup(false);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The latest backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        contentPane.add(buttonRestoreLatestBackup);
+
         JButton buttonOpenBackupFolder = new JButton("Open backup folder");
-        buttonOpenBackupFolder.setBounds(10, 100, 175, 23);
+        buttonOpenBackupFolder.setBounds(10, 130, 175, 23);
         buttonOpenBackupFolder.setToolTipText("Click to open the backup folder. All backups that have been created are located here. Use this if you do want to restore a backup manually.");
         buttonOpenBackupFolder.addActionListener(ignored -> {
             try {
@@ -97,7 +118,7 @@ public class WindowBackup extends JFrame {
         contentPane.add(buttonOpenBackupFolder);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 130, 89, 23);
+        btnBack.setBounds(10, 160, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(ignored -> {
             MainWindow.createFrame();

@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 public class Backup {
     private static Logger logger = LoggerFactory.getLogger(Backup.class);
     private static String currentTimeAndDay;
+    private static String latestBackupFolderName = "";
 
     /**
      * Creates a backup of a given file.
@@ -30,6 +31,7 @@ public class Backup {
      */
     public static void createBackup(File fileToBackup, boolean initialBackup) throws IOException {
         currentTimeAndDay = Utils.getCurrentDateTime();
+        latestBackupFolderName = currentTimeAndDay;
         ChangeLog.addLogEntry(5, fileToBackup.getName());
         File backupFileFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//");
         File directoryBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
@@ -54,8 +56,8 @@ public class Backup {
             logger.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
             File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
             if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
+                logger.info("The file inside the storage folder does already exist. deleting...");
                 fileBackupSaved.delete();
-                fileBackupSaved.createNewFile();
             }
             fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
         }
@@ -63,20 +65,43 @@ public class Backup {
         Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
     }
 
-    public static void restoreInitialBackup(){
+    /**
+     * Restores a backup
+     * @param initialBackup If true the initial backup will be restored. If false the latest backup will be restored.
+     */
+    public static void restoreBackup(boolean initialBackup){
         try {
             logger.info("Restoring initial backup.");
-            File fileGenresInitialBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
-            File fileNpcGamesInitialBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+            File fileGenresBackup;
+            File fileNpcGamesBackup;
+            if(initialBackup){
+                fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
+                fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+            }else{
+                fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
+                fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
+            }
             Utils.fileGenres.delete();
             Utils.fileNpcGames.delete();
-            Files.copy(Paths.get(fileGenresInitialBackup.getPath()), Paths.get(Utils.fileGenres.getPath()));
-            Files.copy(Paths.get(fileNpcGamesInitialBackup.getPath()), Paths.get(Utils.fileNpcGames.getPath()));
-            ChangeLog.addLogEntry(8, "");
-            JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.fileGenres.getPath()));
+            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.fileNpcGames.getPath()));
+            if(initialBackup){
+                ChangeLog.addLogEntry(8, "");
+                JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                ChangeLog.addLogEntry(9, "");
+                JOptionPane.showMessageDialog(null, "The latest backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (IOException exception) {
             exception.printStackTrace();
-            JOptionPane.showMessageDialog(null, "The initial backup could not be restored.\nThe initial backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+            if(initialBackup){
+                ChangeLog.addLogEntry(10, exception.getMessage());
+                JOptionPane.showMessageDialog(null, "The initial backup could not be restored.\nThe initial backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+            }else{
+                ChangeLog.addLogEntry(11, exception.getMessage());
+                JOptionPane.showMessageDialog(null, "The latest backup could not be restored.\nThe latest backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }
 
