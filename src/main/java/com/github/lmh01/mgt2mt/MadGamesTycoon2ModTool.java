@@ -2,10 +2,10 @@ package com.github.lmh01.mgt2mt;
 
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 
 public class MadGamesTycoon2ModTool {
@@ -16,7 +16,8 @@ public class MadGamesTycoon2ModTool {
         if(!settingsImported){
             if(Settings.importSettings()){
                 logger.info("Settings have been imported.");
-                if(!Settings.testFolderForMGT2Exe(Settings.mgt2FilePath)){
+                if(!Utils.doesFoldercontainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
+
                     logger.info("The MGT2 file path is invalid.");
                     Settings.setMgt2FilePath(true);
                 }

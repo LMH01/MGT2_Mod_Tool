@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Utils {
 
@@ -79,5 +80,24 @@ public class Utils {
      */
     public static void openGithubPage() throws Exception {
         Desktop.getDesktop().browse(new URL(GITHUB_URL).toURI());
+    }
+
+    /**
+     * @param folder The folder that should be tested if contains the file.
+     * @param content The content that should be found.
+     * @return Returns true when the input file is the MGT2 folder.
+     */
+    public static boolean doesFoldercontainFile(String folder, String content){
+        File file = new File(folder);
+        if(file.exists()){
+            File[] filesInFolder = file.listFiles();
+            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
+                if(filesInFolder[i].getName().equals(content)){
+                    return true;
+                }
+                System.out.println(filesInFolder[i].getName());
+            }
+        }
+        return false;
     }
 }

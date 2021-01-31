@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public class Settings {
     public static String mgt2FilePath = "";
@@ -43,7 +42,7 @@ public class Settings {
         boolean breakLoop = false;
         File mgt2DefaultFilePathFile = new File(mgt2DefaultFilePath);
         if(mgt2DefaultFilePathFile.exists()){
-            if(testFolderForMGT2Exe(mgt2DefaultFilePath)){
+            if(Utils.doesFoldercontainFile(mgt2FilePath, "Mad Games Tycoon 2.exe")){
                 JOptionPane.showMessageDialog(new Frame(), "MGT2 folder has been detected.");
             }
         }else{
@@ -59,7 +58,7 @@ public class Settings {
                     int return_value = fileChooser.showOpenDialog(null);
                     if(return_value == 0){
                         mgt2FilePath = fileChooser.getSelectedFile().getPath();
-                        if(testFolderForMGT2Exe(mgt2FilePath)){
+                        if(Utils.doesFoldercontainFile(mgt2FilePath, "Mad Games Tycoon 2.exe")){
                             logger.info("File path: " + mgt2FilePath);
                             correctFolder = true;
                             JOptionPane.showMessageDialog(new Frame(), "Folder set.");
@@ -84,23 +83,5 @@ public class Settings {
                 }
             }
         }
-    }
-
-    /**
-     * @param mgt2Folder The folder that should be tested if its the mgt2 folder.
-     * @return Returns true when the input file is the MGT2 folder.
-     */
-    public static boolean testFolderForMGT2Exe(String mgt2Folder){
-        File file = new File(mgt2Folder);
-        if(file.exists()){
-            File[] filesInFolder = file.listFiles();
-            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(filesInFolder[i].getName().equals("Mad Games Tycoon 2.exe")){
-                    return true;
-                }
-                System.out.println(filesInFolder[i].getName());
-            }
-        }
-        return false;
     }
 }

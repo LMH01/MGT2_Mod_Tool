@@ -13,6 +13,7 @@ public class Backup {
     private static Logger logger = LoggerFactory.getLogger(Backup.class);
     private static String currentTimeAndDay;
     private static String latestBackupFolderName = "";
+    public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
 
     /**
      * Creates a backup of a given file.
@@ -33,8 +34,8 @@ public class Backup {
         currentTimeAndDay = Utils.getCurrentDateTime();
         latestBackupFolderName = currentTimeAndDay;
         ChangeLog.addLogEntry(5, fileToBackup.getName());
-        File backupFileFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + currentTimeAndDay + "//");
-        File directoryBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
+        File backupFileFolder = new File(BACKUP_FOLDER_PATH + currentTimeAndDay + "//");
+        File directoryBackup = new File(BACKUP_FOLDER_PATH);
         if(!directoryBackup.exists()){
             directoryBackup.mkdirs();
         }
