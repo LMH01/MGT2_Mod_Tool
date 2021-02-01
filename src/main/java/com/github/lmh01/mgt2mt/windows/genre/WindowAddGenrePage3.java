@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
@@ -11,11 +12,16 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage3 extends JFrame{
+    JPanel contentPane = new JPanel();
     static final WindowAddGenrePage3 FRAME = new WindowAddGenrePage3();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage3.class);
+    JSpinner spinnerResearchPoints = new JSpinner();
+    JSpinner spinnerDevelopmentCost = new JSpinner();
+    JSpinner spinnerGenrePrice = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setSpinners();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -30,7 +36,7 @@ public class WindowAddGenrePage3 extends JFrame{
         setResizable(false);
         setTitle("[Page 3] Research/Price");
 
-        JPanel contentPane = new JPanel();
+        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -39,31 +45,13 @@ public class WindowAddGenrePage3 extends JFrame{
         labelResearchPoints.setBounds(10, 10, 100, 23);
         contentPane.add(labelResearchPoints);
 
-        JSpinner spinnerResearchPoints = new JSpinner();
-        spinnerResearchPoints.setBounds(120, 10, 100, 23);
-        spinnerResearchPoints.setToolTipText("[Range: 1-100000; Default: " + NewGenreManager.researchPoints + "] Number of required research points to research that genre.");
-        spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 100000, 1));
-        contentPane.add(spinnerResearchPoints);
-
         JLabel labelGenreDevelopmentCost = new JLabel("Development cost: ");
         labelGenreDevelopmentCost.setBounds(10, 35, 120, 23);
         contentPane.add(labelGenreDevelopmentCost);
 
-        JSpinner spinnerDevelopmentCost = new JSpinner();
-        spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
-        spinnerDevelopmentCost.setToolTipText("[Range: 1-1000000; Default: " + NewGenreManager.devCost + "] Set the development cost for a game with your genre. This cost will be added when developing a game with this genre.");
-        spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000, 1));
-        contentPane.add(spinnerDevelopmentCost);
-
         JLabel labelGenrePrice = new JLabel("Price: ");
         labelGenrePrice.setBounds(10, 60, 120, 23);
         contentPane.add(labelGenrePrice);
-
-        JSpinner spinnerGenrePrice = new JSpinner();
-        spinnerGenrePrice.setBounds(120, 60, 100, 23);
-        spinnerGenrePrice.setToolTipText("[Range: 1-10000000; Default: " + NewGenreManager.price + "] This is the research cost, it is being payed when researching this genre.");
-        spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 10000000, 1));
-        contentPane.add(spinnerGenrePrice);
 
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 100, 100, 23);
@@ -95,6 +83,32 @@ public class WindowAddGenrePage3 extends JFrame{
             }
         });
         contentPane.add(buttonQuit);
+    }
+    private void setSpinners(){
+        spinnerResearchPoints.setBounds(120, 10, 100, 23);
+        spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
+        spinnerGenrePrice.setBounds(120, 60, 100, 23);
+        spinnerResearchPoints.setToolTipText("[Range: 1 - 100.000; Default: " + NewGenreManager.researchPoints + "] Number of required research points to research that genre.");
+        spinnerDevelopmentCost.setToolTipText("[Range: 1 - 1.000.000; Default: " + NewGenreManager.devCost + "] Set the development cost for a game with your genre. This cost will be added when developing a game with this genre.");
+        spinnerGenrePrice.setToolTipText("[Range: 1 - 10.000.000; Default: " + NewGenreManager.price + "] This is the research cost, it is being payed when researching this genre.");
+        if(Settings.disableSafetyFeatures){
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 1000000000, 1));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000000, 1));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 1000000000, 1));
+            ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(true);
+        }else{
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 100000, 100));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000, 1000));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 10000000, 1000));
+            ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(false);
+        }
+        contentPane.add(spinnerResearchPoints);
+        contentPane.add(spinnerDevelopmentCost);
+        contentPane.add(spinnerGenrePrice);
     }
     private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){
         NewGenreManager.researchPoints = Integer.parseInt(spinnerResearchPoints.getValue().toString());

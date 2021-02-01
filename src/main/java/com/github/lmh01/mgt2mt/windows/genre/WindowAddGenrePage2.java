@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
@@ -13,10 +14,13 @@ import java.util.Objects;
 
 public class WindowAddGenrePage2 extends JFrame{
     static final WindowAddGenrePage2 FRAME = new WindowAddGenrePage2();
+    private final JPanel contentPane;
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage2.class);
+    JSpinner spinnerUnlockYear = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setSpinnerUnlockYear();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -31,7 +35,7 @@ public class WindowAddGenrePage2 extends JFrame{
         setResizable(false);
         setTitle("[Page 2] Date");
 
-        JPanel contentPane = new JPanel();
+        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -53,12 +57,6 @@ public class WindowAddGenrePage2 extends JFrame{
         JLabel labelGenreID = new JLabel("Unlock year: ");
         labelGenreID.setBounds(10, 60, 120, 23);
         contentPane.add(labelGenreID);
-
-        JSpinner spinnerUnlockYear = new JSpinner();
-        spinnerUnlockYear.setBounds(120, 60, 100, 23);
-        spinnerUnlockYear.setToolTipText("[Range: 1976-2050] This is the year when your genre will be unlocked. Note: The latest date you can currently start the game is in 2015.");
-        spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
-        contentPane.add(spinnerUnlockYear);
 
         JButton buttonNext = new JButton("Next");//TODO Replace with arrow? ->
         buttonNext.setBounds(220, 100, 100, 23);
@@ -91,6 +89,19 @@ public class WindowAddGenrePage2 extends JFrame{
             }
         });
         contentPane.add(buttonQuit);
+    }
+    private void setSpinnerUnlockYear(){
+        spinnerUnlockYear.setBounds(120, 60, 100, 23);
+        if(Settings.disableSafetyFeatures){
+            spinnerUnlockYear.setToolTipText("[Range: 1976 - 2050] This is the year when your genre will be unlocked. Note: The latest date you can currently start the game is in 2015.");
+            spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
+            ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
+        }else{
+            spinnerUnlockYear.setToolTipText("[Range: 1976 - 2050] This is the year when your genre will be unlocked. Note: The latest date you can currently start the game is in 2015.");
+            spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
+            ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
+        }
+        contentPane.add(spinnerUnlockYear);
     }
     private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox<String> comboBoxGenreUnlockMonth){
         NewGenreManager.unlockYear = Integer.parseInt(spinnerUnlockYear.getValue().toString());

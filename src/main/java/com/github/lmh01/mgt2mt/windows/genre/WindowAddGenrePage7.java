@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
@@ -13,9 +14,15 @@ import java.awt.*;
 public class WindowAddGenrePage7 extends JFrame{
     static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
+    JPanel contentPane;
+    JSpinner spinnerGameplay = new JSpinner();
+    JSpinner spinnerGraphic = new JSpinner();
+    JSpinner spinnerSound = new JSpinner();
+    JSpinner spinnerControl = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setSpinners();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -30,7 +37,7 @@ public class WindowAddGenrePage7 extends JFrame{
         setResizable(false);
         setTitle("[Page 7] Work Priority");
 
-        JPanel contentPane = new JPanel();
+        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -39,41 +46,18 @@ public class WindowAddGenrePage7 extends JFrame{
         labelGameplay.setBounds(10, 10, 100, 23);
         contentPane.add(labelGameplay);
 
-        JSpinner spinnerGameplay = new JSpinner();
-        spinnerGameplay.setBounds(120, 10, 100, 23);
-        spinnerGameplay.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Gameplay priority in %");
-        spinnerGameplay.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        contentPane.add(spinnerGameplay);
         //TODO Make a ? and explain what the input means
         JLabel labelGraphic = new JLabel("Graphic: ");
         labelGraphic.setBounds(10, 35, 120, 23);
         contentPane.add(labelGraphic);
 
-        JSpinner spinnerGraphic = new JSpinner();
-        spinnerGraphic.setBounds(120, 35, 100, 23);
-        spinnerGraphic.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Graphic priority in %");
-        spinnerGraphic.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        contentPane.add(spinnerGraphic);
-
         JLabel labelSound = new JLabel("Sound: ");
         labelSound.setBounds(10, 60, 120, 23);
         contentPane.add(labelSound);
 
-        JSpinner spinnerSound = new JSpinner();
-        spinnerSound.setBounds(120, 60, 100, 23);
-        spinnerSound.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Sound priority in %");
-        spinnerSound.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        contentPane.add(spinnerSound);
-
         JLabel labelControl = new JLabel("Control: ");
         labelControl.setBounds(10, 85, 120, 23);
         contentPane.add(labelControl);
-
-        JSpinner spinnerControl = new JSpinner();
-        spinnerControl.setBounds(120, 85, 100, 23);
-        spinnerControl.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Control priority in %");
-        spinnerControl.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        contentPane.add(spinnerControl);
 
         JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 125, 100, 23);
@@ -109,6 +93,35 @@ public class WindowAddGenrePage7 extends JFrame{
             }
         });
         contentPane.add(buttonQuit);
+    }
+    private void setSpinners(){
+        spinnerGameplay.setBounds(120, 10, 100, 23);
+        spinnerGraphic.setBounds(120, 35, 100, 23);
+        spinnerSound.setBounds(120, 60, 100, 23);
+        spinnerControl.setBounds(120, 85, 100, 23);
+        spinnerGameplay.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Gameplay priority in %");
+        spinnerGraphic.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Graphic priority in %");
+        spinnerSound.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Sound priority in %");
+        spinnerControl.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Control priority in %");
+        spinnerGameplay.setModel(new SpinnerNumberModel(25, 5, 85, 5));
+        spinnerGraphic.setModel(new SpinnerNumberModel(25, 5, 85, 5));
+        spinnerSound.setModel(new SpinnerNumberModel(25, 5, 85, 5));
+        spinnerControl.setModel(new SpinnerNumberModel(25, 5, 85, 5));
+        if(Settings.disableSafetyFeatures){
+            ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerControl.getEditor()).getTextField().setEditable(true);
+        }else{
+            ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerControl.getEditor()).getTextField().setEditable(false);
+        }
+        contentPane.add(spinnerGameplay);
+        contentPane.add(spinnerGraphic);
+        contentPane.add(spinnerSound);
+        contentPane.add(spinnerControl);
     }
     private static boolean saveInputs(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
         int combinedValue = Integer.parseInt(spinnerGameplay.getValue().toString()) +

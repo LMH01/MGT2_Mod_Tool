@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 
 public class WindowAddGenrePage1 extends JFrame{
@@ -101,10 +102,10 @@ public class WindowAddGenrePage1 extends JFrame{
             spinnerId.setEnabled(true);
         }else{
             spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, NewGenreManager.id, 1));
+            spinnerId.setToolTipText("[Range: Automatic] This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
         }
         spinnerId.setBounds(120, 60, 100, 23);
-        spinnerId.setToolTipText("[Range: Automatic] This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
         contentPane.add(spinnerId);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
