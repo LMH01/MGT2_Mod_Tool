@@ -77,7 +77,19 @@ public class WindowAvailableMods extends JFrame {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 Backup.createBackup(Utils.FILE_GENRES);
-                if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
+                System.out.println("Array ids: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size());
+                if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size() == 19 && !Settings.disableSafetyFeatures){
+                    //This is executed when only one genre has been added to the game.
+                    if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete the genre with id [18] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", JOptionPane.YES_NO_OPTION) == 0){
+                        try{
+                            EditGenreFile.removeGenre(18);
+                            NPCGameListChanger.editNPCGames(18, false, 0);
+                            JOptionPane.showMessageDialog(new Frame(), "The genre with id [18] has been removed successfully.");
+                        }catch (IOException e){
+                            JOptionPane.showMessageDialog(new Frame(), "The genre with id [18] was not removed:\n" + e.getMessage());
+                        }
+                    }
+                }else if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
                     SpinnerNumberModel sModel;
                     if(Settings.disableSafetyFeatures){
                         sModel = new SpinnerNumberModel(18, 18, 999, 1);
@@ -87,15 +99,7 @@ public class WindowAvailableMods extends JFrame {
                     JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
                     int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                     if (option == JOptionPane.OK_OPTION) {
-                        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete the genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] from MGT2?\nNote: Save-files that have already been started with this genre will stay unaffected.", "Remove genre?", JOptionPane.YES_NO_OPTION) == 0){
-                            try{
-                                EditGenreFile.removeGenre(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()));
-                                NPCGameListChanger.editNPCGames(Integer.parseInt(spinnerGenreIdToRemove.getValue().toString()), false, 0);
-                                JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] has been removed successfully.");
-                            }catch (IOException e){
-                                JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + spinnerGenreIdToRemove.getValue().toString() + "] was not removed:\n" + e.getMessage());
-                            }
-                        }
+
                     }
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
