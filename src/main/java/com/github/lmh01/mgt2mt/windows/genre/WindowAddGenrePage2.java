@@ -60,7 +60,7 @@ public class WindowAddGenrePage2 extends JFrame{
         spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
         contentPane.add(spinnerUnlockYear);
 
-        JButton buttonNext = new JButton("Next");
+        JButton buttonNext = new JButton("Next");//TODO Replace with arrow? ->
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener(actionEvent -> {
@@ -70,7 +70,7 @@ public class WindowAddGenrePage2 extends JFrame{
         });
         contentPane.add(buttonNext);
 
-        JButton buttonPrevious = new JButton("Previous");
+        JButton buttonPrevious = new JButton("Previous");//TODO Replace with arrow? <-
         buttonPrevious.setBounds(10, 100, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener(actionEvent -> {

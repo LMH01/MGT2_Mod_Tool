@@ -45,6 +45,7 @@ public class NewGenreManager {
 
 
     public static void addGenre(){
+        //TODO The user should have the option to select a checkbox "Don't show me again" to not show this dialog again. If dialog has been opened will be saved to the settings file
         if(JOptionPane.showConfirmDialog(null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nAdd new genre?", "Add genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             try {
                 Backup.createBackup(Utils.FILE_GENRES);
@@ -95,7 +96,7 @@ public class NewGenreManager {
 
         }
         ImageIcon iconGenre = new ImageIcon(imageFile.getPath());
-        if(JOptionPane.showConfirmDialog(null, "Your genre is ready:\n" +
+        int returnValue = JOptionPane.showConfirmDialog(null, "Your genre is ready:\n\n" +
                 "Id:" + id + "\n" +
                 "Name: " + name + "\n" +
                 "Description: " + description + "\n" +
@@ -105,20 +106,20 @@ public class NewGenreManager {
                 "Development cost: " + devCost + "\n" +
                 "Pic: see top left\n" +
                 "Target group: " + getTargetGroups() + "\n" +
-                "\nDesign Priority:\n" +
+                "\n*Design Priority*\n\n" +
                 "Gameplay/Visuals: " + design1 + "\n" +
                 "Story/Game length: " + design2 + "\n" +
                 "Atmosphere/Content: " + design3 + "\n" +
                 "Game depth/Beginner-friendly: " + design4 + "\n" +
                 "Core Gamers/Casual Gamer: " + design5 + "\n" +
-                "\nCompatible genres:\n" + compatibleGenres + "\n" +
-                "\nWorkPriority:\n" +
+                "\n*Compatible genres*\n\n" + compatibleGenres + "\n" +
+                "\n*WorkPriority*\n\n" +
                 "Gameplay: " + gameplay + "%\n" +
                 "Graphic: " + graphic + "%\n" +
                 "Sound: " + sound + "%\n" +
                 "Control: " + control + "%\n" +
-                "\nClick yes to add this genre.\nClick no if you wan't to make changes\nand return to the step by step guide.", "Add this genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0)
-        {
+                "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.", "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iconGenre);
+        if(returnValue == 0){
             //click yes
             boolean continueAnyway = false;
             boolean imageFileAccessedSuccess = false;
@@ -141,9 +142,12 @@ public class NewGenreManager {
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }else{
-            //click no
+        }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
+            //Click no or close window
             WindowAddGenrePage8.createFrame();
+        }else if (returnValue == JOptionPane.CANCEL_OPTION){
+            //click cancel //TODO When this is clicked all spinners and inputs should be reset to default values after showing a confirm dialog. See WindowsAddGenrePage1 or Settings (id spinner) on how to do this.
+            WindowAddNewGenre.createFrame();
         }
     }
 

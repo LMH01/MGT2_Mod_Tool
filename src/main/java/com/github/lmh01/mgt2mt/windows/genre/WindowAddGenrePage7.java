@@ -44,7 +44,7 @@ public class WindowAddGenrePage7 extends JFrame{
         spinnerGameplay.setToolTipText("[Range: 5-85; Default: 25; Steps of 5] Gameplay priority in %");
         spinnerGameplay.setModel(new SpinnerNumberModel(25, 5, 85, 5));
         contentPane.add(spinnerGameplay);
-
+        //TODO Make a ? and explain what the input means
         JLabel labelGraphic = new JLabel("Graphic: ");
         labelGraphic.setBounds(10, 35, 120, 23);
         contentPane.add(labelGraphic);
