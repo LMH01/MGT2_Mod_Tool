@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class WindowAddGenrePage5 extends JFrame{
-    private final JPanel contentPane;
+    JPanel contentPane = new JPanel();
     static final WindowAddGenrePage5 FRAME = new WindowAddGenrePage5();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage5.class);
     final JList<String> LIST_AVAILABLE_GENRES = new JList<>();
@@ -34,7 +35,6 @@ public class WindowAddGenrePage5 extends JFrame{
         setResizable(false);
         setTitle("[Page 5] Genre combinations");
 
-        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -88,17 +88,32 @@ public class WindowAddGenrePage5 extends JFrame{
     }
     private void setGenreList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
+        ArrayList<Integer> genresSelected = new ArrayList();
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
         for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
             listModel.addElement(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
             LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+            for(int n = 0; n<NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.size(); n++){
+                LOGGER.info("Current n:" + n);
+                if(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i).equals(NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.get(n))){
+                    genresSelected.add(i);
+                }
+            }
+        }
+
+        //Converts ArrayList to int[]
+        final int[] selectedIndices = new int[genresSelected.size()];
+        int index = 0;
+        for (final Integer value: genresSelected) {
+            selectedIndices[index++] = value;
         }
 
         LIST_AVAILABLE_GENRES.setModel(listModel);
         LIST_AVAILABLE_GENRES.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         LIST_AVAILABLE_GENRES.setLayoutOrientation(JList.VERTICAL);
         LIST_AVAILABLE_GENRES.setVisibleRowCount(-1);
+        LIST_AVAILABLE_GENRES.setSelectedIndices(selectedIndices);
 
         SCROLL_PANE_AVAILABLE_GENRES.setBounds(10,45, 315,140);
         contentPane.add(SCROLL_PANE_AVAILABLE_GENRES);
