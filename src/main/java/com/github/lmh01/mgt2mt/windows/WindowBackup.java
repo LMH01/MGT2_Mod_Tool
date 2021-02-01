@@ -90,12 +90,12 @@ public class WindowBackup extends JFrame {
                     LOGGER.info("Creating backup beforehand.");
                     Backup.createFullBackup();
                     Backup.restoreBackup(false);
-                    ChangeLog.addLogEntry(9, "");
+                    ChangeLog.addLogEntry(9);
                 } catch (IOException e) {
                     e.printStackTrace();
                     if(Utils.showConfirmDialog(1, e)){
                         Backup.restoreBackup(false);
-                        ChangeLog.addLogEntry(9, "");
+                        ChangeLog.addLogEntry(9);
                     }else{
                         JOptionPane.showMessageDialog(null, "The latest backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
                     }
@@ -114,7 +114,6 @@ public class WindowBackup extends JFrame {
                     if(JOptionPane.showConfirmDialog(null, "All backups have been deleted.\nDo you wan't to create a new initial backup?", "Backups deleted", JOptionPane.YES_NO_OPTION) == 0){
                         String returnValue = Backup.createInitialBackup();
                         if(returnValue.equals("")) {
-                            ChangeLog.addLogEntry(6, "");
                             JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
                         }else {
                             JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + returnValue, "Unable to backup file", JOptionPane.ERROR_MESSAGE);

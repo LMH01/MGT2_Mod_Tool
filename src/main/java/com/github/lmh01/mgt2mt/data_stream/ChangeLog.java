@@ -13,7 +13,15 @@ public class ChangeLog {
     public static final File FILE_CHANGES_LOG_TEMP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\changes.log.temp");
 
     /**
-     * Ads an entry to the log file.
+     * Adds an entry to the log file.
+     * @param operation
+     * @param operation What operation has been performed.
+     */
+    public static void addLogEntry(int operation){
+        addLogEntry(operation, "");
+    }
+    /**
+     * Adds an entry to the log file. Uses a text string to submit additional information.
      * @param operation What operation has been performed.
      * @param textBody The text body.
      */
@@ -68,6 +76,7 @@ public class ChangeLog {
             case 9: pw.print(currentSystemTime + ": The latest backup has been restored."); break;
             case 10: pw.print(currentSystemTime + ": The initial backup was not restored: " + textBody); break;
             case 11: pw.print(currentSystemTime + ": The latest backup was not restored: " + textBody); break;
+            case 12: pw.print(currentSystemTime + ": All backups have been deleted"); break;
         }
     }
 }

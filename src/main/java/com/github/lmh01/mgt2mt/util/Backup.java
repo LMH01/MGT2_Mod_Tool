@@ -87,10 +87,10 @@ public class Backup {
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.FILE_GENRES.getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.FILE_NPC_GAMES.getPath()), StandardCopyOption.REPLACE_EXISTING);
             if(initialBackup){
-                ChangeLog.addLogEntry(8, "");
+                ChangeLog.addLogEntry(8);
                 JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                ChangeLog.addLogEntry(9, "");
+                ChangeLog.addLogEntry(9);
                 JOptionPane.showMessageDialog(null, "The latest backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException exception) {
@@ -114,6 +114,7 @@ public class Backup {
                     .map(Path::toFile)
                     .forEach(File::delete);
         }
+        ChangeLog.addLogEntry(12);
     }
 
     /**
@@ -137,6 +138,7 @@ public class Backup {
             if(!Backup.FILE_NPC_GAMES_INITIAL_BACKUP.exists()){
                 Backup.createBackup(Utils.FILE_NPC_GAMES, true);
             }
+            ChangeLog.addLogEntry(6);
             return "";
         }catch(IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
