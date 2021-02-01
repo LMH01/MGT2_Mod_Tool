@@ -8,7 +8,6 @@ import com.github.lmh01.mgt2mt.windows.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
 import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
@@ -23,14 +22,12 @@ public class MadGamesTycoon2ModTool {
         MainWindow.createFrame();
         if(Settings.importSettings()){
             LOGGER.info("Settings have been imported.");
-            if(!Utils.doesFoldercontainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
+            if(!Utils.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
                 LOGGER.info("The MGT2 file path is invalid.");
-                Settings.setMgt2FilePath(false);
+                Settings.setMgt2Folder(false);
             }
-        }else{
-            LOGGER.info("Settings where not imported.");
-            Settings.resetSettings();
-            Settings.setMgt2FilePath(false);
+            Settings.madGamesTycoonFolderIsCorrect = true;
+            //If settings do not exist they will automatically be reset inside ImportSettings.import()
         }
         Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
     }

@@ -26,20 +26,28 @@ public class ImportSettings{
                 switch(setting) {
                     case 1:
                         Settings.mgt2FilePath = currentLine; break;
-                    case 2:
-                        Settings.languageToAdd = currentLine; break;
+                    /*case 2:
+                        Settings.languageToAdd = currentLine; break;*/
                     case 3:
                         if(currentLine.equals("true")){
                             Settings.enableDebugLogging = true;
                         }else if(currentLine.equals("false")){
                             Settings.enableDebugLogging = false;
-                        }
+                        } break;
                     case 4:
                         if(currentLine.equals("true")){
                             Settings.disableSafetyFeatures = true;
                         }else if(currentLine.equals("false")){
                             Settings.disableSafetyFeatures = false;
-                        }
+                        } break;
+                    case 5:
+                        Settings.steamLibraryFolder = currentLine; break;
+                    case 6:
+                        if(currentLine.equals("true")){
+                            Settings.enableCustomFolder = true;
+                        }else if(currentLine.equals("false")){
+                            Settings.enableCustomFolder = false;
+                        } break;
                 }
                 LOGGER.info("Imported Setting (" + setting + "): " + currentLine);
                 ++setting;

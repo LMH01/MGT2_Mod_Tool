@@ -48,10 +48,7 @@ public class MainWindow extends JFrame {
         JButton buttonQuit = new JButton("Quit");
         buttonQuit.setBounds(10, 100, 100, 23);
         buttonQuit.setToolTipText("Click to exit the application.");
-        buttonQuit.addActionListener(e -> {
-            Settings.saveSettings();
-            System.exit(0);
-        });
+        buttonQuit.addActionListener(e -> System.exit(0));
         getContentPane().add(buttonQuit);
 
         JButton buttonSettings = new JButton("Settings");

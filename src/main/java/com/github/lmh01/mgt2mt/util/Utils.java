@@ -96,7 +96,7 @@ public class Utils {
      * @param content The content that should be found.
      * @return Returns true when the input file is the MGT2 folder.
      */
-    public static boolean doesFoldercontainFile(String folder, String content){
+    public static boolean doesFolderContainFile(String folder, String content){
         File file = new File(folder);
         if(file.exists()){
             File[] filesInFolder = file.listFiles();

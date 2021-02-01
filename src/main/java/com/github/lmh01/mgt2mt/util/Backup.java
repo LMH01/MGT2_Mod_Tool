@@ -139,7 +139,7 @@ public class Backup {
             }
             return "";
         }catch(IOException e) {
-            LOGGER.error("Unable to create initial backup: ");
+            LOGGER.error("Unable to create initial backup: " + e.getMessage());
             ChangeLog.addLogEntry(7, e.getMessage());
             e.printStackTrace();
             return e.getMessage();

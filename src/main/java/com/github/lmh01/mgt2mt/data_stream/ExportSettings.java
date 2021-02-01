@@ -30,13 +30,14 @@ public class ExportSettings {
             PrintWriter pw = new PrintWriter(new FileWriter(file));
             if(Settings.enableDebugLogging){ LOGGER.info("Writing to file..."); }
             pw.print(Settings.mgt2FilePath + "\n" +
-                    Settings.languageToAdd + "\n" +
+                    "Unused slot" + "\n" +
                     Settings.enableDebugLogging + "\n" +
-                    Settings.disableSafetyFeatures);
+                    Settings.disableSafetyFeatures + "\n" +
+                    Settings.steamLibraryFolder + "\n" +
+                    Settings.enableCustomFolder + "\n");
             pw.close();
             if(Settings.enableDebugLogging){
                 LOGGER.info(Settings.mgt2FilePath);
-                LOGGER.info(Settings.languageToAdd);
                 LOGGER.info(Settings.enableDebugLogging + "");
                 LOGGER.info(Settings.disableSafetyFeatures + "");
                 LOGGER.info("Writing to file successful!");
