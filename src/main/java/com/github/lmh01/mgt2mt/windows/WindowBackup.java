@@ -51,7 +51,7 @@ public class WindowBackup extends JFrame {
         buttonCreateBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
         buttonCreateBackup.addActionListener(actionEvent -> {
             try {
-                Backup.createFullBackup(false);
+                Backup.createFullBackup();
                 JOptionPane.showMessageDialog(new Frame(), "The backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -67,7 +67,7 @@ public class WindowBackup extends JFrame {
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will me lost.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
                 try {
                     LOGGER.info("Creating backup beforehand.");
-                    Backup.createFullBackup(false);
+                    Backup.createFullBackup();
                     Backup.restoreBackup(true);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -88,7 +88,7 @@ public class WindowBackup extends JFrame {
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the latest backup?\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
                 try {
                     LOGGER.info("Creating backup beforehand.");
-                    Backup.createFullBackup(false);
+                    Backup.createFullBackup();
                     Backup.restoreBackup(false);
                     ChangeLog.addLogEntry(9, "");
                 } catch (IOException e) {
@@ -112,13 +112,13 @@ public class WindowBackup extends JFrame {
                 try {
                     Backup.deleteAllBackups();
                     if(JOptionPane.showConfirmDialog(null, "All backups have been deleted.\nDo you wan't to create a new initial backup?", "Backups deleted", JOptionPane.YES_NO_OPTION) == 0){
-                        try{
-                            Backup.createFullBackup(true);
+                        String returnValue = Backup.createInitialBackup();
+                        if(returnValue.equals("")) {
                             ChangeLog.addLogEntry(6, "");
                             JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
-                        }catch(IOException e){
-                            JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to backup file", JOptionPane.ERROR_MESSAGE);
-                            ChangeLog.addLogEntry(7, e.getMessage());
+                        }else {
+                            JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + returnValue, "Unable to backup file", JOptionPane.ERROR_MESSAGE);
+                            ChangeLog.addLogEntry(7, returnValue);
                         }
                     }
                 } catch (IOException e) {

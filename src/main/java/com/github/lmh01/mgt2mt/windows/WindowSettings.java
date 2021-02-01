@@ -60,7 +60,7 @@ public class WindowSettings extends JFrame {
         buttonBrowseMGT2Folder.setBounds(405, 99, 89, 23);
         buttonBrowseMGT2Folder.setToolTipText("Click to open a folder choosing dialog to change the MGT2 folder.");
         buttonBrowseMGT2Folder.addActionListener(actionEvent -> {
-            Settings.setMgt2FilePath(false);
+            Settings.setMgt2FilePath(true);
             textFieldMGT2Folder.setText(Settings.mgt2FilePath);
         });
         contentPane.add(buttonBrowseMGT2Folder);

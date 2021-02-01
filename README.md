@@ -37,4 +37,6 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Tool tips**
     - Should you need help to figure out what an input or button means simply hover over it with your mouse.   
 - **Settings**
-    - Settings are saved when you exit the program so that you don't need to choose the MGT2 folder on each start.    
+    - Settings are saved when you exit the program
+- **The Mad Games Tycoon 2 folder is set automatically**
+    - When launching the application all Stream libraries are searched if they contain Mad Games Tycoon 2. If they don't a prompt is shown where the path can be entered.

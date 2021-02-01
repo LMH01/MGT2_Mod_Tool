@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeSteamLibraries;
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.data_stream.ImportSettings;
@@ -10,10 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Settings {
     public static String mgt2FilePath = "";
-    public static final String MGT_2_DEFAULT_FILE_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";
+    //public static final String MGT_2_DEFAULT_FILE_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Mad Games Tycoon 2\\";//TODO Remove "//" before release because this is the default folder.
+    public static final String MGT_2_DEFAULT_FILE_PATH = "F:\\Games\\Steam Games\\steamapps\\common\\Mad Games Tycoon 2\\";
     public static String languageToAdd = "";
     public static final String MGT2_MOD_MANAGER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//";
     public static boolean enableDebugLogging = false;
@@ -52,53 +55,38 @@ public class Settings {
     public static  void saveSettings(){
         ExportSettings.export();
     }
-    public static void setMgt2FilePath(boolean retry){
-        JOptionPane.showMessageDialog(null, "To continue please select the Mad Games Tycoon 2 main folder.\n(The folder that contains the .exe file)\n\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.\n\nNote:\n- If you need help you can hover over the most components in this tool to reveal a tooltip.\n- If you encounter a bug please report it over on github.\n (Github can be accessed fia the main menu)", "Welcome to MGT2 Mod Tool", JOptionPane.INFORMATION_MESSAGE);
-        boolean correctFolder = false;
-        boolean breakLoop = false;
-        File mgt2DefaultFilePathFile = new File(MGT_2_DEFAULT_FILE_PATH);
-        if(mgt2DefaultFilePathFile.exists()){
-            if(Utils.doesFoldercontainFile(mgt2FilePath, "Mad Games Tycoon 2.exe")){
-                JOptionPane.showMessageDialog(new Frame(), "MGT2 folder has been detected.");
-            }
-        }else{
-            while(!correctFolder && !breakLoop){
-                if(!retry){
-                    breakLoop = true;
-                }
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-                    JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                    fileChooser.setDialogTitle("Choose 'Mad Games Tycoon 2' main folder:");
-                    fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-                    int return_value = fileChooser.showOpenDialog(null);
-                    if(return_value == 0){
-                        mgt2FilePath = fileChooser.getSelectedFile().getPath();
-                        if(Utils.doesFoldercontainFile(mgt2FilePath, "Mad Games Tycoon 2.exe")){
-                            LOGGER.info("File path: " + mgt2FilePath);
-                            correctFolder = true;
-                            JOptionPane.showMessageDialog(new Frame(), "Folder set.");
-                            try{
-                                Backup.createFullBackup(true);
-                                JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
-                            }catch(IOException e){
-                                JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Unable to backup file", JOptionPane.ERROR_MESSAGE);
-                                ChangeLog.addLogEntry(7, e.getMessage());
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(new Frame(), "This is not the MGT2 main folder!\nPlease select the correct folder!\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files.");
-                            mgt2FilePath = MGT_2_DEFAULT_FILE_PATH;
-                        }
-                    }else if(return_value == JFileChooser.CANCEL_OPTION){
-                        mgt2FilePath = MGT_2_DEFAULT_FILE_PATH;
-                        breakLoop = true;
+
+    public static void setMgt2FilePath(boolean showMessages){
+        try {
+            ArrayList<String> arrayListSteamLibraries = AnalyzeSteamLibraries.getSteamLibraries();
+            boolean folderFound = false;
+            for (String arrayListSteamLibrary : arrayListSteamLibraries) {
+                LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
+                if (Utils.doesFoldercontainFile(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", "Mad Games Tycoon 2.exe")) {
+                    LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
+                    mgt2FilePath = arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
+                    folderFound = true;
+                    if (showMessages) {
+                        JOptionPane.showMessageDialog(new Frame(), "Folder set.");
                     }
-                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                } catch (ClassNotFoundException | UnsupportedLookAndFeelException | InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
                 }
             }
+            if(!folderFound){
+                boolean retry = true;
+                while(retry){
+                    String inputString = JOptionPane.showInputDialog(null, "The Mad Games Tycoon folder could not be found.\nPlease enter the path:", "Unable to find folder.", JOptionPane.WARNING_MESSAGE);
+                    if(Utils.doesFoldercontainFile(inputString, "Mad Games Tycoon 2.exe")){
+                        LOGGER.info("Found MGT2 folder: " + inputString + "\\steamapps\\common\\Mad Games Tycoon 2\\");
+                        JOptionPane.showMessageDialog(new Frame(), "Folder set.");
+                        mgt2FilePath = inputString;
+                        retry = false;
+                    }else{
+                        JOptionPane.showMessageDialog(new Frame(), "This is not the MGT2 main folder!\nPlease select the correct folder!\nHint: go into steam -> left click MGT2 -> Manage -> Browse local files -> copy the path from explorer.");
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 }

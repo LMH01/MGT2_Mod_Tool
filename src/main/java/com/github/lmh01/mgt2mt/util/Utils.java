@@ -1,5 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -13,6 +17,7 @@ public class Utils {
     public static final File FILE_GENRES = new File(Utils.getMGT2DataPath() + "\\Genres.txt");
     public static final File FILE_NPC_GAMES = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     /**
      * @return returns the current date time in format: YYYY-MM-DD-HH-MM
@@ -99,8 +104,10 @@ public class Utils {
                 if(filesInFolder[i].getName().equals(content)){
                     return true;
                 }
-                System.out.println(filesInFolder[i].getName());
+                LOGGER.info(filesInFolder[i].getName());
             }
+        }else{
+            LOGGER.info("File does not exist.");
         }
         return false;
     }

@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -16,6 +17,8 @@ public class Backup {
     private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
     private static String latestBackupFolderName = "";
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
+    public static final File FILE_GENRES_INITIAL_BACKUP = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
+    public static final File FILE_NPC_GAMES_INITIAL_BACKUP = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
 
     /**
      * Creates a backup of a given file.
@@ -44,9 +47,7 @@ public class Backup {
         if(initialBackup){
             fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".initialBackup");
             if(fileLatestBackupOfInputFile.exists()){
-                if(JOptionPane.showConfirmDialog(null, "The initial backup of " + fileToBackup.getName() + " already exists.\nDo you want to replace it?", "Initial backup already exists", JOptionPane.YES_NO_OPTION) == 0){
-                    fileLatestBackupOfInputFile.delete();
-                }
+                LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
             }
         }else{
             fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
@@ -83,10 +84,8 @@ public class Backup {
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
             }
-            Utils.FILE_GENRES.delete();
-            Utils.FILE_NPC_GAMES.delete();
-            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.FILE_GENRES.getPath()));
-            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.FILE_NPC_GAMES.getPath()));
+            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.FILE_GENRES.getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.FILE_NPC_GAMES.getPath()), StandardCopyOption.REPLACE_EXISTING);
             if(initialBackup){
                 ChangeLog.addLogEntry(8, "");
                 JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
@@ -119,17 +118,31 @@ public class Backup {
 
     /**
      * Creates a backup of each file that can be edited with this tool.
-     * @param initialBackup Set true when this is the initial backup.
      * @throws IOException Throws IOException when backup was not successful.
      */
-    public static void createFullBackup(boolean initialBackup) throws IOException {
-        if(initialBackup){
-            Backup.createBackup(Utils.FILE_GENRES, true);
-            Backup.createBackup(Utils.FILE_NPC_GAMES, true);
-            ChangeLog.addLogEntry(6, "");
-        }else{
-            Backup.createBackup(Utils.FILE_GENRES);
-            Backup.createBackup(Utils.FILE_NPC_GAMES);
+    public static void createFullBackup() throws IOException {
+       Backup.createBackup(Utils.FILE_GENRES);
+       Backup.createBackup(Utils.FILE_NPC_GAMES);
+    }
+
+    /**
+     * Creates an initial backup when initial backup does not exist already.
+     * @return Returns e.getMessage();
+     */
+    public static String createInitialBackup(){
+        try{
+            if(!Backup.FILE_GENRES_INITIAL_BACKUP.exists()){
+                Backup.createBackup(Utils.FILE_GENRES, true);
+            }
+            if(!Backup.FILE_NPC_GAMES_INITIAL_BACKUP.exists()){
+                Backup.createBackup(Utils.FILE_NPC_GAMES, true);
+            }
+            return "";
+        }catch(IOException e) {
+            LOGGER.error("Unable to create initial backup: ");
+            ChangeLog.addLogEntry(7, e.getMessage());
+            e.printStackTrace();
+            return e.getMessage();
         }
     }
 }
