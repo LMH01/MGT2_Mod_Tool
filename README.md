@@ -12,7 +12,6 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - Install Java 8 (if not already installed)
 - Download this tool (.jar file)
 - Run the .jar file with "java -jar jar_name.jar"
-- Choose the main folder of Mad Games Tycoon 2 (the folder that contains the .exe file)
 ## These are the current features:
 - **Add and remove genres**
     - You can easily add a new genre to Mad Games Tycoon 2 with the help of a step by step guide
@@ -39,4 +38,4 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Settings**
     - Settings are saved when you exit the program
 - **The Mad Games Tycoon 2 folder is set automatically**
-    - When launching the application all Stream libraries are searched if they contain Mad Games Tycoon 2. If they don't a prompt is shown where the path can be entered.
+    - When launching the application all Steam libraries are searched if they contain Mad Games Tycoon 2. If they don't a prompt is shown where the path can be entered.
