@@ -48,7 +48,7 @@ public class NewGenreManager {
         //TODO The user should have the option to select a checkbox "Don't show me again" to not show this dialog again. If dialog has been opened will be saved to the settings file
         if(JOptionPane.showConfirmDialog(null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nAdd new genre?", "Add genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             try {
-                Backup.createBackup(Utils.FILE_GENRES);
+                Backup.createBackup(Utils.getGenreFile());
                 resetVariablesToDefault();
                 LOGGER.info("Adding new genre");
                 openStepWindow(1);

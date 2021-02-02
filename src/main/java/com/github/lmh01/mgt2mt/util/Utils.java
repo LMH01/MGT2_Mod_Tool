@@ -14,8 +14,6 @@ import java.util.Objects;
 public class Utils {
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
-    public static final File FILE_GENRES = new File(Utils.getMGT2DataPath() + "\\Genres.txt");
-    public static final File FILE_NPC_GAMES = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
@@ -34,6 +32,20 @@ public class Utils {
      */
     public static String getMGT2DataPath(){
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\";
+    }
+
+    /**
+     * @return Returns the genre file inside the mgt2 folder.
+     */
+    public static File getGenreFile(){
+        return new File(Utils.getMGT2DataPath() + "\\Genres.txt");
+    }
+
+    /**
+     * @return Returns the genre file inside the mgt2 folder.
+     */
+    public static File getNpcGamesFile(){
+        return new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
     }
 
     /**

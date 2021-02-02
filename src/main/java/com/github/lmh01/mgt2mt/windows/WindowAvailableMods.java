@@ -84,7 +84,7 @@ public class WindowAvailableMods extends JFrame {
         buttonRemoveGenreWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
-                Backup.createBackup(Utils.FILE_GENRES);
+                Backup.createBackup(Utils.getGenreFile());
                 System.out.println("Array ids: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size());
                 if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size() == 19 && !Settings.disableSafetyFeatures){
                     //This is executed when only one genre has been added to the game.

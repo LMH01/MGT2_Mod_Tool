@@ -100,10 +100,10 @@ public class WindowOther extends JFrame {
         buttonOpenGenresTxtFile.setToolTipText("Click to open the MGT2 main folder.");
         buttonOpenGenresTxtFile.addActionListener(actionEvent -> {
             try {
-                if(!Utils.FILE_GENRES.exists()){
+                if(!Utils.getGenreFile().exists()){
                     JOptionPane.showMessageDialog(null, "The Genres.txt file could not be opened.\nFile not found: Please check if your mgt2 folder is set correctly", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    Desktop.getDesktop().open(Utils.FILE_GENRES);
+                    Desktop.getDesktop().open(Utils.getGenreFile());
                 }
             } catch (IOException e) {
                 e.printStackTrace();

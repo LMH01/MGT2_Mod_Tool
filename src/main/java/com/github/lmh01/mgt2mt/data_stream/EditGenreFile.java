@@ -20,10 +20,10 @@ public class EditGenreFile {
         LOGGER.info("Adding new genre...");
         createTempFile();
         LOGGER.info("Deleting old Genres.txt file and writing new file.");
-        Utils.FILE_GENRES.delete();
-        Utils.FILE_GENRES.createNewFile();
+        Utils.getGenreFile().delete();
+        Utils.getGenreFile().createNewFile();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getGenreFile()), StandardCharsets.UTF_8));
 
         int currentid = 0;
         String currentLine;
@@ -90,10 +90,10 @@ public class EditGenreFile {
         LOGGER.info("Removing genre with id [" + genreId + "] from Genres.txt");
         createTempFile();
         LOGGER.info("Deleting old Genres.txt file and writing new file.");
-        Utils.FILE_GENRES.delete();
-        Utils.FILE_GENRES.createNewFile();
+        Utils.getGenreFile().delete();
+        Utils.getGenreFile().createNewFile();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getGenreFile()), StandardCharsets.UTF_8));
 
         String currentLine;
         boolean firstLine = true;
@@ -147,7 +147,7 @@ public class EditGenreFile {
             FILE_TEMP_GENRE_FILE.delete();
         }
         FILE_TEMP_GENRE_FILE.createNewFile();
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.FILE_GENRES), StandardCharsets.UTF_8));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getGenreFile()), StandardCharsets.UTF_8));
         PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));
         LOGGER.info("Writing current content to temp file.");
         String currentLine;

@@ -21,9 +21,9 @@ public class NPCGameListChanger {
     public static void editNPCGames(int genreID, boolean addGenreID, int chance) throws IOException {
         File fileNpcGamesTemp = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt.temp");
         fileNpcGamesTemp.createNewFile();
-        Backup.createBackup(Utils.FILE_NPC_GAMES);
+        Backup.createBackup(Utils.getNpcGamesFile());
         LOGGER.info("NpcGames.txt.temp has been created");
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.FILE_NPC_GAMES), StandardCharsets.UTF_16LE));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getNpcGamesFile()), StandardCharsets.UTF_16LE));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileNpcGamesTemp), StandardCharsets.UTF_16LE));
         String currentLine;
         while((currentLine = br.readLine()) != null){
@@ -40,8 +40,8 @@ public class NPCGameListChanger {
         }
         br.close();
         bw.close();
-        Utils.FILE_NPC_GAMES.delete();
-        fileNpcGamesTemp.renameTo(Utils.FILE_NPC_GAMES);
+        Utils.getNpcGamesFile().delete();
+        fileNpcGamesTemp.renameTo(Utils.getNpcGamesFile());
         if(addGenreID){
             ChangeLog.addLogEntry(2, Integer.toString(genreID));
         }else{

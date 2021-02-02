@@ -86,8 +86,8 @@ public class Backup {
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
             }
-            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.FILE_GENRES.getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.FILE_NPC_GAMES.getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             if(initialBackup){
                 ChangeLog.addLogEntry(8);
                 JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
@@ -124,8 +124,8 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createFullBackup() throws IOException {
-       Backup.createBackup(Utils.FILE_GENRES);
-       Backup.createBackup(Utils.FILE_NPC_GAMES);
+       Backup.createBackup(Utils.getGenreFile());
+       Backup.createBackup(Utils.getNpcGamesFile());
        backupSaveGames(FILE_SAVE_GAME_FOLDER, false);
     }
 
@@ -136,10 +136,10 @@ public class Backup {
     public static String createInitialBackup(){
         try{
             if(!Backup.FILE_GENRES_INITIAL_BACKUP.exists()){
-                Backup.createBackup(Utils.FILE_GENRES, true);
+                Backup.createBackup(Utils.getGenreFile(), true);
             }
             if(!Backup.FILE_NPC_GAMES_INITIAL_BACKUP.exists()){
-                Backup.createBackup(Utils.FILE_NPC_GAMES, true);
+                Backup.createBackup(Utils.getNpcGamesFile(), true);
             }
             backupSaveGames(FILE_SAVE_GAME_FOLDER, true);
             ChangeLog.addLogEntry(6);
@@ -155,7 +155,6 @@ public class Backup {
     /**
      * Create a backup of each save game.
      * @param saveGameFolder The folder where the save games are located.
-     * @throws IOException
      */
     private static void backupSaveGames(File saveGameFolder, boolean initialBackup) throws IOException {
         if(saveGameFolder.exists()){

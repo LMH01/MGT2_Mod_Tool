@@ -61,12 +61,13 @@ public class MainWindow extends JFrame {
         buttonGithub.setBounds(120, 100, 100, 23);
         buttonGithub.setToolTipText("Click to open the Github repository for this project.");
         buttonGithub.addActionListener(actionEvent -> {
-            try {
+            System.out.println("Current mgt2 folder: " + Settings.mgt2FilePath);
+            /*try {
                 Utils.openGithubPage();
             } catch (Exception e) {
                 Utils.showErrorMessage(2, e);
                 e.printStackTrace();
-            }
+            }*/
         });
         getContentPane().add(buttonGithub);
 
