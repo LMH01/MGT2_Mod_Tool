@@ -7,21 +7,23 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 
 public class WindowAddGenrePage1 extends JFrame{
-    private final JPanel contentPane;
+    JPanel contentPane = new JPanel();
     static final WindowAddGenrePage1 FRAME = new WindowAddGenrePage1();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage1.class);
+    JLabel labelGenreID = new JLabel("Genre id: ");
+    JButton buttonExplainGenreID = new JButton("id?");
+    JButton buttonNext = new JButton("Next");
+    JButton buttonQuit = new JButton("Cancel");
     final JSpinner spinnerId = new JSpinner();
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                FRAME.setSpinnerId();
+                FRAME.setGuiComponents();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -32,11 +34,10 @@ public class WindowAddGenrePage1 extends JFrame{
 
     public WindowAddGenrePage1() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 335, 160);
+
         setResizable(false);
         setTitle("[Page 1] Text and id");
 
-        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -57,7 +58,6 @@ public class WindowAddGenrePage1 extends JFrame{
         labelGenreDescription.setToolTipText("This description will be used for every translation.");
         contentPane.add(labelGenreDescription);
 
-        JLabel labelGenreID = new JLabel("Genre id: ");
         labelGenreID.setBounds(10, 60, 120, 23);
         contentPane.add(labelGenreID);
 
@@ -67,14 +67,13 @@ public class WindowAddGenrePage1 extends JFrame{
         textFieldGenreDescription.setToolTipText("Enter the genre description that should be shown in game. Hint: use <br> in your description to make a new line.");
         contentPane.add(textFieldGenreDescription);
 
-        JButton buttonExplainGenreID = new JButton("id?");
         buttonExplainGenreID.setBounds(230, 60, 80, 23);
         buttonExplainGenreID.setToolTipText("Click to learn what the genre id is");
         buttonExplainGenreID.addActionListener(actionEvent -> JOptionPane.showMessageDialog(null, "The genre id is the unique id under which your genre can be found.\nWhenever a game file is modified that should reference your genre this genre id is used.", "Genre id", JOptionPane.INFORMATION_MESSAGE));
         contentPane.add(buttonExplainGenreID);
 
-        JButton buttonNext = new JButton("Next");
-        buttonNext.setBounds(220, 100, 100, 23);
+
+
         buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(spinnerId, textFieldGenreName, textFieldGenreDescription)){
@@ -84,8 +83,8 @@ public class WindowAddGenrePage1 extends JFrame{
         });
         contentPane.add(buttonNext);
 
-        JButton buttonQuit = new JButton("Cancel");
-        buttonQuit.setBounds(120, 100, 90, 23);
+
+
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
@@ -95,15 +94,27 @@ public class WindowAddGenrePage1 extends JFrame{
         });
         contentPane.add(buttonQuit);
     }
-    private void setSpinnerId(){
+    private void setGuiComponents(){
         if(Settings.disableSafetyFeatures){
+            setBounds(100, 100, 335, 160);
             spinnerId.setModel(new SpinnerNumberModel(0, 0, 999, 1));
             spinnerId.setToolTipText("[Range: 0-999] This is the unique id for your genre. Do not change it unless you have your own genre id system.");
             spinnerId.setEnabled(true);
+            spinnerId.setVisible(true);
+            labelGenreID.setVisible(true);
+            buttonExplainGenreID.setVisible(true);
+            buttonNext.setBounds(220, 100, 100, 23);
+            buttonQuit.setBounds(120, 100, 90, 23);
         }else{
+            setBounds(100, 100, 335, 130);
             spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, NewGenreManager.id, 1));
             spinnerId.setToolTipText("[Range: Automatic] This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
+            spinnerId.setVisible(false);
+            labelGenreID.setVisible(false);
+            buttonExplainGenreID.setVisible(false);
+            buttonNext.setBounds(220, 70, 100, 23);
+            buttonQuit.setBounds(120, 70, 90, 23);
         }
         spinnerId.setBounds(120, 60, 100, 23);
         contentPane.add(spinnerId);
