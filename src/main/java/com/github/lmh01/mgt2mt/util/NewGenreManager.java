@@ -218,22 +218,14 @@ public class NewGenreManager {
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);
                 JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
-                if(JOptionPane.showConfirmDialog(null, "Do you wan't to add another genre?", "Add another genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-                    openStepWindow(1);
-                }else{
-                    MainWindow.createFrame();
-                }
+                WindowAvailableMods.createFrame();
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
-                MainWindow.createFrame();
+                WindowAvailableMods.createFrame();
             }
         }else{
-            if(JOptionPane.showConfirmDialog(null, "Do you wan't to add another genre?", "Add another genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-                openStepWindow(1);
-            }else{
-                MainWindow.createFrame();
-            }
+            WindowAvailableMods.createFrame();
         }
     }
     public static String getCompatibleGenresByID(){
