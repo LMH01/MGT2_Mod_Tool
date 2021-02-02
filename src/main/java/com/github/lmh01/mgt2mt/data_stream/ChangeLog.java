@@ -66,9 +66,9 @@ public class ChangeLog {
     private static void printNewLogEntry(int operation, String textBody, PrintWriter pw, String currentSystemTime){
         switch(operation){
             case 1: pw.print(currentSystemTime + ": Added genre [" + textBody + "]\n"); break;
-            case 2: pw.print(currentSystemTime + ": Added genre with id [" + textBody + "] to the npc games list \n"); break;
-            case 3: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list \n"); break;
-            case 4: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "]\n"); break;
+            case 2: pw.print(currentSystemTime + ": Added genre with id [" + textBody + "] to the npc games list\n"); break;
+            case 3: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list\n"); break;
+            case 4: pw.print(currentSystemTime + ": Removed genre with id [" + textBody + "] from the Genres.txt file\n"); break;
             case 5: pw.print(currentSystemTime + ": A backup of file " + textBody + " has been created."); break;
             case 6: pw.print(currentSystemTime + ": The initial backup has been created."); break;
             case 7: pw.print(currentSystemTime + ": The initial backup failed. Exception: " + textBody); break;
