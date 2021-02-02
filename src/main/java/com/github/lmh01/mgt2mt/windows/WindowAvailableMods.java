@@ -95,7 +95,7 @@ public class WindowAvailableMods extends JFrame {
                     }
                     JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
                     int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                    if (option == JOptionPane.OK_OPTION) {//TODO Check here if genre id that should be removed exists in the Genres.txt file. If not say that said genre does not exists and that it thus cant be removed.
+                    if (option == JOptionPane.OK_OPTION) {
                         int genreIDToRemove = Integer.parseInt(spinnerGenreIdToRemove.getValue().toString());
                         EditGenreFile.removeGenre(genreIDToRemove);
                         NPCGameListChanger.editNPCGames(genreIDToRemove, false, 0);

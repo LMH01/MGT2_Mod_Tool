@@ -29,7 +29,7 @@ public class WindowOther extends JFrame {
 
     public WindowOther(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 250);
+        setBounds(100, 100, 200, 280);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -111,14 +111,31 @@ public class WindowOther extends JFrame {
         });
         contentPane.add(buttonOpenGenresTxtFile);
 
+        JButton buttonOpenGenresByIdTextFile = new JButton("Open genres by id");
+        buttonOpenGenresByIdTextFile.setBounds(10,160, 175, 23);
+        buttonOpenGenresByIdTextFile.setToolTipText("<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function");
+        buttonOpenGenresByIdTextFile.addActionListener(e -> {
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
+                if(!AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.exists()){
+                    JOptionPane.showMessageDialog(null, "The help file could not be opened.\nFile not found.", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    Desktop.getDesktop().open(AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP);
+                }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        contentPane.add(buttonOpenGenresByIdTextFile);
+
         JButton buttonCheckForUpdates = new JButton("Check for updates");
-        buttonCheckForUpdates.setBounds(10, 160, 175, 23);
+        buttonCheckForUpdates.setBounds(10, 190, 175, 23);
         buttonCheckForUpdates.setToolTipText("Click to check this tool for updates.");
         buttonCheckForUpdates.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         contentPane.add(buttonCheckForUpdates);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 190, 89, 23);
+        btnBack.setBounds(10, 220, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();

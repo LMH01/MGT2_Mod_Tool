@@ -57,7 +57,7 @@ public class WindowSettings extends JFrame {
         contentPane.add(checkBoxDebugMode);
 
         checkBoxDisableSafety.setBounds(20, 70, 200, 23);
-        checkBoxDisableSafety.setToolTipText("Check this box to disable the automatic genre id allocation. If checked most spinners won't have a maximum value. Do only enable when you use your own genre id system and you need the spinners to be unlocked.");
+        checkBoxDisableSafety.setToolTipText("<html>Check this box to disable the automatic genre id allocation.<br>If checked most spinners won't have a maximum value.<br>Do only enable when you use your own genre id system and you need the spinners to be unlocked.");
         checkBoxDisableSafety.addActionListener(e -> {
             LOGGER.info("checkBoxDisableSafety action: " + e.getActionCommand());
             if(checkBoxDisableSafety.isSelected()){

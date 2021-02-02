@@ -14,6 +14,7 @@ public class AnalyzeExistingGenres {
     public static final ArrayList<Integer> ARRAY_LIST_GENRE_IDS_IN_USE = new ArrayList<>();
     public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_IN_USE = new ArrayList<>();
     public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED = new ArrayList<>();
+    public static final File FILE_GENRES_BY_ID_HELP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
     public static ArrayList<String> arrayListGenreNamesSorted = new ArrayList<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
 
@@ -60,12 +61,11 @@ public class AnalyzeExistingGenres {
      * Writes a help file with genres by id.
      */
     private static void writeHelpFile() throws IOException {
-        File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
-        if(file.exists()){
-            file.delete();
+        if(FILE_GENRES_BY_ID_HELP.exists()){
+            FILE_GENRES_BY_ID_HELP.delete();
         }
-        file.createNewFile();
-        PrintWriter pw = new PrintWriter(file);
+        FILE_GENRES_BY_ID_HELP.createNewFile();
+        PrintWriter pw = new PrintWriter(FILE_GENRES_BY_ID_HELP);
         for(int i = 0; i< ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
             pw.print(ARRAY_LIST_GENRE_IDS_IN_USE.get(i) + " - " + ARRAY_LIST_GENRE_NAMES_IN_USE.get(i) + "\n");
         }

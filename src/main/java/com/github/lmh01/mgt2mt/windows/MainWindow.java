@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
 
         JButton buttonOther = new JButton("Other");
         buttonOther.setBounds(120, 70, 100, 23);
-        buttonOther.setToolTipText("Click to open the other page.");
+        buttonOther.setToolTipText("<html>Click to open the other page.<br>This page contains some useful tools that did not fit any other category.");
         buttonOther.addActionListener(actionEvent -> {
             WindowOther.createFrame();
             FRAME.dispose();
