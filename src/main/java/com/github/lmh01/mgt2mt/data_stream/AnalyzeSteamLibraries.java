@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class AnalyzeSteamLibraries {
     private static final String STEAM_LIBRARY_FOLDERS_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
+    private static final String STEAM_LIBRARY_DEFAULT_FOLDER = "C:\\Program Files (x86)\\Steam\\";
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeSteamLibraries.class);
 
     /**
@@ -20,6 +21,7 @@ public class AnalyzeSteamLibraries {
         ArrayList<String> arrayListSteamLibraries = new ArrayList<>();
         File steamLibraryFoldersVDF = new File(STEAM_LIBRARY_FOLDERS_PATH);
         BufferedReader bf = new BufferedReader(new FileReader(steamLibraryFoldersVDF));
+        arrayListSteamLibraries.add(STEAM_LIBRARY_DEFAULT_FOLDER);
         String currentLine;
         int currentPath = 1;
         while((currentLine = bf.readLine()) != null){
