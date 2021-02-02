@@ -4,7 +4,6 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
 import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 
@@ -50,7 +49,7 @@ public class WindowAvailableMods extends JFrame {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
-                    WindowAddGenreToGames.createFrame();
+                    WindowNpcGameList.createFrame();
                     FRAME.dispose();
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);

@@ -11,11 +11,11 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class WindowAddGenreToGames extends JFrame {//TODO Rename window to WindowNpcGameList
+public class WindowNpcGameList extends JFrame {
 
-    static final WindowAddGenreToGames FRAME = new WindowAddGenreToGames();
+    static final WindowNpcGameList FRAME = new WindowNpcGameList();
     private final JPanel contentPane;
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenreToGames.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowNpcGameList.class);
     final JSpinner SPINNER_GENRE_ID = new JSpinner();
 
     public static void createFrame(){
@@ -30,7 +30,7 @@ public class WindowAddGenreToGames extends JFrame {//TODO Rename window to Windo
         });
     }
 
-    public WindowAddGenreToGames(){
+    public WindowNpcGameList(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 200, 200);
         setResizable(false);
