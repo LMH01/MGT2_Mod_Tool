@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
 import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 
@@ -98,8 +99,11 @@ public class WindowAvailableMods extends JFrame {
                     }
                     JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
                     int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                    if (option == JOptionPane.OK_OPTION) {
-
+                    if (option == JOptionPane.OK_OPTION) {//TODO Check here if genre id that should be removed exists in the Genres.txt file. If not say that said genre does not exists and that it thus cant be removed.
+                        int genreIDToRemove = Integer.parseInt(spinnerGenreIdToRemove.getValue().toString());
+                        EditGenreFile.removeGenre(genreIDToRemove);
+                        NPCGameListChanger.editNPCGames(genreIDToRemove, false, 0);
+                        JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + genreIDToRemove + "] has been removed successfully.");
                     }
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
