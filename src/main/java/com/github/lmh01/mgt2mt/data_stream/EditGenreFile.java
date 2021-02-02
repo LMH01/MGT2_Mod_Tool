@@ -19,7 +19,9 @@ public class EditGenreFile {
     public static void addGenre() throws IOException {
         LOGGER.info("Adding new genre...");
         createTempFile();
-        LOGGER.info("Deleting old Genres.txt file and writing new file.");
+        if(Settings.enableDebugLogging){
+            LOGGER.info("Deleting old Genres.txt file and writing new file.");
+        }
         Utils.getGenreFile().delete();
         Utils.getGenreFile().createNewFile();
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_TEMP_GENRE_FILE), StandardCharsets.UTF_8));

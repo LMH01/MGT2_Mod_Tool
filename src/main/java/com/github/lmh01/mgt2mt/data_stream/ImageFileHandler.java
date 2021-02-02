@@ -40,10 +40,12 @@ public class ImageFileHandler {
     public static void removeImageFiles(String genreName){
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
-        LOGGER.info("imageFile: " + imageFile.getPath());
-        LOGGER.info("imageFile name: " + imageFile.getName());
-        LOGGER.info("imageFileMeta: " + imageFileMeta.getPath());
-        LOGGER.info("imageFileMeta name: " + imageFileMeta.getName());
+        if(Settings.enableDebugLogging){
+            LOGGER.info("imageFile: " + imageFile.getPath());
+            LOGGER.info("imageFile name: " + imageFile.getName());
+            LOGGER.info("imageFileMeta: " + imageFileMeta.getPath());
+            LOGGER.info("imageFileMeta name: " + imageFileMeta.getName());
+        }
         if(imageFile.exists() && imageFileMeta.exists()){
             imageFile.delete();
             imageFileMeta.delete();

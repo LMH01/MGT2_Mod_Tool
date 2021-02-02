@@ -51,7 +51,8 @@ public class AnalyzeExistingGenres {
         reader.close();
         LOGGER.info("Analyzing of genre ids and names complete. Found: " + ARRAY_LIST_GENRE_IDS_IN_USE.size());
         if(Settings.enableDebugLogging){
-            LOGGER.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");}
+            LOGGER.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
+        }
         writeHelpFile();
         fillGenresByIdListSorted();
         sortGenreNames();
@@ -70,7 +71,9 @@ public class AnalyzeExistingGenres {
             pw.print(ARRAY_LIST_GENRE_IDS_IN_USE.get(i) + " - " + ARRAY_LIST_GENRE_NAMES_IN_USE.get(i) + "\n");
         }
         pw.close();
-        LOGGER.info("file created.");
+        if(Settings.enableDebugLogging){
+            LOGGER.info("file created.");
+        }
     }
     private static void fillGenresByIdListSorted(){
         for(int i = 0; i< ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){

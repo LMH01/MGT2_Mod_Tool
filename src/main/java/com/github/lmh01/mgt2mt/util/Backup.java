@@ -38,6 +38,7 @@ public class Backup {
      */
     public static void createBackup(File fileToBackup, boolean initialBackup) throws IOException {
         String currentTimeAndDay = Utils.getCurrentDateTime();
+        boolean initialBackupAlreadyExists = false;
         latestBackupFolderName = currentTimeAndDay;
         File backupFileFolder = new File(BACKUP_FOLDER_PATH + currentTimeAndDay + "//");
         File directoryBackup = new File(BACKUP_FOLDER_PATH);
@@ -48,26 +49,31 @@ public class Backup {
         if(initialBackup){
             fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".initialBackup");
             if(fileLatestBackupOfInputFile.exists()){
-                LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
+                }
+                initialBackupAlreadyExists = true;
             }
         }else{
             fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
         }
-        if(fileLatestBackupOfInputFile.exists()){
-            if(!backupFileFolder.exists()){//Creates directory if backup directory for specified time does not exist
-                backupFileFolder.mkdirs();
+        if(!initialBackupAlreadyExists){
+            if(fileLatestBackupOfInputFile.exists()){
+                if(!backupFileFolder.exists()){//Creates directory if backup directory for specified time does not exist
+                    backupFileFolder.mkdirs();
+                }
+                LOGGER.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
+                File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
+                if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
+                    LOGGER.info("The file inside the storage folder does already exist. deleting...");
+                    fileBackupSaved.delete();
+                }
+                fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
             }
-            LOGGER.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
-            File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
-            if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
-                LOGGER.info("The file inside the storage folder does already exist. deleting...");
-                fileBackupSaved.delete();
-            }
-            fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
+            File fileBackupFile = new File(fileToBackup.getPath());
+            Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
+            ChangeLog.addLogEntry(5, fileToBackup.getName());
         }
-        File fileBackupFile = new File(fileToBackup.getPath());
-        Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
-        ChangeLog.addLogEntry(5, fileToBackup.getName());
     }
 
     /**
@@ -135,12 +141,8 @@ public class Backup {
      */
     public static String createInitialBackup(){
         try{
-            if(!Backup.FILE_GENRES_INITIAL_BACKUP.exists()){
-                Backup.createBackup(Utils.getGenreFile(), true);
-            }
-            if(!Backup.FILE_NPC_GAMES_INITIAL_BACKUP.exists()){
-                Backup.createBackup(Utils.getNpcGamesFile(), true);
-            }
+            Backup.createBackup(Utils.getGenreFile(), true);
+            Backup.createBackup(Utils.getNpcGamesFile(), true);
             backupSaveGames(FILE_SAVE_GAME_FOLDER, true);
             ChangeLog.addLogEntry(6);
             return "";
@@ -162,14 +164,18 @@ public class Backup {
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(filesInFolder[i].getName().contains("savegame")){
                     File backupFile = new File(filesInFolder[i].getPath());
-                    LOGGER.info("Savefile to backup found: " + backupFile);
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("Savefile to backup found: " + backupFile);
+                    }
                     if(initialBackup){
                         createBackup(backupFile, true);
                     }else{
                         createBackup(backupFile);
                     }
                 }
-                LOGGER.info(filesInFolder[i].getName());
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("File [" + i + "] in folder: " + filesInFolder[i].getName());
+                }
             }
         }
     }

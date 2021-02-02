@@ -231,7 +231,9 @@ public class NewGenreManager {
     public static String getCompatibleGenresByID(){
         ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();
         StringBuilder compatibleGenresByID = new StringBuilder();
-        LOGGER.info("arrayListGenreNamesByIdSorted.size: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size());
+        if(Settings.enableDebugLogging){
+            LOGGER.info("arrayListGenreNamesByIdSorted.size: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size());
+        }
         for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size(); i++){
             if(Settings.enableDebugLogging){
                 LOGGER.info("current i: " + i);
@@ -251,7 +253,9 @@ public class NewGenreManager {
                         LOGGER.info("This should only be an id: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", ""));
                     }
                     arrayListGenreIDs.add(Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
-                    LOGGER.info("compatible genre id: " + Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("compatible genre id: " + Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
+                    }
                 }
             }
         }

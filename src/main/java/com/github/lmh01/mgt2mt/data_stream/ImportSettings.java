@@ -49,13 +49,13 @@ public class ImportSettings{
                             Settings.enableCustomFolder = false;
                         } break;
                 }
-                LOGGER.info("Imported Setting (" + setting + "): " + currentLine);
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Imported Setting (" + setting + "): " + currentLine);
+                }
                 ++setting;
             }
-
-            LOGGER.info("Import Complete!");
-            if (importCustomSettings) {
-                JOptionPane.showMessageDialog(new Frame(), "Settings loaded Successfully!");
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Import Complete!");
             }
             reader.close();
             return true;

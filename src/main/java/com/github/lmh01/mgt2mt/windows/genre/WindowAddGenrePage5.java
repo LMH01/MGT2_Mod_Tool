@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import org.slf4j.Logger;
@@ -98,9 +99,13 @@ public class WindowAddGenrePage5 extends JFrame{
         listModel.clear();
         for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
             listModel.addElement(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
-            LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+            }
             for(int n = 0; n<NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.size(); n++){
-                LOGGER.info("Current n:" + n);
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Current n:" + n);
+                }
                 if(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i).equals(NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.get(n))){
                     genresSelected.add(i);
                 }
