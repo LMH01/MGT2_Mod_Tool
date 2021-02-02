@@ -14,6 +14,7 @@ import java.awt.*;
 public class WindowAddGenrePage7 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
     static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
+    static int combinedValue;
     JPanel contentPane = new JPanel();
     JButton buttonNext = new JButton("Next");
     JButton buttonPrevious = new JButton("Previous");
@@ -38,11 +39,11 @@ public class WindowAddGenrePage7 extends JFrame{
 
     public WindowAddGenrePage7() {
         buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
+            if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl) || Settings.disableSafetyFeatures){
                 NewGenreManager.openStepWindow(8);
                 FRAME.dispose();
             }else{
-                JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100 and dividable by 5.");
+                JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100.\nIt is currently at: " + combinedValue);
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
@@ -129,7 +130,7 @@ public class WindowAddGenrePage7 extends JFrame{
         contentPane.add(spinnerControl);
     }
     private static boolean saveInputs(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
-        int combinedValue = Integer.parseInt(spinnerGameplay.getValue().toString()) +
+        combinedValue = Integer.parseInt(spinnerGameplay.getValue().toString()) +
                 Integer.parseInt(spinnerGraphic.getValue().toString()) +
                 Integer.parseInt(spinnerSound.getValue().toString()) +
                 Integer.parseInt(spinnerControl.getValue().toString());
