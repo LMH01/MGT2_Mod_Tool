@@ -63,7 +63,7 @@ public class Settings {
             madGamesTycoonFolderIsCorrect = false;
             for (String arrayListSteamLibrary : arrayListSteamLibraries) {
                 LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                if (Utils.doesFolderContainFile(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", "Mad Games Tycoon 2.exe")) {
+                if (Utils.doesFolderContainFile(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", "Mad Games Tycoon 2.exe") && !madGamesTycoonFolderIsCorrect) {
                     LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
                     steamLibraryFolder = arrayListSteamLibrary;
                     mgt2FilePath = arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
