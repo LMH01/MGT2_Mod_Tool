@@ -30,7 +30,7 @@ public class WindowAvailableMods extends JFrame {
 
     public WindowAvailableMods(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 200);
+        setBounds(100, 100, 200, 170);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -116,24 +116,18 @@ public class WindowAvailableMods extends JFrame {
         contentPane.add(buttonRemoveGenreWindow);
 
         JButton buttonSettings = new JButton("Settings");
-        buttonSettings.setBounds(100, 140, 85, 23);
+        buttonSettings.setBounds(100, 110, 85, 23);
         buttonSettings.setToolTipText("Click to open the settings page.");
         buttonSettings.addActionListener(actionEvent -> WindowSettings.createFrame());
         contentPane.add(buttonSettings);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 112, 80, 23);
+        btnBack.setBounds(10, 110, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
             FRAME.dispose();
         });
         contentPane.add(btnBack);
-
-        JButton btnQuit = new JButton("Quit");
-        btnQuit.setBounds(10, 140, 80, 23);
-        btnQuit.setToolTipText("Click to exit the application.");
-        btnQuit.addActionListener(actionEvent -> System.exit(0));
-        contentPane.add(btnQuit);
     }
 }

@@ -25,7 +25,7 @@ public class WindowAddNewGenre extends JFrame {
 
     public WindowAddNewGenre() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 170);
+        setBounds(100, 100, 200, 140);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -54,24 +54,18 @@ public class WindowAddNewGenre extends JFrame {
         contentPane.add(buttonOpenAddGenreToGamesWindow);
 
         JButton buttonSettings = new JButton("Settings");
-        buttonSettings.setBounds(100, 110, 85, 23);
+        buttonSettings.setBounds(100, 80, 85, 23);
         buttonSettings.setToolTipText("Click to open the settings page.");
         buttonSettings.addActionListener(e -> WindowSettings.createFrame());
         contentPane.add(buttonSettings);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 82, 80, 23);
+        btnBack.setBounds(10, 80, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
             FRAME.dispose();
         });
         contentPane.add(btnBack);
-
-        JButton btnQuit = new JButton("Quit");
-        btnQuit.setBounds(10, 110, 80, 23);
-        btnQuit.setToolTipText("Click to exit the application.");
-        btnQuit.addActionListener(actionEvent -> System.exit(0));
-        contentPane.add(btnQuit);
     }
 }

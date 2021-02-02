@@ -11,7 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class WindowAddGenreToGames extends JFrame {
+public class WindowAddGenreToGames extends JFrame {//TODO Rename window to WindowNpcGameList
 
     static final WindowAddGenreToGames FRAME = new WindowAddGenreToGames();
     private final JPanel contentPane;
@@ -32,7 +32,7 @@ public class WindowAddGenreToGames extends JFrame {
 
     public WindowAddGenreToGames(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 230);
+        setBounds(100, 100, 200, 200);
         setResizable(false);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,7 +69,7 @@ public class WindowAddGenreToGames extends JFrame {
         contentPane.add(spinnerChance);
 
         JButton buttonApply = new JButton("Apply");
-        buttonApply.setBounds(95,170,80,23);
+        buttonApply.setBounds(100,140,80,23);
         buttonApply.setToolTipText("Click to edit the NpcGames.txt file with your settings.");
         buttonApply.addActionListener(actionEvent -> {
             boolean addGenreID;
@@ -96,19 +96,13 @@ public class WindowAddGenreToGames extends JFrame {
         contentPane.add(buttonApply);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 142, 80, 23);
+        btnBack.setBounds(10, 140, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
             FRAME.dispose();
         });
         contentPane.add(btnBack);
-
-        JButton btnQuit = new JButton("Quit");
-        btnQuit.setBounds(10, 170, 80, 23);
-        btnQuit.setToolTipText("Click to exit the application.");
-        btnQuit.addActionListener(actionEvent -> System.exit(0));
-        contentPane.add(btnQuit);
     }
     private void setSpinner(){
         SPINNER_GENRE_ID.setBounds(100,40,80,23);
