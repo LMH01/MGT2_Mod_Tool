@@ -57,7 +57,7 @@ public class WindowAddGenrePage2 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 2] Date");
+        setTitle("[Page 2] Unlock date");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);

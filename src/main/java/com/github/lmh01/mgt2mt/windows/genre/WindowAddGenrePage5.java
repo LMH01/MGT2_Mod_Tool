@@ -65,7 +65,7 @@ public class WindowAddGenrePage5 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 260);
         setResizable(false);
-        setTitle("[Page 5] Genre combinations");
+        setTitle("[Page 5] Genre combo");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);

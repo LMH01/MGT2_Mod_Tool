@@ -60,7 +60,7 @@ public class WindowAddGenrePage6 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 210);
         setResizable(false);
-        setTitle("[Page 6] Design Priority");
+        setTitle("[Page 6] Design priority");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);

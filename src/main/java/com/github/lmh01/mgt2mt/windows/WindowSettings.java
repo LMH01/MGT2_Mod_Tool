@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class WindowSettings extends JFrame {
         checkBoxDisableSafety.addActionListener(e -> {
             LOGGER.info("checkBoxDisableSafety action: " + e.getActionCommand());
             if(checkBoxDisableSafety.isSelected()){
-                checkBoxDisableSafety.setSelected(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to disable the safety features?\nThis could lead to problems.", "Disable safety features?", JOptionPane.YES_NO_OPTION) == 0);
+                checkBoxDisableSafety.setSelected(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to disable the safety features?\nThis could lead to problems.\n\nUSE THIS FEATURE AT YOUR OWN RISK!\nI WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING WITH THE SAFETY FEATURES DISABLED!\n\nDisable safety features?", "Disable safety features?", JOptionPane.YES_NO_OPTION) == 0);
             }
             unsavedChanges = checkBoxDisableSafety.isSelected() != Settings.disableSafetyFeatures;
         });
@@ -140,6 +141,7 @@ public class WindowSettings extends JFrame {
                 String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety);
                 if(JOptionPane.showConfirmDialog(null, "You have made changes that have not been saved:\n\n" + unsavedChanges + "\nDo you want to save them?", "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);WindowSettings.FRAME.dispose();
+                    Backup.createInitialBackup();
                 }
             }
             unsavedChanges = false;
@@ -173,9 +175,11 @@ public class WindowSettings extends JFrame {
                 String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety);
                 if(JOptionPane.showConfirmDialog(null, "Save the following settings?\n\n" + unsavedChanges, "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);
+                    Backup.createInitialBackup();
                 }
             }else{
                 setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);
+                Backup.createInitialBackup();
             }
         });
         contentPane.add(btnSave);
