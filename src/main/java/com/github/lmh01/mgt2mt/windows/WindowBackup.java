@@ -62,9 +62,9 @@ public class WindowBackup extends JFrame {
 
         JButton buttonRestoreInitialBackup = new JButton("Restore initial backup");
         buttonRestoreInitialBackup.setBounds(10, 70, 175, 23);
-        buttonRestoreInitialBackup.setToolTipText("Click to restore the initial backup that has been created when the mod tool was started for the first time.");
+        buttonRestoreInitialBackup.setToolTipText("Click to restore the initial backup that has been created when the mod tool was started for the first time. Your save game backups will not be restored.");
         buttonRestoreInitialBackup.addActionListener(actionEvent ->{
-            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will me lost.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will me lost.\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
                 try {
                     LOGGER.info("Creating backup beforehand.");
                     Backup.createFullBackup();
@@ -83,9 +83,9 @@ public class WindowBackup extends JFrame {
 
         JButton buttonRestoreLatestBackup = new JButton("Restore latest backup");
         buttonRestoreLatestBackup.setBounds(10, 100, 175, 23);
-        buttonRestoreLatestBackup.setToolTipText("Click to restore the latest backup that has been created.");
+        buttonRestoreLatestBackup.setToolTipText("Click to restore the latest backup that has been created. Your save game backups will not be restored.");
         buttonRestoreLatestBackup.addActionListener(actionEvent ->{
-            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the latest backup?\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+            if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the latest backup?\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
                 try {
                     LOGGER.info("Creating backup beforehand.");
                     Backup.createFullBackup();

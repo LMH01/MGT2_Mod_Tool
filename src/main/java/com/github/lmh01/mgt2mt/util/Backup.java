@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
+import java.util.Objects;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class Backup {
@@ -19,6 +20,7 @@ public class Backup {
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
     public static final File FILE_GENRES_INITIAL_BACKUP = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
     public static final File FILE_NPC_GAMES_INITIAL_BACKUP = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+    public static final File FILE_SAVE_GAME_FOLDER = new File(System.getenv("USERPROFILE") + "\\appdata\\locallow\\Eggcode\\Mad Games Tycoon 2\\");
 
     /**
      * Creates a backup of a given file.
@@ -37,7 +39,6 @@ public class Backup {
     public static void createBackup(File fileToBackup, boolean initialBackup) throws IOException {
         String currentTimeAndDay = Utils.getCurrentDateTime();
         latestBackupFolderName = currentTimeAndDay;
-        ChangeLog.addLogEntry(5, fileToBackup.getName());
         File backupFileFolder = new File(BACKUP_FOLDER_PATH + currentTimeAndDay + "//");
         File directoryBackup = new File(BACKUP_FOLDER_PATH);
         if(!directoryBackup.exists()){
@@ -64,12 +65,13 @@ public class Backup {
             }
             fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
         }
-        File fileBackupFile = new File(Utils.getMGT2DataPath() + fileToBackup.getName());
+        File fileBackupFile = new File(fileToBackup.getPath());
         Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
+        ChangeLog.addLogEntry(5, fileToBackup.getName());
     }
 
     /**
-     * Restores a backup
+     * Restores either a complete initial backup or a complete latest backup
      * @param initialBackup If true the initial backup will be restored. If false the latest backup will be restored.
      */
     public static void restoreBackup(boolean initialBackup){
@@ -124,6 +126,7 @@ public class Backup {
     public static void createFullBackup() throws IOException {
        Backup.createBackup(Utils.FILE_GENRES);
        Backup.createBackup(Utils.FILE_NPC_GAMES);
+       backupSaveGames(FILE_SAVE_GAME_FOLDER, false);
     }
 
     /**
@@ -138,6 +141,7 @@ public class Backup {
             if(!Backup.FILE_NPC_GAMES_INITIAL_BACKUP.exists()){
                 Backup.createBackup(Utils.FILE_NPC_GAMES, true);
             }
+            backupSaveGames(FILE_SAVE_GAME_FOLDER, true);
             ChangeLog.addLogEntry(6);
             return "";
         }catch(IOException e) {
@@ -145,6 +149,29 @@ public class Backup {
             ChangeLog.addLogEntry(7, e.getMessage());
             e.printStackTrace();
             return e.getMessage();
+        }
+    }
+
+    /**
+     * Create a backup of each save game.
+     * @param saveGameFolder The folder where the save games are located.
+     * @throws IOException
+     */
+    private static void backupSaveGames(File saveGameFolder, boolean initialBackup) throws IOException {
+        if(saveGameFolder.exists()){
+            File[] filesInFolder = saveGameFolder.listFiles();
+            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
+                if(filesInFolder[i].getName().contains("savegame")){
+                    File backupFile = new File(filesInFolder[i].getPath());
+                    LOGGER.info("Savefile to backup found: " + backupFile);
+                    if(initialBackup){
+                        createBackup(backupFile, true);
+                    }else{
+                        createBackup(backupFile);
+                    }
+                }
+                LOGGER.info(filesInFolder[i].getName());
+            }
         }
     }
 }
