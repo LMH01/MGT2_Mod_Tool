@@ -111,4 +111,14 @@ public class Utils {
         }
         return false;
     }
+
+    /**
+     * @param imageFile The image file that should be resized
+     * @return Returns the resized image file
+     */
+    public static ImageIcon getSmallerImageIcon(ImageIcon imageFile){
+        Image image = imageFile.getImage(); // transform it
+        Image resizedImage = image.getScaledInstance(64, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        return new ImageIcon(resizedImage);  // transform it back
+    }
 }

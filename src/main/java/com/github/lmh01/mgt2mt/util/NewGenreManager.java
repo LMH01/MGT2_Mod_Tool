@@ -95,7 +95,7 @@ public class NewGenreManager {
             n++;
 
         }
-        ImageIcon iconGenre = new ImageIcon(imageFile.getPath());
+        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(imageFile.getPath()));
         int returnValue = JOptionPane.showConfirmDialog(null, "Your genre is ready:\n\n" +
                 "Id:" + id + "\n" +
                 "Name: " + name + "\n" +
@@ -118,7 +118,7 @@ public class NewGenreManager {
                 "Graphic: " + graphic + "%\n" +
                 "Sound: " + sound + "%\n" +
                 "Control: " + control + "%\n" +
-                "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.", "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, iconGenre);
+                "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.", "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
         if(returnValue == 0){
             //click yes
             boolean continueAnyway = false;
@@ -213,8 +213,8 @@ public class NewGenreManager {
     }
     public static void genreAdded(){
         ChangeLog.addLogEntry(1, name);
-        ImageIcon iconGenre = new ImageIcon(NewGenreManager.imageFile.getPath());
-        if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconGenre) == 0){
+        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(NewGenreManager.imageFile.getPath()));
+        if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);
                 JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
