@@ -19,9 +19,10 @@ public class Settings {
     public static boolean enableCustomFolder = false;
     private static final Logger LOGGER = LoggerFactory.getLogger(Settings.class);
     public static boolean madGamesTycoonFolderIsCorrect = false;
+    public static boolean enableAddGenreWarning = true;
     public static void resetSettings(){
         setMgt2Folder(false);
-        setSettings(false, false, false, false, "");
+        setSettings(false, false, false, false, "", true);
         LOGGER.info("Settings have been reset.");
     }
 
@@ -32,10 +33,11 @@ public class Settings {
      * @param customFolderPath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath){
+    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showAddGenreWarning){
         Settings.enableDebugLogging = enableDebugLogging;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
+        Settings.enableAddGenreWarning = showAddGenreWarning;
         if(!customFolderPath.isEmpty()){
             Settings.mgt2FilePath = customFolderPath;
         }

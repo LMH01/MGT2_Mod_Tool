@@ -46,7 +46,21 @@ public class NewGenreManager {
 
     public static void addGenre(){
         //TODO The user should have the option to select a checkbox "Don't show me again" to not show this dialog again. If dialog has been opened will be saved to the settings file
-        if(JOptionPane.showConfirmDialog(null, "Warning:\n\nLoading a save-file with this new added genre will tie it to the file.\nRemoving the genre later won't remove it from save-files that have been accessed with said genre.\n\nAdd new genre?", "Add genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+        JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this warning again");
+        JLabel labelMessage = new JLabel("<html>Warning:<br><br>Loading a save-file with this new added genre will tie it to the file.<br>Removing the genre later won't remove it from save-files that have been accessed with said genre.<br><br>Add new genre?");
+        Object[] params = {labelMessage,checkBoxDontShowAgain};
+        LOGGER.info("enableAddGenreWarning: " + Settings.enableAddGenreWarning);
+        boolean cancelAddGenre = false;
+        if(Settings.enableAddGenreWarning){
+            if(JOptionPane.showConfirmDialog(null, params, "Add genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+                cancelAddGenre = true;
+            }
+        }
+        if(!cancelAddGenre){
+            if(checkBoxDontShowAgain.isSelected()){
+                Settings.enableAddGenreWarning = false;
+                ExportSettings.export();
+            }
             try {
                 Backup.createBackup(Utils.getGenreFile());
                 resetVariablesToDefault();

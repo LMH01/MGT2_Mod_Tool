@@ -3,8 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
-import java.awt.*;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -26,8 +25,12 @@ public class ImportSettings{
                 switch(setting) {
                     case 1:
                         Settings.mgt2FilePath = currentLine; break;
-                    /*case 2:
-                        Settings.languageToAdd = currentLine; break;*/
+                    case 2:
+                        if(currentLine.equals("true")){
+                            Settings.enableAddGenreWarning = true;
+                        }else if(currentLine.equals("false")){
+                            Settings.enableAddGenreWarning = false;
+                        } break;
                     case 3:
                         if(currentLine.equals("true")){
                             Settings.enableDebugLogging = true;

@@ -30,7 +30,7 @@ public class ExportSettings {
             PrintWriter pw = new PrintWriter(new FileWriter(file));
             if(Settings.enableDebugLogging){ LOGGER.info("Writing to file..."); }
             pw.print(Settings.mgt2FilePath + "\n" +
-                    "Unused slot" + "\n" +
+                    Settings.enableAddGenreWarning + "\n" +
                     Settings.enableDebugLogging + "\n" +
                     Settings.disableSafetyFeatures + "\n" +
                     Settings.steamLibraryFolder + "\n" +
