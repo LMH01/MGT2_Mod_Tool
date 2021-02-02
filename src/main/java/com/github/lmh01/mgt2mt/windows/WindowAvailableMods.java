@@ -81,7 +81,7 @@ public class WindowAvailableMods extends JFrame {
 
         JButton buttonRemoveGenreWindow = new JButton("Remove genre");
         buttonRemoveGenreWindow.setBounds(10, 55, 175, 23);
-        buttonRemoveGenreWindow.setToolTipText("Click to remove a genre by id from Mad Games Tycoon 2. This will also remove the genre from the NpcGames.txt file.");
+        buttonRemoveGenreWindow.setToolTipText("<html>Click to remove a genre by id from Mad Games Tycoon 2.<br>This will also remove the genre from the NpcGames.txt file.");
         buttonRemoveGenreWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();

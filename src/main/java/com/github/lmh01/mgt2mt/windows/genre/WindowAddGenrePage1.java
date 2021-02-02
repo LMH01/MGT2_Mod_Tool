@@ -63,7 +63,7 @@ public class WindowAddGenrePage1 extends JFrame{
         if(Settings.disableSafetyFeatures){
             setBounds(100, 100, 335, 160);
             spinnerId.setModel(new SpinnerNumberModel(0, 0, 999, 1));
-            spinnerId.setToolTipText("[Range: 0-999] This is the unique id for your genre. Do not change it unless you have your own genre id system.");
+            spinnerId.setToolTipText("<html>[Range: 0-999]<br>This is the unique id for your genre.<br>Do not change it unless you have your own genre id system.");
             spinnerId.setEnabled(true);
             spinnerId.setVisible(true);
             labelGenreID.setVisible(true);
@@ -73,7 +73,7 @@ public class WindowAddGenrePage1 extends JFrame{
         }else{
             setBounds(100, 100, 335, 130);
             spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, NewGenreManager.id, 1));
-            spinnerId.setToolTipText("[Range: Automatic] This is the unique id for your genre. It can only be changed when the safety features are disabled fia the settings.");
+            spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
             spinnerId.setVisible(false);
             labelGenreID.setVisible(false);
@@ -91,7 +91,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
 
         textFieldGenreName.setBounds(120, 10, 100, 23);
-        textFieldGenreName.setToolTipText("This is the global genre name. This name is being displayed in every translation.");
+        textFieldGenreName.setToolTipText("<html>This is the global genre name.<br>This name is being displayed in every translation.");
         textFieldGenreName.setText(NewGenreManager.name);
         contentPane.add(textFieldGenreName);
 

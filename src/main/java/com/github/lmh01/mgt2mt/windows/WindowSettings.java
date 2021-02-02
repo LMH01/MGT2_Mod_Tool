@@ -74,7 +74,7 @@ public class WindowSettings extends JFrame {
         AtomicBoolean automaticWasLastSelectedOption = new AtomicBoolean(!Settings.enableCustomFolder);
         AtomicBoolean manualWasLastSelectedOption = new AtomicBoolean(Settings.enableCustomFolder);
         comboBoxMGT2FolderOperation.setBounds(117, 100, 100, 23);
-        comboBoxMGT2FolderOperation.setToolTipText("[Automatic]: The folder will be selected automatically; [Manual]: Use a custom path.");
+        comboBoxMGT2FolderOperation.setToolTipText("<html>[Automatic]: The folder will be selected automatically<br>[Manual]: Use a custom path.");
         comboBoxMGT2FolderOperation.addActionListener(e -> {
             LOGGER.info("comboBoxMGT2FolderOperation action: " + e.getActionCommand());
             if(comboBoxMGT2FolderOperation.getSelectedItem().equals("Manual") && !customFolderSetAndValid && !manualWasLastSelectedOption.get()){
@@ -125,7 +125,7 @@ public class WindowSettings extends JFrame {
 
         JButton buttonResetCustomFolder = new JButton("Reset");
         buttonResetCustomFolder.setBounds(230, 99, 89, 23);
-        buttonResetCustomFolder.setToolTipText("Click to reset the custom folder. This will restore the default folder.");
+        buttonResetCustomFolder.setToolTipText("<html>Click to reset the custom folder.<br>This will restore the default folder.");
         buttonResetCustomFolder.addActionListener(actionEvent -> {
             customFolderSetAndValid = false;
             comboBoxMGT2FolderOperation.setSelectedItem("Automatic");

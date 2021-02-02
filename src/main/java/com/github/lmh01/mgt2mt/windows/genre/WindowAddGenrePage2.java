@@ -64,11 +64,11 @@ public class WindowAddGenrePage2 extends JFrame{
         setContentPane(contentPane);
 
         if(Settings.disableSafetyFeatures){
-            spinnerUnlockYear.setToolTipText("[Range: 1976 - 2050] This is the year when your genre will be unlocked. Note: The latest date you can currently start the game is in 2015.");
+            spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your genre will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
             spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
         }else{
-            spinnerUnlockYear.setToolTipText("[Range: 1976 - 2050] This is the year when your genre will be unlocked. Note: The latest date you can currently start the game is in 2015.");
+            spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your genre will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
             spinnerUnlockYear.setModel(new SpinnerNumberModel(NewGenreManager.unlockYear, 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
         }

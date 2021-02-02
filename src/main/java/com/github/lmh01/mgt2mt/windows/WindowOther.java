@@ -45,7 +45,7 @@ public class WindowOther extends JFrame {
 
         JButton buttonCreateBackup = new JButton("Open log");
         buttonCreateBackup.setBounds(10, 40, 175, 23);
-        buttonCreateBackup.setToolTipText("Click to open the change log. Shows all changes that have been made to the game files.");
+        buttonCreateBackup.setToolTipText("<html>Click to open the change log.<br>Shows all changes that have been made to the game files.");
         buttonCreateBackup.addActionListener(actionEvent -> {
             try {
                 if(!ChangeLog.FILE_CHANGES_LOG.exists()){
@@ -73,7 +73,7 @@ public class WindowOther extends JFrame {
 
         JButton buttonShowGenres = new JButton("Show active genres");
         buttonShowGenres.setBounds(10, 100, 175, 23);
-        buttonShowGenres.setToolTipText("Click to see a list of currently active genres. The number behind the genre number is the genre id.");
+        buttonShowGenres.setToolTipText("<html>Click to see a list of currently active genres.");
         buttonShowGenres.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();

@@ -106,11 +106,11 @@ public class WindowAddGenrePage6 extends JFrame{
         spinnerDesign3.setBounds(200, 60, 100, 23);
         spinnerDesign4.setBounds(200, 85, 100, 23);
         spinnerDesign5.setBounds(200, 110, 100, 23);
-        spinnerDesign1.setToolTipText("[Range: 0 - 10; Default 5] If gameplay is favoured type value smaller 5. If Visuals are favoured type value bigger 5.");
-        spinnerDesign2.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Story is favoured type value smaller 5. If Game length is favoured type value bigger 5.");
-        spinnerDesign3.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Atmosphere is favoured type value smaller 5. If Content is favoured type value bigger 5.");
-        spinnerDesign4.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Game depth is favoured type value smaller 5. If your genre should be Beginner-friendly type value bigger 5.");
-        spinnerDesign5.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Core Gamers are favoured type value smaller 5. If your genre should be for Casual Gamers type value bigger 5.");
+        spinnerDesign1.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>If gameplay is favoured type value smaller 5.<br>If Visuals are favoured type value bigger 5.");
+        spinnerDesign2.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Story is favoured type value smaller 5.<br>If Game length is favoured type value bigger 5.");
+        spinnerDesign3.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Atmosphere is favoured type value smaller 5.<br>If Content is favoured type value bigger 5.");
+        spinnerDesign4.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Game depth is favoured type value smaller 5.<br>If your genre should be Beginner-friendly type value bigger 5.");
+        spinnerDesign5.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Core Gamers are favoured type value smaller 5.<br>If your genre should be for Casual Gamers type value bigger 5.");
         spinnerDesign1.setModel(new SpinnerNumberModel(NewGenreManager.design1, 0, 10, 1));
         spinnerDesign2.setModel(new SpinnerNumberModel(NewGenreManager.design2, 0, 10, 1));
         spinnerDesign3.setModel(new SpinnerNumberModel(NewGenreManager.design3, 0, 10, 1));

@@ -65,9 +65,9 @@ public class WindowAddGenrePage3 extends JFrame{
         spinnerResearchPoints.setBounds(120, 10, 100, 23);
         spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
         spinnerGenrePrice.setBounds(120, 60, 100, 23);
-        spinnerResearchPoints.setToolTipText("[Range: 1 - 100.000; Default: " + NewGenreManager.researchPoints + "] Number of required research points to research that genre.");
-        spinnerDevelopmentCost.setToolTipText("[Range: 1 - 1.000.000; Default: " + NewGenreManager.devCost + "] Set the development cost for a game with your genre. This cost will be added when developing a game with this genre.");
-        spinnerGenrePrice.setToolTipText("[Range: 1 - 10.000.000; Default: " + NewGenreManager.price + "] This is the research cost, it is being payed when researching this genre.");
+        spinnerResearchPoints.setToolTipText("<html>[Range: 1 - 100.000; Default: " + NewGenreManager.researchPoints + "]<br>Number of required research points to research that genre.");
+        spinnerDevelopmentCost.setToolTipText("<html>[Range: 1 - 1.000.000; Default: " + NewGenreManager.devCost + "]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this genre.");
+        spinnerGenrePrice.setToolTipText("<html>[Range: 1 - 10.000.000; Default: " + NewGenreManager.price + "]<br>This is the research cost, it is being payed when researching this genre.");
         if(Settings.disableSafetyFeatures){
             spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 1000000000, 1));
             spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000000, 1));

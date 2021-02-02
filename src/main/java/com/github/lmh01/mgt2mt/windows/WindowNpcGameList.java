@@ -48,13 +48,13 @@ public class WindowNpcGameList extends JFrame {
         contentPane.add(labelGenreID);
 
         JLabel labelOperation = new JLabel("Operation: ");
-        labelOperation.setToolTipText("Add = Adds said genre id to the list; Remove = Removes the genre id from the list");
+        labelOperation.setToolTipText("<html>Add = Adds said genre id to the list<brRemove = Removes the genre id from the list");
         labelOperation.setBounds(10, 75, 70, 23);
         contentPane.add(labelOperation);
 
         JComboBox<String> comboBoxOperation = new JComboBox<>();
         comboBoxOperation.setBounds(100,75,80,23);
-        comboBoxOperation.setToolTipText("Add = Adds said genre id to the list; Remove = Removes the genre id from the list");
+        comboBoxOperation.setToolTipText("<html>Add = Adds said genre id to the list<br>Remove = Removes the genre id from the list");
         comboBoxOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Add", "Remove"}));
         contentPane.add(comboBoxOperation);
 
@@ -65,7 +65,7 @@ public class WindowNpcGameList extends JFrame {
         JSpinner spinnerChance = new JSpinner();
         spinnerChance.setBounds(100, 110, 80, 23);
         spinnerChance.setModel(new SpinnerNumberModel(20, 1, 100, 1));
-        spinnerChance.setToolTipText("Determines the chance at which the genre id should be added; 100 = 100% chance.");
+        spinnerChance.setToolTipText("<html>Determines the chance at which the genre id should be added<br>100 = 100% chance.");
         contentPane.add(spinnerChance);
 
         JButton buttonApply = new JButton("Apply");

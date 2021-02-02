@@ -105,10 +105,10 @@ public class WindowAddGenrePage7 extends JFrame{
         spinnerGraphic.setBounds(120, 35, 100, 23);
         spinnerSound.setBounds(120, 60, 100, 23);
         spinnerControl.setBounds(120, 85, 100, 23);
-        spinnerGameplay.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Gameplay priority in %");
-        spinnerGraphic.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Graphic priority in %");
-        spinnerSound.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Sound priority in %");
-        spinnerControl.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Control priority in %");
+        spinnerGameplay.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Gameplay priority in %");
+        spinnerGraphic.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Graphic priority in %");
+        spinnerSound.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Sound priority in %");
+        spinnerControl.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Control priority in %");
         spinnerGameplay.setModel(new SpinnerNumberModel(NewGenreManager.gameplay, 5, 85, 5));
         spinnerGraphic.setModel(new SpinnerNumberModel(NewGenreManager.graphic, 5, 85, 5));
         spinnerSound.setModel(new SpinnerNumberModel(NewGenreManager.sound, 5, 85, 5));
