@@ -12,16 +12,21 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage7 extends JFrame{
-    static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
-    JPanel contentPane;
+    static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
+    JPanel contentPane = new JPanel();
+    JButton buttonNext = new JButton("Next");
+    JButton buttonPrevious = new JButton("Previous");
+    JButton buttonQuit = new JButton("Cancel");
     JSpinner spinnerGameplay = new JSpinner();
     JSpinner spinnerGraphic = new JSpinner();
     JSpinner spinnerSound = new JSpinner();
     JSpinner spinnerControl = new JSpinner();
+
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setGuiComponents();
                 FRAME.setSpinners();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
@@ -32,12 +37,34 @@ public class WindowAddGenrePage7 extends JFrame{
     }
 
     public WindowAddGenrePage7() {
+        buttonNext.addActionListener(actionEvent -> {
+            if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
+                NewGenreManager.openStepWindow(8);
+                FRAME.dispose();
+            }else{
+                JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100 and dividable by 5.");
+            }
+        });
+        buttonPrevious.addActionListener(actionEvent -> {
+            saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
+            NewGenreManager.openStepWindow(6);
+            FRAME.dispose();
+
+        });
+        buttonQuit.addActionListener(actionEvent -> {
+            if(Utils.showConfirmDialog(1)){
+                WindowAddNewGenre.createFrame();
+                FRAME.dispose();
+            }
+        });
+    }
+
+    private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 185);
         setResizable(false);
         setTitle("[Page 7] Work Priority");
 
-        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -59,41 +86,19 @@ public class WindowAddGenrePage7 extends JFrame{
         labelControl.setBounds(10, 85, 120, 23);
         contentPane.add(labelControl);
 
-        JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 125, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
-        buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
-                NewGenreManager.openStepWindow(8);
-                FRAME.dispose();
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100 and dividable by 5.");
-            }
-        });
         contentPane.add(buttonNext);
 
-        JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 125, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
-        buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
-            NewGenreManager.openStepWindow(6);
-            FRAME.dispose();
-
-        });
         contentPane.add(buttonPrevious);
 
-        JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 125, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
-        buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
-                WindowAddNewGenre.createFrame();
-                FRAME.dispose();
-            }
-        });
         contentPane.add(buttonQuit);
     }
+
     private void setSpinners(){
         spinnerGameplay.setBounds(120, 10, 100, 23);
         spinnerGraphic.setBounds(120, 35, 100, 23);
@@ -103,10 +108,10 @@ public class WindowAddGenrePage7 extends JFrame{
         spinnerGraphic.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Graphic priority in %");
         spinnerSound.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Sound priority in %");
         spinnerControl.setToolTipText("[Range: 5 - 85; Default: 25; Steps of 5] Control priority in %");
-        spinnerGameplay.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        spinnerGraphic.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        spinnerSound.setModel(new SpinnerNumberModel(25, 5, 85, 5));
-        spinnerControl.setModel(new SpinnerNumberModel(25, 5, 85, 5));
+        spinnerGameplay.setModel(new SpinnerNumberModel(NewGenreManager.gameplay, 5, 85, 5));
+        spinnerGraphic.setModel(new SpinnerNumberModel(NewGenreManager.graphic, 5, 85, 5));
+        spinnerSound.setModel(new SpinnerNumberModel(NewGenreManager.sound, 5, 85, 5));
+        spinnerControl.setModel(new SpinnerNumberModel(NewGenreManager.control, 5, 85, 5));
         if(Settings.disableSafetyFeatures){
             ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);

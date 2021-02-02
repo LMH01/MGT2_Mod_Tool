@@ -12,17 +12,22 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage6 extends JFrame{
-    static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
-    JPanel contentPane;
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
+    static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
+    JPanel contentPane = new JPanel();
+    JButton buttonNext = new JButton("Next");
+    JButton buttonPrevious = new JButton("Previous");
+    JButton buttonQuit = new JButton("Cancel");
     JSpinner spinnerDesign1 = new JSpinner();
     JSpinner spinnerDesign2 = new JSpinner();
     JSpinner spinnerDesign3 = new JSpinner();
     JSpinner spinnerDesign4 = new JSpinner();
     JSpinner spinnerDesign5 = new JSpinner();
+
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setGuiComponents();
                 FRAME.setSpinners();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
@@ -33,12 +38,30 @@ public class WindowAddGenrePage6 extends JFrame{
     }
 
     public WindowAddGenrePage6() {
+        buttonNext.addActionListener(actionEvent -> {
+            saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
+            NewGenreManager.openStepWindow(7);
+            FRAME.dispose();
+        });
+        buttonQuit.addActionListener(actionEvent -> {
+            if(Utils.showConfirmDialog(1)){
+                WindowAddNewGenre.createFrame();
+                FRAME.dispose();
+            }
+        });
+        buttonPrevious.addActionListener(actionEvent -> {
+            saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
+            NewGenreManager.openStepWindow(5);
+            FRAME.dispose();
+        });
+    }
+
+    private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 210);
         setResizable(false);
         setTitle("[Page 6] Design Priority");
 
-        contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -64,37 +87,19 @@ public class WindowAddGenrePage6 extends JFrame{
         labelDesign5.setBounds(10, 110, 180, 23);
         contentPane.add(labelDesign5);
 
-        JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 150, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
-        buttonNext.addActionListener(actionEvent -> {
-            saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
-            NewGenreManager.openStepWindow(7);
-            FRAME.dispose();
-        });
         contentPane.add(buttonNext);
 
-        JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 150, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
-        buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
-            NewGenreManager.openStepWindow(5);
-            FRAME.dispose();
-        });
         contentPane.add(buttonPrevious);
 
-        JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 150, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
-        buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
-                WindowAddNewGenre.createFrame();
-                FRAME.dispose();
-            }
-        });
         contentPane.add(buttonQuit);
     }
+
     private void setSpinners(){
         spinnerDesign1.setBounds(200, 10, 100, 23);
         spinnerDesign2.setBounds(200, 35, 100, 23);
@@ -106,11 +111,11 @@ public class WindowAddGenrePage6 extends JFrame{
         spinnerDesign3.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Atmosphere is favoured type value smaller 5. If Content is favoured type value bigger 5.");
         spinnerDesign4.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Game depth is favoured type value smaller 5. If your genre should be Beginner-friendly type value bigger 5.");
         spinnerDesign5.setToolTipText("[Range: 0 - 10; Default 5] Design Priority: If Core Gamers are favoured type value smaller 5. If your genre should be for Casual Gamers type value bigger 5.");
-        spinnerDesign1.setModel(new SpinnerNumberModel(5, 0, 10, 1));
-        spinnerDesign2.setModel(new SpinnerNumberModel(5, 0, 10, 1));
-        spinnerDesign3.setModel(new SpinnerNumberModel(5, 0, 10, 1));
-        spinnerDesign4.setModel(new SpinnerNumberModel(5, 0, 10, 1));
-        spinnerDesign5.setModel(new SpinnerNumberModel(5, 0, 10, 1));
+        spinnerDesign1.setModel(new SpinnerNumberModel(NewGenreManager.design1, 0, 10, 1));
+        spinnerDesign2.setModel(new SpinnerNumberModel(NewGenreManager.design2, 0, 10, 1));
+        spinnerDesign3.setModel(new SpinnerNumberModel(NewGenreManager.design3, 0, 10, 1));
+        spinnerDesign4.setModel(new SpinnerNumberModel(NewGenreManager.design4, 0, 10, 1));
+        spinnerDesign5.setModel(new SpinnerNumberModel(NewGenreManager.design5, 0, 10, 1));
         if(Settings.disableSafetyFeatures){
             ((JSpinner.DefaultEditor)spinnerDesign1.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerDesign2.getEditor()).getTextField().setEditable(true);

@@ -13,14 +13,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class WindowAddGenrePage5 extends JFrame{
-    JPanel contentPane = new JPanel();
-    static final WindowAddGenrePage5 FRAME = new WindowAddGenrePage5();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage5.class);
+    static final WindowAddGenrePage5 FRAME = new WindowAddGenrePage5();
+    JPanel contentPane = new JPanel();
+    JButton buttonNext = new JButton("Next");
+    JButton buttonPrevious = new JButton("Previous");
+    JButton buttonQuit = new JButton("Cancel");
     final JList<String> LIST_AVAILABLE_GENRES = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_GENRES = new JScrollPane(LIST_AVAILABLE_GENRES);
+
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setGuiComponents();
                 FRAME.setGenreList();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
@@ -30,6 +35,32 @@ public class WindowAddGenrePage5 extends JFrame{
         });
     }
     public WindowAddGenrePage5() {
+        buttonNext.addActionListener(actionEvent -> {
+            if(saveInputs(LIST_AVAILABLE_GENRES)){
+                NewGenreManager.openStepWindow(6);
+                FRAME.dispose();
+            }else{
+                if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", JOptionPane.YES_NO_OPTION) == 0){
+                    LOGGER.info("Cleared array list with compatible genres.");
+                    NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.clear();
+                    NewGenreManager.openStepWindow(6);
+                    FRAME.dispose();
+                }
+            }
+        });
+        buttonPrevious.addActionListener(actionEvent -> {
+            saveInputs(LIST_AVAILABLE_GENRES);
+            NewGenreManager.openStepWindow(4);
+            FRAME.dispose();
+        });
+        buttonQuit.addActionListener(actionEvent -> {
+            if(Utils.showConfirmDialog(1)){
+                WindowAddNewGenre.createFrame();
+                FRAME.dispose();
+            }
+        });
+    }
+    private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 260);
         setResizable(false);
@@ -47,45 +78,19 @@ public class WindowAddGenrePage5 extends JFrame{
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
-        JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 200, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
-        buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(LIST_AVAILABLE_GENRES)){
-                NewGenreManager.openStepWindow(6);
-                FRAME.dispose();
-            }else{
-                if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", JOptionPane.YES_NO_OPTION) == 0){
-                    LOGGER.info("Cleared array list with compatible genres.");
-                    NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.clear();
-                    NewGenreManager.openStepWindow(6);
-                    FRAME.dispose();
-                }
-            }
-        });
         contentPane.add(buttonNext);
 
-        JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 200, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
-        buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(LIST_AVAILABLE_GENRES);
-            NewGenreManager.openStepWindow(4);
-            FRAME.dispose();
-        });
         contentPane.add(buttonPrevious);
 
-        JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 200, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
-        buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
-                WindowAddNewGenre.createFrame();
-                FRAME.dispose();
-            }
-        });
         contentPane.add(buttonQuit);
     }
+
     private void setGenreList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> genresSelected = new ArrayList();

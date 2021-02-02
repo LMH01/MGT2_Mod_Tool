@@ -13,14 +13,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class WindowAddGenrePage4 extends JFrame{
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage4.class);
     static final WindowAddGenrePage4 FRAME = new WindowAddGenrePage4();
     JPanel contentPane = new JPanel();
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage4.class);
+    JButton buttonNext = new JButton("Next");
+    JButton buttonPrevious = new JButton("Previous");
+    JButton buttonQuit = new JButton("Cancel");
     final JList<String> LIST_TARGET_GROUPS = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_GENRES = new JScrollPane(LIST_TARGET_GROUPS);
+
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
+                FRAME.setGuiComponents();
                 FRAME.setList();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
@@ -31,6 +36,27 @@ public class WindowAddGenrePage4 extends JFrame{
     }
 
     public WindowAddGenrePage4() {
+        buttonNext.addActionListener(actionEvent -> {
+            if(saveInputs(LIST_TARGET_GROUPS)){
+                NewGenreManager.openStepWindow(5);
+                FRAME.dispose();
+            }else{
+                JOptionPane.showMessageDialog(new Frame(), "Please select at least one target group!");
+            }
+        });
+        buttonPrevious.addActionListener(actionEvent -> {
+            saveInputs(LIST_TARGET_GROUPS);
+            NewGenreManager.openStepWindow(3);
+            FRAME.dispose();
+        });
+        buttonQuit.addActionListener(actionEvent -> {
+            if(Utils.showConfirmDialog(1)){
+                WindowAddNewGenre.createFrame();
+                FRAME.dispose();
+            }
+        });
+    }
+    private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 175);
         setResizable(false);
@@ -52,38 +78,16 @@ public class WindowAddGenrePage4 extends JFrame{
         labelTipPart2.setBounds(15, 60, 130, 23);
         contentPane.add(labelTipPart2);
 
-        JButton buttonNext = new JButton("Next");
         buttonNext.setBounds(220, 115, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
-        buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(LIST_TARGET_GROUPS)){
-                NewGenreManager.openStepWindow(5);
-                FRAME.dispose();
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select at least one target group!");
-            }
-        });
         contentPane.add(buttonNext);
 
-        JButton buttonPrevious = new JButton("Previous");
         buttonPrevious.setBounds(10, 115, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
-        buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(LIST_TARGET_GROUPS);
-            NewGenreManager.openStepWindow(3);
-            FRAME.dispose();
-        });
         contentPane.add(buttonPrevious);
 
-        JButton buttonQuit = new JButton("Cancel");
         buttonQuit.setBounds(120, 115, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
-        buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
-                WindowAddNewGenre.createFrame();
-                FRAME.dispose();
-            }
-        });
         contentPane.add(buttonQuit);
     }
     private void setList(){
@@ -101,11 +105,12 @@ public class WindowAddGenrePage4 extends JFrame{
         if(NewGenreManager.targetGroupSenior){
             arrayListInt.add(3);
         }
+
         //Converts ArrayList to int[]
-        final int[] arr = new int[arrayListInt.size()];
+        final int[] selectedIndices = new int[arrayListInt.size()];
         int index = 0;
         for (final Integer value: arrayListInt) {
-            arr[index++] = value;
+            selectedIndices[index++] = value;
         }
 
         listModel.clear();
@@ -117,7 +122,7 @@ public class WindowAddGenrePage4 extends JFrame{
         LIST_TARGET_GROUPS.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         LIST_TARGET_GROUPS.setLayoutOrientation(JList.VERTICAL);
         LIST_TARGET_GROUPS.setVisibleRowCount(-1);
-        LIST_TARGET_GROUPS.setSelectedIndices(arr);
+        LIST_TARGET_GROUPS.setSelectedIndices(selectedIndices);
         SCROLL_PANE_AVAILABLE_GENRES.setBounds(150,30, 100,75);
         contentPane.add(SCROLL_PANE_AVAILABLE_GENRES);
     }

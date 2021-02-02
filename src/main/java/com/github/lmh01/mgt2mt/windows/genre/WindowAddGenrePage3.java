@@ -12,16 +12,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class WindowAddGenrePage3 extends JFrame{
-    JPanel contentPane = new JPanel();
-    static final WindowAddGenrePage3 FRAME = new WindowAddGenrePage3();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage3.class);
+    static final WindowAddGenrePage3 FRAME = new WindowAddGenrePage3();
+    JPanel contentPane = new JPanel();
+    JButton buttonNext = new JButton("Next");
+    JButton buttonPrevious = new JButton("Previous");
+    JButton buttonQuit = new JButton("Cancel");
     JSpinner spinnerResearchPoints = new JSpinner();
     JSpinner spinnerDevelopmentCost = new JSpinner();
     JSpinner spinnerGenrePrice = new JSpinner();
+
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
-                FRAME.setSpinners();
+                FRAME.setGuiComponents();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -31,60 +35,33 @@ public class WindowAddGenrePage3 extends JFrame{
     }
 
     public WindowAddGenrePage3() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 335, 160);
-        setResizable(false);
-        setTitle("[Page 3] Research/Price");
-
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.setLayout(null);
-        setContentPane(contentPane);
-
-        JLabel labelResearchPoints = new JLabel("Research points: ");
-        labelResearchPoints.setBounds(10, 10, 100, 23);
-        contentPane.add(labelResearchPoints);
-
-        JLabel labelGenreDevelopmentCost = new JLabel("Development cost: ");
-        labelGenreDevelopmentCost.setBounds(10, 35, 120, 23);
-        contentPane.add(labelGenreDevelopmentCost);
-
-        JLabel labelGenrePrice = new JLabel("Price: ");
-        labelGenrePrice.setBounds(10, 60, 120, 23);
-        contentPane.add(labelGenrePrice);
-
-        JButton buttonNext = new JButton("Next");
-        buttonNext.setBounds(220, 100, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
             NewGenreManager.openStepWindow(4);
             FRAME.dispose();
         });
-        contentPane.add(buttonNext);
-
-        JButton buttonPrevious = new JButton("Previous");
-        buttonPrevious.setBounds(10, 100, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
             NewGenreManager.openStepWindow(2);
             FRAME.dispose();
         });
-        contentPane.add(buttonPrevious);
-
-        JButton buttonQuit = new JButton("Cancel");
-        buttonQuit.setBounds(120, 100, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
                 WindowAddNewGenre.createFrame();
                 FRAME.dispose();
             }
         });
-        contentPane.add(buttonQuit);
     }
-    private void setSpinners(){
+    private void setGuiComponents(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 335, 160);
+        setResizable(false);
+        setTitle("[Page 3] Research/Price");
+
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(null);
+        setContentPane(contentPane);
+
         spinnerResearchPoints.setBounds(120, 10, 100, 23);
         spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
         spinnerGenrePrice.setBounds(120, 60, 100, 23);
@@ -109,6 +86,30 @@ public class WindowAddGenrePage3 extends JFrame{
         contentPane.add(spinnerResearchPoints);
         contentPane.add(spinnerDevelopmentCost);
         contentPane.add(spinnerGenrePrice);
+
+        JLabel labelResearchPoints = new JLabel("Research points: ");
+        labelResearchPoints.setBounds(10, 10, 100, 23);
+        contentPane.add(labelResearchPoints);
+
+        JLabel labelGenreDevelopmentCost = new JLabel("Development cost: ");
+        labelGenreDevelopmentCost.setBounds(10, 35, 120, 23);
+        contentPane.add(labelGenreDevelopmentCost);
+
+        JLabel labelGenrePrice = new JLabel("Price: ");
+        labelGenrePrice.setBounds(10, 60, 120, 23);
+        contentPane.add(labelGenrePrice);
+
+        buttonNext.setBounds(220, 100, 100, 23);
+        buttonNext.setToolTipText("Click to continue to the next step.");
+        contentPane.add(buttonNext);
+
+        buttonPrevious.setBounds(10, 100, 100, 23);
+        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        contentPane.add(buttonPrevious);
+
+        buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        contentPane.add(buttonQuit);
     }
     private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){
         NewGenreManager.researchPoints = Integer.parseInt(spinnerResearchPoints.getValue().toString());
