@@ -3,7 +3,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
+import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,16 +43,16 @@ public class WindowAddGenrePage6 extends JFrame{
             NewGenreManager.openStepWindow(7);
             FRAME.dispose();
         });
-        buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
-                WindowAddNewGenre.createFrame();
-                FRAME.dispose();
-            }
-        });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             NewGenreManager.openStepWindow(5);
             FRAME.dispose();
+        });
+        buttonQuit.addActionListener(actionEvent -> {
+            if(Utils.showConfirmDialog(1)){
+                WindowAvailableMods.createFrame();
+                FRAME.dispose();
+            }
         });
     }
 

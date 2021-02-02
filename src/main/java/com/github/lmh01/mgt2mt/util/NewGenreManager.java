@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.windows.MainWindow;
-import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
+import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,13 +58,13 @@ public class NewGenreManager {
                     LOGGER.info("Adding new genre");
                     openStepWindow(1);
                 }else{
-                    WindowAddNewGenre.createFrame();
+                    WindowAvailableMods.createFrame();
                 }
                 e.printStackTrace();
             }
 
         }else{
-            WindowAddNewGenre.createFrame();
+            WindowAvailableMods.createFrame();
         }
     }
     public static void openStepWindow(int step){
@@ -146,8 +146,8 @@ public class NewGenreManager {
             //Click no or close window
             WindowAddGenrePage8.createFrame();
         }else if (returnValue == JOptionPane.CANCEL_OPTION){
-            //click cancel //TODO When this is clicked all spinners and inputs should be reset to default values after showing a confirm dialog. See WindowsAddGenrePage1 or Settings (id spinner) on how to do this.
-            WindowAddNewGenre.createFrame();
+            //click cancel
+            WindowAvailableMods.createFrame();
         }
     }
 

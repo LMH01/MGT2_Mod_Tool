@@ -3,7 +3,8 @@ package com.github.lmh01.mgt2mt.windows.genre;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
+import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
@@ -51,7 +52,7 @@ public class WindowAddGenrePage8 extends JFrame{
         });
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
-                WindowAddNewGenre.createFrame();
+                WindowAvailableMods.createFrame();
                 FRAME.dispose();
             }
         });

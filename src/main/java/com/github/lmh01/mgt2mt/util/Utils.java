@@ -80,7 +80,7 @@ public class Utils {
      */
     public static boolean showConfirmDialog(int confirmMessageKey){
         if(confirmMessageKey == 1){
-            return JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be saved until you close the program.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0;
+            return JOptionPane.showConfirmDialog(null, "Are you sure?\nYour progress will be lost.", "Cancel add new genre", JOptionPane.YES_NO_OPTION) == 0;
         }
         return true;
     }

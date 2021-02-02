@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
 import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 
@@ -65,7 +66,14 @@ public class WindowAvailableMods extends JFrame {
         buttonAddGenreWindow.setBounds(10, 30, 175, 23);
         buttonAddGenreWindow.setToolTipText("Click to add a new genre to Mad Games Tycoon 2");
         buttonAddGenreWindow.addActionListener(actionEvent -> {
-            WindowAddNewGenre.createFrame();
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
+                NewGenreManager.addGenre();
+                FRAME.dispose();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
             FRAME.dispose();
         });
         contentPane.add(buttonAddGenreWindow);

@@ -4,7 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowAddNewGenre;
+import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -45,7 +45,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)) {
-                WindowAddNewGenre.createFrame();
+                WindowAvailableMods.createFrame();
                 FRAME.dispose();
             }
         });
