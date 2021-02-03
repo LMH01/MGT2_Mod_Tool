@@ -10,7 +10,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 ### Download: [v1.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.0.0/MGT2_Mod_Tool_1.0.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
-- Download and extract the`.zip` file
+- Download and extract the `.zip` file
 - Launch the tool by double-clicking one of the `.bat` files, located in the unzipped folder:
     - Use `start.bat` to launch the tool
     - Use `start_as_admin.bat` to launch the tool with admin rights. This is required when your MGT2 folder is located in `C:\Program Files (x86)\Steam\steamapps\common`.
