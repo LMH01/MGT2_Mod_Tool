@@ -14,7 +14,6 @@ public class ChangeLog {
 
     /**
      * Adds an entry to the log file.
-     * @param operation
      * @param operation What operation has been performed.
      */
     public static void addLogEntry(int operation){
@@ -84,6 +83,8 @@ public class ChangeLog {
             case 10: logToPrint = currentSystemTime + ": The initial backup was not restored: " + textBody; break;
             case 11: logToPrint = currentSystemTime + ": The latest backup was not restored: " + textBody; break;
             case 12: logToPrint = currentSystemTime + ": All backups have been deleted"; break;
+            case 13: logToPrint = currentSystemTime + ": Added genre with id [" + textBody + "] to the Themes_GE.txt file\n"; break;
+            case 14: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Themes_GE.txt file\n"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

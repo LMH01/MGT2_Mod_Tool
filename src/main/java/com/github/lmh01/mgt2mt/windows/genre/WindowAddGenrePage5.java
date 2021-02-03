@@ -7,14 +7,13 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class WindowAddGenrePage5 extends JFrame{
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage5.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     static final WindowAddGenrePage5 FRAME = new WindowAddGenrePage5();
     JPanel contentPane = new JPanel();
     JButton buttonNext = new JButton("Next");

@@ -36,7 +36,6 @@ public class AnalyzeExistingGenres {
         while((currentLine = reader.readLine()) != null){
             if(currentLine.contains("[ID]")){
                 currentIDAsString = currentLine;
-                //noinspection SpellCheckingInspection
                 currentID = Integer.parseInt(currentIDAsString.replace("[ID]", "").replaceAll("\\uFEFF", ""));//replaceAll("\\uFEFF", "") is used for the correct formatting
                 if(Settings.enableDebugLogging){
                     LOGGER.info("found id: " + currentID);}

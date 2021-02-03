@@ -7,7 +7,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **If you have any suggestions for this project feel free to submit a feature or pull request**
 
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
-### Download: *Coming soon*
+### Download: *See releases*
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -69,27 +69,29 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - **Price**: This is the price you have to pay when you decide to research this genre.
 - **Page [4] Target group**
     - Select the target audience for your genre by clicking the desired entry.
-   
-    **Note: Use STRG and click with your mouse to select multiple entries**
 - **Page [5] Genre combination**
     - Select here what genres work good together with your genre. This is used when you create a game with two genres. The game will check if the chosen genres work good together. This will influence the ratings of your game.
-- **Page [6] Design priority**
+- **Page [6] Topic combination**
+    - Select here what topics work good with your genre. If you create a game with a topic, that you did select in this list, your game will get a better rating.
+    
+    **Note: Use STRG and click with your mouse to select multiple entries from the lists**
+- **Page [7] Design priority**
     - The values that are set in this window are the optimal **design** priorities for your genre. If you select the values that you have set with this tool in game, you will have the correct genre **design** priorities, and you will not get a penalty for a **design** priority miss match.  
     - **The values that are entered in this step are compared against the values that are entered here:**
     ![img](https://i.imgur.com/52oEscH.png "Desing priority ingame")
     - If they match your game will get a better rating
-- **Page [7] Work priority**
+- **Page [8] Work priority**
     - The values that are set in this window are the optimal **work** priorities for your genre. If you select the values that you have set with this tool in game, you will have the correct genre **work** priorities, and you will not get a penalty for a **work** priority miss match.  
     - **The values that are entered in this step are compared against the values that are entered here:**
     ![img](https://i.imgur.com/DplSwSS.png "Desing priority ingame")
     - If they match your game will get a better rating
-- **Page [8] Genre icon**
+- **Page [9] Genre icon**
     - In this step you can enter a custom genre icon. This icon will be copied into the game directory to be displayed as the genre image in game.
     
     **Note: The selected image file has to be a `.png` file**
 ## Pictures
 This is how the summary looks like, when adding a genre
-![img](https://i.imgur.com/2zH8dfs.png "Add genre summary")
+![img](https://i.imgur.com/ahPNay5.png "Add genre summary")
 
 This is what the added genre looks like in the research menu
 ![img](https://i.imgur.com/eghBt4S.png "Add genre summary")

@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.windows.MainWindow;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
@@ -11,8 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class NewGenreManager {
     public static int id = 18;
@@ -28,6 +26,8 @@ public class NewGenreManager {
     public static boolean targetGroupAdult = false;
     public static boolean targetGroupSenior = false;
     public static final ArrayList<String> ARRAY_LIST_COMPATIBLE_GENRES = new ArrayList<>();
+    public static final HashSet<Integer> MAP_COMPATIBLE_THEME_IDS = new HashSet<>();
+    public static final HashMap<Integer, String> MAP_COMPATIBLE_THEMES = new HashMap<>();
     public static int gameplay;
     public static int graphic;
     public static int sound;
@@ -90,24 +90,11 @@ public class NewGenreManager {
             case 6: WindowAddGenrePage6.createFrame(); break;
             case 7: WindowAddGenrePage7.createFrame(); break;
             case 8: WindowAddGenrePage8.createFrame(); break;
+            case 9: WindowAddGenrePage9.createFrame(); break;
         }
     }
     public static void showSummary(){
-        StringBuilder compatibleGenres = new StringBuilder();
-        int n = 0;
-        for(int i = 0; i< ARRAY_LIST_COMPATIBLE_GENRES.size(); i++){
-            if(i== ARRAY_LIST_COMPATIBLE_GENRES.size()-1){
-                compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i));
-            }else{
-                compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i)).append(", ");
-                if(n == 5){
-                    compatibleGenres.append(System.getProperty("line.separator"));
-                    n = 0;
-                }
-            }
-            n++;
 
-        }
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(imageFile.getPath()));
         int returnValue = JOptionPane.showConfirmDialog(null, "Your genre is ready:\n\n" +
                 "Id:" + id + "\n" +
@@ -119,14 +106,15 @@ public class NewGenreManager {
                 "Development cost: " + devCost + "\n" +
                 "Pic: see top left\n" +
                 "Target group: " + getTargetGroups() + "\n" +
-                "\n*Design Priority*\n\n" +
+                "\n*Compatible genres*\n\n" + getCompatibleGenres() + "\n" +
+                "\n*Compatible themes*\n\n" + getCompatibleThemes() + "\n" +
+                "\n*Design priority*\n\n" +
                 "Gameplay/Visuals: " + design1 + "\n" +
                 "Story/Game length: " + design2 + "\n" +
                 "Atmosphere/Content: " + design3 + "\n" +
                 "Game depth/Beginner-friendly: " + design4 + "\n" +
                 "Core Gamers/Casual Gamer: " + design5 + "\n" +
-                "\n*Compatible genres*\n\n" + compatibleGenres + "\n" +
-                "\n*WorkPriority*\n\n" +
+                "\n*Work priority*\n\n" +
                 "Gameplay: " + gameplay + "%\n" +
                 "Graphic: " + graphic + "%\n" +
                 "Sound: " + sound + "%\n" +
@@ -149,6 +137,7 @@ public class NewGenreManager {
             if(continueAnyway || imageFileAccessedSuccess){
                 try {
                     EditGenreFile.addGenre();
+                    EditThemes.editGenreAllocation(NewGenreManager.id, true);
                     NewGenreManager.genreAdded();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -157,7 +146,7 @@ public class NewGenreManager {
             }
         }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
             //Click no or close window
-            WindowAddGenrePage8.createFrame();
+            WindowAddGenrePage9.createFrame();
         }else if (returnValue == JOptionPane.CANCEL_OPTION){
             //click cancel
             WindowAvailableMods.createFrame();
@@ -196,6 +185,53 @@ public class NewGenreManager {
         return targetGroups;
     }
 
+    /**
+     * @return Returns a string containing all genres that are compatible with the new genre.
+     */
+    private static String getCompatibleGenres(){
+        StringBuilder compatibleGenres = new StringBuilder();
+        int n = 0;
+        for(int i = 0; i< ARRAY_LIST_COMPATIBLE_GENRES.size(); i++){
+            if(i== ARRAY_LIST_COMPATIBLE_GENRES.size()-1){
+                compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i));
+            }else{
+                compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i)).append(", ");
+                if(n == 5){
+                    compatibleGenres.append(System.getProperty("line.separator"));
+                    n = 0;
+                }
+            }
+            n++;
+        }
+        return compatibleGenres.toString();
+    }
+
+    /**
+     * @return Returns a string containing all themes that are compatible with the new genre.
+     */
+    private static String getCompatibleThemes(){
+        ArrayList<String> sortedCompatibleThemes = new ArrayList();
+        StringBuilder compatibleThemes = new StringBuilder();
+        for(Map.Entry<Integer, String> entry : NewGenreManager.MAP_COMPATIBLE_THEMES.entrySet()){
+            sortedCompatibleThemes.add(entry.getValue());
+        }
+        int n = 1;
+        Collections.sort(sortedCompatibleThemes);
+        for(int i = 0; i<sortedCompatibleThemes.size(); i++){
+            if(i == sortedCompatibleThemes.size()-1){
+                compatibleThemes.append(sortedCompatibleThemes.get(i));
+            }else{
+                compatibleThemes.append(sortedCompatibleThemes.get(i)).append(", ");
+                if(n == 10){
+                    compatibleThemes.append(System.getProperty("line.separator"));
+                    n = 0;
+                }
+            }
+            n++;
+        }
+        return compatibleThemes.toString();
+    }
+
     public static void resetVariablesToDefault(){
         LOGGER.info("resetting genre variables...");
         id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
@@ -211,6 +247,7 @@ public class NewGenreManager {
         targetGroupAdult = false;
         targetGroupSenior = false;
         ARRAY_LIST_COMPATIBLE_GENRES.clear();
+        MAP_COMPATIBLE_THEMES.clear();
         gameplay = 25;
         graphic = 25;
         sound = 25;

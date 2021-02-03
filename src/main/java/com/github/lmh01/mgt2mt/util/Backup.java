@@ -85,15 +85,19 @@ public class Backup {
             LOGGER.info("Restoring initial backup.");
             File fileGenresBackup;
             File fileNpcGamesBackup;
+            File fileThemesGeBackup;
             if(initialBackup){
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+                fileThemesGeBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_GE.txt.initialBackup");
             }else{
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
+                fileThemesGeBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_GE.txt");
             }
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesGeBackup.getPath()), Paths.get(Utils.getThemesGeFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             if(initialBackup){
                 ChangeLog.addLogEntry(8);
                 JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
@@ -132,6 +136,7 @@ public class Backup {
     public static void createFullBackup() throws IOException {
        Backup.createBackup(Utils.getGenreFile());
        Backup.createBackup(Utils.getNpcGamesFile());
+       Backup.createBackup(Utils.getThemesGeFile());
        backupSaveGames(FILE_SAVE_GAME_FOLDER, false);
     }
 
@@ -143,6 +148,7 @@ public class Backup {
         try{
             Backup.createBackup(Utils.getGenreFile(), true);
             Backup.createBackup(Utils.getNpcGamesFile(), true);
+            Backup.createBackup(Utils.getThemesGeFile(), true);
             backupSaveGames(FILE_SAVE_GAME_FOLDER, true);
             ChangeLog.addLogEntry(6);
             return "";

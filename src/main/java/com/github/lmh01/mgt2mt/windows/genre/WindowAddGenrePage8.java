@@ -4,26 +4,31 @@ import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.io.File;
 
 public class WindowAddGenrePage8 extends JFrame{
+    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage8.class);
     static final WindowAddGenrePage8 FRAME = new WindowAddGenrePage8();
+    static int combinedValue;
     JPanel contentPane = new JPanel();
-    JButton buttonBrowse = new JButton("Browse");
     JButton buttonNext = new JButton("Next");
     JButton buttonPrevious = new JButton("Previous");
     JButton buttonQuit = new JButton("Cancel");
-    JTextField textFieldImagePath = new JTextField();
+    JSpinner spinnerGameplay = new JSpinner();
+    JSpinner spinnerGraphic = new JSpinner();
+    JSpinner spinnerSound = new JSpinner();
+    JSpinner spinnerControl = new JSpinner();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
+                FRAME.setSpinners();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
             }catch (Exception e){
@@ -33,22 +38,19 @@ public class WindowAddGenrePage8 extends JFrame{
     }
 
     public WindowAddGenrePage8() {
-        buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = getGenreImageFilePath();
-            if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
-                NewGenreManager.imageFile = new File(imageFilePath);
-                textFieldImagePath.setText(imageFilePath);
+        buttonNext.addActionListener(actionEvent -> {
+            if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl) || Settings.disableSafetyFeatures){
+                NewGenreManager.openStepWindow(9);
+                FRAME.dispose();
             }else{
-                textFieldImagePath.setText(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+                JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100.\nIt is currently at: " + combinedValue);
             }
         });
-        buttonNext.addActionListener(actionEvent -> {
-            NewGenreManager.showSummary();
-            FRAME.dispose();
-        });
         buttonPrevious.addActionListener(actionEvent -> {
+            saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
             NewGenreManager.openStepWindow(7);
             FRAME.dispose();
+
         });
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
@@ -60,90 +62,106 @@ public class WindowAddGenrePage8 extends JFrame{
 
     private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 335, 160);
+        setBounds(100, 100, 335, 185);
         setResizable(false);
-        setTitle("[Page 8] Image");
+        setTitle("[Page 8] Work Priority");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelTitle = new JLabel("Select genre image:");
-        labelTitle.setBounds(100, 0, 335, 23);
-        labelTitle.setForeground(Color.BLACK);
-        labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        contentPane.add(labelTitle);
+        JLabel labelGameplay = new JLabel("Gameplay: ");
+        labelGameplay.setBounds(10, 10, 100, 23);
+        contentPane.add(labelGameplay);
 
-        textFieldImagePath.setBounds(20, 30, 210, 23);
-        textFieldImagePath.setToolTipText("Path to image file");
-        textFieldImagePath.setText(NewGenreManager.imageFile.getPath());
-        contentPane.add(textFieldImagePath);
+        JLabel labelGraphic = new JLabel("Graphic: ");
+        labelGraphic.setBounds(10, 35, 120, 23);
+        contentPane.add(labelGraphic);
 
-        buttonBrowse.setBounds(240, 30, 80, 23);
-        buttonBrowse.setToolTipText("Click here to select an image file that should be used as your genre image.");
-        contentPane.add(buttonBrowse);
+        JLabel labelSound = new JLabel("Sound: ");
+        labelSound.setBounds(10, 60, 120, 23);
+        contentPane.add(labelSound);
 
-        JLabel labelYouCanSkipThisStep = new JLabel("Note: You can skip this step if you");
-        labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
-        contentPane.add(labelYouCanSkipThisStep);
+        JLabel labelControl = new JLabel("Control: ");
+        labelControl.setBounds(10, 85, 120, 23);
+        contentPane.add(labelControl);
 
-        JLabel labelAddYourOwnGerne = new JLabel("don't want to add you own genre image.");
-        labelAddYourOwnGerne.setBounds(15,75, 300, 23);
-        contentPane.add(labelAddYourOwnGerne);
-
-        buttonNext.setBounds(220, 100, 100, 23);
+        buttonNext.setBounds(220, 125, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         contentPane.add(buttonNext);
 
-        buttonPrevious.setBounds(10, 100, 100, 23);
+        buttonPrevious.setBounds(10, 125, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
         contentPane.add(buttonPrevious);
 
-        buttonQuit.setBounds(120, 100, 90, 23);
+        buttonQuit.setBounds(120, 125, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         contentPane.add(buttonQuit);
     }
 
-    private static String getGenreImageFilePath() {
-        String imageFilePath = "";
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-
-            FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
-                @Override
-                public boolean accept(File f) {
-                    if(f.getName().contains(".png")){
-                        return true;
-                    } if(f.isDirectory()){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }
-
-                @Override
-                public String getDescription() {
-                    return ".png files";
-                }
-            };
-
-            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setFileFilter(fileFilter);
-            fileChooser.setDialogTitle("Choose a genre image (.png):");
-
-            int return_value = fileChooser.showOpenDialog(null);
-            if (return_value == 0) {
-                if(fileChooser.getSelectedFile().getName().contains(".png")){
-                    imageFilePath = fileChooser.getSelectedFile().getPath();
-                    JOptionPane.showMessageDialog(new Frame(), "Image file set.");
-                }else{
-                    JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                }
-            }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+    private void setSpinners(){
+        spinnerGameplay.setBounds(120, 10, 100, 23);
+        spinnerGraphic.setBounds(120, 35, 100, 23);
+        spinnerSound.setBounds(120, 60, 100, 23);
+        spinnerControl.setBounds(120, 85, 100, 23);
+        spinnerGameplay.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Gameplay priority in %");
+        spinnerGraphic.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Graphic priority in %");
+        spinnerSound.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Sound priority in %");
+        spinnerControl.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Control priority in %");
+        spinnerGameplay.setModel(new SpinnerNumberModel(NewGenreManager.gameplay, 5, 85, 5));
+        spinnerGraphic.setModel(new SpinnerNumberModel(NewGenreManager.graphic, 5, 85, 5));
+        spinnerSound.setModel(new SpinnerNumberModel(NewGenreManager.sound, 5, 85, 5));
+        spinnerControl.setModel(new SpinnerNumberModel(NewGenreManager.control, 5, 85, 5));
+        if(Settings.disableSafetyFeatures){
+            ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerControl.getEditor()).getTextField().setEditable(true);
+        }else{
+            ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerControl.getEditor()).getTextField().setEditable(false);
         }
-        return imageFilePath;
+        contentPane.add(spinnerGameplay);
+        contentPane.add(spinnerGraphic);
+        contentPane.add(spinnerSound);
+        contentPane.add(spinnerControl);
+    }
+    private static boolean saveInputs(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
+        combinedValue = Integer.parseInt(spinnerGameplay.getValue().toString()) +
+                Integer.parseInt(spinnerGraphic.getValue().toString()) +
+                Integer.parseInt(spinnerSound.getValue().toString()) +
+                Integer.parseInt(spinnerControl.getValue().toString());
+        LOGGER.info("combined value: " + combinedValue);
+        if(combinedValue == 100 && testIfDividableBy5(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
+            NewGenreManager.gameplay = Integer.parseInt(spinnerGameplay.getValue().toString());
+            LOGGER.info("Gameplay = " + spinnerGameplay.getValue().toString());
+            NewGenreManager.graphic = Integer.parseInt(spinnerGraphic.getValue().toString());
+            LOGGER.info("graphic = " + spinnerGraphic.getValue().toString());
+            NewGenreManager.sound = Integer.parseInt(spinnerSound.getValue().toString());
+            LOGGER.info("sound = " + spinnerSound.getValue().toString());
+            NewGenreManager.control = Integer.parseInt(spinnerControl.getValue().toString());
+            LOGGER.info("control = " + spinnerControl.getValue().toString());
+            return true;
+        }else{
+            return false;
+        }
+    }
+    private static boolean testIfDividableBy5(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
+        boolean dividableBy5 = true;
+        if(Integer.parseInt(spinnerGameplay.getValue().toString()) % 5 != 0){
+            dividableBy5 = false;
+        }
+        if(Integer.parseInt(spinnerGraphic.getValue().toString()) % 5 != 0){
+            dividableBy5 = false;
+        }
+        if(Integer.parseInt(spinnerSound.getValue().toString()) % 5 != 0){
+            dividableBy5 = false;
+        }
+        if(Integer.parseInt(spinnerControl.getValue().toString()) % 5 != 0){
+            dividableBy5 = false;
+        }
+        return dividableBy5;
     }
 }

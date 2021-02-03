@@ -34,20 +34,27 @@ public class Utils {
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\";
     }
 
+    public static String getMGT2TextFolderPath(){
+        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\";
+    }
+
     /**
      * @return Returns the genre file inside the mgt2 folder.
      */
     public static File getGenreFile(){
-        return new File(Utils.getMGT2DataPath() + "\\Genres.txt");
+        return new File(getMGT2DataPath() + "\\Genres.txt");
     }
 
     /**
      * @return Returns the genre file inside the mgt2 folder.
      */
     public static File getNpcGamesFile(){
-        return new File(Utils.getMGT2DataPath() + "\\NpcGames.txt");
+        return new File(getMGT2DataPath() + "\\NpcGames.txt");
     }
 
+    public static File getThemesGeFile(){return new File(getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");}
+
+    public static File getThemesEnFile(){return new File(getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");}
     /**
      * @param s The input String
      * @return Returns the input String without UTF8BOM
@@ -66,8 +73,8 @@ public class Utils {
      */
     public static void showErrorMessage(int errorMessageKey, Exception e){
         switch(errorMessageKey){
-            // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() throws an exception.
-            case 1: JOptionPane.showMessageDialog(null, "The Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\nTry launching the tool with administrator rights.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE); break;
+            // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() or AnalyzeThemes.analyzeThemesFile() an exception.
+            case 1: JOptionPane.showMessageDialog(null, "The game files could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\nTry launching the tool with administrator rights.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE); break;
             // 2 = When it is unsuccessful to open the github repository.
             case 2: JOptionPane.showMessageDialog(null, "Unable to open Github repository:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE); break;
         }

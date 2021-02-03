@@ -1,9 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
-import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
-import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
+import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -69,6 +66,7 @@ public class WindowAvailableMods extends JFrame {
         buttonAddGenreWindow.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
+                AnalyzeExistingThemes.analyzeThemeFiles();
                 NewGenreManager.addGenre();
                 FRAME.dispose();
             } catch (IOException e) {
@@ -100,6 +98,7 @@ public class WindowAvailableMods extends JFrame {
                         int genreIDToRemove = Integer.parseInt(spinnerGenreIdToRemove.getValue().toString());
                         EditGenreFile.removeGenre(genreIDToRemove);
                         NPCGameListChanger.editNPCGames(genreIDToRemove, false, 0);
+                        EditThemes.editGenreAllocation(genreIDToRemove, false);
                         ChangeLog.addLogEntry(4, genreIDToRemove + "");
                         JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + genreIDToRemove + "] has been removed successfully.");
                     }
