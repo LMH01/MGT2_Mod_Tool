@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,9 @@ public class EditThemes {
             }
             if(addGenreID){
                 if(NewGenreManager.MAP_COMPATIBLE_THEME_IDS.contains(currentLineNumber)){
-                    LOGGER.info(currentLineNumber + " - Y: " + currentLine);
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info(currentLineNumber + " - Y: " + currentLine);
+                    }
                     if(!firstLine){
                         bw.write(System.getProperty("line.separator"));
                     }
@@ -41,7 +44,9 @@ public class EditThemes {
                     if(!firstLine){
                         bw.write(System.getProperty("line.separator"));
                     }
-                    LOGGER.info(currentLineNumber + " - N: " + currentLine);
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info(currentLineNumber + " - N: " + currentLine);
+                    }
                     bw.write(currentLine );
                 }
             }else{
