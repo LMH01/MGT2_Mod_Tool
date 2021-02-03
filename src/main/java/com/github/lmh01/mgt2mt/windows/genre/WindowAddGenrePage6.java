@@ -66,7 +66,6 @@ public class WindowAddGenrePage6 extends JFrame{
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        //TODO Make a ? and explain what the input means
         JLabel labelDesign1 = new JLabel("Gameplay/Visuals: ");
         labelDesign1.setBounds(10, 10, 180, 23);
         contentPane.add(labelDesign1);

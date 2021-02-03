@@ -74,7 +74,6 @@ public class WindowAddGenrePage7 extends JFrame{
         labelGameplay.setBounds(10, 10, 100, 23);
         contentPane.add(labelGameplay);
 
-        //TODO Make a ? and explain what the input means
         JLabel labelGraphic = new JLabel("Graphic: ");
         labelGraphic.setBounds(10, 35, 120, 23);
         contentPane.add(labelGraphic);
