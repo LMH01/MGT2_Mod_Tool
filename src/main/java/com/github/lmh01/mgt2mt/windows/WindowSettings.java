@@ -62,7 +62,7 @@ public class WindowSettings extends JFrame {
         checkBoxDisableSafety.addActionListener(e -> {
             LOGGER.info("checkBoxDisableSafety action: " + e.getActionCommand());
             if(checkBoxDisableSafety.isSelected()){
-                checkBoxDisableSafety.setSelected(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to disable the safety features?\nThis could lead to problems.\n\nUSE THIS FEATURE AT YOUR OWN RISK!\nI WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING WITH THE SAFETY FEATURES DISABLED!\n\nDisable safety features?", "Disable safety features?", JOptionPane.YES_NO_OPTION) == 0);
+                checkBoxDisableSafety.setSelected(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to disable the safety features?\nThis could lead to problems.\n\nUSE THIS FEATURE AT YOUR OWN RISK!\nI WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!\n\nDisable safety features?", "Disable safety features?", JOptionPane.YES_NO_OPTION) == 0);
             }
             unsavedChanges = checkBoxDisableSafety.isSelected() != Settings.disableSafetyFeatures;
         });
