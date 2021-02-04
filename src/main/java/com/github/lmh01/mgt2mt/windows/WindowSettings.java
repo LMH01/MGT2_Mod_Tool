@@ -35,7 +35,7 @@ public class WindowSettings extends JFrame {
     }
 
     public WindowSettings(){
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 343, 200);
 
         JPanel contentPane = new JPanel();
