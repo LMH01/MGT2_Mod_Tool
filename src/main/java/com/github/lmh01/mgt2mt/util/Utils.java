@@ -38,6 +38,10 @@ public class Utils {
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\";
     }
 
+    public static String getMGT2ScreenshotsPath(){
+        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\";
+    }
+
     /**
      * @return Returns the genre file inside the mgt2 folder.
      */

@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,175 +10,374 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 
 @SuppressWarnings("ALL")
 public class ImageFileHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageFileHandler.class);
+
     /**
-     * Moves the given file to \\Mad Games Tycoon 2_Data\Extern\Icons_Genres
-     * and adds a genreIcon.png.meta file.
+     * Adds all image and meta files that are required for your genre to function
      */
-    public static void moveImage(File imageFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
+    public static void addGenreImageFiles(int genreID, String genreName, File genreImage) throws IOException {
+        ImageFileHandler.copyScreenshotFiles(genreID);//This copies the custom screenshots into the correct folder
+        if(genreImage.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
+            LOGGER.info("The default image file is in use. No need to copy a new one.");
+        }else{
+            //This copies the .png file to the Icon_Genres directory
+            copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png"));
+            //This creates the meta file in the Icon_Genres directory
+            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png.meta"));
+            //This creates the meta file in the main screenshot direcotry
+            createMetaFile(2, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\" + genreID + ".meta"));
+            //This copies the screenshot images into the corresponding folder (screenshots/genreid/) and creates the .meta files.
+            copyScreenshotFiles(genreID);
+        }
+
+    }
+
+    /**
+     * Moves the given file to the target location
+     * @param imageFile This is the file that should be moved
+     * @param outputFile This is the file that should be created
+     */
+    private static void copyImages(File imageFile, File outputFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
         if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
-            LOGGER.info("Copying this file to Incons_Genres: " + imageFile);
+            LOGGER.info("Copying " + imageFile + " this file to " + outputFile);
             NewGenreManager.useDefaultImageFile = false;
-            File genreIconInFolder = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png");
-            if(genreIconInFolder.exists()){
-                genreIconInFolder.delete();
+            if(outputFile.exists()){
+                outputFile.delete();
             }
-            Files.copy(Paths.get(imageFile.getPath()), Paths.get(genreIconInFolder.getPath()));
+            Files.copy(Paths.get(imageFile.getPath()), Paths.get(outputFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
             LOGGER.info("File copied.");
-            createMetaFile();
         }
     }
 
     /**
-     * Removes the image(.png) and meta-file(.png.meta) from the folder \Mad Games Tycoon 2_Data\Extern\Icons_Genres\
+     * Moves all files that have been selected into the designated folder
+     * @param genreID The genre id
      */
-    public static void removeImageFiles(String genreName){
+    private static void copyScreenshotFiles(int genreID) throws IOException {
+        boolean directoryCreated = false;
+        if(NewGenreManager.arrayListScreenshotFiles.size() != 0){//Things in this loop are only done if at least one custom screenshot file has been set. Otherwise the default files will be used.
+            for(int i = 0; i<NewGenreManager.arrayListScreenshotFiles.size(); i++){
+                File fileScreenshotDirectoryForGenreID = new File(Utils.getMGT2ScreenshotsPath() + "\\" + i + "\\");
+                File fileScreenshotForGenreID =new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png");
+                if(!directoryCreated){
+                    fileScreenshotForGenreID.mkdirs();
+                    directoryCreated = true;
+                }
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("file directory: " + fileScreenshotForGenreID.getPath());
+                    LOGGER.info("Current image file: " + NewGenreManager.arrayListScreenshotFiles.get(i));
+                }
+                createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png.meta"));
+                copyImages(NewGenreManager.arrayListScreenshotFiles.get(i), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png"));
+            }
+        }else{
+            File fileScreenshotForGenreID =new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\");
+            if(!directoryCreated){
+                fileScreenshotForGenreID.mkdirs();
+                directoryCreated = true;
+            }
+            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\2.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "0.png"));
+            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\4.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "1.png"));
+            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\9.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "2.png"));
+            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\11.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "3.png"));
+            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\13.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "4.png"));
+            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\20.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "5.png"));
+            createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\0.png.meta"));
+            createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\1.png.meta"));
+            createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\2.png.meta"));
+            createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\3.png.meta"));
+            createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\4.png.meta"));
+            createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\5.png.meta"));
+        }
+
+    }
+
+    /**
+     * Removes the image(.png) and meta-file(.png.meta) files for the specified genre from each directory that contains them
+     * @param genreName The genre id
+     * @param genreId The genre id
+     */
+    public static void removeImageFiles(String genreName, int genreId) throws IOException {
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
+        File screenshotFolder = new File(getScreenshotsDirectory() + "\\" + genreId + "\\");
+        File screenshotMetaFile = new File(getScreenshotsDirectory() + "\\" +  genreId + ".meta");
         if(Settings.enableDebugLogging){
+            LOGGER.info("Removing genreIcon image files...");
             LOGGER.info("imageFile: " + imageFile.getPath());
             LOGGER.info("imageFile name: " + imageFile.getName());
             LOGGER.info("imageFileMeta: " + imageFileMeta.getPath());
             LOGGER.info("imageFileMeta name: " + imageFileMeta.getName());
+            LOGGER.info("imageFileScreenshotFolder: " + screenshotFolder.getPath());
+            LOGGER.info("imageFileScreenshotMeta: " + screenshotMetaFile.getName());
         }
-        if(imageFile.exists() && imageFileMeta.exists()){
+        if(imageFile.exists()){
             imageFile.delete();
-            imageFileMeta.delete();
-            LOGGER.info("Deleted the image files for genre: " + genreName);
-        }else{
-            LOGGER.info("Image files for genre [" + genreName + "] could not be removed.");
+            LOGGER.info("removed file: " + imageFile.getPath());
         }
+        if(imageFileMeta.exists()){
+            imageFileMeta.delete();
+            LOGGER.info("removed file: " + imageFileMeta.getPath());
+        }
+        if(screenshotFolder.exists()){
+            screenshotFolder.delete();
+            Files.walk(Paths.get(screenshotFolder.getPath()))
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+            LOGGER.info("removed file: " + screenshotFolder.getPath());
+        }
+        if(screenshotMetaFile.exists()){
+            screenshotMetaFile.delete();
+            LOGGER.info("removed file: " + screenshotMetaFile.getPath());
+        }
+        LOGGER.info("All existing image files for genre [" + genreName + "] have been removed successfuly.");
     }
 
     /**
-     * Creates a png.meta file for the current genre name.
+     * @return Returns the directory where the screenshot files are listed
      */
-    private static void createMetaFile() throws IOException {
-        File filePngMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png.meta");
-        if(filePngMeta.exists()){
-            filePngMeta.delete();
+    public static String getScreenshotsDirectory(){
+        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\";
+    }
+
+    /**
+     * Creates creates a .meta file
+     * @param type What type of .meta file should be created; 1 = iconGenre.png.meta; 2 = GenreId.meta file in the screenshots main folder; 3 = genreId.png.meta in the screenshots/genreId folder
+     * @param pngMetaFile
+     * @throws IOException
+     */
+    private static void createMetaFile(int type, File pngMetaFile) throws IOException {
+        //File filePngMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png.meta");
+        if(pngMetaFile.exists()){
+            pngMetaFile.delete();
         }
-        filePngMeta.createNewFile();
-        LOGGER.info("Creating png.meta file.");
-        PrintWriter pw = new PrintWriter(filePngMeta);
-        pw.print("fileFormatVersion: 2\n" +
-                "guid: 14dee014499280641aceb957b082a0c5\n" +
-                "TextureImporter:\n" +
-                "  internalIDToNameTable: []\n" +
-                "  externalObjects: {}\n" +
-                "  serializedVersion: 10\n" +
-                "  mipmaps:\n" +
-                "    mipMapMode: 0\n" +
-                "    enableMipMap: 0\n" +
-                "    sRGBTexture: 1\n" +
-                "    linearTexture: 0\n" +
-                "    fadeOut: 0\n" +
-                "    borderMipMap: 0\n" +
-                "    mipMapsPreserveCoverage: 0\n" +
-                "    alphaTestReferenceValue: 0.5\n" +
-                "    mipMapFadeDistanceStart: 1\n" +
-                "    mipMapFadeDistanceEnd: 3\n" +
-                "  bumpmap:\n" +
-                "    convertToNormalMap: 0\n" +
-                "    externalNormalMap: 0\n" +
-                "    heightScale: 0.25\n" +
-                "    normalMapFilter: 0\n" +
-                "  isReadable: 0\n" +
-                "  streamingMipmaps: 0\n" +
-                "  streamingMipmapsPriority: 0\n" +
-                "  grayScaleToAlpha: 0\n" +
-                "  generateCubemap: 6\n" +
-                "  cubemapConvolution: 0\n" +
-                "  seamlessCubemap: 0\n" +
-                "  textureFormat: 1\n" +
-                "  maxTextureSize: 2048\n" +
-                "  textureSettings:\n" +
-                "    serializedVersion: 2\n" +
-                "    filterMode: -1\n" +
-                "    aniso: -1\n" +
-                "    mipBias: -100\n" +
-                "    wrapU: 1\n" +
-                "    wrapV: 1\n" +
-                "    wrapW: -1\n" +
-                "  nPOTScale: 0\n" +
-                "  lightmap: 0\n" +
-                "  compressionQuality: 50\n" +
-                "  spriteMode: 1\n" +
-                "  spriteExtrude: 1\n" +
-                "  spriteMeshType: 1\n" +
-                "  alignment: 0\n" +
-                "  spritePivot: {x: 0.5, y: 0.5}\n" +
-                "  spritePixelsToUnits: 100\n" +
-                "  spriteBorder: {x: 0, y: 0, z: 0, w: 0}\n" +
-                "  spriteGenerateFallbackPhysicsShape: 1\n" +
-                "  alphaUsage: 1\n" +
-                "  alphaIsTransparency: 1\n" +
-                "  spriteTessellationDetail: -1\n" +
-                "  textureType: 8\n" +
-                "  textureShape: 1\n" +
-                "  singleChannelComponent: 0\n" +
-                "  maxTextureSizeSet: 0\n" +
-                "  compressionQualitySet: 0\n" +
-                "  textureFormatSet: 0\n" +
-                "  platformSettings:\n" +
-                "  - serializedVersion: 2\n" +
-                "    buildTarget: DefaultTexturePlatform\n" +
-                "    maxTextureSize: 2048\n" +
-                "    resizeAlgorithm: 0\n" +
-                "    textureFormat: -1\n" +
-                "    textureCompression: 1\n" +
-                "    compressionQuality: 50\n" +
-                "    crunchedCompression: 0\n" +
-                "    allowsAlphaSplitting: 0\n" +
-                "    overridden: 0\n" +
-                "    androidETC2FallbackOverride: 0\n" +
-                "  - serializedVersion: 2\n" +
-                "    buildTarget: Standalone\n" +
-                "    maxTextureSize: 2048\n" +
-                "    resizeAlgorithm: 0\n" +
-                "    textureFormat: -1\n" +
-                "    textureCompression: 1\n" +
-                "    compressionQuality: 50\n" +
-                "    crunchedCompression: 0\n" +
-                "    allowsAlphaSplitting: 0\n" +
-                "    overridden: 0\n" +
-                "    androidETC2FallbackOverride: 0\n" +
-                "  - serializedVersion: 2\n" +
-                "    buildTarget: Windows Store Apps\n" +
-                "    maxTextureSize: 2048\n" +
-                "    resizeAlgorithm: 0\n" +
-                "    textureFormat: -1\n" +
-                "    textureCompression: 1\n" +
-                "    compressionQuality: 50\n" +
-                "    crunchedCompression: 0\n" +
-                "    allowsAlphaSplitting: 0\n" +
-                "    overridden: 0\n" +
-                "    androidETC2FallbackOverride: 0\n" +
-                "  spriteSheet:\n" +
-                "    serializedVersion: 2\n" +
-                "    sprites: []\n" +
-                "    outline: []\n" +
-                "    physicsShape: []\n" +
-                "    bones: []\n" +
-                "    spriteID: \n" +
-                "    internalID: 0\n" +
-                "    vertices: []\n" +
-                "    indices: \n" +
-                "    edges: []\n" +
-                "    weights: []\n" +
-                "    secondaryTextures: []\n" +
-                "  spritePackingTag: \n" +
-                "  pSDRemoveMatte: 0\n" +
-                "  pSDShowRemoveMatteOption: 0\n" +
-                "  userData: \n" +
-                "  assetBundleName: \n" +
-                "  assetBundleVariant: \n");
+        pngMetaFile.createNewFile();
+        LOGGER.info("Creating png.meta file: " + pngMetaFile.getPath());
+        PrintWriter pw = new PrintWriter(pngMetaFile);
+        if(type == 1){
+            pw.print("fileFormatVersion: 2\n" +
+                    "guid: 14dee014499280641aceb957b082a0c5\n" +
+                    "TextureImporter:\n" +
+                    "  internalIDToNameTable: []\n" +
+                    "  externalObjects: {}\n" +
+                    "  serializedVersion: 10\n" +
+                    "  mipmaps:\n" +
+                    "    mipMapMode: 0\n" +
+                    "    enableMipMap: 0\n" +
+                    "    sRGBTexture: 1\n" +
+                    "    linearTexture: 0\n" +
+                    "    fadeOut: 0\n" +
+                    "    borderMipMap: 0\n" +
+                    "    mipMapsPreserveCoverage: 0\n" +
+                    "    alphaTestReferenceValue: 0.5\n" +
+                    "    mipMapFadeDistanceStart: 1\n" +
+                    "    mipMapFadeDistanceEnd: 3\n" +
+                    "  bumpmap:\n" +
+                    "    convertToNormalMap: 0\n" +
+                    "    externalNormalMap: 0\n" +
+                    "    heightScale: 0.25\n" +
+                    "    normalMapFilter: 0\n" +
+                    "  isReadable: 0\n" +
+                    "  streamingMipmaps: 0\n" +
+                    "  streamingMipmapsPriority: 0\n" +
+                    "  grayScaleToAlpha: 0\n" +
+                    "  generateCubemap: 6\n" +
+                    "  cubemapConvolution: 0\n" +
+                    "  seamlessCubemap: 0\n" +
+                    "  textureFormat: 1\n" +
+                    "  maxTextureSize: 2048\n" +
+                    "  textureSettings:\n" +
+                    "    serializedVersion: 2\n" +
+                    "    filterMode: -1\n" +
+                    "    aniso: -1\n" +
+                    "    mipBias: -100\n" +
+                    "    wrapU: 1\n" +
+                    "    wrapV: 1\n" +
+                    "    wrapW: -1\n" +
+                    "  nPOTScale: 0\n" +
+                    "  lightmap: 0\n" +
+                    "  compressionQuality: 50\n" +
+                    "  spriteMode: 1\n" +
+                    "  spriteExtrude: 1\n" +
+                    "  spriteMeshType: 1\n" +
+                    "  alignment: 0\n" +
+                    "  spritePivot: {x: 0.5, y: 0.5}\n" +
+                    "  spritePixelsToUnits: 100\n" +
+                    "  spriteBorder: {x: 0, y: 0, z: 0, w: 0}\n" +
+                    "  spriteGenerateFallbackPhysicsShape: 1\n" +
+                    "  alphaUsage: 1\n" +
+                    "  alphaIsTransparency: 1\n" +
+                    "  spriteTessellationDetail: -1\n" +
+                    "  textureType: 8\n" +
+                    "  textureShape: 1\n" +
+                    "  singleChannelComponent: 0\n" +
+                    "  maxTextureSizeSet: 0\n" +
+                    "  compressionQualitySet: 0\n" +
+                    "  textureFormatSet: 0\n" +
+                    "  platformSettings:\n" +
+                    "  - serializedVersion: 2\n" +
+                    "    buildTarget: DefaultTexturePlatform\n" +
+                    "    maxTextureSize: 2048\n" +
+                    "    resizeAlgorithm: 0\n" +
+                    "    textureFormat: -1\n" +
+                    "    textureCompression: 1\n" +
+                    "    compressionQuality: 50\n" +
+                    "    crunchedCompression: 0\n" +
+                    "    allowsAlphaSplitting: 0\n" +
+                    "    overridden: 0\n" +
+                    "    androidETC2FallbackOverride: 0\n" +
+                    "  - serializedVersion: 2\n" +
+                    "    buildTarget: Standalone\n" +
+                    "    maxTextureSize: 2048\n" +
+                    "    resizeAlgorithm: 0\n" +
+                    "    textureFormat: -1\n" +
+                    "    textureCompression: 1\n" +
+                    "    compressionQuality: 50\n" +
+                    "    crunchedCompression: 0\n" +
+                    "    allowsAlphaSplitting: 0\n" +
+                    "    overridden: 0\n" +
+                    "    androidETC2FallbackOverride: 0\n" +
+                    "  - serializedVersion: 2\n" +
+                    "    buildTarget: Windows Store Apps\n" +
+                    "    maxTextureSize: 2048\n" +
+                    "    resizeAlgorithm: 0\n" +
+                    "    textureFormat: -1\n" +
+                    "    textureCompression: 1\n" +
+                    "    compressionQuality: 50\n" +
+                    "    crunchedCompression: 0\n" +
+                    "    allowsAlphaSplitting: 0\n" +
+                    "    overridden: 0\n" +
+                    "    androidETC2FallbackOverride: 0\n" +
+                    "  spriteSheet:\n" +
+                    "    serializedVersion: 2\n" +
+                    "    sprites: []\n" +
+                    "    outline: []\n" +
+                    "    physicsShape: []\n" +
+                    "    bones: []\n" +
+                    "    spriteID: \n" +
+                    "    internalID: 0\n" +
+                    "    vertices: []\n" +
+                    "    indices: \n" +
+                    "    edges: []\n" +
+                    "    weights: []\n" +
+                    "    secondaryTextures: []\n" +
+                    "  spritePackingTag: \n" +
+                    "  pSDRemoveMatte: 0\n" +
+                    "  pSDShowRemoveMatteOption: 0\n" +
+                    "  userData: \n" +
+                    "  assetBundleName: \n" +
+                    "  assetBundleVariant: \n");
+        }else if(type == 2){
+            pw.print("fileFormatVersion: 2\n" +
+                    "guid: 9d07848f8729232459a20d3f2c3f8e14\n" +
+                    "folderAsset: yes\n" +
+                    "DefaultImporter:\n" +
+                    "  externalObjects: {}\n" +
+                    "  userData: \n" +
+                    "  assetBundleName: \n" +
+                    "  assetBundleVariant: \n");
+        }else if(type == 3){
+            pw.print("fileFormatVersion: 2\n" +
+                    "guid: 35c72980c47b1aa49ac4bdd556d76877\n" +
+                    "TextureImporter:\n" +
+                    "  internalIDToNameTable: []\n" +
+                    "  externalObjects: {}\n" +
+                    "  serializedVersion: 10\n" +
+                    "  mipmaps:\n" +
+                    "    mipMapMode: 0\n" +
+                    "    enableMipMap: 1\n" +
+                    "    sRGBTexture: 1\n" +
+                    "    linearTexture: 0\n" +
+                    "    fadeOut: 0\n" +
+                    "    borderMipMap: 0\n" +
+                    "    mipMapsPreserveCoverage: 0\n" +
+                    "    alphaTestReferenceValue: 0.5\n" +
+                    "    mipMapFadeDistanceStart: 1\n" +
+                    "    mipMapFadeDistanceEnd: 3\n" +
+                    "  bumpmap:\n" +
+                    "    convertToNormalMap: 0\n" +
+                    "    externalNormalMap: 0\n" +
+                    "    heightScale: 0.25\n" +
+                    "    normalMapFilter: 0\n" +
+                    "  isReadable: 0\n" +
+                    "  streamingMipmaps: 0\n" +
+                    "  streamingMipmapsPriority: 0\n" +
+                    "  grayScaleToAlpha: 0\n" +
+                    "  generateCubemap: 6\n" +
+                    "  cubemapConvolution: 0\n" +
+                    "  seamlessCubemap: 0\n" +
+                    "  textureFormat: 1\n" +
+                    "  maxTextureSize: 2048\n" +
+                    "  textureSettings:\n" +
+                    "    serializedVersion: 2\n" +
+                    "    filterMode: -1\n" +
+                    "    aniso: -1\n" +
+                    "    mipBias: -100\n" +
+                    "    wrapU: -1\n" +
+                    "    wrapV: -1\n" +
+                    "    wrapW: -1\n" +
+                    "  nPOTScale: 1\n" +
+                    "  lightmap: 0\n" +
+                    "  compressionQuality: 50\n" +
+                    "  spriteMode: 0\n" +
+                    "  spriteExtrude: 1\n" +
+                    "  spriteMeshType: 1\n" +
+                    "  alignment: 0\n" +
+                    "  spritePivot: {x: 0.5, y: 0.5}\n" +
+                    "  spritePixelsToUnits: 100\n" +
+                    "  spriteBorder: {x: 0, y: 0, z: 0, w: 0}\n" +
+                    "  spriteGenerateFallbackPhysicsShape: 1\n" +
+                    "  alphaUsage: 1\n" +
+                    "  alphaIsTransparency: 0\n" +
+                    "  spriteTessellationDetail: -1\n" +
+                    "  textureType: 0\n" +
+                    "  textureShape: 1\n" +
+                    "  singleChannelComponent: 0\n" +
+                    "  maxTextureSizeSet: 0\n" +
+                    "  compressionQualitySet: 0\n" +
+                    "  textureFormatSet: 0\n" +
+                    "  platformSettings:\n" +
+                    "  - serializedVersion: 2\n" +
+                    "    buildTarget: DefaultTexturePlatform\n" +
+                    "    maxTextureSize: 2048\n" +
+                    "    resizeAlgorithm: 0\n" +
+                    "    textureFormat: -1\n" +
+                    "    textureCompression: 1\n" +
+                    "    compressionQuality: 50\n" +
+                    "    crunchedCompression: 0\n" +
+                    "    allowsAlphaSplitting: 0\n" +
+                    "    overridden: 0\n" +
+                    "    androidETC2FallbackOverride: 0\n" +
+                    "  spriteSheet:\n" +
+                    "    serializedVersion: 2\n" +
+                    "    sprites: []\n" +
+                    "    outline: []\n" +
+                    "    physicsShape: []\n" +
+                    "    bones: []\n" +
+                    "    spriteID: \n" +
+                    "    internalID: 0\n" +
+                    "    vertices: []\n" +
+                    "    indices: \n" +
+                    "    edges: []\n" +
+                    "    weights: []\n" +
+                    "    secondaryTextures: []\n" +
+                    "  spritePackingTag: \n" +
+                    "  pSDRemoveMatte: 0\n" +
+                    "  pSDShowRemoveMatteOption: 0\n" +
+                    "  userData: \n" +
+                    "  assetBundleName: \n" +
+                    "  assetBundleVariant: \n");
+        }
         pw.close();
         LOGGER.info("png.meta file has been created.");
     }

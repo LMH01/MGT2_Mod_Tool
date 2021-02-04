@@ -85,7 +85,13 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - **The values that are entered in this step are compared against the values that are entered here:**
     ![img](https://i.imgur.com/DplSwSS.png "Desing priority ingame")
     - If they match your game will get a better rating
-- **Page [9] Genre icon**
+- **Page [9] Genre screenshots**
+    - Here you can add pictures that should be used as game screenshots. These images are displayed when your development progress is shown.
+    - If you don't add pictures manually default pictures will be used.
+    - The pictures will be added in the order you add them with the tool. So it is recommended to use the least good-looking picture first.
+    
+    **Note: The selected files has to be `.png` format. It is highly suggested that you only add pictures with a 4:3 aspect ratio**
+- **Page [10] Genre icon**
     - In this step you can enter a custom genre icon. This icon will be copied into the game directory to be displayed as the genre image in game.
     
     **Note: The selected image file has to be a `.png` file**

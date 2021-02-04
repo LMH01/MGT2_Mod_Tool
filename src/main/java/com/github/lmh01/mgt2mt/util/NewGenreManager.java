@@ -40,6 +40,7 @@ public class NewGenreManager {
     public static File imageFile;
     public static String imageFileName;
     public static boolean useDefaultImageFile;
+    public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(NewGenreManager.class);
     public static final String FORBIDDEN_GENRE_NAMES = "[ID], [NAME EN], [NAME GE], [NAME CH], [NAME TU], [NAME FR], [DESC EN], [DESC GE], [DESC CH], [DESC TU], [DESC FR], [NAME PB], [DESC PB], [NAME HU], [DESC HU], [NAME CT], [DESC CT], [NAME ES], [DESC ES], [NAME PL], [DESC PL], [DATE], [RES POINTS], [PRICE], [DEV COSTS], [PIC], [TGROUP], [GAMEPLAY], [GRAPHIC], [SOUND], [CONTROL], [GENRE COMB], [DESIGN1], [DESIGN2], [DESIGN3], [DESIGN4], [DESIGN5]";
 
@@ -91,6 +92,7 @@ public class NewGenreManager {
             case 7: WindowAddGenrePage7.createFrame(); break;
             case 8: WindowAddGenrePage8.createFrame(); break;
             case 9: WindowAddGenrePage9.createFrame(); break;
+            case 10: WindowAddGenrePage10.createFrame(); break;
         }
     }
     public static void showSummary(){
@@ -125,7 +127,7 @@ public class NewGenreManager {
             boolean continueAnyway = false;
             boolean imageFileAccessedSuccess = false;
             try {
-                ImageFileHandler.moveImage(imageFile);
+                ImageFileHandler.addGenreImageFiles(id, name, imageFile);
                 imageFileAccessedSuccess = true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -134,7 +136,7 @@ public class NewGenreManager {
                     continueAnyway = true;
                 }
             }
-            if(continueAnyway || imageFileAccessedSuccess){
+            if(continueAnyway | imageFileAccessedSuccess){
                 try {
                     EditGenreFile.addGenre();
                     EditThemes.editGenreAllocation(NewGenreManager.id, true);
@@ -143,14 +145,18 @@ public class NewGenreManager {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Your genre was not added.");
+                WindowAvailableMods.createFrame();
             }
         }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
             //Click no or close window
-            WindowAddGenrePage9.createFrame();
+            WindowAddGenrePage10.createFrame();
         }else if (returnValue == JOptionPane.CANCEL_OPTION){
             //click cancel
             WindowAvailableMods.createFrame();
         }
+
     }
 
     /**
@@ -260,6 +266,7 @@ public class NewGenreManager {
         imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
         imageFileName = "iconSkill";
         useDefaultImageFile = true;
+        arrayListScreenshotFiles.clear();
     }
     public static void genreAdded(){
         ChangeLog.addLogEntry(1, name);

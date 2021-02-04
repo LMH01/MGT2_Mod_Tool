@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;

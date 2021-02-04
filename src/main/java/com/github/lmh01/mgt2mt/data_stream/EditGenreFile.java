@@ -121,7 +121,7 @@ public class EditGenreFile {
                     if(currentLine.contains("[NAME EN]")){
                         LOGGER.info("Found [NAME EN] for genre to remove. Trying to remove image files.");
                         String genreName = currentLine.replace("[NAME EN]", "");
-                        ImageFileHandler.removeImageFiles(genreName);
+                        ImageFileHandler.removeImageFiles(genreName, genreId);
                     }
                     if(Settings.enableDebugLogging){
                         LOGGER.info("CurrentLines for genre that should be removed: " + currentLine);
