@@ -34,7 +34,7 @@ public class WindowAddGenrePage9 extends JFrame{
 
     public WindowAddGenrePage9() {
         buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = getGenreImageFilePath();
+            String imageFilePath = getGenreImageFilePath(false, true);
             if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
                 NewGenreManager.imageFile = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
@@ -43,8 +43,22 @@ public class WindowAddGenrePage9 extends JFrame{
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            NewGenreManager.showSummary();
-            FRAME.dispose();
+            if(textFieldImagePath.getText().isEmpty()){
+                if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    NewGenreManager.imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+                    NewGenreManager.showSummary();
+                    FRAME.dispose();
+                }
+            }else{
+                String imageFilePath = getGenreImageFilePath(true, false);
+                if(!imageFilePath.equals("error")){
+                    NewGenreManager.imageFile = new File(imageFilePath);
+                    NewGenreManager.showSummary();
+                    FRAME.dispose();
+                }else if(textFieldImagePath.getText().isEmpty()){
+
+                }
+            }
         });
         buttonPrevious.addActionListener(actionEvent -> {
             NewGenreManager.openStepWindow(8);
@@ -87,9 +101,9 @@ public class WindowAddGenrePage9 extends JFrame{
         labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
         contentPane.add(labelYouCanSkipThisStep);
 
-        JLabel labelAddYourOwnGerne = new JLabel("don't want to add you own genre image.");
-        labelAddYourOwnGerne.setBounds(15,75, 300, 23);
-        contentPane.add(labelAddYourOwnGerne);
+        JLabel labelAddYourOwnGenre = new JLabel("don't want to add you own genre image.");
+        labelAddYourOwnGenre.setBounds(15,75, 300, 23);
+        contentPane.add(labelAddYourOwnGenre);
 
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
@@ -104,43 +118,65 @@ public class WindowAddGenrePage9 extends JFrame{
         contentPane.add(buttonQuit);
     }
 
-    private static String getGenreImageFilePath() {
-        String imageFilePath = "";
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-
-            FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
-                @Override
-                public boolean accept(File f) {
-                    if(f.getName().contains(".png")){
-                        return true;
+    private String getGenreImageFilePath(boolean useTextFiledPath, boolean showDialog) {
+        if(useTextFiledPath){
+            String textFieldPath = textFieldImagePath.getText();
+            if(textFieldPath.endsWith(".png")){
+                File imageFile = new File(textFieldPath);
+                if(imageFile.exists()){
+                    if(showDialog){
+                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
                     }
-                    return f.isDirectory();
-                }
-
-                @Override
-                public String getDescription() {
-                    return ".png files";
-                }
-            };
-
-            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setFileFilter(fileFilter);
-            fileChooser.setDialogTitle("Choose a genre image (.png):");
-
-            int return_value = fileChooser.showOpenDialog(null);
-            if (return_value == 0) {
-                if(fileChooser.getSelectedFile().getName().contains(".png")){
-                    imageFilePath = fileChooser.getSelectedFile().getPath();
-                    JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                    return textFieldPath;
                 }else{
-                    JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                    JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
+                    return "error";
                 }
+            }else{
+                JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                return "error";
             }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+        }else{
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+
+                FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
+                    @Override
+                    public boolean accept(File f) {
+                        if(f.getName().contains(".png")){
+                            return true;
+                        }
+                        return f.isDirectory();
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return ".png files";
+                    }
+                };
+
+                JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+                fileChooser.setFileFilter(fileFilter);
+                fileChooser.setDialogTitle("Choose a genre image (.png):");
+
+                int return_value = fileChooser.showOpenDialog(null);
+                if (return_value == 0) {
+                    if(fileChooser.getSelectedFile().getName().contains(".png")){
+                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                        return fileChooser.getSelectedFile().getPath();
+                    }else{
+                        JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                        return "error";
+                    }
+                }
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                return "error";
+            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
+                e.printStackTrace();
+                return "error";
+            }
         }
-        return imageFilePath;
     }
 }

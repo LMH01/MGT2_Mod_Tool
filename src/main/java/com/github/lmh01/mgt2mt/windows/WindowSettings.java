@@ -48,7 +48,6 @@ public class WindowSettings extends JFrame {
         SettingsText.setBounds(137, 11, 57, 19);
         contentPane.add(SettingsText);
 
-
         checkBoxDebugMode.setBounds(20, 40, 200, 23);
         checkBoxDebugMode.setToolTipText("Check this box to enable debug logging when opening this jar with the console.");
         checkBoxDebugMode.addActionListener(e -> {
