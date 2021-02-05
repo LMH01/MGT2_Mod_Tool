@@ -108,7 +108,7 @@ public class EditGenreFile {
                 firstLine = false;
             }
             if(currentLine.equals("[ID]" + genreId)){
-                linesToSkip = 36;//This is how many line the genre has that should be removed
+                linesToSkip = 39;//This is how many line the genre has that should be removed
             }else if(currentLine.contains("[GENRE COMB]")){
                 if(currentLine.contains("<" + genreId + ">")){
                     bw.write(currentLine.replace("<" + genreId + ">", "" + System.getProperty("line.separator")));
@@ -173,26 +173,28 @@ public class EditGenreFile {
     }
 
     private static void printLanguages(BufferedWriter bw) throws IOException {
-        bw.write("[NAME EN]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME GE]" + NewGenreManager.name + System.getProperty("line.separator"));
         bw.write("[NAME CH]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME TU]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME FR]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[DESC EN]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC GE]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC CH]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC TU]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC FR]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[NAME PB]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[DESC PB]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[NAME HU]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[DESC HU]" + NewGenreManager.description + System.getProperty("line.separator"));
         bw.write("[NAME CT]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[DESC CT]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[NAME CZ]" + NewGenreManager.name + System.getProperty("line.separator"));
+        bw.write("[NAME EN]" + NewGenreManager.name + System.getProperty("line.separator"));
         bw.write("[NAME ES]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[DESC ES]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[NAME FR]" + NewGenreManager.name + System.getProperty("line.separator"));
+        bw.write("[NAME GE]" + NewGenreManager.name + System.getProperty("line.separator"));
+        bw.write("[NAME HU]" + NewGenreManager.name + System.getProperty("line.separator"));
+        bw.write("[NAME PB]" + NewGenreManager.name + System.getProperty("line.separator"));
         bw.write("[NAME PL]" + NewGenreManager.name + System.getProperty("line.separator"));
+        bw.write("[NAME TU]" + NewGenreManager.name + System.getProperty("line.separator"));
+        bw.write("[DESC CH]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC CT]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC CZ]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC EN]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC ES]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC FR]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC GE]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC HU]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC PB]" + NewGenreManager.description + System.getProperty("line.separator"));
         bw.write("[DESC PL]" + NewGenreManager.description + System.getProperty("line.separator"));
+        bw.write("[DESC TU]" + NewGenreManager.description + System.getProperty("line.separator"));
     }
     private static String getTargetGroup(){
         String targetGroups = "";
