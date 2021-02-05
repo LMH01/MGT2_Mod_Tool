@@ -7,7 +7,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **If you have any suggestions for this project feel free to submit a feature or pull request**
 
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
-### Download: [v1.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.1.0/MGT2_Mod_Tool_1.1.0.zip)
+### Download: [v1.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.2.0/MGT2_Mod_Tool_1.2.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -20,6 +20,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - When all parameters have been collected a summary is being displayed. You can then decide if you do want to add that genre or make change.
     - You can remove a genre simply by pressing a button
     - It is supported to add a **custom image as genre icon**. This has to be a `.png` file.
+    - It is also supporded to add custom translations for your genre
    
     **Note: You should be able to load an existing save game with a new genre, but once you have loaded this save, the genre is bound to that file. That means that it can't be removed later from that file.**
 - **Edit the `NpcGames.txt` file**
@@ -58,6 +59,8 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Page [1]**
     - **Genre name**: Enter your genre name here. This name will be displayed in each translation.
     - **Genre description**: The description that should be displayed when hovering with your mouse over the genre.
+    - **TRANSL**: With these buttons you can add translations to your genre. The text that stands in the "main" field will be used as the english name/translation.
+    - **Clear Translations**: With this button you can clear all translations that you have entered.
 - **Page [2] Unlock date**
     - **Unlock month**: The month when your genre will be unlocked.
     - **Unlock year**: The year when your genre will be unlocked.
