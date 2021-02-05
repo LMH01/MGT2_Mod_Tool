@@ -51,6 +51,18 @@ public class ImportSettings{
                         }else if(currentLine.equals("false")){
                             Settings.enableCustomFolder = false;
                         } break;
+                    case 7:
+                        if(currentLine.equals("true")){
+                            Settings.enableGenreNameTranslationInfo = true;
+                        }else if(currentLine.equals("false")){
+                            Settings.enableGenreNameTranslationInfo = false;
+                        } break;
+                    case 8:
+                        if(currentLine.equals("true")){
+                            Settings.enableGenreDescriptionTranslationInfo = true;
+                        }else if(currentLine.equals("false")){
+                            Settings.enableGenreDescriptionTranslationInfo = false;
+                        } break;
                 }
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Imported Setting (" + setting + "): " + currentLine);

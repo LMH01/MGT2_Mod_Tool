@@ -16,6 +16,8 @@ public class NewGenreManager {
     public static int id = 18;
     public static String name = "";
     public static String description = "";
+    public static ArrayList<String> arrayListNameTranslations = new ArrayList<>();
+    public static ArrayList<String> arrayListDescriptionTranslations = new ArrayList<>();
     public static int unlockYear = 1976;
     public static String unlockMonth = "JAN";
     public static int researchPoints = 0;
@@ -243,6 +245,8 @@ public class NewGenreManager {
         id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         name = "";
         description = "";
+        arrayListNameTranslations.clear();
+        arrayListDescriptionTranslations.clear();
         unlockYear = 1976;
         unlockMonth = "JAN";
         researchPoints = 1000;

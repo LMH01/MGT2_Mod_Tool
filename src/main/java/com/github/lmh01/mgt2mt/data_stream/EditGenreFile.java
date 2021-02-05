@@ -173,28 +173,58 @@ public class EditGenreFile {
     }
 
     private static void printLanguages(BufferedWriter bw) throws IOException {
-        bw.write("[NAME CH]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME CT]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME CZ]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME EN]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME ES]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME FR]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME GE]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME HU]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME PB]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME PL]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[NAME TU]" + NewGenreManager.name + System.getProperty("line.separator"));
-        bw.write("[DESC CH]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC CT]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC CZ]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC EN]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC ES]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC FR]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC GE]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC HU]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC PB]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC PL]" + NewGenreManager.description + System.getProperty("line.separator"));
-        bw.write("[DESC TU]" + NewGenreManager.description + System.getProperty("line.separator"));
+        if(NewGenreManager.arrayListNameTranslations.isEmpty()){
+            bw.write("[NAME CH]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME CT]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME CZ]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME EN]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME ES]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME FR]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME GE]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME HU]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME PB]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME PL]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME TU]" + NewGenreManager.name + System.getProperty("line.separator"));
+        }else{
+            bw.write("[NAME CH]" + NewGenreManager.arrayListNameTranslations.get(8) + System.getProperty("line.separator"));
+            bw.write("[NAME CT]" + NewGenreManager.arrayListNameTranslations.get(8) + System.getProperty("line.separator"));
+            bw.write("[NAME CZ]" + NewGenreManager.arrayListNameTranslations.get(6) + System.getProperty("line.separator"));
+            bw.write("[NAME EN]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME ES]" + NewGenreManager.arrayListNameTranslations.get(2) + System.getProperty("line.separator"));
+            bw.write("[NAME FR]" + NewGenreManager.arrayListNameTranslations.get(1) + System.getProperty("line.separator"));
+            bw.write("[NAME GE]" + NewGenreManager.arrayListNameTranslations.get(0) + System.getProperty("line.separator"));
+            bw.write("[NAME HU]" + NewGenreManager.arrayListNameTranslations.get(4) + System.getProperty("line.separator"));
+            bw.write("[NAME PB]" + NewGenreManager.arrayListNameTranslations.get(3) + System.getProperty("line.separator"));
+            bw.write("[NAME PL]" + NewGenreManager.arrayListNameTranslations.get(5) + System.getProperty("line.separator"));
+            bw.write("[NAME TU]" + NewGenreManager.arrayListNameTranslations.get(7) + System.getProperty("line.separator"));
+        }
+
+        if(NewGenreManager.arrayListDescriptionTranslations.isEmpty()){
+            bw.write("[DESC CH]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC CT]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC CZ]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC EN]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC ES]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC FR]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC GE]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC HU]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC PB]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC PL]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC TU]" + NewGenreManager.description + System.getProperty("line.separator"));
+        }else{
+            bw.write("[DESC CH]" + NewGenreManager.arrayListDescriptionTranslations.get(8) + System.getProperty("line.separator"));
+            bw.write("[DESC CT]" + NewGenreManager.arrayListDescriptionTranslations.get(8) + System.getProperty("line.separator"));
+            bw.write("[DESC CZ]" + NewGenreManager.arrayListDescriptionTranslations.get(6) + System.getProperty("line.separator"));
+            bw.write("[DESC EN]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC ES]" + NewGenreManager.arrayListDescriptionTranslations.get(2) + System.getProperty("line.separator"));
+            bw.write("[DESC FR]" + NewGenreManager.arrayListDescriptionTranslations.get(1) + System.getProperty("line.separator"));
+            bw.write("[DESC GE]" + NewGenreManager.arrayListDescriptionTranslations.get(0) + System.getProperty("line.separator"));
+            bw.write("[DESC HU]" + NewGenreManager.arrayListDescriptionTranslations.get(4) + System.getProperty("line.separator"));
+            bw.write("[DESC PB]" + NewGenreManager.arrayListDescriptionTranslations.get(3) + System.getProperty("line.separator"));
+            bw.write("[DESC PL]" + NewGenreManager.arrayListDescriptionTranslations.get(5) + System.getProperty("line.separator"));
+            bw.write("[DESC TU]" + NewGenreManager.arrayListDescriptionTranslations.get(7) + System.getProperty("line.separator"));
+        }
+
     }
     private static String getTargetGroup(){
         String targetGroups = "";

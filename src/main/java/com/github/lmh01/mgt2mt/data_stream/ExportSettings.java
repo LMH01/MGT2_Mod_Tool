@@ -34,7 +34,9 @@ public class ExportSettings {
                     Settings.enableDebugLogging + "\n" +
                     Settings.disableSafetyFeatures + "\n" +
                     Settings.steamLibraryFolder + "\n" +
-                    Settings.enableCustomFolder + "\n");
+                    Settings.enableCustomFolder + "\n" +
+                    Settings.enableGenreNameTranslationInfo + "\n" +
+                    Settings.enableGenreDescriptionTranslationInfo);
             pw.close();
             if(Settings.enableDebugLogging){
                 LOGGER.info(Settings.mgt2FilePath);
