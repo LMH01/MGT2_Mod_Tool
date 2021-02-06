@@ -71,10 +71,10 @@ public class ChangeLog {
     private static void printNewLogEntry(int operation, String textBody, PrintWriter pw, String currentSystemTime){
         String logToPrint = "";
         switch(operation){
-            case 1: logToPrint = currentSystemTime + ": Added genre [" + textBody + "]\n"; break;
-            case 2: logToPrint = currentSystemTime + ": Added genre with id [" + textBody + "] to the npc games list\n"; break;
-            case 3: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list\n"; break;
-            case 4: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Genres.txt file\n"; break;
+            case 1: logToPrint = currentSystemTime + ": Added genre [" + textBody + "]"; break;
+            case 2: logToPrint = currentSystemTime + ": Added genre with id [" + textBody + "] to the npc games list"; break;
+            case 3: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list"; break;
+            case 4: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Genres.txt file"; break;
             case 5: logToPrint = currentSystemTime + ": A backup of file " + textBody + " has been created."; break;
             case 6: logToPrint = currentSystemTime + ": The initial backup has been created if it did not already exist."; break;
             case 7: logToPrint = currentSystemTime + ": The initial backup failed. Exception: " + textBody; break;
@@ -83,8 +83,10 @@ public class ChangeLog {
             case 10: logToPrint = currentSystemTime + ": The initial backup was not restored: " + textBody; break;
             case 11: logToPrint = currentSystemTime + ": The latest backup was not restored: " + textBody; break;
             case 12: logToPrint = currentSystemTime + ": All backups have been deleted"; break;
-            case 13: logToPrint = currentSystemTime + ": Added genre with id [" + textBody + "] to the Themes_GE.txt file\n"; break;
-            case 14: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Themes_GE.txt file\n"; break;
+            case 13: logToPrint = currentSystemTime + ": Added genre with id [" + textBody + "] to the Themes_GE.txt file"; break;
+            case 14: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Themes_GE.txt file"; break;
+            case 15: logToPrint = currentSystemTime + ": Added theme: ["+ textBody + "]"; break;
+            case 16: logToPrint = currentSystemTime + ": Removed theme: ["+ textBody + "]"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

@@ -143,7 +143,7 @@ public class NewGenreManager {
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
                     EditGenreFile.addGenre();
-                    EditThemes.editGenreAllocation(NewGenreManager.id, true);
+                    EditThemeFiles.editGenreAllocation(NewGenreManager.id, true);
                     NewGenreManager.genreAdded();
                 } catch (IOException e) {
                     e.printStackTrace();

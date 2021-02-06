@@ -102,7 +102,7 @@ public class WindowUtilities extends JFrame {
         buttonShowActiveThemes.addActionListener(actionEvent -> {
             try {
                 AnalyzeExistingThemes.analyzeThemeFiles();
-                String[] string = AnalyzeExistingThemes.getThemesByAlphabet();
+                String[] string = AnalyzeExistingThemes.getThemesByAlphabet(false);
 
                 JList<String> listAvailableThemes = new JList<>(string);
                 listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);

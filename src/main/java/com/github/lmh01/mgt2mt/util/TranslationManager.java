@@ -13,27 +13,35 @@ public class TranslationManager {
         JLabel labelExplanation = new JLabel();
         Object[] params = {labelExplanation,textFieldDescriptionTranslation};
         boolean breakLoop = false;
-        for(int i = 0; i<9; i++){
+        for(int i = 0; i<13; i++){
             if(!breakLoop){
                 String language = "";
                 switch(i){
-                    case 0: language = "German"; break;
-                    case 1: language = "French"; break;
-                    case 2: language = "Spanish"; break;
-                    case 3: language = "Portuguese"; break;
-                    case 4: language = "Hungarian"; break;
-                    case 5: language = "Polish"; break;
-                    case 6: language = "Czech"; break;
-                    case 7: language = "Turkish"; break;
-                    case 8: language = "Chinese"; break;
+                    case 0: language = "Chinese simplified"; break;
+                    case 1: language = "Chinese traditional"; break;
+                    case 2: language = "Czech"; break;
+                    case 3: language = "English"; break;
+                    case 4: language = "Spanish"; break;
+                    case 5: language = "French"; break;
+                    case 6: language = "German"; break;
+                    case 7: language = "Hungarian"; break;
+                    case 8: language = "Korean"; break;
+                    case 9: language = "Portuguese"; break;
+                    case 10: language = "Polish"; break;
+                    case 11: language = "Russian"; break;
+                    case 12: language = "Turkish"; break;
                 }
-                labelExplanation.setText("Enter the translation for " + language + ":");
-                if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
-                    arrayListTranslations.add(textFieldDescriptionTranslation.getText());
-                    textFieldDescriptionTranslation.setText("");
-                }else{
-                    JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
-                    breakLoop = true;
+                if(i != 3){
+                    labelExplanation.setText("Enter the translation for " + language + ":");
+                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
+                        arrayListTranslations.add(textFieldDescriptionTranslation.getText());
+                        textFieldDescriptionTranslation.setText("");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
+                        breakLoop = true;
+                    }
+                }else if(i == 3){
+                    arrayListTranslations.add("English");
                 }
             }
         }
@@ -41,18 +49,23 @@ public class TranslationManager {
             StringBuilder translations = new StringBuilder();
             for(int i = 0; i<arrayListTranslations.size(); i++){
                 switch(i){
-                    case 0: translations.append("\nGerman: ").append(arrayListTranslations.get(i)); break;
-                    case 1: translations.append("\nFrench: ").append(arrayListTranslations.get(i)); break;
-                    case 2: translations.append("\nSpanish: ").append(arrayListTranslations.get(i)); break;
-                    case 3: translations.append("\nPortuguese: ").append(arrayListTranslations.get(i)); break;
-                    case 4: translations.append("\nHungarian: ").append(arrayListTranslations.get(i)); break;
-                    case 5: translations.append("\nPolish: ").append(arrayListTranslations.get(i)); break;
-                    case 6: translations.append("\nCzech: ").append(arrayListTranslations.get(i)); break;
-                    case 7: translations.append("\nTurkish: ").append(arrayListTranslations.get(i)); break;
-                    case 8: translations.append("\nChinese: ").append(arrayListTranslations.get(i)); break;
+                    case 0: translations.append("\nChinese simplified: ").append(arrayListTranslations.get(i)); break;
+                    case 1: translations.append("\nChinese traditional: ").append(arrayListTranslations.get(i)); break;
+                    case 2: translations.append("\nCzech: ").append(arrayListTranslations.get(i)); break;
+                    //case 3: translations.append("\nEnglish: ").append(arrayListTranslations.get(i)); break;
+                    case 4: translations.append("\nSpanish: ").append(arrayListTranslations.get(i)); break;
+                    case 5: translations.append("\nFrench: ").append(arrayListTranslations.get(i)); break;
+                    case 6: translations.append("\nGerman: ").append(arrayListTranslations.get(i)); break;
+                    case 7: translations.append("\nHungarian: ").append(arrayListTranslations.get(i)); break;
+                    case 8: translations.append("\nKorean: ").append(arrayListTranslations.get(i)); break;
+                    case 9: translations.append("\nPortuguese: ").append(arrayListTranslations.get(i)); break;
+                    case 10: translations.append("\nPolish: ").append(arrayListTranslations.get(i)); break;
+                    case 11: translations.append("\nRussian: " ).append(arrayListTranslations.get(i)); break;
+                    case 12: translations.append("\nTurkish: ").append(arrayListTranslations.get(i)); break;
+
                 }
             }
-            JOptionPane.showMessageDialog(null, "The following description translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
         }
         return arrayListTranslations;
     }

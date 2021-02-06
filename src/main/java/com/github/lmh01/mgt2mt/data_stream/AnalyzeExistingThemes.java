@@ -67,7 +67,7 @@ public class AnalyzeExistingThemes {
             if(!currentLine.equals("")){
                 MAP_ACTIVE_THEMES_EN.put(themeID, currentLine);
                 if(Settings.enableDebugLogging){
-                    LOGGER.info("Added entry to array map MAP_ACTIVE_THEMES_GE: " + "[" + themeID + "] " + currentLine);
+                    LOGGER.info("Added entry to array map MAP_ACTIVE_THEMES_EN: " + "[" + themeID + "] " + currentLine);
                     LOGGER.info("Entry in map: " + MAP_ACTIVE_THEMES_EN.get(themeID));
                 }
                 themeID++;
@@ -75,6 +75,27 @@ public class AnalyzeExistingThemes {
         }
         reader.close();
         LOGGER.info("Analyzing of themes(en) complete. Found: " + MAP_ACTIVE_THEMES_EN.size());
+    }
+
+    /**
+     * @param themeNameEn The theme name that should be searched.
+     * @return Returns the position of the specified genre in the themesNamesEn file.
+     */
+    public static int getPositionOfThemeInFile(String themeNameEn){
+        int position = 0;
+        LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + MAP_ACTIVE_THEMES_EN.size());
+        for(Map.Entry<Integer, String> entry: MAP_ACTIVE_THEMES_EN.entrySet()){
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Value: " + entry.getValue());
+            }
+            if(entry.getValue().contains(themeNameEn)){
+                LOGGER.info("Position of genre to remove in file: " + position);
+                return position;
+            }else{
+                position++;
+            }
+        }
+        return position;
     }
 
     /**
@@ -110,13 +131,19 @@ public class AnalyzeExistingThemes {
     /**
      * @return Returns a string containing all active themes sorted by alphabet.
      */
-    public static String[] getThemesByAlphabet(){
+    public static String[] getThemesByAlphabet(boolean excludeUnsaveThemes){
         ArrayList<String> arrayListAvailableThemesSorted = new ArrayList<>();
         for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
             if(Settings.enableDebugLogging){
                 LOGGER.info("Adding element to list: " + entry.getValue());
             }
-            arrayListAvailableThemesSorted.add(entry.getValue());
+            if(excludeUnsaveThemes){
+                if(!entry.getValue().equals("Pets") | Settings.disableSafetyFeatures){
+                    arrayListAvailableThemesSorted.add(entry.getValue());
+                }
+            }else{
+                arrayListAvailableThemesSorted.add(entry.getValue());
+            }
         }
         Collections.sort(arrayListAvailableThemesSorted);
         String[] string = new String[arrayListAvailableThemesSorted.size()];

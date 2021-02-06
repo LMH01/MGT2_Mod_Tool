@@ -186,7 +186,7 @@ public class Backup {
        Backup.createBackup(Utils.getNpcGamesFile());
        Backup.createBackup(Utils.getThemesGeFile());
        backupSaveGames(FILE_SAVE_GAME_FOLDER, false);
-       backupThemeFiles(false);
+       createThemeFilesBackup(false);
     }
 
     /**
@@ -199,7 +199,7 @@ public class Backup {
             Backup.createBackup(Utils.getNpcGamesFile(), true);
             Backup.createBackup(Utils.getThemesGeFile(), true);
             backupSaveGames(FILE_SAVE_GAME_FOLDER, true);
-            backupThemeFiles(true);
+            createThemeFilesBackup(true);
             ChangeLog.addLogEntry(6);
             return "";
         }catch(IOException e) {
@@ -240,7 +240,7 @@ public class Backup {
      * Creates a backup of each Theme file.
      * @param initialBackup True if this is the initial backup.
      */
-    private static void backupThemeFiles(boolean initialBackup) throws IOException {
+    public static void createThemeFilesBackup(boolean initialBackup) throws IOException {
         Backup.createBackup(Utils.getThemeFile(0), initialBackup);
         Backup.createBackup(Utils.getThemeFile(1), initialBackup);
         Backup.createBackup(Utils.getThemeFile(2), initialBackup);
