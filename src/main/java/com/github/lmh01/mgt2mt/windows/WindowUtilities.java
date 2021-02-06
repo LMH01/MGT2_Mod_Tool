@@ -13,9 +13,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class WindowOther extends JFrame {
+public class WindowUtilities extends JFrame {
 
-    static final WindowOther FRAME = new WindowOther();
+    static final WindowUtilities FRAME = new WindowUtilities();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -28,7 +28,7 @@ public class WindowOther extends JFrame {
         });
     }
 
-    public WindowOther(){
+    public WindowUtilities(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 200, 310);
         setResizable(false);
@@ -38,7 +38,7 @@ public class WindowOther extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel labelTitle = new JLabel("Other");
+        JLabel labelTitle = new JLabel("Utilities");
         labelTitle.setBounds(75, 0, 60, 23);
         labelTitle.setForeground(Color.BLACK);
         labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));

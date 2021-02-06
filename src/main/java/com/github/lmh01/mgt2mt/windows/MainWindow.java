@@ -1,8 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -82,11 +80,11 @@ public class MainWindow extends JFrame {
         });
         getContentPane().add(buttonBackup);
 
-        JButton buttonOther = new JButton("Other");
+        JButton buttonOther = new JButton("Utilities");
         buttonOther.setBounds(120, 70, 100, 23);
-        buttonOther.setToolTipText("<html>Click to open the other page.<br>This page contains some useful tools that did not fit any other category.");
+        buttonOther.setToolTipText("<html>Click to open the utilities page.<br>This page contains some useful tools that did not fit any other category.");
         buttonOther.addActionListener(actionEvent -> {
-            WindowOther.createFrame();
+            WindowUtilities.createFrame();
             FRAME.dispose();
         });
         getContentPane().add(buttonOther);
