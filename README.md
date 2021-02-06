@@ -23,6 +23,10 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - It is also supporded to add custom translations for your genre
    
     **Note: You should be able to load an existing save game with a new genre, but once you have loaded this save, the genre is bound to that file. That means that it can't be removed later from that file.**
+- **Add and remove themes**
+    - You can add your own themes
+    - Existing themes can be removed
+    - It is possible to add custom translations for your themes
 - **Edit the `NpcGames.txt` file**
     - You can add or remove a genre id to/from this file. This has the effect that games released by NPC-Companies can have the specified genre.
     - Additionally, you can change the chance with which the genre id should be added to the file. (100% = All games will have the corresponding genre as genre)
