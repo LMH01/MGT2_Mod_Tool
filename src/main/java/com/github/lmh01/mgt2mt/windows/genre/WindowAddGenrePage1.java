@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.util.NewGenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import org.slf4j.Logger;
@@ -25,8 +26,6 @@ public class WindowAddGenrePage1 extends JFrame{
     JButton buttonClearTranslations = new JButton("Clear Translations");
     JTextField textFieldGenreName = new JTextField();
     JTextField textFieldGenreDescription = new JTextField();
-    boolean nameTranslationsAdded = false;
-    boolean descriptionTranslationsAdded = false;
     final JSpinner spinnerId = new JSpinner();
 
     public static void createFrame(){
@@ -57,25 +56,25 @@ public class WindowAddGenrePage1 extends JFrame{
         });
 
         buttonAddNameTranslations.addActionListener(actionEvent ->{
-            if(!descriptionTranslationsAdded){
+            if(!NewGenreManager.nameTranslationsAdded){
                 addNameTranslations();
-                descriptionTranslationsAdded = true;
+                NewGenreManager.nameTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                     addDescriptionTranslations();
-                    descriptionTranslationsAdded = true;
+                    NewGenreManager.nameTranslationsAdded = true;
                 }
             }
         });
 
         buttonAddDescriptionTranslations.addActionListener(actionEvent ->{
-            if(!nameTranslationsAdded){
+            if(!NewGenreManager.descriptionTranslationsAdded){
                 addDescriptionTranslations();
-                nameTranslationsAdded = true;
+                NewGenreManager.descriptionTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                     addDescriptionTranslations();
-                    nameTranslationsAdded = true;
+                    NewGenreManager.descriptionTranslationsAdded = true;
                 }
             }
         });
@@ -219,51 +218,7 @@ public class WindowAddGenrePage1 extends JFrame{
             ExportSettings.export();
         }
         if(continueWithTranslations){
-            JTextField textFieldNameTranslation = new JTextField();
-            JLabel labelExplanation = new JLabel();
-            Object[] params = {labelExplanation,textFieldNameTranslation};
-            boolean breakLoop = false;
-            for(int i = 0; i<9; i++){
-                if(!breakLoop){
-                    String language = "";
-                    switch(i){
-                        case 0: language = "German"; break;
-                        case 1: language = "French"; break;
-                        case 2: language = "Spanish"; break;
-                        case 3: language = "Portuguese"; break;
-                        case 4: language = "Hungarian"; break;
-                        case 5: language = "Polish"; break;
-                        case 6: language = "Czech"; break;
-                        case 7: language = "Turkish"; break;
-                        case 8: language = "Chinese"; break;
-                    }
-                    labelExplanation.setText("Enter the translation for " + language + ":");
-                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
-                        NewGenreManager.arrayListNameTranslations.add(textFieldNameTranslation.getText());
-                        textFieldNameTranslation.setText("");
-                    }else{
-                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
-                        breakLoop = true;
-                    }
-                }
-            }
-            if(!breakLoop){
-                StringBuilder translations = new StringBuilder();
-                for(int i = 0; i<NewGenreManager.arrayListNameTranslations.size(); i++){
-                    switch(i){
-                        case 0: translations.append("\nGerman: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 1: translations.append("\nFrench: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 2: translations.append("\nSpanish: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 3: translations.append("\nPortuguese: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 4: translations.append("\nHungarian: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 5: translations.append("\nPolish: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 6: translations.append("\nCzech: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 7: translations.append("\nTurkish: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                        case 8: translations.append("\nChinese: ").append(NewGenreManager.arrayListNameTranslations.get(i)); break;
-                    }
-                }
-                JOptionPane.showMessageDialog(null, "The following name translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
-            }
+            NewGenreManager.arrayListNameTranslations = TranslationManager.getTranslationsArrayList();
         }
     }
     private static void addDescriptionTranslations(){
@@ -280,51 +235,7 @@ public class WindowAddGenrePage1 extends JFrame{
             ExportSettings.export();
         }
         if(continueWithTranslations){
-            JTextField textFieldDescriptionTranslation = new JTextField();
-            JLabel labelExplanation = new JLabel();
-            Object[] params = {labelExplanation,textFieldDescriptionTranslation};
-            boolean breakLoop = false;
-            for(int i = 0; i<9; i++){
-                if(!breakLoop){
-                    String language = "";
-                    switch(i){
-                        case 0: language = "German"; break;
-                        case 1: language = "French"; break;
-                        case 2: language = "Spanish"; break;
-                        case 3: language = "Portuguese"; break;
-                        case 4: language = "Hungarian"; break;
-                        case 5: language = "Polish"; break;
-                        case 6: language = "Czech"; break;
-                        case 7: language = "Turkish"; break;
-                        case 8: language = "Chinese"; break;
-                    }
-                    labelExplanation.setText("Enter the translation for " + language + ":");
-                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
-                        NewGenreManager.arrayListDescriptionTranslations.add(textFieldDescriptionTranslation.getText());
-                        textFieldDescriptionTranslation.setText("");
-                    }else{
-                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
-                        breakLoop = true;
-                    }
-                }
-            }
-            if(!breakLoop){
-                StringBuilder translations = new StringBuilder();
-                for(int i = 0; i<NewGenreManager.arrayListDescriptionTranslations.size(); i++){
-                    switch(i){
-                        case 0: translations.append("\nGerman: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 1: translations.append("\nFrench: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 2: translations.append("\nSpanish: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 3: translations.append("\nPortuguese: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 4: translations.append("\nHungarian: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 5: translations.append("\nPolish: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 6: translations.append("\nCzech: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 7: translations.append("\nTurkish: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                        case 8: translations.append("\nChinese: ").append(NewGenreManager.arrayListDescriptionTranslations.get(i)); break;
-                    }
-                }
-                JOptionPane.showMessageDialog(null, "The following description translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
-            }
+            NewGenreManager.arrayListDescriptionTranslations = TranslationManager.getTranslationsArrayList();
         }
     }
 }

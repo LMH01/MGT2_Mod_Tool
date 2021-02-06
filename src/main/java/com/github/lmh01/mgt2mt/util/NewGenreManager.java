@@ -18,6 +18,8 @@ public class NewGenreManager {
     public static String description = "";
     public static ArrayList<String> arrayListNameTranslations = new ArrayList<>();
     public static ArrayList<String> arrayListDescriptionTranslations = new ArrayList<>();
+    public static boolean nameTranslationsAdded = false;
+    public static boolean descriptionTranslationsAdded = false;
     public static int unlockYear = 1976;
     public static String unlockMonth = "JAN";
     public static int researchPoints = 0;
@@ -247,6 +249,8 @@ public class NewGenreManager {
         description = "";
         arrayListNameTranslations.clear();
         arrayListDescriptionTranslations.clear();
+        nameTranslationsAdded = false;
+        descriptionTranslationsAdded = false;
         unlockYear = 1976;
         unlockMonth = "JAN";
         researchPoints = 1000;
