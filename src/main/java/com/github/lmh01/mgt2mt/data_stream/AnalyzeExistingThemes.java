@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,5 +105,22 @@ public class AnalyzeExistingThemes {
         if(Settings.enableDebugLogging){
             LOGGER.info("file created.");
         }
+    }
+
+    /**
+     * @return Returns a string containing all active themes sorted by alphabet.
+     */
+    public static String[] getThemesByAlphabet(){
+        ArrayList<String> arrayListAvailableThemesSorted = new ArrayList<>();
+        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Adding element to list: " + entry.getValue());
+            }
+            arrayListAvailableThemesSorted.add(entry.getValue());
+        }
+        Collections.sort(arrayListAvailableThemesSorted);
+        String[] string = new String[arrayListAvailableThemesSorted.size()];
+        arrayListAvailableThemesSorted.toArray(string);
+        return string;
     }
 }

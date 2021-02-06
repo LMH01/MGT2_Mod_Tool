@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -29,7 +30,7 @@ public class WindowOther extends JFrame {
 
     public WindowOther(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 200, 280);
+        setBounds(100, 100, 200, 310);
         setResizable(false);
 
         JPanel contentPane = new JPanel();
@@ -95,8 +96,32 @@ public class WindowOther extends JFrame {
         });
         contentPane.add(buttonShowGenres);
 
+        JButton buttonShowActiveThemes = new JButton("Show active themes");
+        buttonShowActiveThemes.setBounds(10, 130, 175, 23);
+        buttonShowActiveThemes.setToolTipText("Click to see a list of currently active themes.");
+        buttonShowActiveThemes.addActionListener(actionEvent -> {
+            try {
+                AnalyzeExistingThemes.analyzeThemeFiles();
+                String[] string = AnalyzeExistingThemes.getThemesByAlphabet();
+
+                JList<String> listAvailableThemes = new JList<>(string);
+                listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
+                listAvailableThemes.setVisibleRowCount(-1);
+
+                JScrollPane scrollPaneAvailableThemes = new JScrollPane(listAvailableThemes);
+                scrollPaneAvailableThemes.setPreferredSize(new Dimension(315,140));
+
+                JOptionPane.showMessageDialog(null, scrollPaneAvailableThemes, "The following themes are currently active.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                Utils.showErrorMessage(1, e);
+                e.printStackTrace();
+            }
+        });
+        contentPane.add(buttonShowActiveThemes);
+
         JButton buttonOpenGenresTxtFile = new JButton("Open genres.txt");
-        buttonOpenGenresTxtFile.setBounds(10, 130, 175, 23);
+        buttonOpenGenresTxtFile.setBounds(10, 160, 175, 23);
         buttonOpenGenresTxtFile.setToolTipText("Click to open the MGT2 main folder.");
         buttonOpenGenresTxtFile.addActionListener(actionEvent -> {
             try {
@@ -112,7 +137,7 @@ public class WindowOther extends JFrame {
         contentPane.add(buttonOpenGenresTxtFile);
 
         JButton buttonOpenGenresByIdTextFile = new JButton("Open genres by id");
-        buttonOpenGenresByIdTextFile.setBounds(10,160, 175, 23);
+        buttonOpenGenresByIdTextFile.setBounds(10,190, 175, 23);
         buttonOpenGenresByIdTextFile.setToolTipText("<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function");
         buttonOpenGenresByIdTextFile.addActionListener(e -> {
             try {
@@ -129,13 +154,13 @@ public class WindowOther extends JFrame {
         contentPane.add(buttonOpenGenresByIdTextFile);
 
         JButton buttonCheckForUpdates = new JButton("Check for updates");
-        buttonCheckForUpdates.setBounds(10, 190, 175, 23);
+        buttonCheckForUpdates.setBounds(10, 220, 175, 23);
         buttonCheckForUpdates.setToolTipText("Click to check this tool for updates.");
         buttonCheckForUpdates.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         contentPane.add(buttonCheckForUpdates);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 220, 89, 23);
+        btnBack.setBounds(10, 250, 89, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             MainWindow.createFrame();
