@@ -69,7 +69,6 @@ public class WindowAddGenrePage9 extends JFrame{
                         if(fileChooser.getSelectedFile().getName().contains(".png")){
                             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                             File imageFile = fileChooser.getSelectedFile();
-                            NewGenreManager.arrayListScreenshotFiles.add(imageFile);
                             textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
                         }else{
                             JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
@@ -87,6 +86,7 @@ public class WindowAddGenrePage9 extends JFrame{
                 if(textFieldPath.endsWith(".png")){
                     File imageFile = new File(textFieldPath);
                     if(imageFile.exists()){
+                        NewGenreManager.arrayListScreenshotFiles.add(new File(textFieldPath));
                         JOptionPane.showMessageDialog(new Frame(), "Image file has been added.");
                     }else{
                         JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
