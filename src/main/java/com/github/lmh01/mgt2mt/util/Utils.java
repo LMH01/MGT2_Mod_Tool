@@ -144,4 +144,28 @@ public class Utils {
         Image resizedImage = image.getScaledInstance(64, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         return new ImageIcon(resizedImage);  // transform it back
     }
+
+    /**
+     * @param languageKey They key for the language to use. For more information see this functions content.
+     * @return Returns the themes file for the specified language.
+     */
+    public static File getThemeFile(int languageKey){
+        File returnFile = new File("");
+        switch(languageKey){
+            case 0: return new File(Utils.getMGT2TextFolderPath() + "\\CH\\Themes_CH.txt");
+            case 1: return new File(Utils.getMGT2TextFolderPath() + "\\CT\\Themes_CT.txt");
+            case 2: return new File(Utils.getMGT2TextFolderPath() + "\\CZ\\Themes_CZ.txt");
+            case 3: return new File(Utils.getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");
+            case 4: return new File(Utils.getMGT2TextFolderPath() + "\\ES\\Themes_ES.txt");
+            case 5: return new File(Utils.getMGT2TextFolderPath() + "\\FR\\Themes_FR.txt");
+            case 6: return new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
+            case 7: return new File(Utils.getMGT2TextFolderPath() + "\\HU\\Themes_HU.txt");
+            case 8: return new File(Utils.getMGT2TextFolderPath() + "\\KO\\Themes_KO.txt");
+            case 9: return new File(Utils.getMGT2TextFolderPath() + "\\PB\\Themes_PB.txt");
+            case 10: return new File(Utils.getMGT2TextFolderPath() + "\\PL\\Themes_PL.txt");
+            case 11: return new File(Utils.getMGT2TextFolderPath() + "\\RU\\Themes_RU.txt");
+            case 12: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
+        }
+        return returnFile;
+    }
 }
