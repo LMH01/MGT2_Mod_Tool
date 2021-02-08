@@ -152,19 +152,20 @@ public class Utils {
     public static File getThemeFile(int languageKey){
         File returnFile = new File("");
         switch(languageKey){
-            case 0: return new File(Utils.getMGT2TextFolderPath() + "\\CH\\Themes_CH.txt");
-            case 1: return new File(Utils.getMGT2TextFolderPath() + "\\CT\\Themes_CT.txt");
-            case 2: return new File(Utils.getMGT2TextFolderPath() + "\\CZ\\Themes_CZ.txt");
-            case 3: return new File(Utils.getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");
-            case 4: return new File(Utils.getMGT2TextFolderPath() + "\\ES\\Themes_ES.txt");
-            case 5: return new File(Utils.getMGT2TextFolderPath() + "\\FR\\Themes_FR.txt");
-            case 6: return new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
-            case 7: return new File(Utils.getMGT2TextFolderPath() + "\\HU\\Themes_HU.txt");
-            case 8: return new File(Utils.getMGT2TextFolderPath() + "\\KO\\Themes_KO.txt");
-            case 9: return new File(Utils.getMGT2TextFolderPath() + "\\PB\\Themes_PB.txt");
-            case 10: return new File(Utils.getMGT2TextFolderPath() + "\\PL\\Themes_PL.txt");
-            case 11: return new File(Utils.getMGT2TextFolderPath() + "\\RU\\Themes_RU.txt");
-            case 12: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
+            case 0: return new File(Utils.getMGT2TextFolderPath() + "\\AR\\Themes_AR.txt");
+            case 1: return new File(Utils.getMGT2TextFolderPath() + "\\CH\\Themes_CH.txt");
+            case 2: return new File(Utils.getMGT2TextFolderPath() + "\\CT\\Themes_CT.txt");
+            case 3: return new File(Utils.getMGT2TextFolderPath() + "\\CZ\\Themes_CZ.txt");
+            case 4: return new File(Utils.getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");
+            case 5: return new File(Utils.getMGT2TextFolderPath() + "\\ES\\Themes_ES.txt");
+            case 6: return new File(Utils.getMGT2TextFolderPath() + "\\FR\\Themes_FR.txt");
+            case 7: return new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
+            case 8: return new File(Utils.getMGT2TextFolderPath() + "\\HU\\Themes_HU.txt");
+            case 9: return new File(Utils.getMGT2TextFolderPath() + "\\KO\\Themes_KO.txt");
+            case 10: return new File(Utils.getMGT2TextFolderPath() + "\\PB\\Themes_PB.txt");
+            case 11: return new File(Utils.getMGT2TextFolderPath() + "\\PL\\Themes_PL.txt");
+            case 12: return new File(Utils.getMGT2TextFolderPath() + "\\RU\\Themes_RU.txt");
+            case 13: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
         }
         return returnFile;
     }

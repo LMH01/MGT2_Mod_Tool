@@ -85,6 +85,7 @@ public class Backup {
             LOGGER.info("Restoring initial backup.");
             File fileGenresBackup;
             File fileNpcGamesBackup;
+            File fileThemesArBackup;
             File fileThemesChBackup;
             File fileThemesCtBackup;
             File fileThemesCzBackup;
@@ -101,6 +102,7 @@ public class Backup {
             if(initialBackup){
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+                fileThemesArBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_AR.txt.initialBackup");
                 fileThemesChBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CH.txt.initialBackup");
                 fileThemesCtBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CT.txt.initialBackup");
                 fileThemesCzBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CZ.txt.initialBackup");
@@ -117,6 +119,7 @@ public class Backup {
             }else{
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
+                fileThemesArBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_AR.txt");
                 fileThemesChBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CH.txt");
                 fileThemesCtBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CT.txt");
                 fileThemesCzBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CZ.txt");
@@ -133,19 +136,20 @@ public class Backup {
             }
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesChBackup.getPath()), Paths.get(Utils.getThemeFile(0).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesCtBackup.getPath()), Paths.get(Utils.getThemeFile(1).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesCzBackup.getPath()), Paths.get(Utils.getThemeFile(2).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesEnBackup.getPath()), Paths.get(Utils.getThemeFile(3).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesEsBackup.getPath()), Paths.get(Utils.getThemeFile(4).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesFrBackup.getPath()), Paths.get(Utils.getThemeFile(5).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesGeBackup.getPath()), Paths.get(Utils.getThemeFile(6).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesHuBackup.getPath()), Paths.get(Utils.getThemeFile(7).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesKoBackup.getPath()), Paths.get(Utils.getThemeFile(8).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesPbBackup.getPath()), Paths.get(Utils.getThemeFile(9).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesPlBackup.getPath()), Paths.get(Utils.getThemeFile(10).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesRuBackup.getPath()), Paths.get(Utils.getThemeFile(11).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesTuBackup.getPath()), Paths.get(Utils.getThemeFile(12).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesArBackup.getPath()), Paths.get(Utils.getThemeFile(0).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesChBackup.getPath()), Paths.get(Utils.getThemeFile(1).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesCtBackup.getPath()), Paths.get(Utils.getThemeFile(2).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesCzBackup.getPath()), Paths.get(Utils.getThemeFile(3).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesEnBackup.getPath()), Paths.get(Utils.getThemeFile(4).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesEsBackup.getPath()), Paths.get(Utils.getThemeFile(5).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesFrBackup.getPath()), Paths.get(Utils.getThemeFile(6).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesGeBackup.getPath()), Paths.get(Utils.getThemeFile(7).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesHuBackup.getPath()), Paths.get(Utils.getThemeFile(8).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesKoBackup.getPath()), Paths.get(Utils.getThemeFile(9).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesPbBackup.getPath()), Paths.get(Utils.getThemeFile(10).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesPlBackup.getPath()), Paths.get(Utils.getThemeFile(11).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesRuBackup.getPath()), Paths.get(Utils.getThemeFile(12).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileThemesTuBackup.getPath()), Paths.get(Utils.getThemeFile(13).getPath()), StandardCopyOption.REPLACE_EXISTING);
             if(initialBackup){
                 ChangeLog.addLogEntry(8);
                 JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
@@ -254,5 +258,6 @@ public class Backup {
         Backup.createBackup(Utils.getThemeFile(10), initialBackup);
         Backup.createBackup(Utils.getThemeFile(11), initialBackup);
         Backup.createBackup(Utils.getThemeFile(12), initialBackup);
+        Backup.createBackup(Utils.getThemeFile(13), initialBackup);
     }
 }
