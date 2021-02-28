@@ -108,7 +108,7 @@ public class EditGenreFile {
                 firstLine = false;
             }
             if(currentLine.equals("[ID]" + genreId)){
-                linesToSkip = 45;//This is how many line the genre has that should be removed
+                linesToSkip = 46;//This is how many line the genre has that should be removed
             }else if(currentLine.contains("[GENRE COMB]")){
                 if(currentLine.contains("<" + genreId + ">")){
                     bw.write(currentLine.replace("<" + genreId + ">", "" + System.getProperty("line.separator")));
@@ -183,6 +183,7 @@ public class EditGenreFile {
             bw.write("[NAME FR]" + NewGenreManager.name + System.getProperty("line.separator"));
             bw.write("[NAME GE]" + NewGenreManager.name + System.getProperty("line.separator"));
             bw.write("[NAME HU]" + NewGenreManager.name + System.getProperty("line.separator"));
+            bw.write("[NAME IT]" + NewGenreManager.name + System.getProperty("line.separator"));
             bw.write("[NAME KO]" + NewGenreManager.name + System.getProperty("line.separator"));
             bw.write("[NAME PB]" + NewGenreManager.name + System.getProperty("line.separator"));
             bw.write("[NAME PL]" + NewGenreManager.name + System.getProperty("line.separator"));
@@ -197,12 +198,13 @@ public class EditGenreFile {
             bw.write("[NAME ES]" + NewGenreManager.arrayListNameTranslations.get(5) + System.getProperty("line.separator"));
             bw.write("[NAME FR]" + NewGenreManager.arrayListNameTranslations.get(6) + System.getProperty("line.separator"));
             bw.write("[NAME GE]" + NewGenreManager.arrayListNameTranslations.get(7) + System.getProperty("line.separator"));
-            bw.write("[NAME HU]" + NewGenreManager.arrayListNameTranslations.get(9) + System.getProperty("line.separator"));
-            bw.write("[NAME KO]" + NewGenreManager.arrayListNameTranslations.get(9) + System.getProperty("line.separator"));
-            bw.write("[NAME PB]" + NewGenreManager.arrayListNameTranslations.get(10) + System.getProperty("line.separator"));
-            bw.write("[NAME PL]" + NewGenreManager.arrayListNameTranslations.get(11) + System.getProperty("line.separator"));
-            bw.write("[NAME RU]" + NewGenreManager.arrayListNameTranslations.get(12) + System.getProperty("line.separator"));
-            bw.write("[NAME TU]" + NewGenreManager.arrayListNameTranslations.get(13) + System.getProperty("line.separator"));
+            bw.write("[NAME HU]" + NewGenreManager.arrayListNameTranslations.get(8) + System.getProperty("line.separator"));
+            bw.write("[NAME IT]" + NewGenreManager.arrayListNameTranslations.get(9) + System.getProperty("line.separator"));
+            bw.write("[NAME KO]" + NewGenreManager.arrayListNameTranslations.get(10) + System.getProperty("line.separator"));
+            bw.write("[NAME PB]" + NewGenreManager.arrayListNameTranslations.get(11) + System.getProperty("line.separator"));
+            bw.write("[NAME PL]" + NewGenreManager.arrayListNameTranslations.get(12) + System.getProperty("line.separator"));
+            bw.write("[NAME RU]" + NewGenreManager.arrayListNameTranslations.get(13) + System.getProperty("line.separator"));
+            bw.write("[NAME TU]" + NewGenreManager.arrayListNameTranslations.get(14) + System.getProperty("line.separator"));
         }
 
         if(NewGenreManager.arrayListDescriptionTranslations.isEmpty()){
@@ -215,6 +217,7 @@ public class EditGenreFile {
             bw.write("[DESC FR]" + NewGenreManager.description + System.getProperty("line.separator"));
             bw.write("[DESC GE]" + NewGenreManager.description + System.getProperty("line.separator"));
             bw.write("[DESC HU]" + NewGenreManager.description + System.getProperty("line.separator"));
+            bw.write("[DESC IT]" + NewGenreManager.description + System.getProperty("line.separator"));
             bw.write("[DESC KO]" + NewGenreManager.description + System.getProperty("line.separator"));
             bw.write("[DESC PB]" + NewGenreManager.description + System.getProperty("line.separator"));
             bw.write("[DESC PL]" + NewGenreManager.description + System.getProperty("line.separator"));
@@ -230,11 +233,12 @@ public class EditGenreFile {
             bw.write("[DESC FR]" + NewGenreManager.arrayListDescriptionTranslations.get(6) + System.getProperty("line.separator"));
             bw.write("[DESC GE]" + NewGenreManager.arrayListDescriptionTranslations.get(7) + System.getProperty("line.separator"));
             bw.write("[DESC HU]" + NewGenreManager.arrayListDescriptionTranslations.get(8) + System.getProperty("line.separator"));
-            bw.write("[DESC KO]" + NewGenreManager.arrayListDescriptionTranslations.get(9) + System.getProperty("line.separator"));
-            bw.write("[DESC PB]" + NewGenreManager.arrayListDescriptionTranslations.get(10) + System.getProperty("line.separator"));
-            bw.write("[DESC PL]" + NewGenreManager.arrayListDescriptionTranslations.get(11) + System.getProperty("line.separator"));
-            bw.write("[DESC RU]" + NewGenreManager.arrayListDescriptionTranslations.get(12) + System.getProperty("line.separator"));
-            bw.write("[DESC TU]" + NewGenreManager.arrayListDescriptionTranslations.get(13) + System.getProperty("line.separator"));
+            bw.write("[DESC IT]" + NewGenreManager.arrayListDescriptionTranslations.get(9) + System.getProperty("line.separator"));
+            bw.write("[DESC KO]" + NewGenreManager.arrayListDescriptionTranslations.get(10) + System.getProperty("line.separator"));
+            bw.write("[DESC PB]" + NewGenreManager.arrayListDescriptionTranslations.get(11) + System.getProperty("line.separator"));
+            bw.write("[DESC PL]" + NewGenreManager.arrayListDescriptionTranslations.get(12) + System.getProperty("line.separator"));
+            bw.write("[DESC RU]" + NewGenreManager.arrayListDescriptionTranslations.get(13) + System.getProperty("line.separator"));
+            bw.write("[DESC TU]" + NewGenreManager.arrayListDescriptionTranslations.get(14) + System.getProperty("line.separator"));
         }
 
     }

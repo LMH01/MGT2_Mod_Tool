@@ -21,7 +21,7 @@ public class NewThemeManager {
     public static void addNewTheme(String themeNameEn) throws IOException {
         AnalyzeExistingThemes.analyzeThemeFiles();
         if(arrayListThemeTranslations.isEmpty()){
-            for(int i=0; i<14; i++){
+            for(int i=0; i<15; i++){
                 EditThemeFiles.addTheme(Utils.getThemeFile(i), themeNameEn, arrayListCompatibleGenresForTheme);
             }
         }else{
@@ -39,7 +39,7 @@ public class NewThemeManager {
     public static void removeTheme(String themeNameEn) throws IOException {
         AnalyzeExistingThemes.analyzeThemeFiles();
         int position = AnalyzeExistingThemes.getPositionOfThemeInFile(themeNameEn) + 1;
-        for(int i=0; i<14; i++){
+        for(int i=0; i<15; i++){
             EditThemeFiles.removeTheme(Utils.getThemeFile(i), themeNameEn, position);
         }
         ChangeLog.addLogEntry(16, themeNameEn);

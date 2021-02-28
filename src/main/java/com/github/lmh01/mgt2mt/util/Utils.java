@@ -161,11 +161,12 @@ public class Utils {
             case 6: return new File(Utils.getMGT2TextFolderPath() + "\\FR\\Themes_FR.txt");
             case 7: return new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
             case 8: return new File(Utils.getMGT2TextFolderPath() + "\\HU\\Themes_HU.txt");
-            case 9: return new File(Utils.getMGT2TextFolderPath() + "\\KO\\Themes_KO.txt");
-            case 10: return new File(Utils.getMGT2TextFolderPath() + "\\PB\\Themes_PB.txt");
-            case 11: return new File(Utils.getMGT2TextFolderPath() + "\\PL\\Themes_PL.txt");
-            case 12: return new File(Utils.getMGT2TextFolderPath() + "\\RU\\Themes_RU.txt");
-            case 13: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
+            case 9: return new File(Utils.getMGT2TextFolderPath() + "\\IT\\Themes_IT.txt");
+            case 10: return new File(Utils.getMGT2TextFolderPath() + "\\KO\\Themes_KO.txt");
+            case 11: return new File(Utils.getMGT2TextFolderPath() + "\\PB\\Themes_PB.txt");
+            case 12: return new File(Utils.getMGT2TextFolderPath() + "\\PL\\Themes_PL.txt");
+            case 13: return new File(Utils.getMGT2TextFolderPath() + "\\RU\\Themes_RU.txt");
+            case 14: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
         }
         return returnFile;
     }
