@@ -90,13 +90,22 @@ public class MainWindow extends JFrame {
         getContentPane().add(buttonOther);
 
         JButton buttonAvailableMods = new JButton("Begin");
-        buttonAvailableMods.setBounds(10, 40, 310, 23);
+        buttonAvailableMods.setBounds(120, 40, 200, 23);
         buttonAvailableMods.setToolTipText("Click to open the page with the available modifications");
         buttonAvailableMods.addActionListener(actionEvent -> {
             WindowAvailableMods.createFrame();
             FRAME.dispose();
         });
         getContentPane().add(buttonAvailableMods);
+
+        JButton buttonShare = new JButton("Share");
+        buttonShare.setBounds( 10, 40, 100, 23);
+        buttonShare.setToolTipText("<html>Click to open the share page<br>Here you can export and load genres from file.");
+        buttonShare.addActionListener(actionEvent -> {
+            WindowShare.createFrame();
+            FRAME.dispose();
+        });
+        getContentPane().add(buttonShare);
 
         JLabel labelVersion = new JLabel(MadGamesTycoon2ModTool.VERSION);
         labelVersion.setBounds(268, 100, 150, 23);

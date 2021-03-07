@@ -47,6 +47,7 @@ public class GenreManager {
     public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreManager.class);
     public static final String FORBIDDEN_GENRE_NAMES = "[ID], [NAME EN], [NAME GE], [NAME CH], [NAME TU], [NAME FR], [DESC EN], [DESC GE], [DESC CH], [DESC TU], [DESC FR], [NAME PB], [DESC PB], [NAME HU], [DESC HU], [NAME CT], [DESC CT], [NAME ES], [DESC ES], [NAME PL], [DESC PL], [DATE], [RES POINTS], [PRICE], [DEV COSTS], [PIC], [TGROUP], [GAMEPLAY], [GRAPHIC], [SOUND], [CONTROL], [GENRE COMB], [DESIGN1], [DESIGN2], [DESIGN3], [DESIGN4], [DESIGN5]";
+    public static final HashMap<String, String> MAP_SINGLE_GENRE = new HashMap<>();//When filled contains all information on the specific genre.
 
 
     public static void addGenre(){
@@ -84,6 +85,10 @@ public class GenreManager {
         }else{
             WindowAvailableMods.createFrame();
         }
+    }
+    public static void exportGenre(){
+        MAP_SINGLE_GENRE.clear();
+
     }
     public static void openStepWindow(int step){
         switch(step){
@@ -162,7 +167,6 @@ public class GenreManager {
         }
 
     }
-
     /**
      * @return Returns the compatible target groups in the correct formatting to be put into the Genres.txt file.
      */
@@ -194,7 +198,6 @@ public class GenreManager {
         }
         return targetGroups;
     }
-
     /**
      * @return Returns a string containing all genres that are compatible with the new genre.
      */
@@ -215,7 +218,6 @@ public class GenreManager {
         }
         return compatibleGenres.toString();
     }
-
     /**
      * @return Returns a string containing all themes that are compatible with the new genre.
      */
@@ -241,7 +243,6 @@ public class GenreManager {
         }
         return compatibleThemes.toString();
     }
-
     public static void resetVariablesToDefault(){
         LOGGER.info("resetting genre variables...");
         id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();

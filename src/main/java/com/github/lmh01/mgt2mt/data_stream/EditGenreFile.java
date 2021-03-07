@@ -108,7 +108,7 @@ public class EditGenreFile {
                 firstLine = false;
             }
             if(currentLine.equals("[ID]" + genreId)){
-                linesToSkip = 46;//This is how many line the genre has that should be removed
+                linesToSkip = Utils.genreLineNumbers;//This is how many line the genre has that should be removed
             }else if(currentLine.contains("[GENRE COMB]")){
                 if(currentLine.contains("<" + genreId + ">")){
                     bw.write(currentLine.replace("<" + genreId + ">", "" + System.getProperty("line.separator")));

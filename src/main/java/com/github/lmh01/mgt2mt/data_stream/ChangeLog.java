@@ -87,6 +87,8 @@ public class ChangeLog {
             case 14: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Themes_GE.txt file"; break;
             case 15: logToPrint = currentSystemTime + ": Added theme: ["+ textBody + "]"; break;
             case 16: logToPrint = currentSystemTime + ": Removed theme: ["+ textBody + "]"; break;
+            case 17: logToPrint = currentSystemTime + ": Exported genre: [" + textBody + "]"; break;
+            case 18: logToPrint = currentSystemTime + ": Imported genre: [" + textBody + "]"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

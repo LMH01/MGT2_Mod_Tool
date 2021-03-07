@@ -7,11 +7,17 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Utils {
+
+    public static int genreLineNumbers = 46;//Defines how many lines a genre has inside the Genres.txt file. When the amount of lines is changed, change this number to apply the new number to all refering operations.
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
@@ -40,6 +46,10 @@ public class Utils {
 
     public static String getMGT2ScreenshotsPath(){
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\";
+    }
+
+    public static String getMGT2GenreIconsPath(){
+        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\";
     }
 
     /**
@@ -169,5 +179,25 @@ public class Utils {
             case 14: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
         }
         return returnFile;
+    }
+
+    /**
+     * Copied from https://www.baeldung.com/java-copy-directory
+     * @param sourceDirectoryLocation
+     * @param destinationDirectoryLocation
+     * @throws IOException
+     */
+    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
+            throws IOException {
+        Files.walk(Paths.get(sourceDirectoryLocation))
+                .forEach(source -> {
+                    Path destination = Paths.get(destinationDirectoryLocation, source.toString()
+                            .substring(sourceDirectoryLocation.length()));
+                    try {
+                        Files.copy(source, destination);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }
