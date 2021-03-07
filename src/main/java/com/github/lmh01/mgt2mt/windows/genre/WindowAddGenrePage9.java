@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 
@@ -86,7 +85,7 @@ public class WindowAddGenrePage9 extends JFrame{
                 if(textFieldPath.endsWith(".png")){
                     File imageFile = new File(textFieldPath);
                     if(imageFile.exists()){
-                        NewGenreManager.arrayListScreenshotFiles.add(new File(textFieldPath));
+                        GenreManager.arrayListScreenshotFiles.add(new File(textFieldPath));
                         JOptionPane.showMessageDialog(new Frame(), "Image file has been added.");
                     }else{
                         JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
@@ -98,26 +97,26 @@ public class WindowAddGenrePage9 extends JFrame{
         });
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
             if(JOptionPane.showConfirmDialog(null, "<html>Are you sure that you want to reset<br> the added screenshots?", "Reset?", JOptionPane.YES_NO_OPTION) == 0){
-                NewGenreManager.arrayListScreenshotFiles.clear();
+                GenreManager.arrayListScreenshotFiles.clear();
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            if(!NewGenreManager.arrayListScreenshotFiles.isEmpty()){
+            if(!GenreManager.arrayListScreenshotFiles.isEmpty()){
                 StringBuilder filePaths = new StringBuilder();
-                for(int i=0; i<NewGenreManager.arrayListScreenshotFiles.size(); i++){
-                    filePaths.append("<br>" + NewGenreManager.arrayListScreenshotFiles.get(i));
+                for(int i = 0; i< GenreManager.arrayListScreenshotFiles.size(); i++){
+                    filePaths.append("<br>" + GenreManager.arrayListScreenshotFiles.get(i));
                 }
                 if(JOptionPane.showConfirmDialog(null, "<html>The following image files have been added:<br>" + filePaths + "<br><br>Is this correct and do you want to continue?", "Is this correct?", JOptionPane.YES_NO_OPTION) == 0){
-                    NewGenreManager.openStepWindow(10);
+                    GenreManager.openStepWindow(10);
                     FRAME.dispose();
                 }
             }else{
-                NewGenreManager.openStepWindow(10);
+                GenreManager.openStepWindow(10);
                 FRAME.dispose();
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            NewGenreManager.openStepWindow(8);
+            GenreManager.openStepWindow(8);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {

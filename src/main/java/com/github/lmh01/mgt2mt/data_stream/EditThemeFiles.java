@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -110,7 +110,7 @@ public class EditThemeFiles {
                 currentLine = Utils.removeUTF8BOM(currentLine);
             }
             if (addGenreID) {
-                if (NewGenreManager.MAP_COMPATIBLE_THEME_IDS.contains(currentLineNumber)) {
+                if (GenreManager.MAP_COMPATIBLE_THEME_IDS.contains(currentLineNumber)) {
                     if (Settings.enableDebugLogging) {
                         LOGGER.info(currentLineNumber + " - Y: " + currentLine);
                     }

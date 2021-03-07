@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
@@ -37,20 +37,20 @@ public class WindowAddGenrePage5 extends JFrame{
     public WindowAddGenrePage5() {
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(LIST_AVAILABLE_GENRES)){
-                NewGenreManager.openStepWindow(6);
+                GenreManager.openStepWindow(6);
                 FRAME.dispose();
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", JOptionPane.YES_NO_OPTION) == 0){
                     LOGGER.info("Cleared array list with compatible genres.");
-                    NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.clear();
-                    NewGenreManager.openStepWindow(6);
+                    GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.clear();
+                    GenreManager.openStepWindow(6);
                     FRAME.dispose();
                 }
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(LIST_AVAILABLE_GENRES);
-            NewGenreManager.openStepWindow(4);
+            GenreManager.openStepWindow(4);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -97,15 +97,15 @@ public class WindowAddGenrePage5 extends JFrame{
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
         for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
-            listModel.addElement(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+            listModel.addElement(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_SORTED.get(i));
             if(Settings.enableDebugLogging){
-                LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i));
+                LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_SORTED.get(i));
             }
-            for(int n = 0; n<NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.size(); n++){
+            for(int n = 0; n< GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.size(); n++){
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Current n:" + n);
                 }
-                if(AnalyzeExistingGenres.arrayListGenreNamesSorted.get(i).equals(NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.get(n))){
+                if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_SORTED.get(i).equals(GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.get(n))){
                     genresSelected.add(i);
                 }
             }
@@ -129,10 +129,10 @@ public class WindowAddGenrePage5 extends JFrame{
     }
     private static boolean saveInputs(JList<String> listAvailableGenres){
         LOGGER.info("Cleared array list with compatible genres.");
-        NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.clear();
+        GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.clear();
         if(listAvailableGenres.getSelectedValuesList().size() != 0){
             for(int i = 0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
-                NewGenreManager.ARRAY_LIST_COMPATIBLE_GENRES.add(listAvailableGenres.getSelectedValuesList().get(i));
+                GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.add(listAvailableGenres.getSelectedValuesList().get(i));
                 LOGGER.info("Added selected genre to array list: " + listAvailableGenres.getSelectedValuesList().get(i));
             }
             return  true;

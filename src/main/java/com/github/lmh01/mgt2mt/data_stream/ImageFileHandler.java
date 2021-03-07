@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -28,9 +28,9 @@ public class ImageFileHandler {
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
             //This copies the .png file to the Icon_Genres directory
-            copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png"));
+            copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.imageFileName + ".png"));
             //This creates the meta file in the Icon_Genres directory
-            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + NewGenreManager.imageFileName + ".png.meta"));
+            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.imageFileName + ".png.meta"));
             //This creates the meta file in the main screenshot direcotry
             createMetaFile(2, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\" + genreID + ".meta"));
             //This copies the screenshot images into the corresponding folder (screenshots/genreid/) and creates the .meta files.
@@ -49,7 +49,7 @@ public class ImageFileHandler {
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
             LOGGER.info("Copying " + imageFile + " this file to " + outputFile);
-            NewGenreManager.useDefaultImageFile = false;
+            GenreManager.useDefaultImageFile = false;
             if(outputFile.exists()){
                 outputFile.delete();
             }
@@ -64,8 +64,8 @@ public class ImageFileHandler {
      */
     private static void copyScreenshotFiles(int genreID) throws IOException {
         boolean directoryCreated = false;
-        if(NewGenreManager.arrayListScreenshotFiles.size() != 0){//Things in this loop are only done if at least one custom screenshot file has been set. Otherwise the default files will be used.
-            for(int i = 0; i<NewGenreManager.arrayListScreenshotFiles.size(); i++){
+        if(GenreManager.arrayListScreenshotFiles.size() != 0){//Things in this loop are only done if at least one custom screenshot file has been set. Otherwise the default files will be used.
+            for(int i = 0; i< GenreManager.arrayListScreenshotFiles.size(); i++){
                 File fileScreenshotDirectoryForGenreID = new File(Utils.getMGT2ScreenshotsPath() + "\\" + i + "\\");
                 File fileScreenshotForGenreID =new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png");
                 if(!directoryCreated){
@@ -74,10 +74,10 @@ public class ImageFileHandler {
                 }
                 if(Settings.enableDebugLogging){
                     LOGGER.info("file directory: " + fileScreenshotForGenreID.getPath());
-                    LOGGER.info("Current image file: " + NewGenreManager.arrayListScreenshotFiles.get(i));
+                    LOGGER.info("Current image file: " + GenreManager.arrayListScreenshotFiles.get(i));
                 }
                 createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png.meta"));
-                copyImages(NewGenreManager.arrayListScreenshotFiles.get(i), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png"));
+                copyImages(GenreManager.arrayListScreenshotFiles.get(i), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png"));
             }
         }else{
             File fileScreenshotForGenreID =new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\");

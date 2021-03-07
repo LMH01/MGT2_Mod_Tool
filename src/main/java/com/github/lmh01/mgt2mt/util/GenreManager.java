@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class NewGenreManager {
+public class GenreManager {
     public static int id = 18;
     public static String name = "";
     public static String description = "";
@@ -45,7 +45,7 @@ public class NewGenreManager {
     public static String imageFileName;
     public static boolean useDefaultImageFile;
     public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
-    private static final Logger LOGGER = LoggerFactory.getLogger(NewGenreManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenreManager.class);
     public static final String FORBIDDEN_GENRE_NAMES = "[ID], [NAME EN], [NAME GE], [NAME CH], [NAME TU], [NAME FR], [DESC EN], [DESC GE], [DESC CH], [DESC TU], [DESC FR], [NAME PB], [DESC PB], [NAME HU], [DESC HU], [NAME CT], [DESC CT], [NAME ES], [DESC ES], [NAME PL], [DESC PL], [DATE], [RES POINTS], [PRICE], [DEV COSTS], [PIC], [TGROUP], [GAMEPLAY], [GRAPHIC], [SOUND], [CONTROL], [GENRE COMB], [DESIGN1], [DESIGN2], [DESIGN3], [DESIGN4], [DESIGN5]";
 
 
@@ -143,8 +143,8 @@ public class NewGenreManager {
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
                     EditGenreFile.addGenre();
-                    EditThemeFiles.editGenreAllocation(NewGenreManager.id, true);
-                    NewGenreManager.genreAdded();
+                    EditThemeFiles.editGenreAllocation(GenreManager.id, true);
+                    GenreManager.genreAdded();
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
@@ -222,7 +222,7 @@ public class NewGenreManager {
     private static String getCompatibleThemes(){
         ArrayList<String> sortedCompatibleThemes = new ArrayList();
         StringBuilder compatibleThemes = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : NewGenreManager.MAP_COMPATIBLE_THEMES.entrySet()){
+        for(Map.Entry<Integer, String> entry : GenreManager.MAP_COMPATIBLE_THEMES.entrySet()){
             sortedCompatibleThemes.add(entry.getValue());
         }
         int n = 1;
@@ -278,7 +278,7 @@ public class NewGenreManager {
     }
     public static void genreAdded(){
         ChangeLog.addLogEntry(1, name);
-        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(NewGenreManager.imageFile.getPath()));
+        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(GenreManager.imageFile.getPath()));
         if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);

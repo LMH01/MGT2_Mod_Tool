@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -43,7 +43,7 @@ public class WindowAddGenrePage1 extends JFrame{
     public WindowAddGenrePage1() {
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(spinnerId, textFieldGenreName, textFieldGenreDescription)){
-                NewGenreManager.openStepWindow(2);
+                GenreManager.openStepWindow(2);
                 FRAME.dispose();
             }
         });
@@ -56,32 +56,32 @@ public class WindowAddGenrePage1 extends JFrame{
         });
 
         buttonAddNameTranslations.addActionListener(actionEvent ->{
-            if(!NewGenreManager.nameTranslationsAdded){
+            if(!GenreManager.nameTranslationsAdded){
                 addNameTranslations();
-                NewGenreManager.nameTranslationsAdded = true;
+                GenreManager.nameTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                     addDescriptionTranslations();
-                    NewGenreManager.nameTranslationsAdded = true;
+                    GenreManager.nameTranslationsAdded = true;
                 }
             }
         });
 
         buttonAddDescriptionTranslations.addActionListener(actionEvent ->{
-            if(!NewGenreManager.descriptionTranslationsAdded){
+            if(!GenreManager.descriptionTranslationsAdded){
                 addDescriptionTranslations();
-                NewGenreManager.descriptionTranslationsAdded = true;
+                GenreManager.descriptionTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                     addDescriptionTranslations();
-                    NewGenreManager.descriptionTranslationsAdded = true;
+                    GenreManager.descriptionTranslationsAdded = true;
                 }
             }
         });
         buttonClearTranslations.addActionListener(actionEvent ->{
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you want\nto reset the translations?", "Reset Translations?", JOptionPane.YES_NO_OPTION) == 0){
-                NewGenreManager.arrayListNameTranslations.clear();
-                NewGenreManager.arrayListDescriptionTranslations.clear();
+                GenreManager.arrayListNameTranslations.clear();
+                GenreManager.arrayListDescriptionTranslations.clear();
                 JOptionPane.showMessageDialog(null, "The translations have been cleared.");
             }
         });
@@ -114,7 +114,7 @@ public class WindowAddGenrePage1 extends JFrame{
             contentPane.add(buttonExplainGenreID);
         }else{
             setBounds(100, 100, 335, 160);
-            spinnerId.setModel(new SpinnerNumberModel(NewGenreManager.id, NewGenreManager.id, NewGenreManager.id, 1));
+            spinnerId.setModel(new SpinnerNumberModel(GenreManager.id, GenreManager.id, GenreManager.id, 1));
             spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
             spinnerId.setVisible(false);
@@ -133,7 +133,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
         textFieldGenreName.setBounds(120, 10, 100, 23);
         textFieldGenreName.setToolTipText("<html>This is the global genre name.<br>This name is being displayed in every translation.");
-        textFieldGenreName.setText(NewGenreManager.name);
+        textFieldGenreName.setText(GenreManager.name);
         contentPane.add(textFieldGenreName);
 
         buttonAddNameTranslations.setBounds(230, 10, 90, 23);
@@ -149,7 +149,7 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(labelGenreID);
 
         textFieldGenreDescription.setBounds(120, 35, 100, 23);
-        textFieldGenreDescription.setText(NewGenreManager.description);
+        textFieldGenreDescription.setText(GenreManager.description);
         textFieldGenreDescription.setToolTipText("Enter the genre description that should be shown in game. Hint: use <br> in your description to make a new line.");
         contentPane.add(textFieldGenreDescription);
 
@@ -175,7 +175,7 @@ public class WindowAddGenrePage1 extends JFrame{
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
             return false;
         }else{
-            NewGenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
+            GenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
             LOGGER.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
             try{
                 if(textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
@@ -184,14 +184,14 @@ public class WindowAddGenrePage1 extends JFrame{
                     if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*")){
                         JOptionPane.showMessageDialog(new Frame(), "Name and description may not contain numbers.\nPlease enter another name/description.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     }else{
-                        if(NewGenreManager.FORBIDDEN_GENRE_NAMES.contains(textFieldGenreName.getText())){
+                        if(GenreManager.FORBIDDEN_GENRE_NAMES.contains(textFieldGenreName.getText())){
                             JOptionPane.showMessageDialog(new Frame(), "This genre name is forbidden.\nPlease enter another name.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                         }else{
-                            NewGenreManager.name = textFieldGenreName.getText();
+                            GenreManager.name = textFieldGenreName.getText();
                             LOGGER.info("genre name: " + textFieldGenreName.getText());
-                            NewGenreManager.description = textFieldGenreDescription.getText();
+                            GenreManager.description = textFieldGenreDescription.getText();
                             LOGGER.info("genre description: " + textFieldGenreDescription.getText());
-                            NewGenreManager.imageFileName = "icon" + textFieldGenreName.getText().replace(" ", "");
+                            GenreManager.imageFileName = "icon" + textFieldGenreName.getText().replace(" ", "");
                             return true;
                         }
                     }
@@ -218,7 +218,7 @@ public class WindowAddGenrePage1 extends JFrame{
             ExportSettings.export();
         }
         if(continueWithTranslations){
-            NewGenreManager.arrayListNameTranslations = TranslationManager.getTranslationsArrayList();
+            GenreManager.arrayListNameTranslations = TranslationManager.getTranslationsArrayList();
         }
     }
     private static void addDescriptionTranslations(){
@@ -235,7 +235,7 @@ public class WindowAddGenrePage1 extends JFrame{
             ExportSettings.export();
         }
         if(continueWithTranslations){
-            NewGenreManager.arrayListDescriptionTranslations = TranslationManager.getTranslationsArrayList();
+            GenreManager.arrayListDescriptionTranslations = TranslationManager.getTranslationsArrayList();
         }
     }
 }

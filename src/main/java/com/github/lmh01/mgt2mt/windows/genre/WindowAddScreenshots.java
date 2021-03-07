@@ -1,15 +1,10 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.io.File;
 
 public class WindowAddScreenshots extends JFrame{
     static final WindowAddScreenshots FRAME = new WindowAddScreenshots();
@@ -37,7 +32,7 @@ public class WindowAddScreenshots extends JFrame{
 
         });
         buttonBack.addActionListener(actionEvent ->{
-            NewGenreManager.openStepWindow(9);
+            GenreManager.openStepWindow(9);
             FRAME.dispose();
         });
         buttonBrowse.addActionListener(actionEvent ->{
@@ -45,7 +40,7 @@ public class WindowAddScreenshots extends JFrame{
         });
         buttonCancel.addActionListener(actionEvent ->{
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to reset your changes?", "Cancel?", JOptionPane.YES_NO_OPTION) == 0){
-                NewGenreManager.arrayListScreenshotFiles.clear();
+                GenreManager.arrayListScreenshotFiles.clear();
                 FRAME.dispose();
             }
         });

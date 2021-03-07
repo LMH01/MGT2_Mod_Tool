@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
@@ -40,12 +40,12 @@ public class WindowAddGenrePage7 extends JFrame{
     public WindowAddGenrePage7() {
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
-            NewGenreManager.openStepWindow(8);
+            GenreManager.openStepWindow(8);
             FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
-            NewGenreManager.openStepWindow(6);
+            GenreManager.openStepWindow(6);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -110,11 +110,11 @@ public class WindowAddGenrePage7 extends JFrame{
         spinnerDesign3.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Atmosphere is favoured type value smaller 5.<br>If Content is favoured type value bigger 5.");
         spinnerDesign4.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Game depth is favoured type value smaller 5.<br>If your genre should be Beginner-friendly type value bigger 5.");
         spinnerDesign5.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Core Gamers are favoured type value smaller 5.<br>If your genre should be for Casual Gamers type value bigger 5.");
-        spinnerDesign1.setModel(new SpinnerNumberModel(NewGenreManager.design1, 0, 10, 1));
-        spinnerDesign2.setModel(new SpinnerNumberModel(NewGenreManager.design2, 0, 10, 1));
-        spinnerDesign3.setModel(new SpinnerNumberModel(NewGenreManager.design3, 0, 10, 1));
-        spinnerDesign4.setModel(new SpinnerNumberModel(NewGenreManager.design4, 0, 10, 1));
-        spinnerDesign5.setModel(new SpinnerNumberModel(NewGenreManager.design5, 0, 10, 1));
+        spinnerDesign1.setModel(new SpinnerNumberModel(GenreManager.design1, 0, 10, 1));
+        spinnerDesign2.setModel(new SpinnerNumberModel(GenreManager.design2, 0, 10, 1));
+        spinnerDesign3.setModel(new SpinnerNumberModel(GenreManager.design3, 0, 10, 1));
+        spinnerDesign4.setModel(new SpinnerNumberModel(GenreManager.design4, 0, 10, 1));
+        spinnerDesign5.setModel(new SpinnerNumberModel(GenreManager.design5, 0, 10, 1));
         if(Settings.disableSafetyFeatures){
             ((JSpinner.DefaultEditor)spinnerDesign1.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerDesign2.getEditor()).getTextField().setEditable(true);
@@ -135,15 +135,15 @@ public class WindowAddGenrePage7 extends JFrame{
         contentPane.add(spinnerDesign5);
     }
     private static void saveInputs(JSpinner spinnerDesign1, JSpinner spinnerDesign2, JSpinner spinnerDesign3, JSpinner spinnerDesign4, JSpinner spinnerDesign5){
-        NewGenreManager.design1 = Integer.parseInt(spinnerDesign1.getValue().toString());
+        GenreManager.design1 = Integer.parseInt(spinnerDesign1.getValue().toString());
         LOGGER.info("Design 1 = " + spinnerDesign1.getValue().toString());
-        NewGenreManager.design2 = Integer.parseInt(spinnerDesign2.getValue().toString());
+        GenreManager.design2 = Integer.parseInt(spinnerDesign2.getValue().toString());
         LOGGER.info("Design 2 = " + spinnerDesign2.getValue().toString());
-        NewGenreManager.design3 = Integer.parseInt(spinnerDesign3.getValue().toString());
+        GenreManager.design3 = Integer.parseInt(spinnerDesign3.getValue().toString());
         LOGGER.info("Design 3 = " + spinnerDesign3.getValue().toString());
-        NewGenreManager.design4 = Integer.parseInt(spinnerDesign4.getValue().toString());
+        GenreManager.design4 = Integer.parseInt(spinnerDesign4.getValue().toString());
         LOGGER.info("Design 4 = " + spinnerDesign4.getValue().toString());
-        NewGenreManager.design5 = Integer.parseInt(spinnerDesign5.getValue().toString());
+        GenreManager.design5 = Integer.parseInt(spinnerDesign5.getValue().toString());
         LOGGER.info("Design 5 = " + spinnerDesign5.getValue().toString());
     }
 }

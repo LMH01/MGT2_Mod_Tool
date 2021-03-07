@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
@@ -39,20 +39,20 @@ public class WindowAddGenrePage6 extends JFrame{
     public WindowAddGenrePage6() {
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(LIST_AVAILABLE_THEMES)){
-                NewGenreManager.openStepWindow(7);
+                GenreManager.openStepWindow(7);
                 FRAME.dispose();
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible topic?", "Don't add compatible topic?", JOptionPane.YES_NO_OPTION) == 0){
                     LOGGER.info("Cleared array list with compatible themes.");
-                    NewGenreManager.MAP_COMPATIBLE_THEME_IDS.clear();
-                    NewGenreManager.openStepWindow(7);
+                    GenreManager.MAP_COMPATIBLE_THEME_IDS.clear();
+                    GenreManager.openStepWindow(7);
                     FRAME.dispose();
                 }
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(LIST_AVAILABLE_THEMES);
-            NewGenreManager.openStepWindow(5);
+            GenreManager.openStepWindow(5);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -110,7 +110,7 @@ public class WindowAddGenrePage6 extends JFrame{
             listModel.addElement(s);//Sets the elements for the list
         }
 
-        for(Map.Entry<Integer, String> entry : NewGenreManager.MAP_COMPATIBLE_THEMES.entrySet()){//Selects the values that have been selected previously
+        for(Map.Entry<Integer, String> entry : GenreManager.MAP_COMPATIBLE_THEMES.entrySet()){//Selects the values that have been selected previously
             for(int n = 0; n<themesSorted.size(); n++){
                 if(themesSorted.get(n).contains(entry.getValue())){
                     genresSelected.add(n);
@@ -136,14 +136,14 @@ public class WindowAddGenrePage6 extends JFrame{
     }
     private static boolean saveInputs(JList<String> listAvailableThemes){
         LOGGER.info("Cleared array list with compatible genres.");
-        NewGenreManager.MAP_COMPATIBLE_THEMES.clear();
-        NewGenreManager.MAP_COMPATIBLE_THEME_IDS.clear();
+        GenreManager.MAP_COMPATIBLE_THEMES.clear();
+        GenreManager.MAP_COMPATIBLE_THEME_IDS.clear();
         if(listAvailableThemes.getSelectedValuesList().size() != 0){
             for(int i = 0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
                 for (Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()) {
                     if (entry.getValue().equals(listAvailableThemes.getSelectedValuesList().get(i))) {
-                        NewGenreManager.MAP_COMPATIBLE_THEME_IDS.add(entry.getKey());
-                        NewGenreManager.MAP_COMPATIBLE_THEMES.put(entry.getKey(), listAvailableThemes.getSelectedValuesList().get(i));
+                        GenreManager.MAP_COMPATIBLE_THEME_IDS.add(entry.getKey());
+                        GenreManager.MAP_COMPATIBLE_THEMES.put(entry.getKey(), listAvailableThemes.getSelectedValuesList().get(i));
                         LOGGER.info("Added selected theme to array list: " + listAvailableThemes.getSelectedValuesList().get(i));
                         LOGGER.info("Added theme with id [" + entry.getKey() + "] and name [" + listAvailableThemes.getSelectedValuesList().get(i) + "] to map.");
                     }

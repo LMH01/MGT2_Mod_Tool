@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
@@ -37,12 +37,12 @@ public class WindowAddGenrePage3 extends JFrame{
     public WindowAddGenrePage3() {
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
-            NewGenreManager.openStepWindow(4);
+            GenreManager.openStepWindow(4);
             FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
-            NewGenreManager.openStepWindow(2);
+            GenreManager.openStepWindow(2);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -65,20 +65,20 @@ public class WindowAddGenrePage3 extends JFrame{
         spinnerResearchPoints.setBounds(120, 10, 100, 23);
         spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
         spinnerGenrePrice.setBounds(120, 60, 100, 23);
-        spinnerResearchPoints.setToolTipText("<html>[Range: 1 - 100.000; Default: " + NewGenreManager.researchPoints + "]<br>Number of required research points to research that genre.");
-        spinnerDevelopmentCost.setToolTipText("<html>[Range: 1 - 1.000.000; Default: " + NewGenreManager.devCost + "]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this genre.");
-        spinnerGenrePrice.setToolTipText("<html>[Range: 1 - 10.000.000; Default: " + NewGenreManager.price + "]<br>This is the research cost, it is being payed when researching this genre.");
+        spinnerResearchPoints.setToolTipText("<html>[Range: 1 - 100.000; Default: " + GenreManager.researchPoints + "]<br>Number of required research points to research that genre.");
+        spinnerDevelopmentCost.setToolTipText("<html>[Range: 1 - 1.000.000; Default: " + GenreManager.devCost + "]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this genre.");
+        spinnerGenrePrice.setToolTipText("<html>[Range: 1 - 10.000.000; Default: " + GenreManager.price + "]<br>This is the research cost, it is being payed when researching this genre.");
         if(Settings.disableSafetyFeatures){
-            spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 1000000000, 1));
-            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000000, 1));
-            spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 1000000000, 1));
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(GenreManager.researchPoints, 1, 1000000000, 1));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(GenreManager.devCost, 1, 1000000000, 1));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(GenreManager.price, 1, 1000000000, 1));
             ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(true);
         }else{
-            spinnerResearchPoints.setModel(new SpinnerNumberModel(NewGenreManager.researchPoints, 1, 100000, 100));
-            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(NewGenreManager.devCost, 1, 1000000, 1000));
-            spinnerGenrePrice.setModel(new SpinnerNumberModel(NewGenreManager.price, 1, 10000000, 1000));
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(GenreManager.researchPoints, 1, 100000, 100));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(GenreManager.devCost, 1, 1000000, 1000));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(GenreManager.price, 1, 10000000, 1000));
             ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
             ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
             ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(false);
@@ -112,11 +112,11 @@ public class WindowAddGenrePage3 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){
-        NewGenreManager.researchPoints = Integer.parseInt(spinnerResearchPoints.getValue().toString());
+        GenreManager.researchPoints = Integer.parseInt(spinnerResearchPoints.getValue().toString());
         LOGGER.info("genre research points: " + Integer.parseInt(spinnerResearchPoints.getValue().toString()));
-        NewGenreManager.devCost = Integer.parseInt(spinnerDevelopmentCost.getValue().toString());
+        GenreManager.devCost = Integer.parseInt(spinnerDevelopmentCost.getValue().toString());
         LOGGER.info("genre development cost: " + Integer.parseInt(spinnerDevelopmentCost.getValue().toString()));
-        NewGenreManager.price = Integer.parseInt(spinnerGenrePrice.getValue().toString());
+        GenreManager.price = Integer.parseInt(spinnerGenrePrice.getValue().toString());
         LOGGER.info("genre price: " + Integer.parseInt(spinnerGenrePrice.getValue().toString()));
     }
 }

@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.util.NewGenreManager;
+import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class WindowAddGenrePage4 extends JFrame{
     public WindowAddGenrePage4() {
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(LIST_TARGET_GROUPS)){
-                NewGenreManager.openStepWindow(5);
+                GenreManager.openStepWindow(5);
                 FRAME.dispose();
             }else{
                 JOptionPane.showMessageDialog(new Frame(), "Please select at least one target group!");
@@ -45,7 +45,7 @@ public class WindowAddGenrePage4 extends JFrame{
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(LIST_TARGET_GROUPS);
-            NewGenreManager.openStepWindow(3);
+            GenreManager.openStepWindow(3);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -92,16 +92,16 @@ public class WindowAddGenrePage4 extends JFrame{
     private void setList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> arrayListInt = new ArrayList<>();
-        if(NewGenreManager.targetGroupKid){
+        if(GenreManager.targetGroupKid){
             arrayListInt.add(0);
         }
-        if(NewGenreManager.targetGroupTeen){
+        if(GenreManager.targetGroupTeen){
             arrayListInt.add(1);
         }
-        if(NewGenreManager.targetGroupAdult){
+        if(GenreManager.targetGroupAdult){
             arrayListInt.add(2);
         }
-        if(NewGenreManager.targetGroupSenior){
+        if(GenreManager.targetGroupSenior){
             arrayListInt.add(3);
         }
 
@@ -126,24 +126,24 @@ public class WindowAddGenrePage4 extends JFrame{
         contentPane.add(SCROLL_PANE_AVAILABLE_GENRES);
     }
     private static boolean saveInputs(JList<String> listTargetGroups){
-        NewGenreManager.targetGroupKid = false;
-        NewGenreManager.targetGroupTeen = false;
-        NewGenreManager.targetGroupAdult = false;
-        NewGenreManager.targetGroupSenior = false;
+        GenreManager.targetGroupKid = false;
+        GenreManager.targetGroupTeen = false;
+        GenreManager.targetGroupAdult = false;
+        GenreManager.targetGroupSenior = false;
         if(listTargetGroups.getSelectedValuesList().size() != 0){
             for(int i=0; i<listTargetGroups.getSelectedValuesList().size(); i++) {
                 LOGGER.info("Current target group " + listTargetGroups.getSelectedValuesList().get(i));
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Kid")) {
-                    NewGenreManager.targetGroupKid = true;
+                    GenreManager.targetGroupKid = true;
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Teen")) {
-                    NewGenreManager.targetGroupTeen = true;
+                    GenreManager.targetGroupTeen = true;
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Adult")) {
-                    NewGenreManager.targetGroupAdult = true;
+                    GenreManager.targetGroupAdult = true;
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Senior")) {
-                    NewGenreManager.targetGroupSenior = true;
+                    GenreManager.targetGroupSenior = true;
                 }
             }
             return true;

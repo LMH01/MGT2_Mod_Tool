@@ -49,7 +49,7 @@ public class WindowAvailableMods extends JFrame {
             try {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 AnalyzeExistingThemes.analyzeThemeFiles();
-                NewGenreManager.addGenre();
+                GenreManager.addGenre();
                 FRAME.dispose();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
