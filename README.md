@@ -27,6 +27,9 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - You can add your own themes
     - Existing themes can be removed
     - It is possible to add custom translations for your themes
+- **Share genres**
+    - You can simply share genres with your friends. Here is how it works:
+        - First you will need to export the selected genre. For that you have to go into the *share* menu, there you have to click *export genre*. Select the genre that you would like to export now from the list and click ok. The needed files are now copied into a folder, open this folder by clicking yes on the next step. To share the genre you simply have to copy that folder and give it to your friend. To import it you have to click *import genre* in the share menu and select the folder. Done you can check if everything is correct and click okay to add the genre to Mad Games Tycoon 2.
 - **Edit the `NpcGames.txt` file**
     - You can add or remove a genre id to/from this file. This has the effect that games released by NPC-Companies can have the specified genre.
     - Additionally, you can change the chance with which the genre id should be added to the file. (100% = All games will have the corresponding genre as genre)
@@ -46,7 +49,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Log file**
     - Every change you do to the game files will be noted here. *(eg. added genre [genre_name])*
     - When a backup is being created it will be noted here.
-    - The log file can be opened fia the "Other" menu.
+    - The log file can be opened fia the "Utilities" menu.
 - **Tool tips**
     - Should you need help to figure out what an input or button means simply hover over it with your mouse.   
 - **Settings**
