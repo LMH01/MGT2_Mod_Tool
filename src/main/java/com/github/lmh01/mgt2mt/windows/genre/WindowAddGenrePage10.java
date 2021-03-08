@@ -46,14 +46,14 @@ public class WindowAddGenrePage10 extends JFrame{
             if(textFieldImagePath.getText().isEmpty()){
                 if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     GenreManager.imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    GenreManager.showSummary();
+                    GenreManager.showSummary(false);
                     FRAME.dispose();
                 }
             }else{
                 String imageFilePath = getGenreImageFilePath(true, false);
                 if(!imageFilePath.equals("error")){
                     GenreManager.imageFile = new File(imageFilePath);
-                    GenreManager.showSummary();
+                    GenreManager.showSummary(false);
                     FRAME.dispose();
                 }else if(textFieldImagePath.getText().isEmpty()){
 

@@ -70,7 +70,7 @@ public class AnalyzeExistingGenres {
         String currentLine;
         boolean analyzingGenre = false; //Is set to true when the genre that should be exported is being analyzed. Is set to false when genre has been analyzed.
         boolean genreFound = false;
-        int linesToScan = Utils.genreLineNumbers;
+        int linesToScan = Utils.genreLineNumbers+1;
         while((currentLine = reader.readLine()) != null){
             if(currentLine.contains("[ID]")){
                 if(Integer.toString(genreId).equals(currentLine.replace("[ID]", "").replaceAll("\\uFEFF", ""))){
@@ -181,6 +181,26 @@ public class AnalyzeExistingGenres {
             }
         }
         reader.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemesGeFile()), StandardCharsets.UTF_16LE));
+        boolean firstLine = true;
+        int lineNumber = 1;
+        StringBuilder compatibleThemes = new StringBuilder();
+        while((currentLine = br.readLine()) != null){
+            if(firstLine){
+                currentLine = Utils.removeUTF8BOM(currentLine);
+                firstLine = false;
+            }
+            if(currentLine.contains(Integer.toString(genreId))){
+                compatibleThemes.append("<");
+                compatibleThemes.append(currentLine.replace(" ", "_").replace("<", "").replace(">", "").replaceAll("[0-9]", ""));
+                compatibleThemes.append("-");
+                compatibleThemes.append(lineNumber);
+                compatibleThemes.append(">");
+            }
+            lineNumber++;
+        }
+        br.close();
+        GenreManager.MAP_SINGLE_GENRE.put("[THEME COMB]", compatibleThemes.toString());
         return genreFound;
     }
 
@@ -266,11 +286,13 @@ public class AnalyzeExistingGenres {
         int genreId = -1;
         for(int i = 0; i<ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size(); i++){
             if(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[0-9]", "").replace(" - ", "").equals(genreName)){
-                LOGGER.info("genreName: " + genreName);
-                LOGGER.info("i: " + ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i));
-                LOGGER.info("replaced: " + ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll(genreName, "").replace(" - ", ""));
                 genreId = Integer.parseInt(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll(genreName, "").replace(" - ", ""));
             }
+        }
+        if(genreId == -1){
+            LOGGER.info("Genre [" + genreName + "] does not exist");
+        }else{
+            LOGGER.info("Genre [" + genreName + "] has been found. Id: " + genreId);
         }
         return genreId;
     }

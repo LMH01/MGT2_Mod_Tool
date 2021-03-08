@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 public class WindowShare extends JFrame {
@@ -50,7 +49,38 @@ public class WindowShare extends JFrame {
         buttonImportGenre.setBounds(10, 40, 175, 23);
         buttonImportGenre.setToolTipText("<html>Click to open import a genre.");
         buttonImportGenre.addActionListener(actionEvent -> {
-
+            try {
+                AnalyzeExistingGenres.analyzeGenreFile();
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+                JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+                fileChooser.setDialogTitle("Choose the folder where the genre.txt file is located.");
+                fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+                int return_value = fileChooser.showOpenDialog(null);
+                if(return_value == JFileChooser.APPROVE_OPTION){
+                    String importGenreFolder = fileChooser.getSelectedFile().getPath();
+                    if(Utils.doesFolderContainFile(importGenreFolder, "genre.txt")){
+                        File fileGenreToImport = new File(importGenreFolder + "//genre.txt");
+                        BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
+                        String currentLine = br.readLine();
+                        br.close();
+                        if(currentLine.contains("[MGT2MT VERSION]")){
+                            LOGGER.info("File seams to be valid. Beginning import process.");
+                            if(!SharingHandler.importGenre(importGenreFolder)){
+                                JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid genre.txt file.\nPlease select the correct folder.");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the genre.txt file.\nPlease select the correct folder.");
+                    }
+                }
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         contentPane.add(buttonImportGenre);
 
@@ -115,6 +145,10 @@ public class WindowShare extends JFrame {
         buttonOpenFolder.setToolTipText("Click to open the folder where the exported genres are stored.");
         buttonOpenFolder.addActionListener(actionEvent -> {
             try {
+                File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
+                if(!file.exists()){
+                    file.mkdirs();
+                }
                 Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
             } catch (IOException e) {
                 e.printStackTrace();

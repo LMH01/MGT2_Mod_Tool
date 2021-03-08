@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+import com.github.lmh01.mgt2mt.windows.WindowShare;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,10 +105,15 @@ public class GenreManager {
             case 10: WindowAddGenrePage10.createFrame(); break;
         }
     }
-    public static void showSummary(){
+
+    /**
+     * Shows a summary for the genre that should be added
+     * @param showSummaryFromImport True when called from genre import
+     */
+    public static void showSummary(boolean showSummaryFromImport){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(imageFile.getPath()));
-        int returnValue = JOptionPane.showConfirmDialog(null, "Your genre is ready:\n\n" +
+        String messageBody = "Your genre is ready:\n\n" +
                 "Id:" + id + "\n" +
                 "Name: " + name + "\n" +
                 "Description: " + description + "\n" +
@@ -129,8 +135,15 @@ public class GenreManager {
                 "Gameplay: " + gameplay + "%\n" +
                 "Graphic: " + graphic + "%\n" +
                 "Sound: " + sound + "%\n" +
-                "Control: " + control + "%\n" +
-                "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.", "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+                "Control: " + control + "%\n";
+        int returnValue = 0;
+        if(showSummaryFromImport){
+            String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no cancel this operation.";
+            returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+        }else{
+            String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.";
+            returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+        }
         if(returnValue == 0){
             //click yes
             boolean continueAnyway = false;
@@ -149,7 +162,7 @@ public class GenreManager {
                 try {
                     EditGenreFile.addGenre();
                     EditThemeFiles.editGenreAllocation(GenreManager.id, true);
-                    GenreManager.genreAdded();
+                    GenreManager.genreAdded(showSummaryFromImport);
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
@@ -160,10 +173,14 @@ public class GenreManager {
             }
         }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
             //Click no or close window
-            WindowAddGenrePage10.createFrame();
+            if(!showSummaryFromImport){
+                WindowAddGenrePage10.createFrame();
+            }
         }else if (returnValue == JOptionPane.CANCEL_OPTION){
             //click cancel
-            WindowAvailableMods.createFrame();
+            if(!showSummaryFromImport){
+                WindowAvailableMods.createFrame();
+            }
         }
 
     }
@@ -277,21 +294,31 @@ public class GenreManager {
         useDefaultImageFile = true;
         arrayListScreenshotFiles.clear();
     }
-    public static void genreAdded(){
-        ChangeLog.addLogEntry(1, name);
+    public static void genreAdded(boolean showSummaryFromImport){
+        if(showSummaryFromImport){
+            ChangeLog.addLogEntry(1, name);
+        }else{
+            ChangeLog.addLogEntry(18,  name);
+        }
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(GenreManager.imageFile.getPath()));
         if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);
                 JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
-                WindowAvailableMods.createFrame();
+                if(!showSummaryFromImport){
+                    WindowAvailableMods.createFrame();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
-                WindowAvailableMods.createFrame();
+                if(!showSummaryFromImport){
+                    WindowAvailableMods.createFrame();
+                }
             }
         }else{
-            WindowAvailableMods.createFrame();
+            if(!showSummaryFromImport){
+                WindowAvailableMods.createFrame();
+            }
         }
     }
     public static String getCompatibleGenresByID(){

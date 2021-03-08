@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Utils {
@@ -137,12 +138,33 @@ public class Utils {
                 if(filesInFolder[i].getName().equals(content)){
                     return true;
                 }
-                LOGGER.info(filesInFolder[i].getName());
+                if(Settings.enableDebugLogging){
+                    LOGGER.info(filesInFolder[i].getName());
+                }
             }
         }else{
             LOGGER.info("File does not exist.");
         }
         return false;
+    }
+
+    /**
+     * @param folder The folder that should be searched for files.
+     * @return Returns an array list containing all files inside the input folder
+     */
+    public static ArrayList<File> getFilesInFolder(String folder){
+        File file = new File(folder);
+        ArrayList<File> arrayListFiles = new ArrayList<>();
+        if(file.exists()){
+            File[] filesInFolder = file.listFiles();
+            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
+                arrayListFiles.add(filesInFolder[i]);
+                if(Settings.enableDebugLogging){
+                    LOGGER.info(filesInFolder[i].getName());
+                }
+            }
+        }
+        return arrayListFiles;
     }
 
     /**
