@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WindowSettings extends JFrame {
@@ -77,7 +78,7 @@ public class WindowSettings extends JFrame {
         comboBoxMGT2FolderOperation.setToolTipText("<html>[Automatic]: The folder will be selected automatically<br>[Manual]: Use a custom path.");
         comboBoxMGT2FolderOperation.addActionListener(e -> {
             LOGGER.info("comboBoxMGT2FolderOperation action: " + e.getActionCommand());
-            if(comboBoxMGT2FolderOperation.getSelectedItem().equals("Manual") && !customFolderSetAndValid && !manualWasLastSelectedOption.get()){
+            if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && !customFolderSetAndValid && !manualWasLastSelectedOption.get()){
                 try {
                     automaticWasLastSelectedOption.set(false);
                     manualWasLastSelectedOption.set(true);

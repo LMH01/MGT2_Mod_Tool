@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -205,8 +204,8 @@ public class Utils {
 
     /**
      * Copied from https://www.baeldung.com/java-copy-directory
-     * @param sourceDirectoryLocation
-     * @param destinationDirectoryLocation
+     * @param sourceDirectoryLocation The source
+     * @param destinationDirectoryLocation The destination
      * @throws IOException
      */
     public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)

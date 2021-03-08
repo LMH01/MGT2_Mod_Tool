@@ -104,7 +104,7 @@ public class WindowAddGenrePage9 extends JFrame{
             if(!GenreManager.arrayListScreenshotFiles.isEmpty()){
                 StringBuilder filePaths = new StringBuilder();
                 for(int i = 0; i< GenreManager.arrayListScreenshotFiles.size(); i++){
-                    filePaths.append("<br>" + GenreManager.arrayListScreenshotFiles.get(i));
+                    filePaths.append("<br>").append(GenreManager.arrayListScreenshotFiles.get(i));
                 }
                 if(JOptionPane.showConfirmDialog(null, "<html>The following image files have been added:<br>" + filePaths + "<br><br>Is this correct and do you want to continue?", "Is this correct?", JOptionPane.YES_NO_OPTION) == 0){
                     GenreManager.openStepWindow(10);

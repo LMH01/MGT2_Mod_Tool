@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
-import com.github.lmh01.mgt2mt.windows.WindowShare;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,10 +86,6 @@ public class GenreManager {
             WindowAvailableMods.createFrame();
         }
     }
-    public static void exportGenre(){
-        MAP_SINGLE_GENRE.clear();
-
-    }
     public static void openStepWindow(int step){
         switch(step){
             case 1: WindowAddGenrePage1.createFrame(); break;
@@ -136,7 +131,7 @@ public class GenreManager {
                 "Graphic: " + graphic + "%\n" +
                 "Sound: " + sound + "%\n" +
                 "Control: " + control + "%\n";
-        int returnValue = 0;
+        int returnValue;
         if(showSummaryFromImport){
             String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no cancel this operation.";
             returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);

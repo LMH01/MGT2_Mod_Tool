@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class ImportSettings{
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
 
-    public static boolean Import(String fileLocation, boolean importCustomSettings) {
+    public static boolean Import(String fileLocation) {
         LOGGER.info("Starting settings import process...");
 
         try {

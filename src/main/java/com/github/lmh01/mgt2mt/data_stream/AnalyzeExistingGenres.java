@@ -246,15 +246,15 @@ public class AnalyzeExistingGenres {
         String[] allGenresById = getGenresByAlphabetWithoutId();
         String[] defaultGenres = {"Action", "Adventure", "Building Game", "Economic Simulation", "Fighting Game", "First-Person Shooter", "Interactive Movie", "Platformer", "Puzzle Game", "Racing", "Real-Time Strategy", "Role-Playing Game", "Simulation", "Skill Game", "Sport Game", "Strategy", "Third-Person Shooter", "Visual Novel"};
         ArrayList<String> arrayListCustomGenres = new ArrayList<>();
-        for(int i = 0; i<allGenresById.length; i++){
+        for (String s : allGenresById) {
             boolean defaultGenre = false;
-            for(int x = 0; x<defaultGenres.length; x++){
-                if(allGenresById[i].equals(defaultGenres[x])){
+            for (int x = 0; x < defaultGenres.length; x++) {
+                if (s.equals(defaultGenres[x])) {
                     defaultGenre = true;
                 }
             }
-            if(!defaultGenre){
-                arrayListCustomGenres.add(allGenresById[i]);
+            if (!defaultGenre) {
+                arrayListCustomGenres.add(s);
             }
         }
         String[] string = new String[arrayListCustomGenres.size()];
@@ -263,8 +263,8 @@ public class AnalyzeExistingGenres {
     }
 
     private static void sortGenreNames(){
-        for(int i = 0; i<ARRAY_LIST_GENRE_NAMES_IN_USE.size(); i++){
-            ARRAY_LIST_GENRE_NAMES_SORTED.add(ARRAY_LIST_GENRE_NAMES_IN_USE.get(i));
+        for (String s : ARRAY_LIST_GENRE_NAMES_IN_USE) {
+            ARRAY_LIST_GENRE_NAMES_SORTED.add(s);
         }
         Collections.sort(ARRAY_LIST_GENRE_NAMES_SORTED);
     }
@@ -279,14 +279,14 @@ public class AnalyzeExistingGenres {
 
     /**
      * Returns -1 when genre name does not exist.
-     * @param genreName
+     * @param genreName The genre name
      * @return Returns the genre id for the specified name.
      */
     public static int getGenreIdByName(String genreName){
         int genreId = -1;
-        for(int i = 0; i<ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size(); i++){
-            if(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[0-9]", "").replace(" - ", "").equals(genreName)){
-                genreId = Integer.parseInt(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll(genreName, "").replace(" - ", ""));
+        for (String s : ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED) {
+            if (s.replaceAll("[0-9]", "").replace(" - ", "").equals(genreName)) {
+                genreId = Integer.parseInt(s.replaceAll(genreName, "").replace(" - ", ""));
             }
         }
         if(genreId == -1){

@@ -3,25 +3,24 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.lang.reflect.GenericArrayType;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+@SuppressWarnings("JavaDoc")
 public class SharingHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingHandler.class);
 
     /**
      * Exports the specified genre.
-     * @param genreId
-     * @param genreName
+     * @param genreId The genre id
+     * @param genreName The genre name
      * @return Returns true when the genre has been exported successfully. Returns false when the genre has already been exported.
      * @throws IOException
      */
@@ -103,7 +102,7 @@ public class SharingHandler {
 
     /**
      *
-     * @param importFolderPath
+     * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
     public static boolean importGenre(String importFolderPath) throws IOException {
@@ -111,11 +110,9 @@ public class SharingHandler {
         GenreManager.MAP_SINGLE_GENRE.put("[ID]", Integer.toString(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size() + 1));
         int newGenreId = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
-        File fileGenreIconToImport = new File(importFolderPath + "\\DATA\\icon.png");
-        File fileScreenshotFolderToCopy = new File(importFolderPath + "\\DATA\\screenshots");
-        File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
+       File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
-        String currentLine = "";
+        String currentLine;
         int line = 1;
         while((currentLine = reader.readLine()) != null){
             switch(line){
@@ -288,7 +285,7 @@ public class SharingHandler {
     private static void setGenreCompatibleGenres(){
         String string = GenreManager.MAP_SINGLE_GENRE.get("[GENRE COMB]");
         int charPosition = 0;
-        String currentGenre = "";
+        StringBuilder currentGenre = new StringBuilder();
         for(int i = 0; i<string.length(); i++){
             if(String.valueOf(string.charAt(charPosition)).equals("<")){
                 //Nothing happens
@@ -296,10 +293,10 @@ public class SharingHandler {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreName: " + currentGenre);
                 }
-                GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.add(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(currentGenre)));
-                currentGenre = "";
+                GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.add(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(currentGenre.toString())));
+                currentGenre = new StringBuilder();
             }else{
-                currentGenre = currentGenre + string.charAt(charPosition);
+                currentGenre.append(string.charAt(charPosition));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("currentNumber: " + currentGenre);
                 }
@@ -315,8 +312,8 @@ public class SharingHandler {
         String string = GenreManager.MAP_SINGLE_GENRE.get("[THEME COMB]");
         int charPosition = 0;
         boolean scanningNumber = false;
-        String themeNumber = "";
-        String currentTheme = "";
+        StringBuilder themeNumber = new StringBuilder();
+        StringBuilder currentTheme = new StringBuilder();
         for(int i = 0; i<string.length(); i++){
             if(String.valueOf(string.charAt(charPosition)).equals("<")){
                 //Nothing happens
@@ -326,18 +323,18 @@ public class SharingHandler {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("themeName: " + currentTheme);
                 }
-                GenreManager.MAP_COMPATIBLE_THEMES.put(Integer.parseInt(themeNumber.replaceAll("[^0-9]", "")), currentTheme);
-                currentTheme = "";
-                themeNumber = "";
+                GenreManager.MAP_COMPATIBLE_THEMES.put(Integer.parseInt(themeNumber.toString().replaceAll("[^0-9]", "")), currentTheme.toString());
+                currentTheme = new StringBuilder();
+                themeNumber = new StringBuilder();
                 scanningNumber = false;
             }else{
                 if(scanningNumber){
-                    themeNumber = themeNumber + string.charAt(charPosition);
+                    themeNumber.append(string.charAt(charPosition));
                 }else{
                     if(String.valueOf(string.charAt(charPosition)).equals("_")){
-                        currentTheme = currentTheme + " ";
+                        currentTheme.append(" ");
                     }else{
-                        currentTheme = currentTheme + string.charAt(charPosition);
+                        currentTheme.append(string.charAt(charPosition));
                         if(Settings.enableDebugLogging){
                             LOGGER.info("currentNumber: " + currentTheme);
                         }
@@ -353,9 +350,9 @@ public class SharingHandler {
      */
     private static void setGenreScreenshotFiles(String importFolderPath){
         ArrayList<File> arrayListFilesInScreenshotFolder = Utils.getFilesInFolder(importFolderPath + "\\DATA\\screenshots");
-        for(int i=0; i<arrayListFilesInScreenshotFolder.size(); i++){
-            if(arrayListFilesInScreenshotFolder.get(i).getName().endsWith(".png")){
-                GenreManager.arrayListScreenshotFiles.add(arrayListFilesInScreenshotFolder.get(i));
+        for (File file : arrayListFilesInScreenshotFolder) {
+            if (file.getName().endsWith(".png")) {
+                GenreManager.arrayListScreenshotFiles.add(file);
             }
         }
     }
@@ -365,9 +362,9 @@ public class SharingHandler {
      * @return Returns a list of genre ids.
      */
     private static String getGenreIds(String genreNamesRaw){
-        String genreIds = "";
+        StringBuilder genreIds = new StringBuilder();
         int charPositon = 0;
-        String currentName = "";
+        StringBuilder currentName = new StringBuilder();
         for(int i = 0; i<genreNamesRaw.length(); i++){
             if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals("<")){
                 //Nothing happens
@@ -375,13 +372,13 @@ public class SharingHandler {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreName: " + currentName);
                 }
-                int genreId = AnalyzeExistingGenres.getGenreIdByName(currentName);
+                int genreId = AnalyzeExistingGenres.getGenreIdByName(currentName.toString());
                 if(genreId != -1){
-                    genreIds = genreIds + "<" + genreId + ">";
+                    genreIds.append("<").append(genreId).append(">");
                 }
-                currentName = "";
+                currentName = new StringBuilder();
             }else{
-                currentName = currentName + genreNamesRaw.charAt(charPositon);
+                currentName.append(genreNamesRaw.charAt(charPositon));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("currentNumber: " + currentName);
                 }
@@ -390,26 +387,26 @@ public class SharingHandler {
         }
         String.valueOf(genreNamesRaw.charAt(1));
         LOGGER.info("Genre ids: " + genreIds);
-        return genreIds;
+        return genreIds.toString();
     }
 
     private static String getGenreNames(){
         String genreNumbersRaw = GenreManager.MAP_SINGLE_GENRE.get("[GENRE COMB]");
-        String genreNames = "";
+        StringBuilder genreNames = new StringBuilder();
         int charPositon = 0;
-        String currentNumber = "";
+        StringBuilder currentNumber = new StringBuilder();
         for(int i = 0; i<genreNumbersRaw.length(); i++){
             if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals("<")){
                 //Nothing happens
             }else if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals(">")){
-                int genreNumber = Integer.parseInt(currentNumber);
+                int genreNumber = Integer.parseInt(currentNumber.toString());
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + genreNumber);
                 }
-                genreNames = genreNames + "<" + AnalyzeExistingGenres.getGenreNameById(genreNumber) + ">";
-                currentNumber = "";
+                genreNames.append("<").append(AnalyzeExistingGenres.getGenreNameById(genreNumber)).append(">");
+                currentNumber = new StringBuilder();
             }else{
-                currentNumber = currentNumber + genreNumbersRaw.charAt(charPositon);
+                currentNumber.append(genreNumbersRaw.charAt(charPositon));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("currentNumber: " + currentNumber);
                 }
@@ -417,6 +414,6 @@ public class SharingHandler {
             charPositon++;
         }
         String.valueOf(genreNumbersRaw.charAt(1));
-        return genreNames;
+        return genreNames.toString();
     }
 }

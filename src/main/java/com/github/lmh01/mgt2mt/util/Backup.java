@@ -18,8 +18,6 @@ public class Backup {
     private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
     private static String latestBackupFolderName = "";
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
-    public static final File FILE_GENRES_INITIAL_BACKUP = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
-    public static final File FILE_NPC_GAMES_INITIAL_BACKUP = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
     public static final File FILE_SAVE_GAME_FOLDER = new File(System.getenv("USERPROFILE") + "\\appdata\\locallow\\Eggcode\\Mad Games Tycoon 2\\");
 
     /**
@@ -192,7 +190,7 @@ public class Backup {
     public static void createFullBackup() throws IOException {
        Backup.createBackup(Utils.getGenreFile());
        Backup.createBackup(Utils.getNpcGamesFile());
-       backupSaveGames(FILE_SAVE_GAME_FOLDER, false);
+       backupSaveGames(false);
        createThemeFilesBackup(false);
     }
 
@@ -205,7 +203,7 @@ public class Backup {
             Backup.createBackup(Utils.getGenreFile(), true);
             Backup.createBackup(Utils.getNpcGamesFile(), true);
             Backup.createBackup(Utils.getThemesGeFile(), true);
-            backupSaveGames(FILE_SAVE_GAME_FOLDER, true);
+            backupSaveGames(true);
             createThemeFilesBackup(true);
             ChangeLog.addLogEntry(6);
             return "";
@@ -219,11 +217,10 @@ public class Backup {
 
     /**
      * Create a backup of each save game.
-     * @param saveGameFolder The folder where the save games are located.
      */
-    private static void backupSaveGames(File saveGameFolder, boolean initialBackup) throws IOException {
-        if(saveGameFolder.exists()){
-            File[] filesInFolder = saveGameFolder.listFiles();
+    private static void backupSaveGames(boolean initialBackup) throws IOException {
+        if(Backup.FILE_SAVE_GAME_FOLDER.exists()){
+            File[] filesInFolder = Backup.FILE_SAVE_GAME_FOLDER.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(filesInFolder[i].getName().contains("savegame")){
                     File backupFile = new File(filesInFolder[i].getPath());

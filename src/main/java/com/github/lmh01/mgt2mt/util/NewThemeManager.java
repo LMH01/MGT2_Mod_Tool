@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class NewThemeManager {
     public static ArrayList<String> arrayListThemeTranslations = new ArrayList<>();
     public static ArrayList<Integer> arrayListCompatibleGenresForTheme = new ArrayList<>();
-    private static final Logger LOGGER = LoggerFactory.getLogger(NewThemeManager.class);
+    // --Commented out by Inspection (08.03.2021 13:25):private static final Logger LOGGER = LoggerFactory.getLogger(NewThemeManager.class);
 
     /**
      * Adds a new theme to the theme files.

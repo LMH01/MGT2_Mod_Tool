@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class WindowAvailableMods extends JFrame {
 
     static final WindowAvailableMods FRAME = new WindowAvailableMods();
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAvailableMods.class);
+    // --Commented out by Inspection (08.03.2021 13:27):private static final Logger LOGGER = LoggerFactory.getLogger(WindowAvailableMods.class);
 
     public static void createFrame(){
         EventQueue.invokeLater(() ->{
@@ -134,13 +134,11 @@ public class WindowAvailableMods extends JFrame {
                         if(listAvailableThemes.getSelectedValuesList().size() != 0){
                             if(!textFieldThemeName.getText().isEmpty()){
                                 if(!AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.containsValue(textFieldThemeName.getText()) && !AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.containsValue(textFieldThemeName.getText())){
-                                    for(int i = 0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
-                                        arrayListCompatibleGenreNames.add(listAvailableThemes.getSelectedValuesList().get(i));
-                                    }
+                                    arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
                                     for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size(); i++){
-                                        for(int n = 0; n<arrayListCompatibleGenreNames.size(); n++){
-                                            if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).contains(arrayListCompatibleGenreNames.get(n))){
-                                                NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]","")));
+                                        for (String arrayListCompatibleGenreName : arrayListCompatibleGenreNames) {
+                                            if (AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).contains(arrayListCompatibleGenreName)) {
+                                                NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
                                             }
                                         }
                                     }

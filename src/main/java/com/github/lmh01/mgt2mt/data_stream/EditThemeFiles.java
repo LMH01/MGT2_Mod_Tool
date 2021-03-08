@@ -55,8 +55,8 @@ public class EditThemeFiles {
             if(addTheme){
                 if(themeFile.getName().equals("Themes_GE.txt")){//Writes information for compatible genres only to the german theme file.
                     StringBuilder stringCompatibleGenres = new StringBuilder();
-                    for(int i = 0; i<arrayListCompatibleGenres.size(); i++){
-                        stringCompatibleGenres.append("<").append(arrayListCompatibleGenres.get(i)).append(">");
+                    for (Integer arrayListCompatibleGenre : arrayListCompatibleGenres) {
+                        stringCompatibleGenres.append("<").append(arrayListCompatibleGenre).append(">");
                     }
                     bw.write(System.getProperty("line.separator") + themeName + " " + stringCompatibleGenres);
                 }else{
