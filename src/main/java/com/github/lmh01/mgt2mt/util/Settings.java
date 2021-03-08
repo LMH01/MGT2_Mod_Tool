@@ -56,7 +56,7 @@ public class Settings {
      * @return Returns true if settings have been imported successfully.
      */
     public static boolean importSettings(){
-        return ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt", false);
+        return ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt");
     }
 
     /**
