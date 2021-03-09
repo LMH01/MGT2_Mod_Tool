@@ -4,7 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -57,7 +57,7 @@ public class WindowAddGenrePage6 extends JFrame{
         });
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
-                WindowAvailableMods.createFrame();
+                WindowMain.setNewGenreButtonStatus(true);
                 FRAME.dispose();
             }
         });

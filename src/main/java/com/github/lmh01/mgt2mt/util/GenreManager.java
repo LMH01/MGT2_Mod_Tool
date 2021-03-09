@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.windows.WindowAvailableMods;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,14 +76,9 @@ public class GenreManager {
                     resetVariablesToDefault();
                     LOGGER.info("Adding new genre");
                     openStepWindow(1);
-                }else{
-                    WindowAvailableMods.createFrame();
                 }
                 e.printStackTrace();
             }
-
-        }else{
-            WindowAvailableMods.createFrame();
         }
     }
     public static void openStepWindow(int step){
@@ -158,26 +153,22 @@ public class GenreManager {
                     EditGenreFile.addGenre();
                     EditThemeFiles.editGenreAllocation(GenreManager.id, true);
                     GenreManager.genreAdded(showSummaryFromImport);
+                    WindowMain.setNewGenreButtonStatus(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "Your genre was not added.");
-                WindowAvailableMods.createFrame();
+                WindowMain.setNewGenreButtonStatus(true);
             }
         }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
             //Click no or close window
             if(!showSummaryFromImport){
                 WindowAddGenrePage10.createFrame();
             }
-        }else if (returnValue == JOptionPane.CANCEL_OPTION){
-            //click cancel
-            if(!showSummaryFromImport){
-                WindowAvailableMods.createFrame();
-            }
         }
-
+        WindowMain.setNewGenreButtonStatus(true);
     }
     /**
      * @return Returns the compatible target groups in the correct formatting to be put into the Genres.txt file.
@@ -300,19 +291,9 @@ public class GenreManager {
             try {
                 NPCGameListChanger.editNPCGames(id, true, 20);
                 JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
-                if(!showSummaryFromImport){
-                    WindowAvailableMods.createFrame();
-                }
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
-                if(!showSummaryFromImport){
-                    WindowAvailableMods.createFrame();
-                }
-            }
-        }else{
-            if(!showSummaryFromImport){
-                WindowAvailableMods.createFrame();
             }
         }
     }

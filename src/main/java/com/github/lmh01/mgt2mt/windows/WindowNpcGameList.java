@@ -95,11 +95,10 @@ public class WindowNpcGameList extends JFrame {
         });
         contentPane.add(buttonApply);
 
-        JButton btnBack = new JButton("Back");
+        JButton btnBack = new JButton("Cancel");
         btnBack.setBounds(10, 140, 80, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
-            WindowAvailableMods.createFrame();
             FRAME.dispose();
         });
         contentPane.add(btnBack);

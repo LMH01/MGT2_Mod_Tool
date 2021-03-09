@@ -19,7 +19,7 @@ public class MadGamesTycoon2ModTool {
         UpdateChecker.checkForUpdates(false);
         Locale locale = new Locale("en","US");//Sets the language to english
         JOptionPane.setDefaultLocale(locale);
-        MainWindow.createFrame();
+        WindowMain.createFrame();
         if(Settings.importSettings()){
             LOGGER.info("Settings have been imported.");
             if(!Utils.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
