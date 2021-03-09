@@ -158,29 +158,66 @@ public class WindowMain {
         try {
             AnalyzeExistingGenres.analyzeGenreFile();
             Backup.createBackup(Utils.getGenreFile());
-            System.out.println("Array ids: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size());
-            if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
-                SpinnerNumberModel sModel;
-                if(Settings.disableSafetyFeatures){
-                    sModel = new SpinnerNumberModel(0, 0, 999, 1);
-                }else{
-                    sModel = new SpinnerNumberModel(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 18, AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 1);
+            boolean noGenreToRemoveAvailable = true;
+            JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be removed:");
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
+                noGenreToRemoveAvailable = false;
+            }else{
+                string = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+                if(string.length != 0){
+                    noGenreToRemoveAvailable = false;
                 }
-                JSpinner spinnerGenreIdToRemove = new JSpinner(sModel);
-                int option = JOptionPane.showOptionDialog(null, spinnerGenreIdToRemove, "Enter genre id that should be removed", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (option == JOptionPane.OK_OPTION) {
-                    int genreIDToRemove = Integer.parseInt(spinnerGenreIdToRemove.getValue().toString());
-                    EditGenreFile.removeGenre(genreIDToRemove);
-                    NPCGameListChanger.editNPCGames(genreIDToRemove, false, 0);
-                    EditThemeFiles.editGenreAllocation(genreIDToRemove, false);
-                    ChangeLog.addLogEntry(4, genreIDToRemove + "");
-                    JOptionPane.showMessageDialog(new Frame(), "The genre with id [" + genreIDToRemove + "] has been removed successfully.");
+            }
+            JList<String> listAvailableGenres = new JList<>(string);
+            listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+            listAvailableGenres.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
+            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+
+            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
+
+            if(!noGenreToRemoveAvailable){
+                if(JOptionPane.showConfirmDialog(null, params, "Remove genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!listAvailableGenres.isSelectionEmpty()){
+                        boolean exportFailed = false;
+                        int numberOfGenresToRemove = listAvailableGenres.getSelectedValuesList().size();
+                        String failedGenreRemoves = "";
+                        for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
+                            String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
+                            if(!AnalyzeExistingGenres.analyzeSingleGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre))){
+                                LOGGER.info("Genre has not been found!");
+                                JOptionPane.showMessageDialog(null, "Unable to remove genre:\nInternal error\nSee console for further information!", "Error", JOptionPane.ERROR_MESSAGE);
+                                failedGenreRemoves = failedGenreRemoves + " - Internal error" + currentGenre + System.getProperty("line.separator");
+                                exportFailed = true;
+                            }else{
+                                try{
+                                    EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
+                                }catch (IOException e){
+                                    failedGenreRemoves = failedGenreRemoves + currentGenre + " - " + e.getMessage() + System.getProperty("line.separator");
+                                    exportFailed = true;
+                                }
+                            }
+                            numberOfGenresToRemove--;
+                        }
+                        if(numberOfGenresToRemove == 0){
+                            if(exportFailed){
+                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing genres.\\nThe following genres where not removed:\\n\" + failedGenreRemoves", "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "All selected genres have been exported successfully!", "Genre removal successful", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }else{
-                JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Unable to remove genre:\nThere is no custom genre that could be removed.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
-            Utils.showErrorMessage(1, e);
+            JOptionPane.showMessageDialog(null, "Error while exporting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -388,7 +425,6 @@ public class WindowMain {
                             }
                             numberOfGenresToExport--;
                         }
-                        LOGGER.info("exportFailed: " + exportFailed + "\nnumberOfGenresToExport: " + numberOfGenresToExport);
                         if(numberOfGenresToExport == 0){
                             if(exportFailed){
                                 if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting genres.\nThe following genres where not exported:\n" + failedGenreExports + "\n\nDo you want to open the folder where it has been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
