@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.EditThemeFiles;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ public class NewThemeManager {
             }
         }
         ChangeLog.addLogEntry(15, themeNameEn);
+        WindowMain.checkActionAvailability();
     }
 
     /**

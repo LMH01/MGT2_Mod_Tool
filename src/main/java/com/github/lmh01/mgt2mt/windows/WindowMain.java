@@ -3,24 +3,24 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.windows.genre.WindowAddGenrePage2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.List;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static JFrame frame = new JFrame("MGT2 Mod Tool");
     private static JMenuItem m21 = new JMenuItem("Add Genre");
+    private static JMenuItem m22 = new JMenuItem("Remove Genre");
+    private static JMenuItem m32 = new JMenuItem("Export Genre");
+    private static JMenuItem m24 = new JMenuItem("Remove Theme");
+    private static JMenuItem m25 = new JMenuItem("NPC_Games_list");
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,13 +40,10 @@ public class WindowMain {
         m1.add(m12);
         JMenu m2 = new JMenu("Mods");
         m21.addActionListener(actionEvent -> addGenre());
-        JMenuItem m22 = new JMenuItem("Remove Genre");
         m22.addActionListener(actionEvent -> removeGenre());
         JMenuItem m23 = new JMenuItem("Add Theme");
         m23.addActionListener(actionEvent -> addTheme());
-        JMenuItem m24 = new JMenuItem("Remove Theme");
         m24.addActionListener(actionEvent -> removeTheme());
-        JMenuItem m25 = new JMenuItem("NPC_Games_list");
         m25.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         m25.addActionListener(actionEvent -> npcGameList());
         mb.add(m2);
@@ -58,7 +55,6 @@ public class WindowMain {
         JMenu m3 = new JMenu("Share");
         JMenuItem m31 = new JMenuItem("Import Genre");
         m31.addActionListener(actionEvent -> importGenre());
-        JMenuItem m32 = new JMenuItem("Export Genre");
         m32.addActionListener(actionEvent -> exportGenre());
         JMenuItem m33 = new JMenuItem("Open Export Folder");
         m33.addActionListener(actionEvent -> openExportFolder());
@@ -142,6 +138,47 @@ public class WindowMain {
     public static void setNewGenreButtonStatus(boolean enabled){
         m21.setEnabled(enabled);
     }
+    /**
+     * Checks if specific actions are available. If they are the buttons will be enabled
+     */
+    public static void checkActionAvailability(){
+        try{
+            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingThemes.analyzeThemeFiles();
+            boolean noCustomGenreAvailable = true;
+            boolean noCustomThemesAvailable = true;
+            if(Settings.disableSafetyFeatures){
+                noCustomGenreAvailable = false;
+                noCustomThemesAvailable = false;
+            }else{
+                String[] stringCustomGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+                if(stringCustomGenres.length != 0){
+                    noCustomGenreAvailable = false;
+                }
+                if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > 189){
+                    noCustomThemesAvailable = false;
+                }
+            }
+            m22.setEnabled(!noCustomGenreAvailable);
+            m24.setEnabled(!noCustomThemesAvailable);
+            m25.setEnabled(!noCustomGenreAvailable);
+            m32.setEnabled(!noCustomGenreAvailable);
+            if(noCustomGenreAvailable){
+                m22.setToolTipText("Disabled -> No genre to remove available");
+                m24.setToolTipText("Disabled -> No theme to remove available");
+                m25.setToolTipText("Disabled -> Add a genre first");
+                m32.setToolTipText("Disabled -> No genre to export available");
+            }else{
+                m22.setToolTipText("");
+                m24.setToolTipText("");
+                m25.setToolTipText("");
+                m32.setToolTipText("");
+            }
+        }catch (IOException e){
+            LOGGER.info("Error" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     private static void addGenre(){
         try {
             setNewGenreButtonStatus(false);
@@ -220,6 +257,7 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Error while exporting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        checkActionAvailability();
     }
     private static void addTheme(){
         try {
@@ -323,6 +361,7 @@ public class WindowMain {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        checkActionAvailability();
     }
     private static void npcGameList(){
         try {

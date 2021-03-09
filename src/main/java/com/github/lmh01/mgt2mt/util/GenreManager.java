@@ -296,6 +296,7 @@ public class GenreManager {
                 JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
             }
         }
+        WindowMain.checkActionAvailability();
     }
     public static String getCompatibleGenresByID(){
         ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();

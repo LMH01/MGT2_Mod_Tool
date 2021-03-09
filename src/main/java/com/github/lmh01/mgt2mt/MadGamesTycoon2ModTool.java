@@ -30,5 +30,6 @@ public class MadGamesTycoon2ModTool {
             //If settings do not exist they will automatically be reset inside ImportSettings.import()
         }
         Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
+        WindowMain.checkActionAvailability();
     }
 }
