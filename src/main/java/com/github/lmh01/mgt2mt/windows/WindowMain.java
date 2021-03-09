@@ -30,37 +30,23 @@ public class WindowMain {
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("FILE");
         JMenuItem m11 = new JMenuItem("Settings");
-        m11.addActionListener(actionEvent -> {
-            WindowSettings.createFrame();
-        });
+        m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         JMenuItem m12 = new JMenuItem("Check For Updates");
-        m12.addActionListener(actionEvent -> {
-            UpdateChecker.checkForUpdates(true);
-        });
+        m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
         JMenu m2 = new JMenu("Mods");
-        m21.addActionListener(actionEvent -> {
-            addGenre();
-        });
+        m21.addActionListener(actionEvent -> addGenre());
         JMenuItem m22 = new JMenuItem("Remove Genre");
-        m22.addActionListener(actionEvent -> {
-            removeGenre();
-        });
+        m22.addActionListener(actionEvent -> removeGenre());
         JMenuItem m23 = new JMenuItem("Add Theme");
-        m23.addActionListener(actionEvent -> {
-            addTheme();
-        });
+        m23.addActionListener(actionEvent -> addTheme());
         JMenuItem m24 = new JMenuItem("Remove Theme");
-        m24.addActionListener(actionEvent -> {
-            removeTheme();
-        });
+        m24.addActionListener(actionEvent -> removeTheme());
         JMenuItem m25 = new JMenuItem("NPC_Games_list");
         m25.setToolTipText("Click to add a genre id to the NPC_Games_list.");
-        m25.addActionListener(actionEvent -> {
-            npcGameList();
-        });
+        m25.addActionListener(actionEvent -> npcGameList());
         mb.add(m2);
         m2.add(m21);
         m2.add(m22);
@@ -69,17 +55,11 @@ public class WindowMain {
         m2.add(m25);
         JMenu m3 = new JMenu("Share");
         JMenuItem m31 = new JMenuItem("Import Genre");
-        m31.addActionListener(actionEvent -> {
-            importGenre();
-        });
+        m31.addActionListener(actionEvent -> importGenre());
         JMenuItem m32 = new JMenuItem("Export Genre");
-        m32.addActionListener(actionEvent -> {
-            exportGenre();
-        });
+        m32.addActionListener(actionEvent -> exportGenre());
         JMenuItem m33 = new JMenuItem("Open Export Folder");
-        m33.addActionListener(actionEvent -> {
-            openExportFolder();
-        });
+        m33.addActionListener(actionEvent -> openExportFolder());
         m3.add(m31);
         m3.add(m32);
         m3.add(m33);
@@ -87,29 +67,19 @@ public class WindowMain {
         JMenu m4 = new JMenu("Backup");
         JMenuItem m41 = new JMenuItem("Create Backup");
         m41.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
-        m41.addActionListener(actionEvent -> {
-            createBackup();
-        });
+        m41.addActionListener(actionEvent -> createBackup());
         JMenuItem m42 = new JMenuItem("Restore Initial Backup");
         m42.setToolTipText("<html>Click to restore the initial backup that has been created when the mod tool was started for the first time.<br>Your save game backups will not be restored.");
-        m42.addActionListener(actionEvent -> {
-            restoreInitialBackup();
-        });
+        m42.addActionListener(actionEvent -> restoreInitialBackup());
         JMenuItem m43 = new JMenuItem("Restore Latest Backup");
         m43.setToolTipText("<html>Click to restore the latest backup that has been created.<br>Your save game backups will not be restored.");
-        m43.addActionListener(actionEvent -> {
-            restoreLatestBackup();
-        });
+        m43.addActionListener(actionEvent -> restoreLatestBackup());
         JMenuItem m44 = new JMenuItem("Delete All Backups");
         m44.setToolTipText("Click to delete all backups that have been created.");
-        m44.addActionListener(actionEvent -> {
-            deleteAllBackups();
-        });
+        m44.addActionListener(actionEvent -> deleteAllBackups());
         JMenuItem m45 = new JMenuItem("Open Backup Folder");
         m45.setToolTipText("<html>Click to open the backup folder.<br>All backups that have been created are located here.<br>Use this if you do want to restore a backup manually.");
-        m45.addActionListener(actionEvent -> {
-            openBackupFolder();
-        });
+        m45.addActionListener(actionEvent -> openBackupFolder());
         mb.add(m4);
         m4.add(m41);
         m4.add(m42);
@@ -118,35 +88,21 @@ public class WindowMain {
         m4.add(m45);
         JMenu m5 = new JMenu("Utilities");
         JMenuItem m51 = new JMenuItem("Open Github Page");
-        m51.addActionListener(actionEvent -> {
-            openGithubPage();
-        });
+        m51.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m52 = new JMenuItem("Open MGT2 Folder");
-        m52.addActionListener(actionEvent -> {
-            openMGT2Folder();
-        });
+        m52.addActionListener(actionEvent -> openMGT2Folder());
         JMenuItem m53 = new JMenuItem("Show Active Genres");
-        m53.addActionListener(actionEvent -> {
-            showActiveGenres();
-        });
+        m53.addActionListener(actionEvent -> showActiveGenres());
         JMenuItem m54 = new JMenuItem("Show Active Themes");
-        m54.addActionListener(actionEvent -> {
-            showActiveThemes();
-        });
+        m54.addActionListener(actionEvent -> showActiveThemes());
         JMenuItem m55 = new JMenuItem("Open genres.txt file");
-        m55.addActionListener(actionEvent -> {
-            openGenresTXTFile();
-        });
+        m55.addActionListener(actionEvent -> openGenresTXTFile());
         JMenuItem m56 = new JMenuItem("Open Genres By Id");
         m56.setToolTipText("<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function");
-        m56.addActionListener(actionEvent -> {
-            openGenresByIDFile();
-        });
+        m56.addActionListener(actionEvent -> openGenresByIDFile());
         JMenuItem m57 = new JMenuItem("Open Log File");
         m57.setToolTipText("<html>Click to open the change log.<br>Shows all changes that have been made to the game files.");
-        m57.addActionListener(actionEvent -> {
-            openLogFile();
-        });
+        m57.addActionListener(actionEvent -> openLogFile());
         mb.add(m5);
         m5.add(m51);
         m5.add(m52);
@@ -160,9 +116,7 @@ public class WindowMain {
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel labelVersion = new JLabel("v" + MadGamesTycoon2ModTool.VERSION);
         JButton buttonQuit = new JButton("Quit");
-        buttonQuit.addActionListener(actionEvent -> {
-            disposeFrame();
-        });
+        buttonQuit.addActionListener(actionEvent -> disposeFrame());
         JLabel labelModCreator = new JLabel("by LMH01");
         // Components Added using Flow Layout
         panel.add(labelVersion);
