@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class WindowMain {
@@ -303,26 +304,30 @@ public class WindowMain {
             AnalyzeExistingGenres.analyzeGenreFile();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setDialogTitle("Choose the folder where the genre.txt file is located.");
+            fileChooser.setDialogTitle("Choose the folder(s) where the genre.txt file is located.");
             fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+            fileChooser.setMultiSelectionEnabled(true);
             int return_value = fileChooser.showOpenDialog(null);
             if(return_value == JFileChooser.APPROVE_OPTION){
-                String importGenreFolder = fileChooser.getSelectedFile().getPath();
-                if(Utils.doesFolderContainFile(importGenreFolder, "genre.txt")){
-                    File fileGenreToImport = new File(importGenreFolder + "//genre.txt");
-                    BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
-                    String currentLine = br.readLine();
-                    br.close();
-                    if(currentLine.contains("[MGT2MT VERSION]")){
-                        LOGGER.info("File seams to be valid. Beginning import process.");
-                        if(!SharingHandler.importGenre(importGenreFolder)){
-                            JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                File[] files = fileChooser.getSelectedFiles();
+                for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
+                    String importGenreFolder = files[i].getPath();
+                    if(Utils.doesFolderContainFile(importGenreFolder, "genre.txt")){
+                        File fileGenreToImport = new File(importGenreFolder + "//genre.txt");
+                        BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
+                        String currentLine = br.readLine();
+                        br.close();
+                        if(currentLine.contains("[MGT2MT VERSION]")){
+                            LOGGER.info("File seams to be valid. Beginning import process.");
+                            if(!SharingHandler.importGenre(importGenreFolder)){
+                                JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid genre.txt file.\nPlease select the correct folder.");
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid genre.txt file.\nPlease select the correct folder.");
+                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the genre.txt file.\nPlease select the correct folder.");
                     }
-                }else{
-                    JOptionPane.showMessageDialog(null, "The selected folder does not contain the genre.txt file.\nPlease select the correct folder.");
                 }
             }
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

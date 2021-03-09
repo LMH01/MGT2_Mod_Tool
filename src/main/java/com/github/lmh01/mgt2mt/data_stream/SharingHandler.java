@@ -106,11 +106,12 @@ public class SharingHandler {
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
     public static boolean importGenre(String importFolderPath) throws IOException {
+        AnalyzeExistingGenres.analyzeGenreFile();
         GenreManager.MAP_SINGLE_GENRE.clear();
         GenreManager.MAP_SINGLE_GENRE.put("[ID]", Integer.toString(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size() + 1));
         int newGenreId = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
-       File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
+        File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
         String currentLine;
         int line = 1;
