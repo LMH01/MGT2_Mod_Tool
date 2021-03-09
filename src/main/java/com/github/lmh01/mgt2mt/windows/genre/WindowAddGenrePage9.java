@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WindowAddGenrePage9 extends JFrame{
     static final WindowAddGenrePage9 FRAME = new WindowAddGenrePage9();
@@ -34,12 +37,15 @@ public class WindowAddGenrePage9 extends JFrame{
     public WindowAddGenrePage9() {
         buttonAddScreenshot.addActionListener(actionEvent -> {
             //WindowAddScreenshots.createFrame();
+            ArrayList<File> arrayListScreenshotFilesSelected = new ArrayList<>();
             JTextField textFieldScreenshotFile = new JTextField();
             JLabel labelMessage = new JLabel("<html>Click browse or enter enter the image path manually." +
                     "<br>When the image path is set click okay." +
                     "<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page." +
                     "<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3");
             JButton buttonBrowse = new JButton("Browse");
+            AtomicBoolean multipleFilesSelected = new AtomicBoolean(false);
+            AtomicInteger numberOfScreenshotsToAdd = new AtomicInteger();
             buttonBrowse.addActionListener(actionEventSmall ->{
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
@@ -62,16 +68,33 @@ public class WindowAddGenrePage9 extends JFrame{
                     JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
                     fileChooser.setFileFilter(fileFilter);
                     fileChooser.setDialogTitle("Choose a genre image (.png):");
+                    fileChooser.setMultiSelectionEnabled(true);
 
                     int return_value = fileChooser.showOpenDialog(null);
                     if (return_value == 0) {
-                        if(fileChooser.getSelectedFile().getName().contains(".png")){
-                            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                            File imageFile = fileChooser.getSelectedFile();
-                            textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
-                        }else{
-                            JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                        final int NUMBER_OF_SCREENSHOTS = fileChooser.getSelectedFiles().length;
+                        numberOfScreenshotsToAdd.set(NUMBER_OF_SCREENSHOTS);
+                        File[] screenshots = fileChooser.getSelectedFiles();
+                        if(NUMBER_OF_SCREENSHOTS > 1){
+                            multipleFilesSelected.set(true);
+                        }
+                        boolean failed = false;
+                        for(int i=0; i<NUMBER_OF_SCREENSHOTS; i++){
+                            if(!failed){
+                                if(screenshots[i].getName().contains(".png")){
+                                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                                    if(multipleFilesSelected.get()){
+                                        arrayListScreenshotFilesSelected.add(screenshots[i]);
+                                        textFieldScreenshotFile.setText("Multiple files selected");
+                                    }else{
+                                        textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(new Frame(), "Please select only .png files.");
+                                    failed = true;
+                                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                                }
+                            }
                         }
                     }
                     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
@@ -90,8 +113,14 @@ public class WindowAddGenrePage9 extends JFrame{
                     }else{
                         JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
                     }
+                }else if(multipleFilesSelected.get()){
+                    for(int i = 0; i< numberOfScreenshotsToAdd.get(); i++){
+                        GenreManager.arrayListScreenshotFiles.add(arrayListScreenshotFilesSelected.get(i));
+                    }
+                    JOptionPane.showMessageDialog(new Frame(), "Image files have been added.");
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+
                 }
             }
         });
