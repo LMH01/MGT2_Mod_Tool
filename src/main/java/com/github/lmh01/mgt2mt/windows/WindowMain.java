@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
@@ -351,7 +352,7 @@ public class WindowMain {
                 }
             }
             JList<String> listAvailableThemes = new JList<>(string);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
             listAvailableThemes.setVisibleRowCount(-1);
             JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
@@ -362,16 +363,41 @@ public class WindowMain {
             if(!noGenreToExportAvailable){
                 if(JOptionPane.showConfirmDialog(null, params, "Export genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!listAvailableThemes.isSelectionEmpty()){
-                        if(!AnalyzeExistingGenres.analyzeSingleGenre(AnalyzeExistingGenres.getGenreIdByName(listAvailableThemes.getSelectedValue()))){
-                            LOGGER.info("Genre has not been found!");
-                            JOptionPane.showMessageDialog(null, "Unable to export genre:\nInternal error\nSee console for further information!", "Error", JOptionPane.ERROR_MESSAGE);
-                        }else{
-                            if(SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(listAvailableThemes.getSelectedValue()), listAvailableThemes.getSelectedValue())){
-                                if(JOptionPane.showConfirmDialog(null, "Genre has been exported successfully!\n\nDo you want to open the folder where it has been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                        boolean exportFailed = false;
+                        boolean multipleGenresToExport = false;
+                        if(listAvailableThemes.getSelectedValuesList().size() > 0){
+                            multipleGenresToExport = true;
+                        }
+                        int numberOfGenresToExport = listAvailableThemes.getSelectedValuesList().size();
+                        String failedGenreExports = "";
+                        for(int i=0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
+                            String currentGenre = listAvailableThemes.getSelectedValuesList().get(i);
+                            if(!AnalyzeExistingGenres.analyzeSingleGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre))){
+                                LOGGER.info("Genre has not been found!");
+                                JOptionPane.showMessageDialog(null, "Unable to export genre:\nInternal error\nSee console for further information!", "Error", JOptionPane.ERROR_MESSAGE);
+                                failedGenreExports = failedGenreExports + " - Internal error" + currentGenre + System.getProperty("line.separator");
+                                exportFailed = true;
+                            }else{
+                                if(!SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre), currentGenre)){
+                                    if(!multipleGenresToExport){
+                                        JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                    failedGenreExports = failedGenreExports + currentGenre + " - The selected genre has already been exported" + System.getProperty("line.separator");
+                                    exportFailed = true;
+                                }
+                            }
+                            numberOfGenresToExport--;
+                        }
+                        LOGGER.info("exportFailed: " + exportFailed + "\nnumberOfGenresToExport: " + numberOfGenresToExport);
+                        if(numberOfGenresToExport == 0){
+                            if(exportFailed){
+                                if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting genres.\nThe following genres where not exported:\n" + failedGenreExports + "\n\nDo you want to open the folder where it has been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                                     Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
                                 }
                             }else{
-                                JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                if(JOptionPane.showConfirmDialog(null, "All selected genres have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                }
                             }
                         }
                     }else{
