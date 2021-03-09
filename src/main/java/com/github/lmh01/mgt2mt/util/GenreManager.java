@@ -52,7 +52,7 @@ public class GenreManager {
 
     public static void addGenre(){
         JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this warning again");
-        JLabel labelMessage = new JLabel("<html>Warning:<br>Loading a save-file with this new added genre will tie it to the file.<br>Removing the genre later won't remove it from save-files that have been accessed with said genre.<br><br>Note:<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>(You can open the Github repo by clicking the \"Github\" button in the main menu.<br><br>Add new genre?");
+        JLabel labelMessage = new JLabel("<html>Warning:<br>Loading a save-file with this new added genre will tie it to the file.<br>Removing the genre later won't remove it from save-files that have been accessed with said genre.<br><br>Note:<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>(You can open the Github repo by clicking \"Utilities -> Open Github Page\".<br><br>Add new genre?");
         Object[] params = {labelMessage,checkBoxDontShowAgain};
         LOGGER.info("enableAddGenreWarning: " + Settings.enableAddGenreWarning);
         boolean cancelAddGenre = false;
