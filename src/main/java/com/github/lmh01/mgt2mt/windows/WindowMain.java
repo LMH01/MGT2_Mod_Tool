@@ -136,14 +136,6 @@ public class WindowMain {
         frame.dispose();
         System.exit(0);
     }
-
-    /**
-     * Sets if the entry Add New Genre should be active or disabled
-     * @param enabled True when button should be enabled
-     */
-    public static void setNewGenreButtonStatus(boolean enabled){
-        m21.setEnabled(enabled);
-    }
     /**
      * Checks if specific actions are available. If they are the buttons will be enabled
      */
@@ -187,13 +179,12 @@ public class WindowMain {
     }
     private static void addGenre(){
         try {
-            setNewGenreButtonStatus(false);
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             GenreManager.addGenre();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
-            setNewGenreButtonStatus(true);
+            checkActionAvailability();
             e.printStackTrace();
         }
     }

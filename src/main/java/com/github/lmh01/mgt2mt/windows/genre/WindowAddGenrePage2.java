@@ -42,7 +42,6 @@ public class WindowAddGenrePage2 extends JFrame{
         });
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
-                WindowMain.setNewGenreButtonStatus(true);
                 FRAME.dispose();
             }
         });
