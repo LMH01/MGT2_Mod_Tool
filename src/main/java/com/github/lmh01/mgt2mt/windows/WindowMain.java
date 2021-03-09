@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class WindowMain {
@@ -35,9 +37,13 @@ public class WindowMain {
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         JMenuItem m12 = new JMenuItem("Check For Updates");
         m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
+        JMenuItem m13 = new JMenuItem("Uninstall");
+        m13.setToolTipText("<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.");
+        m13.addActionListener(actionEvent -> uninstall());
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
+        m1.add(m13);
         JMenu m2 = new JMenu("Mods");
         m21.addActionListener(actionEvent -> addGenre());
         m22.addActionListener(actionEvent -> removeGenre());
@@ -512,11 +518,11 @@ public class WindowMain {
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
-                Backup.restoreBackup(true);
+                Backup.restoreBackup(true, true);
             } catch (IOException e) {
                 e.printStackTrace();
                 if(Utils.showConfirmDialog(1, e)){
-                    Backup.restoreBackup(true);
+                    Backup.restoreBackup(true, true);
                 }else{
                     JOptionPane.showMessageDialog(null, "The initial backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
                 }
@@ -528,12 +534,12 @@ public class WindowMain {
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
-                Backup.restoreBackup(false);
+                Backup.restoreBackup(false, true);
                 ChangeLog.addLogEntry(9);
             } catch (IOException e) {
                 e.printStackTrace();
                 if(Utils.showConfirmDialog(1, e)){
-                    Backup.restoreBackup(false);
+                    Backup.restoreBackup(false, true);
                     ChangeLog.addLogEntry(9);
                 }else{
                     JOptionPane.showMessageDialog(null, "The latest backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
@@ -659,6 +665,82 @@ public class WindowMain {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private static void uninstall(){
+        JLabel labelDescription = new JLabel("<html>Select what should be removed<br>After uninstalling the program is exited");
+        JCheckBox checkboxDeleteBackups = new JCheckBox("Delete Backups");
+        checkboxDeleteBackups.setSelected(true);
+        checkboxDeleteBackups.setToolTipText("Check to delete all backups upon uninstalling");
+        JCheckBox checkboxRevertAllMods = new JCheckBox("Revert all mods");
+        checkboxRevertAllMods.setSelected(true);
+        checkboxRevertAllMods.setToolTipText("Check to revert all mods upon uninstalling");
+        JCheckBox checkboxDeleteConfigFiles = new JCheckBox("Delete config files");
+        checkboxDeleteConfigFiles.setSelected(true);
+        checkboxDeleteConfigFiles.setToolTipText("Check to delete the config file.");
+        JCheckBox checkboxDeleteExports = new JCheckBox("Delete Exports");
+        checkboxDeleteExports.setSelected(true);
+        checkboxDeleteExports.setToolTipText("Check to delete all exports");
+        Object[] params = {labelDescription, checkboxDeleteBackups, checkboxRevertAllMods, checkboxDeleteConfigFiles, checkboxDeleteExports};
+        if(JOptionPane.showConfirmDialog(null, params, "Uninstall", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            boolean uninstallFailed = false;
+            StringBuilder stringActions = new StringBuilder();
+            if(checkboxDeleteBackups.isSelected()){
+                stringActions.append("Delete Backups").append(System.getProperty("line.separator"));
+            }
+            if(checkboxRevertAllMods.isSelected()){
+                stringActions.append("Revert All Mods").append(System.getProperty("line.separator"));
+            }
+            if(checkboxDeleteConfigFiles.isSelected()){
+                stringActions.append("Delete config files").append(System.getProperty("line.separator"));
+            }
+            if(checkboxDeleteExports.isSelected()){
+                stringActions.append("Delete exports").append(System.getProperty("line.separator"));
+            }
+            if(JOptionPane.showConfirmDialog(null, "Warning!\nAre you sure that you wan't to do the following:\n\n" + stringActions + "\nThis can't be reverted!", "Confirm uninstall", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                LOGGER.info("Uninstalling...");
+                StringBuilder uninstallFailedExplanation = new StringBuilder();
+                if(checkboxRevertAllMods.isSelected()){
+                    String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+                    for(int i=0; i<customGenres.length; i++){
+                        try {
+                            EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenres[i]));
+                            LOGGER.info("Game files have been restored to original.");
+                        } catch (IOException e) {
+                            LOGGER.info("Genre could not be removed: " + e.getMessage());
+                            uninstallFailedExplanation.append("Genre could not be removed: " + e.getMessage()).append(System.getProperty("line.separator"));
+                            e.printStackTrace();
+                            uninstallFailed = true;
+                        }
+                    }
+                    Backup.restoreBackup(true, false);//This is used to restore the Themes file to its original condition
+                }
+                if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
+                    File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
+                    Utils.deleteDirectory(modManagerPath);
+                }
+                if(checkboxDeleteBackups.isSelected()){
+                    File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
+                    Utils.deleteDirectory(backupFolder);
+                    LOGGER.info("Backups have been deleted.");
+                }
+                if(checkboxDeleteConfigFiles.isSelected()){
+                    File configFile = new File(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+                    configFile.deleteOnExit();;
+                    LOGGER.info("Settings file has been deleted.");
+                }
+                if(checkboxDeleteExports.isSelected()){
+                    File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
+                    Utils.deleteDirectory(exportFolder);
+                    LOGGER.info("Exports have been deleted.");
+                }
+                if(uninstallFailed){
+                    JOptionPane.showMessageDialog(null, "There was a problem while uninstalling:\n\n" + uninstallFailedExplanation, "Uninstall incomplete", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Your selected files have been uninstalled successfully!", "Uninstall successful", JOptionPane.INFORMATION_MESSAGE);
+                }
+                System.exit(0);
+            }
         }
     }
 }

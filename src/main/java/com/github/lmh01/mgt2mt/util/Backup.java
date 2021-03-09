@@ -77,8 +77,9 @@ public class Backup {
     /**
      * Restores either a complete initial backup or a complete latest backup
      * @param initialBackup If true the initial backup will be restored. If false the latest backup will be restored.
+     * @param showMessages Set true when messages should be displayed to the user
      */
-    public static void restoreBackup(boolean initialBackup){
+    public static void restoreBackup(boolean initialBackup, boolean showMessages){
         try {
             LOGGER.info("Restoring initial backup.");
             File fileGenresBackup;
@@ -154,19 +155,27 @@ public class Backup {
             Files.copy(Paths.get(fileThemesTuBackup.getPath()), Paths.get(Utils.getThemeFile(14).getPath()), StandardCopyOption.REPLACE_EXISTING);
             if(initialBackup){
                 ChangeLog.addLogEntry(8);
-                JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                if(showMessages){
+                    JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                }
             }else{
                 ChangeLog.addLogEntry(9);
-                JOptionPane.showMessageDialog(null, "The latest backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                if(showMessages){
+                    JOptionPane.showMessageDialog(null, "The latest backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         } catch (IOException exception) {
             exception.printStackTrace();
             if(initialBackup){
                 ChangeLog.addLogEntry(10, exception.getMessage());
-                JOptionPane.showMessageDialog(null, "The initial backup could not be restored.\nThe initial backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                if(showMessages){
+                    JOptionPane.showMessageDialog(null, "The initial backup could not be restored.\nThe initial backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                }
             }else{
                 ChangeLog.addLogEntry(11, exception.getMessage());
-                JOptionPane.showMessageDialog(null, "The latest backup could not be restored.\nThe latest backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                if(showMessages){
+                    JOptionPane.showMessageDialog(null, "The latest backup could not be restored.\nThe latest backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                }
             }
 
         }
