@@ -221,4 +221,22 @@ public class Utils {
                     }
                 });
     }
+
+    /**
+     * Copied from https://www.baeldung.com/java-delete-directory
+     * Deletes a complete directory with its contents
+     * @return Returns true when operation was successful
+     */
+    public static boolean deleteDirectory(File directoryToBeDeleted ){
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Deleting file: " + file.getPath());
+                }
+            }
+        }
+        return directoryToBeDeleted.delete();
+    }
 }
