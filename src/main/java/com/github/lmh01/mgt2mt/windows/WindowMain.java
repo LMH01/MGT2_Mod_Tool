@@ -1052,7 +1052,19 @@ public class WindowMain {
                             uninstallFailed = true;
                         }
                     }
-                    Backup.restoreBackup(true, false);//This is used to restore the Themes file to its original condition
+                    String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
+                    for(int i=0; i<customPublishers.length; i++){
+                        try {
+                            EditPublishersFile.removePublisher(customPublishers[i]);
+                            LOGGER.info("Publisher files have been restored to original.");
+                        } catch (IOException e) {
+                            LOGGER.info("Publisher could not be removed: " + e.getMessage());
+                            uninstallFailedExplanation.append("Publisher could not be removed: " + e.getMessage()).append(System.getProperty("line.separator"));
+                            e.printStackTrace();
+                            uninstallFailed = true;
+                        }
+                    }
+                    Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
                 }
                 if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                     File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);

@@ -18,7 +18,6 @@ public class AnalyzeExistingPublishers {
                 .map(map -> Integer.parseInt(map.get("ID")))
                 .max(Integer::compareTo)
                 .orElse(0);
-        LOGGER.info("Max Number: " + maxThemeID);
     }
 
     /**

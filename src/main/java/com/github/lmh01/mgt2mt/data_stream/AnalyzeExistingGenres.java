@@ -274,9 +274,6 @@ public class AnalyzeExistingGenres {
      * @return Returns the specified genre name by id.
      */
     public static String getGenreNameById(int id){
-        for(int i=0; i<ARRAY_LIST_GENRE_NAMES_IN_USE.size(); i++){
-            LOGGER.info("id: " + i + " | name: " + ARRAY_LIST_GENRE_NAMES_IN_USE.get(i));
-        }
         return ARRAY_LIST_GENRE_NAMES_IN_USE.get(id);
     }
 
