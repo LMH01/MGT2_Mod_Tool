@@ -24,6 +24,7 @@ public class WindowMain {
     private static JMenuItem m21 = new JMenuItem("Add Genre");
     private static JMenuItem m22 = new JMenuItem("Remove Genre");
     private static JMenuItem m32 = new JMenuItem("Export Genre");
+    private static JMenuItem m34 = new JMenuItem("Export Publisher");
     private static JMenuItem m24 = new JMenuItem("Remove Theme");
     private static JMenuItem m25 = new JMenuItem("NPC_Games_list");
     private static JMenuItem m27 = new JMenuItem("Remove Publisher");
@@ -76,11 +77,16 @@ public class WindowMain {
         JMenuItem m31 = new JMenuItem("Import Genre");
         m31.addActionListener(actionEvent -> importGenre());
         m32.addActionListener(actionEvent -> exportGenre());
-        JMenuItem m33 = new JMenuItem("Open Export Folder");
-        m33.addActionListener(actionEvent -> openExportFolder());
+        JMenuItem m33 = new JMenuItem("Import Publisher");
+        m33.addActionListener(actionEvent -> importPublisher());
+        m34.addActionListener(actionEvent -> exportPublisher());
+        JMenuItem m35 = new JMenuItem("Open Export Folder");
+        m35.addActionListener(actionEvent -> openExportFolder());
         m3.add(m31);
         m3.add(m32);
         m3.add(m33);
+        m3.add(m34);
+        m3.add(m35);
         mb.add(m3);
         JMenu m4 = new JMenu("Backup");
         JMenuItem m41 = new JMenuItem("Create Backup");
@@ -152,15 +158,7 @@ public class WindowMain {
     }
     public static void debug(){
         try {
-            List<Map<String, String>> list = Utils.parseDataFile(Utils.getPublisherFile());
-            for(int i=0; i<list.size(); i++){
-                LOGGER.info("Map: " + i);
-                Map<String, String> map = list.get(i);
-                for(Map.Entry<String, String> entry : map.entrySet()){//Selects the values that have been selected previously
-                    LOGGER.info("Key: " + entry.getKey() + "| Value: " + entry.getValue());
-                }
-            }
-            AnalyzeExistingPublishers.analyzePublisherFile();
+            AnalyzeExistingGenres.analyzeGenreFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -198,6 +196,7 @@ public class WindowMain {
             m25.setEnabled(!noCustomGenreAvailable);
             m27.setEnabled(!noCustomPublishersAvailable);
             m32.setEnabled(!noCustomGenreAvailable);
+            m34.setEnabled(!noCustomPublishersAvailable);
             if(noCustomGenreAvailable){
                 m22.setToolTipText("Disabled -> No genre to remove available");
                 m25.setToolTipText("Disabled -> Add a genre first");
@@ -214,8 +213,10 @@ public class WindowMain {
             }
             if(noCustomPublishersAvailable){
                 m27.setToolTipText("Disabled -> Add publisher first");
+                m34.setToolTipText("Disabled -> No publisher to export available");
             }else{
                 m27.setToolTipText("");
+                m34.setToolTipText("");
             }
         }catch (IOException e){
             LOGGER.info("Error" + e.getMessage());
@@ -754,6 +755,82 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Error while exporting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+    }
+    private static void importPublisher(){
+
+    }
+    private static void exportPublisher(){
+        try {
+            AnalyzeExistingPublishers.analyzePublisherFile();
+            AnalyzeExistingGenres.analyzeGenreFile();
+            boolean noPublisherToExportAvailable = true;
+            JLabel labelChooseGenre = new JLabel("Select the publisher(s) that should be exported:");
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = AnalyzeExistingPublishers.getPublisherString();
+                noPublisherToExportAvailable = false;
+            }else{
+                string = AnalyzeExistingPublishers.getCustomPublisherString();
+                if(string.length != 0){
+                    noPublisherToExportAvailable = false;
+                }
+            }
+            JList<String> listAvailablePublishers = new JList<>(string);
+            listAvailablePublishers.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailablePublishers.setLayoutOrientation(JList.VERTICAL);
+            listAvailablePublishers.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailablePublishers);
+            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+
+            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
+
+            if(!noPublisherToExportAvailable){
+                if(JOptionPane.showConfirmDialog(null, params, "Export publishers", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!listAvailablePublishers.isSelectionEmpty()){
+                        boolean exportFailed = false;
+                        boolean multipleGenresToExport = false;
+                        if(listAvailablePublishers.getSelectedValuesList().size() > 0){
+                            multipleGenresToExport = true;
+                        }
+                        int numberOfPublishersToExport = listAvailablePublishers.getSelectedValuesList().size();
+                        String failedPublishersExport = "";
+                        for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
+                            String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
+                            try{
+                                if(!SharingHandler.exportPublisher(currentPublisher, AnalyzeExistingPublishers.getSinglePublisherByNameMap(currentPublisher))){
+                                    if(!multipleGenresToExport){
+                                        JOptionPane.showMessageDialog(null, "The selected publisher has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                    failedPublishersExport = failedPublishersExport + currentPublisher + " - The selected publisher has already been exported" + System.getProperty("line.separator");
+                                    exportFailed = true;
+                                }
+                            }catch (IOException e){
+                                failedPublishersExport = failedPublishersExport + currentPublisher + " - " + e.getMessage() + System.getProperty("line.separator");
+                                exportFailed = true;
+                            }
+                            numberOfPublishersToExport--;
+                        }
+                        if(numberOfPublishersToExport == 0){
+                            if(exportFailed){
+                                JOptionPane.showMessageDialog(null, "Something went wrong wile exporting publishers.\nThe following publishers where not exported:\n" + failedPublishersExport, "Publisher removal incomplete", JOptionPane.WARNING_MESSAGE);
+                            }else{
+                                if(JOptionPane.showConfirmDialog(null, "All selected publishers have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Publisher export successful", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                }
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a publisher first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Unable to export publisher:\nThere is no custom publisher that could be exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while exporting publisher: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        checkActionAvailability();
     }
     private static void openExportFolder(){
         try {

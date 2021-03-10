@@ -123,7 +123,7 @@ public class EditPublishersFile {
      * @param publisherNameEN The publisher name that should be searched
      * @return returns the number from the list position where the input genre is found.
      */
-    private static int getPublisherPositionInList(String publisherNameEN){
+    public static int getPublisherPositionInList(String publisherNameEN){
         int returnValue = 0;
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
         for(int i=0; i<list.size(); i++){

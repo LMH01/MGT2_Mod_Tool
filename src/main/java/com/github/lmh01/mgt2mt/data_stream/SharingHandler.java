@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Map;
 
 @SuppressWarnings("JavaDoc")
 public class SharingHandler {
@@ -25,7 +26,7 @@ public class SharingHandler {
      * @throws IOException
      */
     public static boolean exportGenre(int genreId, String genreName) throws IOException {
-        final String EXPORTED_GENRE_MAIN_FOLDER_PATH = Settings.MGT2_MOD_MANAGER_PATH + "//Export//" + genreName;
+        final String EXPORTED_GENRE_MAIN_FOLDER_PATH = Settings.MGT2_MOD_MANAGER_PATH + "//Export//Genres//" + genreName;
         final String EXPORTED_GENRE_DATA_FOLDER_PATH = EXPORTED_GENRE_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
@@ -101,7 +102,7 @@ public class SharingHandler {
     }
 
     /**
-     *
+     * Imports the specified genre.
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
@@ -181,6 +182,60 @@ public class SharingHandler {
         return true;
     }
     //TODO Rewrite into a more simple approach -> rewrite addGenre so that it uses a Map and not multiple ArrayLists
+
+    /**
+     * Exports the specified publisher.
+     * @param publisherNameEN The publisher name that should be exported.
+     * @return Returns true when the publisher has been exported successfully. Returns false when the publisher has already been exported.
+     */
+    public static boolean exportPublisher(String publisherNameEN, Map<String, String> singlePublisherMap) throws IOException {
+        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Publishers//" + publisherNameEN;
+        final String EXPORTED_PUBLISHER_DATA_FOLDER_PATH = EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//DATA//";
+        File fileDataFolder = new File(EXPORTED_PUBLISHER_DATA_FOLDER_PATH);
+        File fileExportedPublisher = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//publisher.txt");
+        File fileExportedPublisherIcon = new File(EXPORTED_PUBLISHER_DATA_FOLDER_PATH + "//icon.png");
+        File fileGenreIconToExport = new File(Utils.getMGT2CompanyLogosPath() + singlePublisherMap.get("PIC") + ".png");
+        if(!fileExportedPublisherIcon.exists()){
+            fileDataFolder.mkdirs();
+        }
+        if(fileExportedPublisherIcon.exists()){
+            return false;
+        }
+        if(Settings.enableDebugLogging){
+            LOGGER.info("Copying image files to export folder...");
+        }
+        Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedPublisherIcon.getPath()));
+        fileExportedPublisher.createNewFile();
+        PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedPublisher), StandardCharsets.UTF_8));
+        bw.write("\ufeff");//Makes the file UTF8-BOM
+        bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+        bw.print("[PUBLISHER START]" + System.getProperty("line.separator"));
+        bw.print("[NAME EN]" + singlePublisherMap.get("NAME EN") + System.getProperty("line.separator"));
+        bw.print("[NAME GE]" + singlePublisherMap.get("NAME GE") + System.getProperty("line.separator"));
+        bw.print("[NAME TU]" + singlePublisherMap.get("NAME TU") + System.getProperty("line.separator"));
+        bw.print("[NAME FR]" + singlePublisherMap.get("NAME FR") + System.getProperty("line.separator"));
+        bw.print("[DATE]" + singlePublisherMap.get("DATE") + System.getProperty("line.separator"));
+        bw.print("[DEVELOPER]" + singlePublisherMap.get("DEVELOPER") + System.getProperty("line.separator"));
+        bw.print("[PUBLISHER]" + singlePublisherMap.get("PUBLISHER") + System.getProperty("line.separator"));
+        bw.print("[MARKET]" + singlePublisherMap.get("MARKET") + System.getProperty("line.separator"));
+        bw.print("[SHARE]" + singlePublisherMap.get("SHARE") + System.getProperty("line.separator"));
+        LOGGER.info("GenreID: " + singlePublisherMap.get("GENRE"));
+        LOGGER.info("GenreName: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(singlePublisherMap.get("GENRE"))));
+        bw.print("[GENRE]" + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(singlePublisherMap.get("GENRE"))) + System.getProperty("line.separator"));
+        bw.print("[PUBLISHER END]");
+        bw.close();
+        ChangeLog.addLogEntry(21, singlePublisherMap.get("NAME EN"));
+        return true;
+    }
+
+    /**
+     * Imports the specified genre.
+     * @param importFolderPath The path for the folder where the import files are stored
+     * @return Returns true when the publisher has been imported successfully. Returns false when the publisher already exists.
+     */
+    public static boolean importPublisher(String importFolderPath){
+        return true;
+    }
     /**
      * Fills the new genre variables that are used to add a new genre. The variables that are being filled are the ones in the {@link GenreManager}.
      */

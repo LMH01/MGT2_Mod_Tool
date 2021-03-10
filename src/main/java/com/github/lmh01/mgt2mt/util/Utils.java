@@ -59,6 +59,10 @@ public class Utils {
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\";
     }
 
+    public static String getMGT2ModToolExportFolder(){
+        return Settings.MGT2_MOD_MANAGER_PATH + "//Export//";
+    }
+
     /**
      * @param file The input file
      * @return Returns a list containing map entries for every data package in the input text file.

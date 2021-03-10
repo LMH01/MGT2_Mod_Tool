@@ -4,10 +4,7 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AnalyzeExistingPublishers {
 
@@ -53,5 +50,16 @@ public class AnalyzeExistingPublishers {
         String[] string = new String[arrayListActivePublishers.size()];
         arrayListActivePublishers.toArray(string);
         return string;
+    }
+    public static Map<String, String> getSinglePublisherByNameMap(String publisherNameEN){
+        List<Map<String, String>> list = getListMap();
+        Map<String, String> mapSingleGenre = null;
+        int publisherPosition = EditPublishersFile.getPublisherPositionInList(publisherNameEN);
+        for(int i=0; i<list.size(); i++){
+            if(i == publisherPosition){
+                mapSingleGenre = list.get(i);
+            }
+        }
+        return mapSingleGenre;
     }
 }
