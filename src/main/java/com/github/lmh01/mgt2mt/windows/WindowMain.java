@@ -568,6 +568,7 @@ public class WindowMain {
                             hashMap.put("GENRE", genreID.toString());
                             EditPublishersFile.addPublisher(hashMap, publisherImageFilePath.toString());
                             JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
+                            ChangeLog.addLogEntry(19, hashMap.get("NAME EN"));
                             breakLoop = true;
                         }
                     }
@@ -616,6 +617,7 @@ public class WindowMain {
                             String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
                             try{
                                 EditPublishersFile.removePublisher(currentPublisher);
+                                ChangeLog.addLogEntry(20, currentPublisher);
                             }catch (IOException e){
                                 failedPublishersRemoves = failedPublishersRemoves + currentPublisher + " - " + e.getMessage() + System.getProperty("line.separator");
                                 exportFailed = true;
@@ -624,7 +626,7 @@ public class WindowMain {
                         }
                         if(numberOfPublishersToRemove == 0){
                             if(exportFailed){
-                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing publishers.\\nThe following publishers where not removed:\n" + failedPublishersRemoves, "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing publishers.\\nThe following publishers where not removed:\n" + failedPublishersRemoves, "Publisher removal incomplete", JOptionPane.WARNING_MESSAGE);
                             }else{
                                 JOptionPane.showMessageDialog(null, "All selected publishers have been removed successfully!", "Publisher removal successful", JOptionPane.INFORMATION_MESSAGE);
                             }
@@ -682,7 +684,7 @@ public class WindowMain {
         try {
             boolean noGenreToExportAvailable = true;
             AnalyzeExistingGenres.analyzeGenreFile();
-            JLabel labelChooseGenre = new JLabel("Select the genre that should be exported:");
+            JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be exported:");
             String[] string;
             if(Settings.disableSafetyFeatures){
                 string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
