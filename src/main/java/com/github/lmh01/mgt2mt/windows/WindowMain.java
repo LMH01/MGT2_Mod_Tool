@@ -538,12 +538,11 @@ public class WindowMain {
                         JOptionPane.showMessageDialog(null, "Please select a genre first!", "", JOptionPane.INFORMATION_MESSAGE);
                     }else{
                         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
-                        AnalyzeCompanyLogos.analyzeLogos();
                         int logoId;
                         if(publisherImageFilePath.toString().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
                             logoId = 87;
                         }else{
-                            logoId = AnalyzeCompanyLogos.maxLogoNumber+1;
+                            logoId = AnalyzeCompanyLogos.getLogoNumber();
                         }
                         if(JOptionPane.showConfirmDialog(null, "Add this publisher?:\n" +
                                 "\nName: " + textFieldName.getText() +
@@ -757,7 +756,40 @@ public class WindowMain {
         }
     }
     private static void importPublisher(){
-
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+            fileChooser.setDialogTitle("Choose the folder(s) where the publisher.txt file is located.");
+            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+            fileChooser.setMultiSelectionEnabled(true);
+            int return_value = fileChooser.showOpenDialog(null);
+            if(return_value == JFileChooser.APPROVE_OPTION){
+                File[] files = fileChooser.getSelectedFiles();
+                for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
+                    String importPublisherFolder = files[i].getPath();
+                    if(Utils.doesFolderContainFile(importPublisherFolder, "publisher.txt")){
+                        File filePublisherToImport = new File(importPublisherFolder + "//publisher.txt");
+                        BufferedReader br = new BufferedReader(new FileReader(filePublisherToImport));
+                        String currentLine = br.readLine();
+                        String secondLine = br.readLine();
+                        br.close();
+                        if(currentLine.contains("[MGT2MT VERSION]") && secondLine.contains("[PUBLISHER START]")){
+                            LOGGER.info("File seams to be valid. Beginning import process.");
+                            if(!SharingHandler.importPublisher(importPublisherFolder)){
+                                JOptionPane.showMessageDialog(null, "The selected publisher already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid publisher.txt file.\nPlease select the correct folder.");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the publisher.txt file.\nPlease select the correct folder.");
+                    }
+                }
+            }
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {
+            e.printStackTrace();
+        }
     }
     private static void exportPublisher(){
         try {

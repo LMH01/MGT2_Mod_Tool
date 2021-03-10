@@ -4,14 +4,18 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("JavaDoc")
@@ -233,7 +237,56 @@ public class SharingHandler {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns true when the publisher has been imported successfully. Returns false when the publisher already exists.
      */
-    public static boolean importPublisher(String importFolderPath){
+    public static boolean importPublisher(String importFolderPath) throws IOException {
+        AnalyzeExistingPublishers.analyzePublisherFile();
+        HashMap<String, String> mapNewPublisher = new HashMap<>();
+        int newPublisherId = AnalyzeExistingPublishers.maxThemeID+1;
+        File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
+        String currentLine;
+        int line = 1;
+        while((currentLine = reader.readLine()) != null){
+            switch(line){
+                case 3: mapNewPublisher.put("NAME EN", currentLine.replace("[NAME EN]", "")); break;
+                case 4: mapNewPublisher.put("NAME GE", currentLine.replace("[NAME GE]", "")); break;
+                case 5: mapNewPublisher.put("NAME TU", currentLine.replace("[NAME TU]", "")); break;
+                case 6: mapNewPublisher.put("NAME FR", currentLine.replace("[NAME FR]", "")); break;
+                case 7: mapNewPublisher.put("DATE", currentLine.replace("[DATE]", "")); break;
+                case 8: mapNewPublisher.put("DEVELOPER", currentLine.replace("[DEVELOPER]", "")); break;
+                case 9: mapNewPublisher.put("PUBLISHER", currentLine.replace("[PUBLISHER]", "")); break;
+                case 10: mapNewPublisher.put("MARKET", currentLine.replace("[MARKET]", "")); break;
+                case 11: mapNewPublisher.put("SHARE", currentLine.replace("[SHARE]", "")); break;
+                case 12: mapNewPublisher.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(currentLine.replace("[GENRE]", "")))); break;
+            }
+            line++;
+        }
+        reader.close();
+        mapNewPublisher.put("ID", Integer.toString(newPublisherId));
+        int logoId = AnalyzeCompanyLogos.getLogoNumber();
+        mapNewPublisher.put("PIC", Integer.toString(logoId));
+        List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+        for(int i=0; i<list.size(); i++){
+            Map<String, String> map = list.get(i);
+            if(map.get("NAME EN").equals(mapNewPublisher.get("NAME EN"))){
+                return false;
+            }
+        }
+        File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
+        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
+        if(JOptionPane.showConfirmDialog(null, "Add this publisher?:\n" +
+                "\nName: " + mapNewPublisher.get("NAME EN") +
+                "\nDate: " + mapNewPublisher.get("DATE") +
+                "\nPic: See top left" +
+                "\nDeveloper: " + mapNewPublisher.get("DEVELOPER") +
+                "\nPublisher: " + mapNewPublisher.get("PUBLISHER") +
+                "\nMarketShare: " + mapNewPublisher.get("MARKET") +
+                "\nShare: " + mapNewPublisher.get("SHARE") +
+                "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(mapNewPublisher.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+            EditPublishersFile.addPublisher(mapNewPublisher, publisherImageFilePath.getPath());
+            ChangeLog.addLogEntry(22, mapNewPublisher.get("NAME EN"));
+            JOptionPane.showMessageDialog(null, "Publisher " + mapNewPublisher.get("NAME EN") + " has been added successfully");
+            WindowMain.checkActionAvailability();
+        }
         return true;
     }
     /**

@@ -60,11 +60,11 @@ public class EditPublishersFile {
         bw.write("[EOF]");
         bw.close();
         if(!publisherImageFilePath.equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
-            AnalyzeCompanyLogos.analyzeLogos();
             File publisherImageFileToCopy = new File(publisherImageFilePath);
             File publisherImageFileTarget = new File(Utils.getCompanyLogosPath() + "//" + hashMap.get("PIC") + ".png");
             Files.copy(Paths.get(publisherImageFileToCopy.getPath()), Paths.get(publisherImageFileTarget.getPath()));
         }
+        LOGGER.info("The publisher has been added: " + hashMap.get("NAME EN"));
     }
 
     /**
