@@ -4,16 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
 
@@ -53,10 +56,57 @@ public class Utils {
     }
 
     /**
+     * @param file The input file
+     * @return Returns a list containing map entries for every data package in the input text file.
+     * @throws IOException
+     */
+    public static List<Map<String,String>> parseDataFile(File file) throws IOException{
+        List<Map<String, String>> fileParts = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        String currentLine;
+        boolean firstLine = true;
+        Map<String, String> mapCurrent = new HashMap<>();
+        while((currentLine = reader.readLine()) != null){
+            if(firstLine){
+                currentLine = currentLine.replaceAll("\\uFEFF", "");
+            }
+            if(currentLine.isEmpty()){
+                fileParts.add(mapCurrent);
+                mapCurrent = new HashMap<>();
+            }else{
+                boolean valueComplete = false;
+                StringBuilder mapKey = new StringBuilder();
+                StringBuilder mapValue = new StringBuilder();
+                for(int i=1; i<currentLine.length(); i++){
+                    if(String.valueOf(currentLine.charAt(i)).equals("]")){
+                        valueComplete = true;
+                        continue;
+                    }
+                    if(valueComplete){
+                        mapValue.append(currentLine.charAt(i));
+                    }else{
+                        mapKey.append(currentLine.charAt(i));
+                    }
+                }
+                mapCurrent.put(mapKey.toString(), mapValue.toString());
+            }
+        }
+        reader.close();
+        return fileParts;
+    }
+
+    /**
      * @return Returns the genre file inside the mgt2 folder.
      */
     public static File getGenreFile(){
         return new File(getMGT2DataPath() + "\\Genres.txt");
+    }
+
+    /**
+     * @return Returns the publisher.txt file.
+     */
+    public static File getPublisherFile(){
+        return new File(getMGT2DataPath() + "\\Publisher.txt");
     }
 
     /**
@@ -69,6 +119,11 @@ public class Utils {
     public static File getThemesGeFile(){return new File(getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");}
 
     public static File getThemesEnFile(){return new File(getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");}
+
+    public static String getCompanyLogosPath(){
+        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\";
+    }
+
     /**
      * @param s The input String
      * @return Returns the input String without UTF8BOM
@@ -238,5 +293,52 @@ public class Utils {
             }
         }
         return directoryToBeDeleted.delete();
+    }
+
+    /**
+     * Opens a file chooser where a single image file can be selected.
+     * @return Returns the selected image file path
+     */
+    public static String getImagePath(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+
+            javax.swing.filechooser.FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
+                @Override
+                public boolean accept(File f) {
+                    if(f.getName().contains(".png")){
+                        return true;
+                    }
+                    return f.isDirectory();
+                }
+
+                @Override
+                public String getDescription() {
+                    return ".png files";
+                }
+            };
+
+            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+            fileChooser.setFileFilter(fileFilter);
+            fileChooser.setDialogTitle("Choose a genre image (.png):");
+
+            int return_value = fileChooser.showOpenDialog(null);
+            if (return_value == 0) {
+                if(fileChooser.getSelectedFile().getName().contains(".png")){
+                    JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                    return fileChooser.getSelectedFile().getPath();
+                }else{
+                    JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                    return "error";
+                }
+            }
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+            return "error";
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
 }

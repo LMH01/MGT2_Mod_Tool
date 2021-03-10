@@ -84,6 +84,7 @@ public class Backup {
             LOGGER.info("Restoring initial backup.");
             File fileGenresBackup;
             File fileNpcGamesBackup;
+            File filePublisherBackup;
             File fileThemesArBackup;
             File fileThemesChBackup;
             File fileThemesCtBackup;
@@ -102,6 +103,7 @@ public class Backup {
             if(initialBackup){
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
+                filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Publisher.txt.initialBackup");
                 fileThemesArBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_AR.txt.initialBackup");
                 fileThemesChBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CH.txt.initialBackup");
                 fileThemesCtBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CT.txt.initialBackup");
@@ -120,6 +122,7 @@ public class Backup {
             }else{
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
+                filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Publisher.txt");
                 fileThemesArBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_AR.txt");
                 fileThemesChBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CH.txt");
                 fileThemesCtBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CT.txt");
@@ -138,6 +141,7 @@ public class Backup {
             }
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileThemesArBackup.getPath()), Paths.get(Utils.getThemeFile(0).getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileThemesChBackup.getPath()), Paths.get(Utils.getThemeFile(1).getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileThemesCtBackup.getPath()), Paths.get(Utils.getThemeFile(2).getPath()), StandardCopyOption.REPLACE_EXISTING);
@@ -199,6 +203,7 @@ public class Backup {
     public static void createFullBackup() throws IOException {
        Backup.createBackup(Utils.getGenreFile());
        Backup.createBackup(Utils.getNpcGamesFile());
+       Backup.createBackup(Utils.getPublisherFile());
        backupSaveGames(false);
        createThemeFilesBackup(false);
     }
@@ -212,6 +217,7 @@ public class Backup {
             Backup.createBackup(Utils.getGenreFile(), true);
             Backup.createBackup(Utils.getNpcGamesFile(), true);
             Backup.createBackup(Utils.getThemesGeFile(), true);
+            Backup.createBackup(Utils.getPublisherFile(), true);
             backupSaveGames(true);
             createThemeFilesBackup(true);
             ChangeLog.addLogEntry(6);

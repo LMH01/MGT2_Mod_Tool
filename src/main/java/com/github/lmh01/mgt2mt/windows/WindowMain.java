@@ -11,9 +11,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
@@ -40,10 +43,13 @@ public class WindowMain {
         JMenuItem m13 = new JMenuItem("Uninstall");
         m13.setToolTipText("<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.");
         m13.addActionListener(actionEvent -> uninstall());
+        JMenuItem m14 = new JMenuItem("Debug");
+        m14.addActionListener(actionEvent -> debug());
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
         m1.add(m13);
+        m1.add(m14);
         JMenu m2 = new JMenu("Mods");
         m21.addActionListener(actionEvent -> addGenre());
         m22.addActionListener(actionEvent -> removeGenre());
@@ -52,12 +58,16 @@ public class WindowMain {
         m24.addActionListener(actionEvent -> removeTheme());
         m25.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         m25.addActionListener(actionEvent -> npcGameList());
+        JMenuItem m26 = new JMenuItem("Add Publisher");
+        m26.setToolTipText("Click to add a publisher to MGT2");
+        m26.addActionListener(actionEvent -> addPublisher());
         mb.add(m2);
         m2.add(m21);
         m2.add(m22);
         m2.add(m23);
         m2.add(m24);
         m2.add(m25);
+        m2.add(m26);
         JMenu m3 = new JMenu("Share");
         JMenuItem m31 = new JMenuItem("Import Genre");
         m31.addActionListener(actionEvent -> importGenre());
@@ -135,6 +145,21 @@ public class WindowMain {
     public static void disposeFrame(){
         frame.dispose();
         System.exit(0);
+    }
+    public static void debug(){
+        try {
+            List<Map<String, String>> list = Utils.parseDataFile(Utils.getPublisherFile());
+            for(int i=0; i<list.size(); i++){
+                LOGGER.info("Map: " + i);
+                Map<String, String> map = list.get(i);
+                for(Map.Entry<String, String> entry : map.entrySet()){//Selects the values that have been selected previously
+                    LOGGER.info("Key: " + entry.getKey() + "| Value: " + entry.getValue());
+                }
+            }
+            AnalyzeExistingPublishers.analyzePublisherFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Checks if specific actions are available. If they are the buttons will be enabled
@@ -370,6 +395,168 @@ public class WindowMain {
             }
         } catch (IOException e) {
             Utils.showErrorMessage(1, e);
+            e.printStackTrace();
+        }
+    }
+    private static void addPublisher(){
+        try {
+            AnalyzeExistingPublishers.analyzePublisherFile();
+            JPanel panelName = new JPanel();
+            JLabel labelName = new JLabel("Name:");
+            JTextField textFieldName = new JTextField("---------Enter Name---------");
+            panelName.add(labelName);
+            panelName.add(textFieldName);
+
+            JPanel panelUnlockMonth = new JPanel();
+            JLabel labelUnlockMonth = new JLabel("Unlock Month:");
+            JComboBox comboBoxUnlockMonth = new JComboBox(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
+            panelUnlockMonth.add(labelUnlockMonth);
+            panelUnlockMonth.add(comboBoxUnlockMonth);
+
+            JPanel panelUnlockYear = new JPanel();
+            JLabel labelUnlockYear = new JLabel("Unlock Year:");
+            JSpinner spinnerUnlockYear = new JSpinner();
+            if(Settings.disableSafetyFeatures){
+                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 0, Integer.MAX_VALUE, 1));
+            }else{
+                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
+            }
+            panelUnlockYear.add(labelUnlockYear);
+            panelUnlockYear.add(spinnerUnlockYear);
+
+            AtomicReference<String> publisherImageFilePath = new AtomicReference<>(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png");
+            JPanel panelPublisherIcon = new JPanel();
+            JLabel labelPublisherIcon = new JLabel("Publisher Icon:");
+            JButton buttonBrowseIcon = new JButton("Browse");
+            buttonBrowseIcon.addActionListener(actionEvent -> {
+                String imageFilePath = Utils.getImagePath();
+                if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
+                    publisherImageFilePath.set(imageFilePath);
+                }else{
+                    publisherImageFilePath.set(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png");
+                }
+            });
+            panelPublisherIcon.add(labelPublisherIcon);
+            panelPublisherIcon.add(buttonBrowseIcon);
+
+            JCheckBox checkBoxIsDeveloper = new JCheckBox("Developer");
+            checkBoxIsDeveloper.setSelected(true);
+            checkBoxIsDeveloper.setToolTipText("When enabled: The company can release their own games");
+
+            JCheckBox checkBoxIsPublisher = new JCheckBox("Publisher");
+            checkBoxIsPublisher.setSelected(true);
+            checkBoxIsPublisher.setToolTipText("When enabled: The company can release game for you (publish)");
+
+            JPanel panelMarketShare = new JPanel();
+            JLabel labelMarketShare = new JLabel("Market Share:");
+            JSpinner spinnerMarketShare = new JSpinner();
+            if(Settings.disableSafetyFeatures){
+                spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, Integer.MAX_VALUE, 1));
+            }else{
+                spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, 100, 1));
+            }
+            panelMarketShare.add(labelMarketShare);
+            panelMarketShare.add(spinnerMarketShare);
+
+            JPanel panelShare = new JPanel();
+            JLabel labelShare = new JLabel("Share:");
+            JSpinner spinnerShare = new JSpinner();
+            spinnerShare.setToolTipText("Set how much money should be earned by one sell");
+            if(Settings.disableSafetyFeatures){
+                spinnerShare.setModel(new SpinnerNumberModel(5, 1, Integer.MAX_VALUE, 1));
+            }else{
+                spinnerShare.setModel(new SpinnerNumberModel(5, 1, 10, 1));
+            }
+            panelShare.add(labelShare);
+            panelShare.add(spinnerShare);
+
+            AtomicInteger genreID = new AtomicInteger();
+            JPanel panelGenre = new JPanel();
+            JLabel labelGenre = new JLabel("Genre:");
+            JButton buttonSelectGenre = new JButton("        Select genre        ");
+            buttonSelectGenre.addActionListener(actionEvent -> {
+                try {
+                    AnalyzeExistingGenres.analyzeGenreFile();
+                    JLabel labelChooseGenre = new JLabel("Select the genre that should be compatible:");
+                    String[] string;
+                    string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
+                    JList<String> listAvailableGenres = new JList<>(string);
+                    listAvailableGenres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                    listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+                    listAvailableGenres.setVisibleRowCount(-1);
+                    JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
+                    scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+
+                    Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
+
+                    if(JOptionPane.showConfirmDialog(null, params, "Select main genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                        if(!listAvailableGenres.isSelectionEmpty()){
+                            String currentGenre = listAvailableGenres.getSelectedValue();
+                            genreID.set(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
+                            buttonSelectGenre.setText(currentGenre);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error while selecting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+            });
+            panelGenre.add(labelGenre);
+            panelGenre.add(buttonSelectGenre);
+
+            Object[] params = {panelName, panelUnlockMonth, panelUnlockYear, panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, panelMarketShare, panelShare, panelGenre};
+            boolean breakLoop = false;
+            while(!breakLoop){
+                if(JOptionPane.showConfirmDialog(null, params, "Add Publisher", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(textFieldName.getText().equals("") || textFieldName.getText().equals("---------Enter Name---------")){
+                        JOptionPane.showMessageDialog(null, "Please enter a name first!", "", JOptionPane.INFORMATION_MESSAGE);
+                        textFieldName.setText("---------Enter Name---------");
+                    }else if(buttonSelectGenre.getText().equals("        Select genre        ")){
+                        JOptionPane.showMessageDialog(null, "Please select a genre first!", "", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
+                        AnalyzeCompanyLogos.analyzeLogos();
+                        int logoId;
+                        if(publisherImageFilePath.toString().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
+                            logoId = 87;
+                        }else{
+                            logoId = AnalyzeCompanyLogos.maxLogoNumber+1;
+                        }
+                        if(JOptionPane.showConfirmDialog(null, "Add this publisher?:\n" +
+                                "\nName: " + textFieldName.getText() +
+                                "\nDate: " + comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString() +
+                                "\nPic: See top left" +
+                                "\nDeveloper: " + checkBoxIsDeveloper.isSelected() +
+                                "\nPublisher: " + checkBoxIsPublisher.isSelected() +
+                                "\nMarketShare: " + spinnerMarketShare.getValue().toString() +
+                                "\nShare: " + spinnerShare.getValue().toString() +
+                                "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("ID", Integer.toString(AnalyzeExistingPublishers.maxThemeID+1));
+                            hashMap.put("NAME EN", textFieldName.getText());
+                            hashMap.put("NAME GE", textFieldName.getText());
+                            hashMap.put("NAME TU", textFieldName.getText());
+                            hashMap.put("NAME FR", textFieldName.getText());
+                            hashMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                            hashMap.put("PIC", Integer.toString(logoId));
+                            hashMap.put("DEVELOPER", Boolean.toString(checkBoxIsDeveloper.isSelected()));
+                            hashMap.put("PUBLISHER", Boolean.toString(checkBoxIsPublisher.isSelected()));
+                            hashMap.put("MARKET", spinnerMarketShare.getValue().toString());
+                            hashMap.put("SHARE", spinnerShare.getValue().toString());
+                            hashMap.put("GENRE", genreID.toString());
+                            EditPublishersFile.addPublisher(hashMap, publisherImageFilePath.toString());
+                            JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
+                            breakLoop = true;
+                        }
+                    }
+                }else{
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while adding publisher:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
