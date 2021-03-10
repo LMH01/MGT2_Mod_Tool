@@ -308,6 +308,15 @@ public class Utils {
      * @return Returns the selected image file path
      */
     public static String getImagePath(){
+        return getImagePath(false);
+    }
+
+    /**
+     * Opens a file chooser where a single image file can be selected.
+     * @param showConfirmMessage Set true to display a message that the image file has been set.
+     * @return Returns the selected image file path
+     */
+    public static String getImagePath(boolean showConfirmMessage){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
 
@@ -333,7 +342,9 @@ public class Utils {
             int return_value = fileChooser.showOpenDialog(null);
             if (return_value == 0) {
                 if(fileChooser.getSelectedFile().getName().contains(".png")){
-                    JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                    if(showConfirmMessage){
+                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                    }
                     UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                     return fileChooser.getSelectedFile().getPath();
                 }else{

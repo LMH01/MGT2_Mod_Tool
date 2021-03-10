@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +65,8 @@ public class WindowMain {
         m26.addActionListener(actionEvent -> addPublisher());
         m27.setToolTipText("Click to remove a publisher from MGT2");
         m27.addActionListener(actionEvent -> removePublisher());
+        JMenuItem m28 = new JMenuItem("Add Company Icon");
+        m28.addActionListener(actionEvent -> addCompanyIcon());
         mb.add(m2);
         m2.add(m21);
         m2.add(m22);
@@ -70,6 +75,7 @@ public class WindowMain {
         m2.add(m25);
         m2.add(m26);
         m2.add(m27);
+        m2.add(m28);
         JMenu m3 = new JMenu("Share");
         JMenuItem m31 = new JMenuItem("Import Genre");
         m31.addActionListener(actionEvent -> importGenre());
@@ -636,6 +642,22 @@ public class WindowMain {
             e.printStackTrace();
         }
         checkActionAvailability();
+    }
+    private static void addCompanyIcon(){
+        String imageFilePath = Utils.getImagePath();
+        File imageFileSource = new File(imageFilePath);
+        if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
+            File targetImage = new File(Utils.getMGT2CompanyLogosPath() + "//" + AnalyzeCompanyLogos.getLogoNumber() + ".png");
+            try {
+                Files.copy(Paths.get(imageFileSource.getPath()), Paths.get(targetImage.getPath()));
+                JOptionPane.showMessageDialog(null, "Image has been added.", "Image added", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Unable to add image file:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Unable to add image file: Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     private static void importGenre(){
         try {
