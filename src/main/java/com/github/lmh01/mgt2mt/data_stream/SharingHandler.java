@@ -273,7 +273,7 @@ public class SharingHandler {
         }
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
-        if(JOptionPane.showConfirmDialog(null, "Add this publisher?:\n" +
+        if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
                 "\nName: " + mapNewPublisher.get("NAME EN") +
                 "\nDate: " + mapNewPublisher.get("DATE") +
                 "\nPic: See top left" +

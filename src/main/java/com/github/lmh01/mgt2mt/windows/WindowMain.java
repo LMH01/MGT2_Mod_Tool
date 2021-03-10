@@ -79,11 +79,14 @@ public class WindowMain {
         m34.addActionListener(actionEvent -> exportPublisher());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> openExportFolder());
+        JMenuItem m36 = new JMenuItem("Delete all exports");
+        m36.addActionListener(actionEvent -> deleteAllExports());
         m3.add(m31);
         m3.add(m32);
         m3.add(m33);
         m3.add(m34);
         m3.add(m35);
+        m3.add(m36);
         mb.add(m3);
         JMenu m4 = new JMenu("Backup");
         JMenuItem m41 = new JMenuItem("Create Backup");
@@ -534,7 +537,7 @@ public class WindowMain {
                         }else{
                             logoId = AnalyzeCompanyLogos.getLogoNumber();
                         }
-                        if(JOptionPane.showConfirmDialog(null, "Add this publisher?:\n" +
+                        if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
                                 "\nName: " + textFieldName.getText() +
                                 "\nDate: " + comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString() +
                                 "\nPic: See top left" +
@@ -863,6 +866,12 @@ public class WindowMain {
             Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private static void deleteAllExports(){
+        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all exports?", "Delete exports?", JOptionPane.YES_NO_OPTION) == 0){
+            Utils.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
+            JOptionPane.showMessageDialog(null, "All exports have been deleted.");
         }
     }
     private static void createBackup(){
