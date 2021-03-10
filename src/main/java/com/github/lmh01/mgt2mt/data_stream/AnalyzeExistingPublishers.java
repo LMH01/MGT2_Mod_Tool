@@ -4,6 +4,8 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +29,29 @@ public class AnalyzeExistingPublishers {
      */
     public static List<Map<String, String>> getListMap(){
         return publisherList;
+    }
+    public static String[] getPublisherString(){
+        ArrayList<String> arrayListActivePublishers = new ArrayList<>();
+        List<Map<String, String>> listPublishers = getListMap();
+        for(int i=0; i<listPublishers.size(); i++){
+            Map<String, String> map = listPublishers.get(i);
+            arrayListActivePublishers.add(map.get("NAME EN"));
+        }
+        Collections.sort(arrayListActivePublishers);
+        String[] string = new String[arrayListActivePublishers.size()];
+        arrayListActivePublishers.toArray(string);
+        return string;
+    }
+    public static String[] getCustomPublisherString(){
+        ArrayList<String> arrayListActivePublishers = new ArrayList<>();
+        List<Map<String, String>> listPublishers = getListMap();
+        for(int i=71; i<listPublishers.size(); i++){
+            Map<String, String> map = listPublishers.get(i);
+            arrayListActivePublishers.add(map.get("NAME EN"));
+        }
+        Collections.sort(arrayListActivePublishers);
+        String[] string = new String[arrayListActivePublishers.size()];
+        arrayListActivePublishers.toArray(string);
+        return string;
     }
 }

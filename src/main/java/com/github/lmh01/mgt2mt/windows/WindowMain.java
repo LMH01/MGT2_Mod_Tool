@@ -26,6 +26,7 @@ public class WindowMain {
     private static JMenuItem m32 = new JMenuItem("Export Genre");
     private static JMenuItem m24 = new JMenuItem("Remove Theme");
     private static JMenuItem m25 = new JMenuItem("NPC_Games_list");
+    private static JMenuItem m27 = new JMenuItem("Remove Publisher");
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,6 +62,8 @@ public class WindowMain {
         JMenuItem m26 = new JMenuItem("Add Publisher");
         m26.setToolTipText("Click to add a publisher to MGT2");
         m26.addActionListener(actionEvent -> addPublisher());
+        m27.setToolTipText("Click to remove a publisher from MGT2");
+        m27.addActionListener(actionEvent -> removePublisher());
         mb.add(m2);
         m2.add(m21);
         m2.add(m22);
@@ -68,6 +71,7 @@ public class WindowMain {
         m2.add(m24);
         m2.add(m25);
         m2.add(m26);
+        m2.add(m27);
         JMenu m3 = new JMenu("Share");
         JMenuItem m31 = new JMenuItem("Import Genre");
         m31.addActionListener(actionEvent -> importGenre());
@@ -168,11 +172,14 @@ public class WindowMain {
         try{
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
+            AnalyzeExistingPublishers.analyzePublisherFile();
             boolean noCustomGenreAvailable = true;
             boolean noCustomThemesAvailable = true;
+            boolean noCustomPublishersAvailable = true;
             if(Settings.disableSafetyFeatures){
                 noCustomGenreAvailable = false;
                 noCustomThemesAvailable = false;
+                noCustomPublishersAvailable = false;
             }else{
                 String[] stringCustomGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
                 if(stringCustomGenres.length != 0){
@@ -181,21 +188,34 @@ public class WindowMain {
                 if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > 189){
                     noCustomThemesAvailable = false;
                 }
+                List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+                if(list.size() > 71){
+                    noCustomPublishersAvailable = false;
+                }
             }
             m22.setEnabled(!noCustomGenreAvailable);
             m24.setEnabled(!noCustomThemesAvailable);
             m25.setEnabled(!noCustomGenreAvailable);
+            m27.setEnabled(!noCustomPublishersAvailable);
             m32.setEnabled(!noCustomGenreAvailable);
             if(noCustomGenreAvailable){
                 m22.setToolTipText("Disabled -> No genre to remove available");
-                m24.setToolTipText("Disabled -> No theme to remove available");
                 m25.setToolTipText("Disabled -> Add a genre first");
                 m32.setToolTipText("Disabled -> No genre to export available");
             }else{
                 m22.setToolTipText("");
-                m24.setToolTipText("");
                 m25.setToolTipText("");
                 m32.setToolTipText("");
+            }
+            if(noCustomThemesAvailable){
+                m24.setToolTipText("Disabled -> No theme to remove available");
+            }else{
+                m24.setToolTipText("");
+            }
+            if(noCustomPublishersAvailable){
+                m27.setToolTipText("Disabled -> Add publisher first");
+            }else{
+                m27.setToolTipText("");
             }
         }catch (IOException e){
             LOGGER.info("Error" + e.getMessage());
@@ -263,9 +283,9 @@ public class WindowMain {
                         }
                         if(numberOfGenresToRemove == 0){
                             if(exportFailed){
-                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing genres.\\nThe following genres where not removed:\\n\" + failedGenreRemoves", "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing genres.\\nThe following genres where not removed:\\n" + failedGenreRemoves, "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
                             }else{
-                                JOptionPane.showMessageDialog(null, "All selected genres have been exported successfully!", "Genre removal successful", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "All selected genres have been removed successfully!", "Genre removal successful", JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                     }else{
@@ -559,6 +579,68 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Error while adding publisher:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        checkActionAvailability();
+    }
+    private static void removePublisher(){
+        try {
+            AnalyzeExistingPublishers.analyzePublisherFile();
+            Backup.createBackup(Utils.getPublisherFile());
+            boolean noPublisherToRemoveAvailable = true;
+            JLabel labelChooseGenre = new JLabel("Select the publisher(s) that should be removed:");
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = AnalyzeExistingPublishers.getPublisherString();
+                noPublisherToRemoveAvailable = false;
+            }else{
+                string = AnalyzeExistingPublishers.getCustomPublisherString();
+                if(string.length != 0){
+                    noPublisherToRemoveAvailable = false;
+                }
+            }
+            JList<String> listAvailablePublishers = new JList<>(string);
+            listAvailablePublishers.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailablePublishers.setLayoutOrientation(JList.VERTICAL);
+            listAvailablePublishers.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailablePublishers);
+            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+
+            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
+
+            if(!noPublisherToRemoveAvailable){
+                if(JOptionPane.showConfirmDialog(null, params, "Remove publishers", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!listAvailablePublishers.isSelectionEmpty()){
+                        boolean exportFailed = false;
+                        int numberOfPublishersToRemove = listAvailablePublishers.getSelectedValuesList().size();
+                        String failedPublishersRemoves = "";
+                        for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
+                            String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
+                            try{
+                                EditPublishersFile.removePublisher(currentPublisher);
+                            }catch (IOException e){
+                                failedPublishersRemoves = failedPublishersRemoves + currentPublisher + " - " + e.getMessage() + System.getProperty("line.separator");
+                                exportFailed = true;
+                            }
+                            numberOfPublishersToRemove--;
+                        }
+                        if(numberOfPublishersToRemove == 0){
+                            if(exportFailed){
+                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing publishers.\\nThe following publishers where not removed:\n" + failedPublishersRemoves, "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "All selected publishers have been removed successfully!", "Publisher removal successful", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a publisher first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Unable to remove publisher:\nThere is no custom publisher that could be removed.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while removing publisher: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        checkActionAvailability();
     }
     private static void importGenre(){
         try {

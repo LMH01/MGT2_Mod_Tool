@@ -55,6 +55,10 @@ public class Utils {
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\";
     }
 
+    public static String getMGT2CompanyLogosPath(){
+        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\";
+    }
+
     /**
      * @param file The input file
      * @return Returns a list containing map entries for every data package in the input text file.
