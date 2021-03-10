@@ -45,13 +45,10 @@ public class WindowMain {
         JMenuItem m13 = new JMenuItem("Uninstall");
         m13.setToolTipText("<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.");
         m13.addActionListener(actionEvent -> uninstall());
-        JMenuItem m14 = new JMenuItem("Debug");
-        m14.addActionListener(actionEvent -> debug());
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
         m1.add(m13);
-        m1.add(m14);
         JMenu m2 = new JMenu("Mods");
         m21.addActionListener(actionEvent -> addGenre());
         m22.addActionListener(actionEvent -> removeGenre());
@@ -155,13 +152,6 @@ public class WindowMain {
     public static void disposeFrame(){
         frame.dispose();
         System.exit(0);
-    }
-    public static void debug(){
-        try {
-            AnalyzeExistingGenres.analyzeGenreFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     /**
      * Checks if specific actions are available. If they are the buttons will be enabled
