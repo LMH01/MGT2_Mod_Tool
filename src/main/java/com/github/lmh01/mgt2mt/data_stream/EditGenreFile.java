@@ -45,7 +45,7 @@ public class EditGenreFile {
                 currentid = Integer.parseInt(currentLine.replace("[ID]", ""));
                 bw.write(currentLine + System.getProperty("line.separator"));
             }else if(currentLine.contains("[GENRE COMB]")){
-                if(GenreManager.getCompatibleGenresByID().contains(Integer.toString(currentid))){
+                if(GenreManager.getCompatibleGenresIds().contains(Integer.toString(currentid))){
                     bw.write(currentLine + "<" + GenreManager.id + ">" + System.getProperty("line.separator"));
                     LOGGER.info("Found compatible genre id in file to write: " + currentid);
                 }else{
@@ -76,7 +76,7 @@ public class EditGenreFile {
         bw.write("[GRAPHIC]" + GenreManager.graphic + System.getProperty("line.separator"));
         bw.write("[SOUND]" + GenreManager.sound + System.getProperty("line.separator"));
         bw.write("[CONTROL]" + GenreManager.control + System.getProperty("line.separator"));
-        bw.write("[GENRE COMB]" + GenreManager.getCompatibleGenresByID() + System.getProperty("line.separator"));
+        bw.write("[GENRE COMB]" + GenreManager.getCompatibleGenresIds() + System.getProperty("line.separator"));
         bw.write("[DESIGN1]" + GenreManager.design1 + System.getProperty("line.separator"));
         bw.write("[DESIGN2]" + GenreManager.design2 + System.getProperty("line.separator"));
         bw.write("[DESIGN3]" + GenreManager.design3 + System.getProperty("line.separator"));

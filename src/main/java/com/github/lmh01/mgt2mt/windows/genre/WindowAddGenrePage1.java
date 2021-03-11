@@ -168,7 +168,8 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.contains(Integer.parseInt(spinnerId.getValue().toString()))){
+        //TODO Rewrite all saveInput functions from the WindowsAddGenrePages to use GenreManager.mapNewGenre.add(KEY, VALUE) and GenreManager.mapNewGenre.replace(KEY, VALUE); to save inputs
+        /*if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.contains(Integer.parseInt(spinnerId.getValue().toString()))){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
         }else if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE.contains(textFieldGenreName.getText())){
@@ -202,6 +203,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 return false;
             }
             return false;
-        }
+        }*/
+        return true;
     }
 }

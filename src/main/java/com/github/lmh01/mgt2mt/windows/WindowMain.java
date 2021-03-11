@@ -166,7 +166,7 @@ public class WindowMain {
      */
     public static void checkActionAvailability(){
         try{
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingThemes.analyzeThemeFiles();
             AnalyzeExistingPublishers.analyzePublisherFile();
             boolean noCustomGenreAvailable = true;
@@ -223,6 +223,7 @@ public class WindowMain {
     }
     private static void addGenre(){
         try {
+            //AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             GenreManager.addGenre();
@@ -234,7 +235,7 @@ public class WindowMain {
     }
     private static void removeGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             Backup.createBackup(Utils.getGenreFile());
             boolean noGenreToRemoveAvailable = true;
             JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be removed:");
@@ -302,7 +303,7 @@ public class WindowMain {
     }
     private static void addTheme(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingThemes.analyzeThemeFiles();
             NewThemeManager.arrayListCompatibleGenresForTheme.clear();
             NewThemeManager.arrayListThemeTranslations.clear();
@@ -338,10 +339,10 @@ public class WindowMain {
                         if(!textFieldThemeName.getText().isEmpty()){
                             if(!AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.containsValue(textFieldThemeName.getText()) && !AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.containsValue(textFieldThemeName.getText())){
                                 arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
-                                for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size(); i++){
-                                    for (String arrayListCompatibleGenreName : arrayListCompatibleGenreNames) {
-                                        if (AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).contains(arrayListCompatibleGenreName)) {
-                                            NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
+                                for(Map<String, String> map : AnalyzeExistingGenres.genreList){
+                                    for(String name : arrayListCompatibleGenreNames){
+                                        if(map.get("NAME EN").equals(name)){
+                                            NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(map.get("ID")));
                                         }
                                     }
                                 }
@@ -372,7 +373,7 @@ public class WindowMain {
     }
     private static void removeTheme(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingThemes.analyzeThemeFiles();
             String[] string = AnalyzeExistingThemes.getThemesByAlphabet(true);
             JList<String> listAvailableThemes = new JList<>(string);
@@ -406,8 +407,8 @@ public class WindowMain {
     }
     private static void npcGameList(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
-            if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1 > 17 || Settings.disableSafetyFeatures){
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
+            if(AnalyzeExistingGenres.genreList.size()-1 > 17 || Settings.disableSafetyFeatures){
                 WindowNpcGameList.createFrame();
             }else{
                 JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
@@ -495,7 +496,7 @@ public class WindowMain {
             JButton buttonSelectGenre = new JButton("        Select genre        ");
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
-                    AnalyzeExistingGenres.analyzeGenreFile();
+                    AnalyzeExistingGenres.analyzeGenreFileDeprecated();
                     JLabel labelChooseGenre = new JLabel("Select the genre that should be compatible:");
                     String[] string;
                     string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
@@ -660,7 +661,7 @@ public class WindowMain {
     }
     private static void importGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
             fileChooser.setDialogTitle("Choose the folder(s) where the genre.txt file is located.");
@@ -697,7 +698,7 @@ public class WindowMain {
     private static void exportGenre(){
         try {
             boolean noGenreToExportAvailable = true;
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be exported:");
             String[] string;
             if(Settings.disableSafetyFeatures){
@@ -808,7 +809,7 @@ public class WindowMain {
     private static void exportPublisher(){
         try {
             AnalyzeExistingPublishers.analyzePublisherFile();
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             boolean noPublisherToExportAvailable = true;
             JLabel labelChooseGenre = new JLabel("Select the publisher(s) that should be exported:");
             String[] string;
@@ -988,7 +989,7 @@ public class WindowMain {
     }
     private static void showActiveGenres(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
 
             JList<String> listAvailableGenres = new JList<>(string);
@@ -1037,7 +1038,7 @@ public class WindowMain {
     }
     private static void openGenresByIDFile(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             if(!AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.exists()){
                 JOptionPane.showMessageDialog(null, "The help file could not be opened.\nFile not found.", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
             }else{

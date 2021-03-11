@@ -17,6 +17,7 @@ public class GenreManager {
     //New Variables
     public static Map<String, String> mapNameTranslations = new HashMap<>();
     public static Map<String, String> mapDescriptionTranslations = new HashMap<>();
+    public static Map<String, String> mapNewGenre = new HashMap<>();//This is the map that contains all information on the new genre.
 
     //TODO Rewrite how genres are added and shared to use maps and make steps easier
 
@@ -252,7 +253,7 @@ public class GenreManager {
     }
     public static void resetVariablesToDefault(){
         LOGGER.info("resetting genre variables...");
-        id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
+        id = AnalyzeExistingGenres.getFreeGenreID();
         name = "";
         description = "";
         mapNameTranslations.clear();
@@ -302,42 +303,31 @@ public class GenreManager {
         }
         WindowMain.checkActionAvailability();
     }
-    public static String getCompatibleGenresByID(){
+
+    /**
+     * @return Returns a string containing the compatible genre ids. The ids are already in this format <id><id><id>...
+     */
+    public static String getCompatibleGenresIds(){
         ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();
-        StringBuilder compatibleGenresByID = new StringBuilder();
+        StringBuilder compatibleGenresIds = new StringBuilder();
         if(Settings.enableDebugLogging){
-            LOGGER.info("arrayListGenreNamesByIdSorted.size: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size());
+            LOGGER.info("AnalyzeExistingGenres.genreList.size(): " + AnalyzeExistingGenres.genreList.size());
         }
-        for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.size(); i++){
-            if(Settings.enableDebugLogging){
-                LOGGER.info("current i: " + i);
-            }
-            for (String arrayListCompatibleGenre : ARRAY_LIST_COMPATIBLE_GENRES) {
-                String number = AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "");
-                if (Settings.enableDebugLogging) {
-                    LOGGER.info("current n: " + i);
-                    LOGGER.info("current number: " + number);
-                    LOGGER.info("arrayListGenreNamesByIdSorted [i]: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replace(" - " + number, ""));
-                    LOGGER.info("Does it equal that: " + arrayListCompatibleGenre);
-                }
-                if (AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replace(" - " + number, "").equals(arrayListCompatibleGenre)) {
-                    if (Settings.enableDebugLogging) {
-                        LOGGER.info("genreNamesByIdSorted: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i));
-                        LOGGER.info("arrayListCompatibleGenres: " + arrayListCompatibleGenre);
-                        LOGGER.info("This should only be an id: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", ""));
-                    }
-                    arrayListGenreIDs.add(Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("compatible genre id: " + Integer.parseInt(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i).replaceAll("[^0-9]", "")));
+        for (Map<String, String> map : AnalyzeExistingGenres.genreList) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getKey().equals("ID")) {
+                    int currentId = Integer.parseInt(entry.getValue());
+                    if(ARRAY_LIST_COMPATIBLE_GENRES.contains(currentId)){
+                        arrayListGenreIDs.add(currentId);
                     }
                 }
             }
         }
         Collections.sort(arrayListGenreIDs);
         for (Integer arrayListGenreID : arrayListGenreIDs) {
-            compatibleGenresByID.append("<").append(arrayListGenreID).append(">");
+            compatibleGenresIds.append("<").append(arrayListGenreID).append(">");
         }
-        return compatibleGenresByID.toString();
+        return compatibleGenresIds.toString();
     }
 
     /**

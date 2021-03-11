@@ -108,7 +108,7 @@ public class WindowNpcGameList extends JFrame {
         if(Settings.disableSafetyFeatures){
             SPINNER_GENRE_ID.setModel(new SpinnerNumberModel(0, 0, 999, 1));
         }else{
-            SPINNER_GENRE_ID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 0, AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size()-1, 1));
+            SPINNER_GENRE_ID.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.getFreeGenreID()-1, 0, AnalyzeExistingGenres.getFreeGenreID()-1, 1));
         }
         SPINNER_GENRE_ID.setToolTipText("Enter the ID to add to the games");
         contentPane.add(SPINNER_GENRE_ID);

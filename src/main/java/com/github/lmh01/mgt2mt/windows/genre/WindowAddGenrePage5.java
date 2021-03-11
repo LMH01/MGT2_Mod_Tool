@@ -95,7 +95,7 @@ public class WindowAddGenrePage5 extends JFrame{
         ArrayList<Integer> genresSelected = new ArrayList();
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
-        for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
+        for(int i = 0; i<AnalyzeExistingGenres.getGenreIdsInUse().size(); i++){
             listModel.addElement(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_SORTED.get(i));
             if(Settings.enableDebugLogging){
                 LOGGER.info("Adding element to list: " + AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_SORTED.get(i));

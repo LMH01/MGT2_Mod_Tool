@@ -8,27 +8,73 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class AnalyzeExistingGenres {
-    public static final ArrayList<Integer> ARRAY_LIST_GENRE_IDS_IN_USE = new ArrayList<>();
-    public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_IN_USE = new ArrayList<>();
     public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED = new ArrayList<>();
     public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_SORTED = new ArrayList<>();
     public static final File FILE_GENRES_BY_ID_HELP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
+    public static List<Map<String, String>> genreList;
+    public static int maxGenreID = 0;
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
+
+    public static void analyzeGenreFile() throws IOException {
+        genreList = Utils.parseDataFile(Utils.getGenreFile());
+        int currentMaxGenreId = 0;
+        for (Map<String, String> map : genreList) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getKey().equals("ID")) {
+                    int currentId = Integer.parseInt(entry.getValue());
+                    if (currentMaxGenreId < currentId) {
+                        currentMaxGenreId = currentId;
+                    }
+                }
+            }
+        }
+        maxGenreID = currentMaxGenreId;
+        LOGGER.info("MaxGenreID: " + maxGenreID);
+    }
+
+    /**
+     * @return Returns a array list containing all genre ids that have been found.
+     */
+    public static ArrayList<Integer> getGenreIdsInUse(){
+        ArrayList arrayList = new ArrayList();
+        for(Map<String, String> map : genreList){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("ID")){
+                    arrayList.add(entry.getValue());
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    /**
+     * @return Returns an ArrayList containing all genre names that are in use.
+     */
+    public static ArrayList<String> getGenreNamesInUse(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(Map<String, String> map : genreList){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("NAME EN")){
+                    arrayList.add(entry.getValue());
+                }
+            }
+        }
+        return arrayList;
+    }
 
     /**
      * Analyzes the Genres.txt file.
      */
-    public static void analyzeGenreFile() throws IOException {
+    @Deprecated
+    public static void analyzeGenreFileDeprecated() throws IOException {
         //TODO Delete unnecessary ArrayLists and use Maps instead.
-        ARRAY_LIST_GENRE_IDS_IN_USE.clear();
-        ARRAY_LIST_GENRE_NAMES_IN_USE.clear();
+        //ARRAY_LIST_GENRE_IDS_IN_USE.clear();
+        //ARRAY_LIST_GENRE_NAMES_IN_USE.clear();
         ARRAY_LIST_GENRE_NAMES_SORTED.clear();
-        ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.clear();
 
         File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
         LOGGER.info("Scanning for genre id's and names in file: " + genresFile);
@@ -42,22 +88,28 @@ public class AnalyzeExistingGenres {
                 currentID = Integer.parseInt(currentIDAsString.replace("[ID]", "").replaceAll("\\uFEFF", ""));//replaceAll("\\uFEFF", "") is used for the correct formatting
                 if(Settings.enableDebugLogging){
                     LOGGER.info("found id: " + currentID);}
-                ARRAY_LIST_GENRE_IDS_IN_USE.add(currentID);
+                //ARRAY_LIST_GENRE_IDS_IN_USE.add(currentID);
             }else if(currentLine.contains("[NAME EN]")){
                 String currentName = currentLine.replace("[NAME EN]", "");
-                ARRAY_LIST_GENRE_NAMES_IN_USE.add(currentName);
+                //ARRAY_LIST_GENRE_NAMES_IN_USE.add(currentName);
                 if(Settings.enableDebugLogging){
                     LOGGER.info("found name: " + currentName);}
             }
         }
         reader.close();
-        LOGGER.info("Analyzing of genre ids and names complete. Found: " + ARRAY_LIST_GENRE_IDS_IN_USE.size());
+        //LOGGER.info("Analyzing of genre ids and names complete. Found: " + ARRAY_LIST_GENRE_IDS_IN_USE.size());
         if(Settings.enableDebugLogging){
             LOGGER.info("Writing to file: " + Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
         }
         writeHelpFile();
         fillGenresByIdListSorted();
-        sortGenreNames();
+    }
+
+    /**
+     * @return Returns the next free genre id.
+     */
+    public static int getFreeGenreID(){
+        return maxGenreID+1;
     }
 
     /**
@@ -209,7 +261,8 @@ public class AnalyzeExistingGenres {
      * Writes a help file with genres by id.
      */
     private static void writeHelpFile() throws IOException {
-        if(FILE_GENRES_BY_ID_HELP.exists()){
+        //TODO Rework when genreListMap works
+        /*if(FILE_GENRES_BY_ID_HELP.exists()){
             FILE_GENRES_BY_ID_HELP.delete();
         }
         FILE_GENRES_BY_ID_HELP.createNewFile();
@@ -220,16 +273,18 @@ public class AnalyzeExistingGenres {
         pw.close();
         if(Settings.enableDebugLogging){
             LOGGER.info("file created.");
-        }
+        }*/
     }
     private static void fillGenresByIdListSorted(){
-        for(int i = 0; i< ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
+        //TODO Rewrite to public static ArrayList getGenresByIdSorted -> Should use genreListMap then.
+        /*for(int i = 0; i< ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
             ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.add(ARRAY_LIST_GENRE_NAMES_IN_USE.get(i) + " - " + ARRAY_LIST_GENRE_IDS_IN_USE.get(i));
         }
-        Collections.sort(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED);
+        Collections.sort(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED);*/
     }
     public static String[] getGenresByAlphabetWithoutId(){
-        ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE;
+        //TODO Rewrite when genreMapList is implemented
+        /*ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE;
         Collections.sort(arrayListAvailableGenreNamesSorted);
         ArrayList<String> arrayListAvailableGenreNamesToDisplay = new ArrayList<>();
         for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
@@ -240,7 +295,8 @@ public class AnalyzeExistingGenres {
         }
         String[] string = new String[arrayListAvailableGenreNamesToDisplay.size()];
         arrayListAvailableGenreNamesToDisplay.toArray(string);
-        return string;
+        return string;*/
+        return null;
     }
 
     public static String[] getCustomGenresByAlphabetWithoutId(){
@@ -263,11 +319,10 @@ public class AnalyzeExistingGenres {
         return string;
     }
 
-    private static void sortGenreNames(){
-        for (String s : ARRAY_LIST_GENRE_NAMES_IN_USE) {
-            ARRAY_LIST_GENRE_NAMES_SORTED.add(s);
-        }
-        Collections.sort(ARRAY_LIST_GENRE_NAMES_SORTED);
+    public static ArrayList<String> getSortedGenreNames(){
+        ArrayList<String> arrayListSortedGenreNames = getSortedGenreNames();
+        Collections.sort(arrayListSortedGenreNames);
+        return arrayListSortedGenreNames;
     }
 
     /**
@@ -275,7 +330,7 @@ public class AnalyzeExistingGenres {
      * @return Returns the specified genre name by id.
      */
     public static String getGenreNameById(int id){
-        return ARRAY_LIST_GENRE_NAMES_IN_USE.get(id);
+        return getGenreNamesInUse().get(id);
     }
 
     /**
@@ -285,9 +340,9 @@ public class AnalyzeExistingGenres {
      */
     public static int getGenreIdByName(String genreName){
         int genreId = -1;
-        for (String s : ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED) {
-            if (s.replaceAll("[0-9]", "").replace(" - ", "").equals(genreName)) {
-                genreId = Integer.parseInt(s.replaceAll(genreName, "").replace(" - ", ""));
+        for(Map<String, String> map : genreList){
+            if(map.get("NAME EN").equals(genreName)){
+                genreId = Integer.parseInt(map.get("ID"));
             }
         }
         if(genreId == -1){

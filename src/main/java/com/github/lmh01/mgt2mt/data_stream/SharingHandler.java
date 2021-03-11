@@ -111,17 +111,17 @@ public class SharingHandler {
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
     public static boolean importGenre(String importFolderPath) throws IOException {
-        AnalyzeExistingGenres.analyzeGenreFile();
+        AnalyzeExistingGenres.analyzeGenreFileDeprecated();
         GenreManager.MAP_SINGLE_GENRE.clear();
-        GenreManager.MAP_SINGLE_GENRE.put("[ID]", Integer.toString(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size() + 1));
-        int newGenreId = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
+        int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
+        GenreManager.MAP_SINGLE_GENRE.put("[ID]", Integer.toString(newGenreId));
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
         File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
         String currentLine;
         int line = 1;
         while((currentLine = reader.readLine()) != null){
-            switch(line){
+            switch(line){//TODO Replace GenreManager.MAP_SINGLE_GENRE with GenreManager.mapNewGenre
                 case 1: GenreManager.MAP_SINGLE_GENRE.put("[MGT2MT VERSION]", currentLine.replaceAll("\\uFEFF", "").replace("[MGT2MT VERSION]", "")); break;
                 case 3: GenreManager.MAP_SINGLE_GENRE.put("[NAME AR]", currentLine.replace("[NAME AR]", "")); break;
                 case 4: GenreManager.MAP_SINGLE_GENRE.put("[NAME CH]", currentLine.replace("[NAME CH]", "")); break;
@@ -173,8 +173,8 @@ public class SharingHandler {
             line++;
         }
         reader.close();
-        for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE.size(); i++){//Checks if the genre already exists that should be imported.
-            if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE.contains(GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]"))){
+        for(int i = 0; i<AnalyzeExistingGenres.genreList.size(); i++){//Checks if the genre already exists that should be imported.
+            if(AnalyzeExistingGenres.genreList.contains(GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]"))){
                 return false;
             }
         }
@@ -291,10 +291,13 @@ public class SharingHandler {
     }
     /**
      * Fills the new genre variables that are used to add a new genre. The variables that are being filled are the ones in the {@link GenreManager}.
+     * @deprecated you can now use {@link EditGenreFile#addGenre()} to add a new genre to the game. This method is obsolete
      */
+    @Deprecated
     private static void fillNewGenreVariables(String importFolderPath){
+        //TODO Delete method
         GenreManager.resetVariablesToDefault();
-        GenreManager.id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
+        //GenreManager.id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         GenreManager.name = GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]");
         GenreManager.description = GenreManager.MAP_SINGLE_GENRE.get("[DESC EN]");
         GenreManager.mapNameTranslations.clear();
