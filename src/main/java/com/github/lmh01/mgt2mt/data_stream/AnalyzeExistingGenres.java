@@ -12,8 +12,6 @@ import java.util.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class AnalyzeExistingGenres {
-    public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED = new ArrayList<>();
-    public static final ArrayList<String> ARRAY_LIST_GENRE_NAMES_SORTED = new ArrayList<>();
     public static final File FILE_GENRES_BY_ID_HELP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
     public static List<Map<String, String>> genreList;
     public static int maxGenreID = 0;
@@ -74,7 +72,6 @@ public class AnalyzeExistingGenres {
         //TODO Delete unnecessary ArrayLists and use Maps instead.
         //ARRAY_LIST_GENRE_IDS_IN_USE.clear();
         //ARRAY_LIST_GENRE_NAMES_IN_USE.clear();
-        ARRAY_LIST_GENRE_NAMES_SORTED.clear();
 
         File genresFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\Genres.txt");
         LOGGER.info("Scanning for genre id's and names in file: " + genresFile);
@@ -282,21 +279,23 @@ public class AnalyzeExistingGenres {
         }
         Collections.sort(ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED);*/
     }
+
+    /**
+     * @return Returns a string containing all genre names sorted by alphabet
+     */
     public static String[] getGenresByAlphabetWithoutId(){
-        //TODO Rewrite when genreMapList is implemented
-        /*ArrayList<String> arrayListAvailableGenreNamesSorted = AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE;
-        Collections.sort(arrayListAvailableGenreNamesSorted);
-        ArrayList<String> arrayListAvailableGenreNamesToDisplay = new ArrayList<>();
-        for(int i = 0; i<AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size(); i++){
-            arrayListAvailableGenreNamesToDisplay.add(
-                    AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i)
-                            .replace(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_BY_ID_SORTED.get(i)
-                                    .replace(arrayListAvailableGenreNamesSorted.get(i), ""), ""));
+        ArrayList<String> genresByAlphabet = new ArrayList<>();
+        for(Map<String, String> map : AnalyzeExistingGenres.genreList){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("NAME EN")){
+                    genresByAlphabet.add(entry.getValue());
+                }
+            }
         }
-        String[] string = new String[arrayListAvailableGenreNamesToDisplay.size()];
-        arrayListAvailableGenreNamesToDisplay.toArray(string);
-        return string;*/
-        return null;
+        Collections.sort(genresByAlphabet);
+        String[] string = new String[genresByAlphabet.size()];
+        genresByAlphabet.toArray(string);
+        return string;
     }
 
     public static String[] getCustomGenresByAlphabetWithoutId(){

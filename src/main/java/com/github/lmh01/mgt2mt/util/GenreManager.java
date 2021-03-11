@@ -18,44 +18,9 @@ public class GenreManager {
     public static Map<String, String> mapNameTranslations = new HashMap<>();
     public static Map<String, String> mapDescriptionTranslations = new HashMap<>();
     public static Map<String, String> mapNewGenre = new HashMap<>();//This is the map that contains all information on the new genre.
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenreManager.class);
 
     //TODO Rewrite how genres are added and shared to use maps and make steps easier
-
-    //Old variables
-    public static int id = 18;
-    public static String name = "";
-    public static String description = "";
-    public static boolean nameTranslationsAdded = false;
-    public static boolean descriptionTranslationsAdded = false;
-    public static int unlockYear = 1976;
-    public static String unlockMonth = "JAN";
-    public static int researchPoints = 0;
-    public static int price = 0;
-    public static int devCost = 0;
-    public static boolean targetGroupKid = false;
-    public static boolean targetGroupTeen = false;
-    public static boolean targetGroupAdult = false;
-    public static boolean targetGroupSenior = false;
-    public static final ArrayList<String> ARRAY_LIST_COMPATIBLE_GENRES = new ArrayList<>();
-    public static final HashSet<Integer> MAP_COMPATIBLE_THEME_IDS = new HashSet<>();
-    public static final HashMap<Integer, String> MAP_COMPATIBLE_THEMES = new HashMap<>();
-    public static int gameplay;
-    public static int graphic;
-    public static int sound;
-    public static int control;
-    public static int design1;
-    public static int design2;
-    public static int design3;
-    public static int design4;
-    public static int design5;
-    public static File imageFile;
-    public static String imageFileName;
-    public static boolean useDefaultImageFile;
-    public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenreManager.class);
-    public static final String FORBIDDEN_GENRE_NAMES = "[ID], [NAME EN], [NAME GE], [NAME CH], [NAME TU], [NAME FR], [DESC EN], [DESC GE], [DESC CH], [DESC TU], [DESC FR], [NAME PB], [DESC PB], [NAME HU], [DESC HU], [NAME CT], [DESC CT], [NAME ES], [DESC ES], [NAME PL], [DESC PL], [DATE], [RES POINTS], [PRICE], [DEV COSTS], [PIC], [TGROUP], [GAMEPLAY], [GRAPHIC], [SOUND], [CONTROL], [GENRE COMB], [DESIGN1], [DESIGN2], [DESIGN3], [DESIGN4], [DESIGN5]";
-    public static final HashMap<String, String> MAP_SINGLE_GENRE = new HashMap<>();//When filled contains all information on the specific genre.
-
 
     public static void addGenre(){
         JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this warning again");
@@ -109,30 +74,30 @@ public class GenreManager {
      */
     public static void showSummary(boolean showSummaryFromImport){
 
-        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(imageFile.getPath()));
+        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(mapNewGenre.get("IMAGE FILE")));
         String messageBody = "Your genre is ready:\n\n" +
-                "Id:" + id + "\n" +
-                "Name: " + name + "\n" +
-                "Description: " + description + "\n" +
-                "Unlock date: " + unlockMonth + " " + unlockYear + "\n" +
-                "Research point cost: " + researchPoints + "\n" +
-                "Research cost " + price + "\n" +
-                "Development cost: " + devCost + "\n" +
+                "Id:" + mapNewGenre.get("ID") + "\n" +
+                "Name: " + mapNewGenre.get("NAME EN") + "\n" +
+                "Description: " + mapNewGenre.get("DESC EN") + "\n" +
+                "Unlock date: " + mapNewGenre.get("UNLOCK MONTH") + " " + mapNewGenre.get("UNLOCK YEAR") + "\n" +
+                "Research point cost: " + mapNewGenre.get("RES POINTS") + "\n" +
+                "Research cost " + mapNewGenre.get("PRICE") + "\n" +
+                "Development cost: " + mapNewGenre.get("DEV COSTS") + "\n" +
                 "Pic: see top left\n" +
                 "Target group: " + getTargetGroups() + "\n" +
                 "\n*Compatible genres*\n\n" + getCompatibleGenres() + "\n" +
                 "\n*Compatible themes*\n\n" + getCompatibleThemes() + "\n" +
                 "\n*Design priority*\n\n" +
-                "Gameplay/Visuals: " + design1 + "\n" +
-                "Story/Game length: " + design2 + "\n" +
-                "Atmosphere/Content: " + design3 + "\n" +
-                "Game depth/Beginner-friendly: " + design4 + "\n" +
-                "Core Gamers/Casual Gamer: " + design5 + "\n" +
+                "Gameplay/Visuals: " + mapNewGenre.get("DESIGN1") + "\n" +
+                "Story/Game length: " + mapNewGenre.get("DESIGN2") + "\n" +
+                "Atmosphere/Content: " + mapNewGenre.get("DESIGN3") + "\n" +
+                "Game depth/Beginner-friendly: " + mapNewGenre.get("DESIGN4") + "\n" +
+                "Core Gamers/Casual Gamer: " + mapNewGenre.get("DESIGN5") + "\n" +
                 "\n*Work priority*\n\n" +
-                "Gameplay: " + gameplay + "%\n" +
-                "Graphic: " + graphic + "%\n" +
-                "Sound: " + sound + "%\n" +
-                "Control: " + control + "%\n";
+                "Gameplay: " + mapNewGenre.get("GAMEPLAY") + "%\n" +
+                "Graphic: " + mapNewGenre.get("GRAPHIC") + "%\n" +
+                "Sound: " + mapNewGenre.get("SOUND") + "%\n" +
+                "Control: " + mapNewGenre.get("CONTROL") + "%\n";
         int returnValue;
         if(showSummaryFromImport){
             String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no cancel this operation.";
@@ -146,7 +111,7 @@ public class GenreManager {
             boolean continueAnyway = false;
             boolean imageFileAccessedSuccess = false;
             try {
-                ImageFileHandler.addGenreImageFiles(id, name, imageFile);
+                ImageFileHandler.addGenreImageFiles(Integer.parseInt(mapNewGenre.get("ID")), mapNewGenre.get("NAME EN"), new File(mapNewGenre.get("IMAGE FILE")));
                 imageFileAccessedSuccess = true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -158,7 +123,7 @@ public class GenreManager {
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
                     EditGenreFile.addGenre();
-                    EditThemeFiles.editGenreAllocation(GenreManager.id, true);
+                    EditThemeFiles.editGenreAllocation(Integer.parseInt(mapNewGenre.get("ID")), true);
                     GenreManager.genreAdded(showSummaryFromImport);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -180,28 +145,28 @@ public class GenreManager {
      */
     public static String getTargetGroups(){
         String targetGroups = "";
-        if(targetGroupKid){
-            if(targetGroupTeen || targetGroupAdult || targetGroupSenior){
+        if(mapNewGenre.get("KID").equals("true")){
+            if(mapNewGenre.get("TEEN").equals("true") || mapNewGenre.get("ADULT").equals("true") || mapNewGenre.get("SENIOR").equals("true")){
                 targetGroups = targetGroups + "Kid, ";
             }else{
                 targetGroups = targetGroups + "Kid";
             }
         }
-        if(targetGroupTeen){
-            if(targetGroupAdult || targetGroupSenior){
+        if(mapNewGenre.get("TEEN").equals("true")){
+            if(mapNewGenre.get("ADULT").equals("true") || mapNewGenre.get("SENIOR").equals("true")){
                 targetGroups = targetGroups + "Teen, ";
             }else{
                 targetGroups = targetGroups + "Teen";
             }
         }
-        if(targetGroupAdult){
-            if(targetGroupSenior){
+        if(mapNewGenre.get("ADULT").equals("true")){
+            if(mapNewGenre.get("SENIOR").equals("true")){
                 targetGroups = targetGroups + "Adult, ";
             }else{
                 targetGroups = targetGroups + "Adult";
             }
         }
-        if(targetGroupSenior){
+        if(mapNewGenre.get("SENIOR").equals("true")){
             targetGroups = targetGroups + "Senior";
         }
         return targetGroups;
@@ -210,8 +175,22 @@ public class GenreManager {
      * @return Returns a string containing all genres that are compatible with the new genre.
      */
     private static String getCompatibleGenres(){
-        StringBuilder compatibleGenres = new StringBuilder();
+        //StringBuilder compatibleGenres = new StringBuilder();
         int n = 0;
+        int charPositon = 0;
+        StringBuilder currentGenre = new StringBuilder();
+        String compatibleGenres = mapNewGenre.get("COMPATIBLE GENRES");
+        for(int i=0; i<compatibleGenres.length(); i++){
+            if(String.valueOf(compatibleGenres.charAt(charPositon)).equals("<")){
+                //Nothing happens
+            }else if(String.valueOf(compatibleGenres.charAt(charPositon)).equals(">")){
+                currentGenre.append("<").append(genreId).append(">");
+                currentGenre = new StringBuilder();
+            }else{
+                currentGenre.append(compatibleGenres.charAt(charPositon));
+            }
+            charPositon++;
+        }
         for(int i = 0; i< ARRAY_LIST_COMPATIBLE_GENRES.size(); i++){
             if(i== ARRAY_LIST_COMPATIBLE_GENRES.size()-1){
                 compatibleGenres.append(ARRAY_LIST_COMPATIBLE_GENRES.get(i));
@@ -251,40 +230,7 @@ public class GenreManager {
         }
         return compatibleThemes.toString();
     }
-    public static void resetVariablesToDefault(){
-        LOGGER.info("resetting genre variables...");
-        id = AnalyzeExistingGenres.getFreeGenreID();
-        name = "";
-        description = "";
-        mapNameTranslations.clear();
-        mapDescriptionTranslations.clear();
-        nameTranslationsAdded = false;
-        descriptionTranslationsAdded = false;
-        unlockYear = 1976;
-        unlockMonth = "JAN";
-        researchPoints = 1000;
-        price = 150000;
-        devCost = 3000;
-        targetGroupKid = false;
-        targetGroupTeen = false;
-        targetGroupAdult = false;
-        targetGroupSenior = false;
-        ARRAY_LIST_COMPATIBLE_GENRES.clear();
-        MAP_COMPATIBLE_THEMES.clear();
-        gameplay = 25;
-        graphic = 25;
-        sound = 25;
-        control = 25;
-        design1 = 5;
-        design2 = 5;
-        design3 = 5;
-        design4 = 5;
-        design5 = 5;
-        imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-        imageFileName = "iconSkill";
-        useDefaultImageFile = true;
-        arrayListScreenshotFiles.clear();
-    }
+
     public static void genreAdded(boolean showSummaryFromImport){
         if(showSummaryFromImport){
             ChangeLog.addLogEntry(1, name);

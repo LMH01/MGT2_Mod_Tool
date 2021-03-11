@@ -114,7 +114,7 @@ public class WindowAddGenrePage1 extends JFrame{
             contentPane.add(buttonExplainGenreID);
         }else{
             setBounds(100, 100, 335, 160);
-            spinnerId.setModel(new SpinnerNumberModel(GenreManager.id, GenreManager.id, GenreManager.id, 1));
+            spinnerId.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.getFreeGenreID(), AnalyzeExistingGenres.getFreeGenreID(), AnalyzeExistingGenres.getFreeGenreID(), 1));
             spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
             spinnerId.setVisible(false);
@@ -168,42 +168,28 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        //TODO Rewrite all saveInput functions from the WindowsAddGenrePages to use GenreManager.mapNewGenre.add(KEY, VALUE) and GenreManager.mapNewGenre.replace(KEY, VALUE); to save inputs
-        /*if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.contains(Integer.parseInt(spinnerId.getValue().toString()))){
+        if(AnalyzeExistingGenres.getGenreIdsInUse().contains(spinnerId.getValue())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
-        }else if(AnalyzeExistingGenres.ARRAY_LIST_GENRE_NAMES_IN_USE.contains(textFieldGenreName.getText())){
+        }else if(AnalyzeExistingGenres.getGenreNamesInUse().contains(textFieldGenreName.getToolTipText())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
             return false;
-        }else{
-            GenreManager.id = Integer.parseInt(spinnerId.getValue().toString());
-            LOGGER.info("genre id: " + Integer.parseInt(spinnerId.getValue().toString()));
-            try{
-                if(textFieldGenreDescription.getText().isEmpty() || textFieldGenreName.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    if(textFieldGenreDescription.getText().matches(".*\\d.*") || textFieldGenreName.getText().matches(".*\\d.*")){
-                        JOptionPane.showMessageDialog(new Frame(), "Name and description may not contain numbers.\nPlease enter another name/description.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        if(GenreManager.FORBIDDEN_GENRE_NAMES.contains(textFieldGenreName.getText())){
-                            JOptionPane.showMessageDialog(new Frame(), "This genre name is forbidden.\nPlease enter another name.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
-                        }else{
-                            GenreManager.name = textFieldGenreName.getText();
-                            LOGGER.info("genre name: " + textFieldGenreName.getText());
-                            GenreManager.description = textFieldGenreDescription.getText();
-                            LOGGER.info("genre description: " + textFieldGenreDescription.getText());
-                            GenreManager.imageFileName = "icon" + textFieldGenreName.getText().replace(" ", "");
-                            return true;
-                        }
-                    }
-                }
-            }catch (NullPointerException e){
-                LOGGER.info("Something went wrong.");
-                JOptionPane.showMessageDialog(new Frame(), "Please enter a name and description first.");
-                return false;
-            }
+        }else if(textFieldGenreName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(new Frame(), "Please enter a genre name first!");
             return false;
-        }*/
-        return true;
+        }else if(textFieldGenreDescription.getText().isEmpty()){
+            JOptionPane.showMessageDialog(new Frame(), "Please enter a genre description first!");
+        }else{
+            GenreManager.mapNewGenre.remove("ID");
+            GenreManager.mapNewGenre.remove("NAME EN");
+            GenreManager.mapNewGenre.remove("DESC EN");
+            if(Settings.disableSafetyFeatures){
+                GenreManager.mapNewGenre.put("ID", spinnerId.getValue().toString());
+            }
+            GenreManager.mapNewGenre.put("NAME EN", textFieldGenreName.getText());
+            GenreManager.mapNewGenre.put("DESC EN", textFieldGenreDescription.getText());
+            return true;
+        }
+        return false;
     }
 }
