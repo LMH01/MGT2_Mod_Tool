@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
 
-    public static int genreLineNumbers = 46;//Defines how many lines a genre has inside the Genres.txt file. When the amount of lines is changed, change this number to apply the new number to all refering operations.
+    public static int genreLineNumbers = 48;//Defines how many lines a genre has inside the Genres.txt file. When the amount of lines is changed, change this number to apply the new number to all refering operations.
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
@@ -244,25 +244,8 @@ public class Utils {
      * @return Returns the themes file for the specified language.
      */
     public static File getThemeFile(int languageKey){
-        File returnFile = new File("");
-        switch(languageKey){
-            case 0: return new File(Utils.getMGT2TextFolderPath() + "\\AR\\Themes_AR.txt");
-            case 1: return new File(Utils.getMGT2TextFolderPath() + "\\CH\\Themes_CH.txt");
-            case 2: return new File(Utils.getMGT2TextFolderPath() + "\\CT\\Themes_CT.txt");
-            case 3: return new File(Utils.getMGT2TextFolderPath() + "\\CZ\\Themes_CZ.txt");
-            case 4: return new File(Utils.getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");
-            case 5: return new File(Utils.getMGT2TextFolderPath() + "\\ES\\Themes_ES.txt");
-            case 6: return new File(Utils.getMGT2TextFolderPath() + "\\FR\\Themes_FR.txt");
-            case 7: return new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
-            case 8: return new File(Utils.getMGT2TextFolderPath() + "\\HU\\Themes_HU.txt");
-            case 9: return new File(Utils.getMGT2TextFolderPath() + "\\IT\\Themes_IT.txt");
-            case 10: return new File(Utils.getMGT2TextFolderPath() + "\\KO\\Themes_KO.txt");
-            case 11: return new File(Utils.getMGT2TextFolderPath() + "\\PB\\Themes_PB.txt");
-            case 12: return new File(Utils.getMGT2TextFolderPath() + "\\PL\\Themes_PL.txt");
-            case 13: return new File(Utils.getMGT2TextFolderPath() + "\\RU\\Themes_RU.txt");
-            case 14: return new File(Utils.getMGT2TextFolderPath() + "\\TU\\Themes_TU.txt");
-        }
-        return returnFile;
+        String currentLanguageKey = TranslationManager.TRANSLATION_KEYS[languageKey];
+        return new File(Utils.getMGT2TextFolderPath() + "//" + currentLanguageKey + "//Themes_" + currentLanguageKey + ".txt");
     }
 
     /**

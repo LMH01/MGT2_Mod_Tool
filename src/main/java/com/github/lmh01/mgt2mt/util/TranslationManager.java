@@ -2,8 +2,12 @@ package com.github.lmh01.mgt2mt.util;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TranslationManager {
+    public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "KO", "PB", "PL", "RO", "RU", "TU"};
+    public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     /**
      * @return Returns a array list with the user input that should be used as translation. See cases for translation position in array list.
      */
@@ -71,5 +75,43 @@ public class TranslationManager {
             JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
         }
         return arrayListTranslations;
+    }
+
+    /**
+     * @return Returns a map containing the translations for each language.
+     */
+    public static Map<String, String> getTranslationsMap(){
+        Map<String, String> map = new HashMap<>();
+        JTextField textFieldDescriptionTranslation = new JTextField();
+        JLabel labelExplanation = new JLabel();
+        Object[] params = {labelExplanation,textFieldDescriptionTranslation};
+        boolean breakLoop = false;
+        for(int i=0; i<TRANSLATION_KEYS.length; i++){
+            if(!breakLoop){
+                String language = TRANSLATION_NAMES[i];
+                if(!TRANSLATION_NAMES[i].equals("English")){
+                    labelExplanation.setText("Enter the translation for " + language + ":");
+                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
+                        map.put(TRANSLATION_KEYS[i], textFieldDescriptionTranslation.getText());
+                        textFieldDescriptionTranslation.setText("");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
+                        breakLoop = true;
+                    }
+                }else{
+                    map.put("EN", "English");
+                }
+            }
+        }
+        if(!breakLoop){
+            StringBuilder translations = new StringBuilder();
+            for(int i=0; i<map.size(); i++){
+                if(!TRANSLATION_KEYS[i].equals("EN")){
+                    translations.append(System.getProperty("line.separator")).append(TRANSLATION_NAMES[i]).append(": ").append(map.get(TRANSLATION_KEYS[i]));
+                }
+            }
+            JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return map;
     }
 }

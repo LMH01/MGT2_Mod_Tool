@@ -24,6 +24,7 @@ public class AnalyzeExistingGenres {
      * Analyzes the Genres.txt file.
      */
     public static void analyzeGenreFile() throws IOException {
+        //TODO Delete unnecessary ArrayLists and use Maps instead.
         ARRAY_LIST_GENRE_IDS_IN_USE.clear();
         ARRAY_LIST_GENRE_NAMES_IN_USE.clear();
         ARRAY_LIST_GENRE_NAMES_SORTED.clear();
@@ -84,7 +85,7 @@ public class AnalyzeExistingGenres {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Current line: " + currentLine);
                 }
-                if(currentLine.contains("[NAME AR]")){
+                if(currentLine.contains("[NAME AR]")){//TODO Rewrite to use the TranslationsString[] and make method more compact
                     GenreManager.MAP_SINGLE_GENRE.put("[NAME AR]", currentLine.replace("[NAME AR]", ""));
                 }else if(currentLine.contains("[NAME CH]")){
                     GenreManager.MAP_SINGLE_GENRE.put("[NAME CH]", currentLine.replace("[NAME CH]", ""));

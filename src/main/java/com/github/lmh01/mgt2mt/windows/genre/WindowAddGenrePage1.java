@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Map;
 
 public class WindowAddGenrePage1 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage1.class);
@@ -56,11 +57,11 @@ public class WindowAddGenrePage1 extends JFrame{
 
         buttonAddNameTranslations.addActionListener(actionEvent ->{
             if(!GenreManager.nameTranslationsAdded){
-                addNameTranslations();
+                GenreManager.addNameTranslations();;
                 GenreManager.nameTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
-                    addDescriptionTranslations();
+                    GenreManager.addNameTranslations();
                     GenreManager.nameTranslationsAdded = true;
                 }
             }
@@ -68,19 +69,19 @@ public class WindowAddGenrePage1 extends JFrame{
 
         buttonAddDescriptionTranslations.addActionListener(actionEvent ->{
             if(!GenreManager.descriptionTranslationsAdded){
-                addDescriptionTranslations();
+                GenreManager.addDescriptionTranslations();
                 GenreManager.descriptionTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
-                    addDescriptionTranslations();
+                    GenreManager.addDescriptionTranslations();
                     GenreManager.descriptionTranslationsAdded = true;
                 }
             }
         });
         buttonClearTranslations.addActionListener(actionEvent ->{
             if(JOptionPane.showConfirmDialog(null, "Are you sure that you want\nto reset the translations?", "Reset Translations?", JOptionPane.YES_NO_OPTION) == 0){
-                GenreManager.arrayListNameTranslations.clear();
-                GenreManager.arrayListDescriptionTranslations.clear();
+                GenreManager.mapNameTranslations.clear();
+                GenreManager.mapDescriptionTranslations.clear();
                 JOptionPane.showMessageDialog(null, "The translations have been cleared.");
             }
         });
@@ -201,40 +202,6 @@ public class WindowAddGenrePage1 extends JFrame{
                 return false;
             }
             return false;
-        }
-    }
-    private static void addNameTranslations(){
-        boolean continueWithTranslations = true;
-        if(Settings.enableGenreNameTranslationInfo){
-            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
-            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
-            Object[] params = {labelMessage,checkBoxDontShowAgain};
-            LOGGER.info("enableGenreNameTranslationInfo: " + Settings.enableGenreNameTranslationInfo);
-            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
-                continueWithTranslations = false;
-            }
-            Settings.enableGenreNameTranslationInfo = !checkBoxDontShowAgain.isSelected();
-            ExportSettings.export();
-        }
-        if(continueWithTranslations){
-            GenreManager.arrayListNameTranslations = TranslationManager.getTranslationsArrayList();
-        }
-    }
-    private static void addDescriptionTranslations(){
-        boolean continueWithTranslations = true;
-        if(Settings.enableGenreDescriptionTranslationInfo){
-            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
-            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
-            Object[] params = {labelMessage,checkBoxDontShowAgain};
-            LOGGER.info("enableGenreDescriptionTranslationInfo: " + Settings.enableGenreDescriptionTranslationInfo);
-            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
-                continueWithTranslations = false;
-            }
-            Settings.enableGenreDescriptionTranslationInfo = !checkBoxDontShowAgain.isSelected();
-            ExportSettings.export();
-        }
-        if(continueWithTranslations){
-            GenreManager.arrayListDescriptionTranslations = TranslationManager.getTranslationsArrayList();
         }
     }
 }

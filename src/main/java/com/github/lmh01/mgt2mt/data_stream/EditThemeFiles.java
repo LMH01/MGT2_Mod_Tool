@@ -22,6 +22,7 @@ public class EditThemeFiles {
      * @param position The position where the theme file is positioned that should be removed.
      */
     private static void addOrRemoveTheme(File themeFile, String themeName, boolean addTheme, ArrayList<Integer> arrayListCompatibleGenres, int position) throws IOException {
+        //TODO Rewrite to use maps
         File fileThemeFileTemp = new File(themeFile.getPath() + ".temp");
         if(themeFile.exists()){
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(themeFile), StandardCharsets.UTF_16LE));

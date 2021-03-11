@@ -13,11 +13,17 @@ import java.io.IOException;
 import java.util.*;
 
 public class GenreManager {
+
+    //New Variables
+    public static Map<String, String> mapNameTranslations = new HashMap<>();
+    public static Map<String, String> mapDescriptionTranslations = new HashMap<>();
+
+    //TODO Rewrite how genres are added and shared to use maps and make steps easier
+
+    //Old variables
     public static int id = 18;
     public static String name = "";
     public static String description = "";
-    public static ArrayList<String> arrayListNameTranslations = new ArrayList<>();
-    public static ArrayList<String> arrayListDescriptionTranslations = new ArrayList<>();
     public static boolean nameTranslationsAdded = false;
     public static boolean descriptionTranslationsAdded = false;
     public static int unlockYear = 1976;
@@ -249,8 +255,8 @@ public class GenreManager {
         id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         name = "";
         description = "";
-        arrayListNameTranslations.clear();
-        arrayListDescriptionTranslations.clear();
+        mapNameTranslations.clear();
+        mapDescriptionTranslations.clear();
         nameTranslationsAdded = false;
         descriptionTranslationsAdded = false;
         unlockYear = 1976;
@@ -332,5 +338,47 @@ public class GenreManager {
             compatibleGenresByID.append("<").append(arrayListGenreID).append(">");
         }
         return compatibleGenresByID.toString();
+    }
+
+    /**
+     * Call to add name translations to the genre.
+     */
+    public static void addNameTranslations(){
+        boolean continueWithTranslations = true;
+        if(Settings.enableGenreNameTranslationInfo){
+            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
+            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
+            Object[] params = {labelMessage,checkBoxDontShowAgain};
+            LOGGER.info("enableGenreNameTranslationInfo: " + Settings.enableGenreNameTranslationInfo);
+            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+                continueWithTranslations = false;
+            }
+            Settings.enableGenreNameTranslationInfo = !checkBoxDontShowAgain.isSelected();
+            ExportSettings.export();
+        }
+        if(continueWithTranslations){
+            mapNameTranslations = TranslationManager.getTranslationsMap();
+        }
+    }
+
+    /**
+     * Call to add descriptionTranslations to the genre.
+     */
+    public static void addDescriptionTranslations(){
+        boolean continueWithTranslations = true;
+        if(Settings.enableGenreDescriptionTranslationInfo){
+            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
+            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
+            Object[] params = {labelMessage,checkBoxDontShowAgain};
+            LOGGER.info("enableGenreDescriptionTranslationInfo: " + Settings.enableGenreDescriptionTranslationInfo);
+            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+                continueWithTranslations = false;
+            }
+            Settings.enableGenreDescriptionTranslationInfo = !checkBoxDontShowAgain.isSelected();
+            ExportSettings.export();
+        }
+        if(continueWithTranslations){
+            mapDescriptionTranslations = TranslationManager.getTranslationsMap();
+        }
     }
 }

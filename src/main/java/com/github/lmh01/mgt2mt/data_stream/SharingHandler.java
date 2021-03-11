@@ -297,8 +297,8 @@ public class SharingHandler {
         GenreManager.id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         GenreManager.name = GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]");
         GenreManager.description = GenreManager.MAP_SINGLE_GENRE.get("[DESC EN]");
-        GenreManager.arrayListNameTranslations.clear();
-        GenreManager.arrayListDescriptionTranslations.clear();
+        GenreManager.mapNameTranslations.clear();
+        GenreManager.mapDescriptionTranslations.clear();
         fillTranslationsArrays();
         GenreManager.nameTranslationsAdded = true;
         GenreManager.descriptionTranslationsAdded = true;
@@ -328,7 +328,8 @@ public class SharingHandler {
      * Fills the translations arrays with the translations.
      */
     private static void fillTranslationsArrays(){
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME AR]"));
+        //TODO Rework into working with new genre adding maps
+        /*GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME AR]"));
         GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME CH]"));
         GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME CT]"));
         GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME CZ]"));
@@ -358,6 +359,8 @@ public class SharingHandler {
         GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC PL]"));
         GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC RU]"));
         GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC TU]"));
+
+         */
     }
 
     /**

@@ -85,78 +85,19 @@ public class Backup {
             File fileGenresBackup;
             File fileNpcGamesBackup;
             File filePublisherBackup;
-            File fileThemesArBackup;
-            File fileThemesChBackup;
-            File fileThemesCtBackup;
-            File fileThemesCzBackup;
-            File fileThemesEnBackup;
-            File fileThemesEsBackup;
-            File fileThemesFrBackup;
-            File fileThemesGeBackup;
-            File fileThemesHuBackup;
-            File fileThemesItBackup;
-            File fileThemesKoBackup;
-            File fileThemesPbBackup;
-            File fileThemesPlBackup;
-            File fileThemesRuBackup;
-            File fileThemesTuBackup;
             if(initialBackup){
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
                 filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Publisher.txt.initialBackup");
-                fileThemesArBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_AR.txt.initialBackup");
-                fileThemesChBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CH.txt.initialBackup");
-                fileThemesCtBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CT.txt.initialBackup");
-                fileThemesCzBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_CZ.txt.initialBackup");
-                fileThemesEnBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_EN.txt.initialBackup");
-                fileThemesEsBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_ES.txt.initialBackup");
-                fileThemesFrBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_FR.txt.initialBackup");
-                fileThemesGeBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_GE.txt.initialBackup");
-                fileThemesHuBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_HU.txt.initialBackup");
-                fileThemesItBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_IT.txt.initialBackup");
-                fileThemesKoBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_KO.txt.initialBackup");
-                fileThemesPbBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_PB.txt.initialBackup");
-                fileThemesPlBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_PL.txt.initialBackup");
-                fileThemesRuBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_RU.txt.initialBackup");
-                fileThemesTuBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_TU.txt.initialBackup");
             }else{
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
                 filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Publisher.txt");
-                fileThemesArBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_AR.txt");
-                fileThemesChBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CH.txt");
-                fileThemesCtBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CT.txt");
-                fileThemesCzBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_CZ.txt");
-                fileThemesEnBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_EN.txt");
-                fileThemesEsBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_ES.txt");
-                fileThemesFrBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_FR.txt");
-                fileThemesGeBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_GE.txt");
-                fileThemesHuBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_HU.txt");
-                fileThemesItBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_IT.txt");
-                fileThemesKoBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_KO.txt");
-                fileThemesPbBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_PB.txt");
-                fileThemesPlBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_PL.txt");
-                fileThemesRuBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_RU.txt");
-                fileThemesTuBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_TU.txt");
             }
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesArBackup.getPath()), Paths.get(Utils.getThemeFile(0).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesChBackup.getPath()), Paths.get(Utils.getThemeFile(1).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesCtBackup.getPath()), Paths.get(Utils.getThemeFile(2).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesCzBackup.getPath()), Paths.get(Utils.getThemeFile(3).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesEnBackup.getPath()), Paths.get(Utils.getThemeFile(4).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesEsBackup.getPath()), Paths.get(Utils.getThemeFile(5).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesFrBackup.getPath()), Paths.get(Utils.getThemeFile(6).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesGeBackup.getPath()), Paths.get(Utils.getThemeFile(7).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesHuBackup.getPath()), Paths.get(Utils.getThemeFile(8).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesItBackup.getPath()), Paths.get(Utils.getThemeFile(9).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesKoBackup.getPath()), Paths.get(Utils.getThemeFile(10).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesPbBackup.getPath()), Paths.get(Utils.getThemeFile(11).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesPlBackup.getPath()), Paths.get(Utils.getThemeFile(12).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesRuBackup.getPath()), Paths.get(Utils.getThemeFile(13).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileThemesTuBackup.getPath()), Paths.get(Utils.getThemeFile(14).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            restoreThemeFileBackups(initialBackup);
             if(initialBackup){
                 ChangeLog.addLogEntry(8);
                 if(showMessages){
@@ -182,6 +123,22 @@ public class Backup {
                 }
             }
 
+        }
+    }
+
+    /**
+     * Restores all theme file backups
+     */
+    private static void restoreThemeFileBackups(boolean initialBackup) throws IOException {
+        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
+            File currentBackupFile;
+            if(initialBackup){
+                currentBackupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");
+            }else{
+                currentBackupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt");
+            }
+            Files.copy(Paths.get(currentBackupFile.getPath()), Paths.get(Utils.getThemeFile(i).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            LOGGER.info("File " + currentBackupFile.getPath() + " has been restored.");
         }
     }
 
@@ -260,20 +217,8 @@ public class Backup {
      * @param initialBackup True if this is the initial backup.
      */
     public static void createThemeFilesBackup(boolean initialBackup) throws IOException {
-        Backup.createBackup(Utils.getThemeFile(0), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(1), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(2), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(3), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(4), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(5), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(6), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(7), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(8), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(9), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(10), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(11), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(12), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(13), initialBackup);
-        Backup.createBackup(Utils.getThemeFile(14), initialBackup);
+        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
+            Backup.createBackup(Utils.getThemeFile(i), initialBackup);
+        }
     }
 }
