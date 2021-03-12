@@ -340,8 +340,9 @@ public class AnalyzeExistingGenres {
     /**
      * @param id The id
      * @return Returns the specified genre name by id.
+     * @throws ArrayIndexOutOfBoundsException Is thrown when the requested genre id does not exist in the map.
      */
-    public static String getGenreNameById(int id){
+    public static String getGenreNameById(int id) throws ArrayIndexOutOfBoundsException{
         return getGenreNamesInUse().get(id);
     }
 

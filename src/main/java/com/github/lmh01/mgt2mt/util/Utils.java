@@ -219,7 +219,7 @@ public class Utils {
      * @return Returns an array list containing all files inside the input folder
      */
     public static ArrayList<File> getFilesInFolder(String folder){
-        return getFilesInFolder(folder, "");
+        return getFilesInFolder(folder, "EMPTY");
     }
 
     /**
@@ -233,7 +233,7 @@ public class Utils {
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(!filesInFolder[i].getName().contains(blackList) && !blackList.isEmpty()){
+                if(!filesInFolder[i].getName().contains(blackList) || blackList.equals("EMPTY")){
                     arrayListFiles.add(filesInFolder[i]);
                     if(Settings.enableDebugLogging){
                         LOGGER.info(filesInFolder[i].getName());

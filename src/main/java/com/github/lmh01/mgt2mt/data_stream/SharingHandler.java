@@ -217,19 +217,23 @@ public class SharingHandler {
         }
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
-        if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
-                "\nName: " + mapNewPublisher.get("NAME EN") +
-                "\nDate: " + mapNewPublisher.get("DATE") +
-                "\nPic: See top left" +
-                "\nDeveloper: " + mapNewPublisher.get("DEVELOPER") +
-                "\nPublisher: " + mapNewPublisher.get("PUBLISHER") +
-                "\nMarketShare: " + mapNewPublisher.get("MARKET") +
-                "\nShare: " + mapNewPublisher.get("SHARE") +
-                "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(mapNewPublisher.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
-            EditPublishersFile.addPublisher(mapNewPublisher, publisherImageFilePath.getPath());
-            ChangeLog.addLogEntry(22, mapNewPublisher.get("NAME EN"));
-            JOptionPane.showMessageDialog(null, "Publisher " + mapNewPublisher.get("NAME EN") + " has been added successfully");
-            WindowMain.checkActionAvailability();
+        try{
+            if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
+                    "\nName: " + mapNewPublisher.get("NAME EN") +
+                    "\nDate: " + mapNewPublisher.get("DATE") +
+                    "\nPic: See top left" +
+                    "\nDeveloper: " + mapNewPublisher.get("DEVELOPER") +
+                    "\nPublisher: " + mapNewPublisher.get("PUBLISHER") +
+                    "\nMarketShare: " + mapNewPublisher.get("MARKET") +
+                    "\nShare: " + mapNewPublisher.get("SHARE") +
+                    "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(mapNewPublisher.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+                EditPublishersFile.addPublisher(mapNewPublisher, publisherImageFilePath.getPath());
+                ChangeLog.addLogEntry(22, mapNewPublisher.get("NAME EN"));
+                JOptionPane.showMessageDialog(null, "Publisher " + mapNewPublisher.get("NAME EN") + " has been added successfully");
+                WindowMain.checkActionAvailability();
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
         }
         return true;
     }
