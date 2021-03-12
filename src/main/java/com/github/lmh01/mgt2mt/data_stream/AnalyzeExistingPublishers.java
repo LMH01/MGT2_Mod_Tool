@@ -8,7 +8,6 @@ import java.util.*;
 
 public class AnalyzeExistingPublishers {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingPublishers.class);
     private static List<Map<String, String>> publisherList;
     public static int maxThemeID = 0;
 
@@ -29,8 +28,7 @@ public class AnalyzeExistingPublishers {
     public static String[] getPublisherString(){
         ArrayList<String> arrayListActivePublishers = new ArrayList<>();
         List<Map<String, String>> listPublishers = getListMap();
-        for(int i=0; i<listPublishers.size(); i++){
-            Map<String, String> map = listPublishers.get(i);
+        for (Map<String, String> map : listPublishers) {
             arrayListActivePublishers.add(map.get("NAME EN"));
         }
         Collections.sort(arrayListActivePublishers);

@@ -89,7 +89,7 @@ public class WindowAddGenrePage5 extends JFrame{
 
     private void setGenreList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        ArrayList<Integer> genresSelected = new ArrayList();
+        ArrayList<Integer> genresSelected = new ArrayList<>();
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
         int currentGenre = 0;
@@ -131,10 +131,6 @@ public class WindowAddGenrePage5 extends JFrame{
             compatibleGenres.append("<").append(string).append(">");
         }
         GenreManager.mapNewGenre.put("GENRE COMB", Utils.convertGenreNamesToId(compatibleGenres.toString()));
-        if(listAvailableGenres.getSelectedValuesList().size() != 0){
-            return  true;
-        }else{
-            return false;
-        }
+        return listAvailableGenres.getSelectedValuesList().size() != 0;
     }
 }

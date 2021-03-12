@@ -4,7 +4,6 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -18,13 +17,13 @@ public class AnalyzeCompanyLogos {
         File companyLogosPath = new File(Utils.getCompanyLogosPath());
         ArrayList<File> companyLogos = Utils.getFilesInFolder(companyLogosPath.getPath());
         int currentMaxNumber = 0;
-        for(int i=0; i<companyLogos.size(); i++){
-            if(Settings.enableDebugLogging){
-                LOGGER.info("current file: " + companyLogos.get(i).getPath());
+        for (File companyLogo : companyLogos) {
+            if (Settings.enableDebugLogging) {
+                LOGGER.info("current file: " + companyLogo.getPath());
             }
-            if(!companyLogos.get(i).getName().replaceAll("[^0-9]", "").equals("")){
-                if(Integer.parseInt(companyLogos.get(i).getName().replaceAll("[^0-9]", "")) > currentMaxNumber){
-                    currentMaxNumber = Integer.parseInt(companyLogos.get(i).getName().replaceAll("[^0-9]", ""));
+            if (!companyLogo.getName().replaceAll("[^0-9]", "").equals("")) {
+                if (Integer.parseInt(companyLogo.getName().replaceAll("[^0-9]", "")) > currentMaxNumber) {
+                    currentMaxNumber = Integer.parseInt(companyLogo.getName().replaceAll("[^0-9]", ""));
                 }
             }
         }

@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.windows.WindowMain;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -18,11 +17,7 @@ public class GenreManager {
     public static Map<String, String> mapNameTranslations = new HashMap<>();
     public static Map<String, String> mapDescriptionTranslations = new HashMap<>();
     public static Map<String, String> mapNewGenre = new HashMap<>();//This is the map that contains all information on the new genre.
-    public static boolean nameTranslationsAdded = false;
-    public static boolean descriptionTranslationsAdded = false;
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreManager.class);
-
-    //TODO Rewrite how genres are added and shared to use maps and make steps easier
 
     /**
      * Adds a new genre to mad games tycoon 2
@@ -95,9 +90,7 @@ public class GenreManager {
         mapNewGenre.put("SOUND", "25");
         mapNewGenre.put("CONTROL", "25");
         mapNameTranslations.clear();
-        nameTranslationsAdded = false;
         mapDescriptionTranslations.clear();
-        descriptionTranslationsAdded = false;
         WindowAddGenrePage1.clearTranslationArrayLists();
     }
 
@@ -105,12 +98,11 @@ public class GenreManager {
      * Ads a new genre to mad games tycoon 2. Shows a summary for the genre that should be added.
      * @param map The map that includes the values.
      * @param genreTranslations The map that includes the genre name translations
-     * @param compatibleThemeIds A set containing all compatible theme ids
      * @param genreScreenshots Array list containing all screenshot files
      * @param showSummaryFromImport True when called from genre import
      * @param genreIcon The genre icon file
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations, Set<Integer> compatibleThemeIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
+    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = "Your genre is ready:\n\n" +
@@ -317,31 +309,4 @@ public class GenreManager {
         }
         WindowMain.checkActionAvailability();
     }
-
-    /**
-     * @return Returns a string containing the compatible genre ids. The ids are already in this format <id><id><id>...
-     */
-    public static String getCompatibleGenresIds(){
-        ArrayList<Integer> arrayListGenreIDs = new ArrayList<>();
-        StringBuilder compatibleGenresIds = new StringBuilder();
-        if(Settings.enableDebugLogging){
-            LOGGER.info("AnalyzeExistingGenres.genreList.size(): " + AnalyzeExistingGenres.genreList.size());
-        }
-        for (Map<String, String> map : AnalyzeExistingGenres.genreList) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                if (entry.getKey().equals("ID")) {
-                    int currentId = Integer.parseInt(entry.getValue());
-                    if(mapNewGenre.get("COMPATIBLE THEMES").contains(entry.getValue())){
-                        arrayListGenreIDs.add(currentId);
-                    }
-                }
-            }
-        }
-        Collections.sort(arrayListGenreIDs);
-        for (Integer arrayListGenreID : arrayListGenreIDs) {
-            compatibleGenresIds.append("<").append(arrayListGenreID).append(">");
-        }
-        return compatibleGenresIds.toString();
-    }
-
 }

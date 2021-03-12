@@ -18,8 +18,6 @@ import java.util.List;
 
 public class Utils {
 
-    public static int genreLineNumbers = 48;//Defines how many lines a genre has inside the Genres.txt file. When the amount of lines is changed, change this number to apply the new number to all refering operations.
-
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
@@ -64,7 +62,6 @@ public class Utils {
     /**
      * @param file The input file
      * @return Returns a list containing map entries for every data package in the input text file.
-     * @throws IOException
      */
     public static List<Map<String,String>> parseDataFile(File file) throws IOException{
         List<Map<String, String>> fileParts = new ArrayList<>();
@@ -128,10 +125,19 @@ public class Utils {
         return new File(getMGT2DataPath() + "\\NpcGames.txt");
     }
 
+    /**
+     * @return Returns the Themes_GE.txt file.
+     */
     public static File getThemesGeFile(){return new File(getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");}
 
+    /**
+     * @return Returns the Themes_EN.txt file.
+     */
     public static File getThemesEnFile(){return new File(getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");}
 
+    /**
+     * @return Returns the path to this folder \Mad Games Tycoon 2_Data\Extern\CompanyLogos\.
+     */
     public static String getCompanyLogosPath(){
         return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\";
     }
@@ -160,6 +166,7 @@ public class Utils {
             case 2: JOptionPane.showMessageDialog(null, "Unable to open Github repository:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE); break;
         }
     }
+
     /**
      * Opens a message dialog with a specified error message.
      * @param confirmMessageKey The confirm message key. See this functions for meanings.
@@ -267,7 +274,6 @@ public class Utils {
      * Copied from https://www.baeldung.com/java-copy-directory
      * @param sourceDirectoryLocation The source
      * @param destinationDirectoryLocation The destination
-     * @throws IOException
      */
     public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
             throws IOException {
@@ -286,9 +292,8 @@ public class Utils {
     /**
      * Copied from https://www.baeldung.com/java-delete-directory
      * Deletes a complete directory with its contents
-     * @return Returns true when operation was successful
      */
-    public static boolean deleteDirectory(File directoryToBeDeleted ){
+    public static void deleteDirectory(File directoryToBeDeleted ){
         File[] allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
             for (File file : allContents) {
@@ -298,7 +303,7 @@ public class Utils {
                 }
             }
         }
-        return directoryToBeDeleted.delete();
+        directoryToBeDeleted.delete();
     }
 
     /**

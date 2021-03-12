@@ -12,7 +12,6 @@ public class ImportSettings{
 
     public static boolean Import(String fileLocation) {
         LOGGER.info("Starting settings import process...");
-
         try {
             LOGGER.info("Scanning for File '" + fileLocation + "'...");
             File file = new File(fileLocation);

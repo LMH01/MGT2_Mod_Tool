@@ -13,23 +13,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
-    private static JFrame frame = new JFrame("MGT2 Mod Tool");
-    private static JMenuItem m21 = new JMenuItem("Add Genre");
-    private static JMenuItem m22 = new JMenuItem("Remove Genre");
-    private static JMenuItem m32 = new JMenuItem("Export Genre");
-    private static JMenuItem m34 = new JMenuItem("Export Publisher");
-    private static JMenuItem m24 = new JMenuItem("Remove Theme");
-    private static JMenuItem m25 = new JMenuItem("NPC_Games_list");
-    private static JMenuItem m27 = new JMenuItem("Remove Publisher");
+    private static final JFrame frame = new JFrame("MGT2 Mod Tool");
+    private static final JMenuItem m21 = new JMenuItem("Add Genre");
+    private static final JMenuItem m22 = new JMenuItem("Remove Genre");
+    private static final JMenuItem m32 = new JMenuItem("Export Genre");
+    private static final JMenuItem m34 = new JMenuItem("Export Publisher");
+    private static final JMenuItem m24 = new JMenuItem("Remove Theme");
+    private static final JMenuItem m25 = new JMenuItem("NPC_Games_list");
+    private static final JMenuItem m27 = new JMenuItem("Remove Publisher");
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,7 +164,6 @@ public class WindowMain {
      */
     public static void checkActionAvailability(){
         try{
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             AnalyzeExistingPublishers.analyzePublisherFile();
@@ -236,7 +233,7 @@ public class WindowMain {
     }
     private static void removeGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();;
+            AnalyzeExistingGenres.analyzeGenreFile();
             Backup.createBackup(Utils.getGenreFile());
             boolean noGenreToRemoveAvailable = true;
             JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be removed:");
@@ -264,7 +261,7 @@ public class WindowMain {
                     if(!listAvailableGenres.isSelectionEmpty()){
                         boolean exportFailed = false;
                         int numberOfGenresToRemove = listAvailableGenres.getSelectedValuesList().size();
-                        String failedGenreRemoves = "";
+                        StringBuilder failedGenreRemoves = new StringBuilder();
                         for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
                             String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
                             try{
@@ -273,7 +270,7 @@ public class WindowMain {
                                 EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, null);
                                 NPCGameListChanger.editNPCGames(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, 0);
                             }catch (IOException e){
-                                failedGenreRemoves = failedGenreRemoves + currentGenre + " - " + e.getMessage() + System.getProperty("line.separator");
+                                failedGenreRemoves.append(currentGenre).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
                                 exportFailed = true;
                             }
                             numberOfGenresToRemove--;
@@ -300,7 +297,6 @@ public class WindowMain {
     }
     private static void addTheme(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingThemes.analyzeThemeFiles();
             NewThemeManager.arrayListCompatibleGenresForTheme.clear();
             NewThemeManager.arrayListThemeTranslations.clear();
@@ -370,7 +366,6 @@ public class WindowMain {
     }
     private static void removeTheme(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingThemes.analyzeThemeFiles();
             String[] string = AnalyzeExistingThemes.getThemesByAlphabet(true);
             JList<String> listAvailableThemes = new JList<>(string);
@@ -542,7 +537,7 @@ public class WindowMain {
                         }
                         if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
                                 "\nName: " + textFieldName.getText() +
-                                "\nDate: " + comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString() +
+                                "\nDate: " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString() +
                                 "\nPic: See top left" +
                                 "\nDeveloper: " + checkBoxIsDeveloper.isSelected() +
                                 "\nPublisher: " + checkBoxIsPublisher.isSelected() +
@@ -608,14 +603,14 @@ public class WindowMain {
                     if(!listAvailablePublishers.isSelectionEmpty()){
                         boolean exportFailed = false;
                         int numberOfPublishersToRemove = listAvailablePublishers.getSelectedValuesList().size();
-                        String failedPublishersRemoves = "";
+                        StringBuilder failedPublishersRemoves = new StringBuilder();
                         for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
                             String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
                             try{
                                 EditPublishersFile.removePublisher(currentPublisher);
                                 ChangeLog.addLogEntry(20, currentPublisher);
                             }catch (IOException e){
-                                failedPublishersRemoves = failedPublishersRemoves + currentPublisher + " - " + e.getMessage() + System.getProperty("line.separator");
+                                failedPublishersRemoves.append(currentPublisher).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
                                 exportFailed = true;
                             }
                             numberOfPublishersToRemove--;
@@ -695,7 +690,6 @@ public class WindowMain {
     private static void exportGenre(){
         try {
             boolean noGenreToExportAvailable = true;
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be exported:");
             String[] string;
             if(Settings.disableSafetyFeatures){
@@ -725,22 +719,15 @@ public class WindowMain {
                             multipleGenresToExport = true;
                         }
                         int numberOfGenresToExport = listAvailableThemes.getSelectedValuesList().size();
-                        String failedGenreExports = "";
+                        StringBuilder failedGenreExports = new StringBuilder();
                         for(int i=0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
                             String currentGenre = listAvailableThemes.getSelectedValuesList().get(i);
-                            if(!AnalyzeExistingGenres.analyzeSingleGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre))){
-                                LOGGER.info("Genre has not been found!");
-                                JOptionPane.showMessageDialog(null, "Unable to export genre:\nInternal error\nSee console for further information!", "Error", JOptionPane.ERROR_MESSAGE);
-                                failedGenreExports = failedGenreExports + " - Internal error" + currentGenre + System.getProperty("line.separator");
-                                exportFailed = true;
-                            }else{
-                                if(!SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre), currentGenre)){
-                                    if(!multipleGenresToExport){
-                                        JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                    }
-                                    failedGenreExports = failedGenreExports + currentGenre + " - The selected genre has already been exported" + System.getProperty("line.separator");
-                                    exportFailed = true;
+                            if(!SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre), currentGenre)){
+                                if(!multipleGenresToExport){
+                                    JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
                                 }
+                                failedGenreExports.append(currentGenre).append(" - The selected genre has already been exported").append(System.getProperty("line.separator"));
+                                exportFailed = true;
                             }
                             numberOfGenresToExport--;
                         }
@@ -806,7 +793,6 @@ public class WindowMain {
     private static void exportPublisher(){
         try {
             AnalyzeExistingPublishers.analyzePublisherFile();
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             boolean noPublisherToExportAvailable = true;
             JLabel labelChooseGenre = new JLabel("Select the publisher(s) that should be exported:");
             String[] string;
@@ -837,7 +823,7 @@ public class WindowMain {
                             multipleGenresToExport = true;
                         }
                         int numberOfPublishersToExport = listAvailablePublishers.getSelectedValuesList().size();
-                        String failedPublishersExport = "";
+                        StringBuilder failedPublishersExport = new StringBuilder();
                         for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
                             String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
                             try{
@@ -845,11 +831,11 @@ public class WindowMain {
                                     if(!multipleGenresToExport){
                                         JOptionPane.showMessageDialog(null, "The selected publisher has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
                                     }
-                                    failedPublishersExport = failedPublishersExport + currentPublisher + " - The selected publisher has already been exported" + System.getProperty("line.separator");
+                                    failedPublishersExport.append(currentPublisher).append(" - The selected publisher has already been exported").append(System.getProperty("line.separator"));
                                     exportFailed = true;
                                 }
                             }catch (IOException e){
-                                failedPublishersExport = failedPublishersExport + currentPublisher + " - " + e.getMessage() + System.getProperty("line.separator");
+                                failedPublishersExport.append(currentPublisher).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
                                 exportFailed = true;
                             }
                             numberOfPublishersToExport--;
@@ -985,23 +971,17 @@ public class WindowMain {
         }
     }
     private static void showActiveGenres(){
-        try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
-            String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
+        String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
 
-            JList<String> listAvailableGenres = new JList<>(string);
-            listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-            listAvailableGenres.setVisibleRowCount(-1);
+        JList<String> listAvailableGenres = new JList<>(string);
+        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+        listAvailableGenres.setVisibleRowCount(-1);
 
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
+        scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
-            JOptionPane.showMessageDialog(null, scrollPaneAvailableGenres, "The following genres are currently active.", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            Utils.showErrorMessage(1, e);
-            e.printStackTrace();
-        }
+        JOptionPane.showMessageDialog(null, scrollPaneAvailableGenres, "The following genres are currently active.", JOptionPane.INFORMATION_MESSAGE);
     }
     private static void showActiveThemes(){
         try {
@@ -1035,9 +1015,8 @@ public class WindowMain {
     }
     private static void openGenresByIDFile(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             if(!AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.exists()){
-                JOptionPane.showMessageDialog(null, "The help file could not be opened.\nFile not found.", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "The help file could not be opened.\nFile not found.", "Unable to open help file", JOptionPane.ERROR_MESSAGE);
             }else{
                 Desktop.getDesktop().open(AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP);
             }
@@ -1091,25 +1070,25 @@ public class WindowMain {
                 StringBuilder uninstallFailedExplanation = new StringBuilder();
                 if(checkboxRevertAllMods.isSelected()){
                     String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                    for(int i=0; i<customGenres.length; i++){
+                    for (String customGenre : customGenres) {
                         try {
-                            EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenres[i]));
+                            EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenre));
                             LOGGER.info("Game files have been restored to original.");
                         } catch (IOException e) {
                             LOGGER.info("Genre could not be removed: " + e.getMessage());
-                            uninstallFailedExplanation.append("Genre could not be removed: " + e.getMessage()).append(System.getProperty("line.separator"));
+                            uninstallFailedExplanation.append("Genre could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
                             e.printStackTrace();
                             uninstallFailed = true;
                         }
                     }
                     String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-                    for(int i=0; i<customPublishers.length; i++){
+                    for (String customPublisher : customPublishers) {
                         try {
-                            EditPublishersFile.removePublisher(customPublishers[i]);
+                            EditPublishersFile.removePublisher(customPublisher);
                             LOGGER.info("Publisher files have been restored to original.");
                         } catch (IOException e) {
                             LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                            uninstallFailedExplanation.append("Publisher could not be removed: " + e.getMessage()).append(System.getProperty("line.separator"));
+                            uninstallFailedExplanation.append("Publisher could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
                             e.printStackTrace();
                             uninstallFailed = true;
                         }
@@ -1127,7 +1106,7 @@ public class WindowMain {
                 }
                 if(checkboxDeleteConfigFiles.isSelected()){
                     File configFile = new File(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
-                    configFile.deleteOnExit();;
+                    configFile.deleteOnExit();
                     LOGGER.info("Settings file has been deleted.");
                 }
                 if(checkboxDeleteExports.isSelected()){

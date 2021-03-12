@@ -1,13 +1,10 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -107,7 +104,7 @@ public class WindowAddGenrePage2 extends JFrame{
         contentPane.add(spinnerUnlockYear);
     }
     private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox<String> comboBoxGenreUnlockMonth){
-        GenreManager.mapNewGenre.put("DATE", comboBoxGenreUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+        GenreManager.mapNewGenre.put("DATE", Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
         GenreManager.mapNewGenre.put("UNLOCK MONTH", comboBoxGenreUnlockMonth.getSelectedItem().toString());
         GenreManager.mapNewGenre.put("UNLOCK YEAR", spinnerUnlockYear.getValue().toString());
         LOGGER.info("genre unlock year: " +  Integer.parseInt(spinnerUnlockYear.getValue().toString()));

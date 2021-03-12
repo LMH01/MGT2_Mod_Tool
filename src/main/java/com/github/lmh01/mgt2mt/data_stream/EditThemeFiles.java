@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -78,7 +77,7 @@ public class EditThemeFiles {
      * @param themeName The name of the new theme.
      * @param arrayListCompatibleGenres The array list where the compatible genre ids are listed.
      */
-    public static void addTheme(File themeFile, String themeName, ArrayList arrayListCompatibleGenres) throws IOException {
+    public static void addTheme(File themeFile, String themeName, ArrayList<Integer> arrayListCompatibleGenres) throws IOException {
         addOrRemoveTheme(themeFile, themeName, true, arrayListCompatibleGenres, 0);
     }
 

@@ -95,7 +95,7 @@ public class WindowAddGenrePage6 extends JFrame{
 
     private void setThemesList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        ArrayList<Integer> genresSelected = new ArrayList();
+        ArrayList<Integer> genresSelected = new ArrayList<>();
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
@@ -138,10 +138,6 @@ public class WindowAddGenrePage6 extends JFrame{
             }
         }
         GenreManager.mapNewGenre.put("THEME COMB", compatibleThemes.toString());
-        if(listAvailableThemes.getSelectedValuesList().size() != 0){
-            return  true;
-        }else{
-            return false;
-        }
+        return listAvailableThemes.getSelectedValuesList().size() != 0;
     }
 }

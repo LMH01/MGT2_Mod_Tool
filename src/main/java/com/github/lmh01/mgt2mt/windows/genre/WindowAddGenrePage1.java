@@ -216,7 +216,7 @@ public class WindowAddGenrePage1 extends JFrame{
             ExportSettings.export();
         }
         if(continueWithTranslations){
-            mapNameTranslations = TranslationManager.getTranslationsMap(GenreManager.mapNewGenre.get("NAME EN"));
+            mapNameTranslations = TranslationManager.getTranslationsMap();
             nameTranslationsAdded = true;
         }
     }
@@ -238,7 +238,7 @@ public class WindowAddGenrePage1 extends JFrame{
             ExportSettings.export();
         }
         if(continueWithTranslations){
-            mapDescriptionTranslations = TranslationManager.getTranslationsMap(GenreManager.mapNewGenre.get("DESC EN"));
+            mapDescriptionTranslations = TranslationManager.getTranslationsMap();
         }
     }
 
@@ -253,7 +253,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 mapGenreTranslation.put("NAME " + string, GenreManager.mapNewGenre.get("NAME EN"));
             }
         }else{
-            for(Map.Entry entry : mapNameTranslations.entrySet()){
+            for(Map.Entry<String, String> entry : mapNameTranslations.entrySet()){
                 mapGenreTranslation.put("NAME " + entry.getKey(), entry.getValue().toString());
             }
         }
@@ -262,7 +262,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 mapGenreTranslation.put("DESC " + string, GenreManager.mapNewGenre.get("DESC EN"));
             }
         }else{
-            for(Map.Entry entry : mapDescriptionTranslations.entrySet()){
+            for(Map.Entry<String, String> entry : mapDescriptionTranslations.entrySet()){
                 mapGenreTranslation.put("DESC " + entry.getKey(), entry.getValue().toString());
             }
         }

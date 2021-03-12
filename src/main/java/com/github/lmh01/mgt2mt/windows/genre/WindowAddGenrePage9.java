@@ -2,8 +2,6 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
@@ -132,8 +130,8 @@ public class WindowAddGenrePage9 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             if(!arrayListScreenshotFiles.isEmpty()){
                 StringBuilder filePaths = new StringBuilder();
-                for(int i = 0; i< arrayListScreenshotFiles.size(); i++){
-                    filePaths.append("<br>").append(arrayListScreenshotFiles.get(i));
+                for (File arrayListScreenshotFile : arrayListScreenshotFiles) {
+                    filePaths.append("<br>").append(arrayListScreenshotFile);
                 }
                 if(JOptionPane.showConfirmDialog(null, "<html>The following image files have been added:<br>" + filePaths + "<br><br>Is this correct and do you want to continue?", "Is this correct?", JOptionPane.YES_NO_OPTION) == 0){
                     GenreManager.openStepWindow(10);

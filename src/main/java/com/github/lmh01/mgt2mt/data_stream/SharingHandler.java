@@ -8,7 +8,6 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -50,7 +49,7 @@ public class SharingHandler {
         PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGenre), StandardCharsets.UTF_8));
         bw.write("\ufeff");//Makes the file UTF8-BOM
         bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
-        bw.print("[GENRE START]" + System.getProperty("line.separator"));//TODO Make use of TranslationManager
+        bw.print("[GENRE START]" + System.getProperty("line.separator"));
         for(String translationKey : TranslationManager.TRANSLATION_KEYS){
             bw.print("[NAME " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME " + translationKey)  + System.getProperty("line.separator"));
             bw.print("[DESC " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC " + translationKey)  + System.getProperty("line.separator"));
@@ -127,7 +126,7 @@ public class SharingHandler {
         }
         ArrayList<File> genreScreenshots = Utils.getFilesInFolder(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
-        GenreManager.addGenre(map, map, compatibleThemeIds, genreScreenshots,true, genreIcon);
+        GenreManager.addGenre(map, map, genreScreenshots,true, genreIcon);
         return true;
     }
 
@@ -184,23 +183,43 @@ public class SharingHandler {
     public static boolean importPublisher(String importFolderPath) throws IOException {
         AnalyzeExistingPublishers.analyzePublisherFile();
         HashMap<String, String> mapNewPublisher = new HashMap<>();
-        int newPublisherId = AnalyzeExistingPublishers.maxThemeID+1;
+        int newPublisherId = AnalyzeExistingPublishers.maxThemeID + 1;
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
         String currentLine;
         int line = 1;
-        while((currentLine = reader.readLine()) != null){
-            switch(line){
-                case 3: mapNewPublisher.put("NAME EN", currentLine.replace("[NAME EN]", "")); break;
-                case 4: mapNewPublisher.put("NAME GE", currentLine.replace("[NAME GE]", "")); break;
-                case 5: mapNewPublisher.put("NAME TU", currentLine.replace("[NAME TU]", "")); break;
-                case 6: mapNewPublisher.put("NAME FR", currentLine.replace("[NAME FR]", "")); break;
-                case 7: mapNewPublisher.put("DATE", currentLine.replace("[DATE]", "")); break;
-                case 8: mapNewPublisher.put("DEVELOPER", currentLine.replace("[DEVELOPER]", "")); break;
-                case 9: mapNewPublisher.put("PUBLISHER", currentLine.replace("[PUBLISHER]", "")); break;
-                case 10: mapNewPublisher.put("MARKET", currentLine.replace("[MARKET]", "")); break;
-                case 11: mapNewPublisher.put("SHARE", currentLine.replace("[SHARE]", "")); break;
-                case 12: mapNewPublisher.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(currentLine.replace("[GENRE]", "")))); break;
+        while ((currentLine = reader.readLine()) != null) {
+            switch (line) {
+                case 3:
+                    mapNewPublisher.put("NAME EN", currentLine.replace("[NAME EN]", ""));
+                    break;
+                case 4:
+                    mapNewPublisher.put("NAME GE", currentLine.replace("[NAME GE]", ""));
+                    break;
+                case 5:
+                    mapNewPublisher.put("NAME TU", currentLine.replace("[NAME TU]", ""));
+                    break;
+                case 6:
+                    mapNewPublisher.put("NAME FR", currentLine.replace("[NAME FR]", ""));
+                    break;
+                case 7:
+                    mapNewPublisher.put("DATE", currentLine.replace("[DATE]", ""));
+                    break;
+                case 8:
+                    mapNewPublisher.put("DEVELOPER", currentLine.replace("[DEVELOPER]", ""));
+                    break;
+                case 9:
+                    mapNewPublisher.put("PUBLISHER", currentLine.replace("[PUBLISHER]", ""));
+                    break;
+                case 10:
+                    mapNewPublisher.put("MARKET", currentLine.replace("[MARKET]", ""));
+                    break;
+                case 11:
+                    mapNewPublisher.put("SHARE", currentLine.replace("[SHARE]", ""));
+                    break;
+                case 12:
+                    mapNewPublisher.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(currentLine.replace("[GENRE]", ""))));
+                    break;
             }
             line++;
         }
@@ -209,16 +228,15 @@ public class SharingHandler {
         int logoId = AnalyzeCompanyLogos.getLogoNumber();
         mapNewPublisher.put("PIC", Integer.toString(logoId));
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-        for(int i=0; i<list.size(); i++){
-            Map<String, String> map = list.get(i);
-            if(map.get("NAME EN").equals(mapNewPublisher.get("NAME EN"))){
+        for (Map<String, String> map : list) {
+            if (map.get("NAME EN").equals(mapNewPublisher.get("NAME EN"))) {
                 return false;
             }
         }
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
-        try{
-            if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
+        try {
+            if (JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
                     "\nName: " + mapNewPublisher.get("NAME EN") +
                     "\nDate: " + mapNewPublisher.get("DATE") +
                     "\nPic: See top left" +
@@ -226,93 +244,16 @@ public class SharingHandler {
                     "\nPublisher: " + mapNewPublisher.get("PUBLISHER") +
                     "\nMarketShare: " + mapNewPublisher.get("MARKET") +
                     "\nShare: " + mapNewPublisher.get("SHARE") +
-                    "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(mapNewPublisher.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+                    "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(mapNewPublisher.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
                 EditPublishersFile.addPublisher(mapNewPublisher, publisherImageFilePath.getPath());
                 ChangeLog.addLogEntry(22, mapNewPublisher.get("NAME EN"));
                 JOptionPane.showMessageDialog(null, "Publisher " + mapNewPublisher.get("NAME EN") + " has been added successfully");
                 WindowMain.checkActionAvailability();
             }
-        }catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
         }
         return true;
-    }
-    /**
-     * Fills the new genre variables that are used to add a new genre. The variables that are being filled are the ones in the {@link GenreManager}.
-     * @deprecated you can now use {@link EditGenreFile#addGenre()} to add a new genre to the game. This method is obsolete
-     */
-    @Deprecated
-    private static void fillNewGenreVariables(String importFolderPath){
-        //TODO Delete method
-        /*GenreManager.resetVariablesToDefault();
-        //GenreManager.id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
-        GenreManager.name = GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]");
-        GenreManager.description = GenreManager.MAP_SINGLE_GENRE.get("[DESC EN]");
-        GenreManager.mapNameTranslations.clear();
-        GenreManager.mapDescriptionTranslations.clear();
-        fillTranslationsArrays();
-        GenreManager.nameTranslationsAdded = true;
-        GenreManager.descriptionTranslationsAdded = true;
-        setGenreUnlockDate();
-        GenreManager.researchPoints = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[RES POINTS]"));
-        GenreManager.price = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[PRICE]"));
-        GenreManager.devCost = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[DEV COSTS]"));
-        setGenreTargetGroup();
-        setGenreCompatibleGenres();
-        setGenreCompatibleThemes();
-        GenreManager.gameplay = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[GAMEPLAY]"));
-        GenreManager.graphic = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[GRAPHIC]"));
-        GenreManager.sound = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[SOUND]"));
-        GenreManager.control = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[CONTROL]"));
-        GenreManager.design1 = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[DESIGN1]"));
-        GenreManager.design2 = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[DESIGN2]"));
-        GenreManager.design3 = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[DESIGN3]"));
-        GenreManager.design4 = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[DESIGN4]"));
-        GenreManager.design5 = Integer.parseInt(GenreManager.MAP_SINGLE_GENRE.get("[DESIGN5]"));
-        GenreManager.imageFile = new File(importFolderPath + "\\DATA\\icon.png");
-        GenreManager.imageFileName = "icon" + GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]");
-        GenreManager.useDefaultImageFile = false;
-        setGenreScreenshotFiles(importFolderPath);
-         */
-    }
-
-    /**
-     * Fills the translations arrays with the translations.
-     */
-    private static void fillTranslationsArrays(){
-        //TODO Rework into working with new genre adding maps
-        /*GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME AR]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME CH]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME CT]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME CZ]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME ES]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME FR]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME GE]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME HU]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME IT]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME KO]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME PB]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME PL]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME RU]"));
-        GenreManager.arrayListNameTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[NAME TU]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC AR]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC CH]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC CT]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC CZ]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC EN]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC ES]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC FR]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC GE]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC HU]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC IT]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC KO]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC PB]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC PL]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC RU]"));
-        GenreManager.arrayListDescriptionTranslations.add(GenreManager.MAP_SINGLE_GENRE.get("[DESC TU]"));
-
-         */
     }
 
     /**

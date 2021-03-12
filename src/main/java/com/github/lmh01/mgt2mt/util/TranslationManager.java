@@ -1,17 +1,13 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
-import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TranslationManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TranslationManager.class);
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     /**
@@ -84,10 +80,9 @@ public class TranslationManager {
     }
 
     /**
-     * @param englishTranslation The english translation.
      * @return Returns a map containing the translations for each language.
      */
-    public static Map<String, String> getTranslationsMap(String englishTranslation){
+    public static Map<String, String> getTranslationsMap(){
         Map<String, String> map = new HashMap<>();
         JTextField textFieldTranslation = new JTextField();
         JLabel labelExplanation = new JLabel();

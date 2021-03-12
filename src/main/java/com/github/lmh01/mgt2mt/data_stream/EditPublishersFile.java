@@ -28,20 +28,31 @@ public class EditPublishersFile {
         bw.write("\ufeff");
         LOGGER.info("Writing contents of list to file: " + publisherFile.getPath());
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-        for(int i=0; i<list.size(); i++){
-            Map<String,String> map = list.get(i);
-            bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME EN]" + map.get("NAME EN"));bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME GE]" + map.get("NAME GE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME TU]" + map.get("NAME TU"));bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME FR]" + map.get("NAME FR"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DEVELOPER]" + map.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PUBLISHER]" + map.get("PUBLISHER"));bw.write(System.getProperty("line.separator"));
-            bw.write("[MARKET]" + map.get("MARKET"));bw.write(System.getProperty("line.separator"));
-            bw.write("[SHARE]" + map.get("SHARE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[GENRE]" + map.get("GENRE"));bw.write(System.getProperty("line.separator"));
+        for (Map<String, String> map : list) {
+            bw.write("[ID]" + map.get("ID"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[NAME EN]" + map.get("NAME EN"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[NAME GE]" + map.get("NAME GE"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[NAME TU]" + map.get("NAME TU"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[NAME FR]" + map.get("NAME FR"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[DATE]" + map.get("DATE"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[PIC]" + map.get("PIC"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[DEVELOPER]" + map.get("DEVELOPER"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[PUBLISHER]" + map.get("PUBLISHER"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[MARKET]" + map.get("MARKET"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[SHARE]" + map.get("SHARE"));
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[GENRE]" + map.get("GENRE"));
+            bw.write(System.getProperty("line.separator"));
             bw.write(System.getProperty("line.separator"));
         }
         bw.write("[ID]" + hashMap.get("ID"));bw.write(System.getProperty("line.separator"));
@@ -69,7 +80,7 @@ public class EditPublishersFile {
 
     /**
      * Removes the given publisher from the publisher list.
-     * @param publisherNameEN
+     * @param publisherNameEN The english publisher name.
      */
     public static void removePublisher(String publisherNameEN) throws IOException {
         AnalyzeExistingPublishers.analyzePublisherFile();
@@ -138,9 +149,8 @@ public class EditPublishersFile {
     private static int getPublisherIconIdByName(String publisherNameEN){
         int returnValue = 0;
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-        for(int i=0; i<list.size(); i++){
-            Map<String, String> map = list.get(i);
-            if(map.get("NAME EN").equals(publisherNameEN)){
+        for (Map<String, String> map : list) {
+            if (map.get("NAME EN").equals(publisherNameEN)) {
                 returnValue = Integer.parseInt(map.get("PIC"));
             }
         }
