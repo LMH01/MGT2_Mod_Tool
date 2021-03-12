@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -19,7 +18,6 @@ public class GenreManager {
     public static Map<String, String> mapNameTranslations = new HashMap<>();
     public static Map<String, String> mapDescriptionTranslations = new HashMap<>();
     public static Map<String, String> mapNewGenre = new HashMap<>();//This is the map that contains all information on the new genre.
-    public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
     public static boolean nameTranslationsAdded = false;
     public static boolean descriptionTranslationsAdded = false;
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreManager.class);
@@ -100,8 +98,6 @@ public class GenreManager {
         nameTranslationsAdded = false;
         mapDescriptionTranslations.clear();
         descriptionTranslationsAdded = false;
-        //imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-        arrayListScreenshotFiles.clear();
         WindowAddGenrePage1.clearTranslationArrayLists();
     }
 
@@ -110,24 +106,25 @@ public class GenreManager {
      * @param map The map that includes the values.
      * @param genreTranslations The map that includes the genre name translations
      * @param compatibleThemeIds A set containing all compatible theme ids
+     * @param genreScreenshots Array list containing all screenshot files
      * @param showSummaryFromImport True when called from genre import
      * @param genreIcon The genre icon file
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations, Set<Integer> compatibleThemeIds, boolean showSummaryFromImport, File genreIcon){
+    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations, Set<Integer> compatibleThemeIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = "Your genre is ready:\n\n" +
                 "Id:" + map.get("ID") + "\n" +
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
-                "Unlock date: " + map.get("UNLOCK MONTH") + " " + map.get("UNLOCK YEAR") + "\n" +
+                "Unlock date: " + map.get("DATE") + "\n" +
                 "Research point cost: " + map.get("RES POINTS") + "\n" +
                 "Research cost " + map.get("PRICE") + "\n" +
                 "Development cost: " + map.get("DEV COSTS") + "\n" +
                 "Pic: see top left\n" +
-                "Target group: " + getTargetGroups() + "\n" +
-                "\n*Compatible genres*\n\n" + getCompatibleGenres() + "\n" +
-                "\n*Compatible themes*\n\n" + getCompatibleThemes() + "\n" +
+                "Target group: " + getTargetGroups(map) + "\n" +
+                "\n*Compatible genres*\n\n" + getCompatibleGenres(map) + "\n" +
+                "\n*Compatible themes*\n\n" + getCompatibleThemes(map) + "\n" +
                 "\n*Design priority*\n\n" +
                 "Gameplay/Visuals: " + map.get("DESIGN1") + "\n" +
                 "Story/Game length: " + map.get("DESIGN2") + "\n" +
@@ -152,7 +149,7 @@ public class GenreManager {
             boolean continueAnyway = false;
             boolean imageFileAccessedSuccess = false;
             try {
-                ImageFileHandler.addGenreImageFiles(Integer.parseInt(map.get("ID")), map.get("NAME EN"), genreIcon);
+                ImageFileHandler.addGenreImageFiles(Integer.parseInt(map.get("ID")), map.get("NAME EN"), genreIcon, genreScreenshots);
                 imageFileAccessedSuccess = true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -163,10 +160,9 @@ public class GenreManager {
             }
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
-                    //EditGenreFile.addGenre();
                     EditGenreFile.addGenre(map, genreTranslations);
-                    EditThemeFiles.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
-                    GenreManager.genreAdded(showSummaryFromImport, genreIcon);
+                    //EditThemeFiles.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
+                    GenreManager.genreAdded(map, showSummaryFromImport, genreIcon);
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
@@ -184,41 +180,43 @@ public class GenreManager {
     }
 
     /**
+     * @param map The map where the TGROUP values are stored.
      * @return Returns the compatible target groups to be displayed in the genre summary.
      */
-    public static String getTargetGroups(){
+    public static String getTargetGroups(Map<String, String> map){
         String targetGroups = "";
-        if(mapNewGenre.get("TGROUP").contains("KID")){
-            if(mapNewGenre.get("TGROUP").contains("TEEN") || mapNewGenre.get("TGROUP").contains("ADULT") || mapNewGenre.get("TGROUP").contains("OLD")){
+        if(map.get("TGROUP").contains("KID")){
+            if(map.get("TGROUP").contains("TEEN") || map.get("TGROUP").contains("ADULT") || map.get("TGROUP").contains("OLD")){
                 targetGroups = targetGroups + "Kid, ";
             }else{
                 targetGroups = targetGroups + "Kid";
             }
         }
-        if(mapNewGenre.get("TGROUP").contains("true")){
-            if(mapNewGenre.get("TGROUP").contains("ADULT") || mapNewGenre.get("TGROUP").contains("OLD")){
+        if(map.get("TGROUP").contains("true")){
+            if(map.get("TGROUP").contains("ADULT") || map.get("TGROUP").contains("OLD")){
                 targetGroups = targetGroups + "Teen, ";
             }else{
                 targetGroups = targetGroups + "Teen";
             }
         }
-        if(mapNewGenre.get("TGROUP").contains("ADULT")){
-            if(mapNewGenre.get("TGROUP").contains("OLD")){
+        if(map.get("TGROUP").contains("ADULT")){
+            if(map.get("TGROUP").contains("OLD")){
                 targetGroups = targetGroups + "Adult, ";
             }else{
                 targetGroups = targetGroups + "Adult";
             }
         }
-        if(mapNewGenre.get("TGROUP").contains("OLD")){
+        if(map.get("TGROUP").contains("OLD")){
             targetGroups = targetGroups + "Senior";
         }
         return targetGroups;
     }
     /**
+     * @param map The map where the GENRE COMB values are stored.
      * @return Returns a string containing all genres that are compatible with the new genre. This is called when the compatible genres are displayed in the summary.
      */
-    private static String getCompatibleGenres(){
-        String inputGenres = mapNewGenre.get("GENRE COMB");
+    private static String getCompatibleGenres(Map<String, String> map){
+        String inputGenres = map.get("GENRE COMB");
         StringBuilder currentGenre = new StringBuilder();
         ArrayList<String> outputGenres = new ArrayList<>();
         StringBuilder output = new StringBuilder();
@@ -250,10 +248,11 @@ public class GenreManager {
         return output.toString();
     }
     /**
+     * @param map The map where the THEME COMB values are stored.
      * @return Returns a string containing all themes that are compatible with the new genre. This is called when the compatible themes are displayed in the summary.
      */
-    private static String getCompatibleThemes(){
-        String inputTopics = mapNewGenre.get("THEME COMB");
+    private static String getCompatibleThemes(Map<String, String> map){
+        String inputTopics = map.get("THEME COMB");
         StringBuilder currentThemes = new StringBuilder();
         ArrayList<String> outputThemes = new ArrayList<>();
         StringBuilder output = new StringBuilder();
@@ -292,8 +291,14 @@ public class GenreManager {
         return "icon" + genreName.replaceAll(" ", "");
     }
 
-    public static void genreAdded(boolean showSummaryFromImport, File genreIcon){
-        String name = mapNewGenre.get("NAME EN");
+    /**
+     * Shows a message to the user that the genre has been added successfully and asks if the NPC_GAMES file should be modified.
+     * @param map The map containing the genre name.
+     * @param showSummaryFromImport determines what log information to write to the log file.
+     * @param genreIcon The genre icon.
+     */
+    public static void genreAdded(Map<String, String> map, boolean showSummaryFromImport, File genreIcon){
+        String name = map.get("NAME EN");
         int id = AnalyzeExistingGenres.getFreeGenreID();
         if(showSummaryFromImport){
             ChangeLog.addLogEntry(1, name);

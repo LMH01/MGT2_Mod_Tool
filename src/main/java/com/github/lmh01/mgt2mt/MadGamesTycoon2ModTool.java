@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
+    //TODO Jede datei durchgehen und altes, ungenutzes Zeug weg löschen (z.B. Imports)
+    //TODO Testen, ob import/export/add/remove publisher noch geht.
+    //TODO Herausfinden, warum das Spiel nicht lädt, wenn die Theme datein geändert werden.
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static final String VERSION = "1.6.0";
     public static void main(String[] args) throws IOException {

@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class SharingHandler {
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
         File fileExportedGenreIcon = new File(EXPORTED_GENRE_DATA_FOLDER_PATH + "//icon.png");
-        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + AnalyzeExistingGenres.genreList.get(genreId).get("[PIC]"));
+        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + "icon" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN") + ".png");
         File fileGenreScreenshotsToExport = new File(Utils.getMGT2ScreenshotsPath() + genreId);
         if(!fileExportedGenreIcon.exists()){
             fileDataFolder.mkdirs();
@@ -50,36 +51,10 @@ public class SharingHandler {
         bw.write("\ufeff");//Makes the file UTF8-BOM
         bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
         bw.print("[GENRE START]" + System.getProperty("line.separator"));//TODO Make use of TranslationManager
-        bw.print("[NAME AR]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME AR") + System.getProperty("line.separator"));
-        bw.print("[NAME CH]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME CH") + System.getProperty("line.separator"));
-        bw.print("[NAME CT]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME CT") + System.getProperty("line.separator"));
-        bw.print("[NAME CZ]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME CZ") + System.getProperty("line.separator"));
-        bw.print("[NAME EN]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN") + System.getProperty("line.separator"));
-        bw.print("[NAME ES]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME ES") + System.getProperty("line.separator"));
-        bw.print("[NAME FR]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME FR") + System.getProperty("line.separator"));
-        bw.print("[NAME GE]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME GE") + System.getProperty("line.separator"));
-        bw.print("[NAME HU]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME HU") + System.getProperty("line.separator"));
-        bw.print("[NAME IT]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME IT") + System.getProperty("line.separator"));
-        bw.print("[NAME KO]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME KO") + System.getProperty("line.separator"));
-        bw.print("[NAME PB]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME PB") + System.getProperty("line.separator"));
-        bw.print("[NAME PL]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME PL") + System.getProperty("line.separator"));
-        bw.print("[NAME RU]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME RU") + System.getProperty("line.separator"));
-        bw.print("[NAME TU]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME TU") + System.getProperty("line.separator"));
-        bw.print("[DESC AR]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC AR") + System.getProperty("line.separator"));
-        bw.print("[DESC CH]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC CH") + System.getProperty("line.separator"));
-        bw.print("[DESC CT]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC CT") + System.getProperty("line.separator"));
-        bw.print("[DESC CZ]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC CZ") + System.getProperty("line.separator"));
-        bw.print("[DESC EN]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC EN") + System.getProperty("line.separator"));
-        bw.print("[DESC ES]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC ES") + System.getProperty("line.separator"));
-        bw.print("[DESC FR]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC FR") + System.getProperty("line.separator"));
-        bw.print("[DESC GE]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC GE") + System.getProperty("line.separator"));
-        bw.print("[DESC HU]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC HU") + System.getProperty("line.separator"));
-        bw.print("[DESC IT]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC IT") + System.getProperty("line.separator"));
-        bw.print("[DESC KO]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC KO") + System.getProperty("line.separator"));
-        bw.print("[DESC PB]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC PB") + System.getProperty("line.separator"));
-        bw.print("[DESC PL]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC PL") + System.getProperty("line.separator"));
-        bw.print("[DESC RU]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC RU") + System.getProperty("line.separator"));
-        bw.print("[DESC TU]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC TU") + System.getProperty("line.separator"));
+        for(String translationKey : TranslationManager.TRANSLATION_KEYS){
+            bw.print("[NAME " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME " + translationKey)  + System.getProperty("line.separator"));
+            bw.print("[DESC " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC " + translationKey)  + System.getProperty("line.separator"));
+        }
         bw.print("[DATE]" + AnalyzeExistingGenres.genreList.get(genreId).get("DATE") + System.getProperty("line.separator"));
         bw.print("[RES POINTS]" + AnalyzeExistingGenres.genreList.get(genreId).get("RES POINTS") + System.getProperty("line.separator"));
         bw.print("[PRICE]" + AnalyzeExistingGenres.genreList.get(genreId).get("PRICE") + System.getProperty("line.separator"));
@@ -90,7 +65,7 @@ public class SharingHandler {
         bw.print("[SOUND]" + AnalyzeExistingGenres.genreList.get(genreId).get("SOUND") + System.getProperty("line.separator"));
         bw.print("[CONTROL]" + AnalyzeExistingGenres.genreList.get(genreId).get("CONTROL") + System.getProperty("line.separator"));
         bw.print("[GENRE COMB]" + getGenreNames(genreId) + System.getProperty("line.separator"));
-        bw.print("[THEME COMB]" + AnalyzeExistingGenres.genreList.get(genreId).get("THEME COMB") + System.getProperty("line.separator"));
+        bw.print("[THEME COMB]" + Utils.getCompatibleThemeIdsForGenre(genreId) + System.getProperty("line.separator"));
         bw.print("[DESIGN1]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN1") + System.getProperty("line.separator"));
         bw.print("[DESIGN2]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN2") + System.getProperty("line.separator"));
         bw.print("[DESIGN3]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN3") + System.getProperty("line.separator"));
@@ -108,86 +83,53 @@ public class SharingHandler {
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
     public static boolean importGenre(String importFolderPath) throws IOException {
-        Map<String, String> map = new HashMap<>();
         AnalyzeExistingGenres.analyzeGenreFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
-        GenreManager.mapNewGenre.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
-        File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
-        String currentLine;
-        int line = 1;
-        while((currentLine = reader.readLine()) != null){
-            switch(line){
-                case 1: map.put("[MGT2MT VERSION]", currentLine.replaceAll("\\uFEFF", "").replace("[MGT2MT VERSION]", "")); break;
-                case 3: map.put("NAME AR", currentLine.replace("NAME AR", "")); break;
-                case 4: map.put("NAME CH", currentLine.replace("NAME CH", "")); break;
-                case 5: map.put("NAME CT", currentLine.replace("NAME CT", "")); break;
-                case 6: map.put("NAME CZ", currentLine.replace("NAME CZ", "")); break;
-                case 7: map.put("NAME EN", currentLine.replace("NAME EN", "")); break;
-                case 8: map.put("NAME ES", currentLine.replace("NAME ES", "")); break;
-                case 9: map.put("NAME FR", currentLine.replace("NAME FR", "")); break;
-                case 10: map.put("NAME GE", currentLine.replace("NAME GE", "")); break;
-                case 11: map.put("NAME HU", currentLine.replace("NAME HU", "")); break;
-                case 12: map.put("NAME IT", currentLine.replace("NAME IT", ""));break;
-                case 13: map.put("NAME KO", currentLine.replace("NAME KO", "")); break;
-                case 14: map.put("NAME PB", currentLine.replace("NAME PB", "")); break;
-                case 15: map.put("NAME PL", currentLine.replace("NAME PL", "")); break;
-                case 16: map.put("NAME RU", currentLine.replace("NAME RU", "")); break;
-                case 17: map.put("NAME TU", currentLine.replace("NAME TU", "")); break;
-                case 18: map.put("DESC AR", currentLine.replace("DESC AR", "")); break;
-                case 19: map.put("DESC CH", currentLine.replace("DESC CH", "")); break;
-                case 20: map.put("DESC CT", currentLine.replace("DESC CT", "")); break;
-                case 21: map.put("DESC CZ", currentLine.replace("DESC CZ", "")); break;
-                case 22: map.put("DESC EN", currentLine.replace("DESC EN", "")); break;
-                case 23: map.put("DESC ES", currentLine.replace("DESC ES", "")); break;
-                case 24: map.put("DESC FR", currentLine.replace("DESC FR", "")); break;
-                case 25: map.put("DESC GE", currentLine.replace("DESC GE", "")); break;
-                case 26: map.put("DESC HU", currentLine.replace("DESC HU", "")); break;
-                case 27: map.put("DESC IT", currentLine.replace("DESC IT", "")); break;
-                case 28: map.put("DESC KO", currentLine.replace("DESC KO", "")); break;
-                case 29: map.put("DESC PB", currentLine.replace("DESC PB", "")); break;
-                case 30: map.put("DESC PL", currentLine.replace("DESC PL", "")); break;
-                case 31: map.put("DESC RU", currentLine.replace("DESC RU", "")); break;
-                case 32: map.put("DESC TU", currentLine.replace("DESC TU", "")); break;
-                case 33: map.put("DATE", currentLine.replace("DATE", "")); break;
-                case 34: map.put("RES POINTS", currentLine.replace("RES POINTS", "")); break;
-                case 35: map.put("PRICE", currentLine.replace("PRICE", "")); break;
-                case 36: map.put("DEV COSTS", currentLine.replace("DEV COSTS", "")); break;
-                case 37: map.put("TGROUP", currentLine.replace("TGROUP", "")); break;
-                case 38: map.put("GAMEPLAY", currentLine.replace("GAMEPLAY", "")); break;
-                case 39: map.put("GRAPHIC", currentLine.replace("GRAPHIC", "")); break;
-                case 40: map.put("SOUND", currentLine.replace("SOUND", "")); break;
-                case 41: map.put("CONTROL", currentLine.replace("CONTROL", "")); break;
-                case 42: map.put("GENRE COMB", Utils.getGenreIds(currentLine.replace("GENRE COMB", ""))); break;
-                case 43: map.put("THEME COMB", currentLine.replace("THEME COMB", ""));break;
-                case 44: map.put("DESIGN1", currentLine.replace("DESIGN1", "")); break;
-                case 45: map.put("DESIGN2", currentLine.replace("DESIGN2", "")); break;
-                case 46: map.put("DESIGN3", currentLine.replace("DESIGN3", "")); break;
-                case 47: map.put("DESIGN4", currentLine.replace("DESIGN4", "")); break;
-                case 48: map.put("DESIGN5", currentLine.replace("DESIGN5", "")); break;
+        File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId);
+        File fileScreenshotsToImport = new File(importFolderPath + "//DATA//screenshots//");
+        Map<String, String> map = new HashMap<>();
+        List<Map<String, String>> list = Utils.parseDataFile(fileGenreToImport);
+        map.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
+        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
+            if(entry.getKey().equals("GENRE COMB")){
+                map.put("GENRE COMB", Utils.convertGenreNamesToId(entry.getValue()));
+            }else if(entry.getKey().equals("THEME COMB")){
+                ArrayList<String> arrayList = Utils.getEntriesFromString(entry.getValue().replaceAll("-", ""));
+                StringBuilder themeIds = new StringBuilder();
+                for(String string : arrayList){
+                    int idToSearch = Integer.parseInt(string.replaceAll("[^0-9]", ""))-1;
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("Current id to search: " + idToSearch);
+                    }
+                    themeIds.append("<").append(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.get(idToSearch)).append(">");
+                }
+                map.put("THEME COMB", themeIds.toString());
+            }else{
+                map.put(entry.getKey(), entry.getValue());
             }
-            line++;
         }
-        reader.close();
-        for(int i = 0; i<AnalyzeExistingGenres.genreList.size(); i++){//Checks if the genre already exists that should be imported.
-            if(AnalyzeExistingGenres.genreList.contains(GenreManager.mapNewGenre.get("NAME EN"))){
-                return false;
+        for(Map<String, String> map2 : AnalyzeExistingGenres.genreList){
+            for(Map.Entry<String, String> entry : map2.entrySet()){
+                if(entry.getValue().equals(map.get("NAME EN"))){
+                    LOGGER.info("Genre already exists - The genre name is already taken");
+                    return false;
+                }
             }
         }
         if(fileScreenshotFolder.exists()){
+            LOGGER.info("Genre already exists - screenshot folder already exists.");
             return false;
         }
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
             compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string));
         }
-        File genreIcon = new File("icon" + map.get("[NAME EN]"));
-        fillNewGenreVariables(importFolderPath);
-        GenreManager.addGenre(map, map, compatibleThemeIds,true, genreIcon);
+        ArrayList<File> genreScreenshots = Utils.getFilesInFolder(fileScreenshotsToImport.getPath(), ".meta");
+        File genreIcon = new File(importFolderPath + "//DATA//icon.png");
+        GenreManager.addGenre(map, map, compatibleThemeIds, genreScreenshots,true, genreIcon);
         return true;
     }
-    //TODO Rewrite into a more simple approach -> rewrite addGenre so that it uses a Map and not multiple ArrayLists
 
     /**
      * Exports the specified publisher.

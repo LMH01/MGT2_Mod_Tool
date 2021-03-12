@@ -15,7 +15,7 @@ import java.util.Set;
 public class EditThemeFiles {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditThemeFiles.class);
     /**
-     * Add the specified theme to the specified file.
+     * Add/remove the specified theme to/from the specified file.
      * @param themeFile The file where the theme should be added.
      * @param themeName The name of the new theme.
      * @param addTheme True if the theme should be added. False if it should be removed.
@@ -93,7 +93,7 @@ public class EditThemeFiles {
     }
 
     /**
-     * Adds all themes that are currently in this map: MAP_COMPATIBLE_THEMES (NewGenreManager)
+     * Edits the genre ids for the themes in Themes_GE.txt file
      * @param genreID The genre id that should be added/removed
      * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the file.
      * @param compatibleThemeIds A set containing all compatible theme ids.
@@ -102,13 +102,12 @@ public class EditThemeFiles {
         File fileTopicsGeTemp = new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt.temp");
         fileTopicsGeTemp.createNewFile();
         Backup.createBackup(Utils.getThemesGeFile());
-        LOGGER.info("Themes_GE.txt.temp has been created");
+        LOGGER.info("Themes_GE.txt.temp has been created");//TODO Rewrite to use AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemesGeFile()), StandardCharsets.UTF_16LE));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGeTemp), StandardCharsets.UTF_16LE));
         String currentLine;
         int currentLineNumber = 0;
         boolean firstLine = true;
-        bw.write("\ufeff");
         while ((currentLine = br.readLine()) != null) {
             if (firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);

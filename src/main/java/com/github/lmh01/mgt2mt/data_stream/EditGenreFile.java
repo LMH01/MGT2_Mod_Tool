@@ -36,7 +36,7 @@ public class EditGenreFile {
             bw.write("[RES POINTS]" + mapExistingGenres.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
             bw.write("[PRICE]" + mapExistingGenres.get("PRICE"));bw.write(System.getProperty("line.separator"));
             bw.write("[DEV COSTS]" + mapExistingGenres.get("DEV COSTS"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PIC]icon" + mapExistingGenres.get("NAME EN").replaceAll(" ", "") + ".png");bw.write(System.getProperty("line.separator"));
+            bw.write("[PIC]" + mapExistingGenres.get("PIC"));bw.write(System.getProperty("line.separator"));
             bw.write("[TGROUP]" + mapExistingGenres.get("TGROUP"));bw.write(System.getProperty("line.separator"));
             bw.write("[GAMEPLAY]" + mapExistingGenres.get("GAMEPLAY"));bw.write(System.getProperty("line.separator"));
             bw.write("[GRAPHIC]" + mapExistingGenres.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));

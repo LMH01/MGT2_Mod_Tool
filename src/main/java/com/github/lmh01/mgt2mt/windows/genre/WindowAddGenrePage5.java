@@ -2,16 +2,13 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.GenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class WindowAddGenrePage5 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
@@ -133,7 +130,7 @@ public class WindowAddGenrePage5 extends JFrame{
         for(String string : listAvailableGenres.getSelectedValuesList()){
             compatibleGenres.append("<").append(string).append(">");
         }
-        GenreManager.mapNewGenre.put("GENRE COMB", Utils.getGenreIds(compatibleGenres.toString()));
+        GenreManager.mapNewGenre.put("GENRE COMB", Utils.convertGenreNamesToId(compatibleGenres.toString()));
         if(listAvailableGenres.getSelectedValuesList().size() != 0){
             return  true;
         }else{

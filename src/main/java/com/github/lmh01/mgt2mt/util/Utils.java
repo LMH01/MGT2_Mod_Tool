@@ -71,14 +71,17 @@ public class Utils {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         String currentLine;
         boolean firstLine = true;
+        boolean firstList = true;
         Map<String, String> mapCurrent = new HashMap<>();
         while((currentLine = reader.readLine()) != null){
             if(firstLine){
-                currentLine = currentLine.replaceAll("\\uFEFF", "");
+                currentLine = Utils.removeUTF8BOM(currentLine);
+                firstLine = false;
             }
             if(currentLine.isEmpty()){
                 fileParts.add(mapCurrent);
                 mapCurrent = new HashMap<>();
+                firstList = false;
             }else{
                 boolean valueComplete = false;
                 StringBuilder mapKey = new StringBuilder();
@@ -96,6 +99,9 @@ public class Utils {
                 }
                 mapCurrent.put(mapKey.toString(), mapValue.toString());
             }
+        }
+        if(firstList){
+            fileParts.add(mapCurrent);
         }
         reader.close();
         return fileParts;
@@ -213,14 +219,25 @@ public class Utils {
      * @return Returns an array list containing all files inside the input folder
      */
     public static ArrayList<File> getFilesInFolder(String folder){
+        return getFilesInFolder(folder, "");
+    }
+
+    /**
+     * @param folder The folder that should be searched for files.
+     * @param blackList When the string entered here is found in the filename the file wont be added to the arrayListFiles.
+     * @return Returns an array list containing all files inside the input folder
+     */
+    public static ArrayList<File> getFilesInFolder(String folder, String blackList){
         File file = new File(folder);
         ArrayList<File> arrayListFiles = new ArrayList<>();
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                arrayListFiles.add(filesInFolder[i]);
-                if(Settings.enableDebugLogging){
-                    LOGGER.info(filesInFolder[i].getName());
+                if(!filesInFolder[i].getName().contains(blackList) && !blackList.isEmpty()){
+                    arrayListFiles.add(filesInFolder[i]);
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info(filesInFolder[i].getName());
+                    }
                 }
             }
         }
@@ -343,10 +360,10 @@ public class Utils {
     }
 
     /**
-     * Converts the genre names to ids
+     * Takes the input string and replaces the genreNames with the corresponding genre id.
      * @return Returns a list of genre ids.
      */
-    public static String getGenreIds(String genreNamesRaw){
+    public static String convertGenreNamesToId(String genreNamesRaw){
         StringBuilder genreIds = new StringBuilder();
         int charPositon = 0;
         StringBuilder currentName = new StringBuilder();
@@ -384,9 +401,9 @@ public class Utils {
         ArrayList<String> arrayList = new ArrayList<>();
         StringBuilder currentEntry = new StringBuilder();
         for(Character character : string.toCharArray()){
-            if(character.equals("<")){
+            if(character.toString().equals("<")){
                 //Nothing happens
-            }else if(character.equals(">")){
+            }else if(character.toString().equals(">")){
                 arrayList.add(currentEntry.toString());
                 currentEntry = new StringBuilder();
             }else{
@@ -394,5 +411,33 @@ public class Utils {
             }
         }
         return arrayList;
+    }
+
+    /**
+     * @param genreId The genre id for which the file should be searched
+     * @return Returns a String containing theme ids
+     */
+    public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemesGeFile()), StandardCharsets.UTF_16LE));
+        boolean firstLine = true;
+        int lineNumber = 1;
+        StringBuilder compatibleThemes = new StringBuilder();
+        String currentLine;
+        while((currentLine = br.readLine()) != null){
+            if(firstLine){
+                currentLine = Utils.removeUTF8BOM(currentLine);
+                firstLine = false;
+            }
+            if(currentLine.contains(Integer.toString(genreId))){
+                compatibleThemes.append("<");
+                compatibleThemes.append(currentLine.replace(" ", "_").replace("<", "").replace(">", "").replaceAll("[0-9]", ""));
+                compatibleThemes.append("-");
+                compatibleThemes.append(lineNumber);
+                compatibleThemes.append(">");
+            }
+            lineNumber++;
+        }
+        br.close();
+        return compatibleThemes.toString();
     }
 }

@@ -108,6 +108,8 @@ public class WindowAddGenrePage2 extends JFrame{
     }
     private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox<String> comboBoxGenreUnlockMonth){
         GenreManager.mapNewGenre.put("DATE", comboBoxGenreUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+        GenreManager.mapNewGenre.put("UNLOCK MONTH", comboBoxGenreUnlockMonth.getSelectedItem().toString());
+        GenreManager.mapNewGenre.put("UNLOCK YEAR", spinnerUnlockYear.getValue().toString());
         LOGGER.info("genre unlock year: " +  Integer.parseInt(spinnerUnlockYear.getValue().toString()));
         LOGGER.info("Genre unlock month: " + comboBoxGenreUnlockMonth.getSelectedItem().toString());
     }

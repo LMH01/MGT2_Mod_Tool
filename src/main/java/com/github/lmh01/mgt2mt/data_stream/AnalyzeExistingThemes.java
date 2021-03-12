@@ -89,7 +89,6 @@ public class AnalyzeExistingThemes {
                 LOGGER.info("Value: " + entry.getValue());
             }
             if(entry.getValue().contains(themeNameEn)){
-                LOGGER.info("Position of genre to remove in file: " + position);
                 return position;
             }else{
                 position++;
@@ -108,7 +107,6 @@ public class AnalyzeExistingThemes {
         }
         FILE_THEMES_BY_ID_HELP.createNewFile();
         PrintWriter pw = new PrintWriter(FILE_THEMES_BY_ID_HELP);
-        LOGGER.info("MAP_ACTIVE_THEMES_EN.size() = " + MAP_ACTIVE_THEMES_EN.size());
         boolean firstLine = true;
         for(Map.Entry<Integer, String> entry : MAP_ACTIVE_THEMES_EN.entrySet()){
             if(firstLine){

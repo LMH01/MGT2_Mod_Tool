@@ -271,6 +271,7 @@ public class WindowMain {
                                 ImageFileHandler.removeImageFiles(currentGenre, AnalyzeExistingGenres.getGenreIdByName(currentGenre));
                                 EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
                                 EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, null);
+                                NPCGameListChanger.editNPCGames(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, 0);
                             }catch (IOException e){
                                 failedGenreRemoves = failedGenreRemoves + currentGenre + " - " + e.getMessage() + System.getProperty("line.separator");
                                 exportFailed = true;
@@ -403,7 +404,7 @@ public class WindowMain {
     }
     private static void npcGameList(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
+            AnalyzeExistingGenres.analyzeGenreFile();
             if(AnalyzeExistingGenres.genreList.size()-1 > 17 || Settings.disableSafetyFeatures){
                 WindowNpcGameList.createFrame();
             }else{
@@ -492,7 +493,7 @@ public class WindowMain {
             JButton buttonSelectGenre = new JButton("        Select genre        ");
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
-                    AnalyzeExistingGenres.analyzeGenreFileDeprecated();
+                    AnalyzeExistingGenres.analyzeGenreFile();
                     JLabel labelChooseGenre = new JLabel("Select the genre that should be compatible:");
                     String[] string;
                     string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
@@ -657,7 +658,7 @@ public class WindowMain {
     }
     private static void importGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
+            AnalyzeExistingGenres.analyzeGenreFile();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
             fileChooser.setDialogTitle("Choose the folder(s) where the genre.txt file is located.");
