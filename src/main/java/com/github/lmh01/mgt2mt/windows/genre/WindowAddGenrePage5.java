@@ -98,8 +98,8 @@ public class WindowAddGenrePage5 extends JFrame{
         int currentGenre = 0;
         for(String string : AnalyzeExistingGenres.getGenresByAlphabetWithoutId()){
             listModel.addElement(string);
-            if(GenreManager.mapNewGenre.containsKey("COMPATIBLE GENRES")){
-                if(GenreManager.mapNewGenre.get("COMPATIBLE GENRES").contains(string)) {
+            if(GenreManager.mapNewGenre.containsKey("GENRE COMB")){
+                if(GenreManager.mapNewGenre.get("GENRE COMB").contains(string)) {
                     genresSelected.add(currentGenre);
                 }
             }
@@ -133,7 +133,7 @@ public class WindowAddGenrePage5 extends JFrame{
         for(String string : listAvailableGenres.getSelectedValuesList()){
             compatibleGenres.append("<").append(string).append(">");
         }
-        GenreManager.mapNewGenre.put("COMPATIBLE GENRES", compatibleGenres.toString());
+        GenreManager.mapNewGenre.put("GENRE COMB", Utils.getGenreIds(compatibleGenres.toString()));
         if(listAvailableGenres.getSelectedValuesList().size() != 0){
             return  true;
         }else{

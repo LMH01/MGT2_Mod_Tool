@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
@@ -15,8 +15,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
 
@@ -342,5 +340,59 @@ public class Utils {
             e.printStackTrace();
             return "error";
         }
+    }
+
+    /**
+     * Converts the genre names to ids
+     * @return Returns a list of genre ids.
+     */
+    public static String getGenreIds(String genreNamesRaw){
+        StringBuilder genreIds = new StringBuilder();
+        int charPositon = 0;
+        StringBuilder currentName = new StringBuilder();
+        for(int i = 0; i<genreNamesRaw.length(); i++){
+            if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals("<")){
+                //Nothing happens
+            }else if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals(">")){
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("genreName: " + currentName);
+                }
+                int genreId = AnalyzeExistingGenres.getGenreIdByName(currentName.toString());
+                if(genreId != -1){
+                    genreIds.append("<").append(genreId).append(">");
+                }
+                currentName = new StringBuilder();
+            }else{
+                currentName.append(genreNamesRaw.charAt(charPositon));
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("currentNumber: " + currentName);
+                }
+            }
+            charPositon++;
+        }
+        String.valueOf(genreNamesRaw.charAt(1));
+        LOGGER.info("Genre ids: " + genreIds);
+        return genreIds.toString();
+    }
+
+    /**
+     * Converts the input string to an array list containing the elements of the string. Input string formatting: <s1><s2><s3>. The content between the <> is added to the array list.
+     * @param string Input string
+     * @return Returns an array list containing the elements of string
+     */
+    public static ArrayList<String> getEntriesFromString(String string){
+        ArrayList<String> arrayList = new ArrayList<>();
+        StringBuilder currentEntry = new StringBuilder();
+        for(Character character : string.toCharArray()){
+            if(character.equals("<")){
+                //Nothing happens
+            }else if(character.equals(">")){
+                arrayList.add(currentEntry.toString());
+                currentEntry = new StringBuilder();
+            }else{
+                currentEntry.append(character);
+            }
+        }
+        return arrayList;
     }
 }

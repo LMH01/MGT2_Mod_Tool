@@ -2,21 +2,21 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.util.GenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class WindowAddGenrePage6 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
+    public static Set<Integer> compatibleThemeIds = new HashSet<>();
     JPanel contentPane = new JPanel();
     JButton buttonNext = new JButton("Next");
     JButton buttonPrevious = new JButton("Previous");
@@ -44,7 +44,8 @@ public class WindowAddGenrePage6 extends JFrame{
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible topic?", "Don't add compatible topic?", JOptionPane.YES_NO_OPTION) == 0){
                     LOGGER.info("Cleared array list with compatible themes.");
-                    GenreManager.MAP_COMPATIBLE_THEME_IDS.clear();
+                    GenreManager.mapNewGenre.remove("THEME COMB");
+                    GenreManager.mapNewGenre.put("THEME COMB", "");
                     GenreManager.openStepWindow(7);
                     FRAME.dispose();
                 }
@@ -65,7 +66,7 @@ public class WindowAddGenrePage6 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 260);
         setResizable(false);
-        setTitle("[Page 6] Topic combo");
+        setTitle("[Page 6] THEME COMBo");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
@@ -95,26 +96,17 @@ public class WindowAddGenrePage6 extends JFrame{
     private void setThemesList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> genresSelected = new ArrayList();
-        ArrayList<String> themesSorted = new ArrayList<>();
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
-        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Adding element to list: " + entry.getValue());
-            }
-            themesSorted.add(entry.getValue());
-        }
-        Collections.sort(themesSorted);
-        for (String s : themesSorted) {
-            listModel.addElement(s);//Sets the elements for the list
-        }
-
-        for(Map.Entry<Integer, String> entry : GenreManager.MAP_COMPATIBLE_THEMES.entrySet()){//Selects the values that have been selected previously
-            for(int n = 0; n<themesSorted.size(); n++){
-                if(themesSorted.get(n).contains(entry.getValue())){
-                    genresSelected.add(n);
+        int currentTopic = 0;
+        for(String string : AnalyzeExistingThemes.getThemesByAlphabet(false)){
+            listModel.addElement(string);
+            if(GenreManager.mapNewGenre.containsKey("THEME COMB")){
+                if(GenreManager.mapNewGenre.get("THEME COMB").contains(string)) {
+                    genresSelected.add(currentTopic);
                 }
             }
+            currentTopic++;
         }
 
         //Converts ArrayList to int[]
@@ -135,19 +127,18 @@ public class WindowAddGenrePage6 extends JFrame{
     }
     private static boolean saveInputs(JList<String> listAvailableThemes){
         LOGGER.info("Cleared array list with compatible genres.");
-        GenreManager.MAP_COMPATIBLE_THEMES.clear();
-        GenreManager.MAP_COMPATIBLE_THEME_IDS.clear();
-        if(listAvailableThemes.getSelectedValuesList().size() != 0){
-            for(int i = 0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
-                for (Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()) {
-                    if (entry.getValue().equals(listAvailableThemes.getSelectedValuesList().get(i))) {
-                        GenreManager.MAP_COMPATIBLE_THEME_IDS.add(entry.getKey());
-                        GenreManager.MAP_COMPATIBLE_THEMES.put(entry.getKey(), listAvailableThemes.getSelectedValuesList().get(i));
-                        LOGGER.info("Added selected theme to array list: " + listAvailableThemes.getSelectedValuesList().get(i));
-                        LOGGER.info("Added theme with id [" + entry.getKey() + "] and name [" + listAvailableThemes.getSelectedValuesList().get(i) + "] to map.");
-                    }
+        StringBuilder compatibleThemes = new StringBuilder();
+        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+            for(String string : listAvailableThemes.getSelectedValuesList()){
+                if(entry.getValue().equals(string)){
+                    compatibleThemeIds.add(entry.getKey());
+                    compatibleThemes.append("<").append(string).append(">");
+                    LOGGER.info("Compatible Theme: " + entry.getKey() + " | " + entry.getValue());
                 }
             }
+        }
+        GenreManager.mapNewGenre.put("THEME COMB", compatibleThemes.toString());
+        if(listAvailableThemes.getSelectedValuesList().size() != 0){
             return  true;
         }else{
             return false;

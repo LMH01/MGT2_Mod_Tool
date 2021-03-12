@@ -28,9 +28,9 @@ public class ImageFileHandler {
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
             //This copies the .png file to the Icon_Genres directory
-            copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.imageFileName + ".png"));
+            copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png"));
             //This creates the meta file in the Icon_Genres directory
-            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.imageFileName + ".png.meta"));
+            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png.meta"));
             //This creates the meta file in the main screenshot direcotry
             createMetaFile(2, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\" + genreID + ".meta"));
             //This copies the screenshot images into the corresponding folder (screenshots/genreid/) and creates the .meta files.
@@ -49,7 +49,6 @@ public class ImageFileHandler {
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
             LOGGER.info("Copying " + imageFile + " this file to " + outputFile);
-            GenreManager.useDefaultImageFile = false;
             if(outputFile.exists()){
                 outputFile.delete();
             }

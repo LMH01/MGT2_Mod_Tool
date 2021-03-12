@@ -113,8 +113,11 @@ public class AnalyzeExistingGenres {
      * Searches the Genres.txt file for the input genre id. If found the specifications for the genre will be written in the "MAP_SINGLE_GENRE" to be used later when the genre is being exported.
      * @param genreId The genre id for the genre that should be analyzed
      * @return Returns true when the specified genre has been found. Returns false when the genre id does not exist.
+     * @deprecated Use {@link AnalyzeExistingGenres#getSingleGenreMap(int)} to get the contents of one genre.
      */
+    @Deprecated
     public static boolean analyzeSingleGenre(int genreId) throws IOException {
+        /*
         LOGGER.info("Analyzing genre that should be exported...");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getGenreFile()), StandardCharsets.UTF_8));
         String currentLine;
@@ -252,8 +255,18 @@ public class AnalyzeExistingGenres {
         br.close();
         GenreManager.MAP_SINGLE_GENRE.put("[THEME COMB]", compatibleThemes.toString());
         return genreFound;
+
+         */
+        return true;
     }
 
+    /**
+     * @param genreId
+     * @return Returns a map containing a single genre
+     */
+    public static Map<String, String> getSingleGenreMap(int genreId){
+        return genreList.get(genreId);
+    }
     /**
      * Writes a help file with genres by id.
      */

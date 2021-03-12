@@ -1,22 +1,27 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class WindowAddGenrePage1 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage1.class);
     static final WindowAddGenrePage1 FRAME = new WindowAddGenrePage1();
+    private static Map<String, String> mapNameTranslations = new HashMap<>();
+    private static Map<String, String> mapDescriptionTranslations = new HashMap<>();
+    public static boolean nameTranslationsAdded = false;
+    public static boolean descriptionTranslationsAdded = false;
     JPanel contentPane = new JPanel();
     JLabel labelGenreID = new JLabel("Genre id: ");
     JButton buttonExplainGenreID = new JButton("id?");
@@ -56,25 +61,25 @@ public class WindowAddGenrePage1 extends JFrame{
         });
 
         buttonAddNameTranslations.addActionListener(actionEvent ->{
-            if(!GenreManager.nameTranslationsAdded){
-                GenreManager.addNameTranslations();;
-                GenreManager.nameTranslationsAdded = true;
+            if(!nameTranslationsAdded){
+                addNameTranslations();
+                nameTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
-                    GenreManager.addNameTranslations();
-                    GenreManager.nameTranslationsAdded = true;
+                    addNameTranslations();
+                    nameTranslationsAdded = true;
                 }
             }
         });
 
         buttonAddDescriptionTranslations.addActionListener(actionEvent ->{
-            if(!GenreManager.descriptionTranslationsAdded){
-                GenreManager.addDescriptionTranslations();
-                GenreManager.descriptionTranslationsAdded = true;
+            if(!descriptionTranslationsAdded){
+                addDescriptionTranslations();
+                descriptionTranslationsAdded = true;
             }else{
                 if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
-                    GenreManager.addDescriptionTranslations();
-                    GenreManager.descriptionTranslationsAdded = true;
+                    addDescriptionTranslations();
+                    descriptionTranslationsAdded = true;
                 }
             }
         });
@@ -133,7 +138,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
         textFieldGenreName.setBounds(120, 10, 100, 23);
         textFieldGenreName.setToolTipText("<html>This is the global genre name.<br>This name is being displayed in every translation.");
-        textFieldGenreName.setText(GenreManager.name);
+        textFieldGenreName.setText(GenreManager.mapNewGenre.get("NAME EN"));
         contentPane.add(textFieldGenreName);
 
         buttonAddNameTranslations.setBounds(230, 10, 90, 23);
@@ -149,7 +154,7 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(labelGenreID);
 
         textFieldGenreDescription.setBounds(120, 35, 100, 23);
-        textFieldGenreDescription.setText(GenreManager.description);
+        textFieldGenreDescription.setText(GenreManager.mapNewGenre.get("DESC EN"));
         textFieldGenreDescription.setToolTipText("Enter the genre description that should be shown in game. Hint: use <br> in your description to make a new line.");
         contentPane.add(textFieldGenreDescription);
 
@@ -180,10 +185,10 @@ public class WindowAddGenrePage1 extends JFrame{
         }else if(textFieldGenreDescription.getText().isEmpty()){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a genre description first!");
         }else{
-            GenreManager.mapNewGenre.remove("ID");
             GenreManager.mapNewGenre.remove("NAME EN");
             GenreManager.mapNewGenre.remove("DESC EN");
             if(Settings.disableSafetyFeatures){
+                GenreManager.mapNewGenre.remove("ID");
                 GenreManager.mapNewGenre.put("ID", spinnerId.getValue().toString());
             }
             GenreManager.mapNewGenre.put("NAME EN", textFieldGenreName.getText());
@@ -191,5 +196,84 @@ public class WindowAddGenrePage1 extends JFrame{
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * Call to add nameTranslations to the genre.
+     */
+    public static void addNameTranslations(){
+        boolean continueWithTranslations = true;
+        if(Settings.enableGenreNameTranslationInfo){
+            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
+            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
+            Object[] params = {labelMessage,checkBoxDontShowAgain};
+            LOGGER.info("enableGenreNameTranslationInfo: " + Settings.enableGenreDescriptionTranslationInfo);
+            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+                continueWithTranslations = false;
+            }
+            Settings.enableGenreNameTranslationInfo = !checkBoxDontShowAgain.isSelected();
+            ExportSettings.export();
+        }
+        if(continueWithTranslations){
+            mapNameTranslations = TranslationManager.getTranslationsMap(GenreManager.mapNewGenre.get("NAME EN"));
+            nameTranslationsAdded = true;
+        }
+    }
+
+    /**
+     * Call to add descriptionTranslations to the genre.
+     */
+    public static void addDescriptionTranslations(){
+        boolean continueWithTranslations = true;
+        if(Settings.enableGenreDescriptionTranslationInfo){
+            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
+            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
+            Object[] params = {labelMessage,checkBoxDontShowAgain};
+            LOGGER.info("enableGenreDescriptionTranslationInfo: " + Settings.enableGenreDescriptionTranslationInfo);
+            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+                continueWithTranslations = false;
+            }
+            Settings.enableGenreDescriptionTranslationInfo = !checkBoxDontShowAgain.isSelected();
+            ExportSettings.export();
+        }
+        if(continueWithTranslations){
+            mapDescriptionTranslations = TranslationManager.getTranslationsMap(GenreManager.mapNewGenre.get("DESC EN"));
+        }
+    }
+
+    /**
+     * Uses the maps {@link WindowAddGenrePage1#mapNameTranslations} and {@link WindowAddGenrePage1#mapDescriptionTranslations} to parse new map that contains evey translation. When the maps are empty all translation will be set to english
+     * @return Returns a map containg all genre translations in the format that they are read in {@link EditGenreFile}
+     */
+    public static Map<String, String> getMapGenreTranslations(){
+        Map<String, String> mapGenreTranslation = new HashMap<>();
+        if(mapNameTranslations.isEmpty()){
+            for(String string : TranslationManager.TRANSLATION_KEYS){
+                mapGenreTranslation.put("NAME " + string, GenreManager.mapNewGenre.get("NAME EN"));
+            }
+        }else{
+            for(Map.Entry entry : mapNameTranslations.entrySet()){
+                mapGenreTranslation.put("NAME " + entry.getKey(), entry.getValue().toString());
+            }
+        }
+        if(mapDescriptionTranslations.isEmpty()){
+            for(String string : TranslationManager.TRANSLATION_KEYS){
+                mapGenreTranslation.put("DESC " + string, GenreManager.mapNewGenre.get("DESC EN"));
+            }
+        }else{
+            for(Map.Entry entry : mapDescriptionTranslations.entrySet()){
+                mapGenreTranslation.put("DESC " + entry.getKey(), entry.getValue().toString());
+            }
+        }
+        return mapGenreTranslation;
+    }
+
+    /**
+     * Clears the translation maps
+     */
+    public static void clearTranslationArrayLists(){
+        mapNameTranslations.clear();
+        mapDescriptionTranslations.clear();
     }
 }

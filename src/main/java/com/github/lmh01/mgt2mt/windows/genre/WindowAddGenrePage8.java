@@ -107,10 +107,10 @@ public class WindowAddGenrePage8 extends JFrame{
         spinnerGraphic.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Graphic priority in %");
         spinnerSound.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Sound priority in %");
         spinnerControl.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Control priority in %");
-        spinnerGameplay.setModel(new SpinnerNumberModel(GenreManager.gameplay, 5, 85, 5));
-        spinnerGraphic.setModel(new SpinnerNumberModel(GenreManager.graphic, 5, 85, 5));
-        spinnerSound.setModel(new SpinnerNumberModel(GenreManager.sound, 5, 85, 5));
-        spinnerControl.setModel(new SpinnerNumberModel(GenreManager.control, 5, 85, 5));
+        spinnerGameplay.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("GAMEPLAY")), 5, 85, 5));
+        spinnerGraphic.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("GRAPHIC")), 5, 85, 5));
+        spinnerSound.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("SOUND")), 5, 85, 5));
+        spinnerControl.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("CONTROL")), 5, 85, 5));
         if(Settings.disableSafetyFeatures){
             ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);
@@ -134,13 +134,17 @@ public class WindowAddGenrePage8 extends JFrame{
                 Integer.parseInt(spinnerControl.getValue().toString());
         LOGGER.info("combined value: " + combinedValue);
         if(combinedValue == 100 && testIfDividableBy5(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
-            GenreManager.gameplay = Integer.parseInt(spinnerGameplay.getValue().toString());
+            GenreManager.mapNewGenre.remove("GAMEPLAY");
+            GenreManager.mapNewGenre.remove("GRAPHIC");
+            GenreManager.mapNewGenre.remove("SOUND");
+            GenreManager.mapNewGenre.remove("CONTROL");
+            GenreManager.mapNewGenre.put("GAMEPLAY", spinnerGameplay.getValue().toString());
+            GenreManager.mapNewGenre.put("GRAPHIC", spinnerGraphic.getValue().toString());
+            GenreManager.mapNewGenre.put("SOUND", spinnerSound.getValue().toString());
+            GenreManager.mapNewGenre.put("CONTROL", spinnerControl.getValue().toString());
             LOGGER.info("Gameplay = " + spinnerGameplay.getValue().toString());
-            GenreManager.graphic = Integer.parseInt(spinnerGraphic.getValue().toString());
             LOGGER.info("graphic = " + spinnerGraphic.getValue().toString());
-            GenreManager.sound = Integer.parseInt(spinnerSound.getValue().toString());
             LOGGER.info("sound = " + spinnerSound.getValue().toString());
-            GenreManager.control = Integer.parseInt(spinnerControl.getValue().toString());
             LOGGER.info("control = " + spinnerControl.getValue().toString());
             return true;
         }else{

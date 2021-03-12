@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class EditThemeFiles {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditThemeFiles.class);
@@ -93,9 +94,11 @@ public class EditThemeFiles {
 
     /**
      * Adds all themes that are currently in this map: MAP_COMPATIBLE_THEMES (NewGenreManager)
+     * @param genreID The genre id that should be added/removed
      * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the file.
+     * @param compatibleThemeIds A set containing all compatible theme ids.
      */
-    public static void editGenreAllocation(int genreID, boolean addGenreID) throws IOException {
+    public static void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
         File fileTopicsGeTemp = new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt.temp");
         fileTopicsGeTemp.createNewFile();
         Backup.createBackup(Utils.getThemesGeFile());
@@ -111,7 +114,7 @@ public class EditThemeFiles {
                 currentLine = Utils.removeUTF8BOM(currentLine);
             }
             if (addGenreID) {
-                if (GenreManager.MAP_COMPATIBLE_THEME_IDS.contains(currentLineNumber)) {
+                if (compatibleThemeIds.contains(currentLineNumber)) {
                     if (Settings.enableDebugLogging) {
                         LOGGER.info(currentLineNumber + " - Y: " + currentLine);
                     }

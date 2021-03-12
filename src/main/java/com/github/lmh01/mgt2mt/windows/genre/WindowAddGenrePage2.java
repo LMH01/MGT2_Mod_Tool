@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -64,11 +65,11 @@ public class WindowAddGenrePage2 extends JFrame{
 
         if(Settings.disableSafetyFeatures){
             spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your genre will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
-            spinnerUnlockYear.setModel(new SpinnerNumberModel(GenreManager.unlockYear, 1976, 2050, 1));
+            spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
         }else{
             spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your genre will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
-            spinnerUnlockYear.setModel(new SpinnerNumberModel(GenreManager.unlockYear, 1976, 2050, 1));
+            spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
         }
 
@@ -83,7 +84,7 @@ public class WindowAddGenrePage2 extends JFrame{
         comboBoxGenreUnlockMonth.setBounds(120, 35, 100, 23);
         comboBoxGenreUnlockMonth.setToolTipText("This is the month when your genre will be unlocked.");
         comboBoxGenreUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-        comboBoxGenreUnlockMonth.setSelectedItem(GenreManager.unlockMonth);
+        comboBoxGenreUnlockMonth.setSelectedItem(GenreManager.mapNewGenre.get("UNLOCK MONTH"));
         contentPane.add(comboBoxGenreUnlockMonth);
 
         JLabel labelGenreID = new JLabel("Unlock year: ");
@@ -106,9 +107,8 @@ public class WindowAddGenrePage2 extends JFrame{
         contentPane.add(spinnerUnlockYear);
     }
     private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox<String> comboBoxGenreUnlockMonth){
-        GenreManager.unlockYear = Integer.parseInt(spinnerUnlockYear.getValue().toString());
+        GenreManager.mapNewGenre.put("DATE", comboBoxGenreUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
         LOGGER.info("genre unlock year: " +  Integer.parseInt(spinnerUnlockYear.getValue().toString()));
-        GenreManager.unlockMonth = Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()).toString();
         LOGGER.info("Genre unlock month: " + comboBoxGenreUnlockMonth.getSelectedItem().toString());
     }
 }

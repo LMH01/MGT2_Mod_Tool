@@ -1,11 +1,17 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
+import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TranslationManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TranslationManager.class);
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     /**
@@ -78,13 +84,14 @@ public class TranslationManager {
     }
 
     /**
+     * @param englishTranslation The english translation.
      * @return Returns a map containing the translations for each language.
      */
-    public static Map<String, String> getTranslationsMap(){
+    public static Map<String, String> getTranslationsMap(String englishTranslation){
         Map<String, String> map = new HashMap<>();
-        JTextField textFieldDescriptionTranslation = new JTextField();
+        JTextField textFieldTranslation = new JTextField();
         JLabel labelExplanation = new JLabel();
-        Object[] params = {labelExplanation,textFieldDescriptionTranslation};
+        Object[] params = {labelExplanation,textFieldTranslation};
         boolean breakLoop = false;
         for(int i=0; i<TRANSLATION_KEYS.length; i++){
             if(!breakLoop){
@@ -92,8 +99,8 @@ public class TranslationManager {
                 if(!TRANSLATION_NAMES[i].equals("English")){
                     labelExplanation.setText("Enter the translation for " + language + ":");
                     if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
-                        map.put(TRANSLATION_KEYS[i], textFieldDescriptionTranslation.getText());
-                        textFieldDescriptionTranslation.setText("");
+                        map.put(TRANSLATION_KEYS[i], textFieldTranslation.getText());
+                        textFieldTranslation.setText("");
                     }else{
                         JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
                         breakLoop = true;
@@ -114,4 +121,5 @@ public class TranslationManager {
         }
         return map;
     }
+
 }

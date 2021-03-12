@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.windows.genre;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +18,7 @@ public class WindowAddGenrePage10 extends JFrame{
     JButton buttonPrevious = new JButton("Previous");
     JButton buttonQuit = new JButton("Cancel");
     JTextField textFieldImagePath = new JTextField();
+    File genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -36,7 +36,7 @@ public class WindowAddGenrePage10 extends JFrame{
         buttonBrowse.addActionListener(actionEvent -> {
             String imageFilePath = getGenreImageFilePath(false, true);
             if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
-                GenreManager.imageFile = new File(imageFilePath);
+                genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
             }else{
                 textFieldImagePath.setText(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
@@ -45,15 +45,15 @@ public class WindowAddGenrePage10 extends JFrame{
         buttonNext.addActionListener(actionEvent -> {
             if(textFieldImagePath.getText().isEmpty()){
                 if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    GenreManager.imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    GenreManager.showSummary(false);
+                    genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, false, genreIcon);
                     FRAME.dispose();
                 }
             }else{
                 String imageFilePath = getGenreImageFilePath(true, false);
                 if(!imageFilePath.equals("error")){
-                    GenreManager.imageFile = new File(imageFilePath);
-                    GenreManager.showSummary(false);
+                    genreIcon = new File(imageFilePath);
+                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, false, genreIcon);
                     FRAME.dispose();
                 }else if(textFieldImagePath.getText().isEmpty()){
 
@@ -89,7 +89,7 @@ public class WindowAddGenrePage10 extends JFrame{
 
         textFieldImagePath.setBounds(20, 30, 210, 23);
         textFieldImagePath.setToolTipText("Path to image file");
-        textFieldImagePath.setText(GenreManager.imageFile.getPath());
+        textFieldImagePath.setText(genreIcon.getPath());
         contentPane.add(textFieldImagePath);
 
         buttonBrowse.setBounds(240, 30, 80, 23);

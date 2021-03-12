@@ -36,7 +36,6 @@ public class WindowAddGenrePage9 extends JFrame{
 
     public WindowAddGenrePage9() {
         buttonAddScreenshot.addActionListener(actionEvent -> {
-            //WindowAddScreenshots.createFrame();
             ArrayList<File> arrayListScreenshotFilesSelected = new ArrayList<>();
             JTextField textFieldScreenshotFile = new JTextField();
             JLabel labelMessage = new JLabel("<html>Click browse or enter enter the image path manually." +

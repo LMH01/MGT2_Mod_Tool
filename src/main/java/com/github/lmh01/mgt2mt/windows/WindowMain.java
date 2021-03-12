@@ -167,6 +167,7 @@ public class WindowMain {
     public static void checkActionAvailability(){
         try{
             AnalyzeExistingGenres.analyzeGenreFileDeprecated();
+            AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             AnalyzeExistingPublishers.analyzePublisherFile();
             boolean noCustomGenreAvailable = true;
@@ -226,7 +227,7 @@ public class WindowMain {
             //AnalyzeExistingGenres.analyzeGenreFileDeprecated();
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
-            GenreManager.addGenre();
+            GenreManager.startStepByStepGuide();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
             checkActionAvailability();
@@ -235,7 +236,7 @@ public class WindowMain {
     }
     private static void removeGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFileDeprecated();
+            AnalyzeExistingGenres.analyzeGenreFile();;
             Backup.createBackup(Utils.getGenreFile());
             boolean noGenreToRemoveAvailable = true;
             JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be removed:");
@@ -266,18 +267,13 @@ public class WindowMain {
                         String failedGenreRemoves = "";
                         for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
                             String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
-                            if(!AnalyzeExistingGenres.analyzeSingleGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre))){
-                                LOGGER.info("Genre has not been found!");
-                                JOptionPane.showMessageDialog(null, "Unable to remove genre:\nInternal error\nSee console for further information!", "Error", JOptionPane.ERROR_MESSAGE);
-                                failedGenreRemoves = failedGenreRemoves + " - Internal error" + currentGenre + System.getProperty("line.separator");
+                            try{
+                                ImageFileHandler.removeImageFiles(currentGenre, AnalyzeExistingGenres.getGenreIdByName(currentGenre));
+                                EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
+                                EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, null);
+                            }catch (IOException e){
+                                failedGenreRemoves = failedGenreRemoves + currentGenre + " - " + e.getMessage() + System.getProperty("line.separator");
                                 exportFailed = true;
-                            }else{
-                                try{
-                                    EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
-                                }catch (IOException e){
-                                    failedGenreRemoves = failedGenreRemoves + currentGenre + " - " + e.getMessage() + System.getProperty("line.separator");
-                                    exportFailed = true;
-                                }
                             }
                             numberOfGenresToRemove--;
                         }

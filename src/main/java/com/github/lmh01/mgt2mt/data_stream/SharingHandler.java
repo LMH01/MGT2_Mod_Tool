@@ -13,10 +13,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("JavaDoc")
 public class SharingHandler {
@@ -35,7 +32,7 @@ public class SharingHandler {
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
         File fileExportedGenreIcon = new File(EXPORTED_GENRE_DATA_FOLDER_PATH + "//icon.png");
-        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + GenreManager.MAP_SINGLE_GENRE.get("[PIC]"));
+        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + AnalyzeExistingGenres.genreList.get(genreId).get("[PIC]"));
         File fileGenreScreenshotsToExport = new File(Utils.getMGT2ScreenshotsPath() + genreId);
         if(!fileExportedGenreIcon.exists()){
             fileDataFolder.mkdirs();
@@ -52,56 +49,56 @@ public class SharingHandler {
         PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGenre), StandardCharsets.UTF_8));
         bw.write("\ufeff");//Makes the file UTF8-BOM
         bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
-        bw.print("[GENRE START]" + System.getProperty("line.separator"));
-        bw.print("[NAME AR]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME AR]") + System.getProperty("line.separator"));
-        bw.print("[NAME CH]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME CH]") + System.getProperty("line.separator"));
-        bw.print("[NAME CT]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME CT]") + System.getProperty("line.separator"));
-        bw.print("[NAME CZ]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME CZ]") + System.getProperty("line.separator"));
-        bw.print("[NAME EN]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]") + System.getProperty("line.separator"));
-        bw.print("[NAME ES]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME ES]") + System.getProperty("line.separator"));
-        bw.print("[NAME FR]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME FR]") + System.getProperty("line.separator"));
-        bw.print("[NAME GE]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME GE]") + System.getProperty("line.separator"));
-        bw.print("[NAME HU]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME HU]") + System.getProperty("line.separator"));
-        bw.print("[NAME IT]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME IT]") + System.getProperty("line.separator"));
-        bw.print("[NAME KO]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME KO]") + System.getProperty("line.separator"));
-        bw.print("[NAME PB]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME PB]") + System.getProperty("line.separator"));
-        bw.print("[NAME PL]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME PL]") + System.getProperty("line.separator"));
-        bw.print("[NAME RU]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME RU]") + System.getProperty("line.separator"));
-        bw.print("[NAME TU]" + GenreManager.MAP_SINGLE_GENRE.get("[NAME TU]") + System.getProperty("line.separator"));
-        bw.print("[DESC AR]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC AR]") + System.getProperty("line.separator"));
-        bw.print("[DESC CH]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC CH]") + System.getProperty("line.separator"));
-        bw.print("[DESC CT]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC CT]") + System.getProperty("line.separator"));
-        bw.print("[DESC CZ]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC CZ]") + System.getProperty("line.separator"));
-        bw.print("[DESC EN]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC EN]") + System.getProperty("line.separator"));
-        bw.print("[DESC ES]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC ES]") + System.getProperty("line.separator"));
-        bw.print("[DESC FR]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC FR]") + System.getProperty("line.separator"));
-        bw.print("[DESC GE]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC GE]") + System.getProperty("line.separator"));
-        bw.print("[DESC HU]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC HU]") + System.getProperty("line.separator"));
-        bw.print("[DESC IT]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC IT]") + System.getProperty("line.separator"));
-        bw.print("[DESC KO]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC KO]") + System.getProperty("line.separator"));
-        bw.print("[DESC PB]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC PB]") + System.getProperty("line.separator"));
-        bw.print("[DESC PL]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC PL]") + System.getProperty("line.separator"));
-        bw.print("[DESC RU]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC RU]") + System.getProperty("line.separator"));
-        bw.print("[DESC TU]" + GenreManager.MAP_SINGLE_GENRE.get("[DESC TU]") + System.getProperty("line.separator"));
-        bw.print("[DATE]" + GenreManager.MAP_SINGLE_GENRE.get("[DATE]") + System.getProperty("line.separator"));
-        bw.print("[RES POINTS]" + GenreManager.MAP_SINGLE_GENRE.get("[RES POINTS]") + System.getProperty("line.separator"));
-        bw.print("[PRICE]" + GenreManager.MAP_SINGLE_GENRE.get("[PRICE]") + System.getProperty("line.separator"));
-        bw.print("[DEV COSTS]" + GenreManager.MAP_SINGLE_GENRE.get("[DEV COSTS]") + System.getProperty("line.separator"));
-        bw.print("[TGROUP]" + GenreManager.MAP_SINGLE_GENRE.get("[TGROUP]") + System.getProperty("line.separator"));
-        bw.print("[GAMEPLAY]" + GenreManager.MAP_SINGLE_GENRE.get("[GAMEPLAY]") + System.getProperty("line.separator"));
-        bw.print("[GRAPHIC]" + GenreManager.MAP_SINGLE_GENRE.get("[GRAPHIC]") + System.getProperty("line.separator"));
-        bw.print("[SOUND]" + GenreManager.MAP_SINGLE_GENRE.get("[SOUND]") + System.getProperty("line.separator"));
-        bw.print("[CONTROL]" + GenreManager.MAP_SINGLE_GENRE.get("[CONTROL]") + System.getProperty("line.separator"));
-        bw.print("[GENRE COMB]" + getGenreNames() + System.getProperty("line.separator"));
-        bw.print("[THEME COMB]" + GenreManager.MAP_SINGLE_GENRE.get("[THEME COMB]") + System.getProperty("line.separator"));
-        bw.print("[DESIGN1]" + GenreManager.MAP_SINGLE_GENRE.get("[DESIGN1]") + System.getProperty("line.separator"));
-        bw.print("[DESIGN2]" + GenreManager.MAP_SINGLE_GENRE.get("[DESIGN2]") + System.getProperty("line.separator"));
-        bw.print("[DESIGN3]" + GenreManager.MAP_SINGLE_GENRE.get("[DESIGN3]") + System.getProperty("line.separator"));
-        bw.print("[DESIGN4]" + GenreManager.MAP_SINGLE_GENRE.get("[DESIGN4]") + System.getProperty("line.separator"));
-        bw.print("[DESIGN5]" + GenreManager.MAP_SINGLE_GENRE.get("[DESIGN5]") + System.getProperty("line.separator"));
+        bw.print("[GENRE START]" + System.getProperty("line.separator"));//TODO Make use of TranslationManager
+        bw.print("[NAME AR]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME AR") + System.getProperty("line.separator"));
+        bw.print("[NAME CH]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME CH") + System.getProperty("line.separator"));
+        bw.print("[NAME CT]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME CT") + System.getProperty("line.separator"));
+        bw.print("[NAME CZ]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME CZ") + System.getProperty("line.separator"));
+        bw.print("[NAME EN]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN") + System.getProperty("line.separator"));
+        bw.print("[NAME ES]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME ES") + System.getProperty("line.separator"));
+        bw.print("[NAME FR]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME FR") + System.getProperty("line.separator"));
+        bw.print("[NAME GE]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME GE") + System.getProperty("line.separator"));
+        bw.print("[NAME HU]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME HU") + System.getProperty("line.separator"));
+        bw.print("[NAME IT]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME IT") + System.getProperty("line.separator"));
+        bw.print("[NAME KO]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME KO") + System.getProperty("line.separator"));
+        bw.print("[NAME PB]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME PB") + System.getProperty("line.separator"));
+        bw.print("[NAME PL]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME PL") + System.getProperty("line.separator"));
+        bw.print("[NAME RU]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME RU") + System.getProperty("line.separator"));
+        bw.print("[NAME TU]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME TU") + System.getProperty("line.separator"));
+        bw.print("[DESC AR]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC AR") + System.getProperty("line.separator"));
+        bw.print("[DESC CH]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC CH") + System.getProperty("line.separator"));
+        bw.print("[DESC CT]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC CT") + System.getProperty("line.separator"));
+        bw.print("[DESC CZ]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC CZ") + System.getProperty("line.separator"));
+        bw.print("[DESC EN]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC EN") + System.getProperty("line.separator"));
+        bw.print("[DESC ES]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC ES") + System.getProperty("line.separator"));
+        bw.print("[DESC FR]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC FR") + System.getProperty("line.separator"));
+        bw.print("[DESC GE]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC GE") + System.getProperty("line.separator"));
+        bw.print("[DESC HU]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC HU") + System.getProperty("line.separator"));
+        bw.print("[DESC IT]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC IT") + System.getProperty("line.separator"));
+        bw.print("[DESC KO]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC KO") + System.getProperty("line.separator"));
+        bw.print("[DESC PB]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC PB") + System.getProperty("line.separator"));
+        bw.print("[DESC PL]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC PL") + System.getProperty("line.separator"));
+        bw.print("[DESC RU]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC RU") + System.getProperty("line.separator"));
+        bw.print("[DESC TU]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC TU") + System.getProperty("line.separator"));
+        bw.print("[DATE]" + AnalyzeExistingGenres.genreList.get(genreId).get("DATE") + System.getProperty("line.separator"));
+        bw.print("[RES POINTS]" + AnalyzeExistingGenres.genreList.get(genreId).get("RES POINTS") + System.getProperty("line.separator"));
+        bw.print("[PRICE]" + AnalyzeExistingGenres.genreList.get(genreId).get("PRICE") + System.getProperty("line.separator"));
+        bw.print("[DEV COSTS]" + AnalyzeExistingGenres.genreList.get(genreId).get("DEV COSTS") + System.getProperty("line.separator"));
+        bw.print("[TGROUP]" + AnalyzeExistingGenres.genreList.get(genreId).get("TGROUP") + System.getProperty("line.separator"));
+        bw.print("[GAMEPLAY]" + AnalyzeExistingGenres.genreList.get(genreId).get("GAMEPLAY") + System.getProperty("line.separator"));
+        bw.print("[GRAPHIC]" + AnalyzeExistingGenres.genreList.get(genreId).get("GRAPHIC") + System.getProperty("line.separator"));
+        bw.print("[SOUND]" + AnalyzeExistingGenres.genreList.get(genreId).get("SOUND") + System.getProperty("line.separator"));
+        bw.print("[CONTROL]" + AnalyzeExistingGenres.genreList.get(genreId).get("CONTROL") + System.getProperty("line.separator"));
+        bw.print("[GENRE COMB]" + getGenreNames(genreId) + System.getProperty("line.separator"));
+        bw.print("[THEME COMB]" + AnalyzeExistingGenres.genreList.get(genreId).get("THEME COMB") + System.getProperty("line.separator"));
+        bw.print("[DESIGN1]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN1") + System.getProperty("line.separator"));
+        bw.print("[DESIGN2]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN2") + System.getProperty("line.separator"));
+        bw.print("[DESIGN3]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN3") + System.getProperty("line.separator"));
+        bw.print("[DESIGN4]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN4") + System.getProperty("line.separator"));
+        bw.print("[DESIGN5]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN5") + System.getProperty("line.separator"));
         bw.print("[GENRE END]");
         bw.close();
-        ChangeLog.addLogEntry(17, GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]"));
+        ChangeLog.addLogEntry(17, AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN"));
         return true;
     }
 
@@ -111,78 +108,83 @@ public class SharingHandler {
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
     public static boolean importGenre(String importFolderPath) throws IOException {
-        AnalyzeExistingGenres.analyzeGenreFileDeprecated();
-        GenreManager.MAP_SINGLE_GENRE.clear();
+        Map<String, String> map = new HashMap<>();
+        AnalyzeExistingGenres.analyzeGenreFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
-        GenreManager.MAP_SINGLE_GENRE.put("[ID]", Integer.toString(newGenreId));
+        GenreManager.mapNewGenre.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
         File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId + "//");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
         String currentLine;
         int line = 1;
         while((currentLine = reader.readLine()) != null){
-            switch(line){//TODO Replace GenreManager.MAP_SINGLE_GENRE with GenreManager.mapNewGenre
-                case 1: GenreManager.MAP_SINGLE_GENRE.put("[MGT2MT VERSION]", currentLine.replaceAll("\\uFEFF", "").replace("[MGT2MT VERSION]", "")); break;
-                case 3: GenreManager.MAP_SINGLE_GENRE.put("[NAME AR]", currentLine.replace("[NAME AR]", "")); break;
-                case 4: GenreManager.MAP_SINGLE_GENRE.put("[NAME CH]", currentLine.replace("[NAME CH]", "")); break;
-                case 5: GenreManager.MAP_SINGLE_GENRE.put("[NAME CT]", currentLine.replace("[NAME CT]", "")); break;
-                case 6: GenreManager.MAP_SINGLE_GENRE.put("[NAME CZ]", currentLine.replace("[NAME CZ]", "")); break;
-                case 7: GenreManager.MAP_SINGLE_GENRE.put("[NAME EN]", currentLine.replace("[NAME EN]", "")); break;
-                case 8: GenreManager.MAP_SINGLE_GENRE.put("[NAME ES]", currentLine.replace("[NAME ES]", "")); break;
-                case 9: GenreManager.MAP_SINGLE_GENRE.put("[NAME FR]", currentLine.replace("[NAME FR]", "")); break;
-                case 10: GenreManager.MAP_SINGLE_GENRE.put("[NAME GE]", currentLine.replace("[NAME GE]", "")); break;
-                case 11: GenreManager.MAP_SINGLE_GENRE.put("[NAME HU]", currentLine.replace("[NAME HU]", "")); break;
-                case 12: GenreManager.MAP_SINGLE_GENRE.put("[NAME IT]", currentLine.replace("[NAME IT]", ""));break;
-                case 13: GenreManager.MAP_SINGLE_GENRE.put("[NAME KO]", currentLine.replace("[NAME KO]", "")); break;
-                case 14: GenreManager.MAP_SINGLE_GENRE.put("[NAME PB]", currentLine.replace("[NAME PB]", "")); break;
-                case 15: GenreManager.MAP_SINGLE_GENRE.put("[NAME PL]", currentLine.replace("[NAME PL]", "")); break;
-                case 16: GenreManager.MAP_SINGLE_GENRE.put("[NAME RU]", currentLine.replace("[NAME RU]", "")); break;
-                case 17: GenreManager.MAP_SINGLE_GENRE.put("[NAME TU]", currentLine.replace("[NAME TU]", "")); break;
-                case 18: GenreManager.MAP_SINGLE_GENRE.put("[DESC AR]", currentLine.replace("[DESC AR]", "")); break;
-                case 19: GenreManager.MAP_SINGLE_GENRE.put("[DESC CH]", currentLine.replace("[DESC CH]", "")); break;
-                case 20: GenreManager.MAP_SINGLE_GENRE.put("[DESC CT]", currentLine.replace("[DESC CT]", "")); break;
-                case 21: GenreManager.MAP_SINGLE_GENRE.put("[DESC CZ]", currentLine.replace("[DESC CZ]", "")); break;
-                case 22: GenreManager.MAP_SINGLE_GENRE.put("[DESC EN]", currentLine.replace("[DESC EN]", "")); break;
-                case 23: GenreManager.MAP_SINGLE_GENRE.put("[DESC ES]", currentLine.replace("[DESC ES]", "")); break;
-                case 24: GenreManager.MAP_SINGLE_GENRE.put("[DESC FR]", currentLine.replace("[DESC FR]", "")); break;
-                case 25: GenreManager.MAP_SINGLE_GENRE.put("[DESC GE]", currentLine.replace("[DESC GE]", "")); break;
-                case 26: GenreManager.MAP_SINGLE_GENRE.put("[DESC HU]", currentLine.replace("[DESC HU]", "")); break;
-                case 27: GenreManager.MAP_SINGLE_GENRE.put("[DESC IT]", currentLine.replace("[DESC IT]", "")); break;
-                case 28: GenreManager.MAP_SINGLE_GENRE.put("[DESC KO]", currentLine.replace("[DESC KO]", "")); break;
-                case 29: GenreManager.MAP_SINGLE_GENRE.put("[DESC PB]", currentLine.replace("[DESC PB]", "")); break;
-                case 30: GenreManager.MAP_SINGLE_GENRE.put("[DESC PL]", currentLine.replace("[DESC PL]", "")); break;
-                case 31: GenreManager.MAP_SINGLE_GENRE.put("[DESC RU]", currentLine.replace("[DESC RU]", "")); break;
-                case 32: GenreManager.MAP_SINGLE_GENRE.put("[DESC TU]", currentLine.replace("[DESC TU]", "")); break;
-                case 33: GenreManager.MAP_SINGLE_GENRE.put("[DATE]", currentLine.replace("[DATE]", "")); break;
-                case 34: GenreManager.MAP_SINGLE_GENRE.put("[RES POINTS]", currentLine.replace("[RES POINTS]", "")); break;
-                case 35: GenreManager.MAP_SINGLE_GENRE.put("[PRICE]", currentLine.replace("[PRICE]", "")); break;
-                case 36: GenreManager.MAP_SINGLE_GENRE.put("[DEV COSTS]", currentLine.replace("[DEV COSTS]", "")); break;
-                case 37: GenreManager.MAP_SINGLE_GENRE.put("[TGROUP]", currentLine.replace("[TGROUP]", "")); break;
-                case 38: GenreManager.MAP_SINGLE_GENRE.put("[GAMEPLAY]", currentLine.replace("[GAMEPLAY]", "")); break;
-                case 39: GenreManager.MAP_SINGLE_GENRE.put("[GRAPHIC]", currentLine.replace("[GRAPHIC]", "")); break;
-                case 40: GenreManager.MAP_SINGLE_GENRE.put("[SOUND]", currentLine.replace("[SOUND]", "")); break;
-                case 41: GenreManager.MAP_SINGLE_GENRE.put("[CONTROL]", currentLine.replace("[CONTROL]", "")); break;
-                case 42: GenreManager.MAP_SINGLE_GENRE.put("[GENRE COMB]", getGenreIds(currentLine.replace("[GENRE COMB]", ""))); break;
-                case 43: GenreManager.MAP_SINGLE_GENRE.put("[THEME COMB]", currentLine.replace("[THEME COMB]", ""));break;
-                case 44: GenreManager.MAP_SINGLE_GENRE.put("[DESIGN1]", currentLine.replace("[DESIGN1]", "")); break;
-                case 45: GenreManager.MAP_SINGLE_GENRE.put("[DESIGN2]", currentLine.replace("[DESIGN2]", "")); break;
-                case 46: GenreManager.MAP_SINGLE_GENRE.put("[DESIGN3]", currentLine.replace("[DESIGN3]", "")); break;
-                case 47: GenreManager.MAP_SINGLE_GENRE.put("[DESIGN4]", currentLine.replace("[DESIGN4]", "")); break;
-                case 48: GenreManager.MAP_SINGLE_GENRE.put("[DESIGN5]", currentLine.replace("[DESIGN5]", "")); break;
+            switch(line){
+                case 1: map.put("[MGT2MT VERSION]", currentLine.replaceAll("\\uFEFF", "").replace("[MGT2MT VERSION]", "")); break;
+                case 3: map.put("NAME AR", currentLine.replace("NAME AR", "")); break;
+                case 4: map.put("NAME CH", currentLine.replace("NAME CH", "")); break;
+                case 5: map.put("NAME CT", currentLine.replace("NAME CT", "")); break;
+                case 6: map.put("NAME CZ", currentLine.replace("NAME CZ", "")); break;
+                case 7: map.put("NAME EN", currentLine.replace("NAME EN", "")); break;
+                case 8: map.put("NAME ES", currentLine.replace("NAME ES", "")); break;
+                case 9: map.put("NAME FR", currentLine.replace("NAME FR", "")); break;
+                case 10: map.put("NAME GE", currentLine.replace("NAME GE", "")); break;
+                case 11: map.put("NAME HU", currentLine.replace("NAME HU", "")); break;
+                case 12: map.put("NAME IT", currentLine.replace("NAME IT", ""));break;
+                case 13: map.put("NAME KO", currentLine.replace("NAME KO", "")); break;
+                case 14: map.put("NAME PB", currentLine.replace("NAME PB", "")); break;
+                case 15: map.put("NAME PL", currentLine.replace("NAME PL", "")); break;
+                case 16: map.put("NAME RU", currentLine.replace("NAME RU", "")); break;
+                case 17: map.put("NAME TU", currentLine.replace("NAME TU", "")); break;
+                case 18: map.put("DESC AR", currentLine.replace("DESC AR", "")); break;
+                case 19: map.put("DESC CH", currentLine.replace("DESC CH", "")); break;
+                case 20: map.put("DESC CT", currentLine.replace("DESC CT", "")); break;
+                case 21: map.put("DESC CZ", currentLine.replace("DESC CZ", "")); break;
+                case 22: map.put("DESC EN", currentLine.replace("DESC EN", "")); break;
+                case 23: map.put("DESC ES", currentLine.replace("DESC ES", "")); break;
+                case 24: map.put("DESC FR", currentLine.replace("DESC FR", "")); break;
+                case 25: map.put("DESC GE", currentLine.replace("DESC GE", "")); break;
+                case 26: map.put("DESC HU", currentLine.replace("DESC HU", "")); break;
+                case 27: map.put("DESC IT", currentLine.replace("DESC IT", "")); break;
+                case 28: map.put("DESC KO", currentLine.replace("DESC KO", "")); break;
+                case 29: map.put("DESC PB", currentLine.replace("DESC PB", "")); break;
+                case 30: map.put("DESC PL", currentLine.replace("DESC PL", "")); break;
+                case 31: map.put("DESC RU", currentLine.replace("DESC RU", "")); break;
+                case 32: map.put("DESC TU", currentLine.replace("DESC TU", "")); break;
+                case 33: map.put("DATE", currentLine.replace("DATE", "")); break;
+                case 34: map.put("RES POINTS", currentLine.replace("RES POINTS", "")); break;
+                case 35: map.put("PRICE", currentLine.replace("PRICE", "")); break;
+                case 36: map.put("DEV COSTS", currentLine.replace("DEV COSTS", "")); break;
+                case 37: map.put("TGROUP", currentLine.replace("TGROUP", "")); break;
+                case 38: map.put("GAMEPLAY", currentLine.replace("GAMEPLAY", "")); break;
+                case 39: map.put("GRAPHIC", currentLine.replace("GRAPHIC", "")); break;
+                case 40: map.put("SOUND", currentLine.replace("SOUND", "")); break;
+                case 41: map.put("CONTROL", currentLine.replace("CONTROL", "")); break;
+                case 42: map.put("GENRE COMB", Utils.getGenreIds(currentLine.replace("GENRE COMB", ""))); break;
+                case 43: map.put("THEME COMB", currentLine.replace("THEME COMB", ""));break;
+                case 44: map.put("DESIGN1", currentLine.replace("DESIGN1", "")); break;
+                case 45: map.put("DESIGN2", currentLine.replace("DESIGN2", "")); break;
+                case 46: map.put("DESIGN3", currentLine.replace("DESIGN3", "")); break;
+                case 47: map.put("DESIGN4", currentLine.replace("DESIGN4", "")); break;
+                case 48: map.put("DESIGN5", currentLine.replace("DESIGN5", "")); break;
             }
             line++;
         }
         reader.close();
         for(int i = 0; i<AnalyzeExistingGenres.genreList.size(); i++){//Checks if the genre already exists that should be imported.
-            if(AnalyzeExistingGenres.genreList.contains(GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]"))){
+            if(AnalyzeExistingGenres.genreList.contains(GenreManager.mapNewGenre.get("NAME EN"))){
                 return false;
             }
         }
         if(fileScreenshotFolder.exists()){
             return false;
         }
+        Set<Integer> compatibleThemeIds = new HashSet<>();
+        for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
+            compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string));
+        }
+        File genreIcon = new File("icon" + map.get("[NAME EN]"));
         fillNewGenreVariables(importFolderPath);
-        GenreManager.showSummary(true);
+        GenreManager.addGenre(map, map, compatibleThemeIds,true, genreIcon);
         return true;
     }
     //TODO Rewrite into a more simple approach -> rewrite addGenre so that it uses a Map and not multiple ArrayLists
@@ -296,7 +298,7 @@ public class SharingHandler {
     @Deprecated
     private static void fillNewGenreVariables(String importFolderPath){
         //TODO Delete method
-        GenreManager.resetVariablesToDefault();
+        /*GenreManager.resetVariablesToDefault();
         //GenreManager.id = AnalyzeExistingGenres.ARRAY_LIST_GENRE_IDS_IN_USE.size();
         GenreManager.name = GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]");
         GenreManager.description = GenreManager.MAP_SINGLE_GENRE.get("[DESC EN]");
@@ -325,6 +327,7 @@ public class SharingHandler {
         GenreManager.imageFileName = "icon" + GenreManager.MAP_SINGLE_GENRE.get("[NAME EN]");
         GenreManager.useDefaultImageFile = false;
         setGenreScreenshotFiles(importFolderPath);
+         */
     }
 
     /**
@@ -367,146 +370,11 @@ public class SharingHandler {
     }
 
     /**
-     * Splits the single string [DATE] into its year and month part to be written in the variables
+     * @param genreId The genre id from which the genre comb names should be transformed
+     * @return Returns a list of genre names
      */
-    private static void setGenreUnlockDate(){
-        String string = GenreManager.MAP_SINGLE_GENRE.get("[DATE]");
-        GenreManager.unlockMonth = string.replaceAll("[0-9]", "").replace(" ", "");
-        GenreManager.unlockYear = Integer.parseInt(string.replaceAll("[^0-9]", ""));
-    }
-
-    /**
-     * Sets the genre target group.
-     */
-    private static void setGenreTargetGroup(){
-        String string = GenreManager.MAP_SINGLE_GENRE.get("[TGROUP]");
-        if(string.contains("KID")){
-            GenreManager.targetGroupKid = true;
-        }
-        if(string.contains("TEEN")){
-            GenreManager.targetGroupTeen = true;
-        }
-        if(string.contains("ADULT")){
-            GenreManager.targetGroupAdult = true;
-        }
-        if(string.contains("OLD")){
-            GenreManager.targetGroupSenior = true;
-        }
-    }
-
-    /**
-     * Fills this array list with correct compatible genres {@link GenreManager#ARRAY_LIST_COMPATIBLE_GENRES}
-     */
-    private static void setGenreCompatibleGenres(){
-        String string = GenreManager.MAP_SINGLE_GENRE.get("[GENRE COMB]");
-        int charPosition = 0;
-        StringBuilder currentGenre = new StringBuilder();
-        for(int i = 0; i<string.length(); i++){
-            if(String.valueOf(string.charAt(charPosition)).equals("<")){
-                //Nothing happens
-            }else if(String.valueOf(string.charAt(charPosition)).equals(">")){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("genreName: " + currentGenre);
-                }
-                GenreManager.ARRAY_LIST_COMPATIBLE_GENRES.add(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(currentGenre.toString())));
-                currentGenre = new StringBuilder();
-            }else{
-                currentGenre.append(string.charAt(charPosition));
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("currentNumber: " + currentGenre);
-                }
-            }
-            charPosition++;
-        }
-    }
-
-    /**
-     * Fills this map with correct compatible themes {@link GenreManager#MAP_COMPATIBLE_THEMES}
-     */
-    private static void setGenreCompatibleThemes(){
-        String string = GenreManager.MAP_SINGLE_GENRE.get("[THEME COMB]");
-        int charPosition = 0;
-        boolean scanningNumber = false;
-        StringBuilder themeNumber = new StringBuilder();
-        StringBuilder currentTheme = new StringBuilder();
-        for(int i = 0; i<string.length(); i++){
-            if(String.valueOf(string.charAt(charPosition)).equals("<")){
-                //Nothing happens
-            }else if(String.valueOf(string.charAt(charPosition)).equals("-")){
-                scanningNumber = true;
-            }else if(String.valueOf(string.charAt(charPosition)).equals(">")){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("themeName: " + currentTheme);
-                }
-                GenreManager.MAP_COMPATIBLE_THEMES.put(Integer.parseInt(themeNumber.toString().replaceAll("[^0-9]", "")), currentTheme.toString());
-                currentTheme = new StringBuilder();
-                themeNumber = new StringBuilder();
-                scanningNumber = false;
-            }else{
-                if(scanningNumber){
-                    themeNumber.append(string.charAt(charPosition));
-                }else{
-                    if(String.valueOf(string.charAt(charPosition)).equals("_")){
-                        currentTheme.append(" ");
-                    }else{
-                        currentTheme.append(string.charAt(charPosition));
-                        if(Settings.enableDebugLogging){
-                            LOGGER.info("currentNumber: " + currentTheme);
-                        }
-                    }
-                }
-            }
-            charPosition++;
-        }
-    }
-
-    /**
-     * Fills this array list with genre screenshot files {@link GenreManager#arrayListScreenshotFiles}
-     */
-    private static void setGenreScreenshotFiles(String importFolderPath){
-        ArrayList<File> arrayListFilesInScreenshotFolder = Utils.getFilesInFolder(importFolderPath + "\\DATA\\screenshots");
-        for (File file : arrayListFilesInScreenshotFolder) {
-            if (file.getName().endsWith(".png")) {
-                GenreManager.arrayListScreenshotFiles.add(file);
-            }
-        }
-    }
-
-    /**
-     * Converts the genre names to ids
-     * @return Returns a list of genre ids.
-     */
-    private static String getGenreIds(String genreNamesRaw){
-        StringBuilder genreIds = new StringBuilder();
-        int charPositon = 0;
-        StringBuilder currentName = new StringBuilder();
-        for(int i = 0; i<genreNamesRaw.length(); i++){
-            if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals("<")){
-                //Nothing happens
-            }else if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals(">")){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("genreName: " + currentName);
-                }
-                int genreId = AnalyzeExistingGenres.getGenreIdByName(currentName.toString());
-                if(genreId != -1){
-                    genreIds.append("<").append(genreId).append(">");
-                }
-                currentName = new StringBuilder();
-            }else{
-                currentName.append(genreNamesRaw.charAt(charPositon));
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("currentNumber: " + currentName);
-                }
-            }
-            charPositon++;
-        }
-        String.valueOf(genreNamesRaw.charAt(1));
-        LOGGER.info("Genre ids: " + genreIds);
-        return genreIds.toString();
-    }
-
-    private static String getGenreNames(){
-        String genreNumbersRaw = GenreManager.MAP_SINGLE_GENRE.get("[GENRE COMB]");
+    private static String getGenreNames(int genreId){
+        String genreNumbersRaw = AnalyzeExistingGenres.genreList.get(genreId).get("GENRE COMB");
         StringBuilder genreNames = new StringBuilder();
         int charPositon = 0;
         StringBuilder currentNumber = new StringBuilder();

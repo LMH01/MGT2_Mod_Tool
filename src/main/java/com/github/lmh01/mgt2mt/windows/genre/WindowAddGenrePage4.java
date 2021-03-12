@@ -91,16 +91,16 @@ public class WindowAddGenrePage4 extends JFrame{
     private void setList(){
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> arrayListInt = new ArrayList<>();
-        if(GenreManager.targetGroupKid){
+        if(GenreManager.mapNewGenre.get("TGROUP").contains("KID")){
             arrayListInt.add(0);
         }
-        if(GenreManager.targetGroupTeen){
+        if(GenreManager.mapNewGenre.get("TGROUP").contains("TEEN")){
             arrayListInt.add(1);
         }
-        if(GenreManager.targetGroupAdult){
+        if(GenreManager.mapNewGenre.get("TGROUP").contains("ADULT")){
             arrayListInt.add(2);
         }
-        if(GenreManager.targetGroupSenior){
+        if(GenreManager.mapNewGenre.get("TGROUP").contains("OLD")){
             arrayListInt.add(3);
         }
 
@@ -125,26 +125,25 @@ public class WindowAddGenrePage4 extends JFrame{
         contentPane.add(SCROLL_PANE_AVAILABLE_GENRES);
     }
     private static boolean saveInputs(JList<String> listTargetGroups){
-        GenreManager.targetGroupKid = false;
-        GenreManager.targetGroupTeen = false;
-        GenreManager.targetGroupAdult = false;
-        GenreManager.targetGroupSenior = false;
+        GenreManager.mapNewGenre.remove("TGROUP");
+        StringBuilder targetGroups = new StringBuilder();
         if(listTargetGroups.getSelectedValuesList().size() != 0){
             for(int i=0; i<listTargetGroups.getSelectedValuesList().size(); i++) {
                 LOGGER.info("Current target group " + listTargetGroups.getSelectedValuesList().get(i));
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Kid")) {
-                    GenreManager.targetGroupKid = true;
+                    targetGroups.append("<KID>");
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Teen")) {
-                    GenreManager.targetGroupTeen = true;
+                    targetGroups.append("<TEEN>");
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Adult")) {
-                    GenreManager.targetGroupAdult = true;
+                    targetGroups.append("<ADULT>");
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Senior")) {
-                    GenreManager.targetGroupSenior = true;
+                    targetGroups.append("<OLD>");
                 }
             }
+            GenreManager.mapNewGenre.put("TGROUP", targetGroups.toString());
             return true;
         }else{
             return false;
