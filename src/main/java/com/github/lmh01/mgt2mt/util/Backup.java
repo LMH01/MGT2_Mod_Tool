@@ -84,18 +84,22 @@ public class Backup {
             File fileGenresBackup;
             File fileNpcGamesBackup;
             File filePublisherBackup;
+            File fileGameplayFeaturesBackup;
             if(initialBackup){
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
                 filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Publisher.txt.initialBackup");
+                fileGameplayFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//GameplayFeatures.txt.initialBackup");
             }else{
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
                 filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Publisher.txt");
+                fileGameplayFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//GameplayFeatures.txt");
             }
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileGameplayFeaturesBackup.getPath()), Paths.get(Utils.getGameplayFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
                 ChangeLog.addLogEntry(8);
@@ -160,6 +164,7 @@ public class Backup {
        Backup.createBackup(Utils.getGenreFile());
        Backup.createBackup(Utils.getNpcGamesFile());
        Backup.createBackup(Utils.getPublisherFile());
+       Backup.createBackup(Utils.getGameplayFeaturesFile());
        backupSaveGames(false);
        createThemeFilesBackup(false);
     }
@@ -174,6 +179,7 @@ public class Backup {
             Backup.createBackup(Utils.getNpcGamesFile(), true);
             Backup.createBackup(Utils.getThemesGeFile(), true);
             Backup.createBackup(Utils.getPublisherFile(), true);
+            Backup.createBackup(Utils.getGameplayFeaturesFile(), true);
             backupSaveGames(true);
             createThemeFilesBackup(true);
             ChangeLog.addLogEntry(6);
