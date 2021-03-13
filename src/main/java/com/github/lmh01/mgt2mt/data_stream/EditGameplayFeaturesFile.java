@@ -69,22 +69,30 @@ public class EditGameplayFeaturesFile {
             bw.write("[GRAPHIC]" + map.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
             bw.write("[SOUND]" + map.get("SOUND"));bw.write(System.getProperty("line.separator"));
             bw.write("[TECH]" + map.get("TECH"));bw.write(System.getProperty("line.separator"));
+            String mapValueBad = "";
+            String mapValueGood = "";
+            if(map.get("BAD") != null){
+                mapValueBad = map.get("BAD");
+            }
+            if(map.get("GOOD") != null){
+                mapValueGood = map.get("GOOD");
+            }
             if(activeGameplayFeature || !addGenreId){
                 if(addGenreId){
                     if(goodFeature){
-                        bw.write("[GOOD]" + map.get("GOOD"));bw.write("<" + genreId + ">");bw.write(System.getProperty("line.separator"));
-                        bw.write("[BAD]" + map.get("BAD"));bw.write(System.getProperty("line.separator"));
+                        bw.write("[GOOD]" + mapValueGood);bw.write("<" + genreId + ">");bw.write(System.getProperty("line.separator"));
+                        bw.write("[BAD]" + mapValueBad);bw.write(System.getProperty("line.separator"));
                     }else{
-                        bw.write("[GOOD]" + map.get("GOOD"));bw.write(System.getProperty("line.separator"));
-                        bw.write("[BAD]" + map.get("BAD"));bw.write("<" + genreId + ">");bw.write(System.getProperty("line.separator"));
+                        bw.write("[GOOD]" + mapValueGood);bw.write(System.getProperty("line.separator"));
+                        bw.write("[BAD]" + mapValueBad);bw.write("<" + genreId + ">");bw.write(System.getProperty("line.separator"));
                     }
                 }else{
-                    bw.write("[GOOD]" + map.get("GOOD").replace("<" + genreId + ">", ""));bw.write(System.getProperty("line.separator"));
-                    bw.write("[BAD]" + map.get("BAD").replace("<" + genreId + ">", ""));bw.write(System.getProperty("line.separator"));
+                    bw.write("[GOOD]" + mapValueGood.replace("<" + genreId + ">", ""));bw.write(System.getProperty("line.separator"));
+                    bw.write("[BAD]" + mapValueBad.replace("<" + genreId + ">", ""));bw.write(System.getProperty("line.separator"));
                 }
             }else{
-                bw.write("[GOOD]" + map.get("GOOD"));bw.write(System.getProperty("line.separator"));
-                bw.write("[BAD]" + map.get("BAD"));bw.write(System.getProperty("line.separator"));
+                bw.write("[GOOD]" + mapValueGood);bw.write(System.getProperty("line.separator"));
+                bw.write("[BAD]" + mapValueBad);bw.write(System.getProperty("line.separator"));
             }
             bw.write(System.getProperty("line.separator"));
         }
