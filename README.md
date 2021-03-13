@@ -87,25 +87,27 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - Select here what genres work good together with your genre. This is used when you create a game with two genres. The game will check if the chosen genres work good together. This will influence the ratings of your game.
 - **Page [6] Topic combination**
     - Select here what topics work good with your genre. If you create a game with a topic, that you did select in this list, your game will get a better rating.
+- **Page [7] Gameplay features**
+    - Select here what gameplay features work good and bad together with your genre. If you create a game with a gameplay feature that you have added as good feature you game will get a better raiting. If you create a game with a gameplay feature that you have added as bad your game will get a worse raiting.
     
     **Note: Use STRG and click with your mouse to select multiple entries from the lists**
-- **Page [7] Design priority**
+- **Page [8] Design priority**
     - The values that are set in this window are the optimal **design** priorities for your genre. If you select the values that you have set with this tool in game, you will have the correct genre **design** priorities, and you will not get a penalty for a **design** priority miss match.  
     - **The values that are entered in this step are compared against the values that are entered here:**
     ![img](https://i.imgur.com/52oEscH.png "Desing priority ingame")
     - If they match your game will get a better rating
-- **Page [8] Work priority**
+- **Page [9] Work priority**
     - The values that are set in this window are the optimal **work** priorities for your genre. If you select the values that you have set with this tool in game, you will have the correct genre **work** priorities, and you will not get a penalty for a **work** priority miss match.  
     - **The values that are entered in this step are compared against the values that are entered here:**
     ![img](https://i.imgur.com/DplSwSS.png "Desing priority ingame")
     - If they match your game will get a better rating
-- **Page [9] Genre screenshots**
+- **Page [10] Genre screenshots**
     - Here you can add pictures that should be used as game screenshots. These images are displayed when your development progress is shown.
     - If you don't add pictures manually default pictures will be used.
     - The pictures will be added in the order you add them with the tool. So it is recommended to use the least good-looking picture first.
     
     **Note: The selected files has to be `.png` format. It is highly suggested that you only add pictures with a 4:3 aspect ratio**
-- **Page [10] Genre icon**
+- **Page [11] Genre icon**
     - In this step you can enter a custom genre icon. This icon will be copied into the game directory to be displayed as the genre image in game.
     
     **Note: The selected image file has to be a `.png` file**
