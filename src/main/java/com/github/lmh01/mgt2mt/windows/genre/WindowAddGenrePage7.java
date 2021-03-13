@@ -174,6 +174,8 @@ public class WindowAddGenrePage7 extends JFrame{
      * @return Returns true when the lists don't have mutual selected entries.
      */
     private static boolean saveInputs(JList<String> listGameplayFeaturesGood, JList<String> listGameplayFeaturesBad){
+        gameplayFeaturesBadIds.clear();
+        gameplayFeaturesGoodIds.clear();
         GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE BAD");
         GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE GOOD");
         LOGGER.info("Cleared map entries for good/bad gameplay features.");

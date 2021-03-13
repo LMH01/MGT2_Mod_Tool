@@ -271,12 +271,12 @@ public class WindowMain {
                 if(JOptionPane.showConfirmDialog(null, params, "Remove genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!listAvailableGenres.isSelectionEmpty()){
                         boolean exportFailed = false;
-                        int numberOfGenresToRemove = listAvailableGenres.getSelectedValuesList().size();
                         StringBuilder failedGenreRemoves = new StringBuilder();
-                        for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
-                            String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
+                        for(String currentGenre : listAvailableGenres.getSelectedValuesList()){
                             try{
+                                LOGGER.info("Removing genre: " + currentGenre);
                                 ImageFileHandler.removeImageFiles(currentGenre, AnalyzeExistingGenres.getGenreIdByName(currentGenre));
+                                AnalyzeExistingGenres.analyzeGenreFile();
                                 EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
                                 EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, null);
                                 EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
@@ -285,14 +285,11 @@ public class WindowMain {
                                 failedGenreRemoves.append(currentGenre).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
                                 exportFailed = true;
                             }
-                            numberOfGenresToRemove--;
                         }
-                        if(numberOfGenresToRemove == 0){
-                            if(exportFailed){
-                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing genres.\\nThe following genres where not removed:\\n" + failedGenreRemoves, "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
-                            }else{
-                                JOptionPane.showMessageDialog(null, "All selected genres have been removed successfully!", "Genre removal successful", JOptionPane.INFORMATION_MESSAGE);
-                            }
+                        if(exportFailed){
+                            JOptionPane.showMessageDialog(null, "Something went wrong wile removing genres.\\nThe following genres where not removed:\\n" + failedGenreRemoves, "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "All selected genres have been removed successfully!", "Genre removal successful", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }else{
                         JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
