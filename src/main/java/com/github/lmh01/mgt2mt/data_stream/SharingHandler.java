@@ -18,6 +18,8 @@ import java.util.*;
 @SuppressWarnings("JavaDoc")
 public class SharingHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingHandler.class);
+    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1"};
+    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1"};
 
     /**
      * Exports the specified genre.
@@ -81,9 +83,9 @@ public class SharingHandler {
     /**
      * Imports the specified genre.
      * @param importFolderPath The path for the folder where the import files are stored
-     * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
+     * @return Returns "true" when the genre has been imported successfully. Returns "false" when the genre already exists. Returns mod tool version of import genre when genre is not compatible with current mod tool version.
      */
-    public static boolean importGenre(String importFolderPath) throws IOException, NullPointerException{
+    public static String importGenre(String importFolderPath) throws IOException, NullPointerException{
         AnalyzeExistingGenres.analyzeGenreFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
@@ -110,17 +112,26 @@ public class SharingHandler {
                 map.put(entry.getKey(), entry.getValue());
             }
         }
+        boolean genreCanBeImported = false;
+        for(String string : GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+            if(string.equals(map.get("MGT2MT VERSION"))){
+                genreCanBeImported = true;
+            }
+        }
+        if(!genreCanBeImported){
+            return "Genre [" + map.get("NAME EN") + "] could not be imported:\nThe genre is not with the current mod tool version compatible\nGenre was exported in version: " + map.get("MGT2MT VERSION");
+        }
         for(Map<String, String> map2 : AnalyzeExistingGenres.genreList){
             for(Map.Entry<String, String> entry : map2.entrySet()){
                 if(entry.getValue().equals(map.get("NAME EN"))){
                     LOGGER.info("Genre already exists - The genre name is already taken");
-                    return false;
+                    return "false";
                 }
             }
         }
         if(fileScreenshotFolder.exists()){
             LOGGER.info("Genre already exists - screenshot folder already exists.");
-            return false;
+            return "false";
         }
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
@@ -137,7 +148,7 @@ public class SharingHandler {
         ArrayList<File> genreScreenshots = Utils.getFilesInFolder(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
         GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon);
-        return true;
+        return "true";
     }
 
     /**
@@ -188,82 +199,62 @@ public class SharingHandler {
     /**
      * Imports the specified genre.
      * @param importFolderPath The path for the folder where the import files are stored
-     * @return Returns true when the publisher has been imported successfully. Returns false when the publisher already exists.
+     * @return Returns "true" when the publisher has been imported successfully. Returns "false" when the publisher already exists. Returns mod tool version of import publisher when publisher is not compatible with current mod tool version.
      */
-    public static boolean importPublisher(String importFolderPath) throws IOException {
+    public static String importPublisher(String importFolderPath) throws IOException {
         AnalyzeExistingPublishers.analyzePublisherFile();
-        HashMap<String, String> mapNewPublisher = new HashMap<>();
-        int newPublisherId = AnalyzeExistingPublishers.maxThemeID + 1;
+        int newPublisherId = AnalyzeExistingPublishers.getFreePublisherId();
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileGenreToImport), StandardCharsets.UTF_8));
-        String currentLine;
-        int line = 1;
-        while ((currentLine = reader.readLine()) != null) {
-            switch (line) {
-                case 3:
-                    mapNewPublisher.put("NAME EN", currentLine.replace("[NAME EN]", ""));
-                    break;
-                case 4:
-                    mapNewPublisher.put("NAME GE", currentLine.replace("[NAME GE]", ""));
-                    break;
-                case 5:
-                    mapNewPublisher.put("NAME TU", currentLine.replace("[NAME TU]", ""));
-                    break;
-                case 6:
-                    mapNewPublisher.put("NAME FR", currentLine.replace("[NAME FR]", ""));
-                    break;
-                case 7:
-                    mapNewPublisher.put("DATE", currentLine.replace("[DATE]", ""));
-                    break;
-                case 8:
-                    mapNewPublisher.put("DEVELOPER", currentLine.replace("[DEVELOPER]", ""));
-                    break;
-                case 9:
-                    mapNewPublisher.put("PUBLISHER", currentLine.replace("[PUBLISHER]", ""));
-                    break;
-                case 10:
-                    mapNewPublisher.put("MARKET", currentLine.replace("[MARKET]", ""));
-                    break;
-                case 11:
-                    mapNewPublisher.put("SHARE", currentLine.replace("[SHARE]", ""));
-                    break;
-                case 12:
-                    mapNewPublisher.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(currentLine.replace("[GENRE]", ""))));
-                    break;
+        HashMap<String, String> map = new HashMap<>();
+        List<Map<String, String>> list = Utils.parseDataFile(fileGenreToImport);
+        map.put("ID", Integer.toString(newPublisherId));
+        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
+            if(entry.getKey().equals("GENRE")){
+                map.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(entry.getValue())));
+            }else{
+                map.put(entry.getKey(), entry.getValue());
             }
-            line++;
         }
-        reader.close();
-        mapNewPublisher.put("ID", Integer.toString(newPublisherId));
+        boolean publisherCanBeImported = false;
+        for(String string : PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+            if(string.equals(map.get("MGT2MT VERSION"))){
+                publisherCanBeImported = true;
+            }
+        }
+        if(!publisherCanBeImported){
+            return "Publisher [" + map.get("NAME EN") + "] could not be imported:\nThe publisher is not with the current mod tool version compatible\nPublisher was exported in version: " + map.get("MGT2MT VERSION");
+        }
+        for(Map<String, String> map2 : AnalyzeExistingPublishers.getListMap()){
+            for(Map.Entry<String, String> entry : map2.entrySet()){
+                if(entry.getValue().equals(map.get("NAME EN"))){
+                    LOGGER.info("Publisher already exists - The genre name is already taken");
+                    return "false";
+                }
+            }
+        }
         int logoId = AnalyzeCompanyLogos.getLogoNumber();
-        mapNewPublisher.put("PIC", Integer.toString(logoId));
-        List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-        for (Map<String, String> map : list) {
-            if (map.get("NAME EN").equals(mapNewPublisher.get("NAME EN"))) {
-                return false;
-            }
-        }
+        map.put("PIC", Integer.toString(logoId));
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
         try {
             if (JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
-                    "\nName: " + mapNewPublisher.get("NAME EN") +
-                    "\nDate: " + mapNewPublisher.get("DATE") +
+                    "\nName: " + map.get("NAME EN") +
+                    "\nDate: " + map.get("DATE") +
                     "\nPic: See top left" +
-                    "\nDeveloper: " + mapNewPublisher.get("DEVELOPER") +
-                    "\nPublisher: " + mapNewPublisher.get("PUBLISHER") +
-                    "\nMarketShare: " + mapNewPublisher.get("MARKET") +
-                    "\nShare: " + mapNewPublisher.get("SHARE") +
-                    "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(mapNewPublisher.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
-                EditPublishersFile.addPublisher(mapNewPublisher, publisherImageFilePath.getPath());
-                ChangeLog.addLogEntry(22, mapNewPublisher.get("NAME EN"));
-                JOptionPane.showMessageDialog(null, "Publisher " + mapNewPublisher.get("NAME EN") + " has been added successfully");
+                    "\nDeveloper: " + map.get("DEVELOPER") +
+                    "\nPublisher: " + map.get("PUBLISHER") +
+                    "\nMarketShare: " + map.get("MARKET") +
+                    "\nShare: " + map.get("SHARE") +
+                    "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(map.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
+                EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
+                ChangeLog.addLogEntry(22, map.get("NAME EN"));
+                JOptionPane.showMessageDialog(null, "Publisher " + map.get("NAME EN") + " has been added successfully");
                 WindowMain.checkActionAvailability();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
         }
-        return true;
+        return "true";
     }
 
     /**

@@ -59,4 +59,11 @@ public class AnalyzeExistingPublishers {
         }
         return mapSingleGenre;
     }
+
+    /**
+     * @return Returns the next free gameplayFeature id.
+     */
+    public static int getFreePublisherId(){
+        return maxThemeID+1;
+    }
 }

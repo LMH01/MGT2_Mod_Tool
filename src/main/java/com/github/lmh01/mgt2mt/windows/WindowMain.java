@@ -681,8 +681,17 @@ public class WindowMain {
                         if(currentLine.contains("[MGT2MT VERSION]")){
                             LOGGER.info("File seams to be valid. Beginning import process.");
                             try{
-                                if(!SharingHandler.importGenre(importGenreFolder)){
+                                String returnValue = SharingHandler.importGenre(importGenreFolder);
+                                if(returnValue.equals("false")){
                                     JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                }else{
+                                    if(!returnValue.equals("true")){
+                                        StringBuilder supportedModToolVersions = new StringBuilder();
+                                        for(String string : SharingHandler.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+                                            supportedModToolVersions.append("[").append(string).append("]");
+                                        }
+                                        JOptionPane.showMessageDialog(null, returnValue + "\nSupported versions: " + supportedModToolVersions.toString(), "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                    }
                                 }
                             }catch(NullPointerException e){
                                 e.printStackTrace();
@@ -788,8 +797,17 @@ public class WindowMain {
                         br.close();
                         if(currentLine.contains("[MGT2MT VERSION]") && secondLine.contains("[PUBLISHER START]")){
                             LOGGER.info("File seams to be valid. Beginning import process.");
-                            if(!SharingHandler.importPublisher(importPublisherFolder)){
-                                JOptionPane.showMessageDialog(null, "The selected publisher already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                            String returnValue = SharingHandler.importPublisher(importPublisherFolder);
+                            if(!returnValue.equals("true")){
+                                if(returnValue.equals("false")){
+                                    JOptionPane.showMessageDialog(null, "The selected publisher already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                }else{
+                                    StringBuilder supportedModToolVersions = new StringBuilder();
+                                    for(String string : SharingHandler.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+                                        supportedModToolVersions.append("[").append(string).append("]");
+                                    }
+                                    JOptionPane.showMessageDialog(null, returnValue + "\nSupported versions: " + supportedModToolVersions.toString(), "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                }
                             }
                         }else{
                             JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid publisher.txt file.\nPlease select the correct folder.");
