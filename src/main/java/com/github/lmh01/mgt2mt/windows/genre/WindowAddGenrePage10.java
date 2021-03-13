@@ -1,23 +1,25 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.GenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WindowAddGenrePage10 extends JFrame{
     static final WindowAddGenrePage10 FRAME = new WindowAddGenrePage10();
+    public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
     JPanel contentPane = new JPanel();
-    JButton buttonBrowse = new JButton("Browse");
+    JButton buttonAddScreenshot = new JButton("Add screenshot(s)");
+    JButton buttonResetAddedScreenshots = new JButton("Reset");
     JButton buttonNext = new JButton("Next");
     JButton buttonPrevious = new JButton("Previous");
     JButton buttonQuit = new JButton("Cancel");
-    JTextField textFieldImagePath = new JTextField();
-    File genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -32,31 +34,112 @@ public class WindowAddGenrePage10 extends JFrame{
     }
 
     public WindowAddGenrePage10() {
-        buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = getGenreImageFilePath(false, true);
-            if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
-                genreIcon = new File(imageFilePath);
-                textFieldImagePath.setText(imageFilePath);
-            }else{
-                textFieldImagePath.setText(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+        buttonAddScreenshot.addActionListener(actionEvent -> {
+            ArrayList<File> arrayListScreenshotFilesSelected = new ArrayList<>();
+            JTextField textFieldScreenshotFile = new JTextField();
+            JLabel labelMessage = new JLabel("<html>Click browse or enter enter the image path manually." +
+                    "<br>When the image path is set click okay." +
+                    "<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page." +
+                    "<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3");
+            JButton buttonBrowse = new JButton("Browse");
+            AtomicBoolean multipleFilesSelected = new AtomicBoolean(false);
+            AtomicInteger numberOfScreenshotsToAdd = new AtomicInteger();
+            buttonBrowse.addActionListener(actionEventSmall ->{
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+
+                    FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
+                        @Override
+                        public boolean accept(File f) {
+                            if(f.getName().contains(".png")){
+                                return true;
+                            }
+                            return f.isDirectory();
+                        }
+
+                        @Override
+                        public String getDescription() {
+                            return ".png files";
+                        }
+                    };
+
+                    JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+                    fileChooser.setFileFilter(fileFilter);
+                    fileChooser.setDialogTitle("Choose a genre image (.png):");
+                    fileChooser.setMultiSelectionEnabled(true);
+
+                    int return_value = fileChooser.showOpenDialog(null);
+                    if (return_value == 0) {
+                        final int NUMBER_OF_SCREENSHOTS = fileChooser.getSelectedFiles().length;
+                        numberOfScreenshotsToAdd.set(NUMBER_OF_SCREENSHOTS);
+                        File[] screenshots = fileChooser.getSelectedFiles();
+                        if(NUMBER_OF_SCREENSHOTS > 1){
+                            multipleFilesSelected.set(true);
+                        }
+                        boolean failed = false;
+                        for(int i=0; i<NUMBER_OF_SCREENSHOTS; i++){
+                            if(!failed){
+                                if(screenshots[i].getName().contains(".png")){
+                                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                                    if(multipleFilesSelected.get()){
+                                        arrayListScreenshotFilesSelected.add(screenshots[i]);
+                                        textFieldScreenshotFile.setText("Multiple files selected");
+                                    }else{
+                                        textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(new Frame(), "Please select only .png files.");
+                                    failed = true;
+                                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                                }
+                            }
+                        }
+                    }
+                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
+                    e.printStackTrace();
+                }
+            });
+            Object[] params = {labelMessage,textFieldScreenshotFile, buttonBrowse};
+            if(JOptionPane.showConfirmDialog(null, params, "Add a screenshot", JOptionPane.OK_CANCEL_OPTION) == 0){
+                String textFieldPath = textFieldScreenshotFile.getText();
+                if(textFieldPath.endsWith(".png")){
+                    File imageFile = new File(textFieldPath);
+                    if(imageFile.exists()){
+                        arrayListScreenshotFiles.add(new File(textFieldPath));
+                        JOptionPane.showMessageDialog(new Frame(), "Image file has been added.");
+                    }else{
+                        JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
+                    }
+                }else if(multipleFilesSelected.get()){
+                    for(int i = 0; i< numberOfScreenshotsToAdd.get(); i++){
+                        arrayListScreenshotFiles.add(arrayListScreenshotFilesSelected.get(i));
+                    }
+                    JOptionPane.showMessageDialog(new Frame(), "Image files have been added.");
+                }else{
+                    JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+
+                }
+            }
+        });
+        buttonResetAddedScreenshots.addActionListener(actionEvent -> {
+            if(JOptionPane.showConfirmDialog(null, "<html>Are you sure that you want to reset<br> the added screenshots?", "Reset?", JOptionPane.YES_NO_OPTION) == 0){
+                arrayListScreenshotFiles.clear();
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            if(textFieldImagePath.getText().isEmpty()){
-                if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage9.arrayListScreenshotFiles, false, genreIcon);
+            if(!arrayListScreenshotFiles.isEmpty()){
+                StringBuilder filePaths = new StringBuilder();
+                for (File arrayListScreenshotFile : arrayListScreenshotFiles) {
+                    filePaths.append("<br>").append(arrayListScreenshotFile);
+                }
+                if(JOptionPane.showConfirmDialog(null, "<html>The following image files have been added:<br>" + filePaths + "<br><br>Is this correct and do you want to continue?", "Is this correct?", JOptionPane.YES_NO_OPTION) == 0){
+                    GenreManager.openStepWindow(11);
                     FRAME.dispose();
                 }
             }else{
-                String imageFilePath = getGenreImageFilePath(true, false);
-                if(!imageFilePath.equals("error")){
-                    genreIcon = new File(imageFilePath);
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage9.arrayListScreenshotFiles, false, genreIcon);
-                    FRAME.dispose();
-                }else if(textFieldImagePath.getText().isEmpty()){
-
-                }
+                GenreManager.openStepWindow(11);
+                FRAME.dispose();
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
@@ -74,34 +157,33 @@ public class WindowAddGenrePage10 extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 10] Image");
+        setTitle("[Page 10] Screenshots");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelTitle = new JLabel("Select genre image:");
-        labelTitle.setBounds(100, 0, 335, 23);
+        JLabel labelTitle = new JLabel("Add screenshot(s):");
+        labelTitle.setBounds(98, 0, 335, 23);
         labelTitle.setForeground(Color.BLACK);
         labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(labelTitle);
 
-        textFieldImagePath.setBounds(20, 30, 210, 23);
-        textFieldImagePath.setToolTipText("Path to image file");
-        textFieldImagePath.setText(genreIcon.getPath());
-        contentPane.add(textFieldImagePath);
-
-        buttonBrowse.setBounds(240, 30, 80, 23);
-        buttonBrowse.setToolTipText("Click here to select an image file that should be used as your genre image.");
-        contentPane.add(buttonBrowse);
+        buttonAddScreenshot.setBounds(40, 30, 150, 23);
+        buttonAddScreenshot.setToolTipText("<html>Click here to add image files that should be<br>used as your genre screenshots in the development progress page.");
+        contentPane.add(buttonAddScreenshot);
 
         JLabel labelYouCanSkipThisStep = new JLabel("Note: You can skip this step if you");
         labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
         contentPane.add(labelYouCanSkipThisStep);
 
-        JLabel labelAddYourOwnGenre = new JLabel("don't want to add you own genre image.");
+        JLabel labelAddYourOwnGenre = new JLabel("don't want to add you own screenshots image.");
         labelAddYourOwnGenre.setBounds(15,75, 300, 23);
         contentPane.add(labelAddYourOwnGenre);
+
+        buttonResetAddedScreenshots.setBounds(210, 30, 80, 23);
+        buttonResetAddedScreenshots.setToolTipText("Click to reset all added screenshots");
+        contentPane.add(buttonResetAddedScreenshots);
 
         buttonNext.setBounds(220, 100, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
@@ -114,67 +196,5 @@ public class WindowAddGenrePage10 extends JFrame{
         buttonQuit.setBounds(120, 100, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         contentPane.add(buttonQuit);
-    }
-
-    private String getGenreImageFilePath(boolean useTextFiledPath, boolean showDialog) {
-        if(useTextFiledPath){
-            String textFieldPath = textFieldImagePath.getText();
-            if(textFieldPath.endsWith(".png")){
-                File imageFile = new File(textFieldPath);
-                if(imageFile.exists()){
-                    if(showDialog){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
-                    }
-                    return textFieldPath;
-                }else{
-                    JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
-                    return "error";
-                }
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                return "error";
-            }
-        }else{
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-
-                FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
-                    @Override
-                    public boolean accept(File f) {
-                        if(f.getName().contains(".png")){
-                            return true;
-                        }
-                        return f.isDirectory();
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return ".png files";
-                    }
-                };
-
-                JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                fileChooser.setFileFilter(fileFilter);
-                fileChooser.setDialogTitle("Choose a genre image (.png):");
-
-                int return_value = fileChooser.showOpenDialog(null);
-                if (return_value == 0) {
-                    if(fileChooser.getSelectedFile().getName().contains(".png")){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
-                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                        return fileChooser.getSelectedFile().getPath();
-                    }else{
-                        JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                        return "error";
-                    }
-                }
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                return "error";
-            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
-                e.printStackTrace();
-                return "error";
-            }
-        }
     }
 }

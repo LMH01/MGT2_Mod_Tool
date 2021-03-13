@@ -95,7 +95,7 @@ public class WindowAddGenrePage1 extends JFrame{
     private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setTitle("[Page 1]");
+        setTitle("[Page 1] Name and Description");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);

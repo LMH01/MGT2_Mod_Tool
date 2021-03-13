@@ -65,6 +65,7 @@ public class GenreManager {
             case 8: WindowAddGenrePage8.createFrame(); break;
             case 9: WindowAddGenrePage9.createFrame(); break;
             case 10: WindowAddGenrePage10.createFrame(); break;
+            case 11: WindowAddGenrePage11.createFrame(); break;
         }
     }
 
@@ -98,11 +99,13 @@ public class GenreManager {
      * Ads a new genre to mad games tycoon 2. Shows a summary for the genre that should be added.
      * @param map The map that includes the values.
      * @param genreTranslations The map that includes the genre name translations
+     * @param compatibleThemeIds A set containing all compatible theme ids
+     *
      * @param genreScreenshots Array list containing all screenshot files
      * @param showSummaryFromImport True when called from genre import
      * @param genreIcon The genre icon file
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
+    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesGoodIds, Set<Integer> gameplayFeaturesBadIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = "Your genre is ready:\n\n" +
@@ -116,7 +119,9 @@ public class GenreManager {
                 "Pic: see top left\n" +
                 "Target group: " + getTargetGroups(map) + "\n" +
                 "\n*Compatible genres*\n\n" + getCompatibleGenres(map) + "\n" +
-                "\n*Compatible themes*\n\n" + getCompatibleThemes(map) + "\n" +
+                "\n*Compatible themes*\n\n" + getMapEntryToDisplay(map, "THEME COMB", 15) + "\n" +
+                "\n*Good gameplay features*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE GOOD", 10) + "\n" +
+                "\n*Bad gameplay features*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE BAD", 10) + "\n" +
                 "\n*Design priority*\n\n" +
                 "Gameplay/Visuals: " + map.get("DESIGN1") + "\n" +
                 "Story/Game length: " + map.get("DESIGN2") + "\n" +
@@ -153,7 +158,10 @@ public class GenreManager {
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
                     EditGenreFile.addGenre(map, genreTranslations);
-                    //EditThemeFiles.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
+                    EditThemeFiles.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
+                    EditGameplayFeaturesFile.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
+                    AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+                    EditGameplayFeaturesFile.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, showSummaryFromImport, genreIcon);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -165,7 +173,7 @@ public class GenreManager {
         }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
             //Click no or close window
             if(!showSummaryFromImport){
-                WindowAddGenrePage10.createFrame();
+                WindowAddGenrePage11.createFrame();
             }
         }
         WindowMain.checkActionAvailability();
@@ -203,6 +211,46 @@ public class GenreManager {
         }
         return targetGroups;
     }
+
+    /**
+     * @param map The map where the map key is stored
+     * @param mapKey The key where the content is written
+     * @param objectsPerLine Set how many objects should be dispalyed per line
+     * @return Returns a string containing all entries under the map key ready to display
+     */
+    private static String getMapEntryToDisplay(Map<String, String> map, String mapKey, int objectsPerLine){
+        String input = map.get(mapKey);
+        StringBuilder currentString = new StringBuilder();
+        ArrayList<String> outputArray = new ArrayList<>();
+        StringBuilder output = new StringBuilder();
+
+        for(int i=0; i<input.length(); i++){
+            if(String.valueOf(input.charAt(i)).equals("<")){
+                //Nothing happens
+            }else if (String.valueOf(input.charAt(i)).equals(">")){
+                outputArray.add(currentString.toString());
+                currentString = new StringBuilder();
+            }else{
+                currentString.append(input.charAt(i));
+            }
+        }
+
+        int n = 0;
+        for(int i=0; i<outputArray.size(); i++){
+            if(i == outputArray.size()-1){
+                output.append(outputArray.get(i));
+            }else{
+                output.append(outputArray.get(i)).append(", ");
+                if(n == objectsPerLine){
+                    output.append(System.getProperty("line.separator"));
+                    n = 0;
+                }
+            }
+            n++;
+        }
+        return output.toString();
+    }
+
     /**
      * @param map The map where the GENRE COMB values are stored.
      * @return Returns a string containing all genres that are compatible with the new genre. This is called when the compatible genres are displayed in the summary.
@@ -231,42 +279,6 @@ public class GenreManager {
             }else{
                 output.append(outputGenres.get(i)).append(", ");
                 if(n == 5){
-                    output.append(System.getProperty("line.separator"));
-                    n = 0;
-                }
-            }
-            n++;
-        }
-        return output.toString();
-    }
-    /**
-     * @param map The map where the THEME COMB values are stored.
-     * @return Returns a string containing all themes that are compatible with the new genre. This is called when the compatible themes are displayed in the summary.
-     */
-    private static String getCompatibleThemes(Map<String, String> map){
-        String inputTopics = map.get("THEME COMB");
-        StringBuilder currentThemes = new StringBuilder();
-        ArrayList<String> outputThemes = new ArrayList<>();
-        StringBuilder output = new StringBuilder();
-
-        for(int i=0; i<inputTopics.length(); i++){
-            if(String.valueOf(inputTopics.charAt(i)).equals("<")){
-                //Nothing happens
-            }else if (String.valueOf(inputTopics.charAt(i)).equals(">")){
-                outputThemes.add(currentThemes.toString());
-                currentThemes = new StringBuilder();
-            }else{
-                currentThemes.append(inputTopics.charAt(i));
-            }
-        }
-
-        int n = 0;
-        for(int i=0; i<outputThemes.size(); i++){
-            if(i == outputThemes.size()-1){
-                output.append(outputThemes.get(i));
-            }else{
-                output.append(outputThemes.get(i)).append(", ");
-                if(n == 10){
                     output.append(System.getProperty("line.separator"));
                     n = 0;
                 }

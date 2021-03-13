@@ -96,7 +96,7 @@ public class WindowAddGenrePage5 extends JFrame{
         for(String string : AnalyzeExistingGenres.getGenresByAlphabetWithoutId()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("GENRE COMB")){
-                if(GenreManager.mapNewGenre.get("GENRE COMB").contains(string)) {
+                if(GenreManager.mapNewGenre.get("GENRE COMB").contains(Integer.toString(AnalyzeExistingGenres.getGenreIdByName(string)))) {
                     genresSelected.add(currentGenre);
                 }
             }

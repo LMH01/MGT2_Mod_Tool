@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -12,15 +13,15 @@ import java.awt.*;
 public class WindowAddGenrePage8 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage8.class);
     static final WindowAddGenrePage8 FRAME = new WindowAddGenrePage8();
-    static int combinedValue;
     JPanel contentPane = new JPanel();
     JButton buttonNext = new JButton("Next");
     JButton buttonPrevious = new JButton("Previous");
     JButton buttonQuit = new JButton("Cancel");
-    JSpinner spinnerGameplay = new JSpinner();
-    JSpinner spinnerGraphic = new JSpinner();
-    JSpinner spinnerSound = new JSpinner();
-    JSpinner spinnerControl = new JSpinner();
+    JSpinner spinnerDesign1 = new JSpinner();
+    JSpinner spinnerDesign2 = new JSpinner();
+    JSpinner spinnerDesign3 = new JSpinner();
+    JSpinner spinnerDesign4 = new JSpinner();
+    JSpinner spinnerDesign5 = new JSpinner();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -37,18 +38,14 @@ public class WindowAddGenrePage8 extends JFrame{
 
     public WindowAddGenrePage8() {
         buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl) || Settings.disableSafetyFeatures){
-                GenreManager.openStepWindow(9);
-                FRAME.dispose();
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100.\nIt is currently at: " + combinedValue);
-            }
+            saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
+            GenreManager.openStepWindow(9);
+            FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
+            saveInputs(spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5);
             GenreManager.openStepWindow(7);
             FRAME.dispose();
-
         });
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
@@ -59,110 +56,97 @@ public class WindowAddGenrePage8 extends JFrame{
 
     private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 335, 185);
+        setBounds(100, 100, 335, 210);
         setResizable(false);
-        setTitle("[Page 8] Work Priority");
+        setTitle("[Page 8] Design priority");
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelGameplay = new JLabel("Gameplay: ");
-        labelGameplay.setBounds(10, 10, 100, 23);
-        contentPane.add(labelGameplay);
+        JLabel labelDesign1 = new JLabel("Gameplay/Visuals: ");
+        labelDesign1.setBounds(10, 10, 180, 23);
+        contentPane.add(labelDesign1);
 
-        JLabel labelGraphic = new JLabel("Graphic: ");
-        labelGraphic.setBounds(10, 35, 120, 23);
-        contentPane.add(labelGraphic);
+        JLabel labelDesign2 = new JLabel("Story/Game length: ");
+        labelDesign2.setBounds(10, 35, 180, 23);
+        contentPane.add(labelDesign2);
 
-        JLabel labelSound = new JLabel("Sound: ");
-        labelSound.setBounds(10, 60, 120, 23);
-        contentPane.add(labelSound);
+        JLabel labelDesign3 = new JLabel("Atmosphere/Content: ");
+        labelDesign3.setBounds(10, 60, 180, 23);
+        contentPane.add(labelDesign3);
 
-        JLabel labelControl = new JLabel("Control: ");
-        labelControl.setBounds(10, 85, 120, 23);
-        contentPane.add(labelControl);
+        JLabel labelDesign4 = new JLabel("Game depth/Beginner-friendly: ");
+        labelDesign4.setBounds(10, 85, 180, 23);
+        contentPane.add(labelDesign4);
 
-        buttonNext.setBounds(220, 125, 100, 23);
+        JLabel labelDesign5 = new JLabel("Core Gamers/Casual Gamer: ");
+        labelDesign5.setBounds(10, 110, 180, 23);
+        contentPane.add(labelDesign5);
+
+        buttonNext.setBounds(220, 150, 100, 23);
         buttonNext.setToolTipText("Click to continue to the next step.");
         contentPane.add(buttonNext);
 
-        buttonPrevious.setBounds(10, 125, 100, 23);
+        buttonPrevious.setBounds(10, 150, 100, 23);
         buttonPrevious.setToolTipText("Click to return to the previous page.");
         contentPane.add(buttonPrevious);
 
-        buttonQuit.setBounds(120, 125, 90, 23);
+        buttonQuit.setBounds(120, 150, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         contentPane.add(buttonQuit);
     }
 
     private void setSpinners(){
-        spinnerGameplay.setBounds(120, 10, 100, 23);
-        spinnerGraphic.setBounds(120, 35, 100, 23);
-        spinnerSound.setBounds(120, 60, 100, 23);
-        spinnerControl.setBounds(120, 85, 100, 23);
-        spinnerGameplay.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Gameplay priority in %");
-        spinnerGraphic.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Graphic priority in %");
-        spinnerSound.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Sound priority in %");
-        spinnerControl.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Control priority in %");
-        spinnerGameplay.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("GAMEPLAY")), 5, 85, 5));
-        spinnerGraphic.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("GRAPHIC")), 5, 85, 5));
-        spinnerSound.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("SOUND")), 5, 85, 5));
-        spinnerControl.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("CONTROL")), 5, 85, 5));
+        spinnerDesign1.setBounds(200, 10, 100, 23);
+        spinnerDesign2.setBounds(200, 35, 100, 23);
+        spinnerDesign3.setBounds(200, 60, 100, 23);
+        spinnerDesign4.setBounds(200, 85, 100, 23);
+        spinnerDesign5.setBounds(200, 110, 100, 23);
+        spinnerDesign1.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>If gameplay is favoured type value smaller 5.<br>If Visuals are favoured type value bigger 5.");
+        spinnerDesign2.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Story is favoured type value smaller 5.<br>If Game length is favoured type value bigger 5.");
+        spinnerDesign3.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Atmosphere is favoured type value smaller 5.<br>If Content is favoured type value bigger 5.");
+        spinnerDesign4.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Game depth is favoured type value smaller 5.<br>If your genre should be Beginner-friendly type value bigger 5.");
+        spinnerDesign5.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Priority: If Core Gamers are favoured type value smaller 5.<br>If your genre should be for Casual Gamers type value bigger 5.");
+        spinnerDesign1.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DESIGN1")), 0, 10, 1));
+        spinnerDesign2.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DESIGN2")), 0, 10, 1));
+        spinnerDesign3.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DESIGN3")), 0, 10, 1));
+        spinnerDesign4.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DESIGN4")), 0, 10, 1));
+        spinnerDesign5.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DESIGN5")), 0, 10, 1));
         if(Settings.disableSafetyFeatures){
-            ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerControl.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerDesign1.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerDesign2.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerDesign3.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerDesign4.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor)spinnerDesign5.getEditor()).getTextField().setEditable(true);
         }else{
-            ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerControl.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerDesign1.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerDesign2.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerDesign3.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerDesign4.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor)spinnerDesign5.getEditor()).getTextField().setEditable(false);
         }
-        contentPane.add(spinnerGameplay);
-        contentPane.add(spinnerGraphic);
-        contentPane.add(spinnerSound);
-        contentPane.add(spinnerControl);
+        contentPane.add(spinnerDesign1);
+        contentPane.add(spinnerDesign2);
+        contentPane.add(spinnerDesign3);
+        contentPane.add(spinnerDesign4);
+        contentPane.add(spinnerDesign5);
     }
-    private static boolean saveInputs(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
-        combinedValue = Integer.parseInt(spinnerGameplay.getValue().toString()) +
-                Integer.parseInt(spinnerGraphic.getValue().toString()) +
-                Integer.parseInt(spinnerSound.getValue().toString()) +
-                Integer.parseInt(spinnerControl.getValue().toString());
-        LOGGER.info("combined value: " + combinedValue);
-        if(combinedValue == 100 && testIfDividableBy5(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
-            GenreManager.mapNewGenre.remove("GAMEPLAY");
-            GenreManager.mapNewGenre.remove("GRAPHIC");
-            GenreManager.mapNewGenre.remove("SOUND");
-            GenreManager.mapNewGenre.remove("CONTROL");
-            GenreManager.mapNewGenre.put("GAMEPLAY", spinnerGameplay.getValue().toString());
-            GenreManager.mapNewGenre.put("GRAPHIC", spinnerGraphic.getValue().toString());
-            GenreManager.mapNewGenre.put("SOUND", spinnerSound.getValue().toString());
-            GenreManager.mapNewGenre.put("CONTROL", spinnerControl.getValue().toString());
-            LOGGER.info("Gameplay = " + spinnerGameplay.getValue().toString());
-            LOGGER.info("graphic = " + spinnerGraphic.getValue().toString());
-            LOGGER.info("sound = " + spinnerSound.getValue().toString());
-            LOGGER.info("control = " + spinnerControl.getValue().toString());
-            return true;
-        }else{
-            return false;
-        }
-    }
-    private static boolean testIfDividableBy5(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
-        boolean dividableBy5 = true;
-        if(Integer.parseInt(spinnerGameplay.getValue().toString()) % 5 != 0){
-            dividableBy5 = false;
-        }
-        if(Integer.parseInt(spinnerGraphic.getValue().toString()) % 5 != 0){
-            dividableBy5 = false;
-        }
-        if(Integer.parseInt(spinnerSound.getValue().toString()) % 5 != 0){
-            dividableBy5 = false;
-        }
-        if(Integer.parseInt(spinnerControl.getValue().toString()) % 5 != 0){
-            dividableBy5 = false;
-        }
-        return dividableBy5;
+    private static void saveInputs(JSpinner spinnerDesign1, JSpinner spinnerDesign2, JSpinner spinnerDesign3, JSpinner spinnerDesign4, JSpinner spinnerDesign5){
+        GenreManager.mapNewGenre.remove("DESIGN1");
+        GenreManager.mapNewGenre.remove("DESIGN2");
+        GenreManager.mapNewGenre.remove("DESIGN3");
+        GenreManager.mapNewGenre.remove("DESIGN4");
+        GenreManager.mapNewGenre.remove("DESIGN5");
+        GenreManager.mapNewGenre.put("DESIGN1", spinnerDesign1.getValue().toString());
+        GenreManager.mapNewGenre.put("DESIGN2", spinnerDesign2.getValue().toString());
+        GenreManager.mapNewGenre.put("DESIGN3", spinnerDesign3.getValue().toString());
+        GenreManager.mapNewGenre.put("DESIGN4", spinnerDesign4.getValue().toString());
+        GenreManager.mapNewGenre.put("DESIGN5", spinnerDesign5.getValue().toString());
+        LOGGER.info("Design 1 = " + spinnerDesign1.getValue().toString());
+        LOGGER.info("Design 2 = " + spinnerDesign2.getValue().toString());
+        LOGGER.info("Design 3 = " + spinnerDesign3.getValue().toString());
+        LOGGER.info("Design 4 = " + spinnerDesign4.getValue().toString());
+        LOGGER.info("Design 5 = " + spinnerDesign5.getValue().toString());
     }
 }

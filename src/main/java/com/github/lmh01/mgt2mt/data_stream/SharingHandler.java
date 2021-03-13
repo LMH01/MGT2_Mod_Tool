@@ -72,6 +72,7 @@ public class SharingHandler {
         bw.print("[DESIGN5]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN5") + System.getProperty("line.separator"));
         bw.print("[GENRE END]");
         bw.close();
+        //TODO Good/Bad Themes have to be exported
         ChangeLog.addLogEntry(17, AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN"));
         return true;
     }
@@ -126,7 +127,8 @@ public class SharingHandler {
         }
         ArrayList<File> genreScreenshots = Utils.getFilesInFolder(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
-        GenreManager.addGenre(map, map, genreScreenshots,true, genreIcon);
+        //TODO Make it possible again to import genres
+        //GenreManager.addGenre(map, map,compatibleThemeIds, genreScreenshots,true, genreIcon);
         return true;
     }
 

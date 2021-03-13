@@ -167,6 +167,7 @@ public class WindowMain {
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             AnalyzeExistingPublishers.analyzePublisherFile();
+            AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
             boolean noCustomGenreAvailable = true;
             boolean noCustomThemesAvailable = true;
             boolean noCustomPublishersAvailable = true;
@@ -268,6 +269,7 @@ public class WindowMain {
                                 ImageFileHandler.removeImageFiles(currentGenre, AnalyzeExistingGenres.getGenreIdByName(currentGenre));
                                 EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
                                 EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, null);
+                                EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
                                 NPCGameListChanger.editNPCGames(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, 0);
                             }catch (IOException e){
                                 failedGenreRemoves.append(currentGenre).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));

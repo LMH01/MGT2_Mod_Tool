@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class EditGenreFile {
         bw.write("\ufeff");
         for(Map<String, String> mapExistingGenres : AnalyzeExistingGenres.genreList){
             bw.write("[ID]" + mapExistingGenres.get("ID"));bw.write(System.getProperty("line.separator"));
-            printLanguages(bw, mapExistingGenres);
+            TranslationManager.printLanguages(bw, mapExistingGenres);
             bw.write("[DATE]" + mapExistingGenres.get("DATE"));bw.write(System.getProperty("line.separator"));
             bw.write("[RES POINTS]" + mapExistingGenres.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
             bw.write("[PRICE]" + mapExistingGenres.get("PRICE"));bw.write(System.getProperty("line.separator"));
@@ -49,7 +48,7 @@ public class EditGenreFile {
             bw.write(System.getProperty("line.separator"));
         }
         bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
-        printLanguages(bw, genreTranslations);
+        TranslationManager.printLanguages(bw, genreTranslations);
         bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
         bw.write("[RES POINTS]" + map.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
         bw.write("[PRICE]" + map.get("PRICE"));bw.write(System.getProperty("line.separator"));
@@ -86,7 +85,7 @@ public class EditGenreFile {
         for(Map<String, String> mapExistingGenres : AnalyzeExistingGenres.genreList){
             if(!mapExistingGenres.get("ID").equals(Integer.toString(genreId))){
                 bw.write("[ID]" + mapExistingGenres.get("ID"));bw.write(System.getProperty("line.separator"));
-                printLanguages(bw, mapExistingGenres);
+                TranslationManager.printLanguages(bw, mapExistingGenres);
                 bw.write("[DATE]" + mapExistingGenres.get("DATE"));bw.write(System.getProperty("line.separator"));
                 bw.write("[RES POINTS]" + mapExistingGenres.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
                 bw.write("[PRICE]" + mapExistingGenres.get("PRICE"));bw.write(System.getProperty("line.separator"));
@@ -108,18 +107,5 @@ public class EditGenreFile {
         }
         bw.write("[EOF]");
         bw.close();
-    }
-
-    private static void printLanguages(BufferedWriter bw, Map<String, String> map) throws IOException {
-        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().equals("NAME " + TranslationManager.TRANSLATION_KEYS[i])){
-                    bw.write("[NAME " + TranslationManager.TRANSLATION_KEYS[i] + "]" + entry.getValue() + System.getProperty("line.separator"));
-                }
-                if(entry.getKey().equals("DESC " + TranslationManager.TRANSLATION_KEYS[i])){
-                    bw.write("[DESC " + TranslationManager.TRANSLATION_KEYS[i] + "]" + entry.getValue() + System.getProperty("line.separator"));
-                }
-            }
-        }
     }
 }

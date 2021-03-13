@@ -135,6 +135,8 @@ public class Utils {
      */
     public static File getThemesEnFile(){return new File(getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");}
 
+    public static File getGameplayFeaturesFile(){return new File(getMGT2DataPath() + "//GameplayFeatures.txt");}
+
     /**
      * @return Returns the path to this folder \Mad Games Tycoon 2_Data\Extern\CompanyLogos\.
      */

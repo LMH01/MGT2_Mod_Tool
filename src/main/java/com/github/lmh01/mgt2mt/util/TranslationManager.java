@@ -3,6 +3,8 @@ package com.github.lmh01.mgt2mt.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -115,6 +117,24 @@ public class TranslationManager {
             JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
         }
         return map;
+    }
+
+    /**
+     * Writes the language translations
+     * @param bw The buffered writer
+     * @param map The map containing the translations
+     */
+    public static void printLanguages(BufferedWriter bw, Map<String, String> map) throws IOException {
+        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("NAME " + TranslationManager.TRANSLATION_KEYS[i])){
+                    bw.write("[NAME " + TranslationManager.TRANSLATION_KEYS[i] + "]" + entry.getValue() + System.getProperty("line.separator"));
+                }
+                if(entry.getKey().equals("DESC " + TranslationManager.TRANSLATION_KEYS[i])){
+                    bw.write("[DESC " + TranslationManager.TRANSLATION_KEYS[i] + "]" + entry.getValue() + System.getProperty("line.separator"));
+                }
+            }
+        }
     }
 
 }
