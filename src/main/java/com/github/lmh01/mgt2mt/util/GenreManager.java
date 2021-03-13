@@ -100,12 +100,11 @@ public class GenreManager {
      * @param map The map that includes the values.
      * @param genreTranslations The map that includes the genre name translations
      * @param compatibleThemeIds A set containing all compatible theme ids
-     *
      * @param genreScreenshots Array list containing all screenshot files
      * @param showSummaryFromImport True when called from genre import
      * @param genreIcon The genre icon file
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesGoodIds, Set<Integer> gameplayFeaturesBadIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
+    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = "Your genre is ready:\n\n" +

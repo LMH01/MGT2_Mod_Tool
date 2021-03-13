@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ public class AnalyzeExistingGameplayFeatures {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGameplayFeatures.class);
     public static List<Map<String, String>> gameplayFeatures;
+    public static Map<Integer, String> gameplayFeatureNames;
     public static int maxGameplayFeatureId = 0;
 
     /**

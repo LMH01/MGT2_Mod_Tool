@@ -70,9 +70,10 @@ public class SharingHandler {
         bw.print("[DESIGN3]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN3") + System.getProperty("line.separator"));
         bw.print("[DESIGN4]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN4") + System.getProperty("line.separator"));
         bw.print("[DESIGN5]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESIGN5") + System.getProperty("line.separator"));
+        bw.print("[GAMEPLAYFEATURE GOOD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, true) + System.getProperty("line.separator"));
+        bw.print("[GAMEPLAYFEATURE BAD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, false) + System.getProperty("line.separator"));
         bw.print("[GENRE END]");
         bw.close();
-        //TODO Good/Bad Themes have to be exported
         ChangeLog.addLogEntry(17, AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN"));
         return true;
     }
@@ -125,10 +126,17 @@ public class SharingHandler {
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
             compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string));
         }
+        Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
+        Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
+        for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE BAD"))){
+            gameplayFeaturesBadIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+        }
+        for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE GOOD"))){
+            gameplayFeaturesGoodIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+        }
         ArrayList<File> genreScreenshots = Utils.getFilesInFolder(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
-        //TODO Make it possible again to import genres
-        //GenreManager.addGenre(map, map,compatibleThemeIds, genreScreenshots,true, genreIcon);
+        GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon);
         return true;
     }
 

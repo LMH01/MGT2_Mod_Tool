@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -446,5 +447,28 @@ public class Utils {
         }
         br.close();
         return compatibleThemes.toString();
+    }
+
+    /**
+     * @param genreId The genre id for which the file should be searched
+     * @param goodFeature True when the file should be searched for good features. False when it should be searched for bad features.
+     * @return Returns a String containing gameplay feature names
+     */
+    public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) throws IOException {
+        StringBuilder gameplayFeaturesIds = new StringBuilder();
+        if(goodFeature){
+            for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+                if(map.get("GOOD").contains("<" + genreId + ">")){
+                    gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
+;               }
+            }
+        }else{
+            for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+                if(map.get("BAD").contains("<" + genreId + ">")){
+                    gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
+                }
+            }
+        }
+        return gameplayFeaturesIds.toString();
     }
 }

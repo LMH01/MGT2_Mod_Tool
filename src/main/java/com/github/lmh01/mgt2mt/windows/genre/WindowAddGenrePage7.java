@@ -23,10 +23,10 @@ public class WindowAddGenrePage7 extends JFrame{
     JButton buttonNext = new JButton("Next");
     JButton buttonPrevious = new JButton("Previous");
     JButton buttonQuit = new JButton("Cancel");
-    final JList<String> LIST_GAMEPLAY_FEATURES_GOOD = new JList<>();
     final JList<String> LIST_GAMEPLAY_FEATURES_BAD = new JList<>();
-    final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_GOOD = new JScrollPane(LIST_GAMEPLAY_FEATURES_GOOD);
+    final JList<String> LIST_GAMEPLAY_FEATURES_GOOD = new JList<>();
     final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_BAD = new JScrollPane(LIST_GAMEPLAY_FEATURES_BAD);
+    final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_GOOD = new JScrollPane(LIST_GAMEPLAY_FEATURES_GOOD);
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -174,22 +174,13 @@ public class WindowAddGenrePage7 extends JFrame{
      * @return Returns true when the lists don't have mutual selected entries.
      */
     private static boolean saveInputs(JList<String> listGameplayFeaturesGood, JList<String> listGameplayFeaturesBad){
-        GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE GOOD");
         GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE BAD");
+        GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE GOOD");
         LOGGER.info("Cleared map entries for good/bad gameplay features.");
         StringBuilder gameplayFeaturesGood = new StringBuilder();
         StringBuilder gameplayFeaturesBad = new StringBuilder();
         for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
             for(Map.Entry<String, String> entry : map.entrySet()){
-                for(String string : listGameplayFeaturesGood.getSelectedValuesList()){
-                    if(entry.getKey().equals("NAME EN")){
-                        if(entry.getValue().equals(string)){
-                            gameplayFeaturesGoodIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(entry.getValue()));
-                            gameplayFeaturesGood.append("<").append(string).append(">");
-                            LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
-                        }
-                    }
-                }
                 for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
                     if(entry.getKey().equals("NAME EN")){
                         if(entry.getValue().equals(string)){
@@ -199,10 +190,19 @@ public class WindowAddGenrePage7 extends JFrame{
                         }
                     }
                 }
+                for(String string : listGameplayFeaturesGood.getSelectedValuesList()){
+                    if(entry.getKey().equals("NAME EN")){
+                        if(entry.getValue().equals(string)){
+                            gameplayFeaturesGoodIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(entry.getValue()));
+                            gameplayFeaturesGood.append("<").append(string).append(">");
+                            LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
+                        }
+                    }
+                }
             }
         }
-        GenreManager.mapNewGenre.put("GAMEPLAYFEATURE GOOD", gameplayFeaturesGood.toString());
         GenreManager.mapNewGenre.put("GAMEPLAYFEATURE BAD", gameplayFeaturesBad.toString());
+        GenreManager.mapNewGenre.put("GAMEPLAYFEATURE GOOD", gameplayFeaturesGood.toString());
         boolean mutualEntries = false;
         for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
             for(String string2 : listGameplayFeaturesGood.getSelectedValuesList()){
