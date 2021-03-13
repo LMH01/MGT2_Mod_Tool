@@ -21,13 +21,13 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static final JFrame frame = new JFrame("MGT2 Mod Tool");
-    private static final JMenuItem m21 = new JMenuItem("Add Genre");
-    private static final JMenuItem m22 = new JMenuItem("Remove Genre");
-    private static final JMenuItem m32 = new JMenuItem("Export Genre");
-    private static final JMenuItem m34 = new JMenuItem("Export Publisher");
-    private static final JMenuItem m24 = new JMenuItem("Remove Theme");
-    private static final JMenuItem m25 = new JMenuItem("NPC_Games_list");
-    private static final JMenuItem m27 = new JMenuItem("Remove Publisher");
+    private static final JMenuItem M211ADD_GENRE = new JMenuItem("Add Genre");
+    private static final JMenuItem M212REMOVE_GENRE = new JMenuItem("Remove Genre");
+    private static final JMenuItem M312EXPORT_GENRE = new JMenuItem("Export Genre");
+    private static final JMenuItem M322EXPORT_PUBLISHER = new JMenuItem("Export Publisher");
+    private static final JMenuItem M22REMOVE_THEME = new JMenuItem("Remove Theme");
+    private static final JMenuItem M24NPC_GAMES_LIST = new JMenuItem("NPC_Games_list");
+    private static final JMenuItem M232REMOVE_PUBLISHER = new JMenuItem("Remove Publisher");
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,48 +49,58 @@ public class WindowMain {
         m1.add(m11);
         m1.add(m12);
         m1.add(m13);
-        JMenu m2 = new JMenu("Mods");
-        m21.addActionListener(actionEvent -> addGenre());
-        m22.addActionListener(actionEvent -> removeGenre());
-        JMenuItem m23 = new JMenuItem("Add Theme");
-        m23.addActionListener(actionEvent -> addTheme());
-        m24.addActionListener(actionEvent -> removeTheme());
-        m25.setToolTipText("Click to add a genre id to the NPC_Games_list.");
-        m25.addActionListener(actionEvent -> npcGameList());
-        JMenuItem m26 = new JMenuItem("Add Publisher");
-        m26.setToolTipText("Click to add a publisher to MGT2");
-        m26.addActionListener(actionEvent -> addPublisher());
-        m27.setToolTipText("Click to remove a publisher from MGT2");
-        m27.addActionListener(actionEvent -> removePublisher());
-        JMenuItem m28 = new JMenuItem("Add Company Icon");
-        m28.addActionListener(actionEvent -> addCompanyIcon());
-        mb.add(m2);
-        m2.add(m21);
-        m2.add(m22);
-        m2.add(m23);
-        m2.add(m24);
-        m2.add(m25);
-        m2.add(m26);
-        m2.add(m27);
-        m2.add(m28);
-        JMenu m3 = new JMenu("Share");
-        JMenuItem m31 = new JMenuItem("Import Genre");
-        m31.addActionListener(actionEvent -> importGenre());
-        m32.addActionListener(actionEvent -> exportGenre());
-        JMenuItem m33 = new JMenuItem("Import Publisher");
-        m33.addActionListener(actionEvent -> importPublisher());
-        m34.addActionListener(actionEvent -> exportPublisher());
+        JMenu m2Mods = new JMenu("Mods");
+        JMenu m21Genres = new JMenu("Genres");
+        JMenu m22Themes = new JMenu("Themes");
+        JMenu m23Publisher = new JMenu("Publisher");
+        JMenuItem m221AddTheme = new JMenuItem("Add Theme");
+        JMenuItem m231AddPublisher = new JMenuItem("Add Publisher");
+        m21Genres.add(M211ADD_GENRE);
+        m21Genres.add(M212REMOVE_GENRE);
+        m22Themes.add(m221AddTheme);
+        m22Themes.add(M22REMOVE_THEME);
+        m23Publisher.add(m231AddPublisher);
+        m23Publisher.add(M232REMOVE_PUBLISHER);
+        M211ADD_GENRE.addActionListener(actionEvent -> addGenre());
+        M212REMOVE_GENRE.addActionListener(actionEvent -> removeGenre());
+        m221AddTheme.addActionListener(actionEvent -> addTheme());
+        M22REMOVE_THEME.addActionListener(actionEvent -> removeTheme());
+        M24NPC_GAMES_LIST.setToolTipText("Click to add a genre id to the NPC_Games_list.");
+        M24NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
+        m231AddPublisher.setToolTipText("Click to add a publisher to MGT2");
+        m231AddPublisher.addActionListener(actionEvent -> addPublisher());
+        M232REMOVE_PUBLISHER.setToolTipText("Click to remove a publisher from MGT2");
+        M232REMOVE_PUBLISHER.addActionListener(actionEvent -> removePublisher());
+        JMenuItem m25AddCompanyIcon = new JMenuItem("Add Company Icon");
+        m25AddCompanyIcon.addActionListener(actionEvent -> addCompanyIcon());
+        mb.add(m2Mods);
+        m2Mods.add(m21Genres);
+        m2Mods.add(m22Themes);
+        m2Mods.add(m23Publisher);
+        m2Mods.add(M24NPC_GAMES_LIST);
+        m2Mods.add(m25AddCompanyIcon);
+        JMenu m3Share = new JMenu("Share");
+        JMenu m31Genre = new JMenu("Genre");
+        JMenu m32Publisher = new JMenu("Publisher");
+        JMenuItem m311ImportGenre = new JMenuItem("Import Genre");
+        JMenuItem m321ImportPublisher = new JMenuItem("Import Publisher");
+        m31Genre.add(m311ImportGenre);
+        m31Genre.add(M312EXPORT_GENRE);
+        m32Publisher.add(m321ImportPublisher);
+        m32Publisher.add(M322EXPORT_PUBLISHER);
+        m311ImportGenre.addActionListener(actionEvent -> importGenre());
+        M312EXPORT_GENRE.addActionListener(actionEvent -> exportGenre());
+        m321ImportPublisher.addActionListener(actionEvent -> importPublisher());
+        M322EXPORT_PUBLISHER.addActionListener(actionEvent -> exportPublisher());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> openExportFolder());
         JMenuItem m36 = new JMenuItem("Delete all exports");
         m36.addActionListener(actionEvent -> deleteAllExports());
-        m3.add(m31);
-        m3.add(m32);
-        m3.add(m33);
-        m3.add(m34);
-        m3.add(m35);
-        m3.add(m36);
-        mb.add(m3);
+        m3Share.add(m31Genre);
+        m3Share.add(m32Publisher);
+        m3Share.add(m35);
+        m3Share.add(m36);
+        mb.add(m3Share);
         JMenu m4 = new JMenu("Backup");
         JMenuItem m41 = new JMenuItem("Create Backup");
         m41.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
@@ -188,32 +198,32 @@ public class WindowMain {
                     noCustomPublishersAvailable = false;
                 }
             }
-            m22.setEnabled(!noCustomGenreAvailable);
-            m24.setEnabled(!noCustomThemesAvailable);
-            m25.setEnabled(!noCustomGenreAvailable);
-            m27.setEnabled(!noCustomPublishersAvailable);
-            m32.setEnabled(!noCustomGenreAvailable);
-            m34.setEnabled(!noCustomPublishersAvailable);
+            M212REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
+            M22REMOVE_THEME.setEnabled(!noCustomThemesAvailable);
+            M24NPC_GAMES_LIST.setEnabled(!noCustomGenreAvailable);
+            M232REMOVE_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
+            M312EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
+            M322EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
             if(noCustomGenreAvailable){
-                m22.setToolTipText("Disabled -> No genre to remove available");
-                m25.setToolTipText("Disabled -> Add a genre first");
-                m32.setToolTipText("Disabled -> No genre to export available");
+                M212REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
+                M24NPC_GAMES_LIST.setToolTipText("Disabled -> Add a genre first");
+                M312EXPORT_GENRE.setToolTipText("Disabled -> No genre to export available");
             }else{
-                m22.setToolTipText("");
-                m25.setToolTipText("");
-                m32.setToolTipText("");
+                M212REMOVE_GENRE.setToolTipText("");
+                M24NPC_GAMES_LIST.setToolTipText("");
+                M312EXPORT_GENRE.setToolTipText("");
             }
             if(noCustomThemesAvailable){
-                m24.setToolTipText("Disabled -> No theme to remove available");
+                M22REMOVE_THEME.setToolTipText("Disabled -> No theme to remove available");
             }else{
-                m24.setToolTipText("");
+                M22REMOVE_THEME.setToolTipText("");
             }
             if(noCustomPublishersAvailable){
-                m27.setToolTipText("Disabled -> Add publisher first");
-                m34.setToolTipText("Disabled -> No publisher to export available");
+                M232REMOVE_PUBLISHER.setToolTipText("Disabled -> Add publisher first");
+                M322EXPORT_PUBLISHER.setToolTipText("Disabled -> No publisher to export available");
             }else{
-                m27.setToolTipText("");
-                m34.setToolTipText("");
+                M232REMOVE_PUBLISHER.setToolTipText("");
+                M322EXPORT_PUBLISHER.setToolTipText("");
             }
         }catch (IOException e){
             LOGGER.info("Error" + e.getMessage());
