@@ -683,8 +683,13 @@ public class WindowMain {
                         br.close();
                         if(currentLine.contains("[MGT2MT VERSION]")){
                             LOGGER.info("File seams to be valid. Beginning import process.");
-                            if(!SharingHandler.importGenre(importGenreFolder)){
-                                JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                            try{
+                                if(!SharingHandler.importGenre(importGenreFolder)){
+                                    JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }catch(NullPointerException e){
+                                e.printStackTrace();
+                                JOptionPane.showMessageDialog(null, "Unable to import genre:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
                             }
                         }else{
                             JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid genre.txt file.\nPlease select the correct folder.");

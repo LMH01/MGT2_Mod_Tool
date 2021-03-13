@@ -405,7 +405,7 @@ public class Utils {
      * @param string Input string
      * @return Returns an array list containing the elements of string
      */
-    public static ArrayList<String> getEntriesFromString(String string){
+    public static ArrayList<String> getEntriesFromString(String string) throws NullPointerException{
         ArrayList<String> arrayList = new ArrayList<>();
         StringBuilder currentEntry = new StringBuilder();
         for(Character character : string.toCharArray()){

@@ -83,7 +83,7 @@ public class SharingHandler {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns true when the genre has been imported successfully. Returns false when the genre already exists.
      */
-    public static boolean importGenre(String importFolderPath) throws IOException {
+    public static boolean importGenre(String importFolderPath) throws IOException, NullPointerException{
         AnalyzeExistingGenres.analyzeGenreFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
