@@ -135,7 +135,7 @@ public class SharingHandler {
         }
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
-            compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string));
+            compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string)-1);
         }
         Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
         Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();

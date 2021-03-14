@@ -83,7 +83,7 @@ public class AnalyzeExistingThemes {
      * @return Returns the position of the specified genre in the themesNamesEn file.
      */
     public static int getPositionOfThemeInFile(String themeNameEn){
-        int position = 0;
+        int position = 1;
         LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + MAP_ACTIVE_THEMES_EN.size());
         for(Map.Entry<Integer, String> entry: MAP_ACTIVE_THEMES_EN.entrySet()){
             if(Settings.enableDebugLogging){
@@ -173,7 +173,7 @@ public class AnalyzeExistingThemes {
 
     public static Map<String, String> getSingleThemeByNameMap(String themeNameEn) throws IOException {
         Map<String, String> map = new HashMap<>();
-        int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn)+1;
+        int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn);
         for(String string : TranslationManager.TRANSLATION_KEYS){
             LOGGER.info("Current Translation Key: " + string);
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));

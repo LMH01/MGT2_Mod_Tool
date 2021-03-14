@@ -106,6 +106,27 @@ public class Utils {
     }
 
     /**
+     * @param file The input file
+     * @return Returns a map. The key is the line number and the value is the content for that line number.
+     */
+    public static Map<Integer, String> getContentFromFile(File file) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_16LE));
+        String currentLine;
+        boolean firstLine = true;
+        Map<Integer, String> mapCurrent = new HashMap<>();
+        int currentLineNumber = 1;
+        while((currentLine = br.readLine()) != null){
+            if(firstLine){
+                currentLine = Utils.removeUTF8BOM(currentLine);
+                firstLine = false;
+            }
+            mapCurrent.put(currentLineNumber, currentLine);
+            currentLineNumber++;
+        }
+        br.close();
+        return mapCurrent;
+    }
+    /**
      * @return Returns the genre file inside the mgt2 folder.
      */
     public static File getGenreFile(){

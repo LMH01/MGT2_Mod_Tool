@@ -375,19 +375,23 @@ public class WindowMain {
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         if(!textFieldThemeName.getText().isEmpty()){
                             if(!AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.containsValue(textFieldThemeName.getText()) && !AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.containsValue(textFieldThemeName.getText())){
-                                arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
-                                for(Map<String, String> map : AnalyzeExistingGenres.genreList){
-                                    for(String name : arrayListCompatibleGenreNames){
-                                        if(map.get("NAME EN").equals(name)){
-                                            NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(map.get("ID")));
+                                if(!textFieldThemeName.getText().matches(".*\\d.*")){
+                                    arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
+                                    for(Map<String, String> map : AnalyzeExistingGenres.genreList){
+                                        for(String name : arrayListCompatibleGenreNames){
+                                            if(map.get("NAME EN").equals(name)){
+                                                NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(map.get("ID")));
+                                            }
                                         }
                                     }
-                                }
-                                if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
-                                    Backup.createThemeFilesBackup(false);
-                                    NewThemeManager.addNewTheme(textFieldThemeName.getText());
-                                    JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
-                                    breakLoop = true;
+                                    if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
+                                        Backup.createThemeFilesBackup(false);
+                                        NewThemeManager.addNewTheme(textFieldThemeName.getText());
+                                        JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
+                                        breakLoop = true;
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Unable to add theme:\nThe theme name can not contain numbers!", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
                                 }
                             }else{
                                 JOptionPane.showMessageDialog(null, "Unable to add theme:\nThe selected name is already in use.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);

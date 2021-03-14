@@ -2,93 +2,96 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 
 public class EditThemeFiles {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditThemeFiles.class);
+
     /**
-     * Add/remove the specified theme to/from the specified file.
-     * @param themeFile The file where the theme should be added.
-     * @param themeName The name of the new theme.
-     * @param addTheme True if the theme should be added. False if it should be removed.
-     * @param arrayListCompatibleGenres The array list where the compatible genre ids are listed.
-     * @param position The position where the theme file is positioned that should be removed.
+     * Adds a new theme to the theme files
+     * @param map The map containing the theme translations
+     * @param arrayListCompatibleGenres The array list containing the compatible genres
      */
-    private static void addOrRemoveTheme(File themeFile, String themeName, boolean addTheme, ArrayList<Integer> arrayListCompatibleGenres, int position) throws IOException {
-        //TODO Rewrite to use maps
-        File fileThemeFileTemp = new File(themeFile.getPath() + ".temp");
-        if(themeFile.exists()){
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(themeFile), StandardCharsets.UTF_16LE));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileThemeFileTemp), StandardCharsets.UTF_16LE));
+    public static void addTheme(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres) throws IOException {
+        editThemeFiles(map, arrayListCompatibleGenres, true, 0);
+    }
+
+    /**
+     * Removes a theme from the theme files.
+     * @param removeThemePosition The position where the theme stands in the theme files
+     */
+    public static void removeTheme(int removeThemePosition) throws IOException {
+        editThemeFiles(null, null, false, removeThemePosition);
+    }
+
+    /**
+     * Adds/removes a theme to the theme files
+     * @param map The map containing the translations
+     * @param arrayListCompatibleGenres The array list where the compatible genre ids are listed.
+     * @param addTheme True when the theme should be added. False when the theme should be removed.
+     * @param removeThemePosition The position where the theme is positioned that should be removed.
+     */
+    public static void editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition) throws IOException {
+        final String[] LANGUAGE_KEYS_UTF_8_BOM = {"IT", "RO", "RU", "TU"};
+        final String[] LANGUAGE_KEYS_UTF_16_LE = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "KO", "PB", "PL"};
+        for(String string : TranslationManager.TRANSLATION_KEYS){
+            File themeFile = Utils.getThemeFile(string);
+            Map<Integer, String> currentThemeFileContent = Utils.getContentFromFile(themeFile);
+            if(themeFile.exists()){
+                themeFile.delete();
+            }
+            themeFile.createNewFile();
+            BufferedWriter bw;
+            if(Arrays.asList(LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+                bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_8));
+                bw.write("\ufeff");//Makes the file UTF8 BOM
+            }else if(Arrays.asList(LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+                bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_16LE));
+            }else{
+                break;
+            }
+            int currentLine = 1;
             boolean firstLine = true;
-            int lineNumber = 1;
-            String currentLine;
-            while((currentLine = br.readLine()) != null){
-                if(firstLine) {
-                    currentLine = Utils.removeUTF8BOM(currentLine);
-                }
+            for(int i=0; i<currentThemeFileContent.size(); i++){
                 if(!firstLine){
-                    if(addTheme){
-                        bw.write(System.getProperty("line.separator"));
-                    }else{
-                        if(lineNumber != position){
+                    if(!addTheme){
+                        if(currentLine != removeThemePosition) {
                             bw.write(System.getProperty("line.separator"));
                         }
                     }
-                }
-                firstLine = false;
-                if(addTheme){
-                    bw.write(currentLine);
                 }else{
-                    if(lineNumber != position){
-                        bw.write(currentLine);
-                    }
+                    firstLine = false;
                 }
-                lineNumber++;
+                if(addTheme || currentLine != removeThemePosition) {
+                    bw.write(currentThemeFileContent.get(currentLine));
+                }
+                currentLine++;
             }
             if(addTheme){
-                if(themeFile.getName().equals("Themes_GE.txt")){//Writes information for compatible genres only to the german theme file.
-                    StringBuilder stringCompatibleGenres = new StringBuilder();
-                    for (Integer arrayListCompatibleGenre : arrayListCompatibleGenres) {
-                        stringCompatibleGenres.append("<").append(arrayListCompatibleGenre).append(">");
+                bw.write(System.getProperty("line.separator"));
+                if(string.equals("GE")){
+                    StringBuilder genreIdsToPrint = new StringBuilder();
+                    bw.write(map.get("NAME GE"));
+                    for(Integer genreId : arrayListCompatibleGenres){
+                        LOGGER.info("genreId " + genreId);
+                        genreIdsToPrint.append(" <").append(genreId).append(">");
                     }
-                    bw.write(System.getProperty("line.separator") + themeName + " " + stringCompatibleGenres);
+                    bw.write(genreIdsToPrint.toString());
                 }else{
-                    bw.write(System.getProperty("line.separator") + themeName);
+                    bw.write(map.get("NAME " + string));
                 }
             }
-            br.close();
             bw.close();
-            themeFile.delete();
-            fileThemeFileTemp.renameTo(themeFile);
         }
-    }
-
-    /**
-     * Removes the specified theme from the specified file.
-     * @param themeFile The file where the theme should be added.
-     * @param themeName The name of the new theme.
-     * @param arrayListCompatibleGenres The array list where the compatible genre ids are listed.
-     */
-    public static void addTheme(File themeFile, String themeName, ArrayList<Integer> arrayListCompatibleGenres) throws IOException {
-        addOrRemoveTheme(themeFile, themeName, true, arrayListCompatibleGenres, 0);
-    }
-
-    /**
-     * Adds the specified theme to the specified file.
-     * @param themeFile The file where the theme should be added.
-     * @param themeName The name of the new theme.
-     * @param position The position where the theme file is positioned that should be removed.
-     */
-    public static void removeTheme(File themeFile, String themeName, int position) throws IOException {
-        addOrRemoveTheme(themeFile, themeName, false, new ArrayList<>(), position);
     }
 
     /**
