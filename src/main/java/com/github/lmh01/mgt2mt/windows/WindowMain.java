@@ -158,6 +158,9 @@ public class WindowMain {
         JMenuItem m57 = new JMenuItem("Open Log File");
         m57.setToolTipText("<html>Click to open the change log.<br>Shows all changes that have been made to the game files.");
         m57.addActionListener(actionEvent -> openLogFile());
+        JMenuItem m58 = new JMenuItem("Open save game folder");
+        m58.setToolTipText("Click to open the folder where the save games are stored");
+        m58.addActionListener(actionEvent -> openSaveGameFolder());
         mb.add(m5);
         m5.add(m51);
         m5.add(m52);
@@ -166,6 +169,7 @@ public class WindowMain {
         m5.add(m55);
         m5.add(m56);
         m5.add(m57);
+        m5.add(m58);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -1254,6 +1258,13 @@ public class WindowMain {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private static void openSaveGameFolder(){
+        try {
+            Desktop.getDesktop().open(new File(String.valueOf(Backup.FILE_SAVE_GAME_FOLDER.toPath())));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
     private static void uninstall(){
