@@ -103,15 +103,33 @@ public class WindowMain {
         m3Share.add(m36);
         mb.add(m3Share);
         JMenu m4 = new JMenu("Backup");
-        JMenuItem m41 = new JMenuItem("Create Backup");
-        m41.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
-        m41.addActionListener(actionEvent -> createBackup());
-        JMenuItem m42 = new JMenuItem("Restore Initial Backup");
-        m42.setToolTipText("<html>Click to restore the initial backup that has been created when the mod tool was started for the first time.<br>Your save game backups will not be restored.");
-        m42.addActionListener(actionEvent -> restoreInitialBackup());
-        JMenuItem m43 = new JMenuItem("Restore Latest Backup");
-        m43.setToolTipText("<html>Click to restore the latest backup that has been created.<br>Your save game backups will not be restored.");
-        m43.addActionListener(actionEvent -> restoreLatestBackup());
+        JMenu m41 = new JMenu("Create Backup");
+        JMenu m42 = new JMenu("Restore Backup");
+        JMenuItem m411CreateFullBackup = new JMenuItem("Create Full Backup");
+        m411CreateFullBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
+        m411CreateFullBackup.addActionListener(actionEvent -> createBackup("full"));
+        JMenuItem m412BackupGenresFile = new JMenuItem("Backup Genres File");
+        m412BackupGenresFile.addActionListener(actionEvent -> createBackup("genre"));
+        JMenuItem m413BackupThemesFiles = new JMenuItem("Backup Theme Files");
+        m413BackupThemesFiles.addActionListener(actionEvent -> createBackup("theme"));
+        JMenuItem m414BackupSavegames = new JMenuItem("Backup Save Games");
+        m414BackupSavegames.addActionListener(actionEvent -> createBackup("save_game"));
+        m41.add(m411CreateFullBackup);
+        m41.add(m412BackupGenresFile);
+        m41.add(m413BackupThemesFiles);
+        m41.add(m414BackupSavegames);
+        JMenuItem m421RestoreInitialBackup = new JMenuItem("Restore Initial Backup");
+        m421RestoreInitialBackup.setToolTipText("<html>Click to restore the initial backup that has been created when the mod tool was started for the first time.<br>Your save game backups will not be restored.");
+        m421RestoreInitialBackup.addActionListener(actionEvent -> restoreInitialBackup());
+        JMenuItem m422RestoreLatestBackup = new JMenuItem("Restore Latest Backup");
+        m422RestoreLatestBackup.setToolTipText("<html>Click to restore the latest backup that has been created.<br>Your save game backups will not be restored.");
+        m422RestoreLatestBackup.addActionListener(actionEvent -> restoreLatestBackup());
+        JMenuItem m423RestoreSaveGameBackup = new JMenuItem("Restore Save Game Backup");
+        m423RestoreSaveGameBackup.setToolTipText("Click to select a save game for which the backup should be restored.");
+        m423RestoreSaveGameBackup.addActionListener(actionEvent -> restoreSaveGameBackup());
+        m42.add(m421RestoreInitialBackup);
+        m42.add(m422RestoreLatestBackup);
+        m42.add(m423RestoreSaveGameBackup);
         JMenuItem m44 = new JMenuItem("Delete All Backups");
         m44.setToolTipText("Click to delete all backups that have been created.");
         m44.addActionListener(actionEvent -> deleteAllBackups());
@@ -121,7 +139,6 @@ public class WindowMain {
         mb.add(m4);
         m4.add(m41);
         m4.add(m42);
-        m4.add(m43);
         m4.add(m44);
         m4.add(m45);
         JMenu m5 = new JMenu("Utilities");
@@ -1005,20 +1022,68 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "All exports have been deleted.");
         }
     }
-    private static void createBackup(){
-        try {
-            Backup.createFullBackup();
-            JOptionPane.showMessageDialog(new Frame(), "The backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+    private static void createBackup(String type){
+        if(type.equals("full")){
+            try {
+                Backup.createFullBackup();
+                JOptionPane.showMessageDialog(new Frame(), "The full backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(type.equals("genre")){
+            try{
+                Backup.createBackup(Utils.getGenreFile());
+                Backup.createBackup(Utils.getNpcGamesFile());
+                JOptionPane.showMessageDialog(new Frame(), "Backup of genre files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            }catch(IOException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(type.equals("theme")){
+            try{
+                Backup.createThemeFilesBackup(false);
+                JOptionPane.showMessageDialog(new Frame(), "Backup of theme files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            }catch(IOException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(type.equals("save_game")){
+            try{
+                Backup.backupSaveGames(false);
+                JOptionPane.showMessageDialog(new Frame(), "Backup of save games has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            }catch(IOException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
     private static void restoreInitialBackup(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will me lost.\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will be lost.\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
+                String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+                for (String customGenre : customGenres) {
+                    try {
+                        EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenre));
+                        ImageFileHandler.removeImageFiles(customGenre, AnalyzeExistingGenres.getGenreIdByName(customGenre));
+                        LOGGER.info("Game files have been restored to original.");
+                    } catch (IOException e) {
+                        LOGGER.info("Genre could not be removed: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+                String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
+                for (String customPublisher : customPublishers) {
+                    try {
+                        EditPublishersFile.removePublisher(customPublisher);
+                        LOGGER.info("Publisher files have been restored to original.");
+                    } catch (IOException e) {
+                        LOGGER.info("Publisher could not be removed: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
                 Backup.restoreBackup(true, true);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -1029,6 +1094,7 @@ public class WindowMain {
                 }
             }
         }
+        checkActionAvailability();
     }
     private static void restoreLatestBackup(){
         if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the latest backup?\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
@@ -1046,6 +1112,35 @@ public class WindowMain {
                     JOptionPane.showMessageDialog(null, "The latest backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
                 }
             }
+        }
+    }
+    private static void restoreSaveGameBackup(){
+        try {
+            ArrayList<File> files = Utils.getFilesInFolderWhiteList(Backup.BACKUP_FOLDER_PATH, "savegame");
+            Set<String> saveGameSlots = new HashSet<>();
+            for(File file : files){
+                saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
+            }
+            JLabel label = new JLabel("<html>Select the save game slot where the save game is saved,<br>for which the backup should be restored:<br>0 = Auto save");
+            String[] array = saveGameSlots.stream().toArray(String[]::new);
+            JList<String> listAvailableThemes = new JList<>(array);
+            listAvailableThemes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
+            listAvailableThemes.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableSaveGames = new JScrollPane(listAvailableThemes);
+            scrollPaneAvailableSaveGames.setPreferredSize(new Dimension(30,60));
+
+            Object[] params = {label, scrollPaneAvailableSaveGames};
+            if(JOptionPane.showConfirmDialog(null, params, "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                int saveGameSlotToRestore = Integer.parseInt(listAvailableThemes.getSelectedValue());
+                if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to restore the backup for save game " + saveGameSlotToRestore + " ?\n\nThis can not be undone!\nI will not take any responsibility if your save game is getting corrupted!\n\nRestore save game backup?", "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    Backup.backupSaveGames(false);
+                    Backup.restoreSaveGameBackup(saveGameSlotToRestore);
+                    JOptionPane.showMessageDialog(null, "Save game backup has been restored", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     private static void deleteAllBackups(){
@@ -1199,6 +1294,7 @@ public class WindowMain {
                     for (String customGenre : customGenres) {
                         try {
                             EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenre));
+                            ImageFileHandler.removeImageFiles(customGenre, AnalyzeExistingGenres.getGenreIdByName(customGenre));
                             LOGGER.info("Game files have been restored to original.");
                         } catch (IOException e) {
                             LOGGER.info("Genre could not be removed: " + e.getMessage());

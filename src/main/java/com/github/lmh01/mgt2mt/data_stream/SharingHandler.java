@@ -145,7 +145,7 @@ public class SharingHandler {
         for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE GOOD"))){
             gameplayFeaturesGoodIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
         }
-        ArrayList<File> genreScreenshots = Utils.getFilesInFolder(fileScreenshotsToImport.getPath(), ".meta");
+        ArrayList<File> genreScreenshots = Utils.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
         GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon);
         return "true";

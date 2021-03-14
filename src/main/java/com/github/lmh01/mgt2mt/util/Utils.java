@@ -139,6 +139,14 @@ public class Utils {
     public static File getGameplayFeaturesFile(){return new File(getMGT2DataPath() + "//GameplayFeatures.txt");}
 
     /**
+     * @param saveGameNumber The save game number
+     * @return Returns the save game file for the input save game number
+     */
+    public static File getSaveGameFile(int saveGameNumber){
+        return new File(Backup.FILE_SAVE_GAME_FOLDER + "//" + "savegame" + saveGameNumber + ".txt");
+    }
+
+    /**
      * @return Returns the path to this folder \Mad Games Tycoon 2_Data\Extern\CompanyLogos\.
      */
     public static String getCompanyLogosPath(){
@@ -229,7 +237,7 @@ public class Utils {
      * @return Returns an array list containing all files inside the input folder
      */
     public static ArrayList<File> getFilesInFolder(String folder){
-        return getFilesInFolder(folder, "EMPTY");
+        return getFilesInFolderBlackList(folder, "EMPTY");
     }
 
     /**
@@ -237,13 +245,35 @@ public class Utils {
      * @param blackList When the string entered here is found in the filename the file wont be added to the arrayListFiles.
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolder(String folder, String blackList){
+    public static ArrayList<File> getFilesInFolderBlackList(String folder, String blackList){
         File file = new File(folder);
         ArrayList<File> arrayListFiles = new ArrayList<>();
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(!filesInFolder[i].getName().contains(blackList) || blackList.equals("EMPTY")){
+                    arrayListFiles.add(filesInFolder[i]);
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info(filesInFolder[i].getName());
+                    }
+                }
+            }
+        }
+        return arrayListFiles;
+    }
+
+    /**
+     * @param folder The folder that should be searched for files.
+     * @param whiteList When the string entered here is found in the filename the file will be added to the arrayListFiles.
+     * @return Returns an array list containing all files inside the input folder
+     */
+    public static ArrayList<File> getFilesInFolderWhiteList(String folder, String whiteList){
+        File file = new File(folder);
+        ArrayList<File> arrayListFiles = new ArrayList<>();
+        if(file.exists()){
+            File[] filesInFolder = file.listFiles();
+            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
+                if(filesInFolder[i].getName().contains(whiteList)){
                     arrayListFiles.add(filesInFolder[i]);
                     if(Settings.enableDebugLogging){
                         LOGGER.info(filesInFolder[i].getName());

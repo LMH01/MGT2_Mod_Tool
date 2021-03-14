@@ -80,7 +80,7 @@ public class Backup {
      */
     public static void restoreBackup(boolean initialBackup, boolean showMessages){
         try {
-            LOGGER.info("Restoring initial backup.");
+            LOGGER.info("Restoring backup.");
             File fileGenresBackup;
             File fileNpcGamesBackup;
             File filePublisherBackup;
@@ -125,8 +125,19 @@ public class Backup {
                     JOptionPane.showMessageDialog(null, "The latest backup could not be restored.\nThe latest backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
         }
+    }
+
+    /**
+     * Restores the save game backup for the input save game slot
+     * @param saveGameSlot The slot where the save game is saved that should be restored
+     */
+    public static void restoreSaveGameBackup(int saveGameSlot) throws IOException {
+        File saveGameBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//savegame" + saveGameSlot + ".txt");
+        if (!saveGameBackup.exists()) {
+            saveGameBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//savegame" + saveGameSlot + ".txt.initialBackup");
+        }
+        Files.copy(Paths.get(saveGameBackup.getPath()), Paths.get(Utils.getSaveGameFile(saveGameSlot).getPath()), StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
@@ -195,7 +206,7 @@ public class Backup {
     /**
      * Create a backup of each save game.
      */
-    private static void backupSaveGames(boolean initialBackup) throws IOException {
+    public static void backupSaveGames(boolean initialBackup) throws IOException {
         if(Backup.FILE_SAVE_GAME_FOLDER.exists()){
             File[] filesInFolder = Backup.FILE_SAVE_GAME_FOLDER.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
