@@ -295,12 +295,20 @@ public class Utils {
     }
 
     /**
-     * @param languageKey They key for the language to use. For more information see this functions content.
+     * @param languageKey They key number for the language to use. For more information see this functions content.
      * @return Returns the themes file for the specified language.
      */
     public static File getThemeFile(int languageKey){
         String currentLanguageKey = TranslationManager.TRANSLATION_KEYS[languageKey];
         return new File(Utils.getMGT2TextFolderPath() + "//" + currentLanguageKey + "//Themes_" + currentLanguageKey + ".txt");
+    }
+
+    /**
+     * @param languageKey They key for the language to use. For more information see this functions content.
+     * @return Returns the themes file for the specified language.
+     */
+    public static File getThemeFile(String languageKey){
+        return new File(Utils.getMGT2TextFolderPath() + "//" + languageKey + "//Themes_" + languageKey + ".txt");
     }
 
     /**

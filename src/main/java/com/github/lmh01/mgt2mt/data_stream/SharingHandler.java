@@ -258,6 +258,30 @@ public class SharingHandler {
     }
 
     /**
+     * Exports the theme that stand in the map
+     * @param map The map where the theme values are stored
+     * @return Returns true when the theme has been exported successfully. Returns false when the theme has already been exported.
+     */
+    public static boolean exportTheme(Map<String, String> map) throws IOException {
+        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Themes//" + map.get("NAME EN");
+        File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
+        File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//theme.txt");
+        if(fileExportedTheme.exists()){
+           return false;
+        }else{
+            fileExportFolderPath.mkdirs();
+        }
+        fileExportedTheme.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedTheme), StandardCharsets.UTF_8));
+        bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+        bw.write("[THEME START]" + System.getProperty("line.separator"));
+        TranslationManager.printLanguages(bw, map);
+        bw.write("[GENRE COMB]" + getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+        bw.close();
+        return true;
+    }
+
+    /**
      * @param genreId The genre id from which the genre comb names should be transformed
      * @return Returns a list of genre names
      */
@@ -271,6 +295,36 @@ public class SharingHandler {
                 //Nothing happens
             }else if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals(">")){
                 int genreNumber = Integer.parseInt(currentNumber.toString());
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("genreNumber: " + genreNumber);
+                }
+                genreNames.append("<").append(AnalyzeExistingGenres.getGenreNameById(genreNumber)).append(">");
+                currentNumber = new StringBuilder();
+            }else{
+                currentNumber.append(genreNumbersRaw.charAt(charPositon));
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("currentNumber: " + currentNumber);
+                }
+            }
+            charPositon++;
+        }
+        String.valueOf(genreNumbersRaw.charAt(1));
+        return genreNames.toString();
+    }
+
+    /**
+     * @param genreNumbersRaw The string containing the genre ids that should be transformed
+     * @return Returns a list of genre names
+     */
+    private static String getGenreNames(String genreNumbersRaw){
+        StringBuilder genreNames = new StringBuilder();
+        int charPositon = 0;
+        StringBuilder currentNumber = new StringBuilder();
+        for(int i = 0; i<genreNumbersRaw.length(); i++){
+            if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals("<")){
+                //Nothing happens
+            }else if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals(">")){
+                int genreNumber = Integer.parseInt(currentNumber.toString().replaceAll("[^0-9]", ""));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + genreNumber);
                 }

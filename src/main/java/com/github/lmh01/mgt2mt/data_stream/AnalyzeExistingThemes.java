@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,5 +169,41 @@ public class AnalyzeExistingThemes {
         String[] string = new String[arrayListCustomThemes.size()];
         arrayListCustomThemes.toArray(string);
         return string;
+    }
+
+    public static Map<String, String> getSingleThemeByNameMap(String themeNameEn) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn)+1;
+        for(String string : TranslationManager.TRANSLATION_KEYS){
+            LOGGER.info("Current Translation Key: " + string);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
+            String currentLine;
+            int currentLineNumber =1;
+            boolean firstLine = true;
+            while((currentLine = reader.readLine()) != null){
+                if(firstLine){
+                    currentLine = Utils.removeUTF8BOM(currentLine);
+                    firstLine = false;
+                }
+                LOGGER.info("Reading file: " + string);
+                if(currentLineNumber == positionOfThemeInFiles){
+                    if(string.equals("GE")){
+                        map.put("NAME " + string, currentLine.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", ""));
+                        map.put("GENRE COMB",currentLine.replaceAll("[a-z,A-Z]", ""));
+                        if(Settings.enableDebugLogging){
+                            LOGGER.info("GENRE COMB: " + currentLine.replaceAll("[a-z,A-Z]", "").replaceAll(" ", ""));
+                        }
+                    }else{
+                        map.put("NAME " + string, currentLine);
+                        if(Settings.enableDebugLogging){
+                            LOGGER.info("NAME " + string + " | " + currentLine);
+                        }
+                    }
+                }
+                currentLineNumber++;
+            }
+            reader.close();
+        }
+        return map;
     }
 }

@@ -24,11 +24,12 @@ public class WindowMain {
     private static final JMenuItem M211ADD_GENRE = new JMenuItem("Add Genre");
     private static final JMenuItem M212REMOVE_GENRE = new JMenuItem("Remove Genre");
     private static final JMenuItem M311EXPORT_GENRE = new JMenuItem("Genre");
+    private static final JMenuItem M313EXPORT_THEME = new JMenuItem("Theme");
     private static final JMenuItem M312EXPORT_PUBLISHER = new JMenuItem("Publisher");
     private static final JMenuItem M22REMOVE_THEME = new JMenuItem("Remove Theme");
     private static final JMenuItem M24NPC_GAMES_LIST = new JMenuItem("NPC_Games_list");
     private static final JMenuItem M232REMOVE_PUBLISHER = new JMenuItem("Remove Publisher");
-    private static final JMenuItem M313EXPORT_ALL = new JMenuItem("Export All");
+    private static final JMenuItem M314EXPORT_ALL = new JMenuItem("Export All");
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,10 +91,12 @@ public class WindowMain {
         JMenu m31Export = new JMenu("Export");
         m31Export.add(M311EXPORT_GENRE);
         m31Export.add(M312EXPORT_PUBLISHER);
-        m31Export.add(M313EXPORT_ALL);
+        m31Export.add(M313EXPORT_THEME);
+        m31Export.add(M314EXPORT_ALL);
         M311EXPORT_GENRE.addActionListener(actionEvent -> exportGenre());
         M312EXPORT_PUBLISHER.addActionListener(actionEvent -> exportPublisher());
-        M313EXPORT_ALL.addActionListener(actionEvent -> exportAll());
+        M313EXPORT_THEME.addActionListener(actionEvent -> exportTheme());
+        M314EXPORT_ALL.addActionListener(actionEvent -> exportAll());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> openExportFolder());
         JMenuItem m36 = new JMenuItem("Delete all exports");
@@ -226,25 +229,27 @@ public class WindowMain {
             M232REMOVE_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
             M311EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
             M312EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
+            M313EXPORT_THEME.setEnabled(!noCustomThemesAvailable);
             if(noCustomGenreAvailable && noCustomPublishersAvailable){
-                M313EXPORT_ALL.setEnabled(false);
+                M314EXPORT_ALL.setEnabled(false);
             }else{
-                M313EXPORT_ALL.setEnabled(true);
+                M314EXPORT_ALL.setEnabled(true);
             }
             if(noCustomGenreAvailable){
                 M212REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
                 M24NPC_GAMES_LIST.setToolTipText("Disabled -> Add a genre first");
                 M311EXPORT_GENRE.setToolTipText("Disabled -> No genre to export available");
             }else if(noCustomGenreAvailable && noCustomPublishersAvailable){
-                M313EXPORT_ALL.setToolTipText("Disabled -> Mo genre or publisher to export available");
+                M314EXPORT_ALL.setToolTipText("Disabled -> Mo genre or publisher to export available");
             }else{
                 M212REMOVE_GENRE.setToolTipText("");
                 M24NPC_GAMES_LIST.setToolTipText("");
                 M311EXPORT_GENRE.setToolTipText("");
-                M313EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");
+                M314EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");
             }
             if(noCustomThemesAvailable){
                 M22REMOVE_THEME.setToolTipText("Disabled -> No theme to remove available");
+                M313EXPORT_THEME.setToolTipText("Disabled -> No theme to export available");
             }else{
                 M22REMOVE_THEME.setToolTipText("");
             }
@@ -440,6 +445,73 @@ public class WindowMain {
             e.printStackTrace();
         }
         checkActionAvailability();
+    }
+    private static void exportTheme(){
+        try {
+            boolean noThemeToExportAvailable = true;
+            JLabel labelChooseTheme = new JLabel("Select the theme(s) that should be exported:");
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = AnalyzeExistingThemes.getThemesByAlphabet(false);
+                noThemeToExportAvailable = false;
+            }else{
+                string = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+                if(string.length != 0){
+                    noThemeToExportAvailable = false;
+                }
+            }
+            JList<String> listAvailableThemes = new JList<>(string);
+            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
+            listAvailableThemes.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableThemes = new JScrollPane(listAvailableThemes);
+            scrollPaneAvailableThemes.setPreferredSize(new Dimension(315,140));
+
+            Object[] params = {labelChooseTheme, scrollPaneAvailableThemes};
+
+            if(!noThemeToExportAvailable){
+                if(JOptionPane.showConfirmDialog(null, params, "Export theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!listAvailableThemes.isSelectionEmpty()){
+                        boolean exportFailed = false;
+                        boolean multipleThemesToExport = false;
+                        if(listAvailableThemes.getSelectedValuesList().size() > 0){
+                            multipleThemesToExport = true;
+                        }
+                        int numberOfThemesToExport = listAvailableThemes.getSelectedValuesList().size();
+                        StringBuilder failedThemeExports = new StringBuilder();
+                        for(int i=0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
+                            String currentTheme = listAvailableThemes.getSelectedValuesList().get(i);
+                            if(!SharingHandler.exportTheme(AnalyzeExistingThemes.getSingleThemeByNameMap(currentTheme))){
+                                if(!multipleThemesToExport){
+                                    JOptionPane.showMessageDialog(null, "The selected theme has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                }
+                                failedThemeExports.append(currentTheme).append(" - The selected theme has already been exported").append(System.getProperty("line.separator"));
+                                exportFailed = true;
+                            }
+                            numberOfThemesToExport--;
+                        }
+                        if(numberOfThemesToExport == 0){
+                            if(exportFailed){
+                                if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting themes.\nThe following themes where not exported:\n" + failedThemeExports + "\n\nDo you want to open the folder where it has been saved?", "Theme exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                }
+                            }else{
+                                if(JOptionPane.showConfirmDialog(null, "All selected themes have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Theme exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                }
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a theme first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Unable to export theme:\nThere is no custom theme that could be exported.\nPlease add a theme first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while exporting theme: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
     private static void npcGameList(){
         try {
@@ -759,27 +831,27 @@ public class WindowMain {
                     noGenreToExportAvailable = false;
                 }
             }
-            JList<String> listAvailableThemes = new JList<>(string);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-            listAvailableThemes.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
+            JList<String> listAvailableGenres = new JList<>(string);
+            listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+            listAvailableGenres.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
             scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
             Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
 
             if(!noGenreToExportAvailable){
                 if(JOptionPane.showConfirmDialog(null, params, "Export genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailableThemes.isSelectionEmpty()){
+                    if(!listAvailableGenres.isSelectionEmpty()){
                         boolean exportFailed = false;
                         boolean multipleGenresToExport = false;
-                        if(listAvailableThemes.getSelectedValuesList().size() > 0){
+                        if(listAvailableGenres.getSelectedValuesList().size() > 0){
                             multipleGenresToExport = true;
                         }
-                        int numberOfGenresToExport = listAvailableThemes.getSelectedValuesList().size();
+                        int numberOfGenresToExport = listAvailableGenres.getSelectedValuesList().size();
                         StringBuilder failedGenreExports = new StringBuilder();
-                        for(int i=0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
-                            String currentGenre = listAvailableThemes.getSelectedValuesList().get(i);
+                        for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
+                            String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
                             if(!SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre), currentGenre)){
                                 if(!multipleGenresToExport){
                                     JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
