@@ -67,6 +67,8 @@ public class EditThemeFiles {
                         if(currentLine != removeThemePosition) {
                             bw.write(System.getProperty("line.separator"));
                         }
+                    }else{
+                        bw.write(System.getProperty("line.separator"));
                     }
                 }else{
                     firstLine = false;

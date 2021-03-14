@@ -342,21 +342,21 @@ public class WindowMain {
     private static void addTheme(){
         try {
             AnalyzeExistingThemes.analyzeThemeFiles();
-            NewThemeManager.arrayListCompatibleGenresForTheme.clear();
-            NewThemeManager.arrayListThemeTranslations.clear();
+            final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
+            ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
             String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
             JLabel labelEnterThemeName = new JLabel("Enter the theme name:");
             JTextField textFieldThemeName = new JTextField();
             JButton buttonAddTranslations = new JButton("Add translations");
             buttonAddTranslations.setToolTipText("Click to add translations for your theme.");
             buttonAddTranslations.addActionListener(actionEvent2 -> {
-                if(!NewThemeManager.arrayListThemeTranslations.isEmpty()){
+                if(!arrayListThemeTranslations[0].isEmpty()){
                     if(JOptionPane.showConfirmDialog(null, "Theme translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
-                        NewThemeManager.arrayListThemeTranslations.clear();
-                        NewThemeManager.arrayListThemeTranslations = TranslationManager.getTranslationsArrayList();
+                        arrayListThemeTranslations[0].clear();
+                        arrayListThemeTranslations[0] = TranslationManager.getTranslationsArrayList();
                     }
                 }else{
-                    NewThemeManager.arrayListThemeTranslations = TranslationManager.getTranslationsArrayList();
+                    arrayListThemeTranslations[0] = TranslationManager.getTranslationsArrayList();
                 }
             });
             JLabel labelExplainList = new JLabel("<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)");
@@ -380,13 +380,26 @@ public class WindowMain {
                                     for(Map<String, String> map : AnalyzeExistingGenres.genreList){
                                         for(String name : arrayListCompatibleGenreNames){
                                             if(map.get("NAME EN").equals(name)){
-                                                NewThemeManager.arrayListCompatibleGenresForTheme.add(Integer.parseInt(map.get("ID")));
+                                                arrayListCompatibleGenreIds.add(Integer.parseInt(map.get("ID")));
                                             }
                                         }
                                     }
+                                    Map<String, String> themeTranslations = new HashMap<>();
+                                    int currentTranslationKey = 0;
+                                    if(arrayListThemeTranslations[0].isEmpty()){
+                                        for(String translationKey : TranslationManager.TRANSLATION_KEYS){
+                                            themeTranslations.put("NAME " + translationKey, textFieldThemeName.getText());
+                                        }
+                                    }else{
+                                        for(String translation : arrayListThemeTranslations[0]){
+                                            themeTranslations.put("NAME " + TranslationManager.TRANSLATION_KEYS[currentTranslationKey], translation);
+                                            currentTranslationKey++;
+                                        }
+                                    }
+                                    themeTranslations.put("NAME EN", textFieldThemeName.getText());
                                     if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false);
-                                        NewThemeManager.addNewTheme(textFieldThemeName.getText());
+                                        EditThemeFiles.addTheme(themeTranslations, arrayListCompatibleGenreIds);
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                         breakLoop = true;
                                     }
@@ -436,7 +449,7 @@ public class WindowMain {
                     if(!listAvailableThemes.getSelectedValue().equals("Pets")){
                         if(JOptionPane.showConfirmDialog(null, "Are you shure that you want to remove this theme?:\n" + listAvailableThemes.getSelectedValue(), "Remove theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                             Backup.createThemeFilesBackup(false);
-                            NewThemeManager.removeTheme(listAvailableThemes.getSelectedValue());
+                            EditThemeFiles.removeTheme(AnalyzeExistingThemes.getPositionOfThemeInFile(listAvailableThemes.getSelectedValue()));
                             JOptionPane.showMessageDialog(null, "The theme has been removed successfully!");
                             breakLoop = true;
                         }
