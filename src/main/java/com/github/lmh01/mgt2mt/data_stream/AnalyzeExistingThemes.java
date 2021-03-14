@@ -148,4 +148,25 @@ public class AnalyzeExistingThemes {
         arrayListAvailableThemesSorted.toArray(string);
         return string;
     }
+
+    public static String[] getCustomThemesByAlphabet(){
+        String[] allGenresById = getThemesByAlphabet(false);
+        String[] defaultThemes = {"Agents", "Agriculture", "Airplanes", "Aliens", "American Football", "Angel", "Animals", "Anime", "Art", "Assassins", "Barbarians", "Baseball", "Basketball", "Bicycle", "Birds", "Bounty Hunter", "Boxing", "Building blocks", "Bunker", "Cabs", "Candy", "Cars", "Casinos", "Castles", "Cats", "Chemistry", "Cinema", "Cities", "Colonization", "Comedy", "Companies", "Conquest", "Conspiracies", "Contract killer", "Cooking", "Cowboys", "Cricket", "Crime", "Crocodiles", "Cyberpunk", "Cyberspace", "Cyborgs", "Dancing", "Dating", "Demons", "Detectives", "Devils", "Digging", "Dinosaurs", "Diving", "Doctors", "Dogs", "Dragons", "Drawing", "Dreams", "Druids", "Dungeons", "Dwarfs", "Economy", "Education", "Elements", "Elves", "End Time", "Erotica", "Espionage", "Everyday life", "Evolution", "Extreme sports", "Fairies", "Fantasy", "Fashion", "Fire Department", "Fishes", "Fitness", "Food", "Frogs", "Fruits", "Gambling", "Game development", "Gangsters", "Ghosts", "Goats", "Gods", "Golf", "Hacking", "Helicopters", "Hell", "Historical", "Horror", "Horses", "Hospital", "Hunting", "Ice Age", "Ice Hockey", "Industrialization", "Insects", "Islands", "Karate", "Kids", "Knights", "Mafia", "Martial arts", "Mathematics", "Mecha", "Mercenary", "Middle Ages", "Military", "Monkeys", "Monster", "Motorcycles", "Motorsports", "Movies", "Mushrooms", "Music", "Ninjas", "Octopuses", "Orcs", "Paintball", "Parallel worlds", "Pets", "Physics", "Pirates", "Planets", "Plants", "Plumber", "Police", "Politics", "Portals", "Predators", "Prison", "Puzzles", "Quiz show", "Rabbits", "Radioactivity", "Religion", "Reporters", "Revolutions", "Robots", "Rockstars", "Romans", "Rugby", "Samurai", "Sandbox", "School", "Science", "Sheep", "Ships", "Singing", "Skeletons", "Soccer", "Space", "Space stations", "Spaceships", "Special Forces", "Sports", "Squirrels", "Steampunk", "Stone Age", "Stones", "Submarines", "Superheroes", "Survival", "Tanks", "Television", "Tennis", "Theme Parks", "Thieves", "Time Travel", "Toys", "Trains", "Transportation", "Treasure hunters", "Treasures", "Trolls", "Trucks", "UFOs", "Vacation", "Vampires", "Vikings", "Viruses", "Werewolves", "Wild West", "Witches", "Wizards", "World Wars", "Worms", "Wrestling", "Zombies", "Zoo"};
+
+        ArrayList<String> arrayListCustomThemes = new ArrayList<>();
+        for (String s : allGenresById) {
+            boolean defaultGenre = false;
+            for (String genre : defaultThemes) {
+                if (s.equals(genre)) {
+                    defaultGenre = true;
+                }
+            }
+            if (!defaultGenre) {
+                arrayListCustomThemes.add(s);
+            }
+        }
+        String[] string = new String[arrayListCustomThemes.size()];
+        arrayListCustomThemes.toArray(string);
+        return string;
+    }
 }

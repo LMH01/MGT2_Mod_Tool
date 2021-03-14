@@ -406,7 +406,12 @@ public class WindowMain {
     private static void removeTheme(){
         try {
             AnalyzeExistingThemes.analyzeThemeFiles();
-            String[] string = AnalyzeExistingThemes.getThemesByAlphabet(true);
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = AnalyzeExistingThemes.getThemesByAlphabet(true);
+            }else{
+                string = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+            }
             JList<String> listAvailableThemes = new JList<>(string);
             listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
