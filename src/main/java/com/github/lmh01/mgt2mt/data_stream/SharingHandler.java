@@ -34,7 +34,7 @@ public class SharingHandler {
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
         File fileExportedGenreIcon = new File(EXPORTED_GENRE_DATA_FOLDER_PATH + "//icon.png");
-        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + "icon" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN") + ".png");
+        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + "icon" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN").replaceAll(" ", "") + ".png");
         File fileGenreScreenshotsToExport = new File(Utils.getMGT2ScreenshotsPath() + genreId);
         if(!fileExportedGenreIcon.exists()){
             fileDataFolder.mkdirs();
