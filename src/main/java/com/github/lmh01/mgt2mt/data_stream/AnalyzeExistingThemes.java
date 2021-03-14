@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AnalyzeExistingThemes {
 
@@ -176,7 +173,15 @@ public class AnalyzeExistingThemes {
         int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn);
         for(String string : TranslationManager.TRANSLATION_KEYS){
             LOGGER.info("Current Translation Key: " + string);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
+            BufferedReader reader;
+            if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+                reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
+            }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+
+                reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
+            }else{
+                break;
+            }
             String currentLine;
             int currentLineNumber =1;
             boolean firstLine = true;
@@ -185,7 +190,9 @@ public class AnalyzeExistingThemes {
                     currentLine = Utils.removeUTF8BOM(currentLine);
                     firstLine = false;
                 }
-                LOGGER.info("Reading file: " + string);
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Reading file: " + string);
+                }
                 if(currentLineNumber == positionOfThemeInFiles){
                     if(string.equals("GE")){
                         map.put("NAME " + string, currentLine.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", ""));

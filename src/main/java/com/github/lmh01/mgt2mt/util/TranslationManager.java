@@ -12,6 +12,9 @@ import java.util.Map;
 public class TranslationManager {
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
+    public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"IT", "RO", "RU"};
+    public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "KO", "PB", "PL", "TU"};
+
     /**
      * @return Returns a array list with the user input that should be used as translation. See cases for translation position in array list.
      */
@@ -21,60 +24,26 @@ public class TranslationManager {
         JLabel labelExplanation = new JLabel();
         Object[] params = {labelExplanation,textFieldDescriptionTranslation};
         boolean breakLoop = false;
-        for(int i = 0; i<15; i++){
-            if(!breakLoop){
-                String language = "";
-                switch(i){
-                    case 0: language = "Arabic"; break;
-                    case 1: language = "Chinese simplified"; break;
-                    case 2: language = "Chinese traditional"; break;
-                    case 3: language = "Czech"; break;
-                    case 4: language = "English"; break;
-                    case 5: language = "Spanish"; break;
-                    case 6: language = "French"; break;
-                    case 7: language = "German"; break;
-                    case 8: language = "Hungarian"; break;
-                    case 9: language = "Italian"; break;
-                    case 10: language = "Korean"; break;
-                    case 11: language = "Portuguese"; break;
-                    case 12: language = "Polish"; break;
-                    case 13: language = "Russian"; break;
-                    case 14: language = "Turkish"; break;
-                }
-                if(i != 4){
-                    labelExplanation.setText("Enter the translation for " + language + ":");
-                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
-                        arrayListTranslations.add(textFieldDescriptionTranslation.getText());
-                        textFieldDescriptionTranslation.setText("");
-                    }else{
-                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
-                        breakLoop = true;
-                    }
-                }else {
-                    arrayListTranslations.add("English");
+        for(String translationName : TRANSLATION_NAMES){
+            if(translationName.equals("English")){
+                arrayListTranslations.add("English");
+            }else{
+                labelExplanation.setText("Enter the translation for " + translationName + ":");
+                if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
+                    arrayListTranslations.add(textFieldDescriptionTranslation.getText());
+                    textFieldDescriptionTranslation.setText("");
+                }else{
+                    JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
+                    breakLoop = true;
                 }
             }
         }
         if(!breakLoop){
             StringBuilder translations = new StringBuilder();
-            for(int i = 0; i<arrayListTranslations.size(); i++){
-                switch(i){
-                    case 0: translations.append("\nArabic: ").append(arrayListTranslations.get(i)); break;
-                    case 1: translations.append("\nChinese simplified: ").append(arrayListTranslations.get(i)); break;
-                    case 2: translations.append("\nChinese traditional: ").append(arrayListTranslations.get(i)); break;
-                    case 3: translations.append("\nCzech: ").append(arrayListTranslations.get(i)); break;
-                    //case 4: translations.append("\nnEnglish: ").append(arrayListTranslations.get(i)); break;
-                    case 5: translations.append("\nSpanish: ").append(arrayListTranslations.get(i)); break;
-                    case 6: translations.append("\nFrench: ").append(arrayListTranslations.get(i)); break;
-                    case 7: translations.append("\nGerman: ").append(arrayListTranslations.get(i)); break;
-                    case 8: translations.append("\nHungarian: ").append(arrayListTranslations.get(i)); break;
-                    case 9: translations.append("\nItalian: ").append(arrayListTranslations.get(i)); break;
-                    case 10: translations.append("\nKorean: ").append(arrayListTranslations.get(i)); break;
-                    case 11: translations.append("\nPortuguese: ").append(arrayListTranslations.get(i)); break;
-                    case 12: translations.append("\nPolish: " ).append(arrayListTranslations.get(i)); break;
-                    case 13: translations.append("\nRussian: ").append(arrayListTranslations.get(i)); break;
-                    case 14: translations.append("\nTurkish: ").append(arrayListTranslations.get(i)); break;
-                }
+            int translationNumber = 0;
+            for(String string : TRANSLATION_NAMES){
+                translations.append("\n").append(string).append(": ").append(arrayListTranslations.get(translationNumber));
+                translationNumber++;
             }
             JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -125,13 +94,13 @@ public class TranslationManager {
      * @param map The map containing the translations
      */
     public static void printLanguages(BufferedWriter bw, Map<String, String> map) throws IOException {
-        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
+        for(String string : TranslationManager.TRANSLATION_KEYS){
             for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().equals("NAME " + TranslationManager.TRANSLATION_KEYS[i])){
-                    bw.write("[NAME " + TranslationManager.TRANSLATION_KEYS[i] + "]" + entry.getValue() + System.getProperty("line.separator"));
+                if(entry.getKey().equals("NAME " + string)){
+                    bw.write("[NAME " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
                 }
-                if(entry.getKey().equals("DESC " + TranslationManager.TRANSLATION_KEYS[i])){
-                    bw.write("[DESC " + TranslationManager.TRANSLATION_KEYS[i] + "]" + entry.getValue() + System.getProperty("line.separator"));
+                if(entry.getKey().equals("DESC " + string)){
+                    bw.write("[DESC " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
                 }
             }
         }

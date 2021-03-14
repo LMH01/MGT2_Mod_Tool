@@ -424,6 +424,7 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Unable to add theme:\n\n" + e.getMessage(), "Error while adding theme", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        checkActionAvailability();
     }
     private static void removeTheme(){
         try {

@@ -107,10 +107,18 @@ public class Utils {
 
     /**
      * @param file The input file
+     * @param charsetType Defines what charset the source file uses. Possible UTF_8BOM UTF_16LE
      * @return Returns a map. The key is the line number and the value is the content for that line number.
      */
-    public static Map<Integer, String> getContentFromFile(File file) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_16LE));
+    public static Map<Integer, String> getContentFromFile(File file, String charsetType) throws IOException{
+        BufferedReader br;
+        if(charsetType.equals("UTF_8BOM")){
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        }else if(charsetType.equals("UTF_16LE")){
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_16LE));
+        }else{
+            return null;
+        }
         String currentLine;
         boolean firstLine = true;
         Map<Integer, String> mapCurrent = new HashMap<>();

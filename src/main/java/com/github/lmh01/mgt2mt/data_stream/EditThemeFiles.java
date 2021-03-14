@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,20 +42,25 @@ public class EditThemeFiles {
      * @param removeThemePosition The position where the theme is positioned that should be removed.
      */
     public static void editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition) throws IOException {
-        final String[] LANGUAGE_KEYS_UTF_8_BOM = {"IT", "RO", "RU", "TU"};
-        final String[] LANGUAGE_KEYS_UTF_16_LE = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "KO", "PB", "PL"};
         for(String string : TranslationManager.TRANSLATION_KEYS){
             File themeFile = Utils.getThemeFile(string);
-            Map<Integer, String> currentThemeFileContent = Utils.getContentFromFile(themeFile);
+            Map<Integer, String> currentThemeFileContent;
+            if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+                currentThemeFileContent = Utils.getContentFromFile(themeFile, "UTF_8BOM");
+            }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+                currentThemeFileContent = Utils.getContentFromFile(themeFile, "UTF_16LE");
+            }else{
+                break;
+            }
             if(themeFile.exists()){
                 themeFile.delete();
             }
             themeFile.createNewFile();
             BufferedWriter bw;
-            if(Arrays.asList(LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+            if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
                 bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_8));
                 bw.write("\ufeff");//Makes the file UTF8 BOM
-            }else if(Arrays.asList(LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+            }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
                 bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_16LE));
             }else{
                 break;
@@ -84,11 +90,11 @@ public class EditThemeFiles {
                     StringBuilder genreIdsToPrint = new StringBuilder();
                     bw.write(map.get("NAME GE"));
                     for(Integer genreId : arrayListCompatibleGenres){
-                        LOGGER.info("genreId " + genreId);
                         genreIdsToPrint.append(" <").append(genreId).append(">");
                     }
                     bw.write(genreIdsToPrint.toString());
                 }else{
+                    LOGGER.info("current string: " + string);
                     bw.write(map.get("NAME " + string));
                 }
             }
