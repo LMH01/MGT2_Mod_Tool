@@ -83,6 +83,22 @@ public class AnalyzeExistingGameplayFeatures {
     }
 
     /**
+     * @return Returns a String[] containing all custom gameplay features
+     */
+    public static String[] getCustomGameplayFeaturesString(){
+        ArrayList<String> arrayListActiveGameplayFeatures = new ArrayList<>();
+        List<Map<String, String>> listGameplayFeatures = gameplayFeatures;
+        for(int i=58; i<listGameplayFeatures.size(); i++){
+            Map<String, String> map = listGameplayFeatures.get(i);
+            arrayListActiveGameplayFeatures.add(map.get("NAME EN"));
+        }
+        Collections.sort(arrayListActiveGameplayFeatures);
+        String[] string = new String[arrayListActiveGameplayFeatures.size()];
+        arrayListActiveGameplayFeatures.toArray(string);
+        return string;
+    }
+
+    /**
      * @param gameplayFeatureNameEn The gameplay feature for which the map should be returned.
      * @return Returns a map containing all values for the specified gameplay feature.
      */

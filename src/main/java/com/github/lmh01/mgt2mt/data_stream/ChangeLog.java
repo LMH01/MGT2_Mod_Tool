@@ -95,6 +95,8 @@ public class ChangeLog {
             case 22: logToPrint = currentSystemTime + ": Imported publisher: [" + textBody + "]"; break;
             case 23: logToPrint = currentSystemTime + ": Exported theme: [" + textBody + "]"; break;
             case 24: logToPrint = currentSystemTime + ": Imported theme: [" + textBody + "]"; break;
+            case 25: logToPrint = currentSystemTime + ": Added gameplay feature: [" + textBody + "]"; break;
+            case 26: logToPrint = currentSystemTime + ": Removed gameplay feature: [" + textBody + "]"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

@@ -1,11 +1,12 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
-import com.github.lmh01.mgt2mt.data_stream.EditGameplayFeaturesFile;
+import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import jdk.nashorn.internal.scripts.JO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class GameplayFeatureHelper {
      */
     public static void addGameplayFeature(){
         try{
+            Backup.createBackup(Utils.getGameplayFeaturesFile());
             AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
@@ -245,15 +247,75 @@ public class GameplayFeatureHelper {
                 }
             }
         }catch(IOException e){
-
+            e.printStackTrace();
         }
+        WindowMain.checkActionAvailability();
     }
 
     /**
      * Opens a gui where the user can select the gameplay feature that should be removed
      */
     public static void removeGameplayFeature(){
+        try {
+            AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+            Backup.createBackup(Utils.getGameplayFeaturesFile());
+            boolean noGameplayFeatureToRemoveAvailable = true;
+            JLabel labelChooseGameplayFeature = new JLabel("Select the gameplay feature(s) that should be removed:");
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet();
+                noGameplayFeatureToRemoveAvailable = false;
+            }else{
+                string = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
+                if(string.length != 0){
+                    noGameplayFeatureToRemoveAvailable = false;
+                }
+            }
+            JList<String> listAvailableGameplayFeatures = new JList<>(string);
+            listAvailableGameplayFeatures.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailableGameplayFeatures.setLayoutOrientation(JList.VERTICAL);
+            listAvailableGameplayFeatures.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableGameplayFeatures = new JScrollPane(listAvailableGameplayFeatures);
+            scrollPaneAvailableGameplayFeatures.setPreferredSize(new Dimension(315,140));
 
+            Object[] params = {labelChooseGameplayFeature, scrollPaneAvailableGameplayFeatures};
+
+            if(!noGameplayFeatureToRemoveAvailable){
+                if(JOptionPane.showConfirmDialog(null, params, "Remove gameplay feature", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!listAvailableGameplayFeatures.isSelectionEmpty()){
+                        boolean exportFailed = false;
+                        int numberOfGameplayFeaturesToRemove = listAvailableGameplayFeatures.getSelectedValuesList().size();
+                        StringBuilder failedGameplayFeatureRemoves = new StringBuilder();
+                        for(int i=0; i<listAvailableGameplayFeatures.getSelectedValuesList().size(); i++){
+                            String currentGameplayFeature = listAvailableGameplayFeatures.getSelectedValuesList().get(i);
+                            try{
+                                EditGameplayFeaturesFile.removeGameplayFeature(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(currentGameplayFeature));
+                                ChangeLog.addLogEntry(26, currentGameplayFeature);
+                            }catch (IOException e){
+                                failedGameplayFeatureRemoves.append(currentGameplayFeature).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                                exportFailed = true;
+                            }
+                            numberOfGameplayFeaturesToRemove--;
+                        }
+                        if(numberOfGameplayFeaturesToRemove == 0){
+                            if(exportFailed){
+                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing gameplay features.\\nThe following gameplay features where not removed:\n" + failedGameplayFeatureRemoves, "Publisher removal incomplete", JOptionPane.WARNING_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "All selected gameplay features have been removed successfully!", "Gameplay features removal successful", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a publisher first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Unable to remove publisher:\nThere is no custom publisher that could be removed.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while removing publisher: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        WindowMain.checkActionAvailability();
     }
 
     /**

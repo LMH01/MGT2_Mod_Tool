@@ -106,9 +106,9 @@ public class EditGameplayFeaturesFile {
                 }
                 bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
                 bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
+                bw.write(System.getProperty("line.separator"));
             }
         }
-        bw.write(System.getProperty("line.separator"));
         bw.write("[EOF]");
         bw.close();
     }

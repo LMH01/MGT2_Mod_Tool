@@ -804,9 +804,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         }
         checkActionAvailability();
     }
-    private static void removeGameplayFeature(){
-
-    }
     private static void addCompanyIcon(){
         String imageFilePath = Utils.getImagePath();
         File imageFileSource = new File(imageFilePath);
