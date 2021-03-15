@@ -450,12 +450,15 @@ public class WindowMain {
             boolean breakLoop = false;
             while(!breakLoop){
                 if(JOptionPane.showConfirmDialog(null, params, "Remove theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailableThemes.getSelectedValue().equals("Pets")){
-                        if(JOptionPane.showConfirmDialog(null, "Are you shure that you want to remove this theme?:\n" + listAvailableThemes.getSelectedValue(), "Remove theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                            Backup.createThemeFilesBackup(false);
-                            EditThemeFiles.removeTheme(AnalyzeExistingThemes.getPositionOfThemeInFile(listAvailableThemes.getSelectedValue()));
-                            JOptionPane.showMessageDialog(null, "The theme has been removed successfully!");
-                            breakLoop = true;
+                    breakLoop = true;
+                    Backup.createThemeFilesBackup(false);
+                    for(String themeToRemove : listAvailableThemes.getSelectedValuesList()){
+                        LOGGER.info("Theme to remove: " + themeToRemove);
+                        AnalyzeExistingThemes.analyzeThemeFiles();
+                        if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to remove this theme?:\n" + themeToRemove, "Remove theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                            EditThemeFiles.removeTheme(AnalyzeExistingThemes.getPositionOfThemeInFile(themeToRemove));
+                            JOptionPane.showMessageDialog(null, "Theme " + themeToRemove + " has been removed successfully!");
+                            ChangeLog.addLogEntry(16, themeToRemove);
                         }
                     }
                 }else{
@@ -1044,7 +1047,7 @@ public class WindowMain {
                 e.printStackTrace();
             }
         }
-    }
+    }//TODO Add export of themes
     private static void openExportFolder(){
         try {
             File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
