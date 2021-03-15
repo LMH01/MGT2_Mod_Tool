@@ -171,6 +171,10 @@ public class Utils {
     public static File getGameplayFeaturesFile(){return new File(getMGT2DataPath() + "//GameplayFeatures.txt");}
 
     /**
+     * @return Returns the EngineFeatures.txt file.
+     */
+    public static File getEngineFeaturesFile(){return new File(getMGT2DataPath() + "//EngineFeatures.txt");}
+    /**
      * @param saveGameNumber The save game number
      * @return Returns the save game file for the input save game number
      */

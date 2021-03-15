@@ -76,7 +76,7 @@ public class EditGameplayFeaturesFile {
      */
     public static void removeGameplayFeature(int gameplayFeatureId) throws IOException {
         AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
-        LOGGER.info("Adding new gameplay feature...");
+        LOGGER.info("Removing gameplay feature...");
         File gameplayFeatureFile = Utils.getGameplayFeaturesFile();
         if(gameplayFeatureFile.exists()){
             gameplayFeatureFile.delete();

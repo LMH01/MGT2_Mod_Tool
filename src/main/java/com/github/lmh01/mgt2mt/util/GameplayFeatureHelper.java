@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
-import jdk.nashorn.internal.scripts.JO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -75,7 +74,7 @@ public class GameplayFeatureHelper {
             JLabel labelSelectType = new JLabel("Type:");
             JComboBox comboBoxFeatureType = new JComboBox();
             comboBoxFeatureType.setToolTipText("Select what type your gameplay feature should be");
-            comboBoxFeatureType.setModel(new DefaultComboBoxModel<>(new String[]{"Controls", "Gameplay", "Multiplayer", "Physics", "Graphic", "Sound"}));
+            comboBoxFeatureType.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Physics", "Gameplay", "Controls", "Multiplayer"}));
             comboBoxFeatureType.setSelectedItem("Multiplayer");
             panelType.add(labelSelectType);
             panelType.add(comboBoxFeatureType);
@@ -113,8 +112,8 @@ public class GameplayFeatureHelper {
             JSpinner spinnerResearchPoints = new JSpinner();
             JSpinner spinnerDevelopmentCost = new JSpinner();
             JSpinner spinnerPrice = new JSpinner();
-            spinnerResearchPoints.setToolTipText("<html>[Range: 1 - 100.000; Default: 500]<br>Number of required research points to research that genre.");
-            spinnerDevelopmentCost.setToolTipText("<html>[Range: 1 - 1.000.000; Default: 35000]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this gameplay feature.");
+            spinnerResearchPoints.setToolTipText("<html>[Range: 1 - 100.000; Default: 500]<br>Number of required research points to research that gameplay feature.");
+            spinnerDevelopmentCost.setToolTipText("<html>[Range: 1 - 1.000.000; Default: 35000]<br>Set the development cost for a game with your gameplay feature.<br>This cost will be added when developing a game with this gameplay feature.");
             spinnerPrice.setToolTipText("<html>[Range: 1 - 1.000.000; Default: 50000]<br>This is the research cost, it is being payed when researching this gameplay feature.");
             if(Settings.disableSafetyFeatures){
                 spinnerResearchPoints.setModel(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
@@ -236,9 +235,8 @@ public class GameplayFeatureHelper {
                         newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
                         newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
                         newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-                        for(Map.Entry<String, String> entry : newGameplayFeature.entrySet()){
-                            LOGGER.info("Key: " + entry.getKey() + " | " + entry.getValue());
-                        }
+                        //TODO Write summary that is displayed when all values are collected and where the user has to accept the adding of gameplay feature
+                        //TODO Write add successful dialog
                         EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);
                         break;
                     }

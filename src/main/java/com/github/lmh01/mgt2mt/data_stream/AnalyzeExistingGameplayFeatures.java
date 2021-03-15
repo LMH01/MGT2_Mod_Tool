@@ -1,10 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,9 +73,9 @@ public class AnalyzeExistingGameplayFeatures {
             }
         }
         if(genreId == -1){
-            LOGGER.info("Genre [" + gameplayFeatureName + "] does not exist");
+            LOGGER.info("Gameplay feature [" + gameplayFeatureName + "] does not exist");
         }else{
-            LOGGER.info("Genre [" + gameplayFeatureName + "] has been found. Id: " + genreId);
+            LOGGER.info("Gameplay feature [" + gameplayFeatureName + "] has been found. Id: " + genreId);
         }
         return genreId;
     }
@@ -104,13 +102,13 @@ public class AnalyzeExistingGameplayFeatures {
      */
     public static Map<String, String> getSingleGameplayFeatureByNameMap(String gameplayFeatureNameEn){
         List<Map<String, String>> list = gameplayFeatures;
-        Map<String, String> mapSingleGenre = null;
-        int publisherPosition = getGameplayFeatureIdByName(gameplayFeatureNameEn);
+        Map<String, String> mapSingleGameplayFeature = null;
+        int gameplayFeaturePosition = getGameplayFeatureIdByName(gameplayFeatureNameEn);
         for(int i=0; i<list.size(); i++){
-            if(i == publisherPosition){
-                mapSingleGenre = list.get(i);
+            if(i == gameplayFeaturePosition){
+                mapSingleGameplayFeature = list.get(i);
             }
         }
-        return mapSingleGenre;
+        return mapSingleGameplayFeature;
     }
 }
