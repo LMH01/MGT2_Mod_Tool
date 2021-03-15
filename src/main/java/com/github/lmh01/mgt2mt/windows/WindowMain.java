@@ -56,6 +56,7 @@ public class WindowMain {
         JMenu m22Themes = new JMenu("Themes");
         JMenu m23Publisher = new JMenu("Publisher");
         JMenuItem m221AddTheme = new JMenuItem("Add Theme");
+        JMenuItem m223ImportTheme = new JMenuItem("Import Theme");
         JMenuItem m231AddPublisher = new JMenuItem("Add Publisher");
         JMenuItem m213ImportGenre = new JMenuItem("Import Genre");
         JMenuItem m233ImportPublisher = new JMenuItem("Import Publisher");
@@ -64,6 +65,7 @@ public class WindowMain {
         m21Genres.add(m213ImportGenre);
         m22Themes.add(m221AddTheme);
         m22Themes.add(M22REMOVE_THEME);
+        m22Themes.add(m223ImportTheme);
         m23Publisher.add(m231AddPublisher);
         m23Publisher.add(M232REMOVE_PUBLISHER);
         m23Publisher.add(m233ImportPublisher);
@@ -71,6 +73,7 @@ public class WindowMain {
         M212REMOVE_GENRE.addActionListener(actionEvent -> removeGenre());
         m221AddTheme.addActionListener(actionEvent -> addTheme());
         M22REMOVE_THEME.addActionListener(actionEvent -> removeTheme());
+        m223ImportTheme.addActionListener(actionEvent -> importTheme());
         m213ImportGenre.addActionListener(actionEvent -> importGenre());
         m233ImportPublisher.addActionListener(actionEvent -> importPublisher());
         M24NPC_GAMES_LIST.setToolTipText("Click to add a genre id to the NPC_Games_list.");
@@ -531,6 +534,9 @@ public class WindowMain {
             e.printStackTrace();
         }
     }
+    private static void importTheme(){
+
+    }
     private static void npcGameList(){
         try {
             AnalyzeExistingGenres.analyzeGenreFile();
@@ -787,52 +793,13 @@ public class WindowMain {
     }
     private static void importGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setDialogTitle("Choose the folder(s) where the genre.txt file is located.");
-            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-            fileChooser.setMultiSelectionEnabled(true);
-            int return_value = fileChooser.showOpenDialog(null);
-            if(return_value == JFileChooser.APPROVE_OPTION){
-                File[] files = fileChooser.getSelectedFiles();
-                for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
-                    String importGenreFolder = files[i].getPath();
-                    if(Utils.doesFolderContainFile(importGenreFolder, "genre.txt")){
-                        File fileGenreToImport = new File(importGenreFolder + "//genre.txt");
-                        BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
-                        String currentLine = br.readLine();
-                        br.close();
-                        if(currentLine.contains("[MGT2MT VERSION]")){
-                            LOGGER.info("File seams to be valid. Beginning import process.");
-                            try{
-                                String returnValue = SharingHandler.importGenre(importGenreFolder);
-                                if(returnValue.equals("false")){
-                                    JOptionPane.showMessageDialog(null, "The selected genre already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                }else{
-                                    if(!returnValue.equals("true")){
-                                        StringBuilder supportedModToolVersions = new StringBuilder();
-                                        for(String string : SharingHandler.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
-                                            supportedModToolVersions.append("[").append(string).append("]");
-                                        }
-                                        JOptionPane.showMessageDialog(null, returnValue + "\nSupported versions: " + supportedModToolVersions.toString(), "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                    }
-                                }
-                            }catch(NullPointerException e){
-                                e.printStackTrace();
-                                JOptionPane.showMessageDialog(null, "Unable to import genre:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid genre.txt file.\nPlease select the correct folder.");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the genre.txt file.\nPlease select the correct folder.");
-                    }
-                }
+            ArrayList<String> importFolders = SharingHandler.getImportFolderPath("genre.txt");
+            for(String importFolder : importFolders){
+                SharingHandler.analyzeReturnValue("genre", SharingHandler.importGenre(importFolder), SharingHandler.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS);
             }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {
+        }catch(IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to import genre:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
         }
     }
     private static void exportGenre(){
@@ -904,47 +871,13 @@ public class WindowMain {
     }
     private static void importPublisher(){
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setDialogTitle("Choose the folder(s) where the publisher.txt file is located.");
-            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-            fileChooser.setMultiSelectionEnabled(true);
-            int return_value = fileChooser.showOpenDialog(null);
-            if(return_value == JFileChooser.APPROVE_OPTION){
-                File[] files = fileChooser.getSelectedFiles();
-                for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
-                    String importPublisherFolder = files[i].getPath();
-                    if(Utils.doesFolderContainFile(importPublisherFolder, "publisher.txt")){
-                        File filePublisherToImport = new File(importPublisherFolder + "//publisher.txt");
-                        BufferedReader br = new BufferedReader(new FileReader(filePublisherToImport));
-                        String currentLine = br.readLine();
-                        String secondLine = br.readLine();
-                        br.close();
-                        if(currentLine.contains("[MGT2MT VERSION]") && secondLine.contains("[PUBLISHER START]")){
-                            LOGGER.info("File seams to be valid. Beginning import process.");
-                            String returnValue = SharingHandler.importPublisher(importPublisherFolder);
-                            if(!returnValue.equals("true")){
-                                if(returnValue.equals("false")){
-                                    JOptionPane.showMessageDialog(null, "The selected publisher already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                }else{
-                                    StringBuilder supportedModToolVersions = new StringBuilder();
-                                    for(String string : SharingHandler.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
-                                        supportedModToolVersions.append("[").append(string).append("]");
-                                    }
-                                    JOptionPane.showMessageDialog(null, returnValue + "\nSupported versions: " + supportedModToolVersions.toString(), "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                }
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid publisher.txt file.\nPlease select the correct folder.");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the publisher.txt file.\nPlease select the correct folder.");
-                    }
-                }
+            ArrayList<String> importFolders = SharingHandler.getImportFolderPath("publisher.txt");
+            for(String importFolder : importFolders){
+                SharingHandler.analyzeReturnValue("publisher", SharingHandler.importPublisher(importFolder), SharingHandler.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS);
             }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {
+        }catch(IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to import genre:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
         }
     }
     private static void exportPublisher(){
