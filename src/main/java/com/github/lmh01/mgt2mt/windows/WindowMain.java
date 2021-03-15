@@ -966,6 +966,7 @@ public class WindowMain {
     private static void exportAll(){
         String customGenres[] = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String customPublishers[] = AnalyzeExistingPublishers.getCustomPublisherString();
+        String customThemes[] = AnalyzeExistingThemes.getCustomThemesByAlphabet();
         StringBuilder exportList = new StringBuilder();
         final int ENTIRES_PER_LINE = 10;
         if(customGenres != null){
@@ -985,9 +986,25 @@ public class WindowMain {
             exportList.append(string);
             currentLineNumber++;
         }
-        exportList.append(System.getProperty("line.separator"));
+        if(customThemes != null){
+            exportList.append(System.getProperty("line.separator")).append("Themes: ");
+        }
+        currentLineNumber = 1;
+        boolean firstCustomTheme = true;
+        for(String string : customThemes){
+            if(firstCustomTheme){
+                firstCustomTheme = false;
+            }else{
+                exportList.append(", ");
+            }
+            if(currentLineNumber == ENTIRES_PER_LINE){
+                exportList.append(System.getProperty("line.separator"));
+            }
+            exportList.append(string);
+            currentLineNumber++;
+        }
         if(customPublishers != null){
-            exportList.append("Publisher: ");
+            exportList.append(System.getProperty("line.separator")).append("Publisher: ");
         }
         currentLineNumber = 1;
         boolean firstCustomPublisher = true;
@@ -1020,6 +1037,19 @@ public class WindowMain {
                         exportFailed = true;
                     }
                 }
+                boolean firstThemeExportFail = true;
+                for(String currentTheme : customThemes){
+                    if(!SharingHandler.exportTheme(AnalyzeExistingThemes.getSingleThemeByNameMap(currentTheme))){
+                        if(firstThemeExportFail){
+                            failedExports.append("Themes: ");
+                        }else{
+                            failedExports.append(", ");
+                        }
+                        failedExports.append(currentTheme);
+                        firstThemeExportFail = false;
+                        exportFailed = true;
+                    }
+                }
                 boolean firstPublisherExportFail = true;
                 for(String currentPublisher : customPublishers){
                     if(!SharingHandler.exportPublisher(currentPublisher, AnalyzeExistingPublishers.getSinglePublisherByNameMap(currentPublisher))){
@@ -1047,7 +1077,7 @@ public class WindowMain {
                 e.printStackTrace();
             }
         }
-    }//TODO Add export of themes
+    }
     private static void openExportFolder(){
         try {
             File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
