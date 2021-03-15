@@ -279,7 +279,57 @@ public class SharingHandler {
         TranslationManager.printLanguages(bw, map);
         bw.write("[GENRE COMB]" + getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
         bw.close();
+        ChangeLog.addLogEntry(23, map.get("NAME EN"));
         return true;
+    }
+
+    /**
+     * Imports the specified theme.
+     * @param importFolderPath The path for the folder where the import files are stored
+     * @return Returns "true" when the theme has been imported successfully. Returns "false" when the publisher already exists. Returns mod tool version of import theme when theme is not compatible with current mod tool version.
+     */
+    public static String importTheme(String importFolderPath) throws IOException{
+        AnalyzeExistingThemes.analyzeThemeFiles();
+        File fileThemeToImport = new File(importFolderPath + "\\theme.txt");
+        ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>();
+        List<Map<String, String>> list = Utils.parseDataFile(fileThemeToImport);
+        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
+            if(entry.getKey().equals("GENRE COMB")){
+                ArrayList<String> compatibleGenreNames = Utils.getEntriesFromString(entry.getValue());
+                for(String string : compatibleGenreNames){
+                    compatibleGenreIds.add(AnalyzeExistingGenres.getGenreIdByName(string));
+                }
+            }else{
+                map.put(entry.getKey(), entry.getValue());
+            }
+        }
+        boolean themeCanBeImported = false;
+        for(String string : THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+            if(string.equals(map.get("MGT2MT VERSION"))){
+                themeCanBeImported = true;
+            }
+        }
+        if(!themeCanBeImported){
+            return "Theme [" + map.get("NAME EN") + "] could not be imported:\nThe theme is not with the current mod tool version compatible\nTheme was exported in version: " + map.get("MGT2MT VERSION");
+        }
+        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+            if(entry.getValue().equals(map.get("NAME EN"))){
+                LOGGER.info("Theme already exists - The theme name is already taken");
+                return "false";
+            }
+        }
+        try {
+            if(JOptionPane.showConfirmDialog(null, "Add this theme?\n\n" + map.get("NAME EN"), "Add theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                EditThemeFiles.addTheme(map, compatibleGenreIds);
+                ChangeLog.addLogEntry(24, map.get("NAME EN"));
+                JOptionPane.showMessageDialog(null, "Theme " + map.get("NAME EN") + " has been added successfully");
+                WindowMain.checkActionAvailability();
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
+        }
+        return "true";
     }
 
     /**

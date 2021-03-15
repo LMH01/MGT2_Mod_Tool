@@ -88,9 +88,10 @@ public class EditThemeFiles {
                 bw.write(System.getProperty("line.separator"));
                 if(string.equals("GE")){
                     StringBuilder genreIdsToPrint = new StringBuilder();
+                    genreIdsToPrint.append(" ");
                     bw.write(map.get("NAME GE"));
                     for(Integer genreId : arrayListCompatibleGenres){
-                        genreIdsToPrint.append(" <").append(genreId).append(">");
+                        genreIdsToPrint.append("<").append(genreId).append(">");
                     }
                     bw.write(genreIdsToPrint.toString());
                 }else{

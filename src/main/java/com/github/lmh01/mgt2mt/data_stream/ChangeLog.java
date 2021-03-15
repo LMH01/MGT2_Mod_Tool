@@ -93,6 +93,8 @@ public class ChangeLog {
             case 20: logToPrint = currentSystemTime + ": Removed publisher: [" + textBody + "]"; break;
             case 21: logToPrint = currentSystemTime + ": Exported publisher: [" + textBody + "]"; break;
             case 22: logToPrint = currentSystemTime + ": Imported publisher: [" + textBody + "]"; break;
+            case 23: logToPrint = currentSystemTime + ": Exported theme: [" + textBody + "]"; break;
+            case 24: logToPrint = currentSystemTime + ": Imported theme: [" + textBody + "]"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

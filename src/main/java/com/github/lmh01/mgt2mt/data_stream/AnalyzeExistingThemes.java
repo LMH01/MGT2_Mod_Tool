@@ -195,7 +195,12 @@ public class AnalyzeExistingThemes {
                 }
                 if(currentLineNumber == positionOfThemeInFiles){
                     if(string.equals("GE")){
-                        map.put("NAME " + string, currentLine.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", ""));
+                        String nameGe = currentLine.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
+                        if(nameGe.endsWith(" ")){
+                            nameGe = nameGe.substring(0, nameGe.length() - 1);
+                        }
+                        LOGGER.info("[" + nameGe + "]");
+                        map.put("NAME " + string, nameGe);
                         map.put("GENRE COMB",currentLine.replaceAll("[a-z,A-Z]", ""));
                         if(Settings.enableDebugLogging){
                             LOGGER.info("GENRE COMB: " + currentLine.replaceAll("[a-z,A-Z]", "").replaceAll(" ", ""));

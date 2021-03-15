@@ -535,7 +535,15 @@ public class WindowMain {
         }
     }
     private static void importTheme(){
-
+        try {
+            ArrayList<String> importFolders = SharingHandler.getImportFolderPath("theme.txt");
+            for(String importFolder : importFolders){
+                SharingHandler.analyzeReturnValue("theme", SharingHandler.importTheme(importFolder), SharingHandler.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS);
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Unable to import theme:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+        }
     }
     private static void npcGameList(){
         try {
