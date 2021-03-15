@@ -15,7 +15,6 @@ public class AnalyzeExistingGameplayFeatures {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGameplayFeatures.class);
     public static List<Map<String, String>> gameplayFeatures;
-    public static Map<Integer, String> gameplayFeatureNames;
     public static int maxGameplayFeatureId = 0;
 
     /**
@@ -64,9 +63,9 @@ public class AnalyzeExistingGameplayFeatures {
     }
 
     /**
-     * Returns -1 when genre name does not exist.
+     * Returns -1 when gameplay feature name does not exist.
      * @param gameplayFeatureName The gameplay feature name
-     * @return Returns the genre id for the specified name.
+     * @return Returns the gameplay feature id for the specified name.
      */
     public static int getGameplayFeatureIdByName(String gameplayFeatureName){
         int genreId = -1;
@@ -81,5 +80,21 @@ public class AnalyzeExistingGameplayFeatures {
             LOGGER.info("Genre [" + gameplayFeatureName + "] has been found. Id: " + genreId);
         }
         return genreId;
+    }
+
+    /**
+     * @param gameplayFeatureNameEn The gameplay feature for which the map should be returned.
+     * @return Returns a map containing all values for the specified gameplay feature.
+     */
+    public static Map<String, String> getSingleGameplayFeatureByNameMap(String gameplayFeatureNameEn){
+        List<Map<String, String>> list = gameplayFeatures;
+        Map<String, String> mapSingleGenre = null;
+        int publisherPosition = getGameplayFeatureIdByName(gameplayFeatureNameEn);
+        for(int i=0; i<list.size(); i++){
+            if(i == publisherPosition){
+                mapSingleGenre = list.get(i);
+            }
+        }
+        return mapSingleGenre;
     }
 }

@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -16,6 +17,8 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Utils {
 
@@ -537,5 +540,48 @@ public class Utils {
             }
         }
         return gameplayFeaturesIds.toString();
+    }
+
+    /**
+     * Opens a window where the user can select genres.
+     * @param labelText The text that should be displayed at the top of the window
+     * @return Returns the genre ids for the selected genres as array list.
+     */
+    public static ArrayList<Integer> getSelectedGenresIds(String labelText){//TODO Make more use of this function
+        ArrayList<Integer> genreIds = new ArrayList<>();
+        JLabel labelChooseGenre = new JLabel(labelText);
+        String[] existingGenresByAlphabet;
+        existingGenresByAlphabet = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
+        JList<String> listAvailableGenres = new JList<>(existingGenresByAlphabet);
+        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
+        listAvailableGenres.setVisibleRowCount(-1);
+        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
+        scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+
+        Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
+
+        if(JOptionPane.showConfirmDialog(null, params, "Choose genre(s)", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            if(!listAvailableGenres.isSelectionEmpty()){
+                for(String string : listAvailableGenres.getSelectedValuesList()){
+                    genreIds.add(AnalyzeExistingGenres.getGenreIdByName(string));
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return genreIds;
+    }
+
+    /**
+     * @param arrayList The array list containing the ids
+     * @return Returns the ids in the respective formatting
+     */
+    public static String transformArrayListToString(ArrayList<Integer> arrayList){
+        StringBuilder returnString = new StringBuilder();
+        for(Integer integer : arrayList){
+            returnString.append("<").append(integer).append(">");
+        }
+        return returnString.toString();
     }
 }

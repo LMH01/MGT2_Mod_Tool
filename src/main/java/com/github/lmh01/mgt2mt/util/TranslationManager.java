@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TranslationManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureHelper.class);
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"IT", "RO", "RU"};
     public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "KO", "PB", "PL", "TU"};
-
     /**
      * @return Returns a array list with the user input that should be used as translation. See cases for translation position in array list.
      */
@@ -106,4 +106,41 @@ public class TranslationManager {
         }
     }
 
+    /**
+     * @param nameEN The name that should be added
+     * @return Returns a map with the translation keys where every name translation is set as the english one
+     */
+    public static Map<String, String> getDefaultNameTranslations(String nameEN){
+        Map<String, String> returnMap = new HashMap<>();
+        for(String string : TranslationManager.TRANSLATION_KEYS){
+            returnMap.put("NAME " + string, nameEN);
+        }
+        return returnMap;
+    }
+
+    /**
+     * @param descriptionEN The description that should be added
+     * @return Returns a map with the translation keys where every description translation is set as the english one
+     */
+    public static Map<String, String> getDefaultDescriptionTranslations(String descriptionEN){
+        Map<String, String> returnMap = new HashMap<>();
+        for(String string : TranslationManager.TRANSLATION_KEYS){
+            returnMap.put("DESC " + string, descriptionEN);
+        }
+        return returnMap;
+    }
+
+    /**
+     * The input map just has the language keys and the translations. This function changes the key to include the type. Eg. input map is "Key: GE" "Value: Hey" this is transformed to "Key: NAME GE" "Value Hey"
+     * @param map The input map
+     * @param type NAME or DESC
+     * @return
+     */
+    public static Map<String, String> transformTranslationMap(Map<String, String> map, String type){
+        Map<String, String> outputMap = new HashMap<>();
+        for(Map.Entry<String, String> entry : map.entrySet()){
+            outputMap.put(type + " " + entry.getKey(), entry.getValue());
+        }
+        return outputMap;
+    }
 }
