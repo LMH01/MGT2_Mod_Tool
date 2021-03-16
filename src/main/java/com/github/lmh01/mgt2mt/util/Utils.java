@@ -551,7 +551,7 @@ public class Utils {
      * @param labelText The text that should be displayed at the top of the window
      * @return Returns the genre ids for the selected genres as array list.
      */
-    public static ArrayList<Integer> getSelectedGenresIds(String labelText){//TODO Make more use of this function
+    public static ArrayList<Integer> getSelectedGenresIds(String labelText){
         ArrayList<Integer> genreIds = new ArrayList<>();
         JLabel labelChooseGenre = new JLabel(labelText);
         String[] existingGenresByAlphabet;

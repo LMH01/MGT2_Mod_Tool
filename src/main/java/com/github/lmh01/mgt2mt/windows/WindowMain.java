@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class WindowMain {//TODO Clean up main window -> Move all functions from below in new/existing classes
+public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static final JFrame frame = new JFrame("MGT2 Mod Tool");
     private static final JMenuItem M221ADD_GENRE = new JMenuItem("Add Genre");
@@ -87,9 +87,9 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m21ImportAll.setToolTipText("Click to select a folder where all your files are located that should be imported");
         m21ImportAll.addActionListener(actionEvent -> SharingManager.importAll());
         M221ADD_GENRE.addActionListener(actionEvent -> addGenre());
-        M222REMOVE_GENRE.addActionListener(actionEvent -> removeGenre());
+        M222REMOVE_GENRE.addActionListener(actionEvent -> OperationHelper.process(EditGenreFile::removeGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "removed", "Remove", false));
         m231AddTheme.addActionListener(actionEvent -> addTheme());
-        M232REMOVE_THEME.addActionListener(actionEvent -> removeTheme());
+        M232REMOVE_THEME.addActionListener(actionEvent ->  OperationHelper.process(EditThemeFiles::removeTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "theme", "removed", "Remove", false));
         m233ImportTheme.addActionListener(actionEvent -> SharingManager.importThings("theme.txt", "theme", (string) -> SharingHandler.importTheme(string, true), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
         m223ImportGenre.addActionListener(actionEvent -> SharingManager.importThings("genre.txt", "genre", (string) -> SharingHandler.importGenre(string, true), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
         m243ImportPublisher.addActionListener(actionEvent -> SharingManager.importThings("publisher.txt", "publisher", (string) -> SharingHandler.importPublisher(string, true), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
@@ -100,11 +100,11 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m241AddPublisher.setToolTipText("Click to add a publisher to MGT2");
         m241AddPublisher.addActionListener(actionEvent -> addPublisher());
         M242REMOVE_PUBLISHER.setToolTipText("Click to remove a publisher from MGT2");
-        M242REMOVE_PUBLISHER.addActionListener(actionEvent -> removePublisher());
+        M242REMOVE_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(EditPublishersFile::removePublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "removed", "Remove", false));
         m261AddGameplayFeature.addActionListener(actionEvent -> GameplayFeatureHelper.addGameplayFeature());
-        M262REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> GameplayFeatureHelper.removeGameplayFeature());
+        M262REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(EditGameplayFeaturesFile::removeGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "removed", "Remove", false));
         m251AddEngineFeature.addActionListener(actionEvent -> EngineFeatureHelper.addEngineFeature());
-        M252REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> EngineFeatureHelper.removeEngineFeature());
+        M252REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(EditEngineFeaturesFile::removeEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "removed", "Remove", false));
         JMenuItem m28AddCompanyIcon = new JMenuItem("Add Company Icon");
         m28AddCompanyIcon.addActionListener(actionEvent -> addCompanyIcon());
         mb.add(m2Mods);
@@ -124,11 +124,11 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m31Export.add(M314EXPORT_ENGINE_FEATURE);
         m31Export.add(M315EXPORT_GAMEPLAY_FEATURE);
         m31Export.add(M316EXPORT_ALL);
-        M311EXPORT_GENRE.addActionListener(actionEvent -> exportGenre());
-        M312EXPORT_PUBLISHER.addActionListener(actionEvent -> exportPublisher());
-        M313EXPORT_THEME.addActionListener(actionEvent -> exportTheme());
-        M314EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> SharingHandler.export((name) -> SharingHandler.exportEngineFeature(name), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature"));
-        M315EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> SharingHandler.export((name) -> SharingHandler.exportGameplayFeature(name), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature"));
+        M311EXPORT_GENRE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true));
+        M312EXPORT_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportPublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "exported", "Export", true));
+        M313EXPORT_THEME.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "themes", "exported", "Export", true));
+        M314EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "exported", "Export", true));
+        M315EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
         M316EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> openExportFolder());
@@ -341,68 +341,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             e.printStackTrace();
         }
     }
-    private static void removeGenre(){
-        try {
-            AnalyzeExistingGenres.analyzeGenreFile();
-            Backup.createBackup(Utils.getGenreFile());
-            boolean noGenreToRemoveAvailable = true;
-            JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be removed:");
-            String[] string;
-            if(Settings.disableSafetyFeatures){
-                string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
-                noGenreToRemoveAvailable = false;
-            }else{
-                string = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                if(string.length != 0){
-                    noGenreToRemoveAvailable = false;
-                }
-            }
-            JList<String> listAvailableGenres = new JList<>(string);
-            listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-            listAvailableGenres.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
-
-            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
-
-            if(!noGenreToRemoveAvailable){
-                if(JOptionPane.showConfirmDialog(null, params, "Remove genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailableGenres.isSelectionEmpty()){
-                        boolean exportFailed = false;
-                        StringBuilder failedGenreRemoves = new StringBuilder();
-                        for(String currentGenre : listAvailableGenres.getSelectedValuesList()){
-                            try{
-                                LOGGER.info("Removing genre: " + currentGenre);
-                                ImageFileHandler.removeImageFiles(currentGenre, AnalyzeExistingGenres.getGenreIdByName(currentGenre));
-                                AnalyzeExistingGenres.analyzeGenreFile();
-                                EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
-                                EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, null);
-                                EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
-                                NPCGameListChanger.editNPCGames(AnalyzeExistingGenres.getGenreIdByName(currentGenre), false, 0);
-                            }catch (IOException e){
-                                failedGenreRemoves.append(currentGenre).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                                exportFailed = true;
-                            }
-                        }
-                        if(exportFailed){
-                            JOptionPane.showMessageDialog(null, "Something went wrong wile removing genres.\\nThe following genres where not removed:\\n" + failedGenreRemoves, "Genre removal incomplete", JOptionPane.WARNING_MESSAGE);
-                        }else{
-                            JOptionPane.showMessageDialog(null, "All selected genres have been removed successfully!", "Genre removal successful", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Unable to remove genre:\nThere is no custom genre that could be removed.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while exporting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-        checkActionAvailability();
-    }
     private static void addTheme(){
         try {
             AnalyzeExistingThemes.analyzeThemeFiles();
@@ -489,114 +427,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             e.printStackTrace();
         }
         checkActionAvailability();
-    }
-    private static void removeTheme(){
-        try {
-            AnalyzeExistingThemes.analyzeThemeFiles();
-            String[] string;
-            if(Settings.disableSafetyFeatures){
-                string = AnalyzeExistingThemes.getThemesByAlphabet(true);
-            }else{
-                string = AnalyzeExistingThemes.getCustomThemesByAlphabet();
-            }
-            JList<String> listAvailableThemes = new JList<>(string);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-            listAvailableThemes.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableThemes = new JScrollPane(listAvailableThemes);
-            scrollPaneAvailableThemes.setPreferredSize(new Dimension(315,140));
-            JLabel labelEnterThemeName = new JLabel("Select the theme from the list that should be removed:");
-
-            Object[] params = {labelEnterThemeName, scrollPaneAvailableThemes};
-            boolean breakLoop = false;
-            while(!breakLoop){
-                if(JOptionPane.showConfirmDialog(null, params, "Remove theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    breakLoop = true;
-                    Backup.createThemeFilesBackup(false);
-                    for(String themeToRemove : listAvailableThemes.getSelectedValuesList()){
-                        LOGGER.info("Theme to remove: " + themeToRemove);
-                        AnalyzeExistingThemes.analyzeThemeFiles();
-                        if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to remove this theme?:\n" + themeToRemove, "Remove theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                            EditThemeFiles.removeTheme(AnalyzeExistingThemes.getPositionOfThemeInFile(themeToRemove));
-                            JOptionPane.showMessageDialog(null, "Theme " + themeToRemove + " has been removed successfully!");
-                            ChangeLog.addLogEntry(16, themeToRemove);
-                        }
-                    }
-                }else{
-                    breakLoop = true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        checkActionAvailability();
-    }
-    private static void exportTheme(){
-        try {
-            boolean noThemeToExportAvailable = true;
-            JLabel labelChooseTheme = new JLabel("Select the theme(s) that should be exported:");
-            String[] string;
-            if(Settings.disableSafetyFeatures){
-                string = AnalyzeExistingThemes.getThemesByAlphabet(false);
-                noThemeToExportAvailable = false;
-            }else{
-                string = AnalyzeExistingThemes.getCustomThemesByAlphabet();
-                if(string.length != 0){
-                    noThemeToExportAvailable = false;
-                }
-            }
-            JList<String> listAvailableThemes = new JList<>(string);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-            listAvailableThemes.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableThemes = new JScrollPane(listAvailableThemes);
-            scrollPaneAvailableThemes.setPreferredSize(new Dimension(315,140));
-
-            Object[] params = {labelChooseTheme, scrollPaneAvailableThemes};
-
-            if(!noThemeToExportAvailable){
-                if(JOptionPane.showConfirmDialog(null, params, "Export theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailableThemes.isSelectionEmpty()){
-                        boolean exportFailed = false;
-                        boolean multipleThemesToExport = false;
-                        if(listAvailableThemes.getSelectedValuesList().size() > 0){
-                            multipleThemesToExport = true;
-                        }
-                        int numberOfThemesToExport = listAvailableThemes.getSelectedValuesList().size();
-                        StringBuilder failedThemeExports = new StringBuilder();
-                        for(int i=0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
-                            String currentTheme = listAvailableThemes.getSelectedValuesList().get(i);
-                            if(!SharingHandler.exportTheme(currentTheme)){
-                                if(!multipleThemesToExport){
-                                    JOptionPane.showMessageDialog(null, "The selected theme has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                }
-                                failedThemeExports.append(currentTheme).append(" - The selected theme has already been exported").append(System.getProperty("line.separator"));
-                                exportFailed = true;
-                            }
-                            numberOfThemesToExport--;
-                        }
-                        if(numberOfThemesToExport == 0){
-                            if(exportFailed){
-                                if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting themes.\nThe following themes where not exported:\n" + failedThemeExports + "\n\nDo you want to open the folder where it has been saved?", "Theme exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                                }
-                            }else{
-                                if(JOptionPane.showConfirmDialog(null, "All selected themes have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Theme exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                                }
-                            }
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Please select a theme first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Unable to export theme:\nThere is no custom theme that could be exported.\nPlease add a theme first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while exporting theme: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
     }
     private static void npcGameList(){
         try {
@@ -774,68 +604,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         }
         checkActionAvailability();
     }
-    private static void removePublisher(){
-        try {
-            AnalyzeExistingPublishers.analyzePublisherFile();
-            Backup.createBackup(Utils.getPublisherFile());
-            boolean noPublisherToRemoveAvailable = true;
-            JLabel labelChooseGenre = new JLabel("Select the publisher(s) that should be removed:");
-            String[] string;
-            if(Settings.disableSafetyFeatures){
-                string = AnalyzeExistingPublishers.getPublisherString();
-                noPublisherToRemoveAvailable = false;
-            }else{
-                string = AnalyzeExistingPublishers.getCustomPublisherString();
-                if(string.length != 0){
-                    noPublisherToRemoveAvailable = false;
-                }
-            }
-            JList<String> listAvailablePublishers = new JList<>(string);
-            listAvailablePublishers.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailablePublishers.setLayoutOrientation(JList.VERTICAL);
-            listAvailablePublishers.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailablePublishers);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
-
-            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
-
-            if(!noPublisherToRemoveAvailable){
-                if(JOptionPane.showConfirmDialog(null, params, "Remove publishers", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailablePublishers.isSelectionEmpty()){
-                        boolean exportFailed = false;
-                        int numberOfPublishersToRemove = listAvailablePublishers.getSelectedValuesList().size();
-                        StringBuilder failedPublishersRemoves = new StringBuilder();
-                        for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
-                            String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
-                            try{
-                                EditPublishersFile.removePublisher(currentPublisher);
-                                ChangeLog.addLogEntry(20, currentPublisher);
-                            }catch (IOException e){
-                                failedPublishersRemoves.append(currentPublisher).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                                exportFailed = true;
-                            }
-                            numberOfPublishersToRemove--;
-                        }
-                        if(numberOfPublishersToRemove == 0){
-                            if(exportFailed){
-                                JOptionPane.showMessageDialog(null, "Something went wrong wile removing publishers.\\nThe following publishers where not removed:\n" + failedPublishersRemoves, "Publisher removal incomplete", JOptionPane.WARNING_MESSAGE);
-                            }else{
-                                JOptionPane.showMessageDialog(null, "All selected publishers have been removed successfully!", "Publisher removal successful", JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Please select a publisher first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Unable to remove publisher:\nThere is no custom publisher that could be removed.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while removing publisher: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-        checkActionAvailability();
-    }
     private static void addCompanyIcon(){
         String imageFilePath = Utils.getImagePath();
         File imageFileSource = new File(imageFilePath);
@@ -852,146 +620,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             JOptionPane.showMessageDialog(null, "Unable to add image file: Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private static void exportGenre(){
-        try {
-            boolean noGenreToExportAvailable = true;
-            JLabel labelChooseGenre = new JLabel("Select the genre(s) that should be exported:");
-            String[] string;
-            if(Settings.disableSafetyFeatures){
-                string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
-                noGenreToExportAvailable = false;
-            }else{
-                string = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                if(string.length != 0){
-                    noGenreToExportAvailable = false;
-                }
-            }
-            JList<String> listAvailableGenres = new JList<>(string);
-            listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-            listAvailableGenres.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
-
-            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
-
-            if(!noGenreToExportAvailable){
-                if(JOptionPane.showConfirmDialog(null, params, "Export genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailableGenres.isSelectionEmpty()){
-                        boolean exportFailed = false;
-                        boolean multipleGenresToExport = false;
-                        if(listAvailableGenres.getSelectedValuesList().size() > 0){
-                            multipleGenresToExport = true;
-                        }
-                        int numberOfGenresToExport = listAvailableGenres.getSelectedValuesList().size();
-                        StringBuilder failedGenreExports = new StringBuilder();
-                        for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
-                            String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
-                            if(!SharingHandler.exportGenre(currentGenre)){
-                                if(!multipleGenresToExport){
-                                    JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                }
-                                failedGenreExports.append(currentGenre).append(" - The selected genre has already been exported").append(System.getProperty("line.separator"));
-                                exportFailed = true;
-                            }
-                            numberOfGenresToExport--;
-                        }
-                        if(numberOfGenresToExport == 0){
-                            if(exportFailed){
-                                if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting genres.\nThe following genres where not exported:\n" + failedGenreExports + "\n\nDo you want to open the folder where it has been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                                }
-                            }else{
-                                if(JOptionPane.showConfirmDialog(null, "All selected genres have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                                }
-                            }
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Unable to export genre:\nThere is no custom genre that could be exported.\nPlease add a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while exporting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }
-    private static void exportPublisher(){
-        try {
-            AnalyzeExistingPublishers.analyzePublisherFile();
-            boolean noPublisherToExportAvailable = true;
-            JLabel labelChooseGenre = new JLabel("Select the publisher(s) that should be exported:");
-            String[] string;
-            if(Settings.disableSafetyFeatures){
-                string = AnalyzeExistingPublishers.getPublisherString();
-                noPublisherToExportAvailable = false;
-            }else{
-                string = AnalyzeExistingPublishers.getCustomPublisherString();
-                if(string.length != 0){
-                    noPublisherToExportAvailable = false;
-                }
-            }
-            JList<String> listAvailablePublishers = new JList<>(string);
-            listAvailablePublishers.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailablePublishers.setLayoutOrientation(JList.VERTICAL);
-            listAvailablePublishers.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailablePublishers);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
-
-            Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
-
-            if(!noPublisherToExportAvailable){
-                if(JOptionPane.showConfirmDialog(null, params, "Export publishers", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!listAvailablePublishers.isSelectionEmpty()){
-                        boolean exportFailed = false;
-                        boolean multipleGenresToExport = false;
-                        if(listAvailablePublishers.getSelectedValuesList().size() > 0){
-                            multipleGenresToExport = true;
-                        }
-                        int numberOfPublishersToExport = listAvailablePublishers.getSelectedValuesList().size();
-                        StringBuilder failedPublishersExport = new StringBuilder();
-                        for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
-                            String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
-                            try{
-                                if(!SharingHandler.exportPublisher(currentPublisher)){
-                                    if(!multipleGenresToExport){
-                                        JOptionPane.showMessageDialog(null, "The selected publisher has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                                    }
-                                    failedPublishersExport.append(currentPublisher).append(" - The selected publisher has already been exported").append(System.getProperty("line.separator"));
-                                    exportFailed = true;
-                                }
-                            }catch (IOException e){
-                                failedPublishersExport.append(currentPublisher).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                                exportFailed = true;
-                            }
-                            numberOfPublishersToExport--;
-                        }
-                        if(numberOfPublishersToExport == 0){
-                            if(exportFailed){
-                                JOptionPane.showMessageDialog(null, "Something went wrong wile exporting publishers.\nThe following publishers where not exported:\n" + failedPublishersExport, "Publisher removal incomplete", JOptionPane.WARNING_MESSAGE);
-                            }else{
-                                if(JOptionPane.showConfirmDialog(null, "All selected publishers have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Publisher export successful", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                                }
-                            }
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Please select a publisher first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Unable to export publisher:\nThere is no custom publisher that could be exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while exporting publisher: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-        checkActionAvailability();
-    }
-
     private static void openExportFolder(){
         try {
             File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
@@ -1194,7 +822,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
     private static void showActiveThemes(){
         try {
             AnalyzeExistingThemes.analyzeThemeFiles();
-            String[] string = AnalyzeExistingThemes.getThemesByAlphabet(false);
+            String[] string = AnalyzeExistingThemes.getThemesByAlphabet();
 
             JList<String> listAvailableThemes = new JList<>(string);
             listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);

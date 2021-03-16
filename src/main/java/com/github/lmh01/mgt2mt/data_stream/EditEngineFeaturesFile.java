@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,9 +63,10 @@ public class EditEngineFeaturesFile {
 
     /**
      * Removes the input engine feature id from the EngineFeatures.txt file
-     * @param engineFeatureId The gameplay feature id for which the gameplay feature should be removed
+     * @param engineFeatureName The gameplay feature id for which the gameplay feature should be removed
      */
-    public static void removeEngineFeature(int engineFeatureId) throws IOException {
+    public static boolean removeEngineFeature(String engineFeatureName) throws IOException {
+        int engineFeatureId = AnalyzeExistingEngineFeatures.getEngineFeatureIdByName(engineFeatureName);
         AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
         LOGGER.info("Removing engine feature...");
         File engineFeatureFile = Utils.getEngineFeaturesFile();
@@ -94,5 +96,7 @@ public class EditEngineFeaturesFile {
         }
         bw.write("[EOF]");
         bw.close();
+        WindowMain.checkActionAvailability();
+        return true;
     }
 }

@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -28,10 +29,10 @@ public class EditThemeFiles {
 
     /**
      * Removes a theme from the theme files.
-     * @param removeThemePosition The position where the theme stands in the theme files
+     * @param themeNameEn The theme name that should be removed
      */
-    public static void removeTheme(int removeThemePosition) throws IOException {
-        editThemeFiles(null, null, false, removeThemePosition);
+    public static boolean removeTheme(String themeNameEn) throws IOException {
+        return editThemeFiles(null, null, false, AnalyzeExistingThemes.getPositionOfThemeInFile(themeNameEn));
     }
 
     /**
@@ -41,7 +42,7 @@ public class EditThemeFiles {
      * @param addTheme True when the theme should be added. False when the theme should be removed.
      * @param removeThemePosition The position where the theme is positioned that should be removed.
      */
-    public static void editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition) throws IOException {
+    public static boolean editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition) throws IOException {
         for(String string : TranslationManager.TRANSLATION_KEYS){
             File themeFile = Utils.getThemeFile(string);
             Map<Integer, String> currentThemeFileContent;
@@ -84,23 +85,31 @@ public class EditThemeFiles {
                 }
                 currentLine++;
             }
-            if(addTheme){
-                bw.write(System.getProperty("line.separator"));
-                if(string.equals("GE")){
-                    StringBuilder genreIdsToPrint = new StringBuilder();
-                    genreIdsToPrint.append(" ");
-                    bw.write(map.get("NAME GE"));
-                    for(Integer genreId : arrayListCompatibleGenres){
-                        genreIdsToPrint.append("<").append(genreId).append(">");
+            try{
+                if(addTheme){
+                    bw.write(System.getProperty("line.separator"));
+                    if(string.equals("GE")){
+                        StringBuilder genreIdsToPrint = new StringBuilder();
+                        genreIdsToPrint.append(" ");
+                        bw.write(map.get("NAME GE"));
+                        for(Integer genreId : arrayListCompatibleGenres){
+                            genreIdsToPrint.append("<").append(genreId).append(">");
+                        }
+                        bw.write(genreIdsToPrint.toString());
+                    }else{
+                        if(Settings.enableDebugLogging){
+                            LOGGER.info("current string: " + string);
+                        }
+                        bw.write(map.get("NAME " + string));
                     }
-                    bw.write(genreIdsToPrint.toString());
-                }else{
-                    LOGGER.info("current string: " + string);
-                    bw.write(map.get("NAME " + string));
                 }
+            }catch(NullPointerException ignored){
+
             }
             bw.close();
         }
+        WindowMain.checkActionAvailability();
+        return true;
     }
 
     /**

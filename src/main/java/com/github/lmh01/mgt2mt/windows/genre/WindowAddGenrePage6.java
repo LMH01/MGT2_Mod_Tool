@@ -99,7 +99,7 @@ public class WindowAddGenrePage6 extends JFrame{
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : AnalyzeExistingThemes.getThemesByAlphabet(false)){
+        for(String string : AnalyzeExistingThemes.getThemesByAlphabet()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("THEME COMB")){
                 if(GenreManager.mapNewGenre.get("THEME COMB").contains(string)) {

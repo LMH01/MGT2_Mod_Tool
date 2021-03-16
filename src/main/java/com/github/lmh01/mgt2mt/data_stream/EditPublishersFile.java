@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -82,7 +83,7 @@ public class EditPublishersFile {
      * Removes the given publisher from the publisher list.
      * @param publisherNameEN The english publisher name.
      */
-    public static void removePublisher(String publisherNameEN) throws IOException {
+    public static boolean removePublisher(String publisherNameEN) throws IOException {
         AnalyzeExistingPublishers.analyzePublisherFile();
         LOGGER.info("Removing publisher: " + publisherNameEN);
         File publisherFile = Utils.getPublisherFile();
@@ -128,6 +129,8 @@ public class EditPublishersFile {
                 LOGGER.info("Image file for publisher " + publisherNameEN + " has been removed.");
             }
         }
+        WindowMain.checkActionAvailability();
+        return true;
     }
 
     /**
