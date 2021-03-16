@@ -45,14 +45,14 @@ public class WindowAddGenrePage11 extends JFrame{
             if(textFieldImagePath.getText().isEmpty()){
                 if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.arrayListScreenshotFiles, false, genreIcon);
+                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.arrayListScreenshotFiles, false, genreIcon, true);
                     FRAME.dispose();
                 }
             }else{
                 String imageFilePath = getGenreImageFilePath(true, false);
                 if(!imageFilePath.equals("error")){
                     genreIcon = new File(imageFilePath);
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.arrayListScreenshotFiles, false, genreIcon);
+                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.arrayListScreenshotFiles, false, genreIcon, true);
                     FRAME.dispose();
                 }else if(textFieldImagePath.getText().isEmpty()){
 

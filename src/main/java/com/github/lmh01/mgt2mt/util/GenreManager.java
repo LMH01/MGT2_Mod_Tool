@@ -103,8 +103,9 @@ public class GenreManager {
      * @param genreScreenshots Array list containing all screenshot files
      * @param showSummaryFromImport True when called from genre import
      * @param genreIcon The genre icon file
+     * @param showMessages True when the messages should be shown. False if not.
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon){
+    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = "Your genre is ready:\n\n" +
@@ -134,8 +135,12 @@ public class GenreManager {
                 "Control: " + map.get("CONTROL") + "%\n";
         int returnValue;
         if(showSummaryFromImport){
-            String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no cancel this operation.";
-            returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+            if(showMessages){
+                String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no cancel this operation.";
+                returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+            }else{
+                returnValue = 0;
+            }
         }else{
             String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.";
             returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
@@ -161,7 +166,7 @@ public class GenreManager {
                     EditGameplayFeaturesFile.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
                     AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
                     EditGameplayFeaturesFile.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
-                    GenreManager.genreAdded(map, showSummaryFromImport, genreIcon);
+                    GenreManager.genreAdded(map, showSummaryFromImport, genreIcon, showMessages);
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
@@ -300,7 +305,7 @@ public class GenreManager {
      * @param showSummaryFromImport determines what log information to write to the log file.
      * @param genreIcon The genre icon.
      */
-    public static void genreAdded(Map<String, String> map, boolean showSummaryFromImport, File genreIcon){
+    public static void genreAdded(Map<String, String> map, boolean showSummaryFromImport, File genreIcon, boolean showMessages) throws IOException {
         String name = map.get("NAME EN");
         int id = AnalyzeExistingGenres.getFreeGenreID();
         if(showSummaryFromImport){
@@ -309,14 +314,18 @@ public class GenreManager {
             ChangeLog.addLogEntry(18,  name);
         }
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
-        if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
-            try {
-                NPCGameListChanger.editNPCGames(id, true, 20);
-                JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+        if(showMessages){
+            if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
+                try {
+                    NPCGameListChanger.editNPCGames(id, true, 20);
+                    JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                }
             }
+        }else{
+            NPCGameListChanger.editNPCGames(id,true, 20);
         }
         WindowMain.checkActionAvailability();
     }

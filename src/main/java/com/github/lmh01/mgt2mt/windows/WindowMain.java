@@ -90,11 +90,11 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         M222REMOVE_GENRE.addActionListener(actionEvent -> removeGenre());
         m231AddTheme.addActionListener(actionEvent -> addTheme());
         M232REMOVE_THEME.addActionListener(actionEvent -> removeTheme());
-        m233ImportTheme.addActionListener(actionEvent -> SharingManager.importThings("theme.txt", "theme", SharingHandler::importTheme, SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
-        m223ImportGenre.addActionListener(actionEvent -> SharingManager.importThings("genre.txt", "genre", SharingHandler::importGenre, SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
-        m243ImportPublisher.addActionListener(actionEvent -> SharingManager.importThings("publisher.txt", "publisher", SharingHandler::importPublisher, SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
-        m253ImportEngineFeature.addActionListener(actionEvent -> SharingManager.importThings("engineFeature.txt", "engine feature", SharingHandler::importEngineFeature, SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
-        m263ImportGameplayFeature.addActionListener(actionEvent -> SharingManager.importThings("gameplayFeature.txt", "gameplay feature", SharingHandler::importGameplayFeature, SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m233ImportTheme.addActionListener(actionEvent -> SharingManager.importThings("theme.txt", "theme", (string) -> SharingHandler.importTheme(string, true), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m223ImportGenre.addActionListener(actionEvent -> SharingManager.importThings("genre.txt", "genre", (string) -> SharingHandler.importGenre(string, true), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m243ImportPublisher.addActionListener(actionEvent -> SharingManager.importThings("publisher.txt", "publisher", (string) -> SharingHandler.importPublisher(string, true), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m253ImportEngineFeature.addActionListener(actionEvent -> SharingManager.importThings("engineFeature.txt", "engine feature", (string) -> SharingHandler.importEngineFeature(string, true), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m263ImportGameplayFeature.addActionListener(actionEvent -> SharingManager.importThings("gameplayFeature.txt", "gameplay feature", (string) -> SharingHandler.importGameplayFeature(string, true), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
         M27NPC_GAMES_LIST.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         M27NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
         m241AddPublisher.setToolTipText("Click to add a publisher to MGT2");

@@ -3,9 +3,9 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.interfaces.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
+import jdk.nashorn.internal.scripts.JO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -38,8 +38,8 @@ public class SharingManager {
      * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      */
-    public static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
-        importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null);
+    public static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
+        return importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null);
     }
 
     /**
@@ -50,8 +50,8 @@ public class SharingManager {
      * @param importFolder The import folder where the files are stored.
      */
 
-    public static void importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder){
-        importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder);
+    public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder){
+        return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SharingManager {
      * @param askForImportFolder  If true the user will be asked to select a folder. If false the import folder will be used that passed as argument.
      * @param importFolder The import folder where the files are stored. The folder is used when ask for import folder is false.
      */
-    private static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder){
+    private static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder){
         try {
             if(askForImportFolder){
                 ArrayList<String> importFolders = getImportFolderPath(fileName);
@@ -77,9 +77,11 @@ public class SharingManager {
             }else{
                 analyzeReturnValue(importName, importFunction.getReturnValue(importFolder.getPath()), compatibleModToolVersions);
             }
+            return true;
         }catch(IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
@@ -93,9 +95,10 @@ public class SharingManager {
      * @param freeId The function that returns the free id
      * @param changelogId The id that should be used when the changelog file is being edited
      * @param summary The summary function that should be used
+     * @param showMessages True when the messages should be shown. False if not.
      * @return
      */
-    public static String importGeneral(String importFile, String importName, String importFolderPath, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary) throws IOException{
+    public static String importGeneral(String importFile, String importName, String importFolderPath, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary, boolean showMessages) throws IOException{
         File fileToImport = new File(importFolderPath + "\\" + importFile);
         Map<String, String> map = Utils.parseDataFile(fileToImport).get(0);
         map.put("ID", Integer.toString(freeId.getFreeId()));
@@ -116,10 +119,17 @@ public class SharingManager {
                 }
             }
         }
-        boolean addFeature = summary.showSummary(map);
+        boolean addFeature;
+        if(showMessages){
+            addFeature = summary.showSummary(map);
+        }else{
+            addFeature = true;
+        }
         if(addFeature){
             importFunction.importer(map);
-            JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] has been added successfully");
+            if(showMessages){
+                JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] has been added successfully");
+            }
             ChangeLog.addLogEntry(changelogId, map.get("NAME EN"));
             WindowMain.checkActionAvailability();
         }
@@ -133,8 +143,12 @@ public class SharingManager {
     public static ArrayList<File> getFoldersAsFile(){
         ArrayList<String> arrayList = getImportFolderPath("import", true);
         ArrayList<File> files = new ArrayList<>();
-        for(String string : arrayList){
-            files.add(new File(string));
+        try{
+            for(String string : arrayList){
+                files.add(new File(string));
+            }
+        }catch(NullPointerException ignored){
+            return null;
         }
         return files;
     }
@@ -235,67 +249,100 @@ public class SharingManager {
         ArrayList<File> genres = new ArrayList<>();
         ArrayList<File> publishers = new ArrayList<>();
         ArrayList<File> themes = new ArrayList<>();
+        if(directories != null){
+            try {
+                for(File file : directories){
+                    Path start = Paths.get(file.getPath());
+                    try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
+                        List<String> collect = stream
+                                .map(String::valueOf)
+                                .sorted()
+                                .collect(Collectors.toList());
 
-        try {
-            Path start = Paths.get(directories.get(0).getPath());
-            try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
-                List<String> collect = stream
-                        .map(String::valueOf)
-                        .sorted()
-                        .collect(Collectors.toList());
-
-                collect.forEach((string) -> {
-                    if(string.contains("engineFeature.txt")){
-                        engineFeatures.add(new File(string));
-                    }else if(string.contains("gameplayFeature.txt")){
-                        gameplayFeatures.add(new File(string));
-                    }else if(string.contains("genre.txt")){
-                        genres.add(new File(string));
-                    }else if(string.contains("publisher.txt")){
-                        publishers.add(new File(string));
-                    }else if(string.contains("theme.txt")){
-                        themes.add(new File(string));
+                        collect.forEach((string) -> {
+                            if(string.contains("engineFeature.txt")){
+                                LOGGER.info("engineFeature: " + string);
+                                engineFeatures.add(new File(string));
+                            }else if(string.contains("gameplayFeature.txt")){
+                                LOGGER.info("gameplayFeature: " + string);
+                                gameplayFeatures.add(new File(string));
+                            }else if(string.contains("genre.txt")){
+                                genres.add(new File(string));
+                            }else if(string.contains("publisher.txt")){
+                                publishers.add(new File(string));
+                            }else if(string.contains("theme.txt")){
+                                themes.add(new File(string));
+                            }
+                        });
                     }
-                });
+                }
+            } catch (IOException e)  {
+                e.printStackTrace();
+            }catch (NullPointerException ignored){
+
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        StringBuilder message = new StringBuilder();
-        message.append("The following object to import have been found:").append(System.getProperty("line.separator"));
-        if(!engineFeatures.isEmpty()){
-            message.append("Engine features: ").append(engineFeatures.size()).append(System.getProperty("line.separator"));
-        }
-        if(!gameplayFeatures.isEmpty()){
-            message.append("Gameplay features: ").append(gameplayFeatures.size()).append(System.getProperty("line.separator"));
-        }
-        if(!genres.isEmpty()){
-            message.append("Genres: ").append(genres.size()).append(System.getProperty("line.separator"));
-        }
-        if(!publishers.isEmpty()){
-            message.append("Publishers: ").append(publishers.size()).append(System.getProperty("line.separator"));
-        }
-        if(!themes.isEmpty()){
-            message.append("Themes: ").append(themes.size()).append(System.getProperty("line.separator"));
-        }
-        message.append(System.getProperty("line.separator")).append("Do you want to start the import process?");
-        if(JOptionPane.showConfirmDialog(null, message, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            for(File file : engineFeatures){
-                importThings("engine feature",SharingHandler::importEngineFeature, SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
+            StringBuilder message = new StringBuilder();
+            if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty()) {
+                message.append("<html>The following objects to import have been found:").append("<br>");
+                if(!engineFeatures.isEmpty()){
+                    message.append("Engine features: ").append(engineFeatures.size()).append("<br>");
+                }
+                if(!gameplayFeatures.isEmpty()){
+                    message.append("Gameplay features: ").append(gameplayFeatures.size()).append("<br>");
+                }
+                if(!genres.isEmpty()){
+                    message.append("Genres: ").append(genres.size()).append("<br>");
+                }
+                if(!publishers.isEmpty()){
+                    message.append("Publishers: ").append(publishers.size()).append("<br>");
+                }
+                if(!themes.isEmpty()){
+                    message.append("Themes: ").append(themes.size()).append("<br>");
+                }
+                message.append("<br>").append("Do you want to start the import process?");
+                JLabel labelMessage = new JLabel(message.toString());
+                JCheckBox checkBoxDisableImportPopups = new JCheckBox("Disable popups");
+                checkBoxDisableImportPopups.setToolTipText("<html>Check to disable confirm messages that something can be imported.<br>If checked only error messages are shown");
+                Object[] params = {labelMessage, checkBoxDisableImportPopups};
+
+                if(JOptionPane.showConfirmDialog(null, params, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                    boolean errorOccurred = false;
+                    for(File file : engineFeatures){
+                        if(!importThings("engine feature", (string) -> SharingHandler.importEngineFeature(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                            errorOccurred = true;
+                        }
+                    }
+                    for(File file : gameplayFeatures){
+                        if(!importThings("gameplay feature",(string) -> SharingHandler.importGameplayFeature(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                            errorOccurred = true;
+                        }
+                    }
+                    for(File file : genres){
+                        if(!importThings("genre",(string) -> SharingHandler.importGenre(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                            errorOccurred = true;
+                        }
+                    }
+                    for(File file : publishers){
+                        if(!importThings("publisher", (string) -> SharingHandler.importPublisher(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                            errorOccurred = true;
+                        }
+                    }
+                    for(File file : themes){
+                        if(!importThings("theme", (string) -> SharingHandler.importTheme(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                            errorOccurred = true;
+                        }
+                    }
+                    if(errorOccurred){
+                        JOptionPane.showMessageDialog(null, "Error while importing:\nSome features might not be properly imported.\nSee console for further information!", "Error while importing", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Import complete:\nAll features have been imported.", "Import complete", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "The folder(s) and it's subfolders do not contain things that could be imported.", "Unable to import", JOptionPane.INFORMATION_MESSAGE);
             }
-            for(File file : gameplayFeatures){
-                importThings("gameplay feature",SharingHandler::importGameplayFeature, SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
-            }
-            for(File file : genres){
-                importThings("genre",SharingHandler::importGenre, SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
-            }
-            for(File file : publishers){
-                importThings("publisher",SharingHandler::importPublisher, SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
-            }
-            for(File file : themes){
-                importThings("theme",SharingHandler::importTheme, SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
-            }
         }
+        WindowMain.checkActionAvailability();
     }
 
     /**

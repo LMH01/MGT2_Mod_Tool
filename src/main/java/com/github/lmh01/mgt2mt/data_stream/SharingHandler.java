@@ -161,7 +161,7 @@ public class SharingHandler {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the genre has been imported successfully. Returns "false" when the genre already exists. Returns mod tool version of import genre when genre is not compatible with current mod tool version.
      */
-    public static String importGenre(String importFolderPath) throws IOException, NullPointerException{
+    public static String importGenre(String importFolderPath, boolean showMessages) throws IOException, NullPointerException{
         AnalyzeExistingGenres.analyzeGenreFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
@@ -223,7 +223,7 @@ public class SharingHandler {
         }
         ArrayList<File> genreScreenshots = Utils.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
-        GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon);
+        GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
         return "true";
     }
 
@@ -278,7 +278,7 @@ public class SharingHandler {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the publisher has been imported successfully. Returns "false" when the publisher already exists. Returns mod tool version of import publisher when publisher is not compatible with current mod tool version.
      */
-    public static String importPublisher(String importFolderPath) throws IOException {
+    public static String importPublisher(String importFolderPath, boolean showMessages) throws IOException {
         AnalyzeExistingPublishers.analyzePublisherFile();
         int newPublisherId = AnalyzeExistingPublishers.getFreePublisherId();
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
@@ -314,19 +314,24 @@ public class SharingHandler {
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
         try {
-            if (JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
-                    "\nName: " + map.get("NAME EN") +
-                    "\nDate: " + map.get("DATE") +
-                    "\nPic: See top left" +
-                    "\nDeveloper: " + map.get("DEVELOPER") +
-                    "\nPublisher: " + map.get("PUBLISHER") +
-                    "\nMarketShare: " + map.get("MARKET") +
-                    "\nShare: " + map.get("SHARE") +
-                    "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(map.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
+            if(showMessages){
+                if (JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
+                        "\nName: " + map.get("NAME EN") +
+                        "\nDate: " + map.get("DATE") +
+                        "\nPic: See top left" +
+                        "\nDeveloper: " + map.get("DEVELOPER") +
+                        "\nPublisher: " + map.get("PUBLISHER") +
+                        "\nMarketShare: " + map.get("MARKET") +
+                        "\nShare: " + map.get("SHARE") +
+                        "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(map.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
+                    EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
+                    ChangeLog.addLogEntry(22, map.get("NAME EN"));
+                    JOptionPane.showMessageDialog(null, "Publisher " + map.get("NAME EN") + " has been added successfully");
+                    WindowMain.checkActionAvailability();
+                }
+            }else{
                 EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
                 ChangeLog.addLogEntry(22, map.get("NAME EN"));
-                JOptionPane.showMessageDialog(null, "Publisher " + map.get("NAME EN") + " has been added successfully");
-                WindowMain.checkActionAvailability();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
@@ -365,7 +370,7 @@ public class SharingHandler {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the theme has been imported successfully. Returns "false" when the publisher already exists. Returns mod tool version of import theme when theme is not compatible with current mod tool version.
      */
-    public static String importTheme(String importFolderPath) throws IOException{
+    public static String importTheme(String importFolderPath, boolean showMessages) throws IOException{
         AnalyzeExistingThemes.analyzeThemeFiles();
         File fileThemeToImport = new File(importFolderPath + "\\theme.txt");
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
@@ -397,11 +402,16 @@ public class SharingHandler {
             }
         }
         try {
-            if(JOptionPane.showConfirmDialog(null, "Add this theme?\n\n" + map.get("NAME EN"), "Add theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if(showMessages){
+                if(JOptionPane.showConfirmDialog(null, "Add this theme?\n\n" + map.get("NAME EN"), "Add theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    EditThemeFiles.addTheme(map, compatibleGenreIds);
+                    ChangeLog.addLogEntry(24, map.get("NAME EN"));
+                    JOptionPane.showMessageDialog(null, "Theme " + map.get("NAME EN") + " has been added successfully");
+                    WindowMain.checkActionAvailability();
+                }
+            }else{
                 EditThemeFiles.addTheme(map, compatibleGenreIds);
                 ChangeLog.addLogEntry(24, map.get("NAME EN"));
-                JOptionPane.showMessageDialog(null, "Theme " + map.get("NAME EN") + " has been added successfully");
-                WindowMain.checkActionAvailability();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
@@ -449,7 +459,12 @@ public class SharingHandler {
         return false;
     }
 
-    public static String importEngineFeature(String importFolderPath) throws IOException{
+    /**
+     * Imports an engine feature
+     * @param importFolderPath The path where the engine feature files are located
+     * @param showMessages True when message about adding engine feature should be shown. False if not.
+     */
+    public static String importEngineFeature(String importFolderPath, boolean showMessages) throws IOException {
         AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
         String returnValue = SharingManager.importGeneral("engineFeature.txt",
                 "Engine feature",
@@ -458,7 +473,8 @@ public class SharingHandler {
                 (map) -> EditEngineFeaturesFile.addEngineFeature(map),
                 () -> AnalyzeExistingEngineFeatures.getFreeEngineFeatureId(),
                 30,
-                (map) -> Summaries.showEngineFeatureMessage(map));
+                (map) -> Summaries.showEngineFeatureMessage(map),
+                showMessages);
         return returnValue;
     }
 
@@ -503,7 +519,12 @@ public class SharingHandler {
         return false;
     }
 
-    public static String importGameplayFeature(String importFolderPath) throws IOException{
+    /**
+     * Imports an gameplay feature
+     * @param importFolderPath The path where the gameplay feature files are located
+     * @param showMessages True when message about adding gameplay feature should be shown. False if not.
+     */
+    public static String importGameplayFeature(String importFolderPath, boolean showMessages) throws IOException {
         AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
         String returnValue = SharingManager.importGeneral("gameplayFeature.txt",
                 "Gameplay feature",
@@ -512,7 +533,8 @@ public class SharingHandler {
                 EditGameplayFeaturesFile::addGameplayFeature,
                 AnalyzeExistingGameplayFeatures::getFreeGameplayFeatureId,
                 30,
-                Summaries::showGameplayFeatureMessage);
+                Summaries::showGameplayFeatureMessage,
+                showMessages);
         return returnValue;
     }
 
