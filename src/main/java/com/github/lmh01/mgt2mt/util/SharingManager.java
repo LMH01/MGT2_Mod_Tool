@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.interfaces.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
-import jdk.nashorn.internal.scripts.JO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -38,8 +37,8 @@ public class SharingManager {
      * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      */
-    public static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
-        return importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null, true);
+    public static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
+        importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null, true);
     }
 
     /**
@@ -52,7 +51,7 @@ public class SharingManager {
      */
 
     public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder, boolean showAlreadyExistMessage){
-        return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
+        return !importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
     }
 
     /**
@@ -99,7 +98,7 @@ public class SharingManager {
      * @param changelogId The id that should be used when the changelog file is being edited
      * @param summary The summary function that should be used
      * @param showMessages True when the messages should be shown. False if not.
-     * @return
+     * @return Returns true when the import was successful. Returns false if not. Returns a string containing version numbers when import file is not compatible with current mgt2mt version.
      */
     public static String importGeneral(String importFile, String importName, String importFolderPath, List<Map<String, String>> existingFeatureList, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary, boolean showMessages) throws IOException{
         File fileToImport = new File(importFolderPath + "\\" + importFile);
@@ -319,27 +318,27 @@ public class SharingManager {
                     boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
                     boolean errorOccurred = false;
                     for(File file : engineFeatures){
-                        if(!importThings("engine feature", (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
+                        if(importThings("engine feature", (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : gameplayFeatures){
-                        if(!importThings("gameplay feature",(string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
+                        if(importThings("gameplay feature", (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : genres){
-                        if(!importThings("genre",(string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
+                        if(importThings("genre", (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : publishers){
-                        if(!importThings("publisher", (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
+                        if(importThings("publisher", (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : themes){
-                        if(!importThings("theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
+                        if(importThings("theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
@@ -365,13 +364,12 @@ public class SharingManager {
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
-        final int ENTRIES_PER_LINE = 10;
         StringBuilder exportList = new StringBuilder();
-        exportList.append(getExportListPart(customEngineFeatures, ENTRIES_PER_LINE, "Engine features"));
-        exportList.append(getExportListPart(customGameplayFeatures, ENTRIES_PER_LINE, "Gameplay features"));
-        exportList.append(getExportListPart(customGenres, ENTRIES_PER_LINE, "Genres"));
-        exportList.append(getExportListPart(customPublishers, ENTRIES_PER_LINE, "Publishers"));
-        exportList.append(getExportListPart(customThemes, ENTRIES_PER_LINE, "Themes"));
+        exportList.append(getExportListPart(customEngineFeatures, "Engine features"));
+        exportList.append(getExportListPart(customGameplayFeatures, "Gameplay features"));
+        exportList.append(getExportListPart(customGenres, "Genres"));
+        exportList.append(getExportListPart(customPublishers, "Publishers"));
+        exportList.append(getExportListPart(customThemes, "Themes"));
         if(JOptionPane.showConfirmDialog(null, "The following entries will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
             StringBuilder failedExports = new StringBuilder();
             try{
@@ -399,14 +397,13 @@ public class SharingManager {
 
     /**
      * @param strings The array containing the entries
-     * @param ENTRIES_PER_LINE How many entries should be displayed per line
      * @param exportName The name that should be written when a export item is found. Eg. Genre, Theme
      * @return Returns a string containing the entries from the array
      */
-    private static String getExportListPart(String[] strings, final int ENTRIES_PER_LINE, String exportName){
+    private static String getExportListPart(String[] strings, String exportName){
         StringBuilder stringBuilder = new StringBuilder();
         if(strings.length > 0){
-            stringBuilder.append(exportName + ": ");
+            stringBuilder.append(exportName).append(": ");
         }
         boolean firstCustomGenre = true;
         int currentLineNumber = 1;
@@ -416,7 +413,7 @@ public class SharingManager {
             }else{
                 stringBuilder.append(", ");
             }
-            if(currentLineNumber == ENTRIES_PER_LINE){
+            if(currentLineNumber == 10){
                 stringBuilder.append(System.getProperty("line.separator"));
             }
             stringBuilder.append(string);
@@ -428,7 +425,7 @@ public class SharingManager {
 
     /**
      * Uses the input exporter to export a list of entries. This function may only be called by {@link SharingManager#exportAll()}.
-     * @param exporter
+     * @param exporter The export function that should be used
      * @param strings The array containing the entries
      * @param exportName The name that should be written when a error occurs. Eg. Genre, Theme
      * @return Returns a string of errors if something failed to export
@@ -440,7 +437,7 @@ public class SharingManager {
         for(String string : strings){
             if(!exporter.export(string)){
                 if(firstExportFailed){
-                    stringBuilder.append(exportName + ": ");
+                    stringBuilder.append(exportName).append(": ");
                 }else{
                     stringBuilder.append(", ");
                 }
