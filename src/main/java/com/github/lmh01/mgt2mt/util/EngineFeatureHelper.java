@@ -226,24 +226,8 @@ public class EngineFeatureHelper {
                         newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
                         newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
                         newEngineFeature.put("TECH", spinnerTech.getValue().toString());
-                        for(Map.Entry<String, String> entry : newEngineFeature.entrySet()){
-                            LOGGER.info("Key: " + entry.getKey() + " | " + entry.getValue());
-                        }
-                        String messageBody = "Your gameplay feature is ready:\n\n" +
-                                "Name: " + newEngineFeature.get("NAME EN") + "\n" +
-                                "Description: " + newEngineFeature.get("DESC EN") + "\n" +
-                                "Unlock date: " + newEngineFeature.get("DATE") + "\n" +
-                                "Type: " + getEngineFeatureNameByTypeId(Integer.parseInt(newEngineFeature.get("TYP"))) + "\n" +
-                                "Research point cost: " + newEngineFeature.get("RES POINTS") + "\n" +
-                                "Research cost " + newEngineFeature.get("PRICE") + "\n" +
-                                "Development cost: " + newEngineFeature.get("DEV COSTS") + "\n" +
-                                "Tech level: " + newEngineFeature.get("TECHLEVEL") + "\n" +
-                                "\n*Points*\n\n" +
-                                "Gameplay: " + newEngineFeature.get("GAMEPLAY") + "\n" +
-                                "Graphic: " + newEngineFeature.get("GRAPHIC") + "\n" +
-                                "Sound: " + newEngineFeature.get("SOUND") + "\n" +
-                                "Tech: " + newEngineFeature.get("TECH") + "\n";
-                        if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        boolean addFeature = Summaries.showEngineFeatureMessage(newEngineFeature);
+                        if(addFeature){
                             EditEngineFeaturesFile.addEngineFeature(newEngineFeature);
                             JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
                             ChangeLog.addLogEntry(27, newEngineFeature.get("NAME EN"));

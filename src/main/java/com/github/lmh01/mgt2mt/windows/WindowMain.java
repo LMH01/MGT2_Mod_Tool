@@ -29,8 +29,8 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
     private static final JMenuItem M22REMOVE_THEME = new JMenuItem("Remove Theme");
     private static final JMenuItem M26NPC_GAMES_LIST = new JMenuItem("NPC_Games_list");
     private static final JMenuItem M232REMOVE_PUBLISHER = new JMenuItem("Remove Publisher");
-    private static final JMenuItem M242REMOVE_GAMEPLAY_FEATURE = new JMenuItem("Remove Gameplay Feature");
-    private static final JMenuItem M252REMOVE_ENGINE_FEATURE = new JMenuItem("Remove Engine Feature");
+    private static final JMenuItem M252REMOVE_GAMEPLAY_FEATURE = new JMenuItem("Remove Gameplay Feature");
+    private static final JMenuItem M242REMOVE_ENGINE_FEATURE = new JMenuItem("Remove Engine Feature");
     private static final JMenuItem M316EXPORT_ALL = new JMenuItem("Export All");
     public static void createFrame(){
         //Creating the Frame
@@ -64,8 +64,10 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         JMenuItem m231AddPublisher = new JMenuItem("Add Publisher");
         JMenuItem m213ImportGenre = new JMenuItem("Import Genre");
         JMenuItem m233ImportPublisher = new JMenuItem("Import Publisher");
-        JMenuItem m241AddGameplayFeature = new JMenuItem("Add Gameplay Feature");
-        JMenuItem m251AddEngineFeature = new JMenuItem("Add Engine Feature");
+        JMenuItem m241AddEngineFeature = new JMenuItem("Add Engine Feature");
+        JMenuItem m243ImportEngineFeature = new JMenuItem("Import Engine Feature");
+        JMenuItem m251AddGameplayFeature = new JMenuItem("Add Gameplay Feature");
+        JMenuItem m253ImportGameplayFeature = new JMenuItem("Import Gameplay Feature");
         m21Genres.add(M211ADD_GENRE);
         m21Genres.add(M212REMOVE_GENRE);
         m21Genres.add(m213ImportGenre);
@@ -75,27 +77,31 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m23Publisher.add(m231AddPublisher);
         m23Publisher.add(M232REMOVE_PUBLISHER);
         m23Publisher.add(m233ImportPublisher);
-        m25GameplayFeatures.add(m241AddGameplayFeature);
-        m25GameplayFeatures.add(M242REMOVE_GAMEPLAY_FEATURE);
-        m24EngineFeatures.add(m251AddEngineFeature);
-        m24EngineFeatures.add(M252REMOVE_ENGINE_FEATURE);
+        m24EngineFeatures.add(m241AddEngineFeature);
+        m24EngineFeatures.add(M242REMOVE_ENGINE_FEATURE);
+        m24EngineFeatures.add(m243ImportEngineFeature);
+        m25GameplayFeatures.add(m251AddGameplayFeature);
+        m25GameplayFeatures.add(M252REMOVE_GAMEPLAY_FEATURE);
+        m25GameplayFeatures.add(m253ImportGameplayFeature);
         M211ADD_GENRE.addActionListener(actionEvent -> addGenre());
         M212REMOVE_GENRE.addActionListener(actionEvent -> removeGenre());
         m221AddTheme.addActionListener(actionEvent -> addTheme());
         M22REMOVE_THEME.addActionListener(actionEvent -> removeTheme());
-        m223ImportTheme.addActionListener(actionEvent -> importTheme());
-        m213ImportGenre.addActionListener(actionEvent -> importGenre());
-        m233ImportPublisher.addActionListener(actionEvent -> importPublisher());
+        m223ImportTheme.addActionListener(actionEvent -> SharingManager.importThings("theme.txt", "theme", (value) -> SharingHandler.importTheme(value), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m213ImportGenre.addActionListener(actionEvent -> SharingManager.importThings("genre.txt", "genre", (value) -> SharingHandler.importGenre(value), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m233ImportPublisher.addActionListener(actionEvent -> SharingManager.importThings("publisher.txt", "publisher", (value) -> SharingHandler.importPublisher(value), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m243ImportEngineFeature.addActionListener(actionEvent -> SharingManager.importThings("engineFeature.txt", "engine feature", (value) -> SharingHandler.importEngineFeature(value), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
+        m253ImportGameplayFeature.addActionListener(actionEvent -> SharingManager.importThings("gameplayFeature.txt", "gameplay feature", (value) -> SharingHandler.importGameplayFeature(value), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS));
         M26NPC_GAMES_LIST.setToolTipText("Click to add a genre id to the NPC_Games_list.");
         M26NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
         m231AddPublisher.setToolTipText("Click to add a publisher to MGT2");
         m231AddPublisher.addActionListener(actionEvent -> addPublisher());
         M232REMOVE_PUBLISHER.setToolTipText("Click to remove a publisher from MGT2");
         M232REMOVE_PUBLISHER.addActionListener(actionEvent -> removePublisher());
-        m241AddGameplayFeature.addActionListener(actionEvent -> GameplayFeatureHelper.addGameplayFeature());
-        M242REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> GameplayFeatureHelper.removeGameplayFeature());
-        m251AddEngineFeature.addActionListener(actionEvent -> EngineFeatureHelper.addEngineFeature());
-        M252REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> EngineFeatureHelper.removeEngineFeature());
+        m251AddGameplayFeature.addActionListener(actionEvent -> GameplayFeatureHelper.addGameplayFeature());
+        M252REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> GameplayFeatureHelper.removeGameplayFeature());
+        m241AddEngineFeature.addActionListener(actionEvent -> EngineFeatureHelper.addEngineFeature());
+        M242REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> EngineFeatureHelper.removeEngineFeature());
         JMenuItem m27AddCompanyIcon = new JMenuItem("Add Company Icon");
         m27AddCompanyIcon.addActionListener(actionEvent -> addCompanyIcon());
         mb.add(m2Mods);
@@ -266,9 +272,9 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             M311EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
             M312EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
             M313EXPORT_THEME.setEnabled(!noCustomThemesAvailable);
-            M252REMOVE_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
+            M242REMOVE_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
             M314EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
-            M242REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
+            M252REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M315EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             if(noCustomGenreAvailable && noCustomPublishersAvailable){
                 M316EXPORT_ALL.setEnabled(false);
@@ -301,17 +307,17 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
                 M312EXPORT_PUBLISHER.setToolTipText("");
             }
             if(noCustomEngineFeaturesAvailable){
-                M252REMOVE_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
+                M242REMOVE_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
                 M314EXPORT_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
             }else{
-                M252REMOVE_ENGINE_FEATURE.setToolTipText("");
+                M242REMOVE_ENGINE_FEATURE.setToolTipText("");
                 M314EXPORT_ENGINE_FEATURE.setToolTipText("");
             }
             if(noCustomGameplayFeaturesAvailable){
-                M242REMOVE_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
+                M252REMOVE_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
                 M315EXPORT_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
             }else{
-                M242REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
+                M252REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
                 M315EXPORT_GAMEPLAY_FEATURE.setToolTipText("");
             }
         }catch (IOException e){
@@ -588,17 +594,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             e.printStackTrace();
         }
     }
-    private static void importTheme(){
-        try {
-            ArrayList<String> importFolders = SharingHandler.getImportFolderPath("theme.txt");
-            for(String importFolder : importFolders){
-                SharingHandler.analyzeReturnValue("theme", SharingHandler.importTheme(importFolder), SharingHandler.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS);
-            }
-        }catch(IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to import theme:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-        }
-    }
     private static void npcGameList(){
         try {
             AnalyzeExistingGenres.analyzeGenreFile();
@@ -853,17 +848,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             JOptionPane.showMessageDialog(null, "Unable to add image file: Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private static void importGenre(){
-        try {
-            ArrayList<String> importFolders = SharingHandler.getImportFolderPath("genre.txt");
-            for(String importFolder : importFolders){
-                SharingHandler.analyzeReturnValue("genre", SharingHandler.importGenre(importFolder), SharingHandler.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS);
-            }
-        }catch(IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to import genre:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-        }
-    }
     private static void exportGenre(){
         try {
             boolean noGenreToExportAvailable = true;
@@ -929,17 +913,6 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error while exporting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
-        }
-    }
-    private static void importPublisher(){
-        try {
-            ArrayList<String> importFolders = SharingHandler.getImportFolderPath("publisher.txt");
-            for(String importFolder : importFolders){
-                SharingHandler.analyzeReturnValue("publisher", SharingHandler.importPublisher(importFolder), SharingHandler.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS);
-            }
-        }catch(IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to import genre:\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
         }
     }
     private static void exportPublisher(){

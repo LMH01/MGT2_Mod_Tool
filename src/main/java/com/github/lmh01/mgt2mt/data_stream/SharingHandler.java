@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +17,8 @@ import java.util.List;
 
 @SuppressWarnings("JavaDoc")
 public class SharingHandler {
+    //Contains functions with which exports are written to file and imports are read and imported
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingHandler.class);
-    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1", "1.8.0"};
-    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1", "1.8.0"};
-    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.1", "1.8.0"};//TODO Vor release, wenn tool version geändert 1.7.1 raus nehmen
 
     /**
      * Opens a gui where the user can select what should be exported. The selected entries are then exported using the exporter
@@ -188,7 +187,7 @@ public class SharingHandler {
             }
         }
         boolean genreCanBeImported = false;
-        for(String string : GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+        for(String string : SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
             if(string.equals(map.get("MGT2MT VERSION"))){
                 genreCanBeImported = true;
             }
@@ -291,7 +290,7 @@ public class SharingHandler {
             }
         }
         boolean publisherCanBeImported = false;
-        for(String string : PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+        for(String string : SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
             if(string.equals(map.get("MGT2MT VERSION"))){
                 publisherCanBeImported = true;
             }
@@ -379,7 +378,7 @@ public class SharingHandler {
             }
         }
         boolean themeCanBeImported = false;
-        for(String string : THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+        for(String string : SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
             if(string.equals(map.get("MGT2MT VERSION"))){
                 themeCanBeImported = true;
             }
@@ -446,6 +445,38 @@ public class SharingHandler {
         return false;
     }
 
+    public static String importEngineFeature(String importFolderPath) throws IOException{
+        AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+        File fileToImport = new File(importFolderPath + "\\engineFeature.txt");
+        Map<String, String> map = Utils.parseDataFile(fileToImport).get(0);
+        map.put("ID", Integer.toString(AnalyzeExistingEngineFeatures.getFreeEngineFeatureId()));
+        boolean CanBeImported = false;
+        for(String string : SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
+            if(string.equals(map.get("MGT2MT VERSION"))){
+                CanBeImported = true;
+            }
+        }
+        if(!CanBeImported){
+            return "Engine feature [" + map.get("NAME EN") + "] could not be imported:\nThe engine feature is not with the current mod tool version compatible\nEngine feature was exported in version: " + map.get("MGT2MT VERSION");
+        }
+        for(Map<String, String> existingEngineFeatures : AnalyzeExistingEngineFeatures.engineFeatures){
+            for(Map.Entry<String, String> entry : existingEngineFeatures.entrySet()){
+                if(entry.getValue().equals(map.get("NAME EN"))){
+                    LOGGER.info("Engine feature already exists - The engine feature name is already taken");
+                    return "false";
+                }
+            }
+        }
+        boolean addFeature = Summaries.showEngineFeatureMessage(map);
+        if(addFeature){
+            EditEngineFeaturesFile.addEngineFeature(map);
+            ChangeLog.addLogEntry(32, map.get("NAME EN"));
+            JOptionPane.showMessageDialog(null, "Engine feature [" + map.get("NAME EN") + "] has been added successfully");
+            WindowMain.checkActionAvailability();
+        }
+        return "true";
+    }
+
     /**
      * Opens a GUI where the user can select what gameplay features should be exported. Exports these gameplay features.
      */
@@ -485,6 +516,10 @@ public class SharingHandler {
             JOptionPane.showMessageDialog(null, "Error while exporting gameplay feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
+    }
+
+    public static String importGameplayFeature(String importFolderPath) throws IOException{
+        return null;
     }
 
     /**
@@ -546,72 +581,5 @@ public class SharingHandler {
         }
         String.valueOf(genreNumbersRaw.charAt(1));
         return genreNames.toString();
-    }
-
-    /**
-     * This function will prompt the user to choose a folder where the files to import are located
-     * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
-     * @return Returns the selected folder, ready for import
-     */
-    public static ArrayList<String> getImportFolderPath(String fileName){
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setDialogTitle("Choose the folder(s) where the " + fileName + " file is located.");
-            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-            fileChooser.setMultiSelectionEnabled(true);
-            int return_value = fileChooser.showOpenDialog(null);
-            if(return_value == JFileChooser.APPROVE_OPTION){
-                File[] files = fileChooser.getSelectedFiles();
-                ArrayList<String> importFolders = new ArrayList<>();
-                for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
-                    String importFolder = files[i].getPath();
-                    if(Utils.doesFolderContainFile(importFolder, fileName)){
-                        File fileGenreToImport = new File(importFolder + "//" + fileName);
-                        BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
-                        String currentLine = br.readLine();
-                        br.close();
-                        if(currentLine.contains("[MGT2MT VERSION]")){
-                            LOGGER.info("File seams to be valid.");
-                            importFolders.add(importFolder);
-                        }else{
-                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid " + fileName + " file.\nPlease select the correct folder.");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the " + fileName + " file.\nPlease select the correct folder.");
-                    }
-                }
-                return importFolders;
-            }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Use this function to evaluate the return value from the respective import function.
-     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
-     * @param returnValue The return value from the import function
-     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
-     */
-    public static void analyzeReturnValue(String importName, String returnValue, String[] compatibleModToolVersions){
-        try{
-            if(returnValue.equals("false")){
-                JOptionPane.showMessageDialog(null, "The selected " + importName + " already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-            }else{
-                if(!returnValue.equals("true")){
-                    StringBuilder supportedModToolVersions = new StringBuilder();
-                    for(String string : compatibleModToolVersions){
-                        supportedModToolVersions.append("[").append(string).append("]");
-                    }
-                    JOptionPane.showMessageDialog(null, returnValue + "\nSupported versions: " + supportedModToolVersions.toString(), "Action unavailable", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }catch(NullPointerException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-        }
     }
 }
