@@ -148,43 +148,43 @@ public class EngineFeatureHelper {
             panelTechLevel.add(labelTechLevel);
             panelTechLevel.add(spinnerTechLevel);
 
-            JPanel panelEngine = new JPanel();
+            JPanel panelGameplay = new JPanel();
             JPanel panelGraphic = new JPanel();
             JPanel panelSound = new JPanel();
             JPanel panelTech = new JPanel();
-            JLabel labelEngine = new JLabel("Engine:");
+            JLabel labelGameplay = new JLabel("Gameplay:");
             JLabel labelGraphic = new JLabel("Graphic:");
             JLabel labelSound = new JLabel("Sound:");
             JLabel labelTech = new JLabel("Tech:");
-            JSpinner spinnerEngine = new JSpinner();
+            JSpinner spinnerGameplay = new JSpinner();
             JSpinner spinnerGraphic = new JSpinner();
             JSpinner spinnerSound = new JSpinner();
             JSpinner spinnerTech = new JSpinner();
-            spinnerEngine.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of Engine points that are added when a game is developed with this feature.");
+            spinnerGameplay.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of gameplay points that are added when a game is developed with this feature.");
             spinnerGraphic.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of graphic points that are added when a game is developed with this feature.");
             spinnerSound.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of sound points that are added when a game is developed with this feature.");
             spinnerTech.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of tech points that are added when a game is developed with this feature.");
             if(Settings.disableSafetyFeatures){
-                spinnerEngine.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
+                spinnerGameplay.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
                 spinnerGraphic.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
                 spinnerSound.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
                 spinnerTech.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
-                ((JSpinner.DefaultEditor)spinnerEngine.getEditor()).getTextField().setEditable(true);
+                ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
                 ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);
                 ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(true);
                 ((JSpinner.DefaultEditor)spinnerTech.getEditor()).getTextField().setEditable(true);
             }else{
-                spinnerEngine.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
+                spinnerGameplay.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
                 spinnerGraphic.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
                 spinnerSound.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
                 spinnerTech.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
-                ((JSpinner.DefaultEditor)spinnerEngine.getEditor()).getTextField().setEditable(false);
+                ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerTech.getEditor()).getTextField().setEditable(false);
             }
-            panelEngine.add(labelEngine);
-            panelEngine.add(spinnerEngine);
+            panelGameplay.add(labelGameplay);
+            panelGameplay.add(spinnerGameplay);
             panelGraphic.add(labelGraphic);
             panelGraphic.add(spinnerGraphic);
             panelSound.add(labelSound);
@@ -192,7 +192,7 @@ public class EngineFeatureHelper {
             panelTech.add(labelTech);
             panelTech.add(spinnerTech);
 
-            Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelTechLevel, panelEngine, panelGraphic, panelSound, panelTech};
+            Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelTechLevel, panelGameplay, panelGraphic, panelSound, panelTech};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Engine Feature", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(textFieldName.getText().isEmpty() || textFieldName.getText().equals("ENTER FEATURE NAME") || textFieldDescription.getText().isEmpty() || textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")){
@@ -222,7 +222,7 @@ public class EngineFeatureHelper {
                         newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                         newEngineFeature.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
                         newEngineFeature.put("PIC", "");
-                        newEngineFeature.put("Engine", spinnerEngine.getValue().toString());
+                        newEngineFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
                         newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
                         newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
                         newEngineFeature.put("TECH", spinnerTech.getValue().toString());
