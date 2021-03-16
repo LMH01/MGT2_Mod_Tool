@@ -1,7 +1,13 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingEngineFeatures;
+import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
+import com.github.lmh01.mgt2mt.util.interfaces.FreeId;
+import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.util.interfaces.ReturnValue;
+import com.github.lmh01.mgt2mt.util.interfaces.Summary;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +17,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
@@ -25,15 +32,15 @@ public class SharingManager {
      *
      * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
      * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
-     * @param exportFunction The function that exports the files
+     * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      */
-    public static void importThings(String fileName, String importName, ReturnValue exportFunction, String[] compatibleModToolVersions){
+    public static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
         try {
             ArrayList<String> importFolders = getImportFolderPath(fileName);
             try{
                 for(String importFolder : importFolders){
-                    analyzeReturnValue(importName, exportFunction.getReturnValue(importFolder), compatibleModToolVersions);
+                    analyzeReturnValue(importName, importFunction.getReturnValue(importFolder), compatibleModToolVersions);
                 }
             }catch(NullPointerException ignored){
 
@@ -42,6 +49,49 @@ public class SharingManager {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Loads the contents of import file into a map and imports feature with this map
+     * @param importFile This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
+     * @param importName The name that is written is some JOptionPanes. Eg. Engine feature, Gameplay feature
+     * @param importFolderPath The folder where the importFile is located.
+     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
+     * @param importFunction The function that edits the file
+     * @param freeId The function that returns the free id
+     * @param changelogId The id that should be used when the changelog file is being edited
+     * @param summary The summary function that should be used
+     * @return
+     */
+    public static String importGeneral(String importFile, String importName, String importFolderPath, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary) throws IOException{
+        File fileToImport = new File(importFolderPath + "\\" + importFile);
+        Map<String, String> map = Utils.parseDataFile(fileToImport).get(0);
+        map.put("ID", Integer.toString(freeId.getFreeId()));
+        boolean CanBeImported = false;
+        for(String string : compatibleModToolVersions){
+            if(string.equals(map.get("MGT2MT VERSION"))){
+                CanBeImported = true;
+            }
+        }
+        if(!CanBeImported){
+            return importName + " [" + map.get("NAME EN") + "] could not be imported:\n" + importName + " is not with the current mod tool version compatible\n" + importName + " was exported in version: " + map.get("MGT2MT VERSION");
+        }
+        for(Map<String, String> existingEngineFeatures : AnalyzeExistingEngineFeatures.engineFeatures){
+            for(Map.Entry<String, String> entry : existingEngineFeatures.entrySet()){
+                if(entry.getValue().equals(map.get("NAME EN"))){
+                    LOGGER.info(importName + " already exists - " + importName + " name is already taken");
+                    return "false";
+                }
+            }
+        }
+        boolean addFeature = summary.showSummary(map);
+        if(addFeature){
+            importFunction.importer(map);
+            JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] has been added successfully");
+            ChangeLog.addLogEntry(changelogId, map.get("NAME EN"));
+            WindowMain.checkActionAvailability();
+        }
+        return "true";
     }
 
     /**

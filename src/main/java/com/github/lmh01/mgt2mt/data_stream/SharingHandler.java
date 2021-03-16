@@ -3,6 +3,8 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
+import com.github.lmh01.mgt2mt.util.interfaces.FreeId;
+import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -447,34 +449,15 @@ public class SharingHandler {
 
     public static String importEngineFeature(String importFolderPath) throws IOException{
         AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
-        File fileToImport = new File(importFolderPath + "\\engineFeature.txt");
-        Map<String, String> map = Utils.parseDataFile(fileToImport).get(0);
-        map.put("ID", Integer.toString(AnalyzeExistingEngineFeatures.getFreeEngineFeatureId()));
-        boolean CanBeImported = false;
-        for(String string : SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
-            if(string.equals(map.get("MGT2MT VERSION"))){
-                CanBeImported = true;
-            }
-        }
-        if(!CanBeImported){
-            return "Engine feature [" + map.get("NAME EN") + "] could not be imported:\nThe engine feature is not with the current mod tool version compatible\nEngine feature was exported in version: " + map.get("MGT2MT VERSION");
-        }
-        for(Map<String, String> existingEngineFeatures : AnalyzeExistingEngineFeatures.engineFeatures){
-            for(Map.Entry<String, String> entry : existingEngineFeatures.entrySet()){
-                if(entry.getValue().equals(map.get("NAME EN"))){
-                    LOGGER.info("Engine feature already exists - The engine feature name is already taken");
-                    return "false";
-                }
-            }
-        }
-        boolean addFeature = Summaries.showEngineFeatureMessage(map);
-        if(addFeature){
-            EditEngineFeaturesFile.addEngineFeature(map);
-            ChangeLog.addLogEntry(32, map.get("NAME EN"));
-            JOptionPane.showMessageDialog(null, "Engine feature [" + map.get("NAME EN") + "] has been added successfully");
-            WindowMain.checkActionAvailability();
-        }
-        return "true";
+        String returnValue = SharingManager.importGeneral("engineFeature.txt",
+                "Engine feature",
+                importFolderPath,
+                SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
+                (map) -> EditEngineFeaturesFile.addEngineFeature(map),
+                () -> AnalyzeExistingEngineFeatures.getFreeEngineFeatureId(),
+                30,
+                (map) -> Summaries.showEngineFeatureMessage(map));
+        return returnValue;
     }
 
     /**
@@ -506,8 +489,8 @@ public class SharingHandler {
             bw.write("[GRAPHIC]" + map.get("GRAPHIC") + System.getProperty("line.separator"));
             bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
             bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
-            bw.write("[BAD]" + map.get("BAD") + System.getProperty("line.separator"));
-            bw.write("[GOOD]" + map.get("GOOD") + System.getProperty("line.separator"));
+            bw.write("[BAD]" + getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
+            bw.write("[GOOD]" + getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
             bw.close();
             ChangeLog.addLogEntry(29, map.get("NAME EN"));
             return true;
@@ -519,7 +502,16 @@ public class SharingHandler {
     }
 
     public static String importGameplayFeature(String importFolderPath) throws IOException{
-        return null;
+        AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+        String returnValue = SharingManager.importGeneral("gameplayFeature.txt",
+                "Gameplay feature",
+                importFolderPath,
+                SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
+                EditGameplayFeaturesFile::addGameplayFeature,
+                AnalyzeExistingGameplayFeatures::getFreeGameplayFeatureId,
+                30,
+                Summaries::showGameplayFeatureMessage);
+        return returnValue;
     }
 
     /**

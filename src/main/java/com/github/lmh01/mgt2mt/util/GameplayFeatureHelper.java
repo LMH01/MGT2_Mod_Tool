@@ -75,7 +75,7 @@ public class GameplayFeatureHelper {
             JComboBox comboBoxFeatureType = new JComboBox();
             comboBoxFeatureType.setToolTipText("Select what type your gameplay feature should be");
             comboBoxFeatureType.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Physics", "Gameplay", "Controls", "Multiplayer"}));
-            comboBoxFeatureType.setSelectedItem("Multiplayer");
+            comboBoxFeatureType.setSelectedItem("Graphic");
             panelType.add(labelSelectType);
             panelType.add(comboBoxFeatureType);
 
@@ -249,50 +249,9 @@ public class GameplayFeatureHelper {
                         newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
                         newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
                         newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-                        StringBuilder badGenresFeatures = new StringBuilder();
-                        boolean firstBadFeature = true;
-                        if(newGameplayFeature.get("BAD").equals("")){
-                            badGenresFeatures.append("None");
-                        }else{
-                            for(Integer integer : badGenreIds[0]){
-                                if(!firstBadFeature){
-                                    badGenresFeatures.append(", ");
-                                }else{
-                                    firstBadFeature = false;
-                                }
-                                badGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(integer));
-                            }
-                        }
-                        StringBuilder goodGenresFeatures = new StringBuilder();
-                        boolean firstGoodFeature = true;
-                        if(newGameplayFeature.get("GOOD").equals("")){
-                            goodGenresFeatures.append("None");
-                        }else{
-                            for(Integer integer : goodGenreIds[0]){
-                                if(!firstGoodFeature){
-                                    goodGenresFeatures.append(", ");
-                                }else{
-                                    firstGoodFeature = false;
-                                }
-                                goodGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(integer));
-                            }
-                        }
-                        String messageBody = "Your gameplay feature is ready:\n\n" +
-                                "Name: " + newGameplayFeature.get("NAME EN") + "\n" +
-                                "Description: " + newGameplayFeature.get("DESC EN") + "\n" +
-                                "Unlock date: " + newGameplayFeature.get("DATE") + "\n" +
-                                "Type: " + getGameplayFeatureNameByTypeId(Integer.parseInt(newGameplayFeature.get("TYP"))) + "\n" +
-                                "Research point cost: " + newGameplayFeature.get("RES POINTS") + "\n" +
-                                "Research cost " + newGameplayFeature.get("PRICE") + "\n" +
-                                "Development cost: " + newGameplayFeature.get("DEV COSTS") + "\n" +
-                                "\n*Bad genres*\n\n" + badGenresFeatures.toString() + "\n" +
-                                "\n*Good genres*\n\n" + goodGenresFeatures.toString() + "\n" +
-                                "\n*Points*\n\n" +
-                                "Gameplay: " + newGameplayFeature.get("GAMEPLAY") + "\n" +
-                                "Graphic: " + newGameplayFeature.get("GRAPHIC") + "\n" +
-                                "Sound: " + newGameplayFeature.get("SOUND") + "\n" +
-                                "Tech: " + newGameplayFeature.get("TECH") + "\n";
-                        if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+
+                        boolean addFeature = Summaries.showGameplayFeatureMessage(newGameplayFeature);
+                        if(addFeature) {
                             EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);
                             JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
                             break;
