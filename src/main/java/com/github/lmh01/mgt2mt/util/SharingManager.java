@@ -90,6 +90,7 @@ public class SharingManager {
      * @param importFile This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
      * @param importName The name that is written is some JOptionPanes. Eg. Engine feature, Gameplay feature
      * @param importFolderPath The folder where the importFile is located.
+     * @param existingFeatureList The list where the existing features are listed. Eg. {@link AnalyzeExistingGameplayFeatures#gameplayFeatures}
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param importFunction The function that edits the file
      * @param freeId The function that returns the free id
@@ -98,7 +99,7 @@ public class SharingManager {
      * @param showMessages True when the messages should be shown. False if not.
      * @return
      */
-    public static String importGeneral(String importFile, String importName, String importFolderPath, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary, boolean showMessages) throws IOException{
+    public static String importGeneral(String importFile, String importName, String importFolderPath, List<Map<String, String>> existingFeatureList, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary, boolean showMessages) throws IOException{
         File fileToImport = new File(importFolderPath + "\\" + importFile);
         Map<String, String> map = Utils.parseDataFile(fileToImport).get(0);
         map.put("ID", Integer.toString(freeId.getFreeId()));
@@ -111,8 +112,8 @@ public class SharingManager {
         if(!CanBeImported){
             return importName + " [" + map.get("NAME EN") + "] could not be imported:\n" + importName + " is not with the current mod tool version compatible\n" + importName + " was exported in version: " + map.get("MGT2MT VERSION");
         }
-        for(Map<String, String> existingEngineFeatures : AnalyzeExistingEngineFeatures.engineFeatures){
-            for(Map.Entry<String, String> entry : existingEngineFeatures.entrySet()){
+        for(Map<String, String> existingFeatures : existingFeatureList){
+            for(Map.Entry<String, String> entry : existingFeatures.entrySet()){
                 if(entry.getValue().equals(map.get("NAME EN"))){
                     LOGGER.info(importName + " already exists - " + importName + " name is already taken");
                     return "false";
