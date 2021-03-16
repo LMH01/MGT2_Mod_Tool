@@ -588,4 +588,18 @@ public class Utils {
         }
         return returnString.toString();
     }
+
+    /**
+     * Checks the array lists if they have mutual entries. Returns true if the do. Returns false if the don't
+     */
+    public static boolean checkForMutualEntries(ArrayList arrayList1, ArrayList arrayList2){
+        for(Object object1 : arrayList1){
+            for(Object object2 : arrayList2){
+                if(object1 == object2){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -186,8 +186,14 @@ public class GameplayFeatureHelper {
             buttonBadGenres.addActionListener(actionEvent -> {
                 badGenreIds[0] = Utils.getSelectedGenresIds("Select the genre(s) that don't work with your gameplay feature");
                 if(badGenreIds[0].size() != 0){
-                    buttonBadGenres.setText("Bad Genres Selected");
-                    JOptionPane.showMessageDialog(null, "Bad genres selected!");
+                    boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
+                    if(Settings.disableSafetyFeatures || !mutualEntries){
+                        buttonBadGenres.setText("Bad Genres Selected");
+                        JOptionPane.showMessageDialog(null, "Bad genres selected!");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Unable to save bad genres:\n\nGood genres list already contains (some) selected entries.", "Unable to save", JOptionPane.ERROR_MESSAGE);
+                        badGenreIds[0].clear();
+                    }
                 }else{
                     buttonBadGenres.setText("Select Bad Genres");
                 }
@@ -196,8 +202,14 @@ public class GameplayFeatureHelper {
             buttonGoodGenres.addActionListener(actionEvent -> {
                 goodGenreIds[0] = Utils.getSelectedGenresIds("Select the genre(s) that work with your gameplay feature");
                 if(goodGenreIds[0].size() != 0){
-                    JOptionPane.showMessageDialog(null, "Good genres selected!");
-                    buttonGoodGenres.setText("Good Genres Selected");
+                    boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
+                    if(Settings.disableSafetyFeatures || !mutualEntries){
+                        buttonGoodGenres.setText("Good Genres Selected");
+                        JOptionPane.showMessageDialog(null, "Good genres selected!");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Unable to save good genres:\n\nBad genres list already contains (some) selected entries.", "Unable to save", JOptionPane.ERROR_MESSAGE);
+                        goodGenreIds[0].clear();
+                    }
                 }else{
                     buttonGoodGenres.setText("Select Good Genres");
                 }
