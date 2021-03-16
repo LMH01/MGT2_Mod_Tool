@@ -602,4 +602,27 @@ public class Utils {
         }
         return false;
     }
+
+    /**
+     * @param directoryName The directory that should be searched.
+     * @return Returns a list containing all files in the input folder plus subfolders
+     */
+    public static List<File> getFilesInFolderAndSubfolder(String directoryName){
+        File directory = new File(directoryName);
+
+        List<File> resultList = new ArrayList<File>();
+
+        // get all the files from a directory
+        File[] fList = directory.listFiles();
+        resultList.addAll(Arrays.asList(fList));
+        for (File file : fList) {
+            if (file.isFile()) {
+                System.out.println(file.getAbsolutePath());
+            } else if (file.isDirectory()) {
+                resultList.addAll(getFilesInFolder(file.getAbsolutePath()));
+            }
+        }
+        //System.out.println(fList);
+        return resultList;
+    }
 }

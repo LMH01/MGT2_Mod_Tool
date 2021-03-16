@@ -12,8 +12,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
@@ -24,22 +30,52 @@ public class SharingManager {
     public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.1", "1.8.0"};//TODO Vor release, wenn tool version geändert 1.7.1 raus nehmen
     public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.1", "1.8.0"};//TODO Vor release, wenn tool version geändert 1.7.1 raus nehmen
 
+
     /**
-     *
+     * Opens a gui where the user can select a folder from which the files should be imported. Only supports one type import.
      * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
      * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
      * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      */
     public static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
-        try {
-            ArrayList<String> importFolders = getImportFolderPath(fileName);
-            try{
-                for(String importFolder : importFolders){
-                    analyzeReturnValue(importName, importFunction.getReturnValue(importFolder), compatibleModToolVersions);
-                }
-            }catch(NullPointerException ignored){
+        importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null);
+    }
 
+    /**
+     * Uses the import function to import the content of the import folder.
+     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
+     * @param importFunction The function that imports the files
+     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
+     * @param importFolder The import folder where the files are stored.
+     */
+
+    public static void importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder){
+        importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder);
+    }
+
+    /**
+     * Opens a gui where the user can select a folder from which the files should be imported. Only supports one type import.
+     * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
+     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
+     * @param importFunction The function that imports the files
+     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
+     * @param askForImportFolder  If true the user will be asked to select a folder. If false the import folder will be used that passed as argument.
+     * @param importFolder The import folder where the files are stored. The folder is used when ask for import folder is false.
+     */
+    private static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder){
+        try {
+            if(askForImportFolder){
+                ArrayList<String> importFolders = getImportFolderPath(fileName);
+                try{
+                    for(String folder : importFolders){
+                        analyzeReturnValue(importName, importFunction.getReturnValue(folder), compatibleModToolVersions);
+                    }
+                }catch(NullPointerException ignored){
+
+                }
+            }else{
+                analyzeReturnValue(importName, importFunction.getReturnValue(importFolder.getPath()), compatibleModToolVersions);
             }
         }catch(IOException e) {
             e.printStackTrace();
@@ -91,15 +127,42 @@ public class SharingManager {
     }
 
     /**
+     * Prompts the user to select folders
+     * @return Returns the folders as files.
+     */
+    public static ArrayList<File> getFoldersAsFile(){
+        ArrayList<String> arrayList = getImportFolderPath("import", true);
+        ArrayList<File> files = new ArrayList<>();
+        for(String string : arrayList){
+            files.add(new File(string));
+        }
+        return files;
+    }
+
+    /**
      * This function will prompt the user to choose a folder where the files to import are located
      * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
-     * @return Returns the selected folder, ready for import
+     * @return Returns the selected folders, ready for import
      */
     private static ArrayList<String> getImportFolderPath(String fileName){
+        return getImportFolderPath(fileName, false);
+    }
+
+    /**
+     * This function will prompt the user to choose a folder where the files to import are located
+     * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
+     * @param skipCheckForContent True when the folder should not be checked if it contains the fileName. Useful when the return string should contain all folders.
+     * @return Returns the selected folders, ready for import.
+     */
+    private static ArrayList<String> getImportFolderPath(String fileName, boolean skipCheckForContent){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-            fileChooser.setDialogTitle("Choose the folder(s) where the " + fileName + " file is located.");
+            if(skipCheckForContent){
+                fileChooser.setDialogTitle("Choose the folder(s) where the files are located that should be imported");
+            }else{
+                fileChooser.setDialogTitle("Choose the folder(s) where the " + fileName + " file is located.");
+            }
             fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
             fileChooser.setMultiSelectionEnabled(true);
             int return_value = fileChooser.showOpenDialog(null);
@@ -108,19 +171,23 @@ public class SharingManager {
                 ArrayList<String> importFolders = new ArrayList<>();
                 for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
                     String importFolder = files[i].getPath();
-                    if(Utils.doesFolderContainFile(importFolder, fileName)){
-                        File fileGenreToImport = new File(importFolder + "//" + fileName);
-                        BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
-                        String currentLine = br.readLine();
-                        br.close();
-                        if(currentLine.contains("[MGT2MT VERSION]")){
-                            LOGGER.info("File seams to be valid.");
-                            importFolders.add(importFolder);
-                        }else{
-                            JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid " + fileName + " file.\nPlease select the correct folder.");
-                        }
+                    if(skipCheckForContent){
+                        importFolders.add(importFolder);
                     }else{
-                        JOptionPane.showMessageDialog(null, "The selected folder does not contain the " + fileName + " file.\nPlease select the correct folder.");
+                        if(Utils.doesFolderContainFile(importFolder, fileName)){
+                            File fileGenreToImport = new File(importFolder + "//" + fileName);
+                            BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
+                            String currentLine = br.readLine();
+                            br.close();
+                            if(currentLine.contains("[MGT2MT VERSION]")){
+                                LOGGER.info("File seams to be valid.");
+                                importFolders.add(importFolder);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid " + fileName + " file.\nPlease select the correct folder.");
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "The selected folder does not contain the " + fileName + " file.\nPlease select the correct folder.");
+                        }
                     }
                 }
                 return importFolders;
@@ -134,7 +201,7 @@ public class SharingManager {
 
     /**
      * Use this function to evaluate the return value from the respective import function.
-     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
+     * @param importName The name that is written in some JOptionPanes. Eg. genre, publisher, theme
      * @param returnValue The return value from the import function
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      */
@@ -158,14 +225,88 @@ public class SharingManager {
     }
 
     /**
+     * Opens a gui where the user can select folders where import files are located. When all folders and subfolders are scanned a summary is shown of what can be imported.
+     * It is then possible to import everything at once.
+     */
+    public static void importAll() {
+        ArrayList<File> directories = getFoldersAsFile();
+        ArrayList<File> engineFeatures = new ArrayList<>();
+        ArrayList<File> gameplayFeatures = new ArrayList<>();
+        ArrayList<File> genres = new ArrayList<>();
+        ArrayList<File> publishers = new ArrayList<>();
+        ArrayList<File> themes = new ArrayList<>();
+
+        try {
+            Path start = Paths.get(directories.get(0).getPath());
+            try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
+                List<String> collect = stream
+                        .map(String::valueOf)
+                        .sorted()
+                        .collect(Collectors.toList());
+
+                collect.forEach((string) -> {
+                    if(string.contains("engineFeature.txt")){
+                        engineFeatures.add(new File(string));
+                    }else if(string.contains("gameplayFeature.txt")){
+                        gameplayFeatures.add(new File(string));
+                    }else if(string.contains("genre.txt")){
+                        genres.add(new File(string));
+                    }else if(string.contains("publisher.txt")){
+                        publishers.add(new File(string));
+                    }else if(string.contains("theme.txt")){
+                        themes.add(new File(string));
+                    }
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        StringBuilder message = new StringBuilder();
+        message.append("The following object to import have been found:").append(System.getProperty("line.separator"));
+        if(!engineFeatures.isEmpty()){
+            message.append("Engine features: ").append(engineFeatures.size()).append(System.getProperty("line.separator"));
+        }
+        if(!gameplayFeatures.isEmpty()){
+            message.append("Gameplay features: ").append(gameplayFeatures.size()).append(System.getProperty("line.separator"));
+        }
+        if(!genres.isEmpty()){
+            message.append("Genres: ").append(genres.size()).append(System.getProperty("line.separator"));
+        }
+        if(!publishers.isEmpty()){
+            message.append("Publishers: ").append(publishers.size()).append(System.getProperty("line.separator"));
+        }
+        if(!themes.isEmpty()){
+            message.append("Themes: ").append(themes.size()).append(System.getProperty("line.separator"));
+        }
+        message.append(System.getProperty("line.separator")).append("Do you want to start the import process?");
+        if(JOptionPane.showConfirmDialog(null, message, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            for(File file : engineFeatures){
+                importThings("engine feature",SharingHandler::importEngineFeature, SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
+            }
+            for(File file : gameplayFeatures){
+                importThings("gameplay feature",SharingHandler::importGameplayFeature, SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
+            }
+            for(File file : genres){
+                importThings("genre",SharingHandler::importGenre, SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
+            }
+            for(File file : publishers){
+                importThings("publisher",SharingHandler::importPublisher, SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
+            }
+            for(File file : themes){
+                importThings("theme",SharingHandler::importTheme, SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile());
+            }
+        }
+    }
+
+    /**
      * Exports all available things when the user accepts.
      */
     public static void exportAll(){
-        String customEngineFeatures[] = AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString();
-        String customGameplayFeatures[] = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
-        String customGenres[] = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-        String customPublishers[] = AnalyzeExistingPublishers.getCustomPublisherString();
-        String customThemes[] = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+        String[] customEngineFeatures = AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString();
+        String[] customGameplayFeatures = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
+        String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+        String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
+        String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
         final int ENTRIES_PER_LINE = 10;
         StringBuilder exportList = new StringBuilder();
         exportList.append(getExportListPart(customEngineFeatures, ENTRIES_PER_LINE, "Engine features"));
