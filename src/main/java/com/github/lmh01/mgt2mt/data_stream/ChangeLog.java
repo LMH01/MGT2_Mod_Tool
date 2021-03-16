@@ -97,6 +97,12 @@ public class ChangeLog {
             case 24: logToPrint = currentSystemTime + ": Imported theme: [" + textBody + "]"; break;
             case 25: logToPrint = currentSystemTime + ": Added gameplay feature: [" + textBody + "]"; break;
             case 26: logToPrint = currentSystemTime + ": Removed gameplay feature: [" + textBody + "]"; break;
+            case 27: logToPrint = currentSystemTime + ": Added engine feature: [" + textBody + "]"; break;
+            case 28: logToPrint = currentSystemTime + ": Removed engine feature: [" + textBody + "]"; break;
+            case 29: logToPrint = currentSystemTime + ": Exported gameplay feature: [" + textBody + "]"; break;
+            case 30: logToPrint = currentSystemTime + ": Imported gameplay feature: [" + textBody + "]"; break;
+            case 31: logToPrint = currentSystemTime + ": Exported engine feature: [" + textBody + "]"; break;
+            case 32: logToPrint = currentSystemTime + ": Imported engine feature: [" + textBody + "]"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

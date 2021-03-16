@@ -140,11 +140,11 @@ public class WindowSettings extends JFrame {
                 String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety);
                 if(JOptionPane.showConfirmDialog(null, "You have made changes that have not been saved:\n\n" + unsavedChanges + "\nDo you want to save them?", "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);WindowSettings.FRAME.dispose();
-                    WindowMain.checkActionAvailability();
                     Backup.createInitialBackup();
                 }
             }
             unsavedChanges = false;
+            WindowMain.checkActionAvailability();
             WindowSettings.FRAME.dispose();
         });
         contentPane.add(btnBack);

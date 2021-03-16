@@ -246,6 +246,7 @@ public class EngineFeatureHelper {
                         if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             EditEngineFeaturesFile.addEngineFeature(newEngineFeature);
                             JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
+                            ChangeLog.addLogEntry(27, newEngineFeature.get("NAME EN"));
                             break;
                         }
                     }
@@ -298,7 +299,7 @@ public class EngineFeatureHelper {
                             String currentEngineFeature = listAvailableEngineFeatures.getSelectedValuesList().get(i);
                             try{
                                 EditEngineFeaturesFile.removeEngineFeature(AnalyzeExistingEngineFeatures.getEngineFeatureIdByName(currentEngineFeature));
-                                ChangeLog.addLogEntry(26, currentEngineFeature);
+                                ChangeLog.addLogEntry(28, currentEngineFeature);
                             }catch (IOException e){
                                 failedEngineFeatureRemoves.append(currentEngineFeature).append(" - ").append(e.getMessage()).append(System.getProperty("line.separator"));
                                 exportFailed = true;

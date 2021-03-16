@@ -1,19 +1,18 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.util.GenreManager;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.TranslationManager;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 
 @SuppressWarnings("JavaDoc")
 public class SharingHandler {
@@ -21,6 +20,81 @@ public class SharingHandler {
     public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1", "1.8.0"};
     public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1", "1.8.0"};
     public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.1", "1.8.0"};//TODO Vor release, wenn tool version geändert 1.7.1 raus nehmen
+
+    /**
+     * Opens a gui where the user can select what should be exported. The selected entries are then exported using the exporter
+     * @param exporter The function that exports the files
+     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
+     * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
+     * @param exportType The type that should be exported. Eg. genre, gameplay feature
+     */
+    public static void export(Exporter exporter, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType){
+        try {
+            boolean noExportAvailable = true;
+            JLabel labelChooseExports = new JLabel("Select the " + exportType + "(s) that should be exported:");
+            String[] string;
+            if(Settings.disableSafetyFeatures){
+                string = stringArraySafetyFeaturesDisabled;
+                noExportAvailable = false;
+            }else{
+                string = stringArraySafetyFeaturesOn;
+                if(string.length != 0){
+                    noExportAvailable = false;
+                }
+            }
+            JList<String> listAvailableExports = new JList<>(string);
+            listAvailableExports.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            listAvailableExports.setLayoutOrientation(JList.VERTICAL);
+            listAvailableExports.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableExports = new JScrollPane(listAvailableExports);
+            scrollPaneAvailableExports.setPreferredSize(new Dimension(315,140));
+
+            Object[] params = {labelChooseExports, scrollPaneAvailableExports};
+
+            if(!noExportAvailable){
+                if(JOptionPane.showConfirmDialog(null, params, "Export " + exportType, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!listAvailableExports.isSelectionEmpty()){
+                        boolean exportFailed = false;
+                        boolean multipleExports = false;
+                        if(listAvailableExports.getSelectedValuesList().size() > 0){
+                            multipleExports = true;
+                        }
+                        int numberOfExports = listAvailableExports.getSelectedValuesList().size();
+                        StringBuilder failedExports = new StringBuilder();
+                        for(int i=0; i<listAvailableExports.getSelectedValuesList().size(); i++){
+                            String currentExport = listAvailableExports.getSelectedValuesList().get(i);
+                            if(!exporter.export(currentExport)){
+                                if(!multipleExports){
+                                    JOptionPane.showMessageDialog(null, "The selected " + exportType + " has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                }
+                                failedExports.append(currentExport).append(" - The selected " + exportType + " has already been exported").append(System.getProperty("line.separator"));
+                                exportFailed = true;
+                            }
+                            numberOfExports--;
+                        }
+                        if(numberOfExports == 0){
+                            if(exportFailed){
+                                if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting " + exportType + ".\nThe following " + exportType + "s where not exported:\n" + failedExports + "\n\nDo you want to open the folder where it has been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                }
+                            }else{
+                                if(JOptionPane.showConfirmDialog(null, "All selected " + exportType + "s have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Exported " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                }
+                            }
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a " + exportType + " first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Unable to export " + exportType + ":\nThere is no custom " + exportType + " that could be exported.\nPlease add a " + exportType + " first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while exporting " + exportType + ": An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Exports the specified genre.
@@ -330,6 +404,87 @@ public class SharingHandler {
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
         }
         return "true";
+    }
+
+    /**
+     * Opens a GUI where the user can select what engine features should be exported. Exports these engine features.
+     */
+    public static boolean exportEngineFeature(String engineFeatureName){
+        try{
+            Map<String, String> map = AnalyzeExistingEngineFeatures.getSingleEngineFeatureByNameMap(engineFeatureName);
+            final String EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Engine features//" + map.get("NAME EN");
+            File fileExportFolderPath = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH);
+            File fileExportedEngineFeature = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH + "//engineFeature.txt");
+            if(fileExportedEngineFeature.exists()){
+                return false;
+            }else{
+                fileExportFolderPath.mkdirs();
+            }
+            fileExportedEngineFeature.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedEngineFeature), StandardCharsets.UTF_8));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+            bw.write("[GAMEPLAY FEATURE START]" + System.getProperty("line.separator"));
+            bw.write("[TYP]" + map.get("TYP") + System.getProperty("line.separator"));
+            TranslationManager.printLanguages(bw, map);
+            bw.write("[DATE]" + map.get("DATE") + System.getProperty("line.separator"));
+            bw.write("[RES POINTS]" + map.get("RES POINTS") + System.getProperty("line.separator"));
+            bw.write("[PRICE]" + map.get("PRICE") + System.getProperty("line.separator"));
+            bw.write("[DEV COSTS]" + map.get("DEV COSTS") + System.getProperty("line.separator"));
+            bw.write("[TECHLEVEL]" + map.get("TECHLEVEL") + System.getProperty("line.separator"));
+            bw.write("[PIC]" + map.get("PIC") + System.getProperty("line.separator"));
+            bw.write("[GAMEPLAY]" + map.get("GAMEPLAY") + System.getProperty("line.separator"));
+            bw.write("[GRAPHIC]" + map.get("GRAPHIC") + System.getProperty("line.separator"));
+            bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
+            bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
+            bw.close();
+            ChangeLog.addLogEntry(31, map.get("NAME EN"));
+            return true;
+        }catch(IOException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error while exporting engine feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+    /**
+     * Opens a GUI where the user can select what gameplay features should be exported. Exports these gameplay features.
+     */
+    public static boolean exportGameplayFeature(String gameplayFeatureName){
+        try{
+            Map<String, String> map = AnalyzeExistingGameplayFeatures.getSingleGameplayFeatureByNameMap(gameplayFeatureName);
+            final String EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Gameplay features//" + map.get("NAME EN");
+            File fileExportFolderPath = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH);
+            File fileExportedGameplayFeature = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH + "//gameplayFeature.txt");
+            if(fileExportedGameplayFeature.exists()){
+                return false;
+            }else{
+                fileExportFolderPath.mkdirs();
+            }
+            fileExportedGameplayFeature.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGameplayFeature), StandardCharsets.UTF_8));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+            bw.write("[GAMEPLAY FEATURE START]" + System.getProperty("line.separator"));
+            bw.write("[TYP]" + map.get("TYP") + System.getProperty("line.separator"));
+            TranslationManager.printLanguages(bw, map);
+            bw.write("[DATE]" + map.get("DATE") + System.getProperty("line.separator"));
+            bw.write("[RES POINTS]" + map.get("RES POINTS") + System.getProperty("line.separator"));
+            bw.write("[PRICE]" + map.get("PRICE") + System.getProperty("line.separator"));
+            bw.write("[DEV COSTS]" + map.get("DEV COSTS") + System.getProperty("line.separator"));
+            bw.write("[PIC]" + map.get("PIC") + System.getProperty("line.separator"));
+            bw.write("[GAMEPLAY]" + map.get("GAMEPLAY") + System.getProperty("line.separator"));
+            bw.write("[GRAPHIC]" + map.get("GRAPHIC") + System.getProperty("line.separator"));
+            bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
+            bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
+            bw.write("[BAD]" + map.get("BAD") + System.getProperty("line.separator"));
+            bw.write("[GOOD]" + map.get("GOOD") + System.getProperty("line.separator"));
+            bw.close();
+            ChangeLog.addLogEntry(29, map.get("NAME EN"));
+            return true;
+        }catch(IOException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error while exporting gameplay feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
     }
 
     /**

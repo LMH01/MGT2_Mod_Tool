@@ -24,12 +24,14 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
     private static final JMenuItem M311EXPORT_GENRE = new JMenuItem("Genre");
     private static final JMenuItem M313EXPORT_THEME = new JMenuItem("Theme");
     private static final JMenuItem M312EXPORT_PUBLISHER = new JMenuItem("Publisher");
+    private static final JMenuItem M314EXPORT_ENGINE_FEATURE = new JMenuItem("Engine Feature");
+    private static final JMenuItem M315EXPORT_GAMEPLAY_FEATURE = new JMenuItem("Gameplay Feature");
     private static final JMenuItem M22REMOVE_THEME = new JMenuItem("Remove Theme");
     private static final JMenuItem M26NPC_GAMES_LIST = new JMenuItem("NPC_Games_list");
     private static final JMenuItem M232REMOVE_PUBLISHER = new JMenuItem("Remove Publisher");
     private static final JMenuItem M242REMOVE_GAMEPLAY_FEATURE = new JMenuItem("Remove Gameplay Feature");
     private static final JMenuItem M252REMOVE_ENGINE_FEATURE = new JMenuItem("Remove Engine Feature");
-    private static final JMenuItem M314EXPORT_ALL = new JMenuItem("Export All");
+    private static final JMenuItem M316EXPORT_ALL = new JMenuItem("Export All");
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,8 +57,8 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         JMenu m21Genres = new JMenu("Genres");
         JMenu m22Themes = new JMenu("Themes");
         JMenu m23Publisher = new JMenu("Publisher");
-        JMenu m24GameplayFeatures = new JMenu("Gameplay Features");
-        JMenu m25EngineFeatures = new JMenu("Engine Features");
+        JMenu m25GameplayFeatures = new JMenu("Gameplay Features");
+        JMenu m24EngineFeatures = new JMenu("Engine Features");
         JMenuItem m221AddTheme = new JMenuItem("Add Theme");
         JMenuItem m223ImportTheme = new JMenuItem("Import Theme");
         JMenuItem m231AddPublisher = new JMenuItem("Add Publisher");
@@ -73,10 +75,10 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m23Publisher.add(m231AddPublisher);
         m23Publisher.add(M232REMOVE_PUBLISHER);
         m23Publisher.add(m233ImportPublisher);
-        m24GameplayFeatures.add(m241AddGameplayFeature);
-        m24GameplayFeatures.add(M242REMOVE_GAMEPLAY_FEATURE);
-        m25EngineFeatures.add(m251AddEngineFeature);
-        m25EngineFeatures.add(M252REMOVE_ENGINE_FEATURE);
+        m25GameplayFeatures.add(m241AddGameplayFeature);
+        m25GameplayFeatures.add(M242REMOVE_GAMEPLAY_FEATURE);
+        m24EngineFeatures.add(m251AddEngineFeature);
+        m24EngineFeatures.add(M252REMOVE_ENGINE_FEATURE);
         M211ADD_GENRE.addActionListener(actionEvent -> addGenre());
         M212REMOVE_GENRE.addActionListener(actionEvent -> removeGenre());
         m221AddTheme.addActionListener(actionEvent -> addTheme());
@@ -100,8 +102,8 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m2Mods.add(m21Genres);
         m2Mods.add(m22Themes);
         m2Mods.add(m23Publisher);
-        m2Mods.add(m24GameplayFeatures);
-        m2Mods.add(m25EngineFeatures);
+        m2Mods.add(m24EngineFeatures);
+        m2Mods.add(m25GameplayFeatures);
         m2Mods.add(M26NPC_GAMES_LIST);
         m2Mods.add(m27AddCompanyIcon);
         JMenu m3Share = new JMenu("Share");
@@ -109,11 +111,15 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         m31Export.add(M311EXPORT_GENRE);
         m31Export.add(M312EXPORT_PUBLISHER);
         m31Export.add(M313EXPORT_THEME);
-        m31Export.add(M314EXPORT_ALL);
+        m31Export.add(M314EXPORT_ENGINE_FEATURE);
+        m31Export.add(M315EXPORT_GAMEPLAY_FEATURE);
+        m31Export.add(M316EXPORT_ALL);
         M311EXPORT_GENRE.addActionListener(actionEvent -> exportGenre());
         M312EXPORT_PUBLISHER.addActionListener(actionEvent -> exportPublisher());
         M313EXPORT_THEME.addActionListener(actionEvent -> exportTheme());
-        M314EXPORT_ALL.addActionListener(actionEvent -> exportAll());
+        M314EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> SharingHandler.export((name) -> SharingHandler.exportEngineFeature(name), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature"));
+        M315EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> SharingHandler.export((name) -> SharingHandler.exportGameplayFeature(name), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature"));
+        M316EXPORT_ALL.addActionListener(actionEvent -> exportAll());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> openExportFolder());
         JMenuItem m36 = new JMenuItem("Delete all exports");
@@ -260,24 +266,26 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             M311EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
             M312EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
             M313EXPORT_THEME.setEnabled(!noCustomThemesAvailable);
-            M242REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M252REMOVE_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
+            M314EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
+            M242REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
+            M315EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             if(noCustomGenreAvailable && noCustomPublishersAvailable){
-                M314EXPORT_ALL.setEnabled(false);
+                M316EXPORT_ALL.setEnabled(false);
             }else{
-                M314EXPORT_ALL.setEnabled(true);
+                M316EXPORT_ALL.setEnabled(true);
             }
             if(noCustomGenreAvailable){
                 M212REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
                 M26NPC_GAMES_LIST.setToolTipText("Disabled -> Add a genre first");
                 M311EXPORT_GENRE.setToolTipText("Disabled -> No genre to export available");
             }else if(noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
-                M314EXPORT_ALL.setToolTipText("Disabled -> Mo genre, theme or publisher to export available");
+                M316EXPORT_ALL.setToolTipText("Disabled -> Mo genre, theme or publisher to export available");
             }else{
                 M212REMOVE_GENRE.setToolTipText("");
                 M26NPC_GAMES_LIST.setToolTipText("");
                 M311EXPORT_GENRE.setToolTipText("");
-                M314EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");
+                M316EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");
             }
             if(noCustomThemesAvailable){
                 M22REMOVE_THEME.setToolTipText("Disabled -> No theme to remove available");
@@ -292,15 +300,19 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
                 M232REMOVE_PUBLISHER.setToolTipText("");
                 M312EXPORT_PUBLISHER.setToolTipText("");
             }
-            if(noCustomGameplayFeaturesAvailable){
-                M242REMOVE_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
-            }else{
-                M242REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
-            }
             if(noCustomEngineFeaturesAvailable){
                 M252REMOVE_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
+                M314EXPORT_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
             }else{
                 M252REMOVE_ENGINE_FEATURE.setToolTipText("");
+                M314EXPORT_ENGINE_FEATURE.setToolTipText("");
+            }
+            if(noCustomGameplayFeaturesAvailable){
+                M242REMOVE_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
+                M315EXPORT_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
+            }else{
+                M242REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
+                M315EXPORT_GAMEPLAY_FEATURE.setToolTipText("");
             }
         }catch (IOException e){
             LOGGER.info("Error" + e.getMessage());
