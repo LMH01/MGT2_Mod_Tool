@@ -206,8 +206,7 @@ public class SharingHandler {
             }
         }
         if(fileScreenshotFolder.exists()){
-            LOGGER.info("Genre already exists - screenshot folder already exists.");
-            return "false";
+            Utils.deleteDirectory(fileScreenshotFolder);
         }
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
