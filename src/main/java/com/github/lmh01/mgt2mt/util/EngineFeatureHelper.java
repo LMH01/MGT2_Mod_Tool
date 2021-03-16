@@ -72,7 +72,7 @@ public class EngineFeatureHelper {
             JComboBox comboBoxFeatureType = new JComboBox();
             comboBoxFeatureType.setToolTipText("Select what type your engine feature should be");
             comboBoxFeatureType.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Artificial Intelligence", "Physics"}));
-            comboBoxFeatureType.setSelectedItem("Multiplayer");
+            comboBoxFeatureType.setSelectedItem("Graphic");
             panelType.add(labelSelectType);
             panelType.add(comboBoxFeatureType);
 
@@ -229,10 +229,25 @@ public class EngineFeatureHelper {
                         for(Map.Entry<String, String> entry : newEngineFeature.entrySet()){
                             LOGGER.info("Key: " + entry.getKey() + " | " + entry.getValue());
                         }
-                        //TODO Write summary that is displayed when all values are collected and where the user has to accept the adding of engine feature
-                        //TODO Write add successful dialog
-                        EditEngineFeaturesFile.addEngineFeature(newEngineFeature);
-                        break;
+                        String messageBody = "Your gameplay feature is ready:\n\n" +
+                                "Name: " + newEngineFeature.get("NAME EN") + "\n" +
+                                "Description: " + newEngineFeature.get("DESC EN") + "\n" +
+                                "Unlock date: " + newEngineFeature.get("DATE") + "\n" +
+                                "Type: " + getEngineFeatureNameByTypeId(Integer.parseInt(newEngineFeature.get("TYP"))) + "\n" +
+                                "Research point cost: " + newEngineFeature.get("RES POINTS") + "\n" +
+                                "Research cost " + newEngineFeature.get("PRICE") + "\n" +
+                                "Development cost: " + newEngineFeature.get("DEV COSTS") + "\n" +
+                                "Tech level: " + newEngineFeature.get("TECHLEVEL") + "\n" +
+                                "\n*Points*\n\n" +
+                                "Gameplay: " + newEngineFeature.get("GAMEPLAY") + "\n" +
+                                "Graphic: " + newEngineFeature.get("GRAPHIC") + "\n" +
+                                "Sound: " + newEngineFeature.get("SOUND") + "\n" +
+                                "Tech: " + newEngineFeature.get("TECH") + "\n";
+                        if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            EditEngineFeaturesFile.addEngineFeature(newEngineFeature);
+                            JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+                        }
                     }
                 }else{
                     break;
@@ -240,6 +255,7 @@ public class EngineFeatureHelper {
             }
         }catch(IOException e){
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error while adding engine feature:\n\n" + e.getMessage());
         }
         WindowMain.checkActionAvailability();
     }
@@ -323,5 +339,20 @@ public class EngineFeatureHelper {
             case "Physics": return 3;
         }
         return 10;
+    }
+
+    /**
+     * Converts the input id into the respective type name
+     * @param typeId The feature type id
+     * @return Returns the type name
+     */
+    public static String getEngineFeatureNameByTypeId(int typeId){
+        switch (typeId){
+            case 0: return "Graphic";
+            case 1: return "Sound";
+            case 2: return "Artificial Intelligence";
+            case 3: return "Physics";
+        }
+        return "";
     }
 }

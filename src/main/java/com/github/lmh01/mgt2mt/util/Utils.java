@@ -578,13 +578,13 @@ public class Utils {
     }
 
     /**
-     * @param arrayList The array list containing the ids
-     * @return Returns the ids in the respective formatting
+     * @param arrayList The array list containing the values
+     * @return Returns the values in the respective formatting
      */
-    public static String transformArrayListToString(ArrayList<Integer> arrayList){
+    public static String transformArrayListToString(ArrayList arrayList){
         StringBuilder returnString = new StringBuilder();
-        for(Integer integer : arrayList){
-            returnString.append("<").append(integer).append(">");
+        for(Object object : arrayList){
+            returnString.append("<").append(object.toString()).append(">");
         }
         return returnString.toString();
     }

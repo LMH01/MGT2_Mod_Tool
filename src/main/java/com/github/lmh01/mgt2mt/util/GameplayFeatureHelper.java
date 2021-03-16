@@ -186,18 +186,20 @@ public class GameplayFeatureHelper {
             buttonBadGenres.addActionListener(actionEvent -> {
                 badGenreIds[0] = Utils.getSelectedGenresIds("Select the genre(s) that don't work with your gameplay feature");
                 if(badGenreIds[0].size() != 0){
-                    buttonBadGenres.setToolTipText("Bad Genres Selected");
+                    buttonBadGenres.setText("Bad Genres Selected");
+                    JOptionPane.showMessageDialog(null, "Bad genres selected!");
                 }else{
-                    buttonBadGenres.setToolTipText("Select Bad Genres");
+                    buttonBadGenres.setText("Select Bad Genres");
                 }
             });
             JButton buttonGoodGenres = new JButton("Select Good Genres");
             buttonGoodGenres.addActionListener(actionEvent -> {
                 goodGenreIds[0] = Utils.getSelectedGenresIds("Select the genre(s) that work with your gameplay feature");
                 if(goodGenreIds[0].size() != 0){
-                    buttonGoodGenres.setToolTipText("Good Genres Selected");
+                    JOptionPane.showMessageDialog(null, "Good genres selected!");
+                    buttonGoodGenres.setText("Good Genres Selected");
                 }else{
-                    buttonGoodGenres.setToolTipText("Select Good Genres");
+                    buttonGoodGenres.setText("Select Good Genres");
                 }
             });
             Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelGameplay, panelGraphic, panelSound, panelTech, buttonBadGenres, buttonGoodGenres};
@@ -235,10 +237,54 @@ public class GameplayFeatureHelper {
                         newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
                         newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
                         newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-                        //TODO Write summary that is displayed when all values are collected and where the user has to accept the adding of gameplay feature
-                        //TODO Write add successful dialog
-                        EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);
-                        break;
+                        StringBuilder badGenresFeatures = new StringBuilder();
+                        boolean firstBadFeature = true;
+                        if(newGameplayFeature.get("BAD").equals("")){
+                            badGenresFeatures.append("None");
+                        }else{
+                            for(Integer integer : badGenreIds[0]){
+                                if(!firstBadFeature){
+                                    badGenresFeatures.append(", ");
+                                }else{
+                                    firstBadFeature = false;
+                                }
+                                badGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(integer));
+                            }
+                        }
+                        StringBuilder goodGenresFeatures = new StringBuilder();
+                        boolean firstGoodFeature = true;
+                        if(newGameplayFeature.get("GOOD").equals("")){
+                            goodGenresFeatures.append("None");
+                        }else{
+                            for(Integer integer : goodGenreIds[0]){
+                                if(!firstGoodFeature){
+                                    goodGenresFeatures.append(", ");
+                                }else{
+                                    firstGoodFeature = false;
+                                }
+                                goodGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(integer));
+                            }
+                        }
+                        String messageBody = "Your gameplay feature is ready:\n\n" +
+                                "Name: " + newGameplayFeature.get("NAME EN") + "\n" +
+                                "Description: " + newGameplayFeature.get("DESC EN") + "\n" +
+                                "Unlock date: " + newGameplayFeature.get("DATE") + "\n" +
+                                "Type: " + getGameplayFeatureNameByTypeId(Integer.parseInt(newGameplayFeature.get("TYP"))) + "\n" +
+                                "Research point cost: " + newGameplayFeature.get("RES POINTS") + "\n" +
+                                "Research cost " + newGameplayFeature.get("PRICE") + "\n" +
+                                "Development cost: " + newGameplayFeature.get("DEV COSTS") + "\n" +
+                                "\n*Bad genres*\n\n" + badGenresFeatures.toString() + "\n" +
+                                "\n*Good genres*\n\n" + goodGenresFeatures.toString() + "\n" +
+                                "\n*Points*\n\n" +
+                                "Gameplay: " + newGameplayFeature.get("GAMEPLAY") + "\n" +
+                                "Graphic: " + newGameplayFeature.get("GRAPHIC") + "\n" +
+                                "Sound: " + newGameplayFeature.get("SOUND") + "\n" +
+                                "Tech: " + newGameplayFeature.get("TECH") + "\n";
+                        if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);
+                            JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+                        }
                     }
                 }else{
                     break;
@@ -246,6 +292,7 @@ public class GameplayFeatureHelper {
             }
         }catch(IOException e){
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error while adding gameplay feature:\n\n" + e.getMessage());
         }
         WindowMain.checkActionAvailability();
     }
@@ -331,5 +378,22 @@ public class GameplayFeatureHelper {
             case "Multiplayer": return 6;
         }
         return 10;
+    }
+
+    /**
+     * Converts the input in into the respective type name
+     * @param typeId The feature type id
+     * @return Returns the type name
+     */
+    public static String getGameplayFeatureNameByTypeId(int typeId){
+        switch (typeId){
+            case 0 : return "Graphic";
+            case 1 : return "Sound";
+            case 3 : return "Physics";
+            case 4 : return "Gameplay";
+            case 5 : return "Control";
+            case 6 : return "Multiplayer";
+        }
+        return "";
     }
 }
