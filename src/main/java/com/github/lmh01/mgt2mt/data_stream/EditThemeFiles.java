@@ -119,50 +119,43 @@ public class EditThemeFiles {
      * @param compatibleThemeIds A set containing all compatible theme ids.
      */
     public static void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
-        File fileTopicsGeTemp = new File(Utils.getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt.temp");
-        fileTopicsGeTemp.createNewFile();
-        Backup.createBackup(Utils.getThemesGeFile());
-        LOGGER.info("Themes_GE.txt.temp has been created");//TODO Rewrite to use AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemesGeFile()), StandardCharsets.UTF_16LE));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGeTemp), StandardCharsets.UTF_16LE));
-        String currentLine;
-        int currentLineNumber = 0;
+        AnalyzeExistingThemes.analyzeThemeFiles();
+        File fileTopicsGe = Utils.getThemesGeFile();
+        if(fileTopicsGe.exists()){
+            fileTopicsGe.delete();
+        }
+        fileTopicsGe.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGe), StandardCharsets.UTF_16LE));
+        Map<Integer, String> map = AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE;
         boolean firstLine = true;
-        while ((currentLine = br.readLine()) != null) {
-            if (firstLine) {
-                currentLine = Utils.removeUTF8BOM(currentLine);
-            }
-            if (addGenreID) {
-                if (compatibleThemeIds.contains(currentLineNumber)) {
+        for(int i=0; i<map.size(); i++){
+            if(addGenreID){
+                if(compatibleThemeIds.contains(i)){
                     if (Settings.enableDebugLogging) {
-                        LOGGER.info(currentLineNumber + " - Y: " + currentLine);
+                        LOGGER.info(i + " - Y: " + map.get(i));
                     }
-                    if (!firstLine) {
+                    if(!firstLine){
                         bw.write(System.getProperty("line.separator"));
                     }
-                    bw.write(currentLine + "<" + genreID + ">");
-                } else {
+                    bw.write(map.get(i) + "<" + genreID + ">");
+                }else{
                     if (!firstLine) {
                         bw.write(System.getProperty("line.separator"));
                     }
                     if (Settings.enableDebugLogging) {
-                        LOGGER.info(currentLineNumber + " - N: " + currentLine);
+                        LOGGER.info(i + " - N: " + map.get(i));
                     }
-                    bw.write(currentLine);
+                    bw.write(map.get(i));
                 }
-            } else {
+            }else{
                 if (!firstLine) {
                     bw.write(System.getProperty("line.separator"));
                 }
-                bw.write(currentLine.replace("<" + genreID + ">", ""));
+                bw.write(map.get(i).replace("<" + genreID + ">", ""));
             }
             firstLine = false;
-            currentLineNumber++;
         }
-        br.close();
         bw.close();
-        Utils.getThemesGeFile().delete();
-        fileTopicsGeTemp.renameTo(Utils.getThemesGeFile());
         if (addGenreID) {
             ChangeLog.addLogEntry(2, Integer.toString(genreID));
         } else {

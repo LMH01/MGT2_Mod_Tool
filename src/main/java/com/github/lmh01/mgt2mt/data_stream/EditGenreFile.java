@@ -73,6 +73,7 @@ public class EditGenreFile {
 
     public static boolean removeGenre(String genreName) throws IOException {
         removeGenre(AnalyzeExistingGenres.getGenreIdByName(genreName));
+        EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(genreName), false, null);
         WindowMain.checkActionAvailability();
         return true;
     }
