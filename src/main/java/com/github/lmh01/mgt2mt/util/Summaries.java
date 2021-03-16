@@ -1,8 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
-import com.github.lmh01.mgt2mt.data_stream.EditGameplayFeaturesFile;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;

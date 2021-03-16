@@ -4,13 +4,13 @@ import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class Backup {
@@ -74,6 +74,47 @@ public class Backup {
     }
 
     /**
+     * Creates a specified backup.
+     * @param type The backup type
+     */
+    public static void createBackup(String type){
+        if(type.equals("full")){
+            try {
+                Backup.createFullBackup();
+                JOptionPane.showMessageDialog(new Frame(), "The full backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(type.equals("genre")){
+            try{
+                Backup.createBackup(Utils.getGenreFile());
+                Backup.createBackup(Utils.getNpcGamesFile());
+                JOptionPane.showMessageDialog(new Frame(), "Backup of genre files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            }catch(IOException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(type.equals("theme")){
+            try{
+                Backup.createThemeFilesBackup(false);
+                JOptionPane.showMessageDialog(new Frame(), "Backup of theme files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            }catch(IOException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(type.equals("save_game")){
+            try{
+                Backup.backupSaveGames(false);
+                JOptionPane.showMessageDialog(new Frame(), "Backup of save games has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+            }catch(IOException e){
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
      * Restores either a complete initial backup or a complete latest backup
      * @param initialBackup If true the initial backup will be restored. If false the latest backup will be restored.
      * @param showMessages Set true when messages should be displayed to the user
@@ -133,6 +174,39 @@ public class Backup {
     }
 
     /**
+     * Opens a gui where the user can select which save game backup should be restored
+     */
+    public static void restoreSaveGameBackup(){
+        try {
+            ArrayList<File> files = Utils.getFilesInFolderWhiteList(Backup.BACKUP_FOLDER_PATH, "savegame");
+            Set<String> saveGameSlots = new HashSet<>();
+            for(File file : files){
+                saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
+            }
+            JLabel label = new JLabel("<html>Select the save game slot where the save game is saved,<br>for which the backup should be restored:<br>0 = Auto save");
+            String[] array = saveGameSlots.stream().toArray(String[]::new);
+            JList<String> listAvailableThemes = new JList<>(array);
+            listAvailableThemes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
+            listAvailableThemes.setVisibleRowCount(-1);
+            JScrollPane scrollPaneAvailableSaveGames = new JScrollPane(listAvailableThemes);
+            scrollPaneAvailableSaveGames.setPreferredSize(new Dimension(30,60));
+
+            Object[] params = {label, scrollPaneAvailableSaveGames};
+            if(JOptionPane.showConfirmDialog(null, params, "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                int saveGameSlotToRestore = Integer.parseInt(listAvailableThemes.getSelectedValue());
+                if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to restore the backup for save game " + saveGameSlotToRestore + " ?\n\nThis can not be undone!\nI will not take any responsibility if your save game is getting corrupted!\n\nRestore save game backup?", "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    Backup.backupSaveGames(false);
+                    Backup.restoreSaveGameBackup(saveGameSlotToRestore);
+                    JOptionPane.showMessageDialog(null, "Save game backup has been restored", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Restores the save game backup for the input save game slot
      * @param saveGameSlot The slot where the save game is saved that should be restored
      */
@@ -160,15 +234,34 @@ public class Backup {
         }
     }
 
-    public static void deleteAllBackups() throws IOException {
-        File backupFolder = new File(BACKUP_FOLDER_PATH);
-        if(backupFolder.exists()){
-            Files.walk(Paths.get(backupFolder.getPath()))
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+    /**
+     * Deletes all backups after confirmed by the user
+     */
+    public static void deleteAllBackups(){
+        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all backups?", "Delete backup?", JOptionPane.YES_NO_OPTION) == 0){
+            try {
+                File backupFolder = new File(BACKUP_FOLDER_PATH);
+                if(backupFolder.exists()){
+                    Files.walk(Paths.get(backupFolder.getPath()))
+                            .sorted(Comparator.reverseOrder())
+                            .map(Path::toFile)
+                            .forEach(File::delete);
+                }
+                ChangeLog.addLogEntry(12);
+                if(JOptionPane.showConfirmDialog(null, "All backups have been deleted.\nDo you wan't to create a new initial backup?", "Backups deleted", JOptionPane.YES_NO_OPTION) == 0){
+                    String returnValue = Backup.createInitialBackup();
+                    if(returnValue.equals("")) {
+                        JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
+                    }else {
+                        JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + returnValue, "Unable to backup file", JOptionPane.ERROR_MESSAGE);
+                        ChangeLog.addLogEntry(7, returnValue);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Unable to delete all backups. \n\nException:\n" + e.getMessage(), "Unable to delete backups", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        ChangeLog.addLogEntry(12);
     }
 
     /**

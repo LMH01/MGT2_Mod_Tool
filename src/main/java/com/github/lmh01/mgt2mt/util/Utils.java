@@ -625,4 +625,21 @@ public class Utils {
         //System.out.println(fList);
         return resultList;
     }
+
+    /**
+     * Opens the given folder
+     * @param path
+     */
+    public static void open(String path){
+        try {
+            File file = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + e.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
 }

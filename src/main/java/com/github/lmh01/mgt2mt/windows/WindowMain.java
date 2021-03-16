@@ -48,7 +48,7 @@ public class WindowMain {
         m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         JMenuItem m13 = new JMenuItem("Uninstall");
         m13.setToolTipText("<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.");
-        m13.addActionListener(actionEvent -> uninstall());
+        m13.addActionListener(actionEvent -> Uninstaller.uninstall());
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
@@ -131,7 +131,7 @@ public class WindowMain {
         M315EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
         M316EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
-        m35.addActionListener(actionEvent -> openExportFolder());
+        m35.addActionListener(actionEvent -> Utils.open(Utils.getMGT2ModToolExportFolder()));
         JMenuItem m36 = new JMenuItem("Delete all exports");
         m36.addActionListener(actionEvent -> deleteAllExports());
         m3Share.add(m31Export);
@@ -143,13 +143,13 @@ public class WindowMain {
         JMenu m42 = new JMenu("Restore Backup");
         JMenuItem m411CreateFullBackup = new JMenuItem("Create Full Backup");
         m411CreateFullBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
-        m411CreateFullBackup.addActionListener(actionEvent -> createBackup("full"));
+        m411CreateFullBackup.addActionListener(actionEvent -> Backup.createBackup("full"));
         JMenuItem m412BackupGenresFile = new JMenuItem("Backup Genres File");
-        m412BackupGenresFile.addActionListener(actionEvent -> createBackup("genre"));
+        m412BackupGenresFile.addActionListener(actionEvent -> Backup.createBackup("genre"));
         JMenuItem m413BackupThemesFiles = new JMenuItem("Backup Theme Files");
-        m413BackupThemesFiles.addActionListener(actionEvent -> createBackup("theme"));
+        m413BackupThemesFiles.addActionListener(actionEvent -> Backup.createBackup("theme"));
         JMenuItem m414BackupSavegames = new JMenuItem("Backup Save Games");
-        m414BackupSavegames.addActionListener(actionEvent -> createBackup("save_game"));
+        m414BackupSavegames.addActionListener(actionEvent -> Backup.createBackup("save_game"));
         m41.add(m411CreateFullBackup);
         m41.add(m412BackupGenresFile);
         m41.add(m413BackupThemesFiles);
@@ -162,16 +162,16 @@ public class WindowMain {
         m422RestoreLatestBackup.addActionListener(actionEvent -> restoreLatestBackup());
         JMenuItem m423RestoreSaveGameBackup = new JMenuItem("Restore Save Game Backup");
         m423RestoreSaveGameBackup.setToolTipText("Click to select a save game for which the backup should be restored.");
-        m423RestoreSaveGameBackup.addActionListener(actionEvent -> restoreSaveGameBackup());
+        m423RestoreSaveGameBackup.addActionListener(actionEvent -> Backup.restoreSaveGameBackup());
         m42.add(m421RestoreInitialBackup);
         m42.add(m422RestoreLatestBackup);
         m42.add(m423RestoreSaveGameBackup);
         JMenuItem m44 = new JMenuItem("Delete All Backups");
         m44.setToolTipText("Click to delete all backups that have been created.");
-        m44.addActionListener(actionEvent -> deleteAllBackups());
+        m44.addActionListener(actionEvent -> Backup.deleteAllBackups());
         JMenuItem m45 = new JMenuItem("Open Backup Folder");
         m45.setToolTipText("<html>Click to open the backup folder.<br>All backups that have been created are located here.<br>Use this if you do want to restore a backup manually.");
-        m45.addActionListener(actionEvent -> openBackupFolder());
+        m45.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
         mb.add(m4);
         m4.add(m41);
         m4.add(m42);
@@ -181,22 +181,22 @@ public class WindowMain {
         JMenuItem m51 = new JMenuItem("Open Github Page");
         m51.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m52 = new JMenuItem("Open MGT2 Folder");
-        m52.addActionListener(actionEvent -> openMGT2Folder());
+        m52.addActionListener(actionEvent -> Utils.open(Settings.mgt2FilePath));
         JMenuItem m53 = new JMenuItem("Show Active Genres");
         m53.addActionListener(actionEvent -> showActiveGenres());
         JMenuItem m54 = new JMenuItem("Show Active Themes");
         m54.addActionListener(actionEvent -> showActiveThemes());
         JMenuItem m55 = new JMenuItem("Open genres.txt file");
-        m55.addActionListener(actionEvent -> openGenresTXTFile());
+        m55.addActionListener(actionEvent -> Utils.open(Utils.getGenreFile().getPath()));
         JMenuItem m56 = new JMenuItem("Open Genres By Id");
         m56.setToolTipText("<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function");
-        m56.addActionListener(actionEvent -> openGenresByIDFile());
+        m56.addActionListener(actionEvent -> Utils.open(AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.getPath()));
         JMenuItem m57 = new JMenuItem("Open Log File");
         m57.setToolTipText("<html>Click to open the change log.<br>Shows all changes that have been made to the game files.");
-        m57.addActionListener(actionEvent -> openLogFile());
+        m57.addActionListener(actionEvent -> Utils.open(ChangeLog.FILE_CHANGES_LOG.getPath()));
         JMenuItem m58 = new JMenuItem("Open save game folder");
         m58.setToolTipText("Click to open the folder where the save games are stored");
-        m58.addActionListener(actionEvent -> openSaveGameFolder());
+        m58.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
         mb.add(m5);
         m5.add(m51);
         m5.add(m52);
@@ -620,57 +620,10 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Unable to add image file: Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private static void openExportFolder(){
-        try {
-            File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     private static void deleteAllExports(){
         if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all exports?", "Delete exports?", JOptionPane.YES_NO_OPTION) == 0){
             Utils.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
             JOptionPane.showMessageDialog(null, "All exports have been deleted.");
-        }
-    }
-    private static void createBackup(String type){
-        if(type.equals("full")){
-            try {
-                Backup.createFullBackup();
-                JOptionPane.showMessageDialog(new Frame(), "The full backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if(type.equals("genre")){
-            try{
-                Backup.createBackup(Utils.getGenreFile());
-                Backup.createBackup(Utils.getNpcGamesFile());
-                JOptionPane.showMessageDialog(new Frame(), "Backup of genre files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            }catch(IOException e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if(type.equals("theme")){
-            try{
-                Backup.createThemeFilesBackup(false);
-                JOptionPane.showMessageDialog(new Frame(), "Backup of theme files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            }catch(IOException e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if(type.equals("save_game")){
-            try{
-                Backup.backupSaveGames(false);
-                JOptionPane.showMessageDialog(new Frame(), "Backup of save games has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            }catch(IOException e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
         }
     }
     private static void restoreInitialBackup(){
@@ -729,66 +682,6 @@ public class WindowMain {
             }
         }
     }
-    private static void restoreSaveGameBackup(){
-        try {
-            ArrayList<File> files = Utils.getFilesInFolderWhiteList(Backup.BACKUP_FOLDER_PATH, "savegame");
-            Set<String> saveGameSlots = new HashSet<>();
-            for(File file : files){
-                saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
-            }
-            JLabel label = new JLabel("<html>Select the save game slot where the save game is saved,<br>for which the backup should be restored:<br>0 = Auto save");
-            String[] array = saveGameSlots.stream().toArray(String[]::new);
-            JList<String> listAvailableThemes = new JList<>(array);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-            listAvailableThemes.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableSaveGames = new JScrollPane(listAvailableThemes);
-            scrollPaneAvailableSaveGames.setPreferredSize(new Dimension(30,60));
-
-            Object[] params = {label, scrollPaneAvailableSaveGames};
-            if(JOptionPane.showConfirmDialog(null, params, "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                int saveGameSlotToRestore = Integer.parseInt(listAvailableThemes.getSelectedValue());
-                if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to restore the backup for save game " + saveGameSlotToRestore + " ?\n\nThis can not be undone!\nI will not take any responsibility if your save game is getting corrupted!\n\nRestore save game backup?", "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    Backup.backupSaveGames(false);
-                    Backup.restoreSaveGameBackup(saveGameSlotToRestore);
-                    JOptionPane.showMessageDialog(null, "Save game backup has been restored", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void deleteAllBackups(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all backups?", "Delete backup?", JOptionPane.YES_NO_OPTION) == 0){
-            try {
-                Backup.deleteAllBackups();
-                if(JOptionPane.showConfirmDialog(null, "All backups have been deleted.\nDo you wan't to create a new initial backup?", "Backups deleted", JOptionPane.YES_NO_OPTION) == 0){
-                    String returnValue = Backup.createInitialBackup();
-                    if(returnValue.equals("")) {
-                        JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
-                    }else {
-                        JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + returnValue, "Unable to backup file", JOptionPane.ERROR_MESSAGE);
-                        ChangeLog.addLogEntry(7, returnValue);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Unable to delete all backups. \n\nException:\n" + e.getMessage(), "Unable to delete backups", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-    private static void openBackupFolder(){
-        try {
-            File fileBackFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//");
-            if(!fileBackFolder.exists()){
-                fileBackFolder.mkdirs();
-            }
-            Desktop.getDesktop().open(fileBackFolder);
-        } catch (IOException ioException) {
-            JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + ioException.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
-            ioException.printStackTrace();
-        }
-    }
     private static void openGithubPage(){
         if(JOptionPane.showConfirmDialog(null, "Open Github page?", "Open page?", JOptionPane.YES_NO_OPTION) == 0){
             try {
@@ -797,13 +690,6 @@ public class WindowMain {
                 Utils.showErrorMessage(2, e);
                 e.printStackTrace();
             }
-        }
-    }
-    private static void openMGT2Folder(){
-        try {
-            Desktop.getDesktop().open(new File(Settings.mgt2FilePath));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
         }
     }
     private static void showActiveGenres(){
@@ -836,135 +722,6 @@ public class WindowMain {
         } catch (IOException e) {
             Utils.showErrorMessage(1, e);
             e.printStackTrace();
-        }
-    }
-    private static void openGenresTXTFile(){
-        try {
-            if(!Utils.getGenreFile().exists()){
-                JOptionPane.showMessageDialog(null, "The Genres.txt file could not be opened.\nFile not found: Please check if your mgt2 folder is set correctly", "Unable to open Genres.txt", JOptionPane.ERROR_MESSAGE);
-            }else{
-                Desktop.getDesktop().open(Utils.getGenreFile());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void openGenresByIDFile(){
-        try {
-            if(!AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.exists()){
-                JOptionPane.showMessageDialog(null, "The help file could not be opened.\nFile not found.", "Unable to open help file", JOptionPane.ERROR_MESSAGE);
-            }else{
-                Desktop.getDesktop().open(AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP);
-            }
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
-    private static void openLogFile(){
-        try {
-            if(!ChangeLog.FILE_CHANGES_LOG.exists()){
-                JOptionPane.showMessageDialog(new Frame(), "The file has not been created yet.", "Unable to open log:", JOptionPane.ERROR_MESSAGE);
-            }else{
-                Desktop.getDesktop().open(ChangeLog.FILE_CHANGES_LOG);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private static void openSaveGameFolder(){
-        try {
-            Desktop.getDesktop().open(new File(String.valueOf(Backup.FILE_SAVE_GAME_FOLDER.toPath())));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
-    private static void uninstall(){
-        JLabel labelDescription = new JLabel("<html>Select what should be removed<br>After uninstalling the program is exited");
-        JCheckBox checkboxDeleteBackups = new JCheckBox("Delete Backups");
-        checkboxDeleteBackups.setSelected(true);
-        checkboxDeleteBackups.setToolTipText("Check to delete all backups upon uninstalling");
-        JCheckBox checkboxRevertAllMods = new JCheckBox("Revert all mods");
-        checkboxRevertAllMods.setSelected(true);
-        checkboxRevertAllMods.setToolTipText("Check to revert all mods upon uninstalling");
-        JCheckBox checkboxDeleteConfigFiles = new JCheckBox("Delete config files");
-        checkboxDeleteConfigFiles.setSelected(true);
-        checkboxDeleteConfigFiles.setToolTipText("Check to delete the config file.");
-        JCheckBox checkboxDeleteExports = new JCheckBox("Delete Exports");
-        checkboxDeleteExports.setSelected(true);
-        checkboxDeleteExports.setToolTipText("Check to delete all exports");
-        Object[] params = {labelDescription, checkboxDeleteBackups, checkboxRevertAllMods, checkboxDeleteConfigFiles, checkboxDeleteExports};
-        if(JOptionPane.showConfirmDialog(null, params, "Uninstall", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-            boolean uninstallFailed = false;
-            StringBuilder stringActions = new StringBuilder();
-            if(checkboxDeleteBackups.isSelected()){
-                stringActions.append("Delete Backups").append(System.getProperty("line.separator"));
-            }
-            if(checkboxRevertAllMods.isSelected()){
-                stringActions.append("Revert All Mods").append(System.getProperty("line.separator"));
-            }
-            if(checkboxDeleteConfigFiles.isSelected()){
-                stringActions.append("Delete config files").append(System.getProperty("line.separator"));
-            }
-            if(checkboxDeleteExports.isSelected()){
-                stringActions.append("Delete exports").append(System.getProperty("line.separator"));
-            }
-            if(JOptionPane.showConfirmDialog(null, "Warning!\nAre you sure that you wan't to do the following:\n\n" + stringActions + "\nThis can't be reverted!", "Confirm uninstall", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                LOGGER.info("Uninstalling...");
-                StringBuilder uninstallFailedExplanation = new StringBuilder();
-                if(checkboxRevertAllMods.isSelected()){
-                    String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                    for (String customGenre : customGenres) {
-                        try {
-                            EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenre));
-                            ImageFileHandler.removeImageFiles(customGenre, AnalyzeExistingGenres.getGenreIdByName(customGenre));
-                            LOGGER.info("Game files have been restored to original.");
-                        } catch (IOException e) {
-                            LOGGER.info("Genre could not be removed: " + e.getMessage());
-                            uninstallFailedExplanation.append("Genre could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                            e.printStackTrace();
-                            uninstallFailed = true;
-                        }
-                    }
-                    String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-                    for (String customPublisher : customPublishers) {
-                        try {
-                            EditPublishersFile.removePublisher(customPublisher);
-                            LOGGER.info("Publisher files have been restored to original.");
-                        } catch (IOException e) {
-                            LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                            uninstallFailedExplanation.append("Publisher could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                            e.printStackTrace();
-                            uninstallFailed = true;
-                        }
-                    }
-                    Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
-                }
-                if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
-                    File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
-                    Utils.deleteDirectory(modManagerPath);
-                }
-                if(checkboxDeleteBackups.isSelected()){
-                    File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
-                    Utils.deleteDirectory(backupFolder);
-                    LOGGER.info("Backups have been deleted.");
-                }
-                if(checkboxDeleteConfigFiles.isSelected()){
-                    File configFile = new File(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
-                    configFile.deleteOnExit();
-                    LOGGER.info("Settings file has been deleted.");
-                }
-                if(checkboxDeleteExports.isSelected()){
-                    File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
-                    Utils.deleteDirectory(exportFolder);
-                    LOGGER.info("Exports have been deleted.");
-                }
-                if(uninstallFailed){
-                    JOptionPane.showMessageDialog(null, "There was a problem while uninstalling:\n\n" + uninstallFailedExplanation, "Uninstall incomplete", JOptionPane.WARNING_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Your selected files have been uninstalled successfully!", "Uninstall successful", JOptionPane.INFORMATION_MESSAGE);
-                }
-                System.exit(0);
-            }
         }
     }
 }
