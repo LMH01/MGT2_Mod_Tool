@@ -39,7 +39,7 @@ public class SharingManager {
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      */
     public static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
-        return importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null);
+        return importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null, true);
     }
 
     /**
@@ -48,10 +48,11 @@ public class SharingManager {
      * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param importFolder The import folder where the files are stored.
+     * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
 
-    public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder){
-        return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder);
+    public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder, boolean showAlreadyExistMessage){
+        return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
     }
 
     /**
@@ -62,20 +63,21 @@ public class SharingManager {
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param askForImportFolder  If true the user will be asked to select a folder. If false the import folder will be used that passed as argument.
      * @param importFolder The import folder where the files are stored. The folder is used when ask for import folder is false.
+     * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
-    private static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder){
+    private static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder, boolean showAlreadyExistMessage){
         try {
             if(askForImportFolder){
                 ArrayList<String> importFolders = getImportFolderPath(fileName);
                 try{
                     for(String folder : importFolders){
-                        analyzeReturnValue(importName, importFunction.getReturnValue(folder), compatibleModToolVersions);
+                        analyzeReturnValue(importName, importFunction.getReturnValue(folder), compatibleModToolVersions, showAlreadyExistMessage);
                     }
                 }catch(NullPointerException ignored){
 
                 }
             }else{
-                analyzeReturnValue(importName, importFunction.getReturnValue(importFolder.getPath()), compatibleModToolVersions);
+                analyzeReturnValue(importName, importFunction.getReturnValue(importFolder.getPath()), compatibleModToolVersions, showAlreadyExistMessage);
             }
             return true;
         }catch(IOException e) {
@@ -219,11 +221,14 @@ public class SharingManager {
      * @param importName The name that is written in some JOptionPanes. Eg. genre, publisher, theme
      * @param returnValue The return value from the import function
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
+     * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
-    private static void analyzeReturnValue(String importName, String returnValue, String[] compatibleModToolVersions){
+    private static void analyzeReturnValue(String importName, String returnValue, String[] compatibleModToolVersions, boolean showAlreadyExistMessage){
         try{
             if(returnValue.equals("false")){
-                JOptionPane.showMessageDialog(null, "The selected " + importName + " already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                if(showAlreadyExistMessage){
+                    JOptionPane.showMessageDialog(null, "The selected " + importName + " already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                }
             }else{
                 if(!returnValue.equals("true")){
                     StringBuilder supportedModToolVersions = new StringBuilder();
@@ -303,40 +308,45 @@ public class SharingManager {
                 message.append("<br>").append("Do you want to start the import process?");
                 JLabel labelMessage = new JLabel(message.toString());
                 JCheckBox checkBoxDisableImportPopups = new JCheckBox("Disable popups");
-                checkBoxDisableImportPopups.setToolTipText("<html>Check to disable confirm messages that something can be imported.<br>If checked only error messages are shown");
-                Object[] params = {labelMessage, checkBoxDisableImportPopups};
+                checkBoxDisableImportPopups.setToolTipText("<html>Check to disable confirm messages that something can be imported");
+                JCheckBox checkBoxDisableAlreadyExistPopups = new JCheckBox("Disable already exists popups");
+                checkBoxDisableAlreadyExistPopups.setToolTipText("<html>Check to disable popups that something already exists");
+                checkBoxDisableAlreadyExistPopups.setSelected(true);
+                Object[] params = {labelMessage, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
 
                 if(JOptionPane.showConfirmDialog(null, params, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                    boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
+                    boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
                     boolean errorOccurred = false;
                     for(File file : engineFeatures){
-                        if(!importThings("engine feature", (string) -> SharingHandler.importEngineFeature(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                        if(!importThings("engine feature", (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : gameplayFeatures){
-                        if(!importThings("gameplay feature",(string) -> SharingHandler.importGameplayFeature(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                        if(!importThings("gameplay feature",(string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : genres){
-                        if(!importThings("genre",(string) -> SharingHandler.importGenre(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                        if(!importThings("genre",(string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : publishers){
-                        if(!importThings("publisher", (string) -> SharingHandler.importPublisher(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                        if(!importThings("publisher", (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     for(File file : themes){
-                        if(!importThings("theme", (string) -> SharingHandler.importTheme(string, !checkBoxDisableImportPopups.isSelected()), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile())){
+                        if(!importThings("theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
                             errorOccurred = true;
                         }
                     }
                     if(errorOccurred){
                         JOptionPane.showMessageDialog(null, "Error while importing:\nSome features might not be properly imported.\nSee console for further information!", "Error while importing", JOptionPane.ERROR_MESSAGE);
                     }else{
-                        JOptionPane.showMessageDialog(null, "Import complete:\nAll features have been imported.", "Import complete", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Import complete:\nAll features (that did not already exist) have been imported.", "Import complete", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }else{
