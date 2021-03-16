@@ -125,7 +125,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         M313EXPORT_THEME.addActionListener(actionEvent -> exportTheme());
         M314EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> SharingHandler.export((name) -> SharingHandler.exportEngineFeature(name), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature"));
         M315EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> SharingHandler.export((name) -> SharingHandler.exportGameplayFeature(name), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature"));
-        M316EXPORT_ALL.addActionListener(actionEvent -> exportAll());
+        M316EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> openExportFolder());
         JMenuItem m36 = new JMenuItem("Delete all exports");
@@ -276,7 +276,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
             M314EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
             M252REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M315EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-            if(noCustomGenreAvailable && noCustomPublishersAvailable){
+            if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
                 M316EXPORT_ALL.setEnabled(false);
             }else{
                 M316EXPORT_ALL.setEnabled(true);
@@ -562,7 +562,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
                         StringBuilder failedThemeExports = new StringBuilder();
                         for(int i=0; i<listAvailableThemes.getSelectedValuesList().size(); i++){
                             String currentTheme = listAvailableThemes.getSelectedValuesList().get(i);
-                            if(!SharingHandler.exportTheme(AnalyzeExistingThemes.getSingleThemeByNameMap(currentTheme))){
+                            if(!SharingHandler.exportTheme(currentTheme)){
                                 if(!multipleThemesToExport){
                                     JOptionPane.showMessageDialog(null, "The selected theme has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
                                 }
@@ -883,7 +883,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
                         StringBuilder failedGenreExports = new StringBuilder();
                         for(int i=0; i<listAvailableGenres.getSelectedValuesList().size(); i++){
                             String currentGenre = listAvailableGenres.getSelectedValuesList().get(i);
-                            if(!SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre), currentGenre)){
+                            if(!SharingHandler.exportGenre(currentGenre)){
                                 if(!multipleGenresToExport){
                                     JOptionPane.showMessageDialog(null, "The selected genre has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
                                 }
@@ -952,7 +952,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
                         for(int i=0; i<listAvailablePublishers.getSelectedValuesList().size(); i++){
                             String currentPublisher = listAvailablePublishers.getSelectedValuesList().get(i);
                             try{
-                                if(!SharingHandler.exportPublisher(currentPublisher, AnalyzeExistingPublishers.getSinglePublisherByNameMap(currentPublisher))){
+                                if(!SharingHandler.exportPublisher(currentPublisher)){
                                     if(!multipleGenresToExport){
                                         JOptionPane.showMessageDialog(null, "The selected publisher has already been exported.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
                                     }
@@ -987,121 +987,7 @@ public class WindowMain {//TODO Clean up main window -> Move all functions from 
         }
         checkActionAvailability();
     }
-    private static void exportAll(){
-        String customGenres[] = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-        String customPublishers[] = AnalyzeExistingPublishers.getCustomPublisherString();
-        String customThemes[] = AnalyzeExistingThemes.getCustomThemesByAlphabet();
-        StringBuilder exportList = new StringBuilder();
-        final int ENTIRES_PER_LINE = 10;
-        if(customGenres != null){
-            exportList.append("Genres: ");
-        }
-        boolean firstCustomGenre = true;
-        int currentLineNumber = 1;
-        for(String string : customGenres){
-            if(firstCustomGenre){
-                firstCustomGenre = false;
-            }else{
-                exportList.append(", ");
-            }
-            if(currentLineNumber == ENTIRES_PER_LINE){
-                exportList.append(System.getProperty("line.separator"));
-            }
-            exportList.append(string);
-            currentLineNumber++;
-        }
-        if(customThemes != null){
-            exportList.append(System.getProperty("line.separator")).append("Themes: ");
-        }
-        currentLineNumber = 1;
-        boolean firstCustomTheme = true;
-        for(String string : customThemes){
-            if(firstCustomTheme){
-                firstCustomTheme = false;
-            }else{
-                exportList.append(", ");
-            }
-            if(currentLineNumber == ENTIRES_PER_LINE){
-                exportList.append(System.getProperty("line.separator"));
-            }
-            exportList.append(string);
-            currentLineNumber++;
-        }
-        if(customPublishers != null){
-            exportList.append(System.getProperty("line.separator")).append("Publisher: ");
-        }
-        currentLineNumber = 1;
-        boolean firstCustomPublisher = true;
-        for(String string : customPublishers){
-            if(firstCustomPublisher){
-                firstCustomPublisher = false;
-            }else{
-                exportList.append(", ");
-            }
-            if(currentLineNumber == ENTIRES_PER_LINE){
-                exportList.append(System.getProperty("line.separator"));
-            }
-            exportList.append(string);
-            currentLineNumber++;
-        }
-        if(JOptionPane.showConfirmDialog(null, "The following enties will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-            StringBuilder failedExports = new StringBuilder();
-            try{
-                boolean firstGenreExportFail = true;
-                boolean exportFailed = false;
-                for(String currentGenre : customGenres){
-                    if(!SharingHandler.exportGenre(AnalyzeExistingGenres.getGenreIdByName(currentGenre), currentGenre)){
-                        if(firstGenreExportFail){
-                            failedExports.append("Genres: ");
-                        }else{
-                            failedExports.append(", ");
-                        }
-                        failedExports.append(currentGenre);
-                        firstGenreExportFail = false;
-                        exportFailed = true;
-                    }
-                }
-                boolean firstThemeExportFail = true;
-                for(String currentTheme : customThemes){
-                    if(!SharingHandler.exportTheme(AnalyzeExistingThemes.getSingleThemeByNameMap(currentTheme))){
-                        if(firstThemeExportFail){
-                            failedExports.append("Themes: ");
-                        }else{
-                            failedExports.append(", ");
-                        }
-                        failedExports.append(currentTheme);
-                        firstThemeExportFail = false;
-                        exportFailed = true;
-                    }
-                }
-                boolean firstPublisherExportFail = true;
-                for(String currentPublisher : customPublishers){
-                    if(!SharingHandler.exportPublisher(currentPublisher, AnalyzeExistingPublishers.getSinglePublisherByNameMap(currentPublisher))){
-                        if(firstPublisherExportFail){
-                            failedExports.append(System.getProperty("line.separator")).append("Publisher: ");
-                        }else{
-                            failedExports.append(", ");
-                        }
-                        failedExports.append(currentPublisher);
-                        firstPublisherExportFail = false;
-                        exportFailed = true;
-                    }
-                }
-                if(exportFailed){
-                    if(JOptionPane.showConfirmDialog(null, "The following entries have not been exported because the where already exported:\n\n" + failedExports.toString() + "\n\nDo you want to open the export folder?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                        Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                    }
-                }else{
-                    if(JOptionPane.showConfirmDialog(null, "All entries have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                        Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                    }
-                }
-            }catch(IOException e){
-                JOptionPane.showMessageDialog(null, "Error while exporting:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
-            }
-        }
-    }
+
     private static void openExportFolder(){
         try {
             File file = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");

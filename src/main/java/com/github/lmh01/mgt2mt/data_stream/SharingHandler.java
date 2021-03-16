@@ -30,7 +30,7 @@ public class SharingHandler {
      * @param exportType The type that should be exported. Eg. genre, gameplay feature
      */
     public static void export(Exporter exporter, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType){
-        try {
+        try {//TODO Move this function to Sharing Manager
             boolean noExportAvailable = true;
             JLabel labelChooseExports = new JLabel("Select the " + exportType + "(s) that should be exported:");
             String[] string;
@@ -99,12 +99,12 @@ public class SharingHandler {
 
     /**
      * Exports the specified genre.
-     * @param genreId The genre id
      * @param genreName The genre name
      * @return Returns true when the genre has been exported successfully. Returns false when the genre has already been exported.
      * @throws IOException
      */
-    public static boolean exportGenre(int genreId, String genreName) throws IOException {
+    public static boolean exportGenre(String genreName) throws IOException {
+        int genreId = AnalyzeExistingGenres.getGenreIdByName(genreName);
         final String EXPORTED_GENRE_MAIN_FOLDER_PATH = Settings.MGT2_MOD_MANAGER_PATH + "//Export//Genres//" + genreName;
         final String EXPORTED_GENRE_DATA_FOLDER_PATH = EXPORTED_GENRE_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
@@ -232,7 +232,8 @@ public class SharingHandler {
      * @param publisherNameEN The publisher name that should be exported.
      * @return Returns true when the publisher has been exported successfully. Returns false when the publisher has already been exported.
      */
-    public static boolean exportPublisher(String publisherNameEN, Map<String, String> singlePublisherMap) throws IOException {
+    public static boolean exportPublisher(String publisherNameEN) throws IOException {
+        Map<String, String> singlePublisherMap = AnalyzeExistingPublishers.getSinglePublisherByNameMap(publisherNameEN);
         final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Publishers//" + publisherNameEN;
         final String EXPORTED_PUBLISHER_DATA_FOLDER_PATH = EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_PUBLISHER_DATA_FOLDER_PATH);
@@ -335,10 +336,11 @@ public class SharingHandler {
 
     /**
      * Exports the theme that stand in the map
-     * @param map The map where the theme values are stored
+     * @param themeNameEn The english name of the theme that should be exported
      * @return Returns true when the theme has been exported successfully. Returns false when the theme has already been exported.
      */
-    public static boolean exportTheme(Map<String, String> map) throws IOException {
+    public static boolean exportTheme(String themeNameEn) throws IOException {
+        Map<String, String> map = AnalyzeExistingThemes.getSingleThemeByNameMap(themeNameEn);
         final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Themes//" + map.get("NAME EN");
         File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
         File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//theme.txt");

@@ -1,17 +1,13 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingEngineFeatures;
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
-import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
-import com.github.lmh01.mgt2mt.util.interfaces.FreeId;
-import com.github.lmh01.mgt2mt.util.interfaces.Importer;
-import com.github.lmh01.mgt2mt.util.interfaces.ReturnValue;
-import com.github.lmh01.mgt2mt.util.interfaces.Summary;
+import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.util.interfaces.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -159,5 +155,104 @@ public class SharingManager {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Exports all available things when the user accepts.
+     */
+    public static void exportAll(){
+        String customEngineFeatures[] = AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString();
+        String customGameplayFeatures[] = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
+        String customGenres[] = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+        String customPublishers[] = AnalyzeExistingPublishers.getCustomPublisherString();
+        String customThemes[] = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+        final int ENTRIES_PER_LINE = 10;
+        StringBuilder exportList = new StringBuilder();
+        exportList.append(getExportListPart(customEngineFeatures, ENTRIES_PER_LINE, "Engine features"));
+        exportList.append(getExportListPart(customGameplayFeatures, ENTRIES_PER_LINE, "Gameplay features"));
+        exportList.append(getExportListPart(customGenres, ENTRIES_PER_LINE, "Genres"));
+        exportList.append(getExportListPart(customPublishers, ENTRIES_PER_LINE, "Publishers"));
+        exportList.append(getExportListPart(customThemes, ENTRIES_PER_LINE, "Themes"));
+        if(JOptionPane.showConfirmDialog(null, "The following entries will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            StringBuilder failedExports = new StringBuilder();
+            try{
+                failedExports.append(getExportFailed(SharingHandler::exportEngineFeature, customEngineFeatures, "Engine features"));
+                failedExports.append(getExportFailed(SharingHandler::exportGameplayFeature, customGameplayFeatures, "Gameplay features"));
+                failedExports.append(getExportFailed(SharingHandler::exportGenre, customGenres, "Genres"));
+                failedExports.append(getExportFailed(SharingHandler::exportPublisher, customPublishers, "Publishers"));
+                failedExports.append(getExportFailed(SharingHandler::exportTheme, customThemes, "Themes"));
+
+                if(failedExports.toString().isEmpty()){
+                    if(JOptionPane.showConfirmDialog(null, "All entries have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                        Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                    }
+                }else{
+                    if(JOptionPane.showConfirmDialog(null, "The following entries have not been exported because they where already exported:\n\n" + failedExports.toString() + "\n\nDo you want to open the export folder?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                        Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                    }
+                }
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(null, "Error while exporting:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * @param strings The array containing the entries
+     * @param ENTRIES_PER_LINE How many entries should be displayed per line
+     * @param exportName The name that should be written when a export item is found. Eg. Genre, Theme
+     * @return Returns a string containing the entries from the array
+     */
+    private static String getExportListPart(String[] strings, final int ENTRIES_PER_LINE, String exportName){
+        StringBuilder stringBuilder = new StringBuilder();
+        if(strings.length > 0){
+            stringBuilder.append(exportName + ": ");
+        }
+        boolean firstCustomGenre = true;
+        int currentLineNumber = 1;
+        for(String string : strings){
+            if(firstCustomGenre){
+                firstCustomGenre = false;
+            }else{
+                stringBuilder.append(", ");
+            }
+            if(currentLineNumber == ENTRIES_PER_LINE){
+                stringBuilder.append(System.getProperty("line.separator"));
+            }
+            stringBuilder.append(string);
+            currentLineNumber++;
+        }
+        stringBuilder.append(System.getProperty("line.separator"));
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Uses the input exporter to export a list of entries. This function may only be called by {@link SharingManager#exportAll()}.
+     * @param exporter
+     * @param strings The array containing the entries
+     * @param exportName The name that should be written when a error occurs. Eg. Genre, Theme
+     * @return Returns a string of errors if something failed to export
+     */
+    private static String getExportFailed(Exporter exporter, String[] strings, String exportName) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean firstExportFailed = true;
+        boolean exportFailed = false;
+        for(String string : strings){
+            if(!exporter.export(string)){
+                if(firstExportFailed){
+                    stringBuilder.append(exportName + ": ");
+                }else{
+                    stringBuilder.append(", ");
+                }
+                stringBuilder.append(string);
+                firstExportFailed = false;
+                exportFailed = true;
+            }
+        }
+        if(exportFailed){
+            stringBuilder.append(System.getProperty("line.separator"));
+        }
+        return stringBuilder.toString();
     }
 }
