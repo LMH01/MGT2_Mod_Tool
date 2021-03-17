@@ -25,23 +25,11 @@ import java.util.stream.Stream;
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingManager.class);
-    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1", "1.8.0"};
-    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1", "1.8.0"};
-    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0"};
-    public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0"};
-    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0"};
-
-
-    /**
-     * Opens a gui where the user can select a folder from which the files should be imported. Only supports one type import.
-     * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
-     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
-     * @param importFunction The function that imports the files
-     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
-     */
-    public static void importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions){
-        importThings(fileName, importName, importFunction, compatibleModToolVersions, true, null, true);
-    }
+    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1", "1.8.0", "1.8.1"};
+    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1"};
+    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1"};
+    public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1"};
+    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1"};
 
     /**
      * Uses the import function to import the content of the import folder.
@@ -279,6 +267,9 @@ public class SharingManager {
                                 publishers.add(new File(string));
                             }else if(string.contains("theme.txt")){
                                 themes.add(new File(string));
+                            }
+                            if(Settings.enableDebugLogging){
+                                LOGGER.info("current file: " + string);
                             }
                         });
                     }
