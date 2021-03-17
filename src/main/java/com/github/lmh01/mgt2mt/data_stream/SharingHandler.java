@@ -397,7 +397,7 @@ public class SharingHandler {
                 SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
                 (map) -> EditEngineFeaturesFile.addEngineFeature(map),
                 () -> AnalyzeExistingEngineFeatures.getFreeEngineFeatureId(),
-                30,
+                32,
                 (map) -> Summaries.showEngineFeatureMessage(map),
                 showMessages);
         return returnValue;
