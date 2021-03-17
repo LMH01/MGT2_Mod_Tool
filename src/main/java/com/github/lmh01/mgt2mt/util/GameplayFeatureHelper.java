@@ -262,7 +262,7 @@ public class GameplayFeatureHelper {
             }
         }catch(IOException e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error while adding gameplay feature:\n\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error while adding gameplay feature:\n\n" + e.getMessage(), "Error while adding gameplay feature", JOptionPane.ERROR_MESSAGE);
         }
         WindowMain.checkActionAvailability();
     }
