@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -184,7 +183,7 @@ public class GameplayFeatureHelper {
             JButton buttonBadGenres = new JButton("Select Bad Genres");
             buttonBadGenres.setToolTipText("Click to select what genres don't work good with your gameplay feature");
             buttonBadGenres.addActionListener(actionEvent -> {
-                badGenreIds[0] = Utils.getSelectedGenresIds("Select the genre(s) that don't work with your gameplay feature");
+                badGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", "Choose genre(s)", AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), true);
                 if(badGenreIds[0].size() != 0){
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
                     if(Settings.disableSafetyFeatures || !mutualEntries){
@@ -200,7 +199,7 @@ public class GameplayFeatureHelper {
             });
             JButton buttonGoodGenres = new JButton("Select Good Genres");
             buttonGoodGenres.addActionListener(actionEvent -> {
-                goodGenreIds[0] = Utils.getSelectedGenresIds("Select the genre(s) that work with your gameplay feature");
+                goodGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", "Choose genre(s)", AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), true);
                 if(goodGenreIds[0].size() != 0){
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
                     if(Settings.disableSafetyFeatures || !mutualEntries){

@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -547,34 +548,63 @@ public class Utils {
     }
 
     /**
-     * Opens a window where the user can select genres.
+     * Opens a window where the user can select entries from a list.
      * @param labelText The text that should be displayed at the top of the window
-     * @return Returns the genre ids for the selected genres as array list.
+     * @param windowTile The window title that the window should get
+     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
+     * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
+     * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
+     * @return Returns the selected entries as array list.
      */
-    public static ArrayList<Integer> getSelectedGenresIds(String labelText){
-        ArrayList<Integer> genreIds = new ArrayList<>();
-        JLabel labelChooseGenre = new JLabel(labelText);
-        String[] existingGenresByAlphabet;
-        existingGenresByAlphabet = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
-        JList<String> listAvailableGenres = new JList<>(existingGenresByAlphabet);
-        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-        listAvailableGenres.setVisibleRowCount(-1);
-        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-        scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+    public static ArrayList<Integer> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
+        return getSelectedEntries(labelText, windowTile, stringArraySafetyFeaturesOn, stringArraySafetyFeaturesDisabled, showNoSelectionMessage, false);
+    }
 
-        Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
+    /**
+     * Opens a window where the user can select entries from a list.
+     * @param labelText The text that should be displayed at the top of the window
+     * @param windowTile The window title that the window should get
+     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
+     * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
+     * @param returnGenreIds If true the return value is a array list containing genre ids. If false the position of the selected entries is returned.
+     * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
+     * @return Returns the selected entries as array list.
+     */
+    public static ArrayList<Integer> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage, boolean returnGenreIds){
+        ArrayList<Integer> returnValues = new ArrayList<>();
+        JLabel labelChooseEntry = new JLabel(labelText);
+        String[] existingListContent;
+        if(Settings.disableSafetyFeatures){
+            existingListContent = stringArraySafetyFeaturesDisabled;
+        }else {
+            existingListContent = stringArraySafetyFeaturesOn;
+        }
+        JList<String> listAvailableEntries = new JList<>(existingListContent);
+        listAvailableEntries.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableEntries.setLayoutOrientation(JList.VERTICAL);
+        listAvailableEntries.setVisibleRowCount(-1);
+        JScrollPane scrollPaneAvailableEntries = new JScrollPane(listAvailableEntries);
+        scrollPaneAvailableEntries.setPreferredSize(new Dimension(315,140));
 
-        if(JOptionPane.showConfirmDialog(null, params, "Choose genre(s)", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-            if(!listAvailableGenres.isSelectionEmpty()){
-                for(String string : listAvailableGenres.getSelectedValuesList()){
-                    genreIds.add(AnalyzeExistingGenres.getGenreIdByName(string));
+        Object[] params = {labelChooseEntry, scrollPaneAvailableEntries};
+
+        if(JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            if(!listAvailableEntries.isSelectionEmpty()){
+                for(String string : listAvailableEntries.getSelectedValuesList()){
+                    if(returnGenreIds){
+                        returnValues.add(AnalyzeExistingGenres.getGenreIdByName(string));
+                    }else{
+                        returnValues.add(getPositionInList(string, existingListContent));
+                    }
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                if(showNoSelectionMessage){
+                    JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+
+                }
             }
         }
-        return genreIds;
+        return returnValues;
     }
 
     /**
@@ -641,5 +671,31 @@ public class Utils {
             JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + e.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param arrayList The array list that should be converted
+     * @return Returns a string array
+     */
+    public static String[] convertArrayListToArray(ArrayList<String> arrayList){
+        String[] strings = new String[arrayList.size()];
+        strings = arrayList.toArray(strings);
+        return strings;
+    }
+
+    /**
+     * @param itemInList The item from which the position should be returned
+     * @param listContent A list containing the selected entries
+     * @return Returns the position of the item in the list
+     */
+    public static int getPositionInList(String itemInList, String[] listContent){
+        int currentNumber = 0;
+        for(String string : listContent){
+            if(string.equals(itemInList)){
+                return currentNumber;
+            }
+            currentNumber++;
+        }
+        return -1;
     }
 }

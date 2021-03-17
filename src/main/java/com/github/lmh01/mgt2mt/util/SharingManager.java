@@ -17,6 +17,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -110,7 +112,7 @@ public class SharingManager {
                 CanBeImported = true;
             }
         }
-        if(!CanBeImported){
+        if(!CanBeImported && !Settings.disableSafetyFeatures){
             return importName + " [" + map.get("NAME EN") + "] could not be imported:\n" + importName + " is not with the current mod tool version compatible\n" + importName + " was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map<String, String> existingFeatures : existingFeatureList){
@@ -286,61 +288,69 @@ public class SharingManager {
             }catch (NullPointerException ignored){
 
             }
-            StringBuilder message = new StringBuilder();
+            JPanel panelEngineFeatures = new JPanel();
+            JPanel panelGameplayFeatures = new JPanel();
+            JPanel panelGenres = new JPanel();
+            JPanel panelPublishers = new JPanel();
+            JPanel panelThemes = new JPanel();
+            AtomicReference<ArrayList<Integer>> selectedEntriesEngineFeatures = new AtomicReference<>(new ArrayList<>());
+            AtomicReference<ArrayList<Integer>> selectedEntriesGameplayFeatures = new AtomicReference<>(new ArrayList<>());
+            AtomicReference<ArrayList<Integer>> selectedEntriesGenres = new AtomicReference<>(new ArrayList<>());
+            AtomicReference<ArrayList<Integer>> selectedEntriesPublishers = new AtomicReference<>(new ArrayList<>());
+            AtomicReference<ArrayList<Integer>> selectedEntriesThemes = new AtomicReference<>(new ArrayList<>());
+            AtomicBoolean disableEngineFeatureImport = new AtomicBoolean();
+            AtomicBoolean disableGameplayFeatureImport = new AtomicBoolean();
+            AtomicBoolean disableGenreImport = new AtomicBoolean();
+            AtomicBoolean disablePublisherImport = new AtomicBoolean();
+            AtomicBoolean disableThemeImport = new AtomicBoolean();
             if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty()) {
-                message.append("<html>The following objects to import have been found:").append("<br>");
                 if(!engineFeatures.isEmpty()){
-                    message.append("Engine features: ").append(engineFeatures.size()).append("<br>");
+                    setFeatureAvailableGuiComponents("Engine features:",engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
                 }
                 if(!gameplayFeatures.isEmpty()){
-                    message.append("Gameplay features: ").append(gameplayFeatures.size()).append("<br>");
+                    setFeatureAvailableGuiComponents("Gameplay features:",gameplayFeatures, panelGameplayFeatures, selectedEntriesGameplayFeatures, disableGameplayFeatureImport);
                 }
                 if(!genres.isEmpty()){
-                    message.append("Genres: ").append(genres.size()).append("<br>");
+                    setFeatureAvailableGuiComponents("Genres:", genres, panelGenres, selectedEntriesGenres, disableGenreImport);
                 }
                 if(!publishers.isEmpty()){
-                    message.append("Publishers: ").append(publishers.size()).append("<br>");
+                    setFeatureAvailableGuiComponents("Publishers:", publishers, panelPublishers, selectedEntriesPublishers, disablePublisherImport);
                 }
                 if(!themes.isEmpty()){
-                    message.append("Themes: ").append(themes.size()).append("<br>");
+                    setFeatureAvailableGuiComponents("Themes:", themes, panelThemes, selectedEntriesThemes, disableThemeImport);
                 }
-                message.append("<br>").append("Do you want to start the import process?");
-                JLabel labelMessage = new JLabel(message.toString());
+                JLabel labelStart = new JLabel("The following objects can be imported:");
+                JLabel labelEnd = new JLabel("<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?");
                 JCheckBox checkBoxDisableImportPopups = new JCheckBox("Disable popups");
                 checkBoxDisableImportPopups.setToolTipText("<html>Check to disable confirm messages that something can be imported");
                 JCheckBox checkBoxDisableAlreadyExistPopups = new JCheckBox("Disable already exists popups");
                 checkBoxDisableAlreadyExistPopups.setToolTipText("<html>Check to disable popups that something already exists");
                 checkBoxDisableAlreadyExistPopups.setSelected(true);
-                Object[] params = {labelMessage, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
+                Object[] params = {labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
 
                 if(JOptionPane.showConfirmDialog(null, params, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                     boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                     boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
                     boolean errorOccurred = false;
-                    for(File file : engineFeatures){
-                        if(importThings("engine feature", (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
-                            errorOccurred = true;
-                        }
+                    if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), "engine feature", (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                        LOGGER.info("Error occurred wile importing engine features");
+                        errorOccurred = true;
                     }
-                    for(File file : gameplayFeatures){
-                        if(importThings("gameplay feature", (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
-                            errorOccurred = true;
-                        }
+                    if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), "gameplay feature", (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                        LOGGER.info("Error occurred wile importing gameplay features");
+                        errorOccurred = true;
                     }
-                    for(File file : genres){
-                        if(importThings("genre", (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
-                            errorOccurred = true;
-                        }
+                    if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), "genre", (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                        LOGGER.info("Error occurred wile importing genres");
+                        errorOccurred = true;
                     }
-                    for(File file : publishers){
-                        if(importThings("publisher", (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
-                            errorOccurred = true;
-                        }
+                    if(!importAllFiles(publishers, selectedEntriesPublishers.get(), disablePublisherImport.get(), "publisher", (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                        LOGGER.info("Error occurred wile importing publishers");
+                        errorOccurred = true;
                     }
-                    for(File file : themes){
-                        if(importThings("theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, file.getParentFile(), !showAlreadyExistPopups)){
-                            errorOccurred = true;
-                        }
+                    if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), "theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                        LOGGER.info("Error occurred wile importing themes");
+                        errorOccurred = true;
                     }
                     if(errorOccurred){
                         JOptionPane.showMessageDialog(null, "Error while importing:\nSome features might not be properly imported.\nSee console for further information!", "Error while importing", JOptionPane.ERROR_MESSAGE);
@@ -353,6 +363,89 @@ public class SharingManager {
             }
         }
         WindowMain.checkActionAvailability();
+    }
+
+    /**
+     * Adds gui components to be displayed in the summary. May only be called by {@link SharingManager#importAll()}
+     * @param labelText The label text
+     * @param files The array list containing the feature specific files
+     * @param panel The panel where the components should be added
+     * @param selectedEntries A atomic reference where the return values should be saved
+     */
+    private static void setFeatureAvailableGuiComponents(String labelText, ArrayList<File> files, JPanel panel, AtomicReference<ArrayList<Integer>> selectedEntries, AtomicBoolean disableImport){
+        JLabel label = new JLabel(labelText);
+        JButton button = new JButton(files.size() + "/" + files.size());
+        button.addActionListener(actionEvent -> {
+            ArrayList<Integer> arrayList = getSelectedEntries(files);
+            selectedEntries.set(arrayList);
+            if(arrayList.isEmpty()){
+                LOGGER.info("Import disabled for: " + labelText.replaceAll(":", ""));
+                disableImport.set(true);
+            }else{
+                LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
+                disableImport.set(false);
+            }
+            for(Integer integer : arrayList){
+                LOGGER.info("Selected entry positions: " + integer);
+            }
+            button.setText(selectedEntries.get().size() + "/" + files.size());
+        });
+        panel.add(label);
+        panel.add(button);
+    }
+
+    /**
+     * Opens a gui where the user can select entries.
+     * @param files The files that should be scanned for the name that is displayed in the guis
+     * @return Returns a array list containing numbers of selected entries
+     */
+    private static ArrayList<Integer> getSelectedEntries(ArrayList<File> files){
+        ArrayList<String> engineFeatureNames = new ArrayList<>();
+        for(File file : files){
+            try {
+                engineFeatureNames.add(DataStreamHelper.getNameFromFile(file, "UTF_8BOM"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return Utils.getSelectedEntries("Select what should be imported:", "Import", Utils.convertArrayListToArray(engineFeatureNames), Utils.convertArrayListToArray(engineFeatureNames),false);
+    }
+
+    /**
+     * Imports all files that are listed in the files array
+     * @param files The array containing the import files
+     * @param selectedEntryNumbers If not empty only the files numbers listed in this array are imported
+     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
+     * @param importFunction The function that imports the files
+     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
+     * @param showAlreadyExistPopups When true a message is displayed that the choose import does already exist
+     * @return Returns true when the import was successful. Returns false when something went wrong
+     */
+    private static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean showAlreadyExistPopups){
+        int currentFile = 0;
+        for(Integer integer : selectedEntryNumbers){
+            LOGGER.info("Selected entry numbers: " + integer);
+        }
+        if(!importNothing){
+            boolean failed = false;
+            for(File file : files){
+                if(selectedEntryNumbers.size() == 0){
+                    if(!importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
+                        failed = true;
+                    }
+                }else{
+                    if(selectedEntryNumbers.contains(currentFile)){
+                        if(!importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
+                            failed = true;
+                        }
+                    }
+                }
+                currentFile++;
+            }
+            return failed;
+        }else{
+            return true;
+        }
     }
 
     /**

@@ -119,7 +119,7 @@ public class SharingHandler {
                 genreCanBeImported = true;
             }
         }
-        if(!genreCanBeImported){
+        if(!genreCanBeImported && !Settings.disableSafetyFeatures){
             return "Genre [" + map.get("NAME EN") + "] could not be imported:\nThe genre is not with the current mod tool version compatible\nGenre was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map<String, String> map2 : AnalyzeExistingGenres.genreList){
@@ -222,7 +222,7 @@ public class SharingHandler {
                 publisherCanBeImported = true;
             }
         }
-        if(!publisherCanBeImported){
+        if(!publisherCanBeImported && !Settings.disableSafetyFeatures){
             return "Publisher [" + map.get("NAME EN") + "] could not be imported:\nThe publisher is not with the current mod tool version compatible\nPublisher was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map<String, String> map2 : AnalyzeExistingPublishers.getListMap()){
@@ -316,7 +316,7 @@ public class SharingHandler {
                 themeCanBeImported = true;
             }
         }
-        if(!themeCanBeImported){
+        if(!themeCanBeImported && !Settings.disableSafetyFeatures){
             return "Theme [" + map.get("NAME EN") + "] could not be imported:\nThe theme is not with the current mod tool version compatible\nTheme was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
