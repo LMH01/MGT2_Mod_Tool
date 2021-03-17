@@ -376,9 +376,6 @@ public class SharingManager {
                 LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
                 disableImport.set(false);
             }
-            for(Integer integer : arrayList){
-                LOGGER.info("Selected entry positions: " + integer);
-            }
             button.setText(selectedEntries.get().size() + "/" + files.size());
         });
         panel.add(label);
@@ -414,9 +411,6 @@ public class SharingManager {
      */
     private static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean showAlreadyExistPopups){
         int currentFile = 0;
-        for(Integer integer : selectedEntryNumbers){
-            LOGGER.info("Selected entry numbers: " + integer);
-        }
         if(!importNothing){
             boolean failed = false;
             for(File file : files){
