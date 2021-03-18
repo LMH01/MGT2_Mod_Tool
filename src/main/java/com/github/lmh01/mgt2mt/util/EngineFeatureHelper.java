@@ -159,10 +159,10 @@ public class EngineFeatureHelper {
             JSpinner spinnerGraphic = new JSpinner();
             JSpinner spinnerSound = new JSpinner();
             JSpinner spinnerTech = new JSpinner();
-            spinnerGameplay.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of gameplay points that are added when a game is developed with this feature.");
-            spinnerGraphic.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of graphic points that are added when a game is developed with this feature.");
-            spinnerSound.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of sound points that are added when a game is developed with this feature.");
-            spinnerTech.setToolTipText("<html>[Range: 0 - 2500; Default: 10]<br>The amount of tech points that are added when a game is developed with this feature.");
+            spinnerGameplay.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of gameplay points that are added when a game is developed with this feature.");
+            spinnerGraphic.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of graphic points that are added when a game is developed with this feature.");
+            spinnerSound.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of sound points that are added when a game is developed with this feature.");
+            spinnerTech.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of tech points that are added when a game is developed with this feature.");
             if(Settings.disableSafetyFeatures){
                 spinnerGameplay.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
                 spinnerGraphic.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
@@ -173,10 +173,10 @@ public class EngineFeatureHelper {
                 ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(true);
                 ((JSpinner.DefaultEditor)spinnerTech.getEditor()).getTextField().setEditable(true);
             }else{
-                spinnerGameplay.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
-                spinnerGraphic.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
-                spinnerSound.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
-                spinnerTech.setModel(new SpinnerNumberModel(100, 0, 2500, 5));
+                spinnerGameplay.setModel(new SpinnerNumberModel(100, 0, 4500, 5));
+                spinnerGraphic.setModel(new SpinnerNumberModel(100, 0, 4500, 5));
+                spinnerSound.setModel(new SpinnerNumberModel(100, 0, 4500, 5));
+                spinnerTech.setModel(new SpinnerNumberModel(100, 0, 4500, 5));
                 ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerSound.getEditor()).getTextField().setEditable(false);
