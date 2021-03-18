@@ -15,7 +15,7 @@ public class AnalyzeExistingGenres {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
 
     public static void analyzeGenreFile() throws IOException {
-        genreList = Utils.parseDataFile(Utils.getGenreFile());
+        genreList = DataStreamHelper.parseDataFile(Utils.getGenreFile());
         int currentMaxGenreId = 0;
         for (Map<String, String> map : genreList) {
             for (Map.Entry<String, String> entry : map.entrySet()) {

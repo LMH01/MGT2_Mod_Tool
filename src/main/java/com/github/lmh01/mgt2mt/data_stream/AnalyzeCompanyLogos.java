@@ -15,7 +15,7 @@ public class AnalyzeCompanyLogos {
      */
     public static int getLogoNumber(){
         File companyLogosPath = new File(Utils.getCompanyLogosPath());
-        ArrayList<File> companyLogos = Utils.getFilesInFolder(companyLogosPath.getPath());
+        ArrayList<File> companyLogos = DataStreamHelper.getFilesInFolder(companyLogosPath.getPath());
         int currentMaxNumber = 0;
         for (File companyLogo : companyLogos) {
             if (Settings.enableDebugLogging) {

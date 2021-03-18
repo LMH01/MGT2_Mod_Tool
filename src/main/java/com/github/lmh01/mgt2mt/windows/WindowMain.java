@@ -617,7 +617,7 @@ public class WindowMain {
     }
     private static void deleteAllExports(){
         if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all exports?", "Delete exports?", JOptionPane.YES_NO_OPTION) == 0){
-            Utils.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
+            DataStreamHelper.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
             JOptionPane.showMessageDialog(null, "All exports have been deleted.");
         }
     }

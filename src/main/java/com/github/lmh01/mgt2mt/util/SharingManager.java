@@ -92,7 +92,7 @@ public class SharingManager {
      */
     public static String importGeneral(String importFile, String importName, String importFolderPath, List<Map<String, String>> existingFeatureList, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary, boolean showMessages) throws IOException{
         File fileToImport = new File(importFolderPath + "\\" + importFile);
-        Map<String, String> map = Utils.parseDataFile(fileToImport).get(0);
+        Map<String, String> map = DataStreamHelper.parseDataFile(fileToImport).get(0);
         map.put("ID", Integer.toString(freeId.getFreeId()));
         boolean CanBeImported = false;
         for(String string : compatibleModToolVersions){
@@ -180,7 +180,7 @@ public class SharingManager {
                     if(skipCheckForContent){
                         importFolders.add(importFolder);
                     }else{
-                        if(Utils.doesFolderContainFile(importFolder, fileName)){
+                        if(DataStreamHelper.doesFolderContainFile(importFolder, fileName)){
                             File fileGenreToImport = new File(importFolder + "//" + fileName);
                             BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
                             String currentLine = br.readLine();
@@ -246,7 +246,7 @@ public class SharingManager {
         ArrayList<File> themes = new ArrayList<>();
         if(directories != null){
             try {
-                for(File file : directories){//TODO Maybe make use of this function: DataStreamHelper.getFiles
+                for(File file : directories){
                     Path start = Paths.get(file.getPath());
                     try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
                         List<String> collect = stream

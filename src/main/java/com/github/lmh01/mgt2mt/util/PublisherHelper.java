@@ -28,8 +28,8 @@ public class PublisherHelper {
                     if(JOptionPane.showConfirmDialog(null, "The real publisher download files already exist.\n\nDo you want to download the files again?\n", "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                         downloadFiles = false;
                     }else{
-                        Utils.deleteDirectory(publisherZip);
-                        Utils.deleteDirectory(publisherUnzipped);
+                        DataStreamHelper.deleteDirectory(publisherZip);
+                        DataStreamHelper.deleteDirectory(publisherUnzipped);
                     }
                 }
                 if(downloadFiles){

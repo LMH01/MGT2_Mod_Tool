@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeSteamLibraries;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.data_stream.ImportSettings;
 import org.slf4j.Logger;
@@ -69,7 +70,7 @@ public class Settings {
             madGamesTycoonFolderIsCorrect = false;
             for (String arrayListSteamLibrary : arrayListSteamLibraries) {
                 LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                if (Utils.doesFolderContainFile(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", "Mad Games Tycoon 2.exe") && !madGamesTycoonFolderIsCorrect) {
+                if (DataStreamHelper.doesFolderContainFile(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", "Mad Games Tycoon 2.exe") && !madGamesTycoonFolderIsCorrect) {
                     LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
                     steamLibraryFolder = arrayListSteamLibrary;
                     mgt2FilePath = arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";

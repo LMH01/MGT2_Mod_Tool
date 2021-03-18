@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,7 +181,7 @@ public class Backup {
      */
     public static void restoreSaveGameBackup(){
         try {
-            ArrayList<File> files = Utils.getFilesInFolderWhiteList(Backup.BACKUP_FOLDER_PATH, "savegame");
+            ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(Backup.BACKUP_FOLDER_PATH, "savegame");
             Set<String> saveGameSlots = new HashSet<>();
             for(File file : files){
                 saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));

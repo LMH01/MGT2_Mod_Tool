@@ -1,10 +1,10 @@
 package com.github.lmh01.mgt2mt;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class MadGamesTycoon2ModTool {
         WindowMain.createFrame();
         if(Settings.importSettings()){
             LOGGER.info("Settings have been imported.");
-            if(!Utils.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
+            if(!DataStreamHelper.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
                 LOGGER.info("The MGT2 file path is invalid.");
                 Settings.setMgt2Folder(false);
             }

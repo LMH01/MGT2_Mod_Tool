@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +18,7 @@ public class AnalyzeExistingEngineFeatures {
      * Analyzes the file GameplayFeatures.txt and puts its values into the gameplayFeature list.
      */
     public static void analyzeEngineFeatures() throws IOException {
-        engineFeatures = Utils.parseDataFile(Utils.getEngineFeaturesFile());
+        engineFeatures = DataStreamHelper.parseDataFile(Utils.getEngineFeaturesFile());
         int currentMaxEngineFeatureId = 0;
         for (Map<String, String> map : engineFeatures) {
             for (Map.Entry<String, String> entry : map.entrySet()) {

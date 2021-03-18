@@ -14,7 +14,7 @@ public class Uninstaller {
     /**
      * Opens a gui where the user can select what should be removed. Selected items are then removed and the tool closes.
      */
-    public static void uninstall(){//TODO Make Image icons that have been added be removed as well
+    public static void uninstall(){
         JLabel labelDescription = new JLabel("<html>Select what should be removed<br>After uninstalling the program is exited");
         JCheckBox checkboxDeleteBackups = new JCheckBox("Delete Backups");
         checkboxDeleteBackups.setSelected(true);
@@ -77,11 +77,11 @@ public class Uninstaller {
                 }
                 if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                     File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
-                    Utils.deleteDirectory(modManagerPath);
+                    DataStreamHelper.deleteDirectory(modManagerPath);
                 }
                 if(checkboxDeleteBackups.isSelected()){
                     File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
-                    Utils.deleteDirectory(backupFolder);
+                    DataStreamHelper.deleteDirectory(backupFolder);
                     LOGGER.info("Backups have been deleted.");
                 }
                 if(checkboxDeleteConfigFiles.isSelected()){
@@ -91,7 +91,7 @@ public class Uninstaller {
                 }
                 if(checkboxDeleteExports.isSelected()){
                     File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
-                    Utils.deleteDirectory(exportFolder);
+                    DataStreamHelper.deleteDirectory(exportFolder);
                     LOGGER.info("Exports have been deleted.");
                 }
                 if(uninstallFailed){

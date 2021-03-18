@@ -19,7 +19,7 @@ public class AnalyzeExistingGameplayFeatures {
      * Analyzes the file GameplayFeatures.txt and puts its values into the gameplayFeature list.
      */
     public static void analyzeGameplayFeatures() throws IOException {
-        gameplayFeatures = Utils.parseDataFile(Utils.getGameplayFeaturesFile());
+        gameplayFeatures = DataStreamHelper.parseDataFile(Utils.getGameplayFeaturesFile());
         int currentMaxGameplayFeatureId = 0;
         for (Map<String, String> map : gameplayFeatures) {
             for (Map.Entry<String, String> entry : map.entrySet()) {

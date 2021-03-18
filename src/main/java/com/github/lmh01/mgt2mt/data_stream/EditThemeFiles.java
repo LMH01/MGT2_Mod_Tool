@@ -47,9 +47,9 @@ public class EditThemeFiles {
             File themeFile = Utils.getThemeFile(string);
             Map<Integer, String> currentThemeFileContent;
             if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
-                currentThemeFileContent = Utils.getContentFromFile(themeFile, "UTF_8BOM");
+                currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_8BOM");
             }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
-                currentThemeFileContent = Utils.getContentFromFile(themeFile, "UTF_16LE");
+                currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_16LE");
             }else{
                 break;
             }

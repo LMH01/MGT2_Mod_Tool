@@ -43,7 +43,7 @@ public class SharingHandler {
             LOGGER.info("Copying image files to export folder...");
         }
         Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedGenreIcon.getPath()));
-        Utils.copyDirectory(fileGenreScreenshotsToExport.toPath().toString(), EXPORTED_GENRE_DATA_FOLDER_PATH + "//screenshots//");
+        DataStreamHelper.copyDirectory(fileGenreScreenshotsToExport.toPath().toString(), EXPORTED_GENRE_DATA_FOLDER_PATH + "//screenshots//");
         fileExportedGenre.createNewFile();
         PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGenre), StandardCharsets.UTF_8));
         bw.write("\ufeff");//Makes the file UTF8-BOM
@@ -89,7 +89,7 @@ public class SharingHandler {
         File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId);
         File fileScreenshotsToImport = new File(importFolderPath + "//DATA//screenshots//");
         Map<String, String> map = new HashMap<>();
-        List<Map<String, String>> list = Utils.parseDataFile(fileGenreToImport);
+        List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileGenreToImport);
         map.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE COMB")){
@@ -127,7 +127,7 @@ public class SharingHandler {
             }
         }
         if(fileScreenshotFolder.exists()){
-            Utils.deleteDirectory(fileScreenshotFolder);
+            DataStreamHelper.deleteDirectory(fileScreenshotFolder);
         }
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
@@ -141,7 +141,7 @@ public class SharingHandler {
         for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE GOOD"))){
             gameplayFeaturesGoodIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
         }
-        ArrayList<File> genreScreenshots = Utils.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
+        ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
         GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
         return "true";
@@ -200,7 +200,7 @@ public class SharingHandler {
         int newPublisherId = AnalyzeExistingPublishers.getFreePublisherId();
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
         HashMap<String, String> map = new HashMap<>();
-        List<Map<String, String>> list = Utils.parseDataFile(fileGenreToImport);
+        List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileGenreToImport);
         map.put("ID", Integer.toString(newPublisherId));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE")){
@@ -292,7 +292,7 @@ public class SharingHandler {
         File fileThemeToImport = new File(importFolderPath + "\\theme.txt");
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
-        List<Map<String, String>> list = Utils.parseDataFile(fileThemeToImport);
+        List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileThemeToImport);
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE COMB")){
                 ArrayList<String> compatibleGenreNames = Utils.getEntriesFromString(entry.getValue());

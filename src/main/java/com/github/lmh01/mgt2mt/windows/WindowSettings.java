@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -88,7 +89,7 @@ public class WindowSettings extends JFrame {
                     int return_value = fileChooser.showOpenDialog(null);
                     if(return_value == JFileChooser.APPROVE_OPTION){
                         String mgt2Folder = fileChooser.getSelectedFile().getPath();
-                        if(Utils.doesFolderContainFile(mgt2Folder, "Mad Games Tycoon 2.exe")){
+                        if(DataStreamHelper.doesFolderContainFile(mgt2Folder, "Mad Games Tycoon 2.exe")){
                             JOptionPane.showMessageDialog(new Frame(), "Folder set.");
                             customFolderPath = mgt2Folder;
                             customFolderSetAndValid = true;
