@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.GenreHelper;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
@@ -10,10 +11,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class WindowAddGenrePage10 extends JFrame{
     static final WindowAddGenrePage10 FRAME = new WindowAddGenrePage10();
-    public static ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
+    public static AtomicReference<ArrayList<File>> screenshotFiles = new AtomicReference<>(new ArrayList<>());
     JPanel contentPane = new JPanel();
     JButton buttonAddScreenshot = new JButton("Add screenshot(s)");
     JButton buttonResetAddedScreenshots = new JButton("Reset");
@@ -35,112 +37,16 @@ public class WindowAddGenrePage10 extends JFrame{
 
     public WindowAddGenrePage10() {
         buttonAddScreenshot.addActionListener(actionEvent -> {
-            ArrayList<File> arrayListScreenshotFilesSelected = new ArrayList<>();
-            JTextField textFieldScreenshotFile = new JTextField();
-            JLabel labelMessage = new JLabel("<html>Click browse or enter enter the image path manually." +
-                    "<br>When the image path is set click okay." +
-                    "<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page." +
-                    "<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3");
-            JButton buttonBrowse = new JButton("Browse");
-            AtomicBoolean multipleFilesSelected = new AtomicBoolean(false);
-            AtomicInteger numberOfScreenshotsToAdd = new AtomicInteger();
-            buttonBrowse.addActionListener(actionEventSmall ->{
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-
-                    FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
-                        @Override
-                        public boolean accept(File f) {
-                            if(f.getName().contains(".png")){
-                                return true;
-                            }
-                            return f.isDirectory();
-                        }
-
-                        @Override
-                        public String getDescription() {
-                            return ".png files";
-                        }
-                    };
-
-                    JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                    fileChooser.setFileFilter(fileFilter);
-                    fileChooser.setDialogTitle("Choose a genre image (.png):");
-                    fileChooser.setMultiSelectionEnabled(true);
-
-                    int return_value = fileChooser.showOpenDialog(null);
-                    if (return_value == 0) {
-                        final int NUMBER_OF_SCREENSHOTS = fileChooser.getSelectedFiles().length;
-                        numberOfScreenshotsToAdd.set(NUMBER_OF_SCREENSHOTS);
-                        File[] screenshots = fileChooser.getSelectedFiles();
-                        if(NUMBER_OF_SCREENSHOTS > 1){
-                            multipleFilesSelected.set(true);
-                        }
-                        boolean failed = false;
-                        for(int i=0; i<NUMBER_OF_SCREENSHOTS; i++){
-                            if(!failed){
-                                if(screenshots[i].getName().contains(".png")){
-                                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                                    if(multipleFilesSelected.get()){
-                                        arrayListScreenshotFilesSelected.add(screenshots[i]);
-                                        textFieldScreenshotFile.setText("Multiple files selected");
-                                    }else{
-                                        textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
-                                    }
-                                }else{
-                                    JOptionPane.showMessageDialog(new Frame(), "Please select only .png files.");
-                                    failed = true;
-                                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                                }
-                            }
-                        }
-                    }
-                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
-                    e.printStackTrace();
-                }
-            });
-            Object[] params = {labelMessage,textFieldScreenshotFile, buttonBrowse};
-            if(JOptionPane.showConfirmDialog(null, params, "Add a screenshot", JOptionPane.OK_CANCEL_OPTION) == 0){
-                String textFieldPath = textFieldScreenshotFile.getText();
-                if(textFieldPath.endsWith(".png")){
-                    File imageFile = new File(textFieldPath);
-                    if(imageFile.exists()){
-                        arrayListScreenshotFiles.add(new File(textFieldPath));
-                        JOptionPane.showMessageDialog(new Frame(), "Image file has been added.");
-                    }else{
-                        JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
-                    }
-                }else if(multipleFilesSelected.get()){
-                    for(int i = 0; i< numberOfScreenshotsToAdd.get(); i++){
-                        arrayListScreenshotFiles.add(arrayListScreenshotFilesSelected.get(i));
-                    }
-                    JOptionPane.showMessageDialog(new Frame(), "Image files have been added.");
-                }else{
-                    JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-
-                }
-            }
+            GenreHelper.setGenreScreenshots(screenshotFiles, buttonAddScreenshot);
         });
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
             if(JOptionPane.showConfirmDialog(null, "<html>Are you sure that you want to reset<br> the added screenshots?", "Reset?", JOptionPane.YES_NO_OPTION) == 0){
-                arrayListScreenshotFiles.clear();
+                screenshotFiles.get().clear();
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            if(!arrayListScreenshotFiles.isEmpty()){
-                StringBuilder filePaths = new StringBuilder();
-                for (File arrayListScreenshotFile : arrayListScreenshotFiles) {
-                    filePaths.append("<br>").append(arrayListScreenshotFile);
-                }
-                if(JOptionPane.showConfirmDialog(null, "<html>The following image files have been added:<br>" + filePaths + "<br><br>Is this correct and do you want to continue?", "Is this correct?", JOptionPane.YES_NO_OPTION) == 0){
-                    GenreManager.openStepWindow(11);
-                    FRAME.dispose();
-                }
-            }else{
-                GenreManager.openStepWindow(11);
-                FRAME.dispose();
-            }
+            GenreManager.openStepWindow(11);
+            FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
             GenreManager.openStepWindow(9);

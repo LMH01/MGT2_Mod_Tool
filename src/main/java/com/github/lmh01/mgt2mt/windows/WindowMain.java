@@ -19,8 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static final JFrame frame = new JFrame("MGT2 Mod Tool");
-    private static final JMenuItem M221ADD_GENRE = new JMenuItem("Add Genre");
-    private static final JMenuItem M222REMOVE_GENRE = new JMenuItem("Remove Genre");
+    private static final JMenuItem M223REMOVE_GENRE = new JMenuItem("Remove Genre");
     private static final JMenuItem M311EXPORT_GENRE = new JMenuItem("Genre");
     private static final JMenuItem M313EXPORT_THEME = new JMenuItem("Theme");
     private static final JMenuItem M312EXPORT_PUBLISHER = new JMenuItem("Publisher");
@@ -60,12 +59,15 @@ public class WindowMain {
         JMenu m26GameplayFeatures = new JMenu("Gameplay Features");
         JMenu m25EngineFeatures = new JMenu("Engine Features");
         JMenuItem m21Import = new JMenuItem("Import");
+        JMenuItem m222AddRandomGenre = new JMenuItem("Add Randomized Genre");
+        JMenuItem m221AddGenre = new JMenuItem("Add Genre");
         JMenuItem m231AddTheme = new JMenuItem("Add Theme");
         JMenuItem m241AddPublisher = new JMenuItem("Add Publisher");
         JMenuItem m251AddEngineFeature = new JMenuItem("Add Engine Feature");
         JMenuItem m261AddGameplayFeature = new JMenuItem("Add Gameplay Feature");
-        m22Genres.add(M221ADD_GENRE);
-        m22Genres.add(M222REMOVE_GENRE);
+        m22Genres.add(m221AddGenre);
+        m22Genres.add(m222AddRandomGenre);
+        m22Genres.add(M223REMOVE_GENRE);
         m23Themes.add(m231AddTheme);
         m23Themes.add(M232REMOVE_THEME);
         m24Publisher.add(m241AddPublisher);
@@ -76,8 +78,10 @@ public class WindowMain {
         m26GameplayFeatures.add(M262REMOVE_GAMEPLAY_FEATURE);
         m21Import.setToolTipText("<html>Click to select folders where your import files are located.<br>The selected folders and its subfolders are scanned for imports.<br>When the folders are scanned a summary is shown of what can be imported.");
         m21Import.addActionListener(actionEvent -> SharingManager.importAll());
-        M221ADD_GENRE.addActionListener(actionEvent -> addGenre());
-        M222REMOVE_GENRE.addActionListener(actionEvent -> OperationHelper.process(EditGenreFile::removeGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "removed", "Remove", false));
+        m221AddGenre.addActionListener(actionEvent -> addGenre());
+        m222AddRandomGenre.setToolTipText("<html>Click to add a randomized genre<br>You will just have to enter a name and description<br>Optionally you can also add a icon and screenshots");
+        m222AddRandomGenre.addActionListener(actionEvent -> GenreHelper.addRandomizedGenre());
+        M223REMOVE_GENRE.addActionListener(actionEvent -> OperationHelper.process(EditGenreFile::removeGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "removed", "Remove", false));
         m231AddTheme.addActionListener(actionEvent -> addTheme());
         M232REMOVE_THEME.addActionListener(actionEvent ->  OperationHelper.process(EditThemeFiles::removeTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "theme", "removed", "Remove", false));
         M27NPC_GAMES_LIST.setToolTipText("Click to add a genre id to the NPC_Games_list.");
@@ -264,7 +268,7 @@ public class WindowMain {
                     noCustomEngineFeaturesAvailable = false;
                 }
             }
-            M222REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
+            M223REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
             M232REMOVE_THEME.setEnabled(!noCustomThemesAvailable);
             M27NPC_GAMES_LIST.setEnabled(!noCustomGenreAvailable);
             M242REMOVE_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
@@ -277,13 +281,13 @@ public class WindowMain {
             M315EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M316EXPORT_ALL.setEnabled(!noCustomEngineFeaturesAvailable || !noCustomGameplayFeaturesAvailable || !noCustomGenreAvailable || !noCustomPublishersAvailable || !noCustomThemesAvailable);
             if(noCustomGenreAvailable){
-                M222REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
+                M223REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
                 M27NPC_GAMES_LIST.setToolTipText("Disabled -> Add a genre first");
                 M311EXPORT_GENRE.setToolTipText("Disabled -> No genre to export available");
             }else if(noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
                 M316EXPORT_ALL.setToolTipText("Disabled -> Mo genre, theme or publisher to export available");
             }else{
-                M222REMOVE_GENRE.setToolTipText("");
+                M223REMOVE_GENRE.setToolTipText("");
                 M27NPC_GAMES_LIST.setToolTipText("");
                 M311EXPORT_GENRE.setToolTipText("");
                 M316EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");

@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.GenreHelper;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -33,7 +34,7 @@ public class WindowAddGenrePage11 extends JFrame{
 
     public WindowAddGenrePage11() {
         buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = getGenreImageFilePath(false, true);
+            String imageFilePath = GenreHelper.getGenreImageFilePath(false, true, textFieldImagePath);
             if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
@@ -45,14 +46,14 @@ public class WindowAddGenrePage11 extends JFrame{
             if(textFieldImagePath.getText().isEmpty()){
                 if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.arrayListScreenshotFiles, false, genreIcon, true);
+                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                     FRAME.dispose();
                 }
             }else{
-                String imageFilePath = getGenreImageFilePath(true, false);
+                String imageFilePath = GenreHelper.getGenreImageFilePath(true, false, textFieldImagePath);
                 if(!imageFilePath.equals("error")){
                     genreIcon = new File(imageFilePath);
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.arrayListScreenshotFiles, false, genreIcon, true);
+                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                     FRAME.dispose();
                 }else if(textFieldImagePath.getText().isEmpty()){
 
@@ -114,67 +115,5 @@ public class WindowAddGenrePage11 extends JFrame{
         buttonQuit.setBounds(120, 100, 90, 23);
         buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
         contentPane.add(buttonQuit);
-    }
-
-    private String getGenreImageFilePath(boolean useTextFiledPath, boolean showDialog) {
-        if(useTextFiledPath){
-            String textFieldPath = textFieldImagePath.getText();
-            if(textFieldPath.endsWith(".png")){
-                File imageFile = new File(textFieldPath);
-                if(imageFile.exists()){
-                    if(showDialog){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
-                    }
-                    return textFieldPath;
-                }else{
-                    JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
-                    return "error";
-                }
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                return "error";
-            }
-        }else{
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-
-                FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
-                    @Override
-                    public boolean accept(File f) {
-                        if(f.getName().contains(".png")){
-                            return true;
-                        }
-                        return f.isDirectory();
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return ".png files";
-                    }
-                };
-
-                JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                fileChooser.setFileFilter(fileFilter);
-                fileChooser.setDialogTitle("Choose a genre image (.png):");
-
-                int return_value = fileChooser.showOpenDialog(null);
-                if (return_value == 0) {
-                    if(fileChooser.getSelectedFile().getName().contains(".png")){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
-                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                        return fileChooser.getSelectedFile().getPath();
-                    }else{
-                        JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                        return "error";
-                    }
-                }
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-                return "error";
-            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
-                e.printStackTrace();
-                return "error";
-            }
-        }
     }
 }
