@@ -46,7 +46,11 @@ public class AnalyzeExistingPublishers {
             Map<String, String> map = listPublishers.get(i);
             arrayListActivePublishers.add(map.get("NAME EN"));
         }
-        Collections.sort(arrayListActivePublishers);
+        try{
+            Collections.sort(arrayListActivePublishers);
+        }catch(NullPointerException ignored){
+
+        }
         String[] string = new String[arrayListActivePublishers.size()];
         arrayListActivePublishers.toArray(string);
         return string;

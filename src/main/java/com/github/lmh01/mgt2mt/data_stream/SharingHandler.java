@@ -175,23 +175,20 @@ public class SharingHandler {
         }
         Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedPublisherIcon.getPath()));
         fileExportedPublisher.createNewFile();
-        PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedPublisher), StandardCharsets.UTF_8));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedPublisher), StandardCharsets.UTF_8));
         bw.write("\ufeff");//Makes the file UTF8-BOM
-        bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
-        bw.print("[PUBLISHER START]" + System.getProperty("line.separator"));
-        bw.print("[NAME EN]" + singlePublisherMap.get("NAME EN") + System.getProperty("line.separator"));
-        bw.print("[NAME GE]" + singlePublisherMap.get("NAME GE") + System.getProperty("line.separator"));
-        bw.print("[NAME TU]" + singlePublisherMap.get("NAME TU") + System.getProperty("line.separator"));
-        bw.print("[NAME FR]" + singlePublisherMap.get("NAME FR") + System.getProperty("line.separator"));
-        bw.print("[DATE]" + singlePublisherMap.get("DATE") + System.getProperty("line.separator"));
-        bw.print("[DEVELOPER]" + singlePublisherMap.get("DEVELOPER") + System.getProperty("line.separator"));
-        bw.print("[PUBLISHER]" + singlePublisherMap.get("PUBLISHER") + System.getProperty("line.separator"));
-        bw.print("[MARKET]" + singlePublisherMap.get("MARKET") + System.getProperty("line.separator"));
-        bw.print("[SHARE]" + singlePublisherMap.get("SHARE") + System.getProperty("line.separator"));
+        bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+        bw.write("[PUBLISHER START]" + System.getProperty("line.separator"));
+        TranslationManager.printLanguages(bw, singlePublisherMap);
+        bw.write("[DATE]" + singlePublisherMap.get("DATE") + System.getProperty("line.separator"));
+        bw.write("[DEVELOPER]" + singlePublisherMap.get("DEVELOPER") + System.getProperty("line.separator"));
+        bw.write("[PUBLISHER]" + singlePublisherMap.get("PUBLISHER") + System.getProperty("line.separator"));
+        bw.write("[MARKET]" + singlePublisherMap.get("MARKET") + System.getProperty("line.separator"));
+        bw.write("[SHARE]" + singlePublisherMap.get("SHARE") + System.getProperty("line.separator"));
         LOGGER.info("GenreID: " + singlePublisherMap.get("GENRE"));
         LOGGER.info("GenreName: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(singlePublisherMap.get("GENRE"))));
-        bw.print("[GENRE]" + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(singlePublisherMap.get("GENRE"))) + System.getProperty("line.separator"));
-        bw.print("[PUBLISHER END]");
+        bw.write("[GENRE]" + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(singlePublisherMap.get("GENRE"))) + System.getProperty("line.separator"));
+        bw.write("[PUBLISHER END]");
         bw.close();
         ChangeLog.addLogEntry(21, singlePublisherMap.get("NAME EN"));
         return true;

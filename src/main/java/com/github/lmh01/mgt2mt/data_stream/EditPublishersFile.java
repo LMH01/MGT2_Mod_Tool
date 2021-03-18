@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -30,37 +31,19 @@ public class EditPublishersFile {
         LOGGER.info("Writing contents of list to file: " + publisherFile.getPath());
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
         for (Map<String, String> map : list) {
-            bw.write("[ID]" + map.get("ID"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME EN]" + map.get("NAME EN"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME GE]" + map.get("NAME GE"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME TU]" + map.get("NAME TU"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[NAME FR]" + map.get("NAME FR"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[DATE]" + map.get("DATE"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[PIC]" + map.get("PIC"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[DEVELOPER]" + map.get("DEVELOPER"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[PUBLISHER]" + map.get("PUBLISHER"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[MARKET]" + map.get("MARKET"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[SHARE]" + map.get("SHARE"));
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[GENRE]" + map.get("GENRE"));
-            bw.write(System.getProperty("line.separator"));
+            bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
+            TranslationManager.printLanguages(bw, map);
+            bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
+            bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
+            bw.write("[DEVELOPER]" + map.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
+            bw.write("[PUBLISHER]" + map.get("PUBLISHER"));bw.write(System.getProperty("line.separator"));
+            bw.write("[MARKET]" + map.get("MARKET"));bw.write(System.getProperty("line.separator"));
+            bw.write("[SHARE]" + map.get("SHARE"));bw.write(System.getProperty("line.separator"));
+            bw.write("[GENRE]" + map.get("GENRE"));bw.write(System.getProperty("line.separator"));
             bw.write(System.getProperty("line.separator"));
         }
         bw.write("[ID]" + hashMap.get("ID"));bw.write(System.getProperty("line.separator"));
-        bw.write("[NAME EN]" + hashMap.get("NAME EN"));bw.write(System.getProperty("line.separator"));
-        bw.write("[NAME GE]" + hashMap.get("NAME EN"));bw.write(System.getProperty("line.separator"));
-        bw.write("[NAME TU]" + hashMap.get("NAME EN"));bw.write(System.getProperty("line.separator"));
-        bw.write("[NAME FR]" + hashMap.get("NAME EN"));bw.write(System.getProperty("line.separator"));
+        TranslationManager.printLanguages(bw, hashMap);
         bw.write("[DATE]" + hashMap.get("DATE"));bw.write(System.getProperty("line.separator"));
         bw.write("[PIC]" + hashMap.get("PIC"));bw.write(System.getProperty("line.separator"));
         bw.write("[DEVELOPER]" + hashMap.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
@@ -104,10 +87,7 @@ public class EditPublishersFile {
             if(i != publisherToSkip){
                 Map<String,String> map = list.get(i);
                 bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
-                bw.write("[NAME EN]" + map.get("NAME EN"));bw.write(System.getProperty("line.separator"));
-                bw.write("[NAME GE]" + map.get("NAME GE"));bw.write(System.getProperty("line.separator"));
-                bw.write("[NAME TU]" + map.get("NAME TU"));bw.write(System.getProperty("line.separator"));
-                bw.write("[NAME FR]" + map.get("NAME FR"));bw.write(System.getProperty("line.separator"));
+                TranslationManager.printLanguages(bw, map);
                 bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
                 bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
                 bw.write("[DEVELOPER]" + map.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
@@ -140,11 +120,15 @@ public class EditPublishersFile {
     public static int getPublisherPositionInList(String publisherNameEN){
         int returnValue = 0;
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-        for(int i=0; i<list.size(); i++){
-            Map<String, String> map = list.get(i);
-            if(map.get("NAME EN").equals(publisherNameEN)){
-                returnValue = i;
+        try{
+            for(int i=0; i<list.size(); i++){
+                Map<String, String> map = list.get(i);
+                if(map.get("NAME EN").equals(publisherNameEN)){
+                    returnValue = i;
+                }
             }
+        }catch(NullPointerException ignored){
+
         }
         return returnValue;
     }
@@ -152,10 +136,14 @@ public class EditPublishersFile {
     private static int getPublisherIconIdByName(String publisherNameEN){
         int returnValue = 0;
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-        for (Map<String, String> map : list) {
-            if (map.get("NAME EN").equals(publisherNameEN)) {
-                returnValue = Integer.parseInt(map.get("PIC"));
+        try{
+            for (Map<String, String> map : list) {
+                if (map.get("NAME EN").equals(publisherNameEN)) {
+                    returnValue = Integer.parseInt(map.get("PIC"));
+                }
             }
+        }catch(NullPointerException ignored){
+
         }
         return returnValue;
     }
