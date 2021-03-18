@@ -248,7 +248,7 @@ public class WindowMain {
                 if(stringCustomGenres.length != 0){
                     noCustomGenreAvailable = false;
                 }
-                if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > 189){
+                if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
                     noCustomThemesAvailable = false;
                 }
                 List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
