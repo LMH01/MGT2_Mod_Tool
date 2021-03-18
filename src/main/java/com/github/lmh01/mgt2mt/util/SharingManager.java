@@ -33,7 +33,7 @@ public class SharingManager {
 
     /**
      * Uses the import function to import the content of the import folder.
-     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
+     * @param importName The name that is written in some JOptionPanes. Eg. genre, publisher, theme
      * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param importFolder The import folder where the files are stored.
@@ -289,11 +289,11 @@ public class SharingManager {
             AtomicReference<ArrayList<Integer>> selectedEntriesGenres = new AtomicReference<>(new ArrayList<>());
             AtomicReference<ArrayList<Integer>> selectedEntriesPublishers = new AtomicReference<>(new ArrayList<>());
             AtomicReference<ArrayList<Integer>> selectedEntriesThemes = new AtomicReference<>(new ArrayList<>());
-            AtomicBoolean disableEngineFeatureImport = new AtomicBoolean();
-            AtomicBoolean disableGameplayFeatureImport = new AtomicBoolean();
-            AtomicBoolean disableGenreImport = new AtomicBoolean();
-            AtomicBoolean disablePublisherImport = new AtomicBoolean();
-            AtomicBoolean disableThemeImport = new AtomicBoolean();
+            AtomicBoolean disableEngineFeatureImport = new AtomicBoolean(true);
+            AtomicBoolean disableGameplayFeatureImport = new AtomicBoolean(true);
+            AtomicBoolean disableGenreImport = new AtomicBoolean(true);
+            AtomicBoolean disablePublisherImport = new AtomicBoolean(true);
+            AtomicBoolean disableThemeImport = new AtomicBoolean(true);
             if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty()) {
                 if(!engineFeatures.isEmpty()){
                     setFeatureAvailableGuiComponents("Engine features:",engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
@@ -366,6 +366,7 @@ public class SharingManager {
     private static void setFeatureAvailableGuiComponents(String labelText, ArrayList<File> files, JPanel panel, AtomicReference<ArrayList<Integer>> selectedEntries, AtomicBoolean disableImport){
         JLabel label = new JLabel(labelText);
         JButton button = new JButton(files.size() + "/" + files.size());
+        disableImport.set(false);
         button.addActionListener(actionEvent -> {
             ArrayList<Integer> arrayList = getSelectedEntries(files);
             selectedEntries.set(arrayList);
@@ -403,7 +404,8 @@ public class SharingManager {
      * Imports all files that are listed in the files array
      * @param files The array containing the import files
      * @param selectedEntryNumbers If not empty only the files numbers listed in this array are imported
-     * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
+     * @param importNothing If true nothing will be imported.
+     * @param importName The name that is written in some JOptionPanes. Eg. genre, publisher, theme
      * @param importFunction The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param showAlreadyExistPopups When true a message is displayed that the choose import does already exist
