@@ -41,7 +41,7 @@ public class WindowMain {
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("FILE");
+        JMenu m1 = new JMenu(I18n.INSTANCE.get("file"));
         JMenuItem m11 = new JMenuItem("Settings");
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         JMenuItem m12 = new JMenuItem("Check For Updates");
@@ -101,8 +101,8 @@ public class WindowMain {
         m2Mods.add(m26GameplayFeatures);
         m2Mods.add(M27NPC_GAMES_LIST);
         m2Mods.add(m28AddCompanyIcon);
-        JMenu m3Share = new JMenu("Share");
-        JMenu m31Export = new JMenu("Export");
+        JMenu m3Share = new JMenu(I18n.INSTANCE.get("share"));
+        JMenu m31Export = new JMenu(I18n.INSTANCE.get("export"));
         m31Export.add(M311EXPORT_GENRE);
         m31Export.add(M312EXPORT_PUBLISHER);
         m31Export.add(M313EXPORT_THEME);
@@ -118,7 +118,6 @@ public class WindowMain {
         JMenuItem m35 = new JMenuItem("Open Export Folder");
         m35.addActionListener(actionEvent -> {
             Utils.open(Utils.getMGT2ModToolExportFolder());
-            Debug.writeHelpFile();
         });
         JMenuItem m36 = new JMenuItem("Delete all exports");
         m36.addActionListener(actionEvent -> deleteAllExports());
