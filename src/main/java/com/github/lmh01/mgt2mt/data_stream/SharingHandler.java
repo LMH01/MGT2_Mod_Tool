@@ -2,14 +2,10 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
-import com.github.lmh01.mgt2mt.util.interfaces.FreeId;
-import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
