@@ -98,6 +98,7 @@ public class TranslationManager {
             for(Map.Entry<String, String> entry : map.entrySet()){
                 if(entry.getKey().equals("NAME " + string)){
                     bw.write("[NAME " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
+                    LOGGER.info("NAME: " + entry.getValue());
                 }
                 if(entry.getKey().equals("DESC " + string)){
                     bw.write("[DESC " + string + "]" + entry.getValue() + System.getProperty("line.separator"));

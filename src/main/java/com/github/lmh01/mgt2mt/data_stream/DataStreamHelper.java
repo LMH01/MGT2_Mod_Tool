@@ -77,15 +77,17 @@ public class DataStreamHelper {
                 mapCurrent = new HashMap<>();
                 firstList = false;
             }else{
-                boolean valueComplete = false;
+                boolean keyComplete = false;
                 StringBuilder mapKey = new StringBuilder();
                 StringBuilder mapValue = new StringBuilder();
                 for(int i=1; i<currentLine.length(); i++){
-                    if(String.valueOf(currentLine.charAt(i)).equals("]")){
-                        valueComplete = true;
-                        continue;
+                    if(!keyComplete){
+                        if(String.valueOf(currentLine.charAt(i)).equals("]")){
+                            keyComplete = true;
+                            continue;
+                        }
                     }
-                    if(valueComplete){
+                    if(keyComplete){
                         mapValue.append(currentLine.charAt(i));
                     }else{
                         mapKey.append(currentLine.charAt(i));
