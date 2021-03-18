@@ -19,7 +19,7 @@ public class PublisherHelper {
      * Asks the user if he is sure that the existing publishers should be replaced with the real publisher equivalents
      */
     public static void realPublishers(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to replace the\nexisting publishers with the real live equivalents?\n\nThe real publishers will have to be downloaded\nfirst so a internet connection is required.\n\nWhen continuing the publisher file is reorganized,\nloading a existing save game or\nreverting the changes might result in problems when\nloading a save game that has been affected by these changes.\n\nClick okay to continue.", "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+        if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to replace the\nexisting publishers with the real life equivalents?\n\nThe real publishers will have to be downloaded\nfirst so a internet connection is required.\n\nWhen continuing the publisher file is reorganized.\nLoading an existing save game or reverting the changes\nmight result in problems when loading save games.\n\nNote:\nThe company logos have been taken from the\nReal Publisher Names & Icons v0.2 guide from Steam.\n\nClick okay to continue.", "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             try{
                 File publisherZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher.zip");
                 File publisherUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher");
