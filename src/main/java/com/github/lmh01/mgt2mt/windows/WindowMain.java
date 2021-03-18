@@ -451,9 +451,13 @@ public class WindowMain {
             JLabel labelUnlockYear = new JLabel("Unlock Year:");
             JSpinner spinnerUnlockYear = new JSpinner();
             if(Settings.disableSafetyFeatures){
+                spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - MAX INTEGER VALUE]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 0, Integer.MAX_VALUE, 1));
+                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
             }else{
+                spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
+                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
             }
             panelUnlockYear.add(labelUnlockYear);
             panelUnlockYear.add(spinnerUnlockYear);
@@ -479,15 +483,18 @@ public class WindowMain {
 
             JCheckBox checkBoxIsPublisher = new JCheckBox("Publisher");
             checkBoxIsPublisher.setSelected(true);
-            checkBoxIsPublisher.setToolTipText("When enabled: The company can release game for you (publish)");
+            checkBoxIsPublisher.setToolTipText("When enabled: The company can release games for you (publish them)");
 
             JPanel panelMarketShare = new JPanel();
             JLabel labelMarketShare = new JLabel("Market Share:");
             JSpinner spinnerMarketShare = new JSpinner();
+            spinnerMarketShare.setToolTipText("<html>[Range: 1 - 100]<br>This is how much market share your publisher has");
             if(Settings.disableSafetyFeatures){
                 spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, Integer.MAX_VALUE, 1));
+                ((JSpinner.DefaultEditor)spinnerMarketShare.getEditor()).getTextField().setEditable(true);
             }else{
                 spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, 100, 1));
+                ((JSpinner.DefaultEditor)spinnerMarketShare.getEditor()).getTextField().setEditable(false);
             }
             panelMarketShare.add(labelMarketShare);
             panelMarketShare.add(spinnerMarketShare);
@@ -495,23 +502,26 @@ public class WindowMain {
             JPanel panelShare = new JPanel();
             JLabel labelShare = new JLabel("Share:");
             JSpinner spinnerShare = new JSpinner();
-            spinnerShare.setToolTipText("Set how much money should be earned by one sell");
+            spinnerShare.setToolTipText("<html>[Range: 1 - 10]<br>Set how much money should be earned by one sell");
             if(Settings.disableSafetyFeatures){
                 spinnerShare.setModel(new SpinnerNumberModel(5, 1, Integer.MAX_VALUE, 1));
+                ((JSpinner.DefaultEditor)spinnerShare.getEditor()).getTextField().setEditable(true);
             }else{
                 spinnerShare.setModel(new SpinnerNumberModel(5, 1, 10, 1));
+                ((JSpinner.DefaultEditor)spinnerShare.getEditor()).getTextField().setEditable(false);
             }
             panelShare.add(labelShare);
             panelShare.add(spinnerShare);
 
             AtomicInteger genreID = new AtomicInteger();
             JPanel panelGenre = new JPanel();
-            JLabel labelGenre = new JLabel("Genre:");
+            JLabel labelGenre = new JLabel("Fan base:");
             JButton buttonSelectGenre = new JButton("        Select genre        ");
+            buttonSelectGenre.setToolTipText("Click to select what genre the fan base of your publisher likes the most");
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
                     AnalyzeExistingGenres.analyzeGenreFile();
-                    JLabel labelChooseGenre = new JLabel("Select the genre that should be compatible:");
+                    JLabel labelChooseGenre = new JLabel("Select what main genre your publisher should have:");
                     String[] string;
                     string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
                     JList<String> listAvailableGenres = new JList<>(string);
@@ -523,7 +533,7 @@ public class WindowMain {
 
                     Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
 
-                    if(JOptionPane.showConfirmDialog(null, params, "Select main genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, params, "Select genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                         if(!listAvailableGenres.isSelectionEmpty()){
                             String currentGenre = listAvailableGenres.getSelectedValue();
                             genreID.set(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
