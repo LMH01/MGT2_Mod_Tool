@@ -126,6 +126,7 @@ public class AnalyzeExistingGenres {
             for (String genre : defaultGenres) {
                 if (s.equals(genre)) {
                     defaultGenre = true;
+                    break;
                 }
             }
             if (!defaultGenre) {

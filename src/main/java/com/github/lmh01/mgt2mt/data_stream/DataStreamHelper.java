@@ -310,7 +310,7 @@ public class DataStreamHelper {
      * Copied from https://www.baeldung.com/java-delete-directory
      * Deletes a complete directory with its contents
      */
-    public static void deleteDirectory(File directoryToBeDeleted ){//TODO Move function to DataStreamHelper
+    public static void deleteDirectory(File directoryToBeDeleted ){
         File[] allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
             for (File file : allContents) {
@@ -330,11 +330,10 @@ public class DataStreamHelper {
     public static List<File> getFilesInFolderAndSubfolder(String directoryName){
         File directory = new File(directoryName);
 
-        List<File> resultList = new ArrayList<File>();
-
         // get all the files from a directory
         File[] fList = directory.listFiles();
-        resultList.addAll(Arrays.asList(fList));
+        assert fList != null;
+        List<File> resultList = new ArrayList<>(Arrays.asList(fList));
         for (File file : fList) {
             if (file.isFile()) {
                 System.out.println(file.getAbsolutePath());

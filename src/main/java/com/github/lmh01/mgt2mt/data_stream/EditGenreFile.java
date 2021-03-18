@@ -74,6 +74,7 @@ public class EditGenreFile {
     public static boolean removeGenre(String genreName) throws IOException {
         removeGenre(AnalyzeExistingGenres.getGenreIdByName(genreName));
         EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(genreName), false, null);
+        EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(genreName));
         WindowMain.checkActionAvailability();
         return true;
     }

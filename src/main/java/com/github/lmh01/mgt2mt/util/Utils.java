@@ -10,14 +10,10 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.List;
 
-public class Utils {//TODO Search this function for things that do something with DataStreams and move these functios to the data stream helper
+public class Utils {
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
@@ -261,12 +257,12 @@ public class Utils {//TODO Search this function for things that do something wit
      */
     public static String convertGenreNamesToId(String genreNamesRaw){
         StringBuilder genreIds = new StringBuilder();
-        int charPositon = 0;
+        int charPosition = 0;
         StringBuilder currentName = new StringBuilder();
         for(int i = 0; i<genreNamesRaw.length(); i++){
-            if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals("<")){
+            if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
                 //Nothing happens
-            }else if(String.valueOf(genreNamesRaw.charAt(charPositon)).equals(">")){
+            }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreName: " + currentName);
                 }
@@ -276,12 +272,12 @@ public class Utils {//TODO Search this function for things that do something wit
                 }
                 currentName = new StringBuilder();
             }else{
-                currentName.append(genreNamesRaw.charAt(charPositon));
+                currentName.append(genreNamesRaw.charAt(charPosition));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("currentNumber: " + currentName);
                 }
             }
-            charPositon++;
+            charPosition++;
         }
         String.valueOf(genreNamesRaw.charAt(1));
         LOGGER.info("Genre ids: " + genreIds);
@@ -348,7 +344,7 @@ public class Utils {//TODO Search this function for things that do something wit
             for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
                 if(map.get("GOOD").contains("<" + genreId + ">")){
                     gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
-;               }
+                }
             }
         }else{
             for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){

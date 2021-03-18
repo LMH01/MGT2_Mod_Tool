@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -8,12 +7,8 @@ import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class EditThemeFiles {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditThemeFiles.class);
@@ -68,7 +63,7 @@ public class EditThemeFiles {
             }
             int currentLine = 1;
             boolean firstLine = true;
-            for(int i=0; i<currentThemeFileContent.size(); i++){
+            for(int i = 0; i< Objects.requireNonNull(currentThemeFileContent).size(); i++){
                 if(!firstLine){
                     if(!addTheme){
                         if(currentLine != removeThemePosition) {

@@ -388,10 +388,10 @@ public class SharingHandler {
                 importFolderPath,
                 AnalyzeExistingEngineFeatures.engineFeatures,
                 SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
-                (map) -> EditEngineFeaturesFile.addEngineFeature(map),
-                () -> AnalyzeExistingEngineFeatures.getFreeEngineFeatureId(),
+                EditEngineFeaturesFile::addEngineFeature,
+                AnalyzeExistingEngineFeatures::getFreeEngineFeatureId,
                 32,
-                (map) -> Summaries.showEngineFeatureMessage(map),
+                Summaries::showEngineFeatureMessage,
                 showMessages);
         return returnValue;
     }
@@ -444,7 +444,7 @@ public class SharingHandler {
      */
     public static String importGameplayFeature(String importFolderPath, boolean showMessages) throws IOException {
         AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
-        String returnValue = SharingManager.importGeneral("gameplayFeature.txt",
+        return SharingManager.importGeneral("gameplayFeature.txt",
                 "Gameplay feature",
                 importFolderPath,
                 AnalyzeExistingGameplayFeatures.gameplayFeatures,
@@ -454,7 +454,6 @@ public class SharingHandler {
                 30,
                 Summaries::showGameplayFeatureMessage,
                 showMessages);
-        return returnValue;
     }
 
     /**

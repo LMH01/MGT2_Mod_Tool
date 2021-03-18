@@ -80,39 +80,44 @@ public class Backup {
      * @param type The backup type
      */
     public static void createBackup(String type){
-        if(type.equals("full")){
-            try {
-                Backup.createFullBackup();
-                JOptionPane.showMessageDialog(new Frame(), "The full backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if(type.equals("genre")){
-            try{
-                Backup.createBackup(Utils.getGenreFile());
-                Backup.createBackup(Utils.getNpcGamesFile());
-                JOptionPane.showMessageDialog(new Frame(), "Backup of genre files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            }catch(IOException e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if(type.equals("theme")){
-            try{
-                Backup.createThemeFilesBackup(false);
-                JOptionPane.showMessageDialog(new Frame(), "Backup of theme files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            }catch(IOException e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if(type.equals("save_game")){
-            try{
-                Backup.backupSaveGames(false);
-                JOptionPane.showMessageDialog(new Frame(), "Backup of save games has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
-            }catch(IOException e){
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
-            }
+        switch (type) {
+            case "full":
+                try {
+                    Backup.createFullBackup();
+                    JOptionPane.showMessageDialog(new Frame(), "The full backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "genre":
+                try {
+                    Backup.createBackup(Utils.getGenreFile());
+                    Backup.createBackup(Utils.getNpcGamesFile());
+                    JOptionPane.showMessageDialog(new Frame(), "Backup of genre files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "theme":
+                try {
+                    Backup.createThemeFilesBackup(false);
+                    JOptionPane.showMessageDialog(new Frame(), "Backup of theme files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "save_game":
+                try {
+                    Backup.backupSaveGames(false);
+                    JOptionPane.showMessageDialog(new Frame(), "Backup of save games has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
         }
     }
 
@@ -187,7 +192,7 @@ public class Backup {
                 saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
             }
             JLabel label = new JLabel("<html>Select the save game slot where the save game is saved,<br>for which the backup should be restored:<br>0 = Auto save");
-            String[] array = saveGameSlots.stream().toArray(String[]::new);
+            String[] array = saveGameSlots.toArray(new String[0]);
             JList<String> listAvailableThemes = new JList<>(array);
             listAvailableThemes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listAvailableThemes.setLayoutOrientation(JList.VERTICAL);

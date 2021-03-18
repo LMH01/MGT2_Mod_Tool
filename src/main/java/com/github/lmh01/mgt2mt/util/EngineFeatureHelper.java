@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -215,7 +214,7 @@ public class EngineFeatureHelper {
                             newEngineFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newEngineFeature.put("ID", Integer.toString(AnalyzeExistingEngineFeatures.getFreeEngineFeatureId()));
-                        newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(comboBoxFeatureType.getSelectedItem().toString())));
+                        newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
                         newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                         newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newEngineFeature.put("PRICE", spinnerPrice.getValue().toString());

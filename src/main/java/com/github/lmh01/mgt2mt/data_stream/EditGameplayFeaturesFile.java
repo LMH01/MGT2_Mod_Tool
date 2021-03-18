@@ -42,12 +42,8 @@ public class EditGameplayFeaturesFile {
             bw.write("[GRAPHIC]" + existingGameplayFeatures.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
             bw.write("[SOUND]" + existingGameplayFeatures.get("SOUND"));bw.write(System.getProperty("line.separator"));
             bw.write("[TECH]" + existingGameplayFeatures.get("TECH"));bw.write(System.getProperty("line.separator"));
-            if(existingGameplayFeatures.get("GOOD") == null){
-                existingGameplayFeatures.put("GOOD", "");
-            }
-            if(existingGameplayFeatures.get("BAD") == null){
-                existingGameplayFeatures.put("BAD", "");
-            }
+            existingGameplayFeatures.putIfAbsent("GOOD", "");
+            existingGameplayFeatures.putIfAbsent("BAD", "");
             bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
             bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
             bw.write(System.getProperty("line.separator"));
@@ -100,12 +96,8 @@ public class EditGameplayFeaturesFile {
                 bw.write("[GRAPHIC]" + existingGameplayFeatures.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
                 bw.write("[SOUND]" + existingGameplayFeatures.get("SOUND"));bw.write(System.getProperty("line.separator"));
                 bw.write("[TECH]" + existingGameplayFeatures.get("TECH"));bw.write(System.getProperty("line.separator"));
-                if(existingGameplayFeatures.get("GOOD") == null){
-                    existingGameplayFeatures.put("GOOD", "");
-                }
-                if(existingGameplayFeatures.get("BAD") == null){
-                    existingGameplayFeatures.put("BAD", "");
-                }
+                existingGameplayFeatures.putIfAbsent("GOOD", "");
+                existingGameplayFeatures.putIfAbsent("BAD", "");
                 bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
                 bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
                 bw.write(System.getProperty("line.separator"));

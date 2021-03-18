@@ -28,11 +28,7 @@ public class Summaries {
                 "Graphic: " + map.get("GRAPHIC") + "\n" +
                 "Sound: " + map.get("SOUND") + "\n" +
                 "Tech: " + map.get("TECH") + "\n";
-        if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            return true;
-        }else{
-            return false;
-        }
+        return JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
     public static boolean showGameplayFeatureMessage(Map<String, String> map){
@@ -95,10 +91,6 @@ public class Summaries {
                 "Graphic: " + map.get("GRAPHIC") + "\n" +
                 "Sound: " + map.get("SOUND") + "\n" +
                 "Tech: " + map.get("TECH") + "\n";
-        if(JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-           return true;
-        }else{
-            return false;
-        }
+        return JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 }

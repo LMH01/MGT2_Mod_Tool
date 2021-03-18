@@ -83,7 +83,7 @@ public class AnalyzeExistingPublishers {
         for(Map<String, String> map : publisherList){
             try{
                 activePublisherIds.add(Integer.parseInt(map.get("ID")));
-            }catch(NumberFormatException e){
+            }catch(NumberFormatException ignored){
 
             }
         }

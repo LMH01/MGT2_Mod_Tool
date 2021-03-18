@@ -151,6 +151,7 @@ public class AnalyzeExistingThemes {
             for (String genre : defaultThemes) {
                 if (s.equals(genre)) {
                     defaultGenre = true;
+                    break;
                 }
             }
             if (!defaultGenre) {

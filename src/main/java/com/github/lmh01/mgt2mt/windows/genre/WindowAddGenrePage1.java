@@ -254,7 +254,7 @@ public class WindowAddGenrePage1 extends JFrame{
             }
         }else{
             for(Map.Entry<String, String> entry : mapNameTranslations.entrySet()){
-                mapGenreTranslation.put("NAME " + entry.getKey(), entry.getValue().toString());
+                mapGenreTranslation.put("NAME " + entry.getKey(), entry.getValue());
             }
         }
         if(mapDescriptionTranslations.isEmpty()){
@@ -263,7 +263,7 @@ public class WindowAddGenrePage1 extends JFrame{
             }
         }else{
             for(Map.Entry<String, String> entry : mapDescriptionTranslations.entrySet()){
-                mapGenreTranslation.put("DESC " + entry.getKey(), entry.getValue().toString());
+                mapGenreTranslation.put("DESC " + entry.getKey(), entry.getValue());
             }
         }
         return mapGenreTranslation;

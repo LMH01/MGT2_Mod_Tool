@@ -275,11 +275,7 @@ public class WindowMain {
             M314EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
             M262REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M315EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-            if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
-                M316EXPORT_ALL.setEnabled(false);
-            }else{
-                M316EXPORT_ALL.setEnabled(true);
-            }
+            M316EXPORT_ALL.setEnabled(!noCustomEngineFeaturesAvailable || !noCustomGameplayFeaturesAvailable || !noCustomGenreAvailable || !noCustomPublishersAvailable || !noCustomThemesAvailable);
             if(noCustomGenreAvailable){
                 M222REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
                 M27NPC_GAMES_LIST.setToolTipText("Disabled -> Add a genre first");

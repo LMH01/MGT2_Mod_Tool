@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;

@@ -134,7 +134,6 @@ public class TranslationManager {
      * The input map just has the language keys and the translations. This function changes the key to include the type. Eg. input map is "Key: GE" "Value: Hey" this is transformed to "Key: NAME GE" "Value Hey"
      * @param map The input map
      * @param type NAME or DESC
-     * @return
      */
     public static Map<String, String> transformTranslationMap(Map<String, String> map, String type){
         Map<String, String> outputMap = new HashMap<>();
