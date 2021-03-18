@@ -1,0 +1,3 @@
+share|Teilen
+export|Exportieren
+file|Datei
