@@ -246,7 +246,7 @@ public class SharingManager {
         ArrayList<File> themes = new ArrayList<>();
         if(directories != null){
             try {
-                for(File file : directories){
+                for(File file : directories){//TODO Maybe make use of this function: DataStreamHelper.getFiles
                     Path start = Paths.get(file.getPath());
                     try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
                         List<String> collect = stream
@@ -411,7 +411,7 @@ public class SharingManager {
      * @param showAlreadyExistPopups When true a message is displayed that the choose import does already exist
      * @return Returns true when the import was successful. Returns false when something went wrong
      */
-    private static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean showAlreadyExistPopups){
+    public static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean showAlreadyExistPopups){
         int currentFile = 0;
         if(!importNothing){
             boolean failed = false;

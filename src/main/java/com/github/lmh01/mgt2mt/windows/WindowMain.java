@@ -62,6 +62,7 @@ public class WindowMain {
         JMenuItem m21Import = new JMenuItem("Import");
         JMenuItem m231AddTheme = new JMenuItem("Add Theme");
         JMenuItem m241AddPublisher = new JMenuItem("Add Publisher");
+        JMenuItem m243ReplacePublishersWithRealPublishers = new JMenuItem("Replace Publishers With Real Publishers");
         JMenuItem m251AddEngineFeature = new JMenuItem("Add Engine Feature");
         JMenuItem m261AddGameplayFeature = new JMenuItem("Add Gameplay Feature");
         m22Genres.add(M221ADD_GENRE);
@@ -70,6 +71,7 @@ public class WindowMain {
         m23Themes.add(M232REMOVE_THEME);
         m24Publisher.add(m241AddPublisher);
         m24Publisher.add(M242REMOVE_PUBLISHER);
+        m24Publisher.add(m243ReplacePublishersWithRealPublishers);
         m25EngineFeatures.add(m251AddEngineFeature);
         m25EngineFeatures.add(M252REMOVE_ENGINE_FEATURE);
         m26GameplayFeatures.add(m261AddGameplayFeature);
@@ -84,6 +86,8 @@ public class WindowMain {
         M27NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
         m241AddPublisher.setToolTipText("Click to add a publisher to MGT2");
         m241AddPublisher.addActionListener(actionEvent -> addPublisher());
+        m243ReplacePublishersWithRealPublishers.setToolTipText("Click to replace the original publishers with real publishers");
+        m243ReplacePublishersWithRealPublishers.addActionListener(actionEvent -> PublisherHelper.realPublishers());
         M242REMOVE_PUBLISHER.setToolTipText("Click to remove a publisher from MGT2");
         M242REMOVE_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(EditPublishersFile::removePublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "removed", "Remove", false));
         m261AddGameplayFeature.addActionListener(actionEvent -> GameplayFeatureHelper.addGameplayFeature());
@@ -116,7 +120,10 @@ public class WindowMain {
         M315EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
         M316EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
         JMenuItem m35 = new JMenuItem("Open Export Folder");
-        m35.addActionListener(actionEvent -> Utils.open(Utils.getMGT2ModToolExportFolder()));
+        m35.addActionListener(actionEvent -> {
+            Utils.open(Utils.getMGT2ModToolExportFolder());
+            Debug.writeHelpFile();
+        });
         JMenuItem m36 = new JMenuItem("Delete all exports");
         m36.addActionListener(actionEvent -> deleteAllExports());
         m3Share.add(m31Export);
@@ -561,7 +568,7 @@ public class WindowMain {
                                 "\nShare: " + spinnerShare.getValue().toString() +
                                 "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
                             HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("ID", Integer.toString(AnalyzeExistingPublishers.maxThemeID+1));
+                            hashMap.put("ID", Integer.toString(AnalyzeExistingPublishers.maxPublisherID +1));
                             hashMap.put("NAME EN", textFieldName.getText());
                             hashMap.put("NAME GE", textFieldName.getText());
                             hashMap.put("NAME TU", textFieldName.getText());

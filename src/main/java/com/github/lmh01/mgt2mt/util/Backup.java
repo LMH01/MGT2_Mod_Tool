@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
+import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -147,6 +148,7 @@ public class Backup {
             Files.copy(Paths.get(fileEngineFeaturesBackup.getPath()), Paths.get(Utils.getEngineFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
+                ImageFileHandler.removePublisherIcons();
                 ChangeLog.addLogEntry(8);
                 if(showMessages){
                     JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);

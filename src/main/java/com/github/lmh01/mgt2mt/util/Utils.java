@@ -2,14 +2,12 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
-import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,10 +16,8 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Utils {
+public class Utils {//TODO Search this function for things that do something with DataStreams and move these functios to the data stream helper
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
@@ -78,6 +74,16 @@ public class Utils {
         while((currentLine = reader.readLine()) != null){
             if(firstLine){
                 currentLine = Utils.removeUTF8BOM(currentLine);
+                if(currentLine.contains("EOF")){
+                    //This is being put into the list when the file is empty except for the [EOF]
+                    //A dummy id and name are inserted
+                    mapCurrent.put("ID", "-1");
+                    mapCurrent.put("NAME EN", "Dummy");
+                    mapCurrent.put("PIC", "0");
+                    fileParts.add(mapCurrent);
+                    reader.close();
+                    return fileParts;
+                }
                 firstLine = false;
             }
             if(currentLine.isEmpty()){
@@ -301,7 +307,7 @@ public class Utils {
 
     /**
      * @param folder The folder that should be searched for files.
-     * @param whiteList When the string entered here is found in the filename the file will be added to the arrayListFiles.
+     * @param whiteList When the string entered here is found/equals the filename the file will be added to the arrayListFiles. All other files wont be added
      * @return Returns an array list containing all files inside the input folder
      */
     public static ArrayList<File> getFilesInFolderWhiteList(String folder, String whiteList){
@@ -371,7 +377,7 @@ public class Utils {
      * Copied from https://www.baeldung.com/java-delete-directory
      * Deletes a complete directory with its contents
      */
-    public static void deleteDirectory(File directoryToBeDeleted ){
+    public static void deleteDirectory(File directoryToBeDeleted ){//TODO Move function to DataStreamHelper
         File[] allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
             for (File file : allContents) {

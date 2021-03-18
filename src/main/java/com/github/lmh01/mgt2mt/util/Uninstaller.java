@@ -14,7 +14,7 @@ public class Uninstaller {
     /**
      * Opens a gui where the user can select what should be removed. Selected items are then removed and the tool closes.
      */
-    public static void uninstall(){
+    public static void uninstall(){//TODO Make Image icons that have been added be removed as well
         JLabel labelDescription = new JLabel("<html>Select what should be removed<br>After uninstalling the program is exited");
         JCheckBox checkboxDeleteBackups = new JCheckBox("Delete Backups");
         checkboxDeleteBackups.setSelected(true);

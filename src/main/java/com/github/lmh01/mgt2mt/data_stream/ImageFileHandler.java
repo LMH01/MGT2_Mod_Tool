@@ -106,6 +106,22 @@ public class ImageFileHandler {
     }
 
     /**
+     * Removes all custom publisher icons
+     */
+    public static void removePublisherIcons(){
+        ArrayList<File> files = Utils.getFilesInFolderWhiteList(Utils.getMGT2CompanyLogosPath(), ".png");
+        for(File file : files){
+            try{
+                if(Integer.parseInt(file.getName().replace(".png", "")) > 146){
+                    file.delete();
+                }
+            }catch(NumberFormatException e){
+
+            }
+        }
+    }
+
+    /**
      * Removes the image(.png) and meta-file(.png.meta) files for the specified genre from each directory that contains them
      * @param genreName The genre id
      * @param genreId The genre id
