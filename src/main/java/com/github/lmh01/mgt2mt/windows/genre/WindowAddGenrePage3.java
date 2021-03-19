@@ -62,20 +62,20 @@ public class WindowAddGenrePage3 extends JFrame{
         spinnerResearchPoints.setBounds(120, 10, 100, 23);
         spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
         spinnerGenrePrice.setBounds(120, 60, 100, 23);
-        spinnerResearchPoints.setToolTipText("<html>[Range: 1 - 100.000; Default: " + GenreManager.mapNewGenre.get("RES POINTS") + "]<br>Number of required research points to research that genre.");
-        spinnerDevelopmentCost.setToolTipText("<html>[Range: 1 - 1.000.000; Default: " + GenreManager.mapNewGenre.get("DEV COSTS") + "]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this genre.");
-        spinnerGenrePrice.setToolTipText("<html>[Range: 1 - 10.000.000; Default: " + GenreManager.mapNewGenre.get("PRICE") + "]<br>This is the research cost, it is being payed when researching this genre.");
+        spinnerResearchPoints.setToolTipText("<html>[Range: 0 - 10.000; Default: " + GenreManager.mapNewGenre.get("RES POINTS") + "]<br>Number of required research points to research that genre.");
+        spinnerDevelopmentCost.setToolTipText("<html>[Range: 0 - 1.000.000; Default: " + GenreManager.mapNewGenre.get("DEV COSTS") + "]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this genre.");
+        spinnerGenrePrice.setToolTipText("<html>[Range: 0 - 10.000.000; Default: " + GenreManager.mapNewGenre.get("PRICE") + "]<br>This is the research cost, it is being payed when researching this genre.");
         if(Settings.disableSafetyFeatures){
-            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 1, 1000000000, 1));
-            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 1, 1000000000, 1));
-            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("PRICE")), 1, 1000000000, 1));
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 0, 1000000000, 1));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 0, 1000000000, 1));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("PRICE")), 0, 1000000000, 1));
             ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(true);
         }else{
-            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 1, 100000, 100));
-            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 1, 1000000, 1000));
-            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("PRICE")), 1, 10000000, 1000));
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 0, 10000, 100));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 0, 1000000, 1000));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("PRICE")), 0, 10000000, 1000));
             ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
             ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
             ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(false);
