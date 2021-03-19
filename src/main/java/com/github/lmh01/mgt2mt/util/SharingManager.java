@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -169,8 +171,23 @@ public class SharingManager {
             }else{
                 fileChooser.setDialogTitle("Choose the folder(s) where the " + fileName + " file is located.");
             }
-            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+            FileFilter fileFilter = new FileFilter() {//File filter to only show .zip files.
+                @Override
+                public boolean accept(File f) {
+                    if(f.getName().contains(".zip")){
+                        return true;
+                    }
+                    return f.isDirectory();
+                }
+
+                @Override
+                public String getDescription() {
+                    return ".zip files";
+                }
+            };
+            fileChooser.setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES);
             fileChooser.setMultiSelectionEnabled(true);
+            fileChooser.setFileFilter(fileFilter);
             int return_value = fileChooser.showOpenDialog(null);
             if(return_value == JFileChooser.APPROVE_OPTION){
                 File[] files = fileChooser.getSelectedFiles();
@@ -244,10 +261,17 @@ public class SharingManager {
         ArrayList<File> genres = new ArrayList<>();
         ArrayList<File> publishers = new ArrayList<>();
         ArrayList<File> themes = new ArrayList<>();
+        ArrayList<String> engineFeatureNames = new ArrayList<>();
+        ArrayList<String> gameplayFeatureNames = new ArrayList<>();
+        ArrayList<String> genreNames = new ArrayList<>();
+        ArrayList<String> publisherNames = new ArrayList<>();
+        ArrayList<String> themeNames = new ArrayList<>();
         AtomicBoolean someThingsNotCompatible = new AtomicBoolean(false);
+        AtomicInteger currentZipArchiveNumber = new AtomicInteger();
         if(directories != null){
             try {
-                for(File file : directories){
+                for(int i=0; i<directories.size(); i++){
+                    File file = directories.get(i);
                     Path start = Paths.get(file.getPath());
                     try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
                         List<String> collect = stream
@@ -257,34 +281,28 @@ public class SharingManager {
 
                         collect.forEach((string) -> {
                             if(string.contains("engineFeature.txt")){
-                                if(isImportCompatible(new File(string), ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
-                                    engineFeatures.add(new File(string));
-                                }else{
-                                    someThingsNotCompatible.set(true);
-                                }
+                                addIfCompatible(string, engineFeatures, engineFeatureNames, ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("gameplayFeature.txt")){
-                                if(isImportCompatible(new File(string), GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
-                                    gameplayFeatures.add(new File(string));
-                                }else{
-                                    someThingsNotCompatible.set(true);
-                                }
+                                addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("genre.txt")){
-                                if(isImportCompatible(new File(string), GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
-                                    genres.add(new File(string));
-                                }else{
-                                    someThingsNotCompatible.set(true);
-                                }
+                                addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("publisher.txt")){
-                                if(isImportCompatible(new File(string), PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
-                                    publishers.add(new File(string));
-                                }else{
-                                    someThingsNotCompatible.set(true);
-                                }
+                                addIfCompatible(string, publishers, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("theme.txt")){
-                                if(isImportCompatible(new File(string), THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
-                                    themes.add(new File(string));
-                                }else{
-                                    someThingsNotCompatible.set(true);
+                                addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                            }else if(string.endsWith(".zip")){
+                                if(JOptionPane.showConfirmDialog(null, "A .zip archive has been found:\n\n" + string + "\n\nWould you like to extract it and search it for mods?", "Zip archive found", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                    try {
+                                        File extractedFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//" + currentZipArchiveNumber);
+                                        DataStreamHelper.unzip(string, extractedFolder);
+                                        currentZipArchiveNumber.getAndIncrement();
+                                        directories.add(extractedFolder);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        if(JOptionPane.showConfirmDialog(null, "Error while extracting zip archive:\n\n" + string + "\n\nException: " + e.getMessage() + "\n\nWould you like to continue anyway", "Error while extracting", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
+                                            return;
+                                        }
+                                    }
                                 }
                             }
                             if(Settings.enableDebugLogging){
@@ -376,6 +394,9 @@ public class SharingManager {
                 }
             }
         }
+        //Delete the temp .zip extractions
+        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
+        DataStreamHelper.deleteDirectory(tempFolder);
         WindowMain.checkActionAvailability();
     }
 
@@ -576,5 +597,46 @@ public class SharingManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Checks the input file for compatibility with this mod tool version using the input compatible versions array
+     * @return Returns the name that is stored in NAME EN in the input file. Returns false when no name has been found
+     */
+    private static String getImportName(File inputFile){
+        try {
+            Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
+            for(Map.Entry entry : map.entrySet()){
+                LOGGER.info("Current Value: " + entry.getValue());
+                if(entry.getValue().toString().contains("NAME EN")){
+                    return entry.getValue().toString().replace("[NAME EN]", "");
+                }
+            }
+        } catch (IOException e){
+            LOGGER.error("Error while checking " + inputFile.getPath() + " for compatibility with this tool version. The file might be corrupted.");
+            e.printStackTrace();
+        }
+        return "false";
+    }
+
+    /**
+     * Uses the string and checks if the content of that file has already been added to the mod array list. If it does already exist the user is asked if the mod should be added anyway.
+     */
+    private static void addIfCompatible(String string, ArrayList<File> feature, ArrayList<String> names, String[] compatibleModToolVersions, AtomicBoolean someThingsNotCompatible){
+        if(isImportCompatible(new File(string), compatibleModToolVersions)){
+            String returnValue = getImportName(new File(string));
+            if(names.contains(returnValue)){
+                if(JOptionPane.showConfirmDialog(null, "This mod has already been found: " + returnValue + "\n\nDo you want to add this mod to the import list anyway?", "Import already on the list", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                    feature.add(new File(string));
+                }
+            }else{
+                if(returnValue != "false"){
+                    names.add(returnValue);
+                }
+                feature.add(new File(string));
+            }
+        }else{
+            someThingsNotCompatible.set(true);
+        }
     }
 }
