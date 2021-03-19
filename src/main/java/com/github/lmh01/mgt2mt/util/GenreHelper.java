@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -8,9 +11,8 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,7 +32,7 @@ public class GenreHelper {
 
             JPanel panelName = new JPanel();
             JLabel labelName = new JLabel("Name:");
-            JTextField textFieldName = new JTextField("ENTER FEATURE NAME");
+            JTextField textFieldName = new JTextField("ENTER GENRE NAME");
             panelName.add(labelName);
             panelName.add(textFieldName);
 
@@ -51,7 +53,7 @@ public class GenreHelper {
 
             JPanel panelDescription = new JPanel();
             JLabel labelDescription = new JLabel("Description:");
-            JTextField textFieldDescription = new JTextField("ENTER FEATURE DESCRIPTION");
+            JTextField textFieldDescription = new JTextField("ENTER GENRE DESCRIPTION");
             panelDescription.add(labelDescription);
             panelDescription.add(textFieldDescription);
 
@@ -88,12 +90,72 @@ public class GenreHelper {
                 setGenreScreenshots(screenshotFiles, buttonSetScreenshots);
             });
 
-            Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, buttonSetIcon, buttonSetScreenshots};
-            if(JOptionPane.showConfirmDialog(null, params, "Add Random Genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                for(File file : screenshotFiles.get()){
-                    LOGGER.info("Current file: " + file.getPath());
+            JCheckBox checkBoxShowSummary = new JCheckBox("Show Genre Summary");
+            checkBoxShowSummary.setToolTipText("Check to show the genre summary");
+
+            Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, buttonSetIcon, buttonSetScreenshots, checkBoxShowSummary};
+            while(true){
+                if(JOptionPane.showConfirmDialog(null, params, "Add Random Genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    Map<String, String> map = new HashMap<>();
+                    for(Map.Entry<String, String> entry : mapNameTranslations[0].entrySet()){
+                        map.put("NAME " + entry.getKey(), entry.getValue());
+                    }
+                    for(Map.Entry<String, String> entry : mapDescriptionTranslations[0].entrySet()){
+                        map.put("DESC " + entry.getKey(), entry.getValue());
+                    }
+
+                    //Randomized value allocation
+                    String unlockMonth = convertMonthNumberToMonthName(Utils.getRandomNumber(1, 12));
+                    int unlockYear = Utils.getRandomNumber(1976, 2010);
+                    map.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
+                    String genreName = textFieldName.getText();
+                    String genreDescription = textFieldDescription.getText();
+                    if(textFieldName.getText().equals("ENTER GENRE NAME") || textFieldName.getText().isEmpty()){
+                        genreName = "Randomized Genre";
+                    }
+                    if(textFieldDescription.getText().equals("ENTER GENRE DESCRIPTION") || textFieldDescription.getText().isEmpty()){
+                        genreDescription = "Genre created by the MGT2 Mod Tool using random values";
+                    }
+                    if(map.containsKey("NAME EN")){
+                        map.replace("NAME EN", genreName);
+                    }else{
+                        map.put("NAME EN", genreName);
+                    }
+                    if(map.containsKey("DESC EN")){
+                        map.replace("DESC EN", genreDescription);
+                    }else{
+                        map.put("DESC EN", genreDescription);
+                    }
+                    map.put("DATE", unlockMonth + " " + unlockYear);
+                    int researchPoints = Utils.roundToNextHundred(Utils.getRandomNumber(0, 1500));
+                    int price = Utils.roundToNextThousand(Utils.getRandomNumber(0, 300000));
+                    int developmentCost = Utils.roundToNextThousand(Utils.getRandomNumber(0, 10000));
+                    map.put("RES POINTS", Integer.toString(researchPoints));
+                    map.put("PRICE", Integer.toString(price));
+                    map.put("DEV COSTS", Integer.toString(developmentCost));
+                    map.put("TGROUP", getRandomTargetGroup());
+                    Integer[] workPriority = getRandomWorkPriorityValues();
+                    map.put("GAMEPLAY", Integer.toString(workPriority[0]));
+                    map.put("GRAPHIC", Integer.toString(workPriority[1]));
+                    map.put("SOUND", Integer.toString(workPriority[2]));
+                    map.put("CONTROL", Integer.toString(workPriority[3]));
+                    map.put("GENRE COMB", getRandomGenreCombs());
+                    map.put("DESIGN1", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    map.put("DESIGN2", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    map.put("DESIGN3", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    map.put("DESIGN4", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    map.put("DESIGN5", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    HashSet<Integer> compatibleThemeIds = getRandomThemeIds();
+                    map.put("THEME COMB", getCompatibleThemes(compatibleThemeIds));
+                    List<HashSet<Integer>> gameplayFeatures = getRandomGameplayFeatureIds();
+                    setGameplayFeatureCompatibility(map, gameplayFeatures.get(0), gameplayFeatures.get(1));
+                    File iconFile = new File(iconPath.toString());
+                    GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected());
+                    JOptionPane.showMessageDialog(null, "Genre [" + genreName + "] has been added successfully!", "Genre added", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+                }else{
+                    break;
                 }
-                LOGGER.info("Genre Icon: " + iconPath.get());
             }
         }catch(IOException e){
 
@@ -281,5 +343,142 @@ public class GenreHelper {
             return arrayListScreenshotFiles;
         }
         return arrayListScreenshotFiles;
+    }
+
+    private static String convertMonthNumberToMonthName(int monthNumber){
+        switch(monthNumber){
+            case 1: return "JAN";
+            case 2: return "FEB";
+            case 3: return "MAR";
+            case 4: return "APR";
+            case 5: return "MAY";
+            case 6: return "JUN";
+            case 7: return "JUL";
+            case 8: return "AUG";
+            case 9: return "SEP";
+            case 10: return "OCT";
+            case 11: return "NOV";
+            case 12: return "DEC";
+        }
+        return "JAN";
+    }
+
+    private static String getRandomTargetGroup(){
+        StringBuilder stringBuilder = new StringBuilder();
+        if(Utils.getRandomNumber(0, 10) > 5){
+            stringBuilder.append("<KID>");
+        }
+        if(Utils.getRandomNumber(0, 10) > 5){
+            stringBuilder.append("<TEEN>");
+        }
+        if(Utils.getRandomNumber(0, 10) > 5){
+            stringBuilder.append("<ADULT>");
+        }
+        if(Utils.getRandomNumber(0, 10) > 5){
+            stringBuilder.append("<OLD>");
+        }
+        return stringBuilder.toString();
+    }
+
+    private static Integer[] getRandomWorkPriorityValues(){
+        int sum = 0;
+        int a = 0;
+        int b = 0;
+        int c = 0;
+        int d = 0;
+        int numberOfTries = 1;
+        while(sum !=100){
+            a = Utils.roundToNextFive(Utils.getRandomNumber(5,50));
+            b = Utils.roundToNextFive(Utils.getRandomNumber(5,50));
+            c = Utils.roundToNextFive(Utils.getRandomNumber(5,50));
+            d = Utils.roundToNextFive(Utils.getRandomNumber(5,50));
+            sum = a+b+c+d;
+            numberOfTries++;
+        }
+        LOGGER.info("Number of tries: " + numberOfTries);
+        return new Integer[]{a, b, c, d};
+    }
+
+    private static String getRandomGenreCombs(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Integer integer : AnalyzeExistingGenres.getGenreIdsInUse()){
+            if(Utils.getRandomNumber(1,10) > 5){
+                stringBuilder.append("<").append(integer).append(">");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public static HashSet<Integer> getRandomThemeIds(){
+        HashSet<Integer> hashSet = new HashSet<>();
+        for(Integer integer : AnalyzeExistingThemes.getThemeIdsInUse()){
+            if(Utils.getRandomNumber(1,100) > 30){
+                hashSet.add(integer);
+            }
+        }
+        return hashSet;
+    }
+
+    /**
+     * @Returns Returns a list containing the bad gameplay features in the first HashSet and the good gameplay features in the second HashSet
+     */
+    private static List<HashSet<Integer>> getRandomGameplayFeatureIds(){
+        HashSet<Integer> hashSetBadGameplayFeatures = new HashSet<>();
+        HashSet<Integer> hashSetGoodGameplayFeatures = new HashSet<>();
+        for(String string : AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet()){
+            if(Utils.getRandomNumber(1,100) > 80){
+                hashSetBadGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+            }
+            if(Utils.getRandomNumber(1,100) > 80){
+                hashSetGoodGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+            }
+        }
+        Collections.disjoint(hashSetBadGameplayFeatures, hashSetGoodGameplayFeatures);
+        hashSetBadGameplayFeatures.removeAll(hashSetGoodGameplayFeatures);
+        List<HashSet<Integer>> list = new ArrayList<>();
+        list.add(hashSetBadGameplayFeatures);
+        list.add(hashSetGoodGameplayFeatures);
+        return list;
+    }
+
+    private static String getCompatibleThemes(HashSet<Integer> themeIds){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+            if(themeIds.contains(entry.getKey())){
+                stringBuilder.append("<").append(entry.getValue()).append(">");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    private static void setGameplayFeatureCompatibility(Map<String, String> map1, HashSet<Integer> badGameplayFeatures, HashSet<Integer> goodGameplayFeatures){
+        StringBuilder gameplayFeaturesBad = new StringBuilder();
+        StringBuilder gameplayFeaturesGood = new StringBuilder();
+        for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                for(Integer integer : badGameplayFeatures){
+                    if(entry.getKey().equals("ID")){
+                        if(entry.getValue().equals(Integer.toString(integer))){
+                            gameplayFeaturesBad.append("<").append(AnalyzeExistingGameplayFeatures.getGameplayFeatureNameById(integer)).append(">");
+                            if(Settings.enableDebugLogging){
+                                LOGGER.info("Gameplay feature bad: " + entry.getKey() + " | " + entry.getValue());
+                            }
+                        }
+                    }
+                }
+                for(Integer integer : goodGameplayFeatures){
+                    if(entry.getKey().equals("ID")){
+                        if(entry.getValue().equals(Integer.toString(integer))){
+                            gameplayFeaturesGood.append("<").append(AnalyzeExistingGameplayFeatures.getGameplayFeatureNameById(integer)).append(">");
+                            if(Settings.enableDebugLogging){
+                                LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        map1.put("GAMEPLAYFEATURE BAD", gameplayFeaturesBad.toString());
+        map1.put("GAMEPLAYFEATURE GOOD", gameplayFeaturesGood.toString());
     }
 }

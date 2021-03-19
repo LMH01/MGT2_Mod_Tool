@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Utils {
 
@@ -485,4 +486,54 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * @return Returns a random number between and including origin and range.
+     */
+    public static int getRandomNumber(int origin, int range){
+        return ThreadLocalRandom.current().nextInt(origin, range);
+    }
+
+    /**
+     * Rounds the input number up/down to the next five
+     * @param inputNumber The input number
+     * @return Returns the rounded number
+     */
+    public static int roundToNextFive(int inputNumber){
+        double num = inputNumber;
+        if (num % 5 == 0)
+            return (int) num;
+        else if (num % 5 < 2.5)
+            num = num - num % 5;
+        else
+            num = num + (5 - num % 5);
+        return (int) num;
+    }
+
+    /**
+     * Rounds the input number up/down to the next hundred
+     * @param inputNumber The input number
+     * @return Returns the rounded number
+     */
+    public static int roundToNextHundred(int inputNumber){
+        try{
+            return (inputNumber + 50) / 100 * 100;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * Rounds the input number up/down to the next thousand
+     * @param inputNumber The input number
+     * @return Returns the rounded number
+     */
+    public static int roundToNextThousand(int inputNumber){
+        try{
+            return (inputNumber + 500) / 1000 * 1000;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

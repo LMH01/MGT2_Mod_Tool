@@ -81,6 +81,30 @@ public class AnalyzeExistingGameplayFeatures {
     }
 
     /**
+     * @param id The id
+     * @return Returns the specified genre name by id.
+     * @throws ArrayIndexOutOfBoundsException Is thrown when the requested genre id does not exist in the map.
+     */
+    public static String getGameplayFeatureNameById(int id) throws ArrayIndexOutOfBoundsException{
+        return getGameplayFeatureNamesInUse().get(id);
+    }
+
+    /**
+     * @return Returns an ArrayList containing all genre names that are in use.
+     */
+    public static ArrayList<String> getGameplayFeatureNamesInUse(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(Map<String, String> map : gameplayFeatures){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("NAME EN")){
+                    arrayList.add(entry.getValue());
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    /**
      * @return Returns a String[] containing all custom gameplay features
      */
     public static String[] getCustomGameplayFeaturesString(){

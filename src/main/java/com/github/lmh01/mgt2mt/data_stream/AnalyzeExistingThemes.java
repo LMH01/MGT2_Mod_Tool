@@ -213,4 +213,15 @@ public class AnalyzeExistingThemes {
         }
         return map;
     }
+
+    /**
+     * @return Returns a array list containing all theme ids that have been found.
+     */
+    public static ArrayList<Integer> getThemeIdsInUse(){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for(Map.Entry<Integer, String> entry : MAP_ACTIVE_THEMES_EN.entrySet()){
+            arrayList.add(entry.getKey());
+        }
+        return arrayList;
+    }
 }
