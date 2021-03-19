@@ -109,7 +109,7 @@ public class EngineFeatureHelper {
             JSpinner spinnerDevelopmentCost = new JSpinner();
             JSpinner spinnerPrice = new JSpinner();
             spinnerResearchPoints.setToolTipText("<html>[Range: 0 - 10.000; Default: 500]<br>Number of required research points to research that engine feature.");
-            spinnerDevelopmentCost.setToolTipText("<html>[Range: 0 - 1.000.000; Default: 35000]<br>Set the development cost for a game with your engine feature.<br>This cost will be added when developing a game with this engine feature.");
+            spinnerDevelopmentCost.setToolTipText("<html>[Range: 0 - 100.000; Default: 35000]<br>Set the development cost for a game with your engine feature.<br>This cost will be added when developing a game with this engine feature.");
             spinnerPrice.setToolTipText("<html>[Range: 0 - 1.000.000; Default: 50000]<br>This is the research cost, it is being payed when researching this engine feature.");
             if(Settings.disableSafetyFeatures){
                 spinnerResearchPoints.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
@@ -120,7 +120,7 @@ public class EngineFeatureHelper {
                 ((JSpinner.DefaultEditor)spinnerPrice.getEditor()).getTextField().setEditable(true);
             }else{
                 spinnerResearchPoints.setModel(new SpinnerNumberModel(500, 0, 10000, 100));
-                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(35000, 0, 1000000, 1000));
+                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(35000, 0, 100000, 1000));
                 spinnerPrice.setModel(new SpinnerNumberModel(50000, 0, 1000000, 1000));
                 ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
