@@ -29,7 +29,7 @@ public class ExportSettings {
             PrintWriter pw = new PrintWriter(new FileWriter(file));
             if(Settings.enableDebugLogging){ LOGGER.info("Writing to file..."); }
             pw.print(Settings.mgt2FilePath + "\n" +
-                    Settings.enableAddGenreWarning + "\n" +
+                    Settings.enableDisclaimerMessage + "\n" +
                     Settings.enableDebugLogging + "\n" +
                     Settings.disableSafetyFeatures + "\n" +
                     Settings.steamLibraryFolder + "\n" +

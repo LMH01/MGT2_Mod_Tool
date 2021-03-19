@@ -25,32 +25,16 @@ public class GenreManager {
     public static void startStepByStepGuide() throws IOException {
         AnalyzeExistingGenres.analyzeGenreFile();
         resetVariables();
-        JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this warning again");
-        JLabel labelMessage = new JLabel("<html>Warning:<br>Loading a save-file with this new added genre will tie it to the file.<br>Removing the genre later won't remove it from save-files that have been accessed with said genre.<br><br>Note:<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>(You can open the Github repo by clicking \"Utilities -> Open Github Page\".<br><br>Add new genre?");
-        Object[] params = {labelMessage,checkBoxDontShowAgain};
-        LOGGER.info("enableAddGenreWarning: " + Settings.enableAddGenreWarning);
-        boolean cancelAddGenre = false;
-        if(Settings.enableAddGenreWarning){
-            if(JOptionPane.showConfirmDialog(null, params, "Add genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
-                cancelAddGenre = true;
-            }
-        }
-        if(!cancelAddGenre){
-            if(checkBoxDontShowAgain.isSelected()){
-                Settings.enableAddGenreWarning = false;
-                ExportSettings.export();
-            }
-            try {
-                Backup.createBackup(Utils.getGenreFile());
+        try {
+            Backup.createBackup(Utils.getGenreFile());
+            LOGGER.info("Adding new genre");
+            openStepWindow(1);
+        } catch (IOException e) {
+            if(Utils.showConfirmDialog(1, e)){
                 LOGGER.info("Adding new genre");
                 openStepWindow(1);
-            } catch (IOException e) {
-                if(Utils.showConfirmDialog(1, e)){
-                    LOGGER.info("Adding new genre");
-                    openStepWindow(1);
-                }
-                e.printStackTrace();
             }
+            e.printStackTrace();
         }
     }
     public static void openStepWindow(int step){

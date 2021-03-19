@@ -25,9 +25,9 @@ public class ImportSettings{
                         Settings.mgt2FilePath = currentLine; break;
                     case 2:
                         if(currentLine.equals("true")){
-                            Settings.enableAddGenreWarning = true;
+                            Settings.enableDisclaimerMessage = true;
                         }else if(currentLine.equals("false")){
-                            Settings.enableAddGenreWarning = false;
+                            Settings.enableDisclaimerMessage = false;
                         } break;
                     case 3:
                         if(currentLine.equals("true")){

@@ -20,7 +20,7 @@ public class Settings {
     public static boolean enableCustomFolder = false;
     private static final Logger LOGGER = LoggerFactory.getLogger(Settings.class);
     public static boolean madGamesTycoonFolderIsCorrect = false;
-    public static boolean enableAddGenreWarning = true;
+    public static boolean enableDisclaimerMessage = true;
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
     public static void resetSettings(){
@@ -36,11 +36,11 @@ public class Settings {
      * @param customFolderPath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showAddGenreWarning, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo){
+    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo){
         Settings.enableDebugLogging = enableDebugLogging;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
-        Settings.enableAddGenreWarning = showAddGenreWarning;
+        Settings.enableDisclaimerMessage = showDisclaimerMessage;
         Settings.enableGenreNameTranslationInfo = enableGenreNameTranslationInfo;
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
         if(!customFolderPath.isEmpty()){
