@@ -25,11 +25,11 @@ import java.util.stream.Stream;
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingManager.class);
-    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1", "1.8.0", "1.8.1"};
-    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1"};
-    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1"};
-    public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1"};
-    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1"};
+    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.9.0"};
+    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.9.0"};
+    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.9.0"};
+    public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.9.0"};
+    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.9.0"};
 
     /**
      * Uses the import function to import the content of the import folder.
@@ -244,6 +244,7 @@ public class SharingManager {
         ArrayList<File> genres = new ArrayList<>();
         ArrayList<File> publishers = new ArrayList<>();
         ArrayList<File> themes = new ArrayList<>();
+        AtomicBoolean someThingsNotCompatible = new AtomicBoolean(false);
         if(directories != null){
             try {
                 for(File file : directories){
@@ -256,17 +257,35 @@ public class SharingManager {
 
                         collect.forEach((string) -> {
                             if(string.contains("engineFeature.txt")){
-                                LOGGER.info("engineFeature: " + string);
-                                engineFeatures.add(new File(string));
+                                if(isImportCompatible(new File(string), ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
+                                    engineFeatures.add(new File(string));
+                                }else{
+                                    someThingsNotCompatible.set(true);
+                                }
                             }else if(string.contains("gameplayFeature.txt")){
-                                LOGGER.info("gameplayFeature: " + string);
-                                gameplayFeatures.add(new File(string));
+                                if(isImportCompatible(new File(string), GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
+                                    gameplayFeatures.add(new File(string));
+                                }else{
+                                    someThingsNotCompatible.set(true);
+                                }
                             }else if(string.contains("genre.txt")){
-                                genres.add(new File(string));
+                                if(isImportCompatible(new File(string), GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
+                                    genres.add(new File(string));
+                                }else{
+                                    someThingsNotCompatible.set(true);
+                                }
                             }else if(string.contains("publisher.txt")){
-                                publishers.add(new File(string));
+                                if(isImportCompatible(new File(string), PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
+                                    publishers.add(new File(string));
+                                }else{
+                                    someThingsNotCompatible.set(true);
+                                }
                             }else if(string.contains("theme.txt")){
-                                themes.add(new File(string));
+                                if(isImportCompatible(new File(string), THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS)){
+                                    themes.add(new File(string));
+                                }else{
+                                    someThingsNotCompatible.set(true);
+                                }
                             }
                             if(Settings.enableDebugLogging){
                                 LOGGER.info("current file: " + string);
@@ -350,7 +369,11 @@ public class SharingManager {
                     }
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "The folder(s) and it's subfolders do not contain things that could be imported.", "Unable to import", JOptionPane.INFORMATION_MESSAGE);
+                if(someThingsNotCompatible.get()){
+                    JOptionPane.showMessageDialog(null, "The folder(s) and it's subfolders do not contain things that could be imported.\nSome mods where found that are not compatible with the current mod tool version", "Unable to import", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "The folder(s) and it's subfolders do not contain things that could be imported.", "Unable to import", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
         WindowMain.checkActionAvailability();
@@ -530,5 +553,28 @@ public class SharingManager {
             stringBuilder.append(System.getProperty("line.separator"));
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * Checks the input file for compatibility with this mod tool version using the input compatible versions array
+     * @return Returns true when the file is compatible
+     */
+    private static boolean isImportCompatible(File inputFile, String[] compatibleVersions){
+        try {
+            Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
+            for(Map.Entry entry : map.entrySet()){
+                LOGGER.info("Current Value: " + entry.getValue());
+                for(String string : compatibleVersions){
+                    LOGGER.info("Current compatible version: " + string);
+                    if(entry.getValue().toString().replace("[MGT2MT VERSION]", "").equals(string)){
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e){
+            LOGGER.error("Error while checking " + inputFile.getPath() + " for compatibility with this tool version. The file might be corrupted.");
+            e.printStackTrace();
+        }
+        return false;
     }
 }
