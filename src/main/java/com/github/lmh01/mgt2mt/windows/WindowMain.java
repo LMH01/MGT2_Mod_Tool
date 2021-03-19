@@ -638,8 +638,7 @@ public class WindowMain {
                 String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
                 for (String customGenre : customGenres) {
                     try {
-                        EditGenreFile.removeGenre(AnalyzeExistingGenres.getGenreIdByName(customGenre));
-                        ImageFileHandler.removeImageFiles(customGenre, AnalyzeExistingGenres.getGenreIdByName(customGenre));
+                        EditGenreFile.removeGenre(customGenre);
                         LOGGER.info("Game files have been restored to original.");
                     } catch (IOException e) {
                         LOGGER.info("Genre could not be removed: " + e.getMessage());

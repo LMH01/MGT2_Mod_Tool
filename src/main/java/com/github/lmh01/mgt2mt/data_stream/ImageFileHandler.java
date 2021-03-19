@@ -37,8 +37,6 @@ public class ImageFileHandler {
             createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png.meta"));
             //This creates the meta file in the main screenshot direcotry
             createMetaFile(2, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\" + genreID + ".meta"));
-            //This copies the screenshot images into the corresponding folder (screenshots/genreid/) and creates the .meta files.
-            copyScreenshotFiles(genreID, genreScreenshots);
         }
 
     }
@@ -125,7 +123,8 @@ public class ImageFileHandler {
      * @param genreName The genre id
      * @param genreId The genre id
      */
-    public static void removeImageFiles(String genreName, int genreId) throws IOException {
+    public static void removeImageFiles(String genreName) throws IOException {
+        int genreId = AnalyzeExistingGenres.getGenreIdByName(genreName);
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
         File screenshotFolder = new File(getScreenshotsDirectory() + "\\" + genreId + "\\");

@@ -75,6 +75,7 @@ public class EditGenreFile {
         removeGenre(AnalyzeExistingGenres.getGenreIdByName(genreName));
         EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(genreName), false, null);
         EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(genreName));
+        ImageFileHandler.removeImageFiles(genreName);
         WindowMain.checkActionAvailability();
         return true;
     }
@@ -82,7 +83,7 @@ public class EditGenreFile {
     /**
      * @param genreId The genre id that should be removed.
      */
-    public static void removeGenre(int genreId) throws IOException {
+    private static void removeGenre(int genreId) throws IOException {
         LOGGER.info("Removing genre...");
         File genreFile = Utils.getGenreFile();
         if(genreFile.exists()){
