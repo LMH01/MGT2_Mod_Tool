@@ -99,7 +99,7 @@ public class SharingManager {
         map.put("ID", Integer.toString(freeId.getFreeId()));
         boolean CanBeImported = false;
         for(String string : compatibleModToolVersions){
-            if(string.equals(map.get("MGT2MT VERSION"))){
+            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
                 CanBeImported = true;
             }
         }
@@ -588,7 +588,7 @@ public class SharingManager {
                 LOGGER.info("Current Value: " + entry.getValue());
                 for(String string : compatibleVersions){
                     LOGGER.info("Current compatible version: " + string);
-                    if(entry.getValue().toString().replace("[MGT2MT VERSION]", "").equals(string)){
+                    if(entry.getValue().toString().replace("[MGT2MT VERSION]", "").equals(string) || Settings.disableSafetyFeatures){
                         return true;
                     }
                 }
