@@ -140,18 +140,26 @@ public class GenreHelper {
                     map.put("SOUND", Integer.toString(workPriority[2]));
                     map.put("CONTROL", Integer.toString(workPriority[3]));
                     map.put("GENRE COMB", getRandomGenreCombs());
-                    map.put("DESIGN1", Integer.toString(Utils.getRandomNumber(1, 10)));
-                    map.put("DESIGN2", Integer.toString(Utils.getRandomNumber(1, 10)));
-                    map.put("DESIGN3", Integer.toString(Utils.getRandomNumber(1, 10)));
-                    map.put("DESIGN4", Integer.toString(Utils.getRandomNumber(1, 10)));
-                    map.put("DESIGN5", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    Integer[] designFocus = getRandomDesignFocusValues();
+                    map.put("FOCUS0", Integer.toString(designFocus[0]));
+                    map.put("FOCUS1", Integer.toString(designFocus[1]));
+                    map.put("FOCUS2", Integer.toString(designFocus[2]));
+                    map.put("FOCUS3", Integer.toString(designFocus[3]));
+                    map.put("FOCUS4", Integer.toString(designFocus[4]));
+                    map.put("FOCUS5", Integer.toString(designFocus[5]));
+                    map.put("FOCUS6", Integer.toString(designFocus[6]));
+                    map.put("FOCUS7", Integer.toString(designFocus[7]));
+                    map.put("ALIGN0", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    map.put("ALIGN1", Integer.toString(Utils.getRandomNumber(1, 10)));
+                    map.put("ALIGN2", Integer.toString(Utils.getRandomNumber(1, 10)));
                     HashSet<Integer> compatibleThemeIds = getRandomThemeIds();
                     map.put("THEME COMB", getCompatibleThemes(compatibleThemeIds));
                     List<HashSet<Integer>> gameplayFeatures = getRandomGameplayFeatureIds();
                     setGameplayFeatureCompatibility(map, gameplayFeatures.get(0), gameplayFeatures.get(1));
                     File iconFile = new File(iconPath.toString());
-                    GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected());
-                    JOptionPane.showMessageDialog(null, "Genre [" + genreName + "] has been added successfully!", "Genre added", JOptionPane.INFORMATION_MESSAGE);
+                    if(GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected())){
+                        JOptionPane.showMessageDialog(null, "Genre [" + genreName + "] has been added successfully!", "Genre added", JOptionPane.INFORMATION_MESSAGE);
+                    }
                     break;
                 }else{
                     break;
@@ -395,9 +403,37 @@ public class GenreHelper {
             sum = a+b+c+d;
             numberOfTries++;
         }
-        LOGGER.info("Number of tries: " + numberOfTries);
+        LOGGER.info("Number of tries to find random work priority values that work: " + numberOfTries);
         return new Integer[]{a, b, c, d};
     }
+
+    private static Integer[] getRandomDesignFocusValues(){
+        int sum = 0;
+        int a = 0;
+        int b = 0;
+        int c = 0;
+        int d = 0;
+        int e = 0;
+        int f = 0;
+        int g = 0;
+        int h = 0;
+        int numberOfTries = 1;
+        while(sum != 40){
+            a = Utils.getRandomNumber(0, 10);
+            b = Utils.getRandomNumber(0, 10);
+            c = Utils.getRandomNumber(0, 10);
+            d = Utils.getRandomNumber(0, 10);
+            e = Utils.getRandomNumber(0, 10);
+            f = Utils.getRandomNumber(0, 10);
+            g = Utils.getRandomNumber(0, 10);
+            h = Utils.getRandomNumber(0, 10);
+            sum = a+b+c+d+e+f+g+h;
+            numberOfTries++;
+        }
+        LOGGER.info("Number of tries to find random design focus values that work: " + numberOfTries);
+        return new Integer[]{a, b, c, d, e, f, g, h};
+    }
+
 
     private static String getRandomGenreCombs(){
         StringBuilder stringBuilder = new StringBuilder();

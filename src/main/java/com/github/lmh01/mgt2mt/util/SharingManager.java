@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingManager.class);
-    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {"1.8.3b", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION};
     public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};
     public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};
     public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};

@@ -94,8 +94,9 @@ public class GenreManager {
      * @param showSummaryFromImport True when called from genre import
      * @param genreIcon The genre icon file
      * @param showMessages True when the messages should be shown. False if not.
+     * @return Returns true when the user clicked yes on the confirm popup
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
+    public static boolean addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = "Your genre is ready:\n\n" +
@@ -178,6 +179,11 @@ public class GenreManager {
             }
         }
         WindowMain.checkActionAvailability();
+        if(returnValue == JOptionPane.YES_OPTION){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
