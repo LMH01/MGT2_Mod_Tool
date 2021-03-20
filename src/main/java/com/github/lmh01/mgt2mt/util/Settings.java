@@ -24,9 +24,10 @@ public class Settings {
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
     public static String language = "English";
+    public static String updateBranch = "Release";
     public static void resetSettings(){
         setMgt2Folder(false);
-        setSettings(false, false, false, false, "", true, true, true, "English");
+        setSettings(false, false, false, false, "", true, true, true, "English", "Release");
         LOGGER.info("Settings have been reset.");
     }
 
@@ -37,13 +38,14 @@ public class Settings {
      * @param customFolderPath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language){
+    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch){
         Settings.enableDebugLogging = enableDebugLogging;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
         Settings.enableDisclaimerMessage = showDisclaimerMessage;
         Settings.enableGenreNameTranslationInfo = enableGenreNameTranslationInfo;
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
+        Settings.updateBranch = updateBranch;
         setLanguage(language);
         if(!customFolderPath.isEmpty()){
             Settings.mgt2FilePath = customFolderPath;

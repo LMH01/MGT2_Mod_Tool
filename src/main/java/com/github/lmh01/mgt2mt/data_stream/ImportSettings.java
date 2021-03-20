@@ -63,6 +63,10 @@ public class ImportSettings{
                         } break;
                     case 9:
                         Settings.language = currentLine;
+                        break;
+                    case 10:
+                        Settings.updateBranch = currentLine;
+                        break;
                 }
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Imported Setting (" + setting + "): " + currentLine);

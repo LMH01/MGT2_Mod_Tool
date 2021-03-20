@@ -36,7 +36,8 @@ public class ExportSettings {
                     Settings.enableCustomFolder + "\n" +
                     Settings.enableGenreNameTranslationInfo + "\n" +
                     Settings.enableGenreDescriptionTranslationInfo + "\n" +
-                    Settings.language);
+                    Settings.language + "\n" +
+                    Settings.updateBranch);
             pw.close();
             if(Settings.enableDebugLogging){
                 LOGGER.info(Settings.mgt2FilePath);

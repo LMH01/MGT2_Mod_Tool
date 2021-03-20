@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,14 +13,23 @@ import java.util.Scanner;
 public class UpdateChecker {
     public static String newestVersion = "";
     public static String newestVersionKeyFeatures = "";
-    private static final String UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
+    private static final String RELEASE_UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
+    private static final String ALPHA_UPDATE_URL = "https://www.dropbox.com/s/16lk6kyc1wdpw43/mgt2mtNewestAlphaVersion.txt?dl=1";
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static void checkForUpdates(boolean showNoUpdateAvailableDialog){
         new Thread("UpdateChecker"){
             public void run(){
                 try {
                     LOGGER.info("Checking for updates...");
-                    java.net.URL url = new URL(UPDATE_URL);
+                    java.net.URL url;
+                    String versionType;
+                    if(Settings.updateBranch.equals("Release")){
+                        url = new URL(RELEASE_UPDATE_URL);
+                        versionType = "A new release is available: ";
+                    }else{
+                        url = new URL(ALPHA_UPDATE_URL);
+                        versionType = "A new alpha version is available: ";
+                    }
                     Scanner scanner = new Scanner(url.openStream());
                     String currentLine = scanner.nextLine();
                     newestVersion = currentLine;
@@ -33,7 +43,8 @@ public class UpdateChecker {
                             stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
                         }
                         newestVersionKeyFeatures = stringBuilder.toString();
-                        if(JOptionPane.showConfirmDialog(null, "A new version is available: " + newestVersion + "\nKey features:\n" + newestVersionKeyFeatures + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
+
+                        if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\nKey features:\n" + newestVersionKeyFeatures + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
                             try {
                                 Utils.openGithubPage();
                             } catch (Exception e) {
