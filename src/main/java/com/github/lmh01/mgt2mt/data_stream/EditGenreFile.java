@@ -41,11 +41,17 @@ public class EditGenreFile {
             bw.write("[SOUND]" + mapExistingGenres.get("SOUND"));bw.write(System.getProperty("line.separator"));
             bw.write("[CONTROL]" + mapExistingGenres.get("CONTROL"));bw.write(System.getProperty("line.separator"));
             bw.write("[GENRE COMB]" + mapExistingGenres.get("GENRE COMB"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DESIGN1]" + mapExistingGenres.get("DESIGN1"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DESIGN2]" + mapExistingGenres.get("DESIGN2"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DESIGN3]" + mapExistingGenres.get("DESIGN3"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DESIGN4]" + mapExistingGenres.get("DESIGN4"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DESIGN5]" + mapExistingGenres.get("DESIGN5"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS0]" + mapExistingGenres.get("FOCUS0"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS1]" + mapExistingGenres.get("FOCUS1"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS2]" + mapExistingGenres.get("FOCUS2"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS3]" + mapExistingGenres.get("FOCUS3"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS4]" + mapExistingGenres.get("FOCUS4"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS5]" + mapExistingGenres.get("FOCUS5"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS6]" + mapExistingGenres.get("FOCUS6"));bw.write(System.getProperty("line.separator"));
+            bw.write("[FOCUS7]" + mapExistingGenres.get("FOCUS7"));bw.write(System.getProperty("line.separator"));
+            bw.write("[ALIGN0]" + mapExistingGenres.get("ALIGN0"));bw.write(System.getProperty("line.separator"));
+            bw.write("[ALIGN1]" + mapExistingGenres.get("ALIGN1"));bw.write(System.getProperty("line.separator"));
+            bw.write("[ALIGN2]" + mapExistingGenres.get("ALIGN2"));bw.write(System.getProperty("line.separator"));
             bw.write(System.getProperty("line.separator"));
         }
         bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
@@ -61,11 +67,17 @@ public class EditGenreFile {
         bw.write("[SOUND]" + map.get("SOUND"));bw.write(System.getProperty("line.separator"));
         bw.write("[CONTROL]" + map.get("CONTROL"));bw.write(System.getProperty("line.separator"));
         bw.write("[GENRE COMB]" + map.get("GENRE COMB"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DESIGN1]" + map.get("DESIGN1"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DESIGN2]" + map.get("DESIGN2"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DESIGN3]" + map.get("DESIGN3"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DESIGN4]" + map.get("DESIGN4"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DESIGN5]" + map.get("DESIGN5"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS0]" + map.get("FOCUS0"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS1]" + map.get("FOCUS1"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS2]" + map.get("FOCUS2"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS3]" + map.get("FOCUS3"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS4]" + map.get("FOCUS4"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS5]" + map.get("FOCUS5"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS6]" + map.get("FOCUS6"));bw.write(System.getProperty("line.separator"));
+        bw.write("[FOCUS7]" + map.get("FOCUS7"));bw.write(System.getProperty("line.separator"));
+        bw.write("[ALIGN0]" + map.get("ALIGN0"));bw.write(System.getProperty("line.separator"));
+        bw.write("[ALIGN1]" + map.get("ALIGN1"));bw.write(System.getProperty("line.separator"));
+        bw.write("[ALIGN2]" + map.get("ALIGN2"));bw.write(System.getProperty("line.separator"));
         bw.write(System.getProperty("line.separator"));
         bw.write("[EOF]");
         bw.close();
@@ -106,11 +118,17 @@ public class EditGenreFile {
                 bw.write("[SOUND]" + mapExistingGenres.get("SOUND"));bw.write(System.getProperty("line.separator"));
                 bw.write("[CONTROL]" + mapExistingGenres.get("CONTROL"));bw.write(System.getProperty("line.separator"));
                 bw.write("[GENRE COMB]" + mapExistingGenres.get("GENRE COMB"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DESIGN1]" + mapExistingGenres.get("DESIGN1"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DESIGN2]" + mapExistingGenres.get("DESIGN2"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DESIGN3]" + mapExistingGenres.get("DESIGN3"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DESIGN4]" + mapExistingGenres.get("DESIGN4"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DESIGN5]" + mapExistingGenres.get("DESIGN5"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS0]" + mapExistingGenres.get("FOCUS0"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS1]" + mapExistingGenres.get("FOCUS1"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS2]" + mapExistingGenres.get("FOCUS2"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS3]" + mapExistingGenres.get("FOCUS3"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS4]" + mapExistingGenres.get("FOCUS4"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS5]" + mapExistingGenres.get("FOCUS5"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS6]" + mapExistingGenres.get("FOCUS6"));bw.write(System.getProperty("line.separator"));
+                bw.write("[FOCUS7]" + mapExistingGenres.get("FOCUS7"));bw.write(System.getProperty("line.separator"));
+                bw.write("[ALIGN0]" + mapExistingGenres.get("ALIGN0"));bw.write(System.getProperty("line.separator"));
+                bw.write("[ALIGN1]" + mapExistingGenres.get("ALIGN1"));bw.write(System.getProperty("line.separator"));
+                bw.write("[ALIGN2]" + mapExistingGenres.get("ALIGN2"));bw.write(System.getProperty("line.separator"));
                 bw.write(System.getProperty("line.separator"));
             }
         }
