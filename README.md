@@ -9,7 +9,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
 **WARNING: WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST**
-## Download: [v1.8.3a](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.8.3a/MGT2_Mod_Tool_1.8.3a.zip)
+## Download: [v1.8.3b](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.8.3b/MGT2_Mod_Tool_1.8.3b.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -97,7 +97,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Page [8] Design priority**
     - The values that are set in this window are the optimal **design** priorities for your genre. If you select the values that you have set with this tool in game, you will have the correct genre **design** priorities, and you will not get a penalty for a **design** priority miss match.  
     - **The values that are entered in this step are compared against the values that are entered here:**
-    ![img](https://i.imgur.com/52oEscH.png "Desing priority ingame")
+    ![img](https://i.imgur.com/qzDhXsu.png "Desing priority ingame")
     - If they match your game will get a better rating
 - **Page [9] Work priority**
     - The values that are set in this window are the optimal **work** priorities for your genre. If you select the values that you have set with this tool in game, you will have the correct genre **work** priorities, and you will not get a penalty for a **work** priority miss match.  
