@@ -42,7 +42,9 @@ public class TranslationManager {
             StringBuilder translations = new StringBuilder();
             int translationNumber = 0;
             for(String string : TRANSLATION_NAMES){
-                translations.append("\n").append(string).append(": ").append(arrayListTranslations.get(translationNumber));
+                if(!string.equals("English")){
+                    translations.append("\n").append(string).append(": ").append(arrayListTranslations.get(translationNumber));
+                }
                 translationNumber++;
             }
             JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
