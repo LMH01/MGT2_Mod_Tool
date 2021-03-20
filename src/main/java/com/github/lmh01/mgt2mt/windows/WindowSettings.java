@@ -19,6 +19,7 @@ public class WindowSettings extends JFrame {
     private static boolean unsavedChanges = false;
     private static String customFolderPath = "";
     JComboBox comboBoxMGT2FolderOperation = new JComboBox();
+    JComboBox comboBoxLanguage = new JComboBox();
     JCheckBox checkBoxDisableSafety = new JCheckBox("Disable safety features");
     JCheckBox checkBoxDebugMode = new JCheckBox("Enable debug logging");
 
@@ -36,7 +37,7 @@ public class WindowSettings extends JFrame {
 
     public WindowSettings(){
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setBounds(100, 100, 343, 200);
+        this.setBounds(100, 100, 343, 250);
 
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,13 +68,29 @@ public class WindowSettings extends JFrame {
         });
         contentPane.add(checkBoxDisableSafety);
 
+        JLabel labelLanguage = new JLabel("Language:");
+        labelLanguage.setBounds(20, 128, 127, 14);
+        contentPane.add(labelLanguage);
+
+        comboBoxLanguage.setBounds(117, 125, 100, 23);
+        comboBoxLanguage.setToolTipText("<html>Select what language the ui should use<br>German translations are currently work in progress.<br>You might encounter things that have not been translated yet.");
+        comboBoxLanguage.addActionListener(actionEvent -> {
+            if(!Objects.equals(comboBoxLanguage.getSelectedItem().toString(), Settings.language)){
+                JOptionPane.showMessageDialog(null, "To apply the language please save the settings and restart the program.");
+                unsavedChanges = true;
+            }else{
+                unsavedChanges = false;
+            }
+        });
+        contentPane.add(comboBoxLanguage);
+
         JLabel lblMinecraftLocation = new JLabel("MGT2 Folder:");
-        lblMinecraftLocation.setBounds(20, 103, 127, 14);
+        lblMinecraftLocation.setBounds(20, 153, 127, 14);
         contentPane.add(lblMinecraftLocation);
 
         AtomicBoolean automaticWasLastSelectedOption = new AtomicBoolean(!Settings.enableCustomFolder);
         AtomicBoolean manualWasLastSelectedOption = new AtomicBoolean(Settings.enableCustomFolder);
-        comboBoxMGT2FolderOperation.setBounds(117, 100, 100, 23);
+        comboBoxMGT2FolderOperation.setBounds(117, 150, 100, 23);
         comboBoxMGT2FolderOperation.setToolTipText("<html>[Automatic]: The folder will be selected automatically<br>[Manual]: Use a custom path.");
         comboBoxMGT2FolderOperation.addActionListener(e -> {
             LOGGER.info("comboBoxMGT2FolderOperation action: " + e.getActionCommand());
@@ -124,7 +141,7 @@ public class WindowSettings extends JFrame {
         contentPane.add(comboBoxMGT2FolderOperation);
 
         JButton buttonResetCustomFolder = new JButton("Reset");
-        buttonResetCustomFolder.setBounds(230, 99, 89, 23);
+        buttonResetCustomFolder.setBounds(230, 150, 89, 23);
         buttonResetCustomFolder.setToolTipText("<html>Click to reset the custom folder.<br>This will restore the default folder.");
         buttonResetCustomFolder.addActionListener(actionEvent -> {
             customFolderSetAndValid = false;
@@ -133,13 +150,13 @@ public class WindowSettings extends JFrame {
         contentPane.add(buttonResetCustomFolder);
 
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(10, 132, 69, 23);
+        btnBack.setBounds(10, 182, 69, 23);
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             if(unsavedChanges){
-                String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety);
+                String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage);
                 if(JOptionPane.showConfirmDialog(null, "You have made changes that have not been saved:\n\n" + unsavedChanges + "\nDo you want to save them?", "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);WindowSettings.FRAME.dispose();
+                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage);WindowSettings.FRAME.dispose();
                     Backup.createInitialBackup();
                 }
             }
@@ -150,7 +167,7 @@ public class WindowSettings extends JFrame {
         contentPane.add(btnBack);
 
         JButton btnResetSettings = new JButton("Reset Settings");
-        btnResetSettings.setBounds(90, 132, 127, 23);
+        btnResetSettings.setBounds(90, 182, 127, 23);
         btnResetSettings.setToolTipText("Click to reset the settings to default values.");
         btnResetSettings.addActionListener(actionEvent -> {
             if (JOptionPane.showConfirmDialog(null, "Are you sure?", "Reset Settings", JOptionPane.YES_NO_OPTION) == 0) {
@@ -167,20 +184,15 @@ public class WindowSettings extends JFrame {
         contentPane.add(btnResetSettings);
 
         JButton btnSave = new JButton("Save");
-        btnSave.setBounds(230, 132, 89, 23);
+        btnSave.setBounds(230, 182, 89, 23);
         btnSave.setToolTipText("Click to save the current settings.");
         btnSave.addActionListener(actionEvent -> {
-            unsavedChanges = false;
-            if(checkBoxDisableSafety.isSelected()){
-                String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety);
-                if(JOptionPane.showConfirmDialog(null, "Save the following settings?\n\n" + unsavedChanges, "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);
-                    WindowMain.checkActionAvailability();
-                    Backup.createInitialBackup();
-                }
-            }else{
-                setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety);
+            String unsavedChangesList = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage);
+            if(JOptionPane.showConfirmDialog(null, "Save the following settings?\n\n" + unsavedChangesList, "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage);
+                WindowMain.checkActionAvailability();
                 Backup.createInitialBackup();
+                unsavedChanges = false;
             }
         });
         contentPane.add(btnSave);
@@ -192,6 +204,11 @@ public class WindowSettings extends JFrame {
         }else{
             comboBoxMGT2FolderOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Automatic", "Manual"}));
         }
+        if(Settings.language.equals("English")){
+            comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"English", "Deutsch"}));
+        }else if(Settings.language.equals("Deutsch")){
+            comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
+        }
         checkBoxDebugMode.setSelected(Settings.enableDebugLogging);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
     }
@@ -201,8 +218,8 @@ public class WindowSettings extends JFrame {
      * @param checkBoxDebugMode The debug mode checkbox
      * @param checkBoxDisableSafety The disable safety features checkbox
      */
-    private static void setCurrentSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety){
-        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, customFolderPath, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo);
+    private static void setCurrentSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage){
+        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, customFolderPath, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, comboBoxLanguage.getSelectedItem().toString());
     }
 
     /**
@@ -210,17 +227,20 @@ public class WindowSettings extends JFrame {
      * @param checkBoxDisableSafety The disable safety features checkbox
      * @return Returns the changes that have been made to the settings
      */
-    private static String getChangesInSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety){
-        String unsavedChanges = "";
+    private static String getChangesInSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage){
+        StringBuilder unsavedChanges = new StringBuilder();
         if(Settings.enableDebugLogging != checkBoxDebugMode.isSelected()){
-            unsavedChanges = unsavedChanges + "Enable debug logging: " + Settings.enableDebugLogging + " -> " + checkBoxDebugMode.isSelected() + "\n";
+            unsavedChanges.append("Enable debug logging: ").append(Settings.enableDebugLogging).append(" -> ").append(checkBoxDebugMode.isSelected()).append(System.getProperty("line.separator"));
         }
         if(Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()){
-            unsavedChanges = unsavedChanges + "Disable safety features: " + Settings.disableSafetyFeatures + " -> " + checkBoxDisableSafety.isSelected() + "\n";
+            unsavedChanges.append("Disable safety features: ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));
         }
         if(!Settings.mgt2FilePath.equals(customFolderPath) && !customFolderPath.isEmpty() && !Settings.mgt2FilePath.isEmpty()){
-            unsavedChanges = unsavedChanges + "Mad Games Tycoon folder: " + Settings.mgt2FilePath + " -> " + customFolderPath + "\n";
+            unsavedChanges.append("Mad Games Tycoon folder: ").append(Settings.mgt2FilePath).append(" -> ").append(customFolderPath).append(System.getProperty("line.separator"));
         }
-        return unsavedChanges;
+        if(!Settings.language.equals(comboBoxLanguage.getSelectedItem().toString())){
+            unsavedChanges.append("Language: ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));
+        }
+        return unsavedChanges.toString();
     }
 }

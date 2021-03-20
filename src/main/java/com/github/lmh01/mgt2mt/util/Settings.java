@@ -23,9 +23,10 @@ public class Settings {
     public static boolean enableDisclaimerMessage = true;
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
+    public static String language = "English";
     public static void resetSettings(){
         setMgt2Folder(false);
-        setSettings(false, false, false, false, "", true, true, true);
+        setSettings(false, false, false, false, "", true, true, true, "English");
         LOGGER.info("Settings have been reset.");
     }
 
@@ -36,13 +37,14 @@ public class Settings {
      * @param customFolderPath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo){
+    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language){
         Settings.enableDebugLogging = enableDebugLogging;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
         Settings.enableDisclaimerMessage = showDisclaimerMessage;
         Settings.enableGenreNameTranslationInfo = enableGenreNameTranslationInfo;
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
+        setLanguage(language);
         if(!customFolderPath.isEmpty()){
             Settings.mgt2FilePath = customFolderPath;
         }
@@ -57,7 +59,22 @@ public class Settings {
      * @return Returns true if settings have been imported successfully.
      */
     public static boolean importSettings(){
-        return ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt");
+        boolean importSuccessful = ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt");
+        setLanguage(Settings.language);
+        return importSuccessful;
+    }
+
+    /**
+     * Sets the application language
+     * @param language The language that should be set
+     */
+    public static void setLanguage(String language){
+        if(language.equals("English")){
+            I18n.INSTANCE.setCurrentLocale("en");
+        }else if(language.equals("Deutsch")){
+            I18n.INSTANCE.setCurrentLocale("de");
+        }
+        Settings.language = language;
     }
 
     /**

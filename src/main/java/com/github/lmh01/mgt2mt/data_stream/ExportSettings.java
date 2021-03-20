@@ -35,7 +35,8 @@ public class ExportSettings {
                     Settings.steamLibraryFolder + "\n" +
                     Settings.enableCustomFolder + "\n" +
                     Settings.enableGenreNameTranslationInfo + "\n" +
-                    Settings.enableGenreDescriptionTranslationInfo);
+                    Settings.enableGenreDescriptionTranslationInfo + "\n" +
+                    Settings.language);
             pw.close();
             if(Settings.enableDebugLogging){
                 LOGGER.info(Settings.mgt2FilePath);

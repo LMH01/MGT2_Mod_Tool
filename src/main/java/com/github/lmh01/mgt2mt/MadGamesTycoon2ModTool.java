@@ -16,12 +16,6 @@ public class MadGamesTycoon2ModTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static final String VERSION = "1.8.3b";
     public static void main(String[] args) throws IOException {
-        ToolTipManager.sharedInstance().setDismissDelay(30000);
-        ToolTipManager.sharedInstance().setInitialDelay(500);
-        UpdateChecker.checkForUpdates(false);
-        Locale locale = new Locale("en","US");//Sets the language to english
-        JOptionPane.setDefaultLocale(locale);
-        WindowMain.createFrame();
         if(Settings.importSettings()){
             LOGGER.info("Settings have been imported.");
             if(!DataStreamHelper.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
@@ -31,6 +25,12 @@ public class MadGamesTycoon2ModTool {
             Settings.madGamesTycoonFolderIsCorrect = true;
             //If settings do not exist they will automatically be reset inside ImportSettings.import()
         }
+        ToolTipManager.sharedInstance().setDismissDelay(30000);
+        ToolTipManager.sharedInstance().setInitialDelay(500);
+        UpdateChecker.checkForUpdates(false);
+        Locale locale = new Locale("en","US");//Sets the language to english
+        JOptionPane.setDefaultLocale(locale);
+        WindowMain.createFrame();
         Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
         AnalyzeExistingGenres.analyzeGenreFile();
         WindowMain.checkActionAvailability();

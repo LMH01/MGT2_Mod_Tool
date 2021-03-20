@@ -61,6 +61,8 @@ public class ImportSettings{
                         }else if(currentLine.equals("false")){
                             Settings.enableGenreDescriptionTranslationInfo = false;
                         } break;
+                    case 9:
+                        Settings.language = currentLine;
                 }
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Imported Setting (" + setting + "): " + currentLine);
