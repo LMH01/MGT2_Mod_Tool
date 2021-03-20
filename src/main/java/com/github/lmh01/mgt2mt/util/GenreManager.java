@@ -128,12 +128,19 @@ public class GenreManager {
                 "\n*Compatible themes*\n\n" + getMapEntryToDisplay(map, "THEME COMB", 15) + "\n" +
                 "\n*Good gameplay features*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE GOOD", 10) + "\n" +
                 "\n*Bad gameplay features*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE BAD", 10) + "\n" +
-                "\n*Design priority*\n\n" +
-                "Gameplay/Visuals: " + map.get("DESIGN1") + "\n" +
-                "Story/Game length: " + map.get("DESIGN2") + "\n" +
-                "Atmosphere/Content: " + map.get("DESIGN3") + "\n" +
-                "Game depth/Beginner-friendly: " + map.get("DESIGN4") + "\n" +
-                "Core Gamers/Casual Gamer: " + map.get("DESIGN5") + "\n" +
+                "\n*Design focus*\n\n" +
+                "Game length: " + map.get("FOCUS0") + "\n" +
+                "Game depth: " + map.get("FOCUS1") + "\n" +
+                "Beginner friendliness: " + map.get("FOCUS2") + "\n" +
+                "Innovation: " + map.get("FOCUS3") + "\n" +
+                "Story: " + map.get("FOCUS4") + "\n" +
+                "Character design: " + map.get("FOCUS5") + "\n" +
+                "Level design: " + map.get("FOCUS6") + "\n" +
+                "Mission design: " + map.get("FOCUS7") + "\n" +
+                "\n*Design direction*\n\n" +
+                "Core gamers/Casual gamers: " + map.get("ALIGN0") + "\n" +
+                "Nonviolent/Extreme violence: " + map.get("ALIGN1") + "\n" +
+                "Easy/Hard: " + map.get("ALIGN2") + "\n" +
                 "\n*Work priority*\n\n" +
                 "Gameplay: " + map.get("GAMEPLAY") + "%\n" +
                 "Graphic: " + map.get("GRAPHIC") + "%\n" +
