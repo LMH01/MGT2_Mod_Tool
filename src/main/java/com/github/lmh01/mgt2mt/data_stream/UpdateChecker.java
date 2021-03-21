@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class UpdateChecker {
     public static String newestVersion = "";
     public static String newestVersionKeyFeatures = "";
+    public static boolean updateAvailable = false;
     private static final String RELEASE_UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
     private static final String ALPHA_UPDATE_URL = "https://www.dropbox.com/s/16lk6kyc1wdpw43/mgt2mtNewestAlphaVersion.txt?dl=1";
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
@@ -34,25 +35,31 @@ public class UpdateChecker {
                     String currentLine = scanner.nextLine();
                     newestVersion = currentLine;
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
-                        LOGGER.info("New version found: " + newestVersion);
-                        LOGGER.info("Key features:");
-                        StringBuilder stringBuilder = new StringBuilder();
-                        while(scanner.hasNextLine()){
-                            currentLine = scanner.nextLine();
-                            LOGGER.info(currentLine);
-                            stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
-                        }
-                        newestVersionKeyFeatures = stringBuilder.toString();
+                        if(!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)){
+                            if(!MadGamesTycoon2ModTool.VERSION.contains("dev")){
+                                updateAvailable = true;
+                                LOGGER.info("New version found: " + newestVersion);
+                                LOGGER.info("Key features:");
+                                StringBuilder stringBuilder = new StringBuilder();
+                                while(scanner.hasNextLine()){
+                                    currentLine = scanner.nextLine();
+                                    LOGGER.info(currentLine);
+                                    stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
+                                }
+                                newestVersionKeyFeatures = stringBuilder.toString();
 
-                        if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\nKey features:\n" + newestVersionKeyFeatures + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
-                            try {
-                                Utils.openGithubPage();
-                            } catch (Exception e) {
-                                Utils.showErrorMessage(2, e);
-                                e.printStackTrace();
+                                if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\nKey features:\n" + newestVersionKeyFeatures + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
+                                    try {
+                                        Utils.openGithubPage();
+                                    } catch (Exception e) {
+                                        Utils.showErrorMessage(2, e);
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         }
-                    }else{
+                    }
+                    if(!updateAvailable){
                         LOGGER.info("You are using the newest version");
                         if(showNoUpdateAvailableDialog){
                             JOptionPane.showMessageDialog(null, "You are using the newest version.\nNo update available.", "No update available", JOptionPane.INFORMATION_MESSAGE);
