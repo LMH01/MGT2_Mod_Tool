@@ -20,26 +20,27 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
-    private static final JFrame frame = new JFrame("MGT2 Mod Tool");
-    private static final JMenu M_22_GENRES = new JMenu("Genres");
-    private static final JMenu M_23_THEMES = new JMenu("Themes");
-    private static final JMenu M_24_PUBLISHER = new JMenu("Publisher");
-    private static final JMenu M_26_GAMEPLAY_FEATURES = new JMenu("Gameplay Features");
-    private static final JMenu M_25_ENGINE_FEATURES = new JMenu("Engine Features");
-    private static final JMenuItem M_21_IMPORT = new JMenuItem("Import");
-    private static final JMenuItem M_28_ADD_COMPANY_ICON = new JMenuItem("Add Company Icon");
-    private static final JMenuItem M_223_REMOVE_GENRE = new JMenuItem("Remove Genre");
-    private static final JMenuItem M_311_EXPORT_GENRE = new JMenuItem("Genre");
-    private static final JMenuItem M_313_EXPORT_THEME = new JMenuItem("Theme");
-    private static final JMenuItem M_312_EXPORT_PUBLISHER = new JMenuItem("Publisher");
-    private static final JMenuItem M_314_EXPORT_ENGINE_FEATURE = new JMenuItem("Engine Feature");
-    private static final JMenuItem M_315_EXPORT_GAMEPLAY_FEATURE = new JMenuItem("Gameplay Feature");
-    private static final JMenuItem M_232_REMOVE_THEME = new JMenuItem("Remove Theme");
-    private static final JMenuItem M_27_NPC_GAMES_LIST = new JMenuItem("NPC_Games_list");
-    private static final JMenuItem M_242_REMOVE_PUBLISHER = new JMenuItem("Remove Publisher");
-    private static final JMenuItem M_262_REMOVE_GAMEPLAY_FEATURE = new JMenuItem("Remove Gameplay Feature");
-    private static final JMenuItem M_252_REMOVE_ENGINE_FEATURE = new JMenuItem("Remove Engine Feature");
-    private static final JMenuItem M_316_EXPORT_ALL = new JMenuItem("Export All");
+    private static final JFrame frame = new JFrame(I18n.INSTANCE.get("window.main.tile"));
+    private static final JMenu M_22_GENRES = new JMenu(I18n.INSTANCE.get("window.main.mods.genres"));
+    private static final JMenu M_23_THEMES = new JMenu(I18n.INSTANCE.get("window.main.mods.themes"));
+    private static final JMenu M_24_PUBLISHER = new JMenu(I18n.INSTANCE.get("window.main.mods.publisher"));
+    private static final JMenu M_26_GAMEPLAY_FEATURES = new JMenu(I18n.INSTANCE.get("window.main.mods.gameplayFeatures"));
+    private static final JMenu M_25_ENGINE_FEATURES = new JMenu(I18n.INSTANCE.get("window.main.mods.engineFeatures"));
+    private static final JMenuItem M_21_IMPORT = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import"));
+    private static final JMenuItem M_28_ADD_COMPANY_ICON = new JMenuItem(I18n.INSTANCE.get("window.main.mods.addCompanyIcon"));
+    private static final JMenuItem M_223_REMOVE_GENRE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.removeGenre"));
+    private static final JMenuItem M_311_EXPORT_GENRE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.genre"));
+    private static final JMenuItem M_313_EXPORT_THEME = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.theme"));
+    private static final JMenuItem M_312_EXPORT_PUBLISHER = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.publisher"));
+    private static final JMenuItem M_314_EXPORT_ENGINE_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.engineFeature"));
+    private static final JMenuItem M_315_EXPORT_GAMEPLAY_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.gameplayFeature"));
+    private static final JMenuItem M_232_REMOVE_THEME = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.removeTheme"));
+    private static final JMenuItem M_27_NPC_GAMES_LIST = new JMenuItem(I18n.INSTANCE.get("window.main.mods.npcGamesList"));
+    private static final JMenuItem M_242_REMOVE_PUBLISHER = new JMenuItem(I18n.INSTANCE.get("window.main.mods.publisher.removePublisher"));
+    private static final JMenuItem M_262_REMOVE_GAMEPLAY_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.removeGameplayFeature"));
+    private static final JMenuItem M_252_REMOVE_ENGINE_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.removeEngineFeature"));
+    private static final JMenuItem M_316_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
+    private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,28 +50,28 @@ public class WindowMain {
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu(I18n.INSTANCE.get("file"));
-        JMenuItem m11 = new JMenuItem("Settings");
+        JMenu m1 = new JMenu(I18n.INSTANCE.get("window.main.file"));
+        JMenuItem m11 = new JMenuItem(I18n.INSTANCE.get("window.main.file.settings"));
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
-        JMenuItem m12 = new JMenuItem("Check For Updates");
+        JMenuItem m12 = new JMenuItem(I18n.INSTANCE.get("window.main.file.updateCheck"));
         m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
-        JMenuItem m13 = new JMenuItem("Uninstall");
-        m13.setToolTipText("<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.");
+        JMenuItem m13 = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
+        m13.setToolTipText(I18n.INSTANCE.get("window.main.file.uninstall.toolTip"));
         m13.addActionListener(actionEvent -> Uninstaller.uninstall());
-        JMenuItem m14About = new JMenuItem("About");
+        JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
         m1.add(m13);
         m1.add(m14About);
-        JMenu m2Mods = new JMenu("Mods");
-        JMenuItem m221AddGenre  = new JMenuItem("Add Genre");
-        JMenuItem m222AddRandomGenre  = new JMenuItem("Add Randomized Genre");
-        JMenuItem m231AddTheme  = new JMenuItem("Add Theme");
-        JMenuItem m241AddPublisher  = new JMenuItem("Add Publisher");
-        JMenuItem m251AddEngineFeature  = new JMenuItem("Add Engine Feature");
-        JMenuItem m261AddGameplayFeature  = new JMenuItem("Add Gameplay Feature");
+        JMenu m2Mods = new JMenu(I18n.INSTANCE.get("window.main.mods"));
+        JMenuItem m221AddGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addGenre"));
+        JMenuItem m222AddRandomGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre"));
+        JMenuItem m231AddTheme  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.addTheme"));
+        JMenuItem m241AddPublisher  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.publisher.addPublisher"));
+        JMenuItem m251AddEngineFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.addEngineFeature"));
+        JMenuItem m261AddGameplayFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.addGameplayFeature"));
         M_22_GENRES.add(m221AddGenre);
         M_22_GENRES.add(m222AddRandomGenre);
         M_22_GENRES.add(M_223_REMOVE_GENRE);
@@ -99,19 +100,17 @@ public class WindowMain {
 
             }
         });
-        M_21_IMPORT.setToolTipText("<html>Click to select folders where your import files are located.<br>The selected folders and its subfolders are scanned for imports.<br>When the folders are scanned a summary is shown of what can be imported.");
+        M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.toolTip"));
         M_21_IMPORT.addActionListener(actionEvent -> SharingManager.importAll());
         m221AddGenre.addActionListener(actionEvent -> addGenre());
-        m222AddRandomGenre.setToolTipText("<html>Click to add a randomized genre<br>You will just have to enter a name and description<br>Optionally you can also add a icon and screenshots");
+        m222AddRandomGenre.setToolTipText(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre.toolTip"));
         m222AddRandomGenre.addActionListener(actionEvent -> GenreHelper.addRandomizedGenre());
         M_223_REMOVE_GENRE.addActionListener(actionEvent -> OperationHelper.process(EditGenreFile::removeGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "removed", "Remove", false));
         m231AddTheme.addActionListener(actionEvent -> addTheme());
         M_232_REMOVE_THEME.addActionListener(actionEvent ->  OperationHelper.process(EditThemeFiles::removeTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "theme", "removed", "Remove", false));
-        M_27_NPC_GAMES_LIST.setToolTipText("Click to add a genre id to the NPC_Games_list.");
+        M_27_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
         M_27_NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
-        m241AddPublisher.setToolTipText("Click to add a publisher to MGT2");
         m241AddPublisher.addActionListener(actionEvent -> addPublisher());
-        M_242_REMOVE_PUBLISHER.setToolTipText("Click to remove a publisher from MGT2");
         M_242_REMOVE_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(EditPublishersFile::removePublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "removed", "Remove", false));
         m261AddGameplayFeature .addActionListener(actionEvent -> GameplayFeatureHelper.addGameplayFeature());
         M_262_REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(EditGameplayFeaturesFile::removeGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "removed", "Remove", false));
@@ -127,8 +126,8 @@ public class WindowMain {
         m2Mods.add(M_26_GAMEPLAY_FEATURES);
         m2Mods.add(M_27_NPC_GAMES_LIST);
         m2Mods.add(M_28_ADD_COMPANY_ICON);
-        JMenu m3Share = new JMenu(I18n.INSTANCE.get("share"));
-        JMenu m31Export = new JMenu(I18n.INSTANCE.get("export"));
+        JMenu m3Share = new JMenu(I18n.INSTANCE.get("window.main.share"));
+        JMenu m31Export = new JMenu(I18n.INSTANCE.get("window.main.share.export"));
         m31Export.add(M_311_EXPORT_GENRE);
         m31Export.add(M_312_EXPORT_PUBLISHER);
         m31Export.add(M_313_EXPORT_THEME);
@@ -141,88 +140,86 @@ public class WindowMain {
         M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "exported", "Export", true));
         M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
         M_316_EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
-        JMenuItem m35 = new JMenuItem("Open Export Folder");
+        JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> {
             Utils.open(Utils.getMGT2ModToolExportFolder());
         });
-        JMenuItem m36 = new JMenuItem("Delete all exports");
+        JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
         m36.addActionListener(actionEvent -> deleteAllExports());
         m3Share.add(m31Export);
         m3Share.add(m35);
         m3Share.add(m36);
         mb.add(m3Share);
-        JMenu m4 = new JMenu("Backup");
-        JMenu m41 = new JMenu("Create Backup");
-        JMenu m42 = new JMenu("Restore Backup");
-        JMenuItem m411CreateFullBackup = new JMenuItem("Create Full Backup");
-        m411CreateFullBackup.setToolTipText("Click to create a backup from the files that could be modified with this tool.");
+        JMenu m4 = new JMenu(I18n.INSTANCE.get("window.main.backup"));
+        JMenu m41 = new JMenu(I18n.INSTANCE.get("window.main.backup.createBackup"));
+        JMenu m42 = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
+        JMenuItem m411CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
+        m411CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
         m411CreateFullBackup.addActionListener(actionEvent -> Backup.createBackup("full"));
-        JMenuItem m412BackupGenresFile = new JMenuItem("Backup Genres File");
+        JMenuItem m412BackupGenresFile = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createGenreBackup"));
         m412BackupGenresFile.addActionListener(actionEvent -> Backup.createBackup("genre"));
-        JMenuItem m413BackupThemesFiles = new JMenuItem("Backup Theme Files");
+        JMenuItem m413BackupThemesFiles = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createThemeFilesBackup"));
         m413BackupThemesFiles.addActionListener(actionEvent -> Backup.createBackup("theme"));
-        JMenuItem m414BackupSavegames = new JMenuItem("Backup Save Games");
-        m414BackupSavegames.addActionListener(actionEvent -> Backup.createBackup("save_game"));
+        JMenuItem m414BackupSaveGames = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createSaveGameBackup"));
+        m414BackupSaveGames.addActionListener(actionEvent -> Backup.createBackup("save_game"));
         m41.add(m411CreateFullBackup);
         m41.add(m412BackupGenresFile);
         m41.add(m413BackupThemesFiles);
-        m41.add(m414BackupSavegames);
-        JMenuItem m421RestoreInitialBackup = new JMenuItem("Restore Initial Backup");
-        m421RestoreInitialBackup.setToolTipText("<html>Click to restore the initial backup that has been created when the mod tool was started for the first time.<br>Your save game backups will not be restored.");
+        m41.add(m414BackupSaveGames);
+        JMenuItem m421RestoreInitialBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup"));
+        m421RestoreInitialBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup.toolTip"));
         m421RestoreInitialBackup.addActionListener(actionEvent -> restoreInitialBackup());
-        JMenuItem m422RestoreLatestBackup = new JMenuItem("Restore Latest Backup");
-        m422RestoreLatestBackup.setToolTipText("<html>Click to restore the latest backup that has been created.<br>Your save game backups will not be restored.");
+        JMenuItem m422RestoreLatestBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup"));
+        m422RestoreLatestBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup.toolTip"));
         m422RestoreLatestBackup.addActionListener(actionEvent -> restoreLatestBackup());
-        JMenuItem m423RestoreSaveGameBackup = new JMenuItem("Restore Save Game Backup");
-        m423RestoreSaveGameBackup.setToolTipText("Click to select a save game for which the backup should be restored.");
+        JMenuItem m423RestoreSaveGameBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup"));
+        m423RestoreSaveGameBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip"));
         m423RestoreSaveGameBackup.addActionListener(actionEvent -> Backup.restoreSaveGameBackup());
         m42.add(m421RestoreInitialBackup);
         m42.add(m422RestoreLatestBackup);
         m42.add(m423RestoreSaveGameBackup);
-        JMenuItem m44 = new JMenuItem("Delete All Backups");
-        m44.setToolTipText("Click to delete all backups that have been created.");
+        JMenuItem m44 = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
+        m44.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));
         m44.addActionListener(actionEvent -> Backup.deleteAllBackups());
-        JMenuItem m45 = new JMenuItem("Open Backup Folder");
-        m45.setToolTipText("<html>Click to open the backup folder.<br>All backups that have been created are located here.<br>Use this if you do want to restore a backup manually.");
+        JMenuItem m45 = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
+        m45.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
         m45.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
         mb.add(m4);
         m4.add(m41);
         m4.add(m42);
         m4.add(m44);
         m4.add(m45);
-        JMenu m5 = new JMenu("Utilities");
-        JMenu m51ExperimentalFeatures = new JMenu("Experimental Features");
-        m51ExperimentalFeatures.setToolTipText("Contains features that are experimental and might cause problems or bugs");
-        JMenuItem m511ReplacePublishersWithRealPublishers = new JMenuItem("Replace Publishers With Real Publishers");
-        m511ReplacePublishersWithRealPublishers.setToolTipText("Click to replace the original publishers with real publishers");
-        m511ReplacePublishersWithRealPublishers.addActionListener(actionEvent -> PublisherHelper.realPublishers());
-        JMenuItem m52OpengitHubPage = new JMenuItem("Open Github Page");
-        m52OpengitHubPage.addActionListener(actionEvent -> openGithubPage());
-        JMenuItem m53OpenMGT2Folder = new JMenuItem("Open MGT2 Folder");
+        JMenu m5 = new JMenu(I18n.INSTANCE.get("window.main.utilities"));
+        JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
+        m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
+        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> PublisherHelper.realPublishers());
+        JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
+        m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
+        JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
         m53OpenMGT2Folder.addActionListener(actionEvent -> Utils.open(Settings.mgt2FilePath));
-        JMenuItem m54ShowActiveGenres = new JMenuItem("Show Active Genres");
+        JMenuItem m54ShowActiveGenres = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.showActiveGenres"));
         m54ShowActiveGenres.addActionListener(actionEvent -> showActiveGenres());
-        JMenuItem m55ShowActiveThemes = new JMenuItem("Show Active Themes");
+        JMenuItem m55ShowActiveThemes = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.showActiveThemes"));
         m55ShowActiveThemes.addActionListener(actionEvent -> showActiveThemes());
-        JMenuItem m56ShowActiveThemes = new JMenuItem("Open genres.txt file");
-        m56ShowActiveThemes.addActionListener(actionEvent -> Utils.open(Utils.getGenreFile().getPath()));
-        JMenuItem m57OpenGenresById = new JMenuItem("Open Genres By Id");
-        m57OpenGenresById.setToolTipText("<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function");
+        JMenuItem m56OpenGenreFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGenresTXTFile"));
+        m56OpenGenreFile.addActionListener(actionEvent -> Utils.open(Utils.getGenreFile().getPath()));
+        JMenuItem m57OpenGenresById = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGenresById"));
+        m57OpenGenresById.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openGenresById.toolTip"));
         m57OpenGenresById.addActionListener(actionEvent -> Utils.open(AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.getPath()));
-        JMenuItem m58OpenLogFile = new JMenuItem("Open Log File");
-        m58OpenLogFile.setToolTipText("<html>Click to open the change log.<br>Shows all changes that have been made to the game files.");
+        JMenuItem m58OpenLogFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openLogFile"));
+        m58OpenLogFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openLogFile.toolTip"));
         m58OpenLogFile.addActionListener(actionEvent -> Utils.open(ChangeLog.FILE_CHANGES_LOG.getPath()));
-        JMenuItem m59OpenSaveGameFolder = new JMenuItem("Open save game folder");
-        m59OpenSaveGameFolder.setToolTipText("Click to open the folder where the save games are stored");
+        JMenuItem m59OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
+        m59OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
         m59OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
         mb.add(m5);
         m5.add(m51ExperimentalFeatures);
-        m51ExperimentalFeatures.add(m511ReplacePublishersWithRealPublishers);
-        m5.add(m52OpengitHubPage);
+        m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
+        m5.add(m52OpenGitHubPage);
         m5.add(m53OpenMGT2Folder);
         m5.add(m54ShowActiveGenres);
         m5.add(m55ShowActiveThemes);
-        m5.add(m56ShowActiveThemes);
+        m5.add(m56OpenGenreFile);
         m5.add(m57OpenGenresById);
         m5.add(m58OpenLogFile);
         m5.add(m59OpenSaveGameFolder);
@@ -230,7 +227,7 @@ public class WindowMain {
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel labelVersion = new JLabel("v" + MadGamesTycoon2ModTool.VERSION);
-        JButton buttonQuit = new JButton("Quit");
+        JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.quit"));
         buttonQuit.addActionListener(actionEvent -> disposeFrame());
         JLabel labelModCreator = new JLabel("by LMH01");
         // Components Added using Flow Layout
@@ -300,42 +297,47 @@ public class WindowMain {
             M_314_EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
             M_262_REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M_315_EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-            M_316_EXPORT_ALL.setEnabled(!noCustomEngineFeaturesAvailable || !noCustomGameplayFeaturesAvailable || !noCustomGenreAvailable || !noCustomPublishersAvailable || !noCustomThemesAvailable);
             if(noCustomGenreAvailable){
-                M_223_REMOVE_GENRE.setToolTipText("Disabled -> No genre to remove available");
-                M_27_NPC_GAMES_LIST.setToolTipText("Disabled -> Add a genre first");
-                M_311_EXPORT_GENRE.setToolTipText("Disabled -> No genre to export available");
+                M_223_REMOVE_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
+                M_27_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
+                M_311_EXPORT_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
             }else if(noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
-                M_316_EXPORT_ALL.setToolTipText("Disabled -> Mo genre, theme or publisher to export available");
             }else{
                 M_223_REMOVE_GENRE.setToolTipText("");
                 M_27_NPC_GAMES_LIST.setToolTipText("");
                 M_311_EXPORT_GENRE.setToolTipText("");
                 M_316_EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");
             }
+            if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
+                M_316_EXPORT_ALL.setEnabled(false);
+                M_316_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
+            }else{
+                M_316_EXPORT_ALL.setEnabled(true);
+                M_316_EXPORT_ALL.setToolTipText("Click to export all publishers and genres that have been added");
+            }
             if(noCustomThemesAvailable){
-                M_232_REMOVE_THEME.setToolTipText("Disabled -> No theme to remove available");
-                M_313_EXPORT_THEME.setToolTipText("Disabled -> No theme to export available");
+                M_232_REMOVE_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
+                M_313_EXPORT_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
             }else{
                 M_232_REMOVE_THEME.setToolTipText("");
             }
             if(noCustomPublishersAvailable){
-                M_242_REMOVE_PUBLISHER.setToolTipText("Disabled -> Add publisher first");
-                M_312_EXPORT_PUBLISHER.setToolTipText("Disabled -> No publisher to export available");
+                M_242_REMOVE_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
+                M_312_EXPORT_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
             }else{
                 M_242_REMOVE_PUBLISHER.setToolTipText("");
                 M_312_EXPORT_PUBLISHER.setToolTipText("");
             }
             if(noCustomEngineFeaturesAvailable){
-                M_252_REMOVE_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
-                M_314_EXPORT_ENGINE_FEATURE.setToolTipText("Disabled -> Add engine feature first");
+                M_252_REMOVE_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
+                M_314_EXPORT_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
             }else{
                 M_252_REMOVE_ENGINE_FEATURE.setToolTipText("");
                 M_314_EXPORT_ENGINE_FEATURE.setToolTipText("");
             }
             if(noCustomGameplayFeaturesAvailable){
-                M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
-                M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText("Disabled -> Add gameplay feature first");
+                M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
+                M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
             }else{
                 M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
                 M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText("");
@@ -349,14 +351,16 @@ public class WindowMain {
                 M_26_GAMEPLAY_FEATURES.setEnabled(false);
                 M_27_NPC_GAMES_LIST.setEnabled(false);
                 M_28_ADD_COMPANY_ICON.setEnabled(false);
-                M_21_IMPORT.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_22_GENRES.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_23_THEMES.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_24_PUBLISHER.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_25_ENGINE_FEATURES.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_26_GAMEPLAY_FEATURES.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_27_NPC_GAMES_LIST.setToolTipText("Disabled -> Accept that you have read the popup message first!");
-                M_28_ADD_COMPANY_ICON.setToolTipText("Disabled -> Accept that you have read the popup message first!");
+                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(false);
+                M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_22_GENRES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_23_THEMES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_24_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_25_ENGINE_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_26_GAMEPLAY_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_27_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_28_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
             }else{
                 M_21_IMPORT.setEnabled(true);
                 M_22_GENRES.setEnabled(true);
@@ -366,6 +370,7 @@ public class WindowMain {
                 M_26_GAMEPLAY_FEATURES.setEnabled(true);
                 M_27_NPC_GAMES_LIST.setEnabled(true);
                 M_28_ADD_COMPANY_ICON.setEnabled(true);
+                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
                 M_21_IMPORT.setToolTipText("");
                 M_22_GENRES.setToolTipText("");
                 M_23_THEMES.setToolTipText("");
@@ -374,6 +379,7 @@ public class WindowMain {
                 M_26_GAMEPLAY_FEATURES.setToolTipText("");
                 M_27_NPC_GAMES_LIST.setToolTipText("");
                 M_28_ADD_COMPANY_ICON.setToolTipText("");
+                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
             }
         }catch (IOException e){
             LOGGER.info("Error" + e.getMessage());

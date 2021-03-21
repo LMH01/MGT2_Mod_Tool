@@ -26,11 +26,16 @@ public class MadGamesTycoon2ModTool {
             Settings.madGamesTycoonFolderIsCorrect = true;
             //If settings do not exist they will automatically be reset inside ImportSettings.import()
         }
+        if(Settings.language.equals("English")){
+            Locale locale = new Locale("en","US");//Sets the language to english
+            JOptionPane.setDefaultLocale(locale);
+        }else if(Settings.language.equals("Deutsch")){
+            Locale locale = new Locale("de","DE");//Sets the language to english
+            JOptionPane.setDefaultLocale(locale);
+        }
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         UpdateChecker.checkForUpdates(false);
-        Locale locale = new Locale("en","US");//Sets the language to english
-        JOptionPane.setDefaultLocale(locale);
         WindowMain.createFrame();
         Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
         AnalyzeExistingGenres.analyzeGenreFile();

@@ -1,3 +1,86 @@
-share|Share
-export|Export
-file|File
+button.quit|Quit
+
+disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
+
+window.main.tile|MGT2 Mod Tool
+window.main.file|File
+window.main.file.settings|Settings
+window.main.file.updateCheck|Check For Updates
+window.main.file.uninstall|Uninstall
+window.main.file.uninstall.toolTip|<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.
+window.main.file.about|About
+window.main.mods|Mods
+window.main.mods.import|Import
+window.main.mods.import.toolTip|<html>Click to select folders where your import files are located.<br>The selected folders and its subfolders are scanned for imports.<br>When the folders are scanned a summary is shown of what can be imported.
+window.main.mods.genres|Genres
+window.main.mods.genres.addGenre|Add Genre
+window.main.mods.genres.addRandomGenre|Add Randomized Genre
+window.main.mods.genres.addRandomGenre.toolTip|<html>Click to add a randomized genre<br>You will just have to enter a name and description<br>Optionally you can also add a icon and screenshots
+window.main.mods.genres.removeGenre|Remove Genre
+window.main.mods.themes|Themes
+window.main.mods.themes.addTheme|Add Theme
+window.main.mods.themes.removeTheme|Remove Theme
+window.main.mods.publisher|Publisher
+window.main.mods.publisher.addPublisher|Add Publisher
+window.main.mods.publisher.removePublisher|Remove Publisher
+window.main.mods.engineFeatures|Engine Features
+window.main.mods.engineFeatures.addEngineFeature|Add Engine Feature
+window.main.mods.engineFeatures.removeEngineFeature|Remove Engine Feature
+window.main.mods.gameplayFeatures|Gameplay Features
+window.main.mods.gameplayFeatures.addGameplayFeature|Add Gameplay Feature
+window.main.mods.gameplayFeatures.removeGameplayFeature|Remove Gameplay Feature
+window.main.mods.npcGamesList|NPC_Games_List
+window.main.mods.npcGamesList.toolTip|Click to add a genre id to the NPC_Games_list.
+window.main.mods.addCompanyIcon|Add Company Icon
+window.main.share|Share
+window.main.share.export|Export
+window.main.share.export.genre|Genre
+window.main.share.export.publisher|Publisher
+window.main.share.export.theme|Theme
+window.main.share.export.engineFeature|Engine Feature
+window.main.share.export.gameplayFeature|Gameplay Feature
+window.main.share.export.exportAll|Export All
+window.main.share.export.exportAll.toolTip|Click to export all publishers and genres that have been added
+window.main.share.openExportFolder|Open Export Folder
+window.main.share.deleteAllExport|Delete All Exports
+window.main.backup|Backup
+window.main.backup.createBackup|Create Backup
+window.main.backup.createBackup.createFullBackup|Create Full Backup
+window.main.backup.createBackup.createFullBackup.toolTip|Click to create a backup from the files that could be modified with this tool.
+window.main.backup.createBackup.createGenreBackup|Backup Genre File
+window.main.backup.createBackup.createThemeFilesBackup|Backup Theme Files
+window.main.backup.createBackup.createSaveGameBackup|Backup Save Games
+window.main.backup.restoreBackup|Restore Backup
+window.main.backup.restoreBackup.restoreInitialBackup|Restore Initial Backup
+window.main.backup.restoreBackup.restoreInitialBackup.toolTip|<html>Click to restore the initial backup that has been created when the mod tool was started for the first time.<br>Your save game backups will not be restored.
+window.main.backup.restoreBackup.restoreLatestBackup|Restore Latest Backup
+window.main.backup.restoreBackup.restoreLatestBackup.toolTip|<html>Click to restore the latest backup that has been created.<br>Your save game backups will not be restored.
+window.main.backup.restoreBackup.restoreSaveGameBackup|Restore Save Game Backup
+window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip|Click to select a save game for which the backup should be restored.
+window.main.backup.deleteAllBackups|Delete All Backups
+window.main.backup.deleteAllBackups.toolTip|Click to delete all backups that have been created.
+window.main.backup.openBackupFolder|Open Backup Folder
+window.main.backup.openBackupFolder.toolTip|<html>Click to open the backup folder.<br>All backups that have been created are located here.<br>Use this if you do want to restore a backup manually.
+window.main.utilities|Utilities
+window.main.utilities.experimentalFeatures|Experimental Features
+window.main.utilities.experimentalFeatures.toolTip|Contains features that are experimental and might cause problems or bugs
+window.main.utilities.experimentalFeatures.replacePublisher|Replace Publishers With Real Publishers
+window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Click to replace the original publishers with real publishers
+window.main.utilities.openGithubPage|Open Github Page
+window.main.utilities.openMGT2Folder|Open MGT2 Folder
+window.main.utilities.showActiveGenres|Show Active Genres
+window.main.utilities.showActiveThemes|Show Active Themes
+window.main.utilities.openGenresTXTFile|Open genres.txt File
+window.main.utilities.openGenresById|Open Genres By Id
+window.main.utilities.openGenresById.toolTip|<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function
+window.main.utilities.openLogFile|Open Log File
+window.main.utilities.openLogFile.toolTip|<html>Click to open the change log.<br>Shows all changes that have been made to the game files.
+window.main.utilities.openSaveGameFolder|Open Save Game Folder
+window.main.utilities.openSaveGameFolder.toolTip|Click to open the folder where the save games are stored
+window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!
+window.main.actionAvailability.noThemeAvailable|Disabled -> No theme available
+window.main.actionAvailability.noPublisherAvailable|Disabled -> No publisher available
+window.main.actionAvailability.noEngineFeatureAvailable|Disabled -> No engine feature available
+window.main.actionAvailability.noGameplayFeatureAvailable|Disabled -> No gameplay feature available
+window.main.actionAvailability.noGenreAvailable|Disabled -> No genre available
+window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available

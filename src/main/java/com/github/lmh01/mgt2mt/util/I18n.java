@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,11 +37,12 @@ public class I18n {
      * @throws IOException if an error occurred reading the stream
      */
     public void parseLocale(String language, InputStream in) throws IOException {
-        BufferedReader read = new BufferedReader(new InputStreamReader(in));
+        BufferedReader read = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
         Map<String, String> map = new HashMap<>();
         String line;
         while ((line = read.readLine()) != null) {
             line = line.trim();
+            //line = line.replaceAll("ü", "\u00fc");
             if (line.isEmpty())
                 continue;
             String[] parts = line.split("\\|", 2);
