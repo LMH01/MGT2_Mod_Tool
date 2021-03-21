@@ -9,7 +9,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
 **WARNING: WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST**
-## Download: [v1.8.3b](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.8.3b/MGT2_Mod_Tool_1.8.3b.zip)
+## Download: [v1.9.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.9.0/MGT2_Mod_Tool_1.9.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -62,6 +62,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Settings**
     - If you wish to not use the automatically detected MGT2 folder you can select a folder manually.
     - Most spinners are locked and some features do only work on specific conditions to prevent problems. Disable the safety feaatures to circumvent this behaviour. **Do only do so if you know what you are doing! I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!**
+    - It is possible to change the language of the tool. The german translations are currently wip.
 - **The Mad Games Tycoon 2 folder is set automatically**
     - When launching the application all Steam libraries are searched if they contain Mad Games Tycoon 2. If they don't a prompt is shown where the path can be entered.
 - **Miscellaneous**
