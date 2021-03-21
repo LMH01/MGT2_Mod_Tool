@@ -20,7 +20,7 @@ public class WindowSettings extends JFrame {
     private static String customFolderPath = "";
     JComboBox comboBoxMGT2FolderOperation = new JComboBox();
     JComboBox comboBoxLanguage = new JComboBox();
-    JComboBox comboBoxUpdateBranch = new JComboBox();
+    JComboBox comboBoxUpdateChannel = new JComboBox();
     JCheckBox checkBoxDisableSafety = new JCheckBox("Disable safety features");
     JCheckBox checkBoxDebugMode = new JCheckBox("Enable debug logging");
 
@@ -89,16 +89,16 @@ public class WindowSettings extends JFrame {
         labelUpdateBranch.setBounds(20,128, 127, 14);
         contentPane.add(labelUpdateBranch);
 
-        comboBoxUpdateBranch.setBounds(117, 125, 100, 23);
-        comboBoxUpdateBranch.setToolTipText("<html>Select what branch should be searched for updates when the tool searches for updates<br>Beta: Select to receive notifications when a new beta version is available<br>Release: Select this, when you only want to be notified when a new release version is available");
-        comboBoxUpdateBranch.addActionListener(actionEvent -> {
-            if(!Objects.equals(comboBoxUpdateBranch.getSelectedItem().toString(), Settings.updateBranch)){
+        comboBoxUpdateChannel.setBounds(117, 125, 100, 23);
+        comboBoxUpdateChannel.setToolTipText("<html>Select what channel should be searched for updates when the tool searches for updates<br>Beta: Select to receive notifications when a new beta version is available<br>Release: Select this, when you only want to be notified when a new release version is available");
+        comboBoxUpdateChannel.addActionListener(actionEvent -> {
+            if(!Objects.equals(comboBoxUpdateChannel.getSelectedItem().toString(), Settings.updateBranch)){
                 unsavedChanges = true;
             }else{
                 unsavedChanges = false;
             }
         });
-        contentPane.add(comboBoxUpdateBranch);
+        contentPane.add(comboBoxUpdateChannel);
 
         JLabel lblMGT2Location = new JLabel("MGT2 Folder:");
         lblMGT2Location.setBounds(20, 153, 127, 14);
@@ -170,9 +170,9 @@ public class WindowSettings extends JFrame {
         btnBack.setToolTipText("Click to get to the main page.");
         btnBack.addActionListener(actionEvent -> {
             if(unsavedChanges){
-                String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateBranch);
+                String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
                 if(JOptionPane.showConfirmDialog(null, "You have made changes that have not been saved:\n\n" + unsavedChanges + "\nDo you want to save them?", "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateBranch);
+                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
                     WindowSettings.FRAME.dispose();
                     Backup.createInitialBackup();
                 }
@@ -204,9 +204,9 @@ public class WindowSettings extends JFrame {
         btnSave.setBounds(230, 182, 89, 23);
         btnSave.setToolTipText("Click to save the current settings.");
         btnSave.addActionListener(actionEvent -> {
-            String unsavedChangesList = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateBranch);
+            String unsavedChangesList = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
             if(JOptionPane.showConfirmDialog(null, "Save the following settings?\n\n" + unsavedChangesList, "Unsaved changes", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateBranch);
+                setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
                 WindowMain.checkActionAvailability();
                 Backup.createInitialBackup();
                 unsavedChanges = false;
@@ -227,9 +227,9 @@ public class WindowSettings extends JFrame {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
         }
         if(Settings.updateBranch.equals("Release")){
-            comboBoxUpdateBranch.setModel(new DefaultComboBoxModel<>(new String[]{"Release", "Alpha"}));
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Release", "Alpha"}));
         }else{
-            comboBoxUpdateBranch.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
         }
         checkBoxDebugMode.setSelected(Settings.enableDebugLogging);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
@@ -264,7 +264,7 @@ public class WindowSettings extends JFrame {
             unsavedChanges.append("Language: ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
         if(!Settings.updateBranch.equals(comboBoxUpdateBranch.getSelectedItem().toString())){
-            unsavedChanges.append("Update branch: ").append(Settings.updateBranch).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
+            unsavedChanges.append("Update channel: ").append(Settings.updateBranch).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
         return unsavedChanges.toString();
     }
