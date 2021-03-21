@@ -1,4 +1,7 @@
 button.quit|Beenden
+button.back|Zurück
+
+commonBodies.areYouSure|Bist du sicher?
 
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
@@ -8,6 +11,11 @@ publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, das
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
 publisherHelper.replaceWithRealPublishers.success|Alle vorhandenen Publisher wurden mit den echten Publishern ersetzt.
 publisherHelper.replaceWithRealPublishers.somethingWentWrong|<html>Irgendwas ist schief gelaufen:<br><br>Fehler:
+
+settings.settingsSaved|Einstellungen gespeichert!
+settings.mgt2FolderSetAutomatically|<html>Mad Games Tycoon 2 Ordner wurde automatisch gesetzt.<br><br>Ort:<br>
+settings.mgt2FolderSetAutomatically.windowTitle|Ordner automatisch gefunden
+settings.mgt2FolderNotFound|<html>Der Mad Games Tycoon Ordner wurde nicht gefunden.<br><br>Bitte geh in die Einstellungen und setze ihn manuell."
 
 window.main.tile|MGT2 Mod Tool
 window.main.file|Datei
@@ -91,3 +99,41 @@ window.main.actionAvailability.noEngineFeatureAvailable|Deaktiviert -> Kein Engi
 window.main.actionAvailability.noGameplayFeatureAvailable|Deaktiviert -> Kein Gameplay feature verfügbar
 window.main.actionAvailability.noGenreAvailable|Deaktiviert -> Kein Genre verfügbar
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
+
+window.settings.button.back.toolTip|Klicke, um zum Hauptmenü zurück zu kommen
+window.settings.button.resetSettings.label|Einstellungen zurücksetzen
+window.settings.button.resetSettings.toolTip|Klicke, um die Einstellungen zu den Standardwerten zurück zu setzen
+window.settings.button.resetSettings.restored|Einstellungen wurden wiederhergestellt
+window.settings.button.save.label|Speichern
+window.settings.button.save.toolTip|klicke, um die aktuellen Einstellungen zu speichern
+window.settings.button.save.saveSettings|Die folgenden Einstellungen speichern?
+window.settings.button.save.saveSettings.title|Ungespeicherte Änderungen
+window.settings.changesInSettings.debugLogging|Debug-Protokollierung aktivieren:
+window.settings.changesInSettings.disableSafetyFeatures|Sicherheitsfunktionen deaktivieren:
+window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon Ordner:
+window.settings.changesInSettings.language|Sprache:
+window.settings.changesInSettings.updateChannel|Update Kanal:
+window.settings.changesNotSaved.part1|Es wurden Änderungen gemacht, die noch nicht gespeichert wurden:
+window.settings.changesNotSaved.part2|Möchtest du sie speichern?
+window.settings.changesNotSaved.title|Ungespeicherte änderungen
+window.settings.debugMode.checkBoxText|Debug-Protokollierung aktivieren
+window.settings.debugMode.checkBoxToolTip|<html>Aktiviere diese box, um die Debug-Protokollierung zu aktivieren,<br>wenn die .jar Datei über die Konsole geöffnet wird.
+window.settings.language.label|Sprache:
+window.settings.language.comboBox.toolTip|<html>Wähle aus, welche Sprache die Benutzeroberfläche verwenden soll.<br>Deutsche Übersetzungen sind derzeit in Arbeit.<br>Einige Dinge sind Möglicherweise noch nicht übersetzt<br>Außerdem kann es vorkommen, dass Beschriftungen von Knöpfen o.ä. nicht korrekt angezeigt werden.
+window.settings.language.informationMessage|Um die Sprache anzuwenden, speicher bitte die Einstellungen und starte das Programm neu.
+window.settings.language.informationMessageTranslationIncomplete|Hinweis: Die deutschen Übersetzungen sind in Arbeit, einige Dinge sind möglicherweise noch nicht übersetzt.
+window.settings.mgt2location.label|MGT2 Ordner:
+window.settings.mgt2location.toolTip|<html>[Automatic]: Der Ordner wird automatisch erkannt und ausgewählt<br>[Manual]: Benutze einen benutzerdefinierten Ort.
+window.settings.mgt2location.chooseFolder.title|Wähle den "Mad Games Tycoon 2" haupt Ordner:
+window.settings.mgt2location.chooseFolder.folderSet|Ordner eingestellt.
+window.settings.mgt2location.chooseFolder.folderInvalid.title|Ordner nicht geändert
+window.settings.mgt2location.chooseFolder.folderInvalid|<html>Ordner ist ungültig:<br>Ordner enthält nicht Mad Games Tycoon 2.exe<br>Der automatische Ordner wird benutzt.
+window.settings.reset.label|Zurücksetzen
+window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
+window.settings.safetyFeatures.checkBoxText|Sicherheitsfunktionen deaktivieren
+window.settings.safetyFeatures.checkBoxToolTip|<html>Aktiviere dieses Kontrollkästchen, um die automatische Zuweisung von Genre-IDs zu deaktivieren.<br>Wenn diese Option aktiviert ist, haben die meisten Spinner keinen Maximalwert.<br>Aktivieren Sie diese Option nur, wenn Sie Ihr eigenes Genre-ID-System verwenden und die Spinner erforderlicherweise freigeschaltet sein müssen.
+window.settings.safetyFeatures.warning|<html>Bist du sicher, dass du die Sicherheitsfunktionen deaktivieren möchtest?<br>Dies kann zu Problemen führen.<br><br>VERWENDE DIESE FUNKTION AUF EIGENES RISIKO!<br>ICH ÜBERNEHME KEINE VERANTWORTUNG, WENN ETWAS KAPUTT GEHT! <br><br>Sicherheitsfunktionen deaktivieren?
+window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
+window.settings.updateChannel.label|Update Kanal:
+window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
+window.settings.windowTitle|Einstellungen

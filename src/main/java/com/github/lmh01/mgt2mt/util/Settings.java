@@ -52,7 +52,7 @@ public class Settings {
         }
         ExportSettings.export();
         if(showSuccessDialog){
-            JOptionPane.showMessageDialog(new Frame(), "Settings saved.");
+            JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.settingsSaved"));
         }
     }
 
@@ -96,12 +96,12 @@ public class Settings {
                     madGamesTycoonFolderIsCorrect = true;
                     enableCustomFolder = false;
                     if (showMessages) {
-                        JOptionPane.showMessageDialog(new Frame(), "Mad Games Tycoon 2 Folder has been set automatically.\n\nLocation:\n" + mgt2FilePath, "Folder detected automatically", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically") + mgt2FilePath, I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically.windowTitle"), JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
             if(!madGamesTycoonFolderIsCorrect){
-                JOptionPane.showMessageDialog(null, "The Mad Games Tycoon folder could not be detected.\n\nPlease go into the settings, select \"Manual\" as file folder and choose the path to the \"Mad Games Tycoon 2.exe\" file.");
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
             }
         } catch (IOException e) {
             e.printStackTrace();
