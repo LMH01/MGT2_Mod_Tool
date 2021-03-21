@@ -22,6 +22,7 @@ public class UpdateChecker {
             public void run(){
                 try {
                     LOGGER.info("Checking for updates...");
+                    updateAvailable = false;
                     java.net.URL url;
                     String versionType;
                     if(Settings.updateBranch.equals("Release")){

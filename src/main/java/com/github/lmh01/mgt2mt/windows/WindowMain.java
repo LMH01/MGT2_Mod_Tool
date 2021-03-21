@@ -57,10 +57,13 @@ public class WindowMain {
         JMenuItem m13 = new JMenuItem("Uninstall");
         m13.setToolTipText("<html>Includes options with which all mod manager files<br> can be removed and all changes to the game files can be reverted.");
         m13.addActionListener(actionEvent -> Uninstaller.uninstall());
+        JMenuItem m14About = new JMenuItem("About");
+        m14About.addActionListener(actionEvent -> About.showAboutPopup());
         mb.add(m1);
         m1.add(m11);
         m1.add(m12);
         m1.add(m13);
+        m1.add(m14About);
         JMenu m2Mods = new JMenu("Mods");
         JMenuItem m221AddGenre  = new JMenuItem("Add Genre");
         JMenuItem m222AddRandomGenre  = new JMenuItem("Add Randomized Genre");
