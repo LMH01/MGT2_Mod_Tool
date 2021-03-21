@@ -1,5 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +14,7 @@ import java.util.Map;
  * Class for localizing strings.
  */
 public class I18n {
+    private static final Logger LOGGER = LoggerFactory.getLogger(I18n.class);
     public static I18n INSTANCE = new I18n();
     static {
         try {
@@ -51,6 +55,7 @@ public class I18n {
      * @param currentLocale the locale to use
      */
     public void setCurrentLocale(String currentLocale) {
+        LOGGER.info("Localisation set: " + currentLocale);
         this.currentLocale = currentLocale;
     }
 
@@ -59,6 +64,7 @@ public class I18n {
      * @param fallbackLocale the locale to use
      */
     public void setFallbackLocale(String fallbackLocale) {
+        LOGGER.info("Fallback localisation set: " + currentLocale);
         this.fallbackLocale = fallbackLocale;
     }
 
@@ -69,9 +75,15 @@ public class I18n {
      */
     public String get(String key) {
         Map<String, String> loc = locale.getOrDefault(currentLocale, locale.get(fallbackLocale));
-        if (loc.containsKey(key))
-            return loc.get(key);
-
-        return locale.get(fallbackLocale).getOrDefault(key, key);
+        if (loc.containsKey(key)){
+            String localisation = loc.get(key);
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Returned localisation: " + key + " | " + localisation);
+            }
+            return localisation;
+        }
+        String fallbackLocalisation = locale.get(fallbackLocale).getOrDefault(key, key);
+        LOGGER.info("Localisation for key [" + key + "] not found. Returning fallback local: " + fallbackLocalisation);
+        return fallbackLocalisation;
     }
 }

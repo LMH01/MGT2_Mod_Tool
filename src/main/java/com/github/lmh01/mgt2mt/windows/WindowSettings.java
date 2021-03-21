@@ -77,7 +77,11 @@ public class WindowSettings extends JFrame {
         comboBoxLanguage.setToolTipText("<html>Select what language the ui should use<br>German translations are currently work in progress.<br>You might encounter things that have not been translated yet.");
         comboBoxLanguage.addActionListener(actionEvent -> {
             if(!Objects.equals(comboBoxLanguage.getSelectedItem().toString(), Settings.language)){
-                JOptionPane.showMessageDialog(null, "To apply the language please save the settings and restart the program.");
+                if(Objects.equals(comboBoxLanguage.getSelectedItem().toString(), "Deutsch")){
+                    JOptionPane.showMessageDialog(null, "To apply the language please save the settings and restart the program.\nNote: The german translations are work in progress, some things might not be translated yet.");
+                }else{
+                    JOptionPane.showMessageDialog(null, "To apply the language please save the settings and restart the program.");
+                }
                 unsavedChanges = true;
             }else{
                 unsavedChanges = false;
