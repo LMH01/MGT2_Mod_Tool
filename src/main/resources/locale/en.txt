@@ -2,6 +2,13 @@ button.quit|Quit
 
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
+frame.title.error|Error
+
+publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
+publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?
+publisherHelper.replaceWithRealPublishers.success|<html>All existing publishers have been replaced<br>with the real live equivalent.
+publisherHelper.replaceWithRealPublishers.somethingWentWrong|<html>Something went wrong:<br><br>Exception:
+
 window.main.tile|MGT2 Mod Tool
 window.main.file|File
 window.main.file.settings|Settings

@@ -19,13 +19,13 @@ public class PublisherHelper {
      * Asks the user if he is sure that the existing publishers should be replaced with the real publisher equivalents
      */
     public static void realPublishers(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to replace the\nexisting publishers with the real life equivalents?\n\nThe real publishers will have to be downloaded\nfirst so a internet connection is required.\n\nWhen continuing the publisher file is reorganized.\nLoading an existing save game or reverting the changes\nmight result in problems when loading save games.\n\nNote:\nThe company logos have been taken from the\nReal Publisher Names & Icons v0.2 guide from Steam.\n\nClick okay to continue.", "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             try{
                 File publisherZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher.zip");
                 File publisherUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher");
                 boolean downloadFiles = true;
                 if(publisherUnzipped.exists()){
-                    if(JOptionPane.showConfirmDialog(null, "The real publisher download files already exist.\n\nDo you want to download the files again?\n", "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists"), "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                         downloadFiles = false;
                     }else{
                         DataStreamHelper.deleteDirectory(publisherZip);
@@ -48,10 +48,10 @@ public class PublisherHelper {
                 if(AnalyzeExistingPublishers.getActivePublisherIds().contains(-1)){
                     EditPublishersFile.removePublisher("Dummy");
                 }
-                JOptionPane.showMessageDialog(null, "All existing publishers have been replaced\nwith the real live equivalent.");
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
             }catch (IOException e){
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Something went wrong:\n\nException:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
