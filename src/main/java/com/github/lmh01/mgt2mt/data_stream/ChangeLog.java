@@ -105,6 +105,8 @@ public class ChangeLog {
             case 32: logToPrint = currentSystemTime + ": Imported engine feature: [" + textBody + "]"; break;
             case 33: logToPrint = currentSystemTime + ": Exported licence feature: [" + textBody + "]"; break;
             case 34: logToPrint = currentSystemTime + ": Imported licence feature: [" + textBody + "]"; break;
+            case 35: logToPrint = currentSystemTime + ": Added licence: [" + textBody + "]"; break;
+            case 36: logToPrint = currentSystemTime + ": Removed licence: [" + textBody + "]"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

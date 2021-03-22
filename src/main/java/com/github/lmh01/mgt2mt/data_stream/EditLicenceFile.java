@@ -53,6 +53,9 @@ public class EditLicenceFile {
         if(addLicence){
             bw.write(System.getProperty("line.separator"));
             bw.write(newLicenceMap.get("NAME") + " " + newLicenceMap.get("TYPE"));
+            ChangeLog.addLogEntry(35, newLicenceMap.get("NAME"));
+        }else{
+            ChangeLog.addLogEntry(36, licenceName);
         }
         bw.close();
         WindowMain.checkActionAvailability();
