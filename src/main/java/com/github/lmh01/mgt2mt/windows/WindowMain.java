@@ -190,7 +190,7 @@ public class WindowMain {
         m44.addActionListener(actionEvent -> Backup.deleteAllBackups());
         JMenuItem m45 = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
         m45.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
-        m45.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+        m45.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
         mb.add(m4);
         m4.add(m41);
         m4.add(m42);
