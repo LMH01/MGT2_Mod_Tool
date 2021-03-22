@@ -134,24 +134,28 @@ public class Backup {
             File filePublisherBackup;
             File fileGameplayFeaturesBackup;
             File fileEngineFeaturesBackup;
+            File fileLicenceBackup;
             if(initialBackup){
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
                 filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Publisher.txt.initialBackup");
                 fileGameplayFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//GameplayFeatures.txt.initialBackup");
                 fileEngineFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//EngineFeatures.txt.initialBackup");
+                fileLicenceBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Licence.txt.initialBackup");
             }else{
                 fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
                 fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
                 filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Publisher.txt");
                 fileGameplayFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//GameplayFeatures.txt");
                 fileEngineFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//EngineFeatures.txt");
+                fileLicenceBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Licence.txt");
             }
             Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileGameplayFeaturesBackup.getPath()), Paths.get(Utils.getGameplayFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(Paths.get(fileEngineFeaturesBackup.getPath()), Paths.get(Utils.getEngineFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileLicenceBackup.getPath()), Paths.get(Utils.getLicenceFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
                 ImageFileHandler.removePublisherIcons();
@@ -282,6 +286,7 @@ public class Backup {
        Backup.createBackup(Utils.getPublisherFile());
        Backup.createBackup(Utils.getGameplayFeaturesFile());
        Backup.createBackup(Utils.getEngineFeaturesFile());
+       Backup.createBackup(Utils.getLicenceFile());
        backupSaveGames(false);
        createThemeFilesBackup(false);
     }
@@ -298,6 +303,7 @@ public class Backup {
             Backup.createBackup(Utils.getPublisherFile(), true);
             Backup.createBackup(Utils.getGameplayFeaturesFile(), true);
             Backup.createBackup(Utils.getEngineFeaturesFile(), true);
+            Backup.createBackup(Utils.getLicenceFile(), true);
             backupSaveGames(true);
             createThemeFilesBackup(true);
             ChangeLog.addLogEntry(6);
