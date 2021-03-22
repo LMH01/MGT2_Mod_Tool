@@ -115,7 +115,7 @@ public class WindowAddGenrePage8 extends JFrame{
         labelDesign9.setBounds(10, 260, 180, 23);
         contentPane.add(labelDesign9);
 
-        JLabel labelDesign10 = new JLabel("Nonviolent/Extreme violence");
+        JLabel labelDesign10 = new JLabel("Nonviolent/Explicit Content");
         labelDesign10.setBounds(10, 285, 180, 23);
         contentPane.add(labelDesign10);
 
@@ -158,7 +158,7 @@ public class WindowAddGenrePage8 extends JFrame{
         spinnerDesign8.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Focus:<br>If mission design is more important for your genre type value bigger 5.<br>If mission design is less important type value smaller 5.");
 
         spinnerDesign9.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Core Gamers are favoured type value smaller 5.<br>If Casual Gamers are favoured type value bigger 5.");
-        spinnerDesign10.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Nonviolence is favoured type value smaller 5.<br>If Extreme Violence is favoured type value bigger 5.");
+        spinnerDesign10.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Nonviolence is favoured type value smaller 5.<br>If Explicit Content is favoured type value bigger 5.");
         spinnerDesign11.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Easy is favoured type value smaller 5.<br>If Hard is favoured type value bigger 5.");
         spinnerDesign1.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("FOCUS0")), 0, 10, 1));
         spinnerDesign2.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("FOCUS1")), 0, 10, 1));
