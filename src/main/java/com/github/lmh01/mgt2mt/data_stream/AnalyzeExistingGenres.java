@@ -70,6 +70,19 @@ public class AnalyzeExistingGenres {
     }
 
     /**
+     * @param genreId The genre id for which the position should be returned
+     * @return Returns the position in the genre list where the input genre id is stored in.
+     */
+    public static int getPositionInGenreListByGenreId(int genreId){
+        for(int i=0; i<genreList.size(); i++){
+            if(genreList.get(i).get("ID").equals(Integer.toString(genreId))){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Writes a help file with genres by id.
      */
     private static void writeHelpFile() throws IOException {
@@ -144,7 +157,12 @@ public class AnalyzeExistingGenres {
      * @throws ArrayIndexOutOfBoundsException Is thrown when the requested genre id does not exist in the map.
      */
     public static String getGenreNameById(int id) throws ArrayIndexOutOfBoundsException{
-        return getGenreNamesInUse().get(id);
+        for(int i=0; i<genreList.size(); i++){
+            if(genreList.get(i).get("ID").equals(Integer.toString(id))){
+                return genreList.get(i).get("NAME EN");
+            }
+        }
+        return "Genre not available";
     }
 
     /**

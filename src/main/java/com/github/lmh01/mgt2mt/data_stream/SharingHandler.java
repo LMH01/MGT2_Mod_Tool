@@ -26,12 +26,13 @@ public class SharingHandler {
      */
     public static boolean exportGenre(String genreName) throws IOException {
         int genreId = AnalyzeExistingGenres.getGenreIdByName(genreName);
+        int positionInGenreList = AnalyzeExistingGenres.getPositionInGenreListByGenreId(genreId);
         final String EXPORTED_GENRE_MAIN_FOLDER_PATH = Settings.MGT2_MOD_MANAGER_PATH + "//Export//Genres//" + genreName;
         final String EXPORTED_GENRE_DATA_FOLDER_PATH = EXPORTED_GENRE_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
         File fileExportedGenreIcon = new File(EXPORTED_GENRE_DATA_FOLDER_PATH + "//icon.png");
-        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + "icon" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN").replaceAll(" ", "") + ".png");
+        File fileGenreIconToExport = new File(Utils.getMGT2GenreIconsPath() + "icon" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("NAME EN").replaceAll(" ", "") + ".png");
         File fileGenreScreenshotsToExport = new File(Utils.getMGT2ScreenshotsPath() + genreId);
         if(!fileExportedGenreIcon.exists()){
             fileDataFolder.mkdirs();
@@ -50,36 +51,36 @@ public class SharingHandler {
         bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
         bw.print("[GENRE START]" + System.getProperty("line.separator"));
         for(String translationKey : TranslationManager.TRANSLATION_KEYS){
-            bw.print("[NAME " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(genreId).get("NAME " + translationKey)  + System.getProperty("line.separator"));
-            bw.print("[DESC " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(genreId).get("DESC " + translationKey)  + System.getProperty("line.separator"));
+            bw.print("[NAME " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("NAME " + translationKey)  + System.getProperty("line.separator"));
+            bw.print("[DESC " + translationKey + "]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("DESC " + translationKey)  + System.getProperty("line.separator"));
         }
-        bw.print("[DATE]" + AnalyzeExistingGenres.genreList.get(genreId).get("DATE") + System.getProperty("line.separator"));
-        bw.print("[RES POINTS]" + AnalyzeExistingGenres.genreList.get(genreId).get("RES POINTS") + System.getProperty("line.separator"));
-        bw.print("[PRICE]" + AnalyzeExistingGenres.genreList.get(genreId).get("PRICE") + System.getProperty("line.separator"));
-        bw.print("[DEV COSTS]" + AnalyzeExistingGenres.genreList.get(genreId).get("DEV COSTS") + System.getProperty("line.separator"));
-        bw.print("[TGROUP]" + AnalyzeExistingGenres.genreList.get(genreId).get("TGROUP") + System.getProperty("line.separator"));
-        bw.print("[GAMEPLAY]" + AnalyzeExistingGenres.genreList.get(genreId).get("GAMEPLAY") + System.getProperty("line.separator"));
-        bw.print("[GRAPHIC]" + AnalyzeExistingGenres.genreList.get(genreId).get("GRAPHIC") + System.getProperty("line.separator"));
-        bw.print("[SOUND]" + AnalyzeExistingGenres.genreList.get(genreId).get("SOUND") + System.getProperty("line.separator"));
-        bw.print("[CONTROL]" + AnalyzeExistingGenres.genreList.get(genreId).get("CONTROL") + System.getProperty("line.separator"));
+        bw.print("[DATE]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("DATE") + System.getProperty("line.separator"));
+        bw.print("[RES POINTS]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("RES POINTS") + System.getProperty("line.separator"));
+        bw.print("[PRICE]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("PRICE") + System.getProperty("line.separator"));
+        bw.print("[DEV COSTS]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("DEV COSTS") + System.getProperty("line.separator"));
+        bw.print("[TGROUP]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("TGROUP") + System.getProperty("line.separator"));
+        bw.print("[GAMEPLAY]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("GAMEPLAY") + System.getProperty("line.separator"));
+        bw.print("[GRAPHIC]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("GRAPHIC") + System.getProperty("line.separator"));
+        bw.print("[SOUND]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("SOUND") + System.getProperty("line.separator"));
+        bw.print("[CONTROL]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("CONTROL") + System.getProperty("line.separator"));
         bw.print("[GENRE COMB]" + getGenreNames(genreId) + System.getProperty("line.separator"));
-        bw.print("[THEME COMB]" + Utils.getCompatibleThemeIdsForGenre(genreId) + System.getProperty("line.separator"));
-        bw.print("[FOCUS0]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS0") + System.getProperty("line.separator"));
-        bw.print("[FOCUS1]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS1") + System.getProperty("line.separator"));
-        bw.print("[FOCUS2]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS2") + System.getProperty("line.separator"));
-        bw.print("[FOCUS3]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS3") + System.getProperty("line.separator"));
-        bw.print("[FOCUS4]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS4") + System.getProperty("line.separator"));
-        bw.print("[FOCUS5]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS5") + System.getProperty("line.separator"));
-        bw.print("[FOCUS6]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS6") + System.getProperty("line.separator"));
-        bw.print("[FOCUS7]" + AnalyzeExistingGenres.genreList.get(genreId).get("FOCUS7") + System.getProperty("line.separator"));
-        bw.print("[ALIGN0]" + AnalyzeExistingGenres.genreList.get(genreId).get("ALIGN0") + System.getProperty("line.separator"));
-        bw.print("[ALIGN1]" + AnalyzeExistingGenres.genreList.get(genreId).get("ALIGN1") + System.getProperty("line.separator"));
-        bw.print("[ALIGN2]" + AnalyzeExistingGenres.genreList.get(genreId).get("ALIGN2") + System.getProperty("line.separator"));
+        bw.print("[THEME COMB]" + Utils.getCompatibleThemeIdsForGenre(positionInGenreList) + System.getProperty("line.separator"));
+        bw.print("[FOCUS0]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS0") + System.getProperty("line.separator"));
+        bw.print("[FOCUS1]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS1") + System.getProperty("line.separator"));
+        bw.print("[FOCUS2]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS2") + System.getProperty("line.separator"));
+        bw.print("[FOCUS3]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS3") + System.getProperty("line.separator"));
+        bw.print("[FOCUS4]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS4") + System.getProperty("line.separator"));
+        bw.print("[FOCUS5]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS5") + System.getProperty("line.separator"));
+        bw.print("[FOCUS6]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS6") + System.getProperty("line.separator"));
+        bw.print("[FOCUS7]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("FOCUS7") + System.getProperty("line.separator"));
+        bw.print("[ALIGN0]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("ALIGN0") + System.getProperty("line.separator"));
+        bw.print("[ALIGN1]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("ALIGN1") + System.getProperty("line.separator"));
+        bw.print("[ALIGN2]" + AnalyzeExistingGenres.genreList.get(positionInGenreList).get("ALIGN2") + System.getProperty("line.separator"));
         bw.print("[GAMEPLAYFEATURE GOOD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, true) + System.getProperty("line.separator"));
         bw.print("[GAMEPLAYFEATURE BAD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, false) + System.getProperty("line.separator"));
         bw.print("[GENRE END]");
         bw.close();
-        ChangeLog.addLogEntry(17, AnalyzeExistingGenres.genreList.get(genreId).get("NAME EN"));
+        ChangeLog.addLogEntry(17, AnalyzeExistingGenres.genreList.get(positionInGenreList).get("NAME EN"));
         return true;
     }
 
@@ -519,7 +520,8 @@ public class SharingHandler {
      * @return Returns a list of genre names
      */
     private static String getGenreNames(int genreId){
-        String genreNumbersRaw = AnalyzeExistingGenres.genreList.get(genreId).get("GENRE COMB");
+        int genrePositionInList = AnalyzeExistingGenres.getPositionInGenreListByGenreId(genreId);
+        String genreNumbersRaw = AnalyzeExistingGenres.genreList.get(genrePositionInList).get("GENRE COMB");
         StringBuilder genreNames = new StringBuilder();
         int charPositon = 0;
         StringBuilder currentNumber = new StringBuilder();
