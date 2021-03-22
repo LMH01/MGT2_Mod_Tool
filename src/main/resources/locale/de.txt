@@ -44,6 +44,9 @@ window.main.mods.engineFeatures.removeEngineFeature|Engine Feature Entfernen
 window.main.mods.gameplayFeatures|Gameplay Features
 window.main.mods.gameplayFeatures.addGameplayFeature|Gameplay Feature Hinzufügen
 window.main.mods.gameplayFeatures.removeGameplayFeature|Gameplay Feature Entfernen
+window.main.mods.licences|Lizenzen
+window.main.mods.licences.addLicence|Lizenz Hinzufügen
+window.main.mods.licences.removeLicence|Lizenz Entfernen
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click, um eine genre id zu der NPC_Games_list hinzuzufügen.
 window.main.mods.addCompanyIcon|Firmenbild Hinzufügen
@@ -98,7 +101,9 @@ window.main.actionAvailability.noPublisherAvailable|Deaktiviert -> Kein Publishe
 window.main.actionAvailability.noEngineFeatureAvailable|Deaktiviert -> Kein Engine feature verfügbar
 window.main.actionAvailability.noGameplayFeatureAvailable|Deaktiviert -> Kein Gameplay feature verfügbar
 window.main.actionAvailability.noGenreAvailable|Deaktiviert -> Kein Genre verfügbar
+window.main.actionAvailability.noLicenceAvailable|Deaktiviert -> Keine Lizent verfügbar
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
+window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
 
 window.settings.button.back.toolTip|Klicke, um zum Hauptmenü zurück zu kommen
 window.settings.button.resetSettings.label|Einstellungen zurücksetzen

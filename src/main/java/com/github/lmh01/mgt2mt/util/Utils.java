@@ -192,7 +192,12 @@ public class Utils {
         return new File(Utils.getMGT2TextFolderPath() + "//" + languageKey + "//Themes_" + languageKey + ".txt");
     }
 
-
+    /**
+     * @return Returns the Licence.txt file
+     */
+    public static File getLicenceFile(){
+        return new File(Utils.getMGT2DataPath() + "//Licence.txt");
+    }
 
     /**
      * Opens a file chooser where a single image file can be selected.

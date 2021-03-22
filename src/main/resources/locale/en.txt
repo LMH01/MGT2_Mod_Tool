@@ -44,6 +44,9 @@ window.main.mods.engineFeatures.removeEngineFeature|Remove Engine Feature
 window.main.mods.gameplayFeatures|Gameplay Features
 window.main.mods.gameplayFeatures.addGameplayFeature|Add Gameplay Feature
 window.main.mods.gameplayFeatures.removeGameplayFeature|Remove Gameplay Feature
+window.main.mods.licences|Licences
+window.main.mods.licences.addLicence|Add Licence
+window.main.mods.licences.removeLicence|Remove Licence
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click to add a genre id to the NPC_Games_list.
 window.main.mods.addCompanyIcon|Add Company Icon
@@ -98,7 +101,9 @@ window.main.actionAvailability.noPublisherAvailable|Disabled -> No publisher ava
 window.main.actionAvailability.noEngineFeatureAvailable|Disabled -> No engine feature available
 window.main.actionAvailability.noGameplayFeatureAvailable|Disabled -> No gameplay feature available
 window.main.actionAvailability.noGenreAvailable|Disabled -> No genre available
+window.main.actionAvailability.noLicenceAvailable|Disabled -> No licence available
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
+window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added
 
 window.settings.button.back.toolTip|Click to get to the main page
 window.settings.button.resetSettings.label|Reset Settings
