@@ -57,6 +57,7 @@ window.main.share.export.publisher|Publisher
 window.main.share.export.theme|Thema
 window.main.share.export.engineFeature|Engine Feature
 window.main.share.export.gameplayFeature|Gameplay Feature
+window.main.share.export.licence|Lizenz
 window.main.share.export.exportAll|Alles Exportieren
 window.main.share.export.exportAll.toolTip|Klicke hier, um alles zu exportieren, was mit diesem Tool erstellt wurde
 window.main.share.openExportFolder|Export Ordner Öffnen

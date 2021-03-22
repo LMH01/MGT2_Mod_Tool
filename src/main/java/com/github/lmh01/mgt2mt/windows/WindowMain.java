@@ -41,7 +41,8 @@ public class WindowMain {
     private static final JMenuItem M_262_REMOVE_GAMEPLAY_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.removeGameplayFeature"));
     private static final JMenuItem M_252_REMOVE_ENGINE_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.removeEngineFeature"));
     private static final JMenuItem M_272_REMOVE_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.removeLicence"));
-    private static final JMenuItem M_316_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
+    private static final JMenuItem M_316_EXPORT_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.licence"));
+    private static final JMenuItem M_317_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
     private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
     public static void createFrame(){
         //Creating the Frame
@@ -141,13 +142,15 @@ public class WindowMain {
         m31Export.add(M_313_EXPORT_THEME);
         m31Export.add(M_314_EXPORT_ENGINE_FEATURE);
         m31Export.add(M_315_EXPORT_GAMEPLAY_FEATURE);
-        m31Export.add(M_316_EXPORT_ALL);
+        m31Export.add(M_316_EXPORT_LICENCE);
+        m31Export.add(M_317_EXPORT_ALL);
         M_311_EXPORT_GENRE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true));
         M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportPublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "exported", "Export", true));
         M_313_EXPORT_THEME.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "themes", "exported", "Export", true));
         M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "exported", "Export", true));
         M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
-        M_316_EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
+        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "exported", "Export", true));
+        M_317_EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> {
             Utils.open(Utils.getMGT2ModToolExportFolder());
@@ -313,6 +316,7 @@ public class WindowMain {
             M_262_REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M_315_EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M_272_REMOVE_LICENCE.setEnabled(!noCustomLicencesAvailable);
+            M_316_EXPORT_LICENCE.setEnabled(!noCustomLicencesAvailable);
             if(noCustomGenreAvailable){
                 M_223_REMOVE_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
                 M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
@@ -322,12 +326,12 @@ public class WindowMain {
                 M_28_NPC_GAMES_LIST.setToolTipText("");
                 M_311_EXPORT_GENRE.setToolTipText("");
             }
-            if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable){
-                M_316_EXPORT_ALL.setEnabled(false);
-                M_316_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
+            if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable &&noCustomLicencesAvailable){
+                M_317_EXPORT_ALL.setEnabled(false);
+                M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
             }else{
-                M_316_EXPORT_ALL.setEnabled(true);
-                M_316_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
+                M_317_EXPORT_ALL.setEnabled(true);
+                M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
             }
             if(noCustomThemesAvailable){
                 M_232_REMOVE_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
@@ -358,8 +362,10 @@ public class WindowMain {
             }
             if(noCustomLicencesAvailable){
                 M_272_REMOVE_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
+                M_316_EXPORT_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
             }else{
                 M_272_REMOVE_LICENCE.setToolTipText("");
+                M_316_EXPORT_LICENCE.setToolTipText("");
             }
             if(Settings.enableDisclaimerMessage){
                 M_21_IMPORT.setEnabled(false);

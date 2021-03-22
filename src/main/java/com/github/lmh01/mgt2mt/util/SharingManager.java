@@ -489,12 +489,14 @@ public class SharingManager {
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+        String[] customLicences = AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet();
         StringBuilder exportList = new StringBuilder();
         exportList.append(getExportListPart(customEngineFeatures, "Engine features"));
         exportList.append(getExportListPart(customGameplayFeatures, "Gameplay features"));
         exportList.append(getExportListPart(customGenres, "Genres"));
         exportList.append(getExportListPart(customPublishers, "Publishers"));
         exportList.append(getExportListPart(customThemes, "Themes"));
+        exportList.append(getExportListPart(customLicences, "Licences"));
         if(JOptionPane.showConfirmDialog(null, "The following entries will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
             StringBuilder failedExports = new StringBuilder();
             try{
@@ -503,7 +505,7 @@ public class SharingManager {
                 failedExports.append(getExportFailed(SharingHandler::exportGenre, customGenres, "Genres"));
                 failedExports.append(getExportFailed(SharingHandler::exportPublisher, customPublishers, "Publishers"));
                 failedExports.append(getExportFailed(SharingHandler::exportTheme, customThemes, "Themes"));
-
+                failedExports.append(getExportFailed(SharingHandler::exportLicence, customLicences, "Licences"));
                 if(failedExports.toString().isEmpty()){
                     if(JOptionPane.showConfirmDialog(null, "All entries have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                         Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));

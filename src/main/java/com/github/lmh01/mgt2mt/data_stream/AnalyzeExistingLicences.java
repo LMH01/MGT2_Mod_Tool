@@ -33,6 +33,21 @@ public class AnalyzeExistingLicences {
         return strings;
     }
 
+    public static String getTypeForLicence(String licenceName){
+        for(int i=1; i<=existingLicences.size(); i++){
+            String currentLicence = existingLicences.get(i);
+            if(currentLicence.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim().equals(licenceName)){
+                if(currentLicence.contains("[MOVIE]")){
+                    return "[MOVIE]";
+                }else if(currentLicence.contains("[BOOK]")){
+                    return "[BOOK]";
+                }else if(currentLicence.contains("[SPORT]")){
+                    return "[SPORT]";
+                }
+            }
+        }
+        return "";
+    }
 
     public static String[] getCustomLicenceNamesByAlphabet(){
         try{

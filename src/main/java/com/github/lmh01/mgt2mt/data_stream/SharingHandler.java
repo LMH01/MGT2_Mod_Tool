@@ -154,6 +154,28 @@ public class SharingHandler {
     }
 
     /**
+     * Exports the specified licence
+     * @param licenceName The licence that should be exported
+     */
+    public static boolean exportLicence(String licenceName) throws IOException {
+        final String EXPORTED_LICENCE_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Licence//" + licenceName;
+        File fileExportMainFolder = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH);
+        File fileExportedLicence = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH + "//licence.txt");
+        fileExportMainFolder.mkdirs();
+        fileExportedLicence.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedLicence), StandardCharsets.UTF_8));
+        bw.write("\ufeff");//Makes the file UTF8-BOM
+        bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION);bw.write(System.getProperty("line.separator"));
+        bw.write("[LICENCE START]");bw.write(System.getProperty("line.separator"));
+        bw.write("[NAME]" + licenceName);bw.write(System.getProperty("line.separator"));
+        bw.write("[TYPE]" + AnalyzeExistingLicences.getTypeForLicence(licenceName));bw.write(System.getProperty("line.separator"));
+        bw.write("[LICENCE END]");
+        bw.close();
+        ChangeLog.addLogEntry(33, licenceName);
+        return true;
+    }
+
+    /**
      * Exports the specified publisher.
      * @param publisherNameEN The publisher name that should be exported.
      * @return Returns true when the publisher has been exported successfully. Returns false when the publisher has already been exported.

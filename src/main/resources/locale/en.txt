@@ -57,6 +57,7 @@ window.main.share.export.publisher|Publisher
 window.main.share.export.theme|Theme
 window.main.share.export.engineFeature|Engine Feature
 window.main.share.export.gameplayFeature|Gameplay Feature
+window.main.share.export.licence|Licence
 window.main.share.export.exportAll|Export All
 window.main.share.export.exportAll.toolTip|Click to export all publishers and genres that have been added
 window.main.share.openExportFolder|Open Export Folder
