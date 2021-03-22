@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,13 +12,13 @@ import java.util.Map;
 
 public class EditLicenceFile {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditLicenceFile.class);
-    public static void addLicence(Map<String, String> map) throws IOException {
-        editLicenceFile(true, null, map);
+    public static boolean addLicence(Map<String, String> map) throws IOException {
+        return editLicenceFile(true, null, map);
     }
-    public static void removeLicence(String licenceName) throws IOException {
-        editLicenceFile(false, licenceName, null);
+    public static boolean removeLicence(String licenceName) throws IOException {
+        return editLicenceFile(false, licenceName, null);
     }
-    private static void editLicenceFile(boolean addLicence, String licenceName, Map<String, String> newLicenceMap) throws IOException {
+    private static boolean editLicenceFile(boolean addLicence, String licenceName, Map<String, String> newLicenceMap) throws IOException {
         File licenceFile = Utils.getLicenceFile();
         if(Settings.disableSafetyFeatures){
             LOGGER.info("Deleting old publisher file.");
@@ -54,5 +55,7 @@ public class EditLicenceFile {
             bw.write(newLicenceMap.get("NAME") + " " + newLicenceMap.get("TYPE"));
         }
         bw.close();
+        WindowMain.checkActionAvailability();
+        return true;
     }
 }

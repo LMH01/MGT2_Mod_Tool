@@ -87,6 +87,7 @@ public class WindowMain {
         M_26_GAMEPLAY_FEATURES.add(m261AddGameplayFeature );
         M_26_GAMEPLAY_FEATURES.add(M_262_REMOVE_GAMEPLAY_FEATURE);
         M_27_LICENCES.add(m271AddLicence);
+        M_27_LICENCES.add(M_272_REMOVE_LICENCE);
         m2Mods.addActionListener(actionEvent -> Disclaimer.showDisclaimer());
         m2Mods.addMenuListener(new MenuListener() {
             @Override
@@ -121,7 +122,7 @@ public class WindowMain {
         m251AddEngineFeature.addActionListener(actionEvent -> EngineFeatureHelper.addEngineFeature());
         M_252_REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(EditEngineFeaturesFile::removeEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "removed", "Remove", false));
         m271AddLicence.addActionListener(actionEvent -> LicenceHelper.addLicence());
-        M_272_REMOVE_LICENCE.addActionListener(actionEvent -> {});
+        M_272_REMOVE_LICENCE.addActionListener(actionEvent -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "removed", "Remove", false));
         M_29_ADD_COMPANY_ICON.addActionListener(actionEvent -> addCompanyIcon());
         mb.add(m2Mods);
         m2Mods.add(M_21_IMPORT);

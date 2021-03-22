@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.EditLicenceFile;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -40,7 +39,7 @@ public class LicenceHelper {
                                 newLicence.put("TYPE", "[SPORT]");
                             }
                             EditLicenceFile.addLicence(newLicence);
-                            JOptionPane.showMessageDialog(null, "Licence [" + textFieldName.getText() + "]has been added successfully!");
+                            JOptionPane.showMessageDialog(null, "Licence [" + textFieldName.getText() + "] has been added successfully!");
                             break;
                         } catch (IOException e) {
                             e.printStackTrace();
