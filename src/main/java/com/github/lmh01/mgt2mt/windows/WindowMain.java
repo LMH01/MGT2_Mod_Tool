@@ -447,6 +447,13 @@ public class WindowMain {
                     arrayListThemeTranslations[0] = TranslationManager.getTranslationsArrayList();
                 }
             });
+            JPanel panelChooseViolenceLevel = new JPanel();
+            JLabel labelViolenceLevel = new JLabel("Choose the violence level:");
+            JComboBox comboBoxViolenceLevel = new JComboBox();
+            comboBoxViolenceLevel.setToolTipText("<html>This declares how much the age rating should be influenced when a game is made with this topic<br>0 - The theme will not influence your age rating<br>1-3 - The higher the number the more the age rating of your game with this topic will be influenced");
+            comboBoxViolenceLevel.setModel(new DefaultComboBoxModel<>(new String[]{"0", "1", "2", "3"}));
+            panelChooseViolenceLevel.add(labelViolenceLevel);
+            panelChooseViolenceLevel.add(comboBoxViolenceLevel);
             JLabel labelExplainList = new JLabel("<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)");
             JList<String> listAvailableThemes = new JList<>(string);
             listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -455,7 +462,7 @@ public class WindowMain {
             JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
             scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
-            Object[] params = {labelEnterThemeName, textFieldThemeName, buttonAddTranslations, labelExplainList, scrollPaneAvailableGenres};
+            Object[] params = {labelEnterThemeName, textFieldThemeName, buttonAddTranslations, panelChooseViolenceLevel, labelExplainList, scrollPaneAvailableGenres};
             ArrayList<String> arrayListCompatibleGenreNames = new ArrayList<>();
             boolean breakLoop = false;
             while(!breakLoop){
@@ -487,7 +494,7 @@ public class WindowMain {
                                     themeTranslations.put("NAME EN", textFieldThemeName.getText());
                                     if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false);
-                                        EditThemeFiles.addTheme(themeTranslations, arrayListCompatibleGenreIds);
+                                        EditThemeFiles.addTheme(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                         breakLoop = true;
                                     }

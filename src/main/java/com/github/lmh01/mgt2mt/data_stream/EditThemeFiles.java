@@ -18,8 +18,8 @@ public class EditThemeFiles {
      * @param map The map containing the theme translations
      * @param arrayListCompatibleGenres The array list containing the compatible genres
      */
-    public static void addTheme(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres) throws IOException {
-        editThemeFiles(map, arrayListCompatibleGenres, true, 0);
+    public static void addTheme(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, int violenceLevel) throws IOException {
+        editThemeFiles(map, arrayListCompatibleGenres, true, 0, violenceLevel);
     }
 
     /**
@@ -27,7 +27,7 @@ public class EditThemeFiles {
      * @param themeNameEn The theme name that should be removed
      */
     public static boolean removeTheme(String themeNameEn) throws IOException {
-        return editThemeFiles(null, null, false, AnalyzeExistingThemes.getPositionOfThemeInFile(themeNameEn));
+        return editThemeFiles(null, null, false, AnalyzeExistingThemes.getPositionOfThemeInFile(themeNameEn), 0);
     }
 
     /**
@@ -36,8 +36,9 @@ public class EditThemeFiles {
      * @param arrayListCompatibleGenres The array list where the compatible genre ids are listed.
      * @param addTheme True when the theme should be added. False when the theme should be removed.
      * @param removeThemePosition The position where the theme is positioned that should be removed.
+     * @param violenceLevel This is the number that will be added to the theme entry in the german file. This declares how much the age rating should be influenced when a game is made with this topic
      */
-    public static boolean editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition) throws IOException {
+    public static boolean editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition, int violenceLevel) throws IOException {
         for(String string : TranslationManager.TRANSLATION_KEYS){
             File themeFile = Utils.getThemeFile(string);
             Map<Integer, String> currentThemeFileContent;
@@ -89,6 +90,9 @@ public class EditThemeFiles {
                         bw.write(map.get("NAME GE"));
                         for(Integer genreId : arrayListCompatibleGenres){
                             genreIdsToPrint.append("<").append(genreId).append(">");
+                        }
+                        if(violenceLevel != 0){
+                            genreIdsToPrint.append("<").append("M").append(violenceLevel).append(">");
                         }
                         bw.write(genreIdsToPrint.toString());
                     }else{

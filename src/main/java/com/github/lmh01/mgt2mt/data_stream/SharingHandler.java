@@ -334,6 +334,7 @@ public class SharingHandler {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedTheme), StandardCharsets.UTF_8));
         bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
         bw.write("[THEME START]" + System.getProperty("line.separator"));
+        bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + System.getProperty("line.separator"));
         TranslationManager.printLanguages(bw, map);
         bw.write("[GENRE COMB]" + getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
         bw.close();
@@ -351,6 +352,7 @@ public class SharingHandler {
         File fileThemeToImport = new File(importFolderPath + "\\theme.txt");
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
+        int violenceRating = 0;
         List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileThemeToImport);
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE COMB")){
@@ -358,10 +360,13 @@ public class SharingHandler {
                 for(String string : compatibleGenreNames){
                     compatibleGenreIds.add(AnalyzeExistingGenres.getGenreIdByName(string));
                 }
+            }else if(entry.getKey().equals("VIOLENCE LEVEL")){
+                violenceRating = Integer.parseInt(entry.getValue());
             }else{
                 map.put(entry.getKey(), entry.getValue());
             }
         }
+
         boolean themeCanBeImported = false;
         for(String string : SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS){
             if(string.equals(map.get("MGT2MT VERSION"))){
@@ -380,13 +385,13 @@ public class SharingHandler {
         try {
             if(showMessages){
                 if(JOptionPane.showConfirmDialog(null, "Add this theme?\n\n" + map.get("NAME EN"), "Add theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    EditThemeFiles.addTheme(map, compatibleGenreIds);
+                    EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
                     ChangeLog.addLogEntry(24, map.get("NAME EN"));
                     JOptionPane.showMessageDialog(null, "Theme " + map.get("NAME EN") + " has been added successfully");
                     WindowMain.checkActionAvailability();
                 }
             }else{
-                EditThemeFiles.addTheme(map, compatibleGenreIds);
+                EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
                 ChangeLog.addLogEntry(24, map.get("NAME EN"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {

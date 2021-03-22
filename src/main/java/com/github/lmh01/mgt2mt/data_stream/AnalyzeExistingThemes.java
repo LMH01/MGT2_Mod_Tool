@@ -190,15 +190,22 @@ public class AnalyzeExistingThemes {
                 }
                 if(currentLineNumber == positionOfThemeInFiles){
                     if(string.equals("GE")){
-                        String nameGe = currentLine.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
-                        if(nameGe.endsWith(" ")){
-                            nameGe = nameGe.substring(0, nameGe.length() - 1);
-                        }
-                        LOGGER.info("[" + nameGe + "]");
+                        String replaceViolenceLevel = currentLine.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "");
+                        String nameGe = replaceViolenceLevel.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
+                        nameGe = nameGe.trim();
                         map.put("NAME " + string, nameGe);
-                        map.put("GENRE COMB",currentLine.replaceAll("[a-z,A-Z]", ""));
+                        if(currentLine.contains("M1")){
+                            map.put("VIOLENCE LEVEL", "1");
+                        }else if(currentLine.contains("M2")){
+                            map.put("VIOLENCE LEVEL", "2");
+                        }else if(currentLine.contains("M3")){
+                            map.put("VIOLENCE LEVEL", "3");
+                        }else{
+                            map.put("VIOLENCE LEVEL", "0");
+                        }
+                        map.put("GENRE COMB", replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim());
                         if(Settings.enableDebugLogging){
-                            LOGGER.info("GENRE COMB: " + currentLine.replaceAll("[a-z,A-Z]", "").replaceAll(" ", ""));
+                            LOGGER.info("GENRE COMB: [" + replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim() + "]");
                         }
                     }else{
                         map.put("NAME " + string, currentLine);
