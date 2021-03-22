@@ -9,7 +9,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
 **WARNING: WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST**
-## Download: [v1.10.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.10.1/MGT2_Mod_Tool_1.10.1.zip)
+## Download: [v1.10.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.10.2/MGT2_Mod_Tool_1.10.2.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -31,6 +31,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - You can add your own themes
     - Existing themes can be removed
     - It is possible to add custom translations for your themes
+    - It is possible to select how strong a topic should influence the age rating
 - **Add and remove publishers/developers**
     - You can add custom publishers, this is useful when you add your own genre because otherwise there would be no publisher for your genre.
     - You can select if the publisher should just be a publisher or if it should be a developer and vice versa.
