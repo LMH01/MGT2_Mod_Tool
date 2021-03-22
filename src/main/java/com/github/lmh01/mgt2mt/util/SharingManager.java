@@ -29,10 +29,11 @@ public class SharingManager {
     //This class contains functions with which it is easy to export/import things
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingManager.class);
     public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION};
-    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};
-    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};
-    public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};
-    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a"};
+    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0"};
+    public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0"};
+    public static final String[] ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0"};
+    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0"};
+    public static final String[] LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS = {MadGamesTycoon2ModTool.VERSION, "1.10.0"};
 
     /**
      * Uses the import function to import the content of the import folder.
@@ -262,11 +263,13 @@ public class SharingManager {
         ArrayList<File> genres = new ArrayList<>();
         ArrayList<File> publishers = new ArrayList<>();
         ArrayList<File> themes = new ArrayList<>();
+        ArrayList<File> licences = new ArrayList<>();
         ArrayList<String> engineFeatureNames = new ArrayList<>();
         ArrayList<String> gameplayFeatureNames = new ArrayList<>();
         ArrayList<String> genreNames = new ArrayList<>();
         ArrayList<String> publisherNames = new ArrayList<>();
         ArrayList<String> themeNames = new ArrayList<>();
+        ArrayList<String> licenceNames = new ArrayList<>();
         AtomicBoolean someThingsNotCompatible = new AtomicBoolean(false);
         AtomicInteger currentZipArchiveNumber = new AtomicInteger();
         if(directories != null){
@@ -291,6 +294,8 @@ public class SharingManager {
                                 addIfCompatible(string, publishers, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("theme.txt")){
                                 addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                            }else if(string.contains("licence.txt")){
+                                addIfCompatible(string, licences, licenceNames, LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, someThingsNotCompatible);
                             }else if(string.endsWith(".zip")){
                                 if(JOptionPane.showConfirmDialog(null, "A .zip archive has been found:\n\n" + string + "\n\nWould you like to extract it and search it for mods?", "Zip archive found", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                     try {
@@ -322,17 +327,20 @@ public class SharingManager {
             JPanel panelGenres = new JPanel();
             JPanel panelPublishers = new JPanel();
             JPanel panelThemes = new JPanel();
+            JPanel panelLicences = new JPanel();
             AtomicReference<ArrayList<Integer>> selectedEntriesEngineFeatures = new AtomicReference<>(new ArrayList<>());
             AtomicReference<ArrayList<Integer>> selectedEntriesGameplayFeatures = new AtomicReference<>(new ArrayList<>());
             AtomicReference<ArrayList<Integer>> selectedEntriesGenres = new AtomicReference<>(new ArrayList<>());
             AtomicReference<ArrayList<Integer>> selectedEntriesPublishers = new AtomicReference<>(new ArrayList<>());
             AtomicReference<ArrayList<Integer>> selectedEntriesThemes = new AtomicReference<>(new ArrayList<>());
+            AtomicReference<ArrayList<Integer>> selectedEntriesLicences = new AtomicReference<>(new ArrayList<>());
             AtomicBoolean disableEngineFeatureImport = new AtomicBoolean(true);
             AtomicBoolean disableGameplayFeatureImport = new AtomicBoolean(true);
             AtomicBoolean disableGenreImport = new AtomicBoolean(true);
             AtomicBoolean disablePublisherImport = new AtomicBoolean(true);
             AtomicBoolean disableThemeImport = new AtomicBoolean(true);
-            if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty()) {
+            AtomicBoolean disableLicenceImport = new AtomicBoolean(true);
+            if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty() || !licences.isEmpty()) {
                 if(!engineFeatures.isEmpty()){
                     setFeatureAvailableGuiComponents("Engine features:",engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
                 }
@@ -348,6 +356,9 @@ public class SharingManager {
                 if(!themes.isEmpty()){
                     setFeatureAvailableGuiComponents("Themes:", themes, panelThemes, selectedEntriesThemes, disableThemeImport);
                 }
+                if(!licences.isEmpty()){
+                    setFeatureAvailableGuiComponents("Licences:", licences, panelLicences, selectedEntriesLicences, disableLicenceImport);
+                }
                 JLabel labelStart = new JLabel("The following objects can be imported:");
                 JLabel labelEnd = new JLabel("<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?");
                 JCheckBox checkBoxDisableImportPopups = new JCheckBox("Disable popups");
@@ -355,7 +366,7 @@ public class SharingManager {
                 JCheckBox checkBoxDisableAlreadyExistPopups = new JCheckBox("Disable already exists popups");
                 checkBoxDisableAlreadyExistPopups.setToolTipText("<html>Check to disable popups that something already exists");
                 checkBoxDisableAlreadyExistPopups.setSelected(true);
-                Object[] params = {labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
+                Object[] params = {labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
 
                 if(JOptionPane.showConfirmDialog(null, params, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                     boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
@@ -379,6 +390,10 @@ public class SharingManager {
                     }
                     if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), "theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing themes");
+                        errorOccurred = true;
+                    }
+                    if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), "licence", (string) -> SharingHandler.importLicence(string, !showMessageDialogs), SharingManager.LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, !showAlreadyExistPopups)){
+                        LOGGER.info("Error occured wile importing licences");
                         errorOccurred = true;
                     }
                     if(errorOccurred){

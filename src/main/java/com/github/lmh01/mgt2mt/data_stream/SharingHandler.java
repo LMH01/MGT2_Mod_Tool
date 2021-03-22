@@ -175,6 +175,36 @@ public class SharingHandler {
         return true;
     }
 
+    public static String importLicence(String importFolderPath, boolean showMessages) throws IOException {
+        AnalyzeExistingLicences.analyze();
+        File fileGenreToImport = new File(importFolderPath + "\\licence.txt");
+        List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileGenreToImport);
+        Map<String, String> map = list.get(0);
+        boolean licenceCanBeImported = false;
+        for(String string : SharingManager.LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS){
+            if(string.equals(map.get("MGT2MT VERSION"))){
+                licenceCanBeImported = true;
+            }
+        }
+        if(!licenceCanBeImported && !Settings.disableSafetyFeatures){
+            return "Licence [" + map.get("NAME") + "] could not be imported:\nThe licence is not with the current mod tool version compatible\nLicence was exported in version: " + map.get("MGT2MT VERSION");
+        }
+        Map<String, String> exportMap = new HashMap<>();
+        exportMap.put("NAME", map.get("NAME"));
+        exportMap.put("TYPE", map.get("TYPE"));
+        EditLicenceFile.addLicence(exportMap);
+        if(showMessages){
+            if(JOptionPane.showConfirmDialog(null, "Add this licence:\nName: " + exportMap.get("NAME") + "\nType: " + exportMap.get("TYPE"), "Add licence?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                ChangeLog.addLogEntry(22, map.get("NAME EN"));
+                JOptionPane.showMessageDialog(null, "Licence " + map.get("NAME") + " has been added successfully");
+                WindowMain.checkActionAvailability();
+            }
+        }else{
+            ChangeLog.addLogEntry(34, map.get("NAME"));
+            WindowMain.checkActionAvailability();
+        }
+        return "true";
+    }
     /**
      * Exports the specified publisher.
      * @param publisherNameEN The publisher name that should be exported.

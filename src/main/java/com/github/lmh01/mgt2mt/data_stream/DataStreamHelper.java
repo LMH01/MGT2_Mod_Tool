@@ -32,6 +32,9 @@ public class DataStreamHelper {
             if(entry.getValue().toString().contains("NAME EN")){
                 return entry.getValue().toString().replace("[NAME EN]", "");
             }
+            if(entry.getValue().toString().contains("NAME")){
+                return entry.getValue().toString().replace("[NAME]", "");
+            }
         }
         return "-1";
     }
