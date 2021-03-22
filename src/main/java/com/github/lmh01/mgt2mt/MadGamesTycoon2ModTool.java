@@ -14,8 +14,8 @@ import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
-    public static final String VERSION = "1.10.0-dev";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
-    public static final String CURRENT_RELEASE_VERSION = "1.9.0";//When this version number has been detected as the newest release version the update available message is held back
+    public static final String VERSION = "1.10.0";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
+    public static final String CURRENT_RELEASE_VERSION = "1.10.0";//When this version number has been detected as the newest release version the update available message is held back
     public static void main(String[] args) throws IOException {
         if(Settings.importSettings()){
             LOGGER.info("Settings have been imported.");

@@ -9,7 +9,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
 **WARNING: WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST**
-## Download: [v1.9.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.9.0/MGT2_Mod_Tool_1.9.0.zip)
+## Download: [v1.10.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.10.0/MGT2_Mod_Tool_1.10.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -37,6 +37,8 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - In the **Utilities** menu under **Experimental Features** you can switch all preexisting publisher and developer names to the real life equivalents.
 - **Add and remove engine/gameplay features**
     - You can add custom engine/gameplay features, however you should be careful what values you enter because it could happen that you break the balance of the game.
+- **Add and remove licences**
+    - You can add custom licences for books, movies and sport events
 - **Share your modifications**
     - It is supported to export genres, publishers/developer, themes, engine features and gameplay features, to be loaded later. Here is how it works:
         - First you will need to export the selected genre/publisher. For that you have to go into the **share** menu, there you have to click **export genre/publisher** or **export all**. Select the genre/publisher that you would like to export now from the list and click ok. The needed files are now copied into a folder, open this folder by clicking yes on the next step. To share the genre/publisher you simply have to copy that folder and give it to your friend. 
