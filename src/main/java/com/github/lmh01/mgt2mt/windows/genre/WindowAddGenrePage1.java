@@ -93,7 +93,7 @@ public class WindowAddGenrePage1 extends JFrame{
     }
 
     private void setGuiComponents(){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setTitle("[Page 1] Name and Description");
 

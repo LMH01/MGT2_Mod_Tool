@@ -67,7 +67,7 @@ public class WindowAddGenrePage7 extends JFrame{
         });
     }
     private void setGuiComponents(){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 665, 260);
         setResizable(false);
         setTitle("[Page 7] Gameplay Features");
