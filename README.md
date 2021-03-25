@@ -9,7 +9,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
 **WARNING: WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST**
-## Download: [v1.10.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.10.2/MGT2_Mod_Tool_1.10.2.zip)
+## Download: [v1.10.3](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.10.3/MGT2_Mod_Tool_1.10.3.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
