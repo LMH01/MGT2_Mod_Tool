@@ -76,7 +76,13 @@ window.main.backup.restoreBackup.restoreLatestBackup|Letztes Backup Wiederherste
 window.main.backup.restoreBackup.restoreLatestBackup.toolTip|<html>Klicke hier, um das zuletzt erstellte Backup wiederherzustellen.<br>Die Spielstand-Backups werden nicht wiederhergestellt.
 window.main.backup.restoreBackup.restoreSaveGameBackup|Spielstand-Backups Wiederherstellen
 window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip|Klicke hier, um einen Spielstand auszuwählen, von welchem das Backup wiederhergestellt werden soll.
-window.main.backup.deleteAllBackups|All Backups Löschen
+window.main.backup.modRestorePoint|Mod-Wiederherstellungspunkt
+window.main.backup.modRestorePoint.createModRestorePoint|Mod-Wiederherstellungspunkt Erstellen
+window.main.backup.modRestorePoint.createModRestorePoint.toolTip|<html> Klicke hier, um einen Mod-Wiederherstellungspunkt zu erstellen<br>Wenn ein Wiederherstellungspunkt gesetzt ist, können alle aktuell installierten Mods<br>später wiederhergestellt werden. Nützlich, wenn das Spiel aktualisiert wurde und die Mods verloren gegangen sind.
+window.main.backup.modRestorePoint.restoreModRestorePoint|Wiederherstellungspunkt Wiederherstellen
+window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip|<html>Klicke hier, um alle derzeit installierten Mods auf dem zuvor festgelegten Wiederherstellungspunkt zu setzen
+window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip|<html>Um den Widerherstellungspunkt wiederhestellen zu können, muss dieser erst erstellt werden!
+window.main.backup.deleteAllBackups|Alle Backups Löschen
 window.main.backup.deleteAllBackups.toolTip|Klicke hier, um alle Backups zu löschen, die von dem Tool erstellt wurden.
 window.main.backup.openBackupFolder|Backup Ordner Öffnen
 window.main.backup.openBackupFolder.toolTip|<html>Clicke hier, um den Backup Ordner zu öffnen.<br>Alle Backups, die von dem Tool erstellt wurden sind hier gespeichert.<br>Nützlich, wenn mein ein Backup manuell wiederherstellen möchte.

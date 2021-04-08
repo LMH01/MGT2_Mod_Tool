@@ -57,6 +57,8 @@ public class Utils {
         return Settings.MGT2_MOD_MANAGER_PATH + "//Export//";
     }
 
+    public static String getMGT2ModToolModRestorePointFolder() {return Settings.MGT2_MOD_MANAGER_PATH + "//Mod_Restore_Point//";}
+
     /**
      * @return Returns the genre file inside the mgt2 folder.
      */

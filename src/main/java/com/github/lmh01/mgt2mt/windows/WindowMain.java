@@ -43,6 +43,7 @@ public class WindowMain {
     private static final JMenuItem M_272_REMOVE_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.removeLicence"));
     private static final JMenuItem M_316_EXPORT_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.licence"));
     private static final JMenuItem M_317_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
+    private static final JMenuItem M_432_RESTORE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint"));
     private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
     public static void createFrame(){
         //Creating the Frame
@@ -164,6 +165,7 @@ public class WindowMain {
         JMenu m4 = new JMenu(I18n.INSTANCE.get("window.main.backup"));
         JMenu m41 = new JMenu(I18n.INSTANCE.get("window.main.backup.createBackup"));
         JMenu m42 = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
+        JMenu m43RestorePoint = new JMenu(I18n.INSTANCE.get("window.main.backup.modRestorePoint"));
         JMenuItem m411CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
         m411CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
         m411CreateFullBackup.addActionListener(actionEvent -> Backup.createBackup("full"));
@@ -189,17 +191,25 @@ public class WindowMain {
         m42.add(m421RestoreInitialBackup);
         m42.add(m422RestoreLatestBackup);
         m42.add(m423RestoreSaveGameBackup);
-        JMenuItem m44 = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
-        m44.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));
-        m44.addActionListener(actionEvent -> Backup.deleteAllBackups());
-        JMenuItem m45 = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
-        m45.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
-        m45.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
+        JMenuItem m431CreateModRestorePoint = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
+        m431CreateModRestorePoint.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
+        m431CreateModRestorePoint.addActionListener(actionEvent -> {});//TODO add action events
+        M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip"));
+        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> {});
+        m43RestorePoint.add(m431CreateModRestorePoint);
+        m43RestorePoint.add(M_432_RESTORE_MOD_RESTORE_POINT);
+        JMenuItem m44DeleteAllBackups = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
+        m44DeleteAllBackups.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));
+        m44DeleteAllBackups.addActionListener(actionEvent -> Backup.deleteAllBackups());
+        JMenuItem m45penBackupFolder = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
+        m45penBackupFolder.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
+        m45penBackupFolder.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
         mb.add(m4);
         m4.add(m41);
         m4.add(m42);
-        m4.add(m44);
-        m4.add(m45);
+        m4.add(m43RestorePoint);
+        m4.add(m44DeleteAllBackups);
+        m4.add(m45penBackupFolder);
         JMenu m5 = new JMenu(I18n.INSTANCE.get("window.main.utilities"));
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
@@ -272,6 +282,7 @@ public class WindowMain {
             boolean noCustomGameplayFeaturesAvailable = true;
             boolean noCustomEngineFeaturesAvailable = true;
             boolean noCustomLicencesAvailable = true;
+            boolean noModRestorePointSet = true;
             if(Settings.disableSafetyFeatures){
                 noCustomGenreAvailable = false;
                 noCustomThemesAvailable = false;
@@ -303,6 +314,9 @@ public class WindowMain {
                 if(mapLicences.size() > 956){
                     noCustomLicencesAvailable = false;
                 }
+                if(new File(Utils.getMGT2ModToolModRestorePointFolder()).exists()){
+                    noModRestorePointSet = false;
+                }
             }
             M_223_REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
             M_232_REMOVE_THEME.setEnabled(!noCustomThemesAvailable);
@@ -317,6 +331,7 @@ public class WindowMain {
             M_315_EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
             M_272_REMOVE_LICENCE.setEnabled(!noCustomLicencesAvailable);
             M_316_EXPORT_LICENCE.setEnabled(!noCustomLicencesAvailable);
+            M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
             if(noCustomGenreAvailable){
                 M_223_REMOVE_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
                 M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
@@ -366,6 +381,11 @@ public class WindowMain {
             }else{
                 M_272_REMOVE_LICENCE.setToolTipText("");
                 M_316_EXPORT_LICENCE.setToolTipText("");
+            }
+            if(noModRestorePointSet){
+                M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip"));
+            }else{
+                M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText("");
             }
             if(Settings.enableDisclaimerMessage){
                 M_21_IMPORT.setEnabled(false);

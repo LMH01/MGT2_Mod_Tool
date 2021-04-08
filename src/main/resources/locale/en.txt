@@ -76,6 +76,12 @@ window.main.backup.restoreBackup.restoreLatestBackup|Restore Latest Backup
 window.main.backup.restoreBackup.restoreLatestBackup.toolTip|<html>Click to restore the latest backup that has been created.<br>Your save game backups will not be restored.
 window.main.backup.restoreBackup.restoreSaveGameBackup|Restore Save Game Backup
 window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip|Click to select a save game for which the backup should be restored.
+window.main.backup.modRestorePoint|Mod Restore Point
+window.main.backup.modRestorePoint.createModRestorePoint|Create Mod Restore Point
+window.main.backup.modRestorePoint.createModRestorePoint.toolTip|<html>Click to create a mod restore point<br>When a restore point is set you will be able to restore all your currently installed mods later.<br>Useful when the game has been updated and the mods are lost.
+window.main.backup.modRestorePoint.restoreModRestorePoint|Restore Mod Restore Point
+window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip|<html>Click to restore all currently installed mods to the restore point that has been set previously
+window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip|<html>To restore the restore point it has to be set first!
 window.main.backup.deleteAllBackups|Delete All Backups
 window.main.backup.deleteAllBackups.toolTip|Click to delete all backups that have been created.
 window.main.backup.openBackupFolder|Open Backup Folder
