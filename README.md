@@ -53,6 +53,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - Backups can be created manually
     - When starting this program for the first time an initial backup is created that can be restored later with the click of one button.
     - Backups of your saved games will be created but not automatically restored. To restore a save game backup go into the **Backup** menu, click **Restore Backup** and then **Restore Save Game Backup**. 
+    - Create a mod restore point: When a restore point is set you will be able to restore all your currently installed mods later.<br>Useful when the game has been updated and the mods are lost.
     - **Even though backups are created I will not take any responsibility if you loose or damage you saved games!**    
 - **Update Checker**
     - When started the tool will look for updates. If an update is available the user will be notified.
