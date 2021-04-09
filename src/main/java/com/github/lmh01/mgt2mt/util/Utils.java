@@ -350,14 +350,18 @@ public class Utils {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if(goodFeature){
             for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
-                if(map.get("GOOD").contains("<" + genreId + ">")){
-                    gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
+                if(map.get("GOOD") != null){
+                    if(map.get("GOOD").contains("<" + genreId + ">")){
+                        gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
+                    }
                 }
             }
         }else{
             for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
-                if(map.get("BAD").contains("<" + genreId + ">")){
-                    gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
+                if(map.get("BAD") != null){
+                    if(map.get("BAD").contains("<" + genreId + ">")){
+                        gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
+                    }
                 }
             }
         }
