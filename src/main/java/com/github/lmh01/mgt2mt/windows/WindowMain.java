@@ -109,7 +109,7 @@ public class WindowMain {
             }
         });
         M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.toolTip"));
-        M_21_IMPORT.addActionListener(actionEvent -> SharingManager.importAll());
+        M_21_IMPORT.addActionListener(actionEvent -> SharingManager.importAll(false));
         m221AddGenre.addActionListener(actionEvent -> addGenre());
         m222AddRandomGenre.setToolTipText(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre.toolTip"));
         m222AddRandomGenre.addActionListener(actionEvent -> GenreHelper.addRandomizedGenre());
@@ -193,9 +193,9 @@ public class WindowMain {
         m42.add(m422RestoreLatestBackup);
         m42.add(m423RestoreSaveGameBackup);
         M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
-        M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.setRestorePoint());//TODO add action events
+        M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.setRestorePoint());
         M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip"));
-        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> {});
+        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.restoreToRestorePoint());
         m43RestorePoint.add(M_431_CREATE_MOD_RESTORE_POINT);
         m43RestorePoint.add(M_432_RESTORE_MOD_RESTORE_POINT);
         JMenuItem m44DeleteAllBackups = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));

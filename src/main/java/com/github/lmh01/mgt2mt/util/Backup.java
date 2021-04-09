@@ -16,7 +16,7 @@ import java.util.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class Backup {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);//TODO Backup dialogs übersetzen
     private static String latestBackupFolderName = "";
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
     public static final File FILE_SAVE_GAME_FOLDER = new File(System.getenv("USERPROFILE") + "\\appdata\\locallow\\Eggcode\\Mad Games Tycoon 2\\");

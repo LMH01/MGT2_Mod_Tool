@@ -8,6 +8,8 @@ dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>Ein Wiederherstellungspunkt wurde bereits erstellt.<br><br>Möchtest du einen neuen Wiederherstellungspunkt erstellen und die alten Dateien in einen Speicherordner verschieben?
 dialog.restorePoint.restorePointDoesAlreadyExist.title|Wiederherstellungspunkt bereits erstellt
 dialog.restorePoint.moveRestorePointFailed|<html>Beim Verschieben der alten Wiederherstellungspunktdateien in den Speicherordner ist ein Problem aufgetreten.<br><br>Der Wiederherstellungspunkt wurde nicht erstellt!
+dialog.restorePoint.restore.mainDialog|<html>Bist du sicher, dass die Mods auf den Wiederherstellungspunkt zurückgesetzt werden sollen?<br><br>Dadurch werden alle derzeit installierten Mods entfernt und durch die Mods ersetzt, die als Wiederherstellungspunkt gesetzt wurden.<br>Beim fortfahren wird ein Dialog angezeigt, in dem du auswählen kannst, welche Mods wiederhergestellt werden sollen.<br>Hinweis: Firmenlogos werden nicht wiederhergestellt.
+dialog.restorePoint.restore.mainDialog.title|Mods wiederherstellen
 
 dialog.export.exportSuccessful|<html>Alle Einträge wurden erfolgreich exportiert!<br><br>Soll der Ordner geöffnet werden, in wlechem sie gespeichert wurden?
 dialog.export.restorePointSuccessful|Der Wiederherstellungspunkt wurde erfolgreich erstellt!

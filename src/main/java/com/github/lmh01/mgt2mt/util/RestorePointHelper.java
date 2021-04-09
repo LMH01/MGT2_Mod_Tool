@@ -42,4 +42,20 @@ public class RestorePointHelper {
             }
         }
     }
+
+    /**
+     * This will remove all currently installed mods and replace them with the mods that have been exported previously as restore point
+     */
+    public static void restoreToRestorePoint(){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog"), I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            StringBuilder failedUninstalls = new StringBuilder();
+            boolean modRemovalFailed = Uninstaller.uninstallAllMods(failedUninstalls);
+            if(modRemovalFailed){
+                LOGGER.info("Something went wrong while uninstalling mods, however this should not impact the uninstall process: " + failedUninstalls.toString());
+            }else{
+                LOGGER.info("All mods have been removed");
+            }
+            SharingManager.importAll(true);
+        }
+    }
 }

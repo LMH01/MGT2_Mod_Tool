@@ -255,9 +255,16 @@ public class SharingManager {
     /**
      * Opens a gui where the user can select folders where import files are located. When all folders and subfolders are scanned a summary is shown of what can be imported.
      * It is then possible to import everything at once.
+     * @param importFromRestorePoint True when this function is called from import point restore. Will change some messages and will set the directory.
      */
-    public static void importAll() {
-        ArrayList<File> directories = getFoldersAsFile();
+    public static void importAll(boolean importFromRestorePoint) {
+        ArrayList<File> directories;
+        if(importFromRestorePoint){
+            directories = new ArrayList<>();
+            directories.add(new File(Utils.getMGT2ModToolModRestorePointFolder()));
+        }else{
+            directories = getFoldersAsFile();
+        }
         ArrayList<File> engineFeatures = new ArrayList<>();
         ArrayList<File> gameplayFeatures = new ArrayList<>();
         ArrayList<File> genres = new ArrayList<>();
@@ -359,15 +366,44 @@ public class SharingManager {
                 if(!licences.isEmpty()){
                     setFeatureAvailableGuiComponents("Licences:", licences, panelLicences, selectedEntriesLicences, disableLicenceImport);
                 }
-                JLabel labelStart = new JLabel("The following objects can be imported:");
-                JLabel labelEnd = new JLabel("<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?");
+                String labelStartText;
+                String labelEndText;
+                String disableImportPopupsText;
+                String importErredMessage;
+                String importErredMessageTitle;
+                String importSuccessfulMessage;
+                String importSuccessfulMessageTitle;
+                if(importFromRestorePoint){
+                    labelStartText = "The following mods can be restored:";
+                    labelEndText = "<html>The numbers indicate how many entries,<br>out of the available entries will be restored.<br><br>Tip:<br>If you wish not to restore everything,<br>click the button(s) to select what entries should be restored.<br><br>Do you want to start the restoration process?";
+                    disableImportPopupsText = "<html>Check to disable confirm messages that something can be restored";
+                    importErredMessage = "Error while restoring:\nSome features might not be properly restored.\nSee console for further information!";
+                    importErredMessageTitle = "Error while restoring";
+                    importSuccessfulMessage = "Restoration complete:\nAll mods have been restored to the restore point.";
+                    importSuccessfulMessageTitle = "Restoration complete";
+                }else{
+                    labelStartText = "The following objects can be imported:";
+                    labelEndText = "<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?";
+                    disableImportPopupsText = "<html>Check to disable confirm messages that something can be imported";
+                    importErredMessage = "Error while importing:\nSome features might not be properly imported.\nSee console for further information!";
+                    importErredMessageTitle = "Error while importing";
+                    importSuccessfulMessage = "Import complete:\nAll features (that did not already exist) have been imported.";
+                    importSuccessfulMessageTitle = "Import complete";
+                }
+                JLabel labelStart = new JLabel(labelStartText);
+                JLabel labelEnd = new JLabel(labelEndText);
                 JCheckBox checkBoxDisableImportPopups = new JCheckBox("Disable popups");
-                checkBoxDisableImportPopups.setToolTipText("<html>Check to disable confirm messages that something can be imported");
+                checkBoxDisableImportPopups.setToolTipText(disableImportPopupsText);
                 JCheckBox checkBoxDisableAlreadyExistPopups = new JCheckBox("Disable already exists popups");
                 checkBoxDisableAlreadyExistPopups.setToolTipText("<html>Check to disable popups that something already exists");
                 checkBoxDisableAlreadyExistPopups.setSelected(true);
-                Object[] params = {labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
-
+                Object[] params;
+                if(importFromRestorePoint){
+                    checkBoxDisableImportPopups.setSelected(true);
+                    params = new Object[]{labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups};
+                }else{
+                    params = new Object[]{labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
+                }
                 if(JOptionPane.showConfirmDialog(null, params, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                     boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                     boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
@@ -397,16 +433,28 @@ public class SharingManager {
                         errorOccurred = true;
                     }
                     if(errorOccurred){
-                        JOptionPane.showMessageDialog(null, "Error while importing:\nSome features might not be properly imported.\nSee console for further information!", "Error while importing", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, importErredMessage, importErredMessageTitle, JOptionPane.ERROR_MESSAGE);
                     }else{
-                        JOptionPane.showMessageDialog(null, "Import complete:\nAll features (that did not already exist) have been imported.", "Import complete", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, importSuccessfulMessage, importSuccessfulMessageTitle, JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }else{
-                if(someThingsNotCompatible.get()){
-                    JOptionPane.showMessageDialog(null, "The folder(s) and it's subfolders do not contain things that could be imported.\nSome mods where found that are not compatible with the current mod tool version", "Unable to import", JOptionPane.INFORMATION_MESSAGE);
+                String noImportAvailableMessage;
+                String noImportAvailableButIncompatibleModsFound;
+                String windowTitle;
+                if(importFromRestorePoint){
+                    noImportAvailableMessage = "<html>Unable to restore to restore point:<br>The restore point files do not exist.";
+                    noImportAvailableButIncompatibleModsFound = "<html>Unable to restore to restore point:<br>The restore point files do not exist and/or are not compatible with the current mod tool version.";
+                    windowTitle = "Unable to restore";
                 }else{
-                    JOptionPane.showMessageDialog(null, "The folder(s) and it's subfolders do not contain things that could be imported.", "Unable to import", JOptionPane.INFORMATION_MESSAGE);
+                    noImportAvailableMessage = "The folder(s) and it's subfolders do not contain things that could be imported.";
+                    noImportAvailableButIncompatibleModsFound = "The folder(s) and it's subfolders do not contain things that could be imported.\nSome mods where found that are not compatible with the current mod tool version";
+                    windowTitle = "Unable to import";
+                }
+                if(someThingsNotCompatible.get()){
+                    JOptionPane.showMessageDialog(null, noImportAvailableButIncompatibleModsFound, windowTitle, JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, noImportAvailableMessage, windowTitle, JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }
@@ -417,7 +465,7 @@ public class SharingManager {
     }
 
     /**
-     * Adds gui components to be displayed in the summary. May only be called by {@link SharingManager#importAll()}
+     * Adds gui components to be displayed in the summary. May only be called by {@link SharingManager#importAll(boolean)}
      * @param labelText The label text
      * @param files The array list containing the feature specific files
      * @param panel The panel where the components should be added

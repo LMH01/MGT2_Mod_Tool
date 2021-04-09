@@ -8,6 +8,8 @@ dialog.restorePoint.createRestorePoint.title|Create restore point?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>A restore point has already been created.<br><br>Would you like to create a new restore point and move the old files into a storage folder?
 dialog.restorePoint.restorePointDoesAlreadyExist.title|Restore point already exists
 dialog.restorePoint.moveRestorePointFailed|<html>There was a problem moving the old restore point files to the storage folder.<br><br>The restore point has not been created!
+dialog.restorePoint.restore.mainDialog|<html>Are you sure that you would like to restore the mods to the latest restore point?<br><br>This will remove all currently installed mods and replace them with the mods that have been set as restore point.<br>When continuing a dialog is shown where you can select what mods should be restored.<br>Note: Company logos will not be restored.
+dialog.restorePoint.restore.mainDialog.title|Restore mods
 
 dialog.export.exportSuccessful|<html>All entries have been exported successfully!<br><br>Do you want to open the folder where they have been saved?
 dialog.export.restorePointSuccessful|The restore point has been created successfully!

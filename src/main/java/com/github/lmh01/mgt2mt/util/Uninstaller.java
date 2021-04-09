@@ -51,31 +51,7 @@ public class Uninstaller {
                         LOGGER.info("Uninstalling...");
                         StringBuilder uninstallFailedExplanation = new StringBuilder();
                         if(checkboxRevertAllMods.isSelected()){
-                            String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                            for (String customGenre : customGenres) {
-                                try {
-                                    EditGenreFile.removeGenre(customGenre);
-                                    LOGGER.info("Game files have been restored to original.");
-                                } catch (IOException e) {
-                                    LOGGER.info("Genre could not be removed: " + e.getMessage());
-                                    uninstallFailedExplanation.append("Genre could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                                    e.printStackTrace();
-                                    uninstallFailed = true;
-                                }
-                            }
-                            String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-                            for (String customPublisher : customPublishers) {
-                                try {
-                                    EditPublishersFile.removePublisher(customPublisher);
-                                    LOGGER.info("Publisher files have been restored to original.");
-                                } catch (IOException e) {
-                                    LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                                    uninstallFailedExplanation.append("Publisher could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                                    e.printStackTrace();
-                                    uninstallFailed = true;
-                                }
-                            }
-                            Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
+                            uninstallFailed = uninstallAllMods(uninstallFailedExplanation);
                         }
                         if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                             File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
@@ -107,5 +83,40 @@ public class Uninstaller {
             }
             break;
         }
+    }
+
+    /**
+     * Removes all currently installed mods
+     * @param uninstallFailedExplanation This string builder contains reasons in case the removal of some mods fails
+     * @return Returns false when the removal of mods was successful
+     */
+    public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation){
+        boolean uninstallFailed = false;
+        String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+        for (String customGenre : customGenres) {
+            try {
+                EditGenreFile.removeGenre(customGenre);
+                LOGGER.info("Game files have been restored to original.");
+            } catch (IOException e) {
+                LOGGER.info("Genre could not be removed: " + e.getMessage());
+                uninstallFailedExplanation.append("Genre could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                e.printStackTrace();
+                uninstallFailed = true;
+            }
+        }
+        String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
+        for (String customPublisher : customPublishers) {
+            try {
+                EditPublishersFile.removePublisher(customPublisher);
+                LOGGER.info("Publisher files have been restored to original.");
+            } catch (IOException e) {
+                LOGGER.info("Publisher could not be removed: " + e.getMessage());
+                uninstallFailedExplanation.append("Publisher could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                e.printStackTrace();
+                uninstallFailed = true;
+            }
+        }
+        Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
+        return uninstallFailed;
     }
 }
