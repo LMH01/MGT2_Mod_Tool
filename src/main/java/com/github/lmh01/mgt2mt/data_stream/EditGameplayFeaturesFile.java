@@ -46,6 +46,12 @@ public class EditGameplayFeaturesFile {
             existingGameplayFeatures.putIfAbsent("BAD", "");
             bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
             bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
+            if(existingGameplayFeatures.get("NO_ARCADE") != null){
+                bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
+            }
+            if(existingGameplayFeatures.get("NO_MOBILE") != null){
+                bw.write("[NO_MOBILE]");bw.write(System.getProperty("line.separator"));
+            }
             bw.write(System.getProperty("line.separator"));
         }
         bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
@@ -62,6 +68,12 @@ public class EditGameplayFeaturesFile {
         bw.write("[TECH]" + map.get("TECH"));bw.write(System.getProperty("line.separator"));
         bw.write("[GOOD]" + map.get("GOOD"));bw.write(System.getProperty("line.separator"));
         bw.write("[BAD]" + map.get("BAD"));bw.write(System.getProperty("line.separator"));
+        if(map.get("NO_ARCADE") != null){
+            bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
+        }
+        if(map.get("NO_MOBILE") != null){
+            bw.write("[NO_MOBILE]");bw.write(System.getProperty("line.separator"));
+        }
         bw.write(System.getProperty("line.separator"));
         bw.write("[EOF]");
         bw.close();
@@ -100,6 +112,12 @@ public class EditGameplayFeaturesFile {
                 existingGameplayFeatures.putIfAbsent("BAD", "");
                 bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
                 bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
+                if(existingGameplayFeatures.get("NO_ARCADE") != null){
+                    bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
+                }
+                if(existingGameplayFeatures.get("NO_MOBILE") != null){
+                    bw.write("[NO_MOBILE]");bw.write(System.getProperty("line.separator"));
+                }
                 bw.write(System.getProperty("line.separator"));
             }
         }

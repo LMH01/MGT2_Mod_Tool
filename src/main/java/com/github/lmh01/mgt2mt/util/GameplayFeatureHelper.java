@@ -40,11 +40,15 @@ public class GameplayFeatureHelper {
             buttonAddNameTranslations.addActionListener(actionEvent -> {
                 if(!nameTranslationsAdded.get()){
                     mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                    nameTranslationsAdded.set(true);
+                    if(mapNameTranslations[0].size() > 0){
+                        nameTranslationsAdded.set(true);
+                    }
                 }else{
                     if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                         mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                        nameTranslationsAdded.set(true);
+                        if(mapNameTranslations[0].size() > 0){
+                            nameTranslationsAdded.set(true);
+                        }
                     }
                 }
             });
@@ -60,11 +64,15 @@ public class GameplayFeatureHelper {
             buttonAddDescriptionTranslations.addActionListener(actionEvent -> {
                 if(!descriptionTranslationsAdded.get()){
                     mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
-                    descriptionTranslationsAdded.set(true);
+                    if(mapDescriptionTranslations[0].size() > 0){
+                        descriptionTranslationsAdded.set(true);
+                    }
                 }else{
                     if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                         mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
-                        descriptionTranslationsAdded.set(true);
+                        if(mapDescriptionTranslations[0].size() > 0){
+                            descriptionTranslationsAdded.set(true);
+                        }
                     }
                 }
             });
@@ -213,7 +221,16 @@ public class GameplayFeatureHelper {
                     buttonGoodGenres.setText("Select Good Genres");
                 }
             });
-            Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelGameplay, panelGraphic, panelSound, panelTech, buttonBadGenres, buttonGoodGenres};
+
+            JCheckBox checkBoxCompatibleWithArcadeCabinets = new JCheckBox("Arcade cabinet compatibility");
+            checkBoxCompatibleWithArcadeCabinets.setToolTipText("<html>Select to enable compatibility with arcade cabinets for this gameplay feature.<br>If disabled this gameplay feature does not work on arcade cabinets.");
+            checkBoxCompatibleWithArcadeCabinets.setSelected(true);
+
+            JCheckBox checkBoxCompatibleWithMobile = new JCheckBox("Mobile compatibility");
+            checkBoxCompatibleWithMobile.setToolTipText("<html>Select to enable compatibility with mobile devices for this gameplay feature.<br>If disabled this gameplay feature does not work on mobile devices.");
+            checkBoxCompatibleWithMobile.setSelected(true);
+
+            Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelGameplay, panelGraphic, panelSound, panelTech, buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Gameplay Feature", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(textFieldName.getText().isEmpty() || textFieldName.getText().equals("ENTER FEATURE NAME") || textFieldDescription.getText().isEmpty() || textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")){
@@ -248,7 +265,12 @@ public class GameplayFeatureHelper {
                         newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
                         newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
                         newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-
+                        if(!checkBoxCompatibleWithArcadeCabinets.isSelected()){
+                            newGameplayFeature.put("NO_ARCADE", "");
+                        }
+                        if(!checkBoxCompatibleWithMobile.isSelected()){
+                            newGameplayFeature.put("NO_MOBILE", "");
+                        }
                         boolean addFeature = Summaries.showGameplayFeatureMessage(newGameplayFeature);
                         if(addFeature) {
                             EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);

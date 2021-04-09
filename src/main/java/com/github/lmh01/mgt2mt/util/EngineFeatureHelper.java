@@ -37,11 +37,15 @@ public class EngineFeatureHelper {
             buttonAddNameTranslations.addActionListener(actionEvent -> {
                 if(!nameTranslationsAdded.get()){
                     mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                    nameTranslationsAdded.set(true);
+                    if(mapNameTranslations[0].size() > 0){
+                        nameTranslationsAdded.set(true);
+                    }
                 }else{
                     if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                         mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                        nameTranslationsAdded.set(true);
+                        if(mapNameTranslations[0].size() > 0){
+                            nameTranslationsAdded.set(true);
+                        }
                     }
                 }
             });
@@ -57,11 +61,15 @@ public class EngineFeatureHelper {
             buttonAddDescriptionTranslations.addActionListener(actionEvent -> {
                 if(!descriptionTranslationsAdded.get()){
                     mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
-                    descriptionTranslationsAdded.set(true);
+                    if(mapDescriptionTranslations[0].size() > 0){
+                        descriptionTranslationsAdded.set(true);
+                    }
                 }else{
                     if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
                         mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
-                        descriptionTranslationsAdded.set(true);
+                        if(mapDescriptionTranslations[0].size() > 0){
+                            descriptionTranslationsAdded.set(true);
+                        }
                     }
                 }
             });

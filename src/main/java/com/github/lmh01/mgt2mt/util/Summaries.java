@@ -76,6 +76,14 @@ public class Summaries {
                 goodGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(string)));
             }
         }
+        String arcadeCompatibility = "yes";
+        String mobileCompatibility = "yes";
+        if(map.get("NO_ARCADE") != null){
+            arcadeCompatibility = "no";
+        }
+        if(map.get("NO_MOBILE") != null){
+            mobileCompatibility = "no";
+        }
         String messageBody = "Your gameplay feature is ready:\n\n" +
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
@@ -90,7 +98,9 @@ public class Summaries {
                 "Gameplay: " + map.get("GAMEPLAY") + "\n" +
                 "Graphic: " + map.get("GRAPHIC") + "\n" +
                 "Sound: " + map.get("SOUND") + "\n" +
-                "Tech: " + map.get("TECH") + "\n";
+                "Tech: " + map.get("TECH") + "\n\n" +
+                "Arcade compatibility: " + arcadeCompatibility + "\n" +
+                "Mobile compatibility: " + mobileCompatibility + "\n";
         return JOptionPane.showConfirmDialog(null, messageBody, "Add gameplay feature?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 }
