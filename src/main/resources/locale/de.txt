@@ -15,6 +15,17 @@ dialog.export.error|Fehler beim Exportieren
 dialog.export.alreadyExported1|Die folgenden Einträge wurden nicht exportiert, da sie bereits exportiert wurden
 dialog.export.alreadyExported2|Soll der Exportordner geöffnet werden?
 
+dialog.backup.deleteAllBackups.mainMessage|<html>Bis du dir sicher, dass du alle backups löschen möchtest?<br>Dies könnte zu Problemen führen.
+dialog.backup.deleteAllBackups.mainMessage.title|Backups löschen?
+dialog.backup.deleteAllBackups.createNewInitialBackupQuestion|<html>Alle Backups wurden gelöscht.<br>Soll ein neues Initial-Backup erstellt werden?
+dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title|Backups gelöscht
+dialog.backup.deleteAllBackups.failed|<html>Backups konnten nicht gelöscht werden:
+dialog.backup.deleteAllBackups.failed.title|Backups löschen
+dialog.backup.initialBackupCreated|Das Initial-Backup wurde erfolgreich erstellt.
+dialog.backup.initialBackupCreated.title|Initial-Backup
+dialog.backup.initialBackupNotCreated|<html>Das Initial-Backup wurde nicht erstellt:<br>Datei nicht gefunden: Bitte überprüfe, ob dein mgt2-Ordner richtig eingestellt ist.<br><br>Fehler:
+dialog.backup.initialBackupNotCreated.title|Backup nicht erfolgreich
+
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
 frame.title.error|Fehler

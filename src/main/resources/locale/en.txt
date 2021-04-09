@@ -15,6 +15,17 @@ dialog.export.error|Error while exporting
 dialog.export.alreadyExported1|The following entries have not been exported because they were already exported
 dialog.export.alreadyExported2|Do you want to open the export folder?
 
+dialog.backup.deleteAllBackups.mainMessage|<html>Are you sure that you would like to delete all backups?<br>This could lead to problems.
+dialog.backup.deleteAllBackups.mainMessage.title|Delete backups?
+dialog.backup.deleteAllBackups.createNewInitialBackupQuestion|<html>All backups have been deleted.<br>Do you want to create a new initial backup?
+dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title|Backups deleted
+dialog.backup.deleteAllBackups.failed|<html>Unable to delete all backups.<br><br>Exception:
+dialog.backup.deleteAllBackups.failed.title|Unable to delete backups
+dialog.backup.initialBackupCreated|The initial backup has been created successfully.
+dialog.backup.initialBackupCreated.title|Initial backup
+dialog.backup.initialBackupNotCreated|<html>The initial backup was not created:<br>File not found: Please check if your mgt2 folder is set correctly.<br><br>Exception:
+dialog.backup.initialBackupNotCreated.title|Unable to backup file
+
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
 frame.title.error|Error

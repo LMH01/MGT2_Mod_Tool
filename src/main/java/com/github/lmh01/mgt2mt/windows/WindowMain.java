@@ -208,7 +208,9 @@ public class WindowMain {
         m4.add(m41);
         m4.add(m42);
         m4.add(m43RestorePoint);
-        m4.add(m44DeleteAllBackups);
+        if(Settings.disableSafetyFeatures){
+            m4.add(m44DeleteAllBackups);
+        }
         m4.add(m45penBackupFolder);
         JMenu m5 = new JMenu(I18n.INSTANCE.get("window.main.utilities"));
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));

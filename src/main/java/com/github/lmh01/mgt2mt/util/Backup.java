@@ -250,7 +250,7 @@ public class Backup {
      * Deletes all backups after confirmed by the user
      */
     public static void deleteAllBackups(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all backups?", "Delete backup?", JOptionPane.YES_NO_OPTION) == 0){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
                 File backupFolder = new File(BACKUP_FOLDER_PATH);
                 if(backupFolder.exists()){
@@ -260,18 +260,18 @@ public class Backup {
                             .forEach(File::delete);
                 }
                 ChangeLog.addLogEntry(12);
-                if(JOptionPane.showConfirmDialog(null, "All backups have been deleted.\nDo you wan't to create a new initial backup?", "Backups deleted", JOptionPane.YES_NO_OPTION) == 0){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title"), JOptionPane.YES_NO_OPTION) == 0){
                     String returnValue = Backup.createInitialBackup();
                     if(returnValue.equals("")) {
-                        JOptionPane.showMessageDialog(null, "The initial backup has been created successfully.", "Initial backup", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupCreated"), I18n.INSTANCE.get("dialog.backup.initialBackupCreated.title"), JOptionPane.INFORMATION_MESSAGE);
                     }else {
-                        JOptionPane.showMessageDialog(null, "The initial backup was not created:\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + returnValue, "Unable to backup file", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated") + returnValue, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated.title"), JOptionPane.ERROR_MESSAGE);
                         ChangeLog.addLogEntry(7, returnValue);
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Unable to delete all backups. \n\nException:\n" + e.getMessage(), "Unable to delete backups", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.failed") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.failed.title"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
