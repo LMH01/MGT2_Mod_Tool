@@ -28,6 +28,30 @@ dialog.backup.initialBackupCreated|Das Initial-Backup wurde erfolgreich erstellt
 dialog.backup.initialBackupCreated.title|Initial-Backup
 dialog.backup.initialBackupNotCreated|<html>Das Initial-Backup wurde nicht erstellt:<br>Datei nicht gefunden: Bitte überprüfe, ob dein mgt2-Ordner richtig eingestellt ist.<br><br>Fehler:
 dialog.backup.initialBackupNotCreated.title|Backup nicht erfolgreich
+dialog.backup.createBackup.fullBackupCreated|Das komplette Backup wurde erfolgreich erstellt.
+dialog.backup.createBackup.genreFileBackupCreated|Die Sicherung der Genre-Dateien wurde erfolgreich erstellt.
+dialog.backup.createBackup.themeFileBackupCreated|Die Sicherung der Themendateien wurde erfolgreich erstellt.
+dialog.backup.createBackup.saveGamesFileBackupCreated|Das Backup der gespeicherten Spiele wurde erfolgreich erstellt.
+dialog.backup.backupCreatedTitle|Backup erstellt
+dialog.backup.backupFailedTitle|Backup fehlgeschlagen
+dialog.backup.unableToCreateBackup|Backup kann nicht erstellt werden.
+dialog.backup.unableToCreateBackup.fileNotFound|Datei nicht gefunden: Bitte überprüfe, ob der mgt2-Ordner richtig eingestellt ist.
+dialog.backup.restoreBackup.initialBackup.restored|Das Initiale-Backup wurde wiederhergestellt.
+dialog.backup.restoreBackup.latestBackup.restored|Das neueste Backup wurde wiederhergestellt.
+dialog.backup.restoreBackup.initialBackup.notRestored|<html>Das Initiale-Backup konnte nicht wiederhergestellt werden:<br>Die Backupdatei(en) fehlen.
+dialog.backup.restoreBackup.latestBackup.notRestored|<html>Die letzte Sicherung konnte nicht wiederhergestellt werden:<br>Die Backupdatei(en) fehlen.
+dialog.backup.restoreBackup.restored|Backup wiederhergestellt
+dialog.backup.restoreBackup.failed|Wiederherstellung fehlgeschlagen
+dialog.backup.restoreBackup.saveGameBackup.label|<html>Wähle den Speicherplatz aus, für welchen das Backup wiederhergestellt werden soll.<br>0 = Automatisches Speichern
+dialog.backup.restoreBackup.saveGameBackup.title|Wiederherstellen von gespeicherten Spielen
+dialog.backup.restoreBackup.saveGameBackup.confirmMessage.firstPart|Bist du sicher, dass du das Backup für das gespeicherte Spiel wiederherstellen möchtest?
+dialog.backup.restoreBackup.saveGameBackup.confirmMessage.secondPart|<html>Dies kann nicht rückgängig gemacht werden!<br>Ich übernehme keine Verantwortung, wenn das gespeicherte Spiel beschädigt wird!<br><br>Backup des gesicherten Spiels wiederherstellen?
+dialog.backup.restoreBackup.saveGameBackup.restored|Das Backup des gespeicherten Spiels wurde wiederhergestellt.
+dialog.backup.restoreBackup.initialBackup.message|<html>Bist du sicher, dass du das Initiale-Backup wiederherstellen möchtest?<br>Alle Änderungen, die du an den Spieldateien vorgenommen hast, gehen verloren.<br>Die Sicherungen der Spielstände werden nicht wiederhergestellt.<br>Ein Backup der aktuellen Dateien wird erstellt.
+dialog.backup.restoreBackup.title|Backup wiederherstellen?
+dialog.backup.restoreBackup.initialBackup.notRestored|Das Initiale-Backup wurde nicht wiederhergestellt.
+dialog.backup.restoreBackup.latestBackup.message|<html>Bist du sicher, dass du das neueste Backup wiederherstellen möchtest?<br>Die Sicherungen der Spielstände werden nicht wiederhergestellt.<br>Ein Backup der aktuellen Dateien wird erstellt.
+dialog.backup.restoreBackup.latestBackup.notRestored|Das letzte Backup wurde nicht wiederhergestellt.
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|Ein .zip Archiv wurde gefunden:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Soll es extrahiert und nach Mods durchsucht werden?

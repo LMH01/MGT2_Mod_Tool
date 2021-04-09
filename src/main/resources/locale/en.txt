@@ -28,6 +28,30 @@ dialog.backup.initialBackupCreated|The initial backup has been created successfu
 dialog.backup.initialBackupCreated.title|Initial backup
 dialog.backup.initialBackupNotCreated|<html>The initial backup was not created:<br>File not found: Please check if your mgt2 folder is set correctly.<br><br>Exception:
 dialog.backup.initialBackupNotCreated.title|Unable to backup file
+dialog.backup.createBackup.fullBackupCreated|The full backup has been created successfully.
+dialog.backup.createBackup.genreFileBackupCreated|Backup of genre files has been created successfully.
+dialog.backup.createBackup.themeFileBackupCreated|Backup of theme files has been created successfully.
+dialog.backup.createBackup.saveGamesFileBackupCreated|Backup of save games has been created successfully.
+dialog.backup.backupCreatedTitle|Backup created
+dialog.backup.backupFailedTitle|Backup failed
+dialog.backup.unableToCreateBackup|Unable to create backup.
+dialog.backup.unableToCreateBackup.fileNotFound|File not found: Please check if your mgt2 folder is set correctly.
+dialog.backup.restoreBackup.initialBackup.restored|The initial backup has been restored.
+dialog.backup.restoreBackup.latestBackup.restored|The latest backup has been restored.
+dialog.backup.restoreBackup.initialBackup.notRestored|<html>The initial backup could not be restored.<br>The initial backup file(s) are missing.
+dialog.backup.restoreBackup.latestBackup.notRestored|<html>The latest backup could not be restored.<br>The initial backup file(s) are missing.
+dialog.backup.restoreBackup.restored|Backup restored
+dialog.backup.restoreBackup.failed|Restoring failed
+dialog.backup.restoreBackup.saveGameBackup.label|<html>Select the save game slot where the save game is saved,<br>for which the backup should be restored:<br>0 = Auto save
+dialog.backup.restoreBackup.saveGameBackup.title|Restore save game
+dialog.backup.restoreBackup.saveGameBackup.confirmMessage.firstPart|Are you sure that you would like to restore the backup for save game?
+dialog.backup.restoreBackup.saveGameBackup.confirmMessage.secondPart|<html>This can not be undone!<br>I will not take any responsibility if your save game is getting corrupted!<br><br>Restore save game backup?
+dialog.backup.restoreBackup.saveGameBackup.restored|Save game backup has been restored.
+dialog.backup.restoreBackup.initialBackup.message|<html>Are you sure that you want to restore the initial backup?<br>All changes that you have applied to the game files will be lost.<br>The savegame backups will not be restored.<br>A backup of the current files will be created.
+dialog.backup.restoreBackup.title|Restore backup?
+dialog.backup.restoreBackup.initialBackup.notRestored|The initial backup was not restored.
+dialog.backup.restoreBackup.latestBackup.message|<html>Are you sure that you want to restore the latest backup?<br>The savegame backups will not be restored.<br>A backup of the current files will be created.
+dialog.backup.restoreBackup.latestBackup.notRestored|The latest backup was not restored.
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|A .zip archive has been found:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Would you like to extract it and search it for mods?

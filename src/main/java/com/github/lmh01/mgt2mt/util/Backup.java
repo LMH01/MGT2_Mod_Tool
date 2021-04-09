@@ -16,7 +16,7 @@ import java.util.*;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class Backup {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);//TODO Backup dialogs übersetzen
+    private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
     private static String latestBackupFolderName = "";
     public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
     public static final File FILE_SAVE_GAME_FOLDER = new File(System.getenv("USERPROFILE") + "\\appdata\\locallow\\Eggcode\\Mad Games Tycoon 2\\");
@@ -84,38 +84,38 @@ public class Backup {
             case "full":
                 try {
                     Backup.createFullBackup();
-                    JOptionPane.showMessageDialog(new Frame(), "The full backup has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.createBackup.fullBackupCreated"), I18n.INSTANCE.get("dialog.backup.backupCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\nFile not found: Please check if your mgt2 folder is set correctly.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n" + I18n.INSTANCE.get("dialog.backup.unableToCreateBackup.fileNotFound") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "genre":
                 try {
                     Backup.createBackup(Utils.getGenreFile());
                     Backup.createBackup(Utils.getNpcGamesFile());
-                    JOptionPane.showMessageDialog(new Frame(), "Backup of genre files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.createBackup.genreFileBackupCreated"), I18n.INSTANCE.get("dialog.backup.backupCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "theme":
                 try {
                     Backup.createThemeFilesBackup(false);
-                    JOptionPane.showMessageDialog(new Frame(), "Backup of theme files has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.createBackup.themeFileBackupCreated"), I18n.INSTANCE.get("dialog.backup.backupCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "save_game":
                 try {
                     Backup.backupSaveGames(false);
-                    JOptionPane.showMessageDialog(new Frame(), "Backup of save games has been created successfully.", "Backup created.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.createBackup.saveGamesFileBackupCreated"), I18n.INSTANCE.get("dialog.backup.backupCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), "Unable to create backup.\n\nException:\n" + e.getMessage(), "Backup failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }
@@ -161,12 +161,12 @@ public class Backup {
                 ImageFileHandler.removePublisherIcons();
                 ChangeLog.addLogEntry(8);
                 if(showMessages){
-                    JOptionPane.showMessageDialog(null, "The initial backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
                 ChangeLog.addLogEntry(9);
                 if(showMessages){
-                    JOptionPane.showMessageDialog(null, "The latest backup has been restored.", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (IOException exception) {
@@ -174,12 +174,12 @@ public class Backup {
             if(initialBackup){
                 ChangeLog.addLogEntry(10, exception.getMessage());
                 if(showMessages){
-                    JOptionPane.showMessageDialog(null, "The initial backup could not be restored.\nThe initial backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }else{
                 ChangeLog.addLogEntry(11, exception.getMessage());
                 if(showMessages){
-                    JOptionPane.showMessageDialog(null, "The latest backup could not be restored.\nThe latest backup file(s) are missing.\n\nException:\n" + exception.getMessage(), "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -195,7 +195,7 @@ public class Backup {
             for(File file : files){
                 saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
             }
-            JLabel label = new JLabel("<html>Select the save game slot where the save game is saved,<br>for which the backup should be restored:<br>0 = Auto save");
+            JLabel label = new JLabel(I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.label"));
             String[] array = saveGameSlots.toArray(new String[0]);
             JList<String> listAvailableThemes = new JList<>(array);
             listAvailableThemes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -205,12 +205,12 @@ public class Backup {
             scrollPaneAvailableSaveGames.setPreferredSize(new Dimension(30,60));
 
             Object[] params = {label, scrollPaneAvailableSaveGames};
-            if(JOptionPane.showConfirmDialog(null, params, "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                 int saveGameSlotToRestore = Integer.parseInt(listAvailableThemes.getSelectedValue());
-                if(JOptionPane.showConfirmDialog(null, "Are you sure that you would like to restore the backup for save game " + saveGameSlotToRestore + " ?\n\nThis can not be undone!\nI will not take any responsibility if your save game is getting corrupted!\n\nRestore save game backup?", "Restore save game", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.confirmMessage.firstPart") + " " + saveGameSlotToRestore + "\n\n" + I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.confirmMessage.secondPart"), I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     Backup.backupSaveGames(false);
                     Backup.restoreSaveGameBackup(saveGameSlotToRestore);
-                    JOptionPane.showMessageDialog(null, "Save game backup has been restored", "Backup restored", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (IOException e) {

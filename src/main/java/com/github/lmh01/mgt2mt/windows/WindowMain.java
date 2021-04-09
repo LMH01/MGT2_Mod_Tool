@@ -756,7 +756,7 @@ public class WindowMain {
         }
     }
     private static void restoreInitialBackup(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the initial backup?\nAll changes that you have applied to the game files will be lost.\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
@@ -786,14 +786,14 @@ public class WindowMain {
                 if(Utils.showConfirmDialog(1, e)){
                     Backup.restoreBackup(true, true);
                 }else{
-                    JOptionPane.showMessageDialog(null, "The initial backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
         checkActionAvailability();
     }
     private static void restoreLatestBackup(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to restore the latest backup?\nThe savegame backups will not be restored.\nA backup of the current files will be created.", "Restore backup?", JOptionPane.YES_NO_OPTION) == 0){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
@@ -805,7 +805,7 @@ public class WindowMain {
                     Backup.restoreBackup(false, true);
                     ChangeLog.addLogEntry(9);
                 }else{
-                    JOptionPane.showMessageDialog(null, "The latest backup was not restored.", "Restoring failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
