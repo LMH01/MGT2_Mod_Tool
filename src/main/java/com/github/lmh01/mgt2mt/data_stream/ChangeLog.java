@@ -107,6 +107,8 @@ public class ChangeLog {
             case 34: logToPrint = currentSystemTime + ": Imported licence feature: [" + textBody + "]"; break;
             case 35: logToPrint = currentSystemTime + ": Added licence: [" + textBody + "]"; break;
             case 36: logToPrint = currentSystemTime + ": Removed licence: [" + textBody + "]"; break;
+            case 37: logToPrint = currentSystemTime + ": Created restore point"; break;
+            case 38: logToPrint = currentSystemTime + ": Restore point has been restored"; break;
         }
         pw.print(logToPrint);
         LOGGER.info("Added log entry: " + logToPrint);

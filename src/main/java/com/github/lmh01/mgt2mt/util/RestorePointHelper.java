@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ public class RestorePointHelper {
             }
         }
         WindowMain.checkActionAvailability();
+        ChangeLog.addLogEntry(37);
     }
 
     /**
@@ -58,6 +60,7 @@ public class RestorePointHelper {
                 LOGGER.info("All mods have been removed");
             }
             SharingManager.importAll(true);
+            ChangeLog.addLogEntry(38);
         }
     }
 }
