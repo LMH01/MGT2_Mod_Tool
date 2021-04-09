@@ -2,6 +2,7 @@ button.quit|Beenden
 button.back|Zurück
 
 commonBodies.areYouSure|Bist du sicher?
+commonBodies.exception|Grund:
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -27,6 +28,56 @@ dialog.backup.initialBackupCreated|Das Initial-Backup wurde erfolgreich erstellt
 dialog.backup.initialBackupCreated.title|Initial-Backup
 dialog.backup.initialBackupNotCreated|<html>Das Initial-Backup wurde nicht erstellt:<br>Datei nicht gefunden: Bitte überprüfe, ob dein mgt2-Ordner richtig eingestellt ist.<br><br>Fehler:
 dialog.backup.initialBackupNotCreated.title|Backup nicht erfolgreich
+
+dialog.sharingManager.importAll.zipArchiveFound.firstPart|Ein .zip Archiv wurde gefunden:
+dialog.sharingManager.importAll.zipArchiveFound.secondPart|Soll es extrahiert und nach Mods durchsucht werden?
+dialog.sharingManager.importAll.zipArchiveFound.title|Zip Archiv gefunden
+dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart|Fehler beim Extrahieren des Zip-Archivs:
+dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart|Soll trotzdem weiter gemacht werden?
+dialog.sharingManager.importAll.zipArchiveFound.error.title|Fehler beim Extrahieren
+dialog.sharingManager.importAll.guiComponents.label1|Engine Features:
+dialog.sharingManager.importAll.guiComponents.label2|Gameplay Features:
+dialog.sharingManager.importAll.guiComponents.label3|Genres:
+dialog.sharingManager.importAll.guiComponents.label4|Publisher:
+dialog.sharingManager.importAll.guiComponents.label5|Themen:
+dialog.sharingManager.importAll.guiComponents.label6|Lizenzen:
+dialog.sharingManager.importAll.guiComponents.checkBox.disableImportPopups|Popups deaktivieren
+dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups|Popups deaktivieren, die zeigen, dass etwas bereits exisitert
+dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip|<html>Aktiviere diese Option, um Popups zu deaktivieren, die sagen, dass etwas bereits vorhanden ist
+dialog.sharingManager.importAll.summary.startText.var1|Die folgenden Mods können wiederhergestellt werden:
+dialog.sharingManager.importAll.summary.startText.var2|Folgende Objekte können importiert werden:
+dialog.sharingManager.importAll.summary.endText.var1|<html>Die Zahlen geben an, wie viele Einträge von den verfügbaren Einträgen wiederhergestellt werden.<br><br>Tipp:<br>Wenn du nicht alles wiederherstellen möchtest,<br>kannst du auf die Schaltfläche(n) klicken, um auszuwählen, welche Einträge wiederhergestellt werden sollen.<br><br>Soll der Wiederherstellungsprozess gestartet werden?
+dialog.sharingManager.importAll.summary.endText.var2|<html>Die Zahlen geben an, wie viele Einträge von den verfügbaren Einträgen importiert werden.<br><br>Tipp:<br>Wenn du nicht alles importieren möchtest,<br>kannst du auf die Schaltfläche(n) klicken, um auszuwählen, welche Einträge importiert werden sollen.<br><br>Soll der Importierprozess gestartet werden?
+dialog.sharingManager.importAll.summary.disableImportPopupsText.var1|<html>Aktiviere diese Option, um Bestätigungsmeldungen zu deaktivieren, die sagen, dass etwas wiederhergestellt werden kann
+dialog.sharingManager.importAll.summary.disableImportPopupsText.var2|<html>Aktiviere diese Option, um Bestätigungsmeldungen zu deaktivieren, die sagen, dass etwas importiert werden kann
+dialog.sharingManager.importAll.summary.importErredMessage.var1|<html>Fehler beim Wiederherstellen:<br>Einige Mods wurden möglicherweise nicht ordnungsgemäß wiederhergestellt.<br>Weitere Informationen findest du in der Konsole!
+dialog.sharingManager.importAll.summary.importErredMessage.var2|<html>Error while importing:<br>Einige Mods wurden möglicherweise nicht ordnungsgemäß importiert.<br>Weitere Informationen findest du in der Konsole!
+dialog.sharingManager.importAll.summary.importErredMessageTitle.var1|Fehler beim Wiederherstellen
+dialog.sharingManager.importAll.summary.importErredMessageTitle.var2|Fehler beim Importieren
+dialog.sharingManager.importAll.summary.importSuccessfulMessage.var1|<html>Wiederherstellung abgeschlossen:<br>Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt.
+dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2|<html>Import abgeschlossen:<br>Alle Mods (die noch nicht vorhanden waren) wurden importiert.
+dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1|Wiederherstellung abgeschlossen
+dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2|Import abgeschlossen
+dialog.sharingManager.importAll.importReady.message.title|Import bereit
+dialog.sharingManager.importAll.importName1|Engine Feature
+dialog.sharingManager.importAll.importName2|Gameplay Feature
+dialog.sharingManager.importAll.importName3|Genre
+dialog.sharingManager.importAll.importName4|Publisher
+dialog.sharingManager.importAll.importName5|Thema
+dialog.sharingManager.importAll.importName6|Lizenz
+dialog.sharingManager.importAll.error.noImportAvailable.var1|<html>Wiederherstellung auf Wiederherstellungspunkt nicht möglich:<br>Die Wiederherstellungspunktdateien sind nicht vorhanden.
+dialog.sharingManager.importAll.error.noImportAvailable.var2|Die Ordner und ihre Unterordner enthalten keine Dinge, die importiert werden könnten.
+dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var1|<html>Wiederherstellung auf Wiederherstellungspunkt nicht möglich:<br>Die Wiederherstellungspunktdateien sind nicht vorhanden und / oder nicht mit der aktuellen Mod-Tool-Version kompatibel.
+dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2|<html>Die Ordner und ihre Unterordner enthalten keine Dinge, die importiert werden könnten. <br> Einige Mods wurden gefunden, die nicht mit der aktuellen Mod-Tool-Version kompatibel sind
+dialog.sharingManager.importAll.error.windowTitle.var1|Wiederherstellung nicht möglich
+dialog.sharingManager.importAll.error.windowTitle.var2|Import kann nicht durchgeführt werden
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Wähle die Ordner aus, in denen sich die zu importierenden Dateien befinden
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Wählen Sie die Ordner aus, in denen sich die
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|Datei befindet.
+dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip Dateien
+dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|Der ausgewählte Ordner enthält keinen gültigen
+dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|Der ausgewählte Ordner enthält nicht die
+dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>Datei.<br>Bitte wähle den richtigen Ordner.
 
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 

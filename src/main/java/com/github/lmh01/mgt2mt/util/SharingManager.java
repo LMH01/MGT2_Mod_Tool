@@ -169,9 +169,9 @@ public class SharingManager {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
             if(skipCheckForContent){
-                fileChooser.setDialogTitle("Choose the folder(s) where the files are located that should be imported");
+                fileChooser.setDialogTitle(I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.fileChooser.title.version1"));
             }else{
-                fileChooser.setDialogTitle("Choose the folder(s) where the " + fileName + " file is located.");
+                fileChooser.setDialogTitle(I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart") + " " + fileName + " " + I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart"));
             }
             FileFilter fileFilter = new FileFilter() {//File filter to only show .zip files.
                 @Override
@@ -184,7 +184,7 @@ public class SharingManager {
 
                 @Override
                 public String getDescription() {
-                    return ".zip files";
+                    return I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription");
                 }
             };
             fileChooser.setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES);
@@ -208,10 +208,10 @@ public class SharingManager {
                                 LOGGER.info("File seams to be valid.");
                                 importFolders.add(importFolder);
                             }else{
-                                JOptionPane.showMessageDialog(null, "The selected folder does not contain a valid " + fileName + " file.\nPlease select the correct folder.");
+                                JOptionPane.showMessageDialog(null,  I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1")+ " " + fileName + " " + I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.noValidFile.secondPart"));
                             }
                         }else{
-                            JOptionPane.showMessageDialog(null, "The selected folder does not contain the " + fileName + " file.\nPlease select the correct folder.");
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2") + " " + fileName + I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.noValidFile.secondPart"));
                         }
                     }
                 }
@@ -304,7 +304,7 @@ public class SharingManager {
                             }else if(string.contains("licence.txt")){
                                 addIfCompatible(string, licences, licenceNames, LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, someThingsNotCompatible);
                             }else if(string.endsWith(".zip")){
-                                if(JOptionPane.showConfirmDialog(null, "A .zip archive has been found:\n\n" + string + "\n\nWould you like to extract it and search it for mods?", "Zip archive found", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + "\n\n" + string + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                     try {
                                         File extractedFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//" + currentZipArchiveNumber);
                                         DataStreamHelper.unzip(string, extractedFolder);
@@ -312,7 +312,7 @@ public class SharingManager {
                                         directories.add(extractedFolder);
                                     } catch (IOException e) {
                                         e.printStackTrace();
-                                        if(JOptionPane.showConfirmDialog(null, "Error while extracting zip archive:\n\n" + string + "\n\nException: " + e.getMessage() + "\n\nWould you like to continue anyway", "Error while extracting", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
+                                        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.firstPart") + "\n\n" + string + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage() + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
                                             return;
                                         }
                                     }
@@ -349,22 +349,22 @@ public class SharingManager {
             AtomicBoolean disableLicenceImport = new AtomicBoolean(true);
             if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty() || !licences.isEmpty()) {
                 if(!engineFeatures.isEmpty()){
-                    setFeatureAvailableGuiComponents("Engine features:",engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label1"),engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
                 }
                 if(!gameplayFeatures.isEmpty()){
-                    setFeatureAvailableGuiComponents("Gameplay features:",gameplayFeatures, panelGameplayFeatures, selectedEntriesGameplayFeatures, disableGameplayFeatureImport);
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label2"),gameplayFeatures, panelGameplayFeatures, selectedEntriesGameplayFeatures, disableGameplayFeatureImport);
                 }
                 if(!genres.isEmpty()){
-                    setFeatureAvailableGuiComponents("Genres:", genres, panelGenres, selectedEntriesGenres, disableGenreImport);
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label3"), genres, panelGenres, selectedEntriesGenres, disableGenreImport);
                 }
                 if(!publishers.isEmpty()){
-                    setFeatureAvailableGuiComponents("Publishers:", publishers, panelPublishers, selectedEntriesPublishers, disablePublisherImport);
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label4"), publishers, panelPublishers, selectedEntriesPublishers, disablePublisherImport);
                 }
                 if(!themes.isEmpty()){
-                    setFeatureAvailableGuiComponents("Themes:", themes, panelThemes, selectedEntriesThemes, disableThemeImport);
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label5"), themes, panelThemes, selectedEntriesThemes, disableThemeImport);
                 }
                 if(!licences.isEmpty()){
-                    setFeatureAvailableGuiComponents("Licences:", licences, panelLicences, selectedEntriesLicences, disableLicenceImport);
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label6"), licences, panelLicences, selectedEntriesLicences, disableLicenceImport);
                 }
                 String labelStartText;
                 String labelEndText;
@@ -374,28 +374,28 @@ public class SharingManager {
                 String importSuccessfulMessage;
                 String importSuccessfulMessageTitle;
                 if(importFromRestorePoint){
-                    labelStartText = "The following mods can be restored:";
-                    labelEndText = "<html>The numbers indicate how many entries,<br>out of the available entries will be restored.<br><br>Tip:<br>If you wish not to restore everything,<br>click the button(s) to select what entries should be restored.<br><br>Do you want to start the restoration process?";
-                    disableImportPopupsText = "<html>Check to disable confirm messages that something can be restored";
-                    importErredMessage = "Error while restoring:\nSome features might not be properly restored.\nSee console for further information!";
-                    importErredMessageTitle = "Error while restoring";
-                    importSuccessfulMessage = "Restoration complete:\nAll mods have been restored to the restore point.";
-                    importSuccessfulMessageTitle = "Restoration complete";
+                    labelStartText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.startText.var1");
+                    labelEndText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.endText.var1");
+                    disableImportPopupsText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.disableImportPopupsText.var1");
+                    importErredMessage = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importErredMessage.var1");
+                    importErredMessageTitle = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importErredMessageTitle.var1");
+                    importSuccessfulMessage = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessfulMessage.var1");
+                    importSuccessfulMessageTitle = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1");
                 }else{
-                    labelStartText = "The following objects can be imported:";
-                    labelEndText = "<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?";
-                    disableImportPopupsText = "<html>Check to disable confirm messages that something can be imported";
-                    importErredMessage = "Error while importing:\nSome features might not be properly imported.\nSee console for further information!";
-                    importErredMessageTitle = "Error while importing";
-                    importSuccessfulMessage = "Import complete:\nAll features (that did not already exist) have been imported.";
-                    importSuccessfulMessageTitle = "Import complete";
+                    labelStartText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.startText.var2");
+                    labelEndText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.endText.var2");
+                    disableImportPopupsText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.disableImportPopupsText.var2");
+                    importErredMessage = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importErredMessage.var2");
+                    importErredMessageTitle = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importErredMessageTitle.var2");
+                    importSuccessfulMessage = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2");
+                    importSuccessfulMessageTitle = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2");
                 }
                 JLabel labelStart = new JLabel(labelStartText);
                 JLabel labelEnd = new JLabel(labelEndText);
-                JCheckBox checkBoxDisableImportPopups = new JCheckBox("Disable popups");
+                JCheckBox checkBoxDisableImportPopups = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.checkBox.disableImportPopups"));
                 checkBoxDisableImportPopups.setToolTipText(disableImportPopupsText);
-                JCheckBox checkBoxDisableAlreadyExistPopups = new JCheckBox("Disable already exists popups");
-                checkBoxDisableAlreadyExistPopups.setToolTipText("<html>Check to disable popups that something already exists");
+                JCheckBox checkBoxDisableAlreadyExistPopups = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups"));
+                checkBoxDisableAlreadyExistPopups.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip"));
                 checkBoxDisableAlreadyExistPopups.setSelected(true);
                 Object[] params;
                 if(importFromRestorePoint){
@@ -404,31 +404,31 @@ public class SharingManager {
                 }else{
                     params = new Object[]{labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
                 }
-                if(JOptionPane.showConfirmDialog(null, params, "Import ready", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                     boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                     boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
                     boolean errorOccurred = false;
-                    if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), "engine feature", (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing engine features");
                         errorOccurred = true;
                     }
-                    if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), "gameplay feature", (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing gameplay features");
                         errorOccurred = true;
                     }
-                    if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), "genre", (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing genres");
                         errorOccurred = true;
                     }
-                    if(!importAllFiles(publishers, selectedEntriesPublishers.get(), disablePublisherImport.get(), "publisher", (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(publishers, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing publishers");
                         errorOccurred = true;
                     }
-                    if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), "theme", (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName5"), (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing themes");
                         errorOccurred = true;
                     }
-                    if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), "licence", (string) -> SharingHandler.importLicence(string, !showMessageDialogs), SharingManager.LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName6"), (string) -> SharingHandler.importLicence(string, !showMessageDialogs), SharingManager.LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occured wile importing licences");
                         errorOccurred = true;
                     }
@@ -443,13 +443,13 @@ public class SharingManager {
                 String noImportAvailableButIncompatibleModsFound;
                 String windowTitle;
                 if(importFromRestorePoint){
-                    noImportAvailableMessage = "<html>Unable to restore to restore point:<br>The restore point files do not exist.";
-                    noImportAvailableButIncompatibleModsFound = "<html>Unable to restore to restore point:<br>The restore point files do not exist and/or are not compatible with the current mod tool version.";
-                    windowTitle = "Unable to restore";
+                    noImportAvailableMessage = I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var1");
+                    noImportAvailableButIncompatibleModsFound = I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var1");
+                    windowTitle = I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var1");
                 }else{
-                    noImportAvailableMessage = "The folder(s) and it's subfolders do not contain things that could be imported.";
-                    noImportAvailableButIncompatibleModsFound = "The folder(s) and it's subfolders do not contain things that could be imported.\nSome mods where found that are not compatible with the current mod tool version";
-                    windowTitle = "Unable to import";
+                    noImportAvailableMessage = I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var2");
+                    noImportAvailableButIncompatibleModsFound = I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2");
+                    windowTitle = I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2");
                 }
                 if(someThingsNotCompatible.get()){
                     JOptionPane.showMessageDialog(null, noImportAvailableButIncompatibleModsFound, windowTitle, JOptionPane.INFORMATION_MESSAGE);

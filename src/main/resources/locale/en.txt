@@ -2,6 +2,7 @@ button.quit|Quit
 button.back|Back
 
 commonBodies.areYouSure|Are you sure?
+commonBodies.exception|Exception:
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
@@ -27,6 +28,56 @@ dialog.backup.initialBackupCreated|The initial backup has been created successfu
 dialog.backup.initialBackupCreated.title|Initial backup
 dialog.backup.initialBackupNotCreated|<html>The initial backup was not created:<br>File not found: Please check if your mgt2 folder is set correctly.<br><br>Exception:
 dialog.backup.initialBackupNotCreated.title|Unable to backup file
+
+dialog.sharingManager.importAll.zipArchiveFound.firstPart|A .zip archive has been found:
+dialog.sharingManager.importAll.zipArchiveFound.secondPart|Would you like to extract it and search it for mods?
+dialog.sharingManager.importAll.zipArchiveFound.title|Zip archive found
+dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart|Error while extracting zip archive:
+dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart|Would you like to continue anyway?
+dialog.sharingManager.importAll.zipArchiveFound.error.title|Error while extracting
+dialog.sharingManager.importAll.guiComponents.label1|Engine features:
+dialog.sharingManager.importAll.guiComponents.label2|Gameplay features:
+dialog.sharingManager.importAll.guiComponents.label3|Genres:
+dialog.sharingManager.importAll.guiComponents.label4|Publishers:
+dialog.sharingManager.importAll.guiComponents.label5|Themes:
+dialog.sharingManager.importAll.guiComponents.label6|Licences:
+dialog.sharingManager.importAll.guiComponents.checkBox.disableImportPopups|Disable popups
+dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups|Disable already exists popups
+dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip|<html>Check to disable popups that something already exists
+dialog.sharingManager.importAll.summary.startText.var1|The following mods can be restored:
+dialog.sharingManager.importAll.summary.startText.var2|The following objects can be imported:
+dialog.sharingManager.importAll.summary.endText.var1|<html>The numbers indicate how many entries,<br>out of the available entries will be restored.<br><br>Tip:<br>If you wish not to restore everything,<br>click the button(s) to select what entries should be restored.<br><br>Do you want to start the restoration process?
+dialog.sharingManager.importAll.summary.endText.var2|<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?
+dialog.sharingManager.importAll.summary.disableImportPopupsText.var1|<html>Check to disable confirm messages that something can be restored
+dialog.sharingManager.importAll.summary.disableImportPopupsText.var2|<html>Check to disable confirm messages that something can be imported
+dialog.sharingManager.importAll.summary.importErredMessage.var1|<html>Error while restoring:<br>Some features might not be properly restored.<br>See console for further information!
+dialog.sharingManager.importAll.summary.importErredMessage.var2|<html>Error while importing:<br>Some features might not be properly imported.<br>See console for further information!
+dialog.sharingManager.importAll.summary.importErredMessageTitle.var1|Error while restoring
+dialog.sharingManager.importAll.summary.importErredMessageTitle.var2|Error while importing
+dialog.sharingManager.importAll.summary.importSuccessfulMessage.var1|<html>Restoration complete:<br>All mods have been restored to the restore point.
+dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2|<html>Import complete:<br>All features (that did not already exist) have been imported.
+dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1|Restoration complete
+dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2|Import complete
+dialog.sharingManager.importAll.importReady.message.title|Import ready
+dialog.sharingManager.importAll.importName1|engine feature
+dialog.sharingManager.importAll.importName2|gameplay feature
+dialog.sharingManager.importAll.importName3|genre
+dialog.sharingManager.importAll.importName4|publisher
+dialog.sharingManager.importAll.importName5|theme
+dialog.sharingManager.importAll.importName6|licence
+dialog.sharingManager.importAll.error.noImportAvailable.var1|<html>Unable to restore to restore point:<br>The restore point files do not exist.
+dialog.sharingManager.importAll.error.noImportAvailable.var2|The folder(s) and it's subfolders do not contain things that could be imported.
+dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var1|<html>Unable to restore to restore point:<br>The restore point files do not exist and/or are not compatible with the current mod tool version.
+dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2|<html>The folder(s) and it's subfolders do not contain things that could be imported.<br>Some mods where found that are not compatible with the current mod tool version
+dialog.sharingManager.importAll.error.windowTitle.var1|Unable to restore
+dialog.sharingManager.importAll.error.windowTitle.var2|Unable to import
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Choose the folder(s) where the files are located that should be imported
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Choose the folder(s) where the
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|file is located.
+dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip files
+dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|The selected folder does not contain a valid
+dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|The selected folder does not contain the
+dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>file.<br>Please select the correct folder.
 
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
