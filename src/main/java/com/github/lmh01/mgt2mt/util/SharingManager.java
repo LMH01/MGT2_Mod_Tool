@@ -497,8 +497,9 @@ public class SharingManager {
 
     /**
      * Exports all available things when the user accepts.
+     * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
      */
-    public static void exportAll(){
+    public static void exportAll(boolean exportAsRestorePoint){
         String[] customEngineFeatures = AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString();
         String[] customGameplayFeatures = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
@@ -512,26 +513,38 @@ public class SharingManager {
         exportList.append(getExportListPart(customPublishers, "Publishers"));
         exportList.append(getExportListPart(customThemes, "Themes"));
         exportList.append(getExportListPart(customLicences, "Licences"));
-        if(JOptionPane.showConfirmDialog(null, "The following entries will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+        boolean exportFiles = false;
+        if(exportAsRestorePoint){
+            exportFiles = true;
+        }else{
+            if(JOptionPane.showConfirmDialog(null, "The following entries will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                exportFiles = true;
+            }
+        }
+        if(exportFiles){
             StringBuilder failedExports = new StringBuilder();
             try{
-                failedExports.append(getExportFailed(SharingHandler::exportEngineFeature, customEngineFeatures, "Engine features"));
-                failedExports.append(getExportFailed(SharingHandler::exportGameplayFeature, customGameplayFeatures, "Gameplay features"));
-                failedExports.append(getExportFailed(SharingHandler::exportGenre, customGenres, "Genres"));
-                failedExports.append(getExportFailed(SharingHandler::exportPublisher, customPublishers, "Publishers"));
-                failedExports.append(getExportFailed(SharingHandler::exportTheme, customThemes, "Themes"));
-                failedExports.append(getExportFailed(SharingHandler::exportLicence, customLicences, "Licences"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportEngineFeature(string, exportAsRestorePoint), customEngineFeatures, "Engine features"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportGameplayFeature(string, exportAsRestorePoint), customGameplayFeatures, "Gameplay features"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportGenre(string, exportAsRestorePoint), customGenres, "Genres"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportPublisher(string, exportAsRestorePoint), customPublishers, "Publishers"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportTheme(string, exportAsRestorePoint), customThemes, "Themes"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportLicence(string, exportAsRestorePoint), customLicences, "Licences"));
                 if(failedExports.toString().isEmpty()){
-                    if(JOptionPane.showConfirmDialog(null, "All entries have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                        Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                    if(exportAsRestorePoint){
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                            Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                        }
                     }
                 }else{
-                    if(JOptionPane.showConfirmDialog(null, "The following entries have not been exported because they where already exported:\n\n" + failedExports.toString() + "\n\nDo you want to open the export folder?", "Genre exported", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.export.alreadyExported1") + ":\n\n" + failedExports.toString() + "\n" + I18n.INSTANCE.get("dialog.export.alreadyExported2") + "\n\n", I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                         Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
                     }
                 }
             }catch(IOException e){
-                JOptionPane.showMessageDialog(null, "Error while exporting:" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.error") + ": " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }
@@ -566,7 +579,7 @@ public class SharingManager {
     }
 
     /**
-     * Uses the input exporter to export a list of entries. This function may only be called by {@link SharingManager#exportAll()}.
+     * Uses the input exporter to export a list of entries. This function may only be called by {@link SharingManager#exportAll(boolean)} )}.
      * @param exporter The export function that should be used
      * @param strings The array containing the entries
      * @param exportName The name that should be written when a error occurs. Eg. Genre, Theme

@@ -43,6 +43,7 @@ public class WindowMain {
     private static final JMenuItem M_272_REMOVE_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.removeLicence"));
     private static final JMenuItem M_316_EXPORT_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.licence"));
     private static final JMenuItem M_317_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
+    private static final JMenuItem M_431_CREATE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
     private static final JMenuItem M_432_RESTORE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint"));
     private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
     public static void createFrame(){
@@ -145,13 +146,13 @@ public class WindowMain {
         m31Export.add(M_315_EXPORT_GAMEPLAY_FEATURE);
         m31Export.add(M_316_EXPORT_LICENCE);
         m31Export.add(M_317_EXPORT_ALL);
-        M_311_EXPORT_GENRE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true));
-        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportPublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "exported", "Export", true));
-        M_313_EXPORT_THEME.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "themes", "exported", "Export", true));
-        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "exported", "Export", true));
-        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
-        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> OperationHelper.process(SharingHandler::exportLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "exported", "Export", true));
-        M_317_EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll());
+        M_311_EXPORT_GENRE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportGenre(string, false), AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true));
+        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportPublisher(string, false), AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "exported", "Export", true));
+        M_313_EXPORT_THEME.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportTheme(string, false), AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "themes", "exported", "Export", true));
+        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportEngineFeature(string, false), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "exported", "Export", true));
+        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportGameplayFeature(string, false), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
+        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportLicence(string, false), AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "exported", "Export", true));
+        M_317_EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll(false));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> {
             Utils.open(Utils.getMGT2ModToolExportFolder());
@@ -191,12 +192,11 @@ public class WindowMain {
         m42.add(m421RestoreInitialBackup);
         m42.add(m422RestoreLatestBackup);
         m42.add(m423RestoreSaveGameBackup);
-        JMenuItem m431CreateModRestorePoint = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
-        m431CreateModRestorePoint.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
-        m431CreateModRestorePoint.addActionListener(actionEvent -> {});//TODO add action events
+        M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
+        M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.setRestorePoint());//TODO add action events
         M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip"));
         M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> {});
-        m43RestorePoint.add(m431CreateModRestorePoint);
+        m43RestorePoint.add(M_431_CREATE_MOD_RESTORE_POINT);
         m43RestorePoint.add(M_432_RESTORE_MOD_RESTORE_POINT);
         JMenuItem m44DeleteAllBackups = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
         m44DeleteAllBackups.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));
@@ -344,9 +344,13 @@ public class WindowMain {
             if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable &&noCustomLicencesAvailable){
                 M_317_EXPORT_ALL.setEnabled(false);
                 M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
+                M_431_CREATE_MOD_RESTORE_POINT.setEnabled(false);
+                M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.notAvailableToCreateRestorePoint"));
             }else{
                 M_317_EXPORT_ALL.setEnabled(true);
                 M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
+                M_431_CREATE_MOD_RESTORE_POINT.setEnabled(true);
+                M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
             }
             if(noCustomThemesAvailable){
                 M_232_REMOVE_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));

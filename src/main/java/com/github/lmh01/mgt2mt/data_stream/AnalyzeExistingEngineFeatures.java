@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AnalyzeExistingEngineFeatures {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGameplayFeatures.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingEngineFeatures.class);
     public static List<Map<String, String>> engineFeatures;
     public static int maxEngineFeatureId = 0;
 

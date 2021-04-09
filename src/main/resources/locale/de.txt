@@ -3,9 +3,22 @@ button.back|Zurück
 
 commonBodies.areYouSure|Bist du sicher?
 
+dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
+dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
+dialog.restorePoint.restorePointDoesAlreadyExist|<html>Ein Wiederherstellungspunkt wurde bereits erstellt.<br><br>Möchtest du einen neuen Wiederherstellungspunkt erstellen und die alten Dateien in einen Speicherordner verschieben?
+dialog.restorePoint.restorePointDoesAlreadyExist.title|Wiederherstellungspunkt bereits erstellt
+dialog.restorePoint.moveRestorePointFailed|<html>Beim Verschieben der alten Wiederherstellungspunktdateien in den Speicherordner ist ein Problem aufgetreten.<br><br>Der Wiederherstellungspunkt wurde nicht erstellt!
+
+dialog.export.exportSuccessful|<html>Alle Einträge wurden erfolgreich exportiert!<br><br>Soll der Ordner geöffnet werden, in wlechem sie gespeichert wurden?
+dialog.export.restorePointSuccessful|Der Wiederherstellungspunkt wurde erfolgreich erstellt!
+dialog.export.error|Fehler beim Exportieren
+dialog.export.alreadyExported1|Die folgenden Einträge wurden nicht exportiert, da sie bereits exportiert wurden
+dialog.export.alreadyExported2|Soll der Exportordner geöffnet werden?
+
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
 frame.title.error|Fehler
+frame.title.success|Erfolg
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
@@ -111,6 +124,7 @@ window.main.actionAvailability.noGenreAvailable|Deaktiviert -> Kein Genre verfü
 window.main.actionAvailability.noLicenceAvailable|Deaktiviert -> Keine Lizent verfügbar
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
+window.main.actionAvailability.notAvailableToCreateRestorePoint|Deaktiviert -> Keine mods verfügbar, für die ein Wiederherstellungspunkt erstellt werden könnte
 
 window.settings.button.back.toolTip|Klicke, um zum Hauptmenü zurück zu kommen
 window.settings.button.resetSettings.label|Einstellungen zurücksetzen

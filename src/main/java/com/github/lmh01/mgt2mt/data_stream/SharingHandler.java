@@ -24,10 +24,16 @@ public class SharingHandler {
      * @return Returns true when the genre has been exported successfully. Returns false when the genre has already been exported.
      * @throws IOException
      */
-    public static boolean exportGenre(String genreName) throws IOException {
+    public static boolean exportGenre(String genreName, boolean exportAsRestorePoint) throws IOException {
         int genreId = AnalyzeExistingGenres.getGenreIdByName(genreName);
         int positionInGenreList = AnalyzeExistingGenres.getPositionInGenreListByGenreId(genreId);
-        final String EXPORTED_GENRE_MAIN_FOLDER_PATH = Settings.MGT2_MOD_MANAGER_PATH + "//Export//Genres//" + genreName;
+        String exportFolder;
+        if(exportAsRestorePoint){
+            exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+        }else{
+            exportFolder = Utils.getMGT2ModToolExportFolder();
+        }
+        final String EXPORTED_GENRE_MAIN_FOLDER_PATH = exportFolder + "//Genres//" + genreName;
         final String EXPORTED_GENRE_DATA_FOLDER_PATH = EXPORTED_GENRE_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
@@ -158,8 +164,14 @@ public class SharingHandler {
      * Exports the specified licence
      * @param licenceName The licence that should be exported
      */
-    public static boolean exportLicence(String licenceName) throws IOException {
-        final String EXPORTED_LICENCE_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Licence//" + licenceName;
+    public static boolean exportLicence(String licenceName, boolean exportAsRestorePoint) throws IOException {
+        String exportFolder;
+        if(exportAsRestorePoint){
+            exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+        }else{
+            exportFolder = Utils.getMGT2ModToolExportFolder();
+        }
+        final String EXPORTED_LICENCE_MAIN_FOLDER_PATH = exportFolder + "//Licence//" + licenceName;
         File fileExportMainFolder = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH);
         File fileExportedLicence = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH + "//licence.txt");
         fileExportMainFolder.mkdirs();
@@ -211,9 +223,15 @@ public class SharingHandler {
      * @param publisherNameEN The publisher name that should be exported.
      * @return Returns true when the publisher has been exported successfully. Returns false when the publisher has already been exported.
      */
-    public static boolean exportPublisher(String publisherNameEN) throws IOException {
+    public static boolean exportPublisher(String publisherNameEN, boolean exportAsRestorePoint) throws IOException {
         Map<String, String> singlePublisherMap = AnalyzeExistingPublishers.getSinglePublisherByNameMap(publisherNameEN);
-        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Publishers//" + publisherNameEN;
+        String exportFolder;
+        if(exportAsRestorePoint){
+            exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+        }else{
+            exportFolder = Utils.getMGT2ModToolExportFolder();
+        }
+        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//Publishers//" + publisherNameEN;
         final String EXPORTED_PUBLISHER_DATA_FOLDER_PATH = EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_PUBLISHER_DATA_FOLDER_PATH);
         File fileExportedPublisher = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//publisher.txt");
@@ -320,9 +338,15 @@ public class SharingHandler {
      * @param themeNameEn The english name of the theme that should be exported
      * @return Returns true when the theme has been exported successfully. Returns false when the theme has already been exported.
      */
-    public static boolean exportTheme(String themeNameEn) throws IOException {
+    public static boolean exportTheme(String themeNameEn, boolean exportAsRestorePoint) throws IOException {
         Map<String, String> map = AnalyzeExistingThemes.getSingleThemeByNameMap(themeNameEn);
-        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Themes//" + map.get("NAME EN");
+        String exportFolder;
+        if(exportAsRestorePoint){
+            exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+        }else{
+            exportFolder = Utils.getMGT2ModToolExportFolder();
+        }
+        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//Themes//" + map.get("NAME EN");
         File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
         File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//theme.txt");
         if(fileExportedTheme.exists()){
@@ -403,10 +427,16 @@ public class SharingHandler {
     /**
      * Opens a GUI where the user can select what engine features should be exported. Exports these engine features.
      */
-    public static boolean exportEngineFeature(String engineFeatureName){
+    public static boolean exportEngineFeature(String engineFeatureName, boolean exportAsRestorePoint){
         try{
             Map<String, String> map = AnalyzeExistingEngineFeatures.getSingleEngineFeatureByNameMap(engineFeatureName);
-            final String EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Engine features//" + map.get("NAME EN");
+            String exportFolder;
+            if(exportAsRestorePoint){
+                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+            }else{
+                exportFolder = Utils.getMGT2ModToolExportFolder();
+            }
+            final String EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH = exportFolder + "//Engine features//" + map.get("NAME EN");
             File fileExportFolderPath = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH);
             File fileExportedEngineFeature = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH + "//engineFeature.txt");
             if(fileExportedEngineFeature.exists()){
@@ -463,10 +493,16 @@ public class SharingHandler {
     /**
      * Opens a GUI where the user can select what gameplay features should be exported. Exports these gameplay features.
      */
-    public static boolean exportGameplayFeature(String gameplayFeatureName){
+    public static boolean exportGameplayFeature(String gameplayFeatureName, boolean exportAsRestorePoint){
         try{
             Map<String, String> map = AnalyzeExistingGameplayFeatures.getSingleGameplayFeatureByNameMap(gameplayFeatureName);
-            final String EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH = Utils.getMGT2ModToolExportFolder() + "//Gameplay features//" + map.get("NAME EN");
+            String exportFolder;
+            if(exportAsRestorePoint){
+                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+            }else{
+                exportFolder = Utils.getMGT2ModToolExportFolder();
+            }
+            final String EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH = exportFolder + "//Gameplay features//" + map.get("NAME EN");
             File fileExportFolderPath = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH);
             File fileExportedGameplayFeature = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH + "//gameplayFeature.txt");
             if(fileExportedGameplayFeature.exists()){
@@ -489,8 +525,8 @@ public class SharingHandler {
             bw.write("[GRAPHIC]" + map.get("GRAPHIC") + System.getProperty("line.separator"));
             bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
             bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
-            bw.write("[BAD]" + getGenreNames(Utils.convertGenreNamesToId(map.get("BAD"))) + System.getProperty("line.separator"));
-            bw.write("[GOOD]" + getGenreNames(Utils.convertGenreNamesToId(map.get("GOOD"))) + System.getProperty("line.separator"));
+            bw.write("[BAD]" + getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
+            bw.write("[GOOD]" + getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
             bw.close();
             ChangeLog.addLogEntry(29, map.get("NAME EN"));
             return true;
@@ -558,12 +594,12 @@ public class SharingHandler {
      */
     private static String getGenreNames(String genreNumbersRaw){
         StringBuilder genreNames = new StringBuilder();
-        int charPositon = 0;
+        int charPosition = 0;
         StringBuilder currentNumber = new StringBuilder();
         for(int i = 0; i<genreNumbersRaw.length(); i++){
-            if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals("<")){
+            if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals("<")){
                 //Nothing happens
-            }else if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals(">")){
+            }else if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals(">")){
                 int genreNumber = Integer.parseInt(currentNumber.toString().replaceAll("[^0-9]", ""));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + genreNumber);
@@ -571,14 +607,14 @@ public class SharingHandler {
                 genreNames.append("<").append(AnalyzeExistingGenres.getGenreNameById(genreNumber)).append(">");
                 currentNumber = new StringBuilder();
             }else{
-                currentNumber.append(genreNumbersRaw.charAt(charPositon));
+                currentNumber.append(genreNumbersRaw.charAt(charPosition));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("currentNumber: " + currentNumber);
                 }
             }
-            charPositon++;
+            charPosition++;
         }
-        String.valueOf(genreNumbersRaw.charAt(1));
+        //String.valueOf(genreNumbersRaw.charAt(1));
         return genreNames.toString();
     }
 }
