@@ -33,7 +33,7 @@ public class SharingHandler {
         }else{
             exportFolder = Utils.getMGT2ModToolExportFolder();
         }
-        final String EXPORTED_GENRE_MAIN_FOLDER_PATH = exportFolder + "//Genres//" + genreName;
+        final String EXPORTED_GENRE_MAIN_FOLDER_PATH = exportFolder + "//Genres//" + genreName.replaceAll("[^a-zA-Z0-9]", "");
         final String EXPORTED_GENRE_DATA_FOLDER_PATH = EXPORTED_GENRE_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_GENRE_DATA_FOLDER_PATH);
         File fileExportedGenre = new File(EXPORTED_GENRE_MAIN_FOLDER_PATH + "//genre.txt");
@@ -171,7 +171,7 @@ public class SharingHandler {
         }else{
             exportFolder = Utils.getMGT2ModToolExportFolder();
         }
-        final String EXPORTED_LICENCE_MAIN_FOLDER_PATH = exportFolder + "//Licence//" + licenceName;
+        final String EXPORTED_LICENCE_MAIN_FOLDER_PATH = exportFolder + "//Licence//" + licenceName.replaceAll("[^a-zA-Z0-9]", "");
         File fileExportMainFolder = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH);
         File fileExportedLicence = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH + "//licence.txt");
         fileExportMainFolder.mkdirs();
@@ -231,7 +231,7 @@ public class SharingHandler {
         }else{
             exportFolder = Utils.getMGT2ModToolExportFolder();
         }
-        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//Publishers//" + publisherNameEN;
+        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//Publishers//" + publisherNameEN.replaceAll("[^a-zA-Z0-9]", "");
         final String EXPORTED_PUBLISHER_DATA_FOLDER_PATH = EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//DATA//";
         File fileDataFolder = new File(EXPORTED_PUBLISHER_DATA_FOLDER_PATH);
         File fileExportedPublisher = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//publisher.txt");
@@ -346,7 +346,7 @@ public class SharingHandler {
         }else{
             exportFolder = Utils.getMGT2ModToolExportFolder();
         }
-        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//Themes//" + map.get("NAME EN");
+        final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//Themes//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
         File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
         File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//theme.txt");
         if(fileExportedTheme.exists()){
@@ -436,7 +436,7 @@ public class SharingHandler {
             }else{
                 exportFolder = Utils.getMGT2ModToolExportFolder();
             }
-            final String EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH = exportFolder + "//Engine features//" + map.get("NAME EN");
+            final String EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH = exportFolder + "//Engine features//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH);
             File fileExportedEngineFeature = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH + "//engineFeature.txt");
             if(fileExportedEngineFeature.exists()){
@@ -502,7 +502,7 @@ public class SharingHandler {
             }else{
                 exportFolder = Utils.getMGT2ModToolExportFolder();
             }
-            final String EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH = exportFolder + "//Gameplay features//" + map.get("NAME EN");
+            final String EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH = exportFolder + "//Gameplay features//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH);
             File fileExportedGameplayFeature = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH + "//gameplayFeature.txt");
             if(fileExportedGameplayFeature.exists()){

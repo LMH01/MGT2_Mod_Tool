@@ -618,6 +618,7 @@ public class SharingManager {
             }
             if(currentLineNumber == 10){
                 stringBuilder.append(System.getProperty("line.separator"));
+                currentLineNumber = 0;
             }
             stringBuilder.append(string);
             currentLineNumber++;
