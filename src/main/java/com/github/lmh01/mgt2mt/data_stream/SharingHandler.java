@@ -527,6 +527,12 @@ public class SharingHandler {
             bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
             bw.write("[BAD]" + getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
             bw.write("[GOOD]" + getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
+            if(map.get("NO_ARCADE") != null){
+                bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
+            }
+            if(map.get("NO_MOBILE") != null){
+                bw.write("[NO_MOBILE]");bw.write(System.getProperty("line.separator"));
+            }
             bw.close();
             ChangeLog.addLogEntry(29, map.get("NAME EN"));
             return true;
