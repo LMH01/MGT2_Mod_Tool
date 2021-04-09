@@ -110,7 +110,7 @@ public class AnalyzeExistingGameplayFeatures {
     public static String[] getCustomGameplayFeaturesString(){
         ArrayList<String> arrayListActiveGameplayFeatures = new ArrayList<>();
         List<Map<String, String>> listGameplayFeatures = gameplayFeatures;
-        for(int i=58; i<listGameplayFeatures.size(); i++){
+        for(int i=61; i<listGameplayFeatures.size(); i++){
             Map<String, String> map = listGameplayFeatures.get(i);
             arrayListActiveGameplayFeatures.add(map.get("NAME EN"));
         }

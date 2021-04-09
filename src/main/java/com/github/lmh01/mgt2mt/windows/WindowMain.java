@@ -303,7 +303,7 @@ public class WindowMain {
                     noCustomPublishersAvailable = false;
                 }
                 List<Map<String, String>> currentGameplayFeatures = AnalyzeExistingGameplayFeatures.gameplayFeatures;
-                if(currentGameplayFeatures.size() > 58){
+                if(currentGameplayFeatures.size() > 61){
                     noCustomGameplayFeaturesAvailable = false;
                 }
                 List<Map<String, String>> currentEngineFeatures = AnalyzeExistingEngineFeatures.engineFeatures;
