@@ -103,10 +103,19 @@ dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|Der ausgew�
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|Der ausgewählte Ordner enthält nicht die
 dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>Datei.<br>Bitte wähle den richtigen Ordner.
 
+dialog.updateChecker.noUpdateAvailable|<html>Du benutzt die neueste Version. Kein Update verfügbar.
+dialog.updateChecker.noUpdateAvailable.title|Kein Update verfügbar
+dialog.updateChecker.keyFeatures|Haupt-Neuerungen:
+dialog.updateChecker.updateAvailable|<html>Es wird empfohlen, immer die neueste Version zu verwenden, um dieses Tool mit MGT2 kompatibel zu halten.<br><br>Möchtest du das Github-Repository öffnen, um die neueste Version herunterzuladen?
+dialog.updateChecker.updateAvailable.title|Neue Version verfügbar
+dialog.updateChecker.updateAvailable.versionType.ver1|Eine neue Version ist verfügbar:
+dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version ist verfügbar:
+
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
 frame.title.error|Fehler
 frame.title.success|Erfolg
+frame.title.about|Über
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
@@ -213,6 +222,28 @@ window.main.actionAvailability.noLicenceAvailable|Deaktiviert -> Keine Lizent ve
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Deaktiviert -> Keine mods verfügbar, für die ein Wiederherstellungspunkt erstellt werden könnte
+
+window.uninstall.labelDescription|<html>Wähle aus, was entfernt werden soll.<br>Nach der Deinstallation wird das Programm beendet.
+window.uninstall.checkBoxDeleteBackups|Backups löschen
+window.uninstall.checkBoxDeleteBackups.toolTip|Aktiviere diese Option, um alle Backups bei der Deinstallation zu löschen
+window.uninstall.checkBoxRevertAllMods|Alle Mods entfernen
+window.uninstall.checkBoxRevertAllMods.toolTip|Aktiviere diese Option, um alle Mods bei der Deinstallation zu löschen
+window.uninstall.checkBoxDeleteConfigFiles|Konfigurationsdateien löschen
+window.uninstall.checkBoxDeleteConfigFiles.toolTip|Aktiviere diese Option, um alle Konfigurationsdateien bei der Deinstallation zu löschen
+window.uninstall.checkBoxDeleteExports|Exporte löschen
+window.uninstall.checkBoxDeleteExports.toolTip|Aktiviere diese Option, um alle Exports bei der Deinstallation zu löschen
+window.uninstall.title|Deinstallieren
+window.uninstall.nothingSelected|Wähle bitte mindestens eine Sache aus, die deinstalliert werden soll
+window.uninstall.nothingSelected.title|Deinstallation nicht möglich
+window.uninstall.confirmMessage.firstPart|<html>Warnung!<br>Bist du sicher, dass du Folgendes tun möchtest:
+window.uninstall.confirmMessage.secondPart|Dies kann nicht rückgängig gemacht werden!
+window.uninstall.confirmMessage.title|Bestätigen der Deinstallation
+window.uninstall.uninstallIncomplete|Bei der Deinstallation ist ein Problem aufgetreten:
+window.uninstall.uninstallIncomplete.title|Deinstallation unvollstäding
+window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved|Genre konnte nicht entfernt werden:
+window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved|Publisher konnte nicht entfernt werden:
+window.uninstall.uninstallSuccessful|Ihre ausgewählten Dateien wurden erfolgreich deinstalliert!
+window.uninstall.uninstallSuccessful.title|Deinstallation erfolgreich
 
 window.settings.button.back.toolTip|Klicke, um zum Hauptmenü zurück zu kommen
 window.settings.button.resetSettings.label|Einstellungen zurücksetzen

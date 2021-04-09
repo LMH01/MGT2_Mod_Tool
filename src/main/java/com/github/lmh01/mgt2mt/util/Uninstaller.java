@@ -14,40 +14,40 @@ public class Uninstaller {
      * Opens a gui where the user can select what should be removed. Selected items are then removed and the tool closes.
      */
     public static void uninstall(){
-        JLabel labelDescription = new JLabel("<html>Select what should be removed<br>After uninstalling the program is exited");
-        JCheckBox checkboxDeleteBackups = new JCheckBox("Delete Backups");
+        JLabel labelDescription = new JLabel(I18n.INSTANCE.get("window.uninstall.labelDescription"));
+        JCheckBox checkboxDeleteBackups = new JCheckBox(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteBackups"));
         checkboxDeleteBackups.setSelected(true);
-        checkboxDeleteBackups.setToolTipText("Check to delete all backups upon uninstalling");
-        JCheckBox checkboxRevertAllMods = new JCheckBox("Revert all mods");
+        checkboxDeleteBackups.setToolTipText(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteBackups.toolTip"));
+        JCheckBox checkboxRevertAllMods = new JCheckBox(I18n.INSTANCE.get("window.uninstall.checkBoxRevertAllMods"));
         checkboxRevertAllMods.setSelected(true);
-        checkboxRevertAllMods.setToolTipText("Check to revert all mods upon uninstalling");
-        JCheckBox checkboxDeleteConfigFiles = new JCheckBox("Delete config files");
+        checkboxRevertAllMods.setToolTipText(I18n.INSTANCE.get("window.uninstall.checkBoxRevertAllMods.toolTip"));
+        JCheckBox checkboxDeleteConfigFiles = new JCheckBox(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteConfigFiles"));
         checkboxDeleteConfigFiles.setSelected(true);
-        checkboxDeleteConfigFiles.setToolTipText("Check to delete the config file.");
-        JCheckBox checkboxDeleteExports = new JCheckBox("Delete Exports");
+        checkboxDeleteConfigFiles.setToolTipText(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteConfigFiles.toolTip"));
+        JCheckBox checkboxDeleteExports = new JCheckBox(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteExports"));
         checkboxDeleteExports.setSelected(true);
-        checkboxDeleteExports.setToolTipText("Check to delete all exports");
+        checkboxDeleteExports.setToolTipText(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteExports.toolTip"));
         Object[] params = {labelDescription, checkboxDeleteBackups, checkboxRevertAllMods, checkboxDeleteConfigFiles, checkboxDeleteExports};
         while(true){
-            if(JOptionPane.showConfirmDialog(null, params, "Uninstall", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("window.uninstall.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                 boolean uninstallFailed = false;
                 StringBuilder stringActions = new StringBuilder();
                 if(checkboxDeleteBackups.isSelected()){
-                    stringActions.append("Delete Backups").append(System.getProperty("line.separator"));
+                    stringActions.append(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteBackups")).append(System.getProperty("line.separator"));
                 }
                 if(checkboxRevertAllMods.isSelected()){
-                    stringActions.append("Revert All Mods").append(System.getProperty("line.separator"));
+                    stringActions.append(I18n.INSTANCE.get("window.uninstall.checkBoxRevertAllMods")).append(System.getProperty("line.separator"));
                 }
                 if(checkboxDeleteConfigFiles.isSelected()){
-                    stringActions.append("Delete config files").append(System.getProperty("line.separator"));
+                    stringActions.append(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteConfigFiles")).append(System.getProperty("line.separator"));
                 }
                 if(checkboxDeleteExports.isSelected()){
-                    stringActions.append("Delete exports").append(System.getProperty("line.separator"));
+                    stringActions.append(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteExports")).append(System.getProperty("line.separator"));
                 }
                 if(!checkboxDeleteBackups.isSelected() && !checkboxRevertAllMods.isSelected() && !checkboxDeleteConfigFiles.isSelected() && !checkboxDeleteExports.isSelected()){
-                    JOptionPane.showMessageDialog(null, "Please select at least one thing that should be uninstalled", "Unable to uninstall", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.nothingSelected"), I18n.INSTANCE.get("window.uninstall.nothingSelected.title"), JOptionPane.ERROR_MESSAGE);
                 }else{
-                    if(JOptionPane.showConfirmDialog(null, "Warning!\nAre you sure that you wan't to do the following:\n\n" + stringActions + "\nThis can't be reverted!", "Confirm uninstall", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.confirmMessage.firstPart") + "\n\n" + stringActions + "\n" + I18n.INSTANCE.get("window.uninstall.confirmMessage.secondPart"), I18n.INSTANCE.get("window.uninstall.confirmMessage.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                         LOGGER.info("Uninstalling...");
                         StringBuilder uninstallFailedExplanation = new StringBuilder();
                         if(checkboxRevertAllMods.isSelected()){
@@ -73,9 +73,9 @@ public class Uninstaller {
                             LOGGER.info("Exports have been deleted.");
                         }
                         if(uninstallFailed){
-                            JOptionPane.showMessageDialog(null, "There was a problem while uninstalling:\n\n" + uninstallFailedExplanation, "Uninstall incomplete", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
                         }else{
-                            JOptionPane.showMessageDialog(null, "Your selected files have been uninstalled successfully!", "Uninstall successful", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallSuccessful"), I18n.INSTANCE.get("window.uninstall.uninstallSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                         }
                         System.exit(0);
                     }
@@ -99,7 +99,7 @@ public class Uninstaller {
                 LOGGER.info("Game files have been restored to original.");
             } catch (IOException e) {
                 LOGGER.info("Genre could not be removed: " + e.getMessage());
-                uninstallFailedExplanation.append("Genre could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
                 e.printStackTrace();
                 uninstallFailed = true;
             }
@@ -111,7 +111,7 @@ public class Uninstaller {
                 LOGGER.info("Publisher files have been restored to original.");
             } catch (IOException e) {
                 LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                uninstallFailedExplanation.append("Publisher could not be removed: ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
                 e.printStackTrace();
                 uninstallFailed = true;
             }

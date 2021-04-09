@@ -13,6 +13,6 @@ public class About {
         if(UpdateChecker.updateAvailable){
             stringBuilder.append("Newest version: ").append(UpdateChecker.newestVersion).append(System.getProperty("line.separator"));
         }
-        JOptionPane.showMessageDialog(null, stringBuilder.toString(), "About", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("frame.title.about"), JOptionPane.INFORMATION_MESSAGE);
     }
 }

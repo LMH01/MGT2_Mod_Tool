@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -27,10 +28,10 @@ public class UpdateChecker {
                     String versionType;
                     if(Settings.updateBranch.equals("Release")){
                         url = new URL(RELEASE_UPDATE_URL);
-                        versionType = "A new release is available: ";
+                        versionType =  I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver1") + " ";
                     }else{
                         url = new URL(ALPHA_UPDATE_URL);
-                        versionType = "A new alpha version is available: ";
+                        versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver2" + " ");
                     }
                     Scanner scanner = new Scanner(url.openStream());
                     String currentLine = scanner.nextLine();
@@ -49,7 +50,7 @@ public class UpdateChecker {
                                 }
                                 newestVersionKeyFeatures = stringBuilder.toString();
 
-                                if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\nKey features:\n" + newestVersionKeyFeatures + "\nIt is recommended to always use the newest version to keep this tool compatible with MGT2.\n\nDo you wan't to open the github repository to download the newest version?", "New version available", JOptionPane.YES_NO_OPTION) == 0){
+                                if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0){
                                     try {
                                         Utils.openGithubPage();
                                     } catch (Exception e) {
@@ -63,7 +64,7 @@ public class UpdateChecker {
                     if(!updateAvailable){
                         LOGGER.info("You are using the newest version");
                         if(showNoUpdateAvailableDialog){
-                            JOptionPane.showMessageDialog(null, "You are using the newest version.\nNo update available.", "No update available", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.noUpdateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.noUpdateAvailable.title"), JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 } catch (IOException e) {
