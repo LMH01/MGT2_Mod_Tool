@@ -130,7 +130,7 @@ settings.mgt2FolderNotFound|<html>Der Mad Games Tycoon Ordner wurde nicht gefund
 window.main.tile|MGT2 Mod Tool
 window.main.file|Datei
 window.main.file.settings|Einstellungen
-window.main.file.updateCheck|Auf Updates Prüfen
+window.main.file.updateCheck|Auf Updates prüfen
 window.main.file.uninstall|Deinstallieren
 window.main.file.uninstall.toolTip|<html>Enthält Optionen, mit denen alle Mod-Manager-Dateien<br>entfernt und alle Änderungen an den Spieledateien rückgängig gemacht werden können.
 window.main.file.about|Über
@@ -138,28 +138,28 @@ window.main.mods|Mods
 window.main.mods.import|Importieren
 window.main.mods.import.toolTip|<html>Klick hier, um Ordner auszuwählen, in denen Mods gespeichert sind, die du importieren möchtest.<br>Die ausgewählten Ordner werden dann nach kompatiblen Mods durchsucht und am Ende<br>wird eine Zusammenfassung der gefundenen Mods angezeigt, die importiert werden können.
 window.main.mods.genres|Genres
-window.main.mods.genres.addGenre|Genre Hinzufügen
-window.main.mods.genres.addRandomGenre|Zufälliges Genre Hinzufügen
+window.main.mods.genres.addGenre|Genre hinzufügen
+window.main.mods.genres.addRandomGenre|Zufälliges Genre hinzufügen
 window.main.mods.genres.addRandomGenre.toolTip|<html>Klicken hier, um ein zufälliges Genre hinzuzufügen.<br>Du musst nur einen Namen und eine Beschreibung eingeben.<br>Optional können auch ein Symbol oder Screenshots hinzugefügt werden.
-window.main.mods.genres.removeGenre|Genre Entfernen
+window.main.mods.genres.removeGenre|Genre entfernen
 window.main.mods.themes|Themen
-window.main.mods.themes.addTheme|Thema Hinzufügen
-window.main.mods.themes.removeTheme|Thema Entfernen
+window.main.mods.themes.addTheme|Thema hinzufügen
+window.main.mods.themes.removeTheme|Thema entfernen
 window.main.mods.publisher|Publisher
-window.main.mods.publisher.addPublisher|Publisher Hinzufügen
-window.main.mods.publisher.removePublisher|Publisher Entfernen
+window.main.mods.publisher.addPublisher|Publisher hinzufügen
+window.main.mods.publisher.removePublisher|Publisher entfernen
 window.main.mods.engineFeatures|Engine Features
-window.main.mods.engineFeatures.addEngineFeature|Engine Feature Hinzufügen
-window.main.mods.engineFeatures.removeEngineFeature|Engine Feature Entfernen
+window.main.mods.engineFeatures.addEngineFeature|Engine Feature hinzufügen
+window.main.mods.engineFeatures.removeEngineFeature|Engine Feature entfernen
 window.main.mods.gameplayFeatures|Gameplay Features
-window.main.mods.gameplayFeatures.addGameplayFeature|Gameplay Feature Hinzufügen
-window.main.mods.gameplayFeatures.removeGameplayFeature|Gameplay Feature Entfernen
+window.main.mods.gameplayFeatures.addGameplayFeature|Gameplay Feature hinzufügen
+window.main.mods.gameplayFeatures.removeGameplayFeature|Gameplay Feature entfernen
 window.main.mods.licences|Lizenzen
-window.main.mods.licences.addLicence|Lizenz Hinzufügen
-window.main.mods.licences.removeLicence|Lizenz Entfernen
+window.main.mods.licences.addLicence|Lizenz hinzufügen
+window.main.mods.licences.removeLicence|Lizenz entfernen
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click, um eine genre id zu der NPC_Games_list hinzuzufügen.
-window.main.mods.addCompanyIcon|Firmenbild Hinzufügen
+window.main.mods.addCompanyIcon|Firmenbild hinzufügen
 window.main.share|Teilen
 window.main.share.export|Exportieren
 window.main.share.export.genre|Genre
@@ -168,49 +168,49 @@ window.main.share.export.theme|Thema
 window.main.share.export.engineFeature|Engine Feature
 window.main.share.export.gameplayFeature|Gameplay Feature
 window.main.share.export.licence|Lizenz
-window.main.share.export.exportAll|Alles Exportieren
+window.main.share.export.exportAll|Alles exportieren
 window.main.share.export.exportAll.toolTip|Klicke hier, um alles zu exportieren, was mit diesem Tool erstellt wurde
-window.main.share.openExportFolder|Export Ordner Öffnen
-window.main.share.deleteAllExport|All Exports Löschen
+window.main.share.openExportFolder|Export Ordner öffnen
+window.main.share.deleteAllExport|All Exports löschen
 window.main.backup|Backup
-window.main.backup.createBackup|Backup Erstellen
-window.main.backup.createBackup.createFullBackup|Komplettes Backup Erstellen
+window.main.backup.createBackup|Backup erstellen
+window.main.backup.createBackup.createFullBackup|Komplettes Backup erstellen
 window.main.backup.createBackup.createFullBackup.toolTip|Klicke hier, um ein Backup aus den Dateien zu erstellen, die mit diesem Tool geändert werden können.
-window.main.backup.createBackup.createGenreBackup|Backup Der Genre Datei Erstellen
-window.main.backup.createBackup.createThemeFilesBackup|Backup Der Themen Dateien Erstellen
-window.main.backup.createBackup.createSaveGameBackup|Backup Der Spielstände Erstellen
-window.main.backup.restoreBackup|Backup Wiederherstellen
-window.main.backup.restoreBackup.restoreInitialBackup|Initial Backup Wiederherstellen
+window.main.backup.createBackup.createGenreBackup|Backup Der Genre Datei erstellen
+window.main.backup.createBackup.createThemeFilesBackup|Backup Der Themen Dateien erstellen
+window.main.backup.createBackup.createSaveGameBackup|Backup Der Spielstände erstellen
+window.main.backup.restoreBackup|Backup wiederherstellen
+window.main.backup.restoreBackup.restoreInitialBackup|Initial Backup wiederherstellen
 window.main.backup.restoreBackup.restoreInitialBackup.toolTip|<html>Klicke hier, um die erste Sicherung wiederherzustellen, die beim ersten Start des Mod-Tools erstellt wurde.<br>Die Spielstand-Backups werden nicht wiederhergestellt.
-window.main.backup.restoreBackup.restoreLatestBackup|Letztes Backup Wiederherstellen
+window.main.backup.restoreBackup.restoreLatestBackup|Letztes Backup wiederherstellen
 window.main.backup.restoreBackup.restoreLatestBackup.toolTip|<html>Klicke hier, um das zuletzt erstellte Backup wiederherzustellen.<br>Die Spielstand-Backups werden nicht wiederhergestellt.
-window.main.backup.restoreBackup.restoreSaveGameBackup|Spielstand-Backups Wiederherstellen
+window.main.backup.restoreBackup.restoreSaveGameBackup|Spielstand-Backups wiederherstellen
 window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip|Klicke hier, um einen Spielstand auszuwählen, von welchem das Backup wiederhergestellt werden soll.
 window.main.backup.modRestorePoint|Mod-Wiederherstellungspunkt
-window.main.backup.modRestorePoint.createModRestorePoint|Mod-Wiederherstellungspunkt Erstellen
+window.main.backup.modRestorePoint.createModRestorePoint|Mod-Wiederherstellungspunkt erstellen
 window.main.backup.modRestorePoint.createModRestorePoint.toolTip|<html> Klicke hier, um einen Mod-Wiederherstellungspunkt zu erstellen<br>Wenn ein Wiederherstellungspunkt gesetzt ist, können alle aktuell installierten Mods<br>später wiederhergestellt werden. Nützlich, wenn das Spiel aktualisiert wurde und die Mods verloren gegangen sind.
-window.main.backup.modRestorePoint.restoreModRestorePoint|Wiederherstellungspunkt Wiederherstellen
+window.main.backup.modRestorePoint.restoreModRestorePoint|Wiederherstellungspunkt wiederherstellen
 window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip|<html>Klicke hier, um alle derzeit installierten Mods auf dem zuvor festgelegten Wiederherstellungspunkt zu setzen
 window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip|<html>Um den Widerherstellungspunkt wiederhestellen zu können, muss dieser erst erstellt werden!
-window.main.backup.deleteAllBackups|Alle Backups Löschen
+window.main.backup.deleteAllBackups|Alle Backups löschen
 window.main.backup.deleteAllBackups.toolTip|Klicke hier, um alle Backups zu löschen, die von dem Tool erstellt wurden.
-window.main.backup.openBackupFolder|Backup Ordner Öffnen
+window.main.backup.openBackupFolder|Backup Ordner öffnen
 window.main.backup.openBackupFolder.toolTip|<html>Clicke hier, um den Backup Ordner zu öffnen.<br>Alle Backups, die von dem Tool erstellt wurden sind hier gespeichert.<br>Nützlich, wenn mein ein Backup manuell wiederherstellen möchte.
 window.main.utilities|Nützliches
 window.main.utilities.experimentalFeatures|Experimentelle Funktionen
 window.main.utilities.experimentalFeatures.toolTip|Enthält Funktionen, die experimentell sind und Probleme oder Fehler verursachen können
-window.main.utilities.experimentalFeatures.replacePublisher|Publisher Mit Echten Publischern Ersetzen.
+window.main.utilities.experimentalFeatures.replacePublisher|Publisher mit echten Publischern ersetzen.
 window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Clicke hier, um die standart Publisher mit den "echten" Publishern zu ersetzen
-window.main.utilities.openGithubPage|Github Seite Öffnen
-window.main.utilities.openMGT2Folder|MGT2 Ordner Öffnen
-window.main.utilities.showActiveGenres|Aktive Genres Anzeigen
-window.main.utilities.showActiveThemes|Aktive Themen Anzeigen
-window.main.utilities.openGenresTXTFile|genres.txt Datei Öffnen
+window.main.utilities.openGithubPage|Github Seite öffnen
+window.main.utilities.openMGT2Folder|MGT2 Ordner öffnen
+window.main.utilities.showActiveGenres|Aktive Genres anzeigen
+window.main.utilities.showActiveThemes|Aktive Themen anzeigen
+window.main.utilities.openGenresTXTFile|genres.txt Datei öffnen
 window.main.utilities.openGenresById|Öffne Genres nach Id sortiert
 window.main.utilities.openGenresById.toolTip|<html>Klicke hier, um eine Datei zu öffnen, in der alle erkannten Genres nach ID aufgelistet sind.<br>Nützlich, wenn die Genre-ID für eine Funktion benötigt wird
-window.main.utilities.openLogFile|Änderungsprotokoll Öffnen
+window.main.utilities.openLogFile|Änderungsprotokoll öffnen
 window.main.utilities.openLogFile.toolTip|<html>Klicke hier, um das Änderungsprotokoll zu öffnen.<br>Zeigt alle Änderungen an, die an den Spieledateien vorgenommen wurden.
-window.main.utilities.openSaveGameFolder|Spielstand Ordner Öffnen
+window.main.utilities.openSaveGameFolder|Spielstand Ordner öffnen
 window.main.utilities.openSaveGameFolder.toolTip|Klicke hier, um den Ordner zu öffnen, wo die Spielstände gespeichert sind.
 window.main.actionAvailability.acceptMessageFirst|Deaktiviert -> Du musst erst akzeptieren, dass du die Nachricht gelesen hast!
 window.main.actionAvailability.noThemeAvailable|Deaktiviert -> Kein Thema verfügbar
