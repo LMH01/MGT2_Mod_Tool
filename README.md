@@ -119,8 +119,17 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     
     **Note: The selected image file has to be a `.png` file**
 ## Pictures
-This is how the summary looks like, when adding a genre
+####This is how the summary looks like, when adding a genre
 ![img](https://i.imgur.com/ahPNay5.png "Add genre summary")
 
-This is what the added genre looks like in the research menu
+####This is what the added genre looks like in the research menu
 ![img](https://i.imgur.com/eghBt4S.png "Add genre summary")
+
+####This is what the main window looks like
+![img](https://i.imgur.com/ZnQQ8G1.png "The main window")
+
+####This is what the import window could look like
+![img](https://i.imgur.com/RvDoupc.png "The import window")
+
+####This is what the mods menu looks like
+![img](https://i.imgur.com/pdIwEHw.png "The mods window")
