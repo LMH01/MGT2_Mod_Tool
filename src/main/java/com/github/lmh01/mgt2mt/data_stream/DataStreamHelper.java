@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -320,14 +321,23 @@ public class DataStreamHelper {
      */
     public static void deleteDirectory(File directoryToBeDeleted ){
         File[] allContents = directoryToBeDeleted.listFiles();
+        try{
+            ProgressBarHelper.initializeProgressBar(0, allContents.length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+        }catch (NullPointerException ignored){
+            ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+        }
+        int currentProgressBarValue = 0;
         if (allContents != null) {
             for (File file : allContents) {
                 deleteDirectory(file);
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Deleting file: " + file.getPath());
                 }
+                currentProgressBarValue++;
+                ProgressBarHelper.setValue(currentProgressBarValue);
             }
         }
+        ProgressBarHelper.resetProgressBar();
         directoryToBeDeleted.delete();
     }
 

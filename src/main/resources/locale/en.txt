@@ -128,6 +128,7 @@ progressBar.moddedLicences|Scanning for modded licences
 progressBar.moddedPublishers|Scanning for modded publishers
 progressBar.moddedThemes|Scanning for modded themes
 progressBar.startingExport|Starting export of
+progressBar.delete|Deleting:
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -157,6 +158,16 @@ textArea.licenceExportSuccessful|The following licence has been exported:
 textArea.themeExportFailed.alreadyExported|The following theme was not exported because it has already been exported:
 textArea.themeExportSuccessful|The following theme has been exported:
 textArea.ExportFailed.generalError.secondPart|the following error occurred:
+textArea.uninstalling|Uninstalling
+textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
+textArea.uninstalling.uninstallingAllMods.genre.success|Genre uninstalled:
+textArea.uninstalling.uninstallingAllMods.genre.failed|Uninstalling genre failed:
+textArea.uninstalling.uninstallingAllMods.publisher.success|Publisher uninstalled:
+textArea.uninstalling.uninstallingAllMods.publisher.failed|Uninstalling publisher failed:
+textArea.deleteModManagerFiles|Deleting all mod manager files
+textArea.deletingBackups|Deleting backups
+textArea.deletingSettings|Deleting settings
+textArea.deletingExports|Deleting exports
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?

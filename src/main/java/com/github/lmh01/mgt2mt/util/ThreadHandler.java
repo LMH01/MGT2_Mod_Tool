@@ -11,4 +11,5 @@ public class ThreadHandler {
     public static Runnable runnableExportPublisher = () -> OperationHelper.process((string) -> SharingHandler.exportPublisher(string, false), AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "exported", "Export", true);
     public static Runnable runnableExportGenre = () -> OperationHelper.process((string) -> SharingHandler.exportGenre(string, false), AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true);
     public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
+    public static Runnable runnableUninstall = () -> Uninstaller.uninstall();
 }

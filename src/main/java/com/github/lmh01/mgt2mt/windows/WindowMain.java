@@ -68,7 +68,11 @@ public class WindowMain {
         m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         JMenuItem m13 = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
         m13.setToolTipText(I18n.INSTANCE.get("window.main.file.uninstall.toolTip"));
-        m13.addActionListener(actionEvent -> Uninstaller.uninstall());
+        m13.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableUninstall);
+            thread.start();
+        });
         JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
         mb.add(m1);

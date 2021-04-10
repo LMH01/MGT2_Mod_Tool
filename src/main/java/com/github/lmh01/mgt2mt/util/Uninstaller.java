@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -49,28 +51,35 @@ public class Uninstaller {
                 }else{
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.confirmMessage.firstPart") + "\n\n" + stringActions + "\n" + I18n.INSTANCE.get("window.uninstall.confirmMessage.secondPart"), I18n.INSTANCE.get("window.uninstall.confirmMessage.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                         LOGGER.info("Uninstalling...");
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling"));
+                        ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.uninstalling"));
                         StringBuilder uninstallFailedExplanation = new StringBuilder();
                         if(checkboxRevertAllMods.isSelected()){
                             uninstallFailed = uninstallAllMods(uninstallFailedExplanation);
                         }
                         if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                             File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deleteModManagerFiles"));
                             DataStreamHelper.deleteDirectory(modManagerPath);
-                        }
-                        if(checkboxDeleteBackups.isSelected()){
-                            File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
-                            DataStreamHelper.deleteDirectory(backupFolder);
-                            LOGGER.info("Backups have been deleted.");
-                        }
-                        if(checkboxDeleteConfigFiles.isSelected()){
-                            File configFile = new File(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
-                            configFile.deleteOnExit();
-                            LOGGER.info("Settings file has been deleted.");
-                        }
-                        if(checkboxDeleteExports.isSelected()){
-                            File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
-                            DataStreamHelper.deleteDirectory(exportFolder);
-                            LOGGER.info("Exports have been deleted.");
+                        }else{
+                            if(checkboxDeleteBackups.isSelected()){
+                                File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingBackups"));
+                                DataStreamHelper.deleteDirectory(backupFolder);
+                                LOGGER.info("Backups have been deleted.");
+                            }
+                            if(checkboxDeleteConfigFiles.isSelected()){
+                                File configFile = new File(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingSettings"));
+                                configFile.deleteOnExit();
+                                LOGGER.info("Settings file has been deleted.");
+                            }
+                            if(checkboxDeleteExports.isSelected()){
+                                File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingExports"));
+                                DataStreamHelper.deleteDirectory(exportFolder);
+                                LOGGER.info("Exports have been deleted.");
+                            }
                         }
                         if(uninstallFailed){
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
@@ -93,30 +102,42 @@ public class Uninstaller {
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation){
         boolean uninstallFailed = false;
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+        String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
+        ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
+        int currentProgressBarValue = 0;
         for (String customGenre : customGenres) {
             try {
                 EditGenreFile.removeGenre(customGenre);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.success") + " " + customGenre);
                 LOGGER.info("Game files have been restored to original.");
             } catch (IOException e) {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
                 LOGGER.info("Genre could not be removed: " + e.getMessage());
                 uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
                 e.printStackTrace();
                 uninstallFailed = true;
             }
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
         }
-        String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         for (String customPublisher : customPublishers) {
             try {
                 EditPublishersFile.removePublisher(customPublisher);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.success") + " " + customPublisher);
                 LOGGER.info("Publisher files have been restored to original.");
             } catch (IOException e) {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
                 LOGGER.info("Publisher could not be removed: " + e.getMessage());
                 uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
                 e.printStackTrace();
                 uninstallFailed = true;
             }
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
         }
         Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
+        ProgressBarHelper.resetProgressBar();
         return uninstallFailed;
     }
 }

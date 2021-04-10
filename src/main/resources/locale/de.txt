@@ -128,6 +128,7 @@ progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
 progressBar.moddedPublishers|Scannen nach modifizierten Publishern
 progressBar.moddedThemes|Scannen nach modifizierten Themen
 progressBar.startingExport|Beginne export von
+progressBar.delete|Lösche:
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -157,6 +158,16 @@ textArea.licenceExportSuccessful|Die folgende Lizenz wurde exportiert:
 textArea.themeExportFailed.alreadyExported|Das folgende Thema wurde nicht exportiert, da es bereits exportiert wurde:
 textArea.themeExportSuccessful|Das folgende Thema wurde exportiert:
 textArea.ExportFailed.generalError.secondPart|ist folgender Fehler aufgetreten:
+textArea.uninstalling|Deinstalliere
+textArea.uninstalling.uninstallingAllMods|Deinstalliere alle Mods
+textArea.uninstalling.uninstallingAllMods.genre.success|Genre deinstalliert:
+textArea.uninstalling.uninstallingAllMods.genre.failed|Deinstallation des Genre fehlgeschlagen:
+textArea.uninstalling.uninstallingAllMods.publisher.success|Publisher deinstalliert:
+textArea.uninstalling.uninstallingAllMods.publisher.failed|Deinstallation des Publisher fehlgeschlagen:
+textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
+textArea.deletingBackups|Lösche Backups
+textArea.deletingSettings|Lösche Einstellungen
+textArea.deletingExports|Lösche Exports
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
