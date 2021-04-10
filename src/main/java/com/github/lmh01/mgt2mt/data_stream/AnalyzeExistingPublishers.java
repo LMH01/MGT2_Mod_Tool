@@ -1,5 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
 import java.io.IOException;
 import java.util.*;
@@ -42,10 +45,15 @@ public class AnalyzeExistingPublishers {
     public static String[] getCustomPublisherString(){
         ArrayList<String> arrayListActivePublishers = new ArrayList<>();
         List<Map<String, String>> listPublishers = getListMap();
+        ProgressBarHelper.initializeProgressBar(71, listPublishers.size(), I18n.INSTANCE.get("progressBar.moddedPublishers"));
         for(int i=71; i<listPublishers.size(); i++){
             Map<String, String> map = listPublishers.get(i);
             arrayListActivePublishers.add(map.get("NAME EN"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublisherFound") + " " + map.get("NAME EN"));
+            ProgressBarHelper.setValue(i);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublishersComplete"));
+        ProgressBarHelper.resetProgressBar();
         try{
             Collections.sort(arrayListActivePublishers);
         }catch(NullPointerException ignored){

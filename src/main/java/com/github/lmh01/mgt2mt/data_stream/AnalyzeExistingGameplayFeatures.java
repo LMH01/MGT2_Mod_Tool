@@ -1,5 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,10 +113,15 @@ public class AnalyzeExistingGameplayFeatures {
     public static String[] getCustomGameplayFeaturesString(){
         ArrayList<String> arrayListActiveGameplayFeatures = new ArrayList<>();
         List<Map<String, String>> listGameplayFeatures = gameplayFeatures;
+        ProgressBarHelper.initializeProgressBar(61, listGameplayFeatures.size(), I18n.INSTANCE.get("progressBar.moddedGameplayFeatures"));
         for(int i=61; i<listGameplayFeatures.size(); i++){
             Map<String, String> map = listGameplayFeatures.get(i);
             arrayListActiveGameplayFeatures.add(map.get("NAME EN"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedGameplayFeatureFound") + " " + map.get("NAME EN"));
+            ProgressBarHelper.setValue(i);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedGameplayFeaturesComplete"));
+        ProgressBarHelper.resetProgressBar();
         Collections.sort(arrayListActiveGameplayFeatures);
         String[] string = new String[arrayListActiveGameplayFeatures.size()];
         arrayListActiveGameplayFeatures.toArray(string);

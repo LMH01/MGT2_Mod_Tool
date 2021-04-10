@@ -92,5 +92,6 @@ public class OperationHelper {
             JOptionPane.showMessageDialog(null, "Error while exporting " + exportType + ": An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        TextAreaHelper.resetAutoScroll();
     }
 }

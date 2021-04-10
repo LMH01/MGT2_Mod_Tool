@@ -1,5 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +58,8 @@ public class AnalyzeExistingLicences {
 
             ArrayList<String> arrayListCustomThemes = new ArrayList<>();
 
+            ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"));
+            int currentProgressBarValue = 0;
             for (String s : allLicenceNamesByAlphabet) {
                 boolean defaultGenre = false;
                 for (String licenceName : ReadDefaultContent.getDefaultLicences()) {
@@ -68,8 +73,13 @@ public class AnalyzeExistingLicences {
                 }
                 if (!defaultGenre) {
                     arrayListCustomThemes.add(s);
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicenceFound") + " " + s);
                 }
+                currentProgressBarValue++;
+                ProgressBarHelper.setValue(currentProgressBarValue);
             }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicencesComplete"));
+            ProgressBarHelper.resetProgressBar();
             arrayListCustomThemes.remove("Chronicles of Nornio [5]");
             String[] string = new String[arrayListCustomThemes.size()];
             arrayListCustomThemes.toArray(string);

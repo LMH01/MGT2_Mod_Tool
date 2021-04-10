@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -147,6 +148,7 @@ public class DataStreamHelper {
         boolean firstLine = true;
         Map<Integer, String> mapCurrent = new HashMap<>();
         int currentLineNumber = 1;
+        ProgressBarHelper.setText("Analyzing file: " + file.getName());
         while((currentLine = br.readLine()) != null){
             if(firstLine){
                 currentLine = Utils.removeUTF8BOM(currentLine);
@@ -156,6 +158,7 @@ public class DataStreamHelper {
             currentLineNumber++;
         }
         br.close();
+        ProgressBarHelper.resetProgressBar();
         return mapCurrent;
     }
 

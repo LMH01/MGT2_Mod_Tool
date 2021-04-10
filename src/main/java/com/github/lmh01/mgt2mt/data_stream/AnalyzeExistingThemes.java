@@ -1,8 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.TranslationManager;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -144,8 +142,9 @@ public class AnalyzeExistingThemes {
 
     public static String[] getCustomThemesByAlphabet(){
         String[] allGenresById = getThemesByAlphabet();
-
         ArrayList<String> arrayListCustomThemes = new ArrayList<>();
+        ProgressBarHelper.initializeProgressBar(0, arrayListCustomThemes.size(), I18n.INSTANCE.get("progressBar.moddedThemes"));
+        int currentProgressBarValue = 0;
         for (String s : allGenresById) {
             boolean defaultGenre = false;
             for (String genre : DEFAULT_THEMES) {
@@ -156,8 +155,13 @@ public class AnalyzeExistingThemes {
             }
             if (!defaultGenre) {
                 arrayListCustomThemes.add(s);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedThemeFound") + " " + s);
             }
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedThemesComplete"));
+        ProgressBarHelper.resetProgressBar();
         String[] string = new String[arrayListCustomThemes.size()];
         arrayListCustomThemes.toArray(string);
         return string;

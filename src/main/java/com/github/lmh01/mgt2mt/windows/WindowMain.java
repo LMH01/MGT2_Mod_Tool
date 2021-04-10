@@ -48,11 +48,14 @@ public class WindowMain {
     private static final JMenuItem M_431_CREATE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
     private static final JMenuItem M_432_RESTORE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint"));
     private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
+    public static final JProgressBar PROGRESS_BAR = new JProgressBar();
+    public static final JTextArea TEXT_AREA = new JTextArea();
+    public static final JScrollPane SCROLL_PANE = new JScrollPane(TEXT_AREA, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 150);
-        frame.setMinimumSize(new Dimension(270, 150));
+        frame.setSize(300, 300);
+        frame.setMinimumSize(new Dimension(270, 250));
         frame.setLocationRelativeTo(null);
 
         //Creating the MenuBar and adding components
@@ -160,13 +163,41 @@ public class WindowMain {
         m31Export.add(M_315_EXPORT_GAMEPLAY_FEATURE);
         m31Export.add(M_316_EXPORT_LICENCE);
         m31Export.add(M_317_EXPORT_ALL);
-        M_311_EXPORT_GENRE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportGenre(string, false), AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true));
-        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportPublisher(string, false), AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "exported", "Export", true));
-        M_313_EXPORT_THEME.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportTheme(string, false), AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "themes", "exported", "Export", true));
-        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportEngineFeature(string, false), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "exported", "Export", true));
-        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportGameplayFeature(string, false), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "exported", "Export", true));
-        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> OperationHelper.process((string) -> SharingHandler.exportLicence(string, false), AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "exported", "Export", true));
-        M_317_EXPORT_ALL.addActionListener(actionEvent -> SharingManager.exportAll(false));
+        M_311_EXPORT_GENRE.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportGenre);
+            thread.start();
+        });
+        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportPublisher);
+            thread.start();
+        });
+        M_313_EXPORT_THEME.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportThemes);
+            thread.start();
+        });
+        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportEngineFeatures);
+            thread.start();
+        });
+        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportGameplayFeatures);
+            thread.start();
+        });
+        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportLicence);
+            thread.start();
+        });
+        M_317_EXPORT_ALL.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableExportAll);
+            thread.start();
+        });
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> {
             Utils.open(Utils.getMGT2ModToolExportFolder());
@@ -272,9 +303,18 @@ public class WindowMain {
         panel.add(buttonQuit);
         panel.add(labelModCreator);
 
+        //Progress Bar
+        JPanel panelMiddle = new JPanel();
+        panelMiddle.setLayout(new BoxLayout(panelMiddle, BoxLayout.Y_AXIS));
+        PROGRESS_BAR.setStringPainted(true);
+        TEXT_AREA.setEditable(false);
+        panelMiddle.add(PROGRESS_BAR);
+        panelMiddle.add(SCROLL_PANE);
+
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.NORTH, mb);
+        frame.getContentPane().add(BorderLayout.CENTER, panelMiddle);
         frame.setVisible(true);
     }
     public static void disposeFrame(){
@@ -450,6 +490,8 @@ public class WindowMain {
                 M_29_ADD_COMPANY_ICON.setToolTipText("");
                 M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
             }
+            ProgressBarHelper.resetProgressBar();
+            TextAreaHelper.resetAutoScroll();
         }catch (IOException e){
             LOGGER.info("Error" + e.getMessage());
             e.printStackTrace();

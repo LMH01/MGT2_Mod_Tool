@@ -120,6 +120,27 @@ frame.title.error|Fehler
 frame.title.success|Erfolg
 frame.title.about|Über
 
+progressBar.idle|Leerlauf
+progressBar.moddedEngineFeatures|Scannen nach modifizierten Engine Features
+progressBar.moddedGameplayFeatures|Scannen nach modifizierten Gameplay Features
+progressBar.moddedGenre|Scannen nach modifizierten Genres
+progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
+progressBar.moddedPublishers|Scannen nach modifizierten Publishern
+progressBar.moddedThemes|Scannen nach modifizierten Themen
+
+textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
+textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
+textArea.moddedGameplayFeatureFound|Modifiziertes Gameplay Feature gefunden:
+textArea.moddedGameplayFeaturesComplete|Scannen nach modifizierten Gameplay Features abgeschlossen
+textArea.moddedGenreFound|Modifiziertes Genre gefunden:
+textArea.moddedGenresComplete|Scannen nach modifizierten Genres abgeschlossen
+textArea.moddedPublisherFound|Modifizierten Publisher gefunden:
+textArea.moddedPublishersComplete|Scannen nach modifizierten Publishern abgeschlossen
+textArea.moddedLicenceFound|Modifizierte Lizenz gefunden:
+textArea.moddedLicencesComplete|Scannen nach modifizierten Lizenzen abgeschlossen
+textArea.moddedThemeFound|Modifiziertes Thema gefunden:
+textArea.moddedThemesComplete|Scannen nach modifizierten Themen abgeschlossen
+
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
 publisherHelper.replaceWithRealPublishers.success|Alle vorhandenen Publisher wurden mit den echten Publishern ersetzt.

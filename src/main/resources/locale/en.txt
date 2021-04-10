@@ -120,6 +120,27 @@ frame.title.error|Error
 frame.title.success|Success
 frame.title.about|About
 
+progressBar.idle|Idle
+progressBar.moddedEngineFeatures|Scanning for modded engine features
+progressBar.moddedGameplayFeatures|Scanning for modded gameplay features
+progressBar.moddedGenre|Scanning for modded gameplay features
+progressBar.moddedLicences|Scanning for modded licences
+progressBar.moddedPublishers|Scanning for modded publishers
+progressBar.moddedThemes|Scanning for modded themes
+
+textArea.moddedEngineFeatureFound|Modded engine feature found:
+textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
+textArea.moddedGameplayFeatureFound|Modded gameplay feature found:
+textArea.moddedGameplayFeaturesComplete|Scanning for modded gameplay features complete
+textArea.moddedGenreFound|Modded genre found:
+textArea.moddedGenresComplete|Scanning for modded genres complete
+textArea.moddedPublisherFound|Modded publisher found:
+textArea.moddedPublishersComplete|Scanning for modded publishers complete
+textArea.moddedLicenceFound|Modded licence found:
+textArea.moddedLicencesComplete|Scanning for modded licences complete
+textArea.moddedThemeFound|Modded theme found:
+textArea.moddedThemesComplete|Scanning for modded themes complete
+
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?
 publisherHelper.replaceWithRealPublishers.success|<html>All existing publishers have been replaced<br>with the real live equivalent.

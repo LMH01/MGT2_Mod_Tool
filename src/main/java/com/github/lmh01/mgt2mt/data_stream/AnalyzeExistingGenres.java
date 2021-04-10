@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -134,6 +133,8 @@ public class AnalyzeExistingGenres {
         String[] allGenresById = getGenresByAlphabetWithoutId();
         String[] defaultGenres = {"Action", "Adventure", "Building Game", "Economic Simulation", "Fighting Game", "First-Person Shooter", "Interactive Movie", "Platformer", "Puzzle Game", "Racing", "Real-Time Strategy", "Role-Playing Game", "Simulation", "Skill Game", "Sport Game", "Strategy", "Third-Person Shooter", "Visual Novel"};
         ArrayList<String> arrayListCustomGenres = new ArrayList<>();
+        ProgressBarHelper.initializeProgressBar(0, arrayListCustomGenres.size(), I18n.INSTANCE.get("progressBar.moddedGenre"));
+        int currentProgressBarValue = 0;
         for (String s : allGenresById) {
             boolean defaultGenre = false;
             for (String genre : defaultGenres) {
@@ -144,8 +145,13 @@ public class AnalyzeExistingGenres {
             }
             if (!defaultGenre) {
                 arrayListCustomGenres.add(s);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedGenreFound") + " " + s);
             }
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedGenresComplete"));
+        ProgressBarHelper.resetProgressBar();
         String[] string = new String[arrayListCustomGenres.size()];
         arrayListCustomGenres.toArray(string);
         return string;

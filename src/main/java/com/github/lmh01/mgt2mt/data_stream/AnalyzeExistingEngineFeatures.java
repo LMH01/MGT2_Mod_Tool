@@ -1,5 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,10 +88,15 @@ public class AnalyzeExistingEngineFeatures {
     public static String[] getCustomEngineFeaturesString(){
         ArrayList<String> arrayListActiveEngineFeatures = new ArrayList<>();
         List<Map<String, String>> listEngineFeatures = engineFeatures;
+        ProgressBarHelper.initializeProgressBar(58, listEngineFeatures.size(), I18n.INSTANCE.get("progressBar.moddedEngineFeatures"));
         for(int i=58; i<listEngineFeatures.size(); i++){
             Map<String, String> map = listEngineFeatures.get(i);
             arrayListActiveEngineFeatures.add(map.get("NAME EN"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedEngineFeatureFound") + " " + map.get("NAME EN"));
+            ProgressBarHelper.setValue(i);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedEngineFeaturesComplete"));
+        ProgressBarHelper.resetProgressBar();
         Collections.sort(arrayListActiveEngineFeatures);
         String[] string = new String[arrayListActiveEngineFeatures.size()];
         arrayListActiveEngineFeatures.toArray(string);

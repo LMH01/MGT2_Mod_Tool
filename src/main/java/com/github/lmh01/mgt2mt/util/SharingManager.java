@@ -605,6 +605,7 @@ public class SharingManager {
                 e.printStackTrace();
             }
         }
+        TextAreaHelper.resetAutoScroll();
     }
 
     /**
