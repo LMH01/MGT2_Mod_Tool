@@ -9,7 +9,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
 **WARNING: WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST**
-## Download: [v1.11.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.11.0/MGT2_Mod_Tool_1.11.0.zip)
+## Download: [v1.12.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v1.12.0/MGT2_Mod_Tool_1.12.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -43,7 +43,8 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
 - **Share your modifications**
     - It is supported to export genres, publishers/developer, themes, engine features and gameplay features, to be loaded later. Here is how it works:
         - First you will need to export the selected genre/publisher. For that you have to go into the **share** menu, there you have to click **export genre/publisher** or **export all**. Select the genre/publisher that you would like to export now from the list and click ok. The needed files are now copied into a folder, open this folder by clicking yes on the next step. To share the genre/publisher you simply have to copy that folder and give it to your friend. 
-        - To import mods you have to click **Import All** in the mod menu and select the folder where your mods are saved. The program then scans all folders for mods and displays a summary of what can be imported. Just click **ok**, and the program will import the files. You can also import just a specific type of mod, the button for that is found under the respective modification.
+        - To import mods you have to click **Import from file system** in the mod menu and select the folder where your mods are saved. The program then scans all folders for mods and displays a summary of what can be imported. Just click **ok**, and the program will import the files.
+        - You can also import mods by using a direct download url. For a list of mods you can take a look [here](https://github.com/LMH01/MGT2_Mod_Tool/discussions/34).
 - **Edit the `NpcGames.txt` file**
     - You can add or remove a genre id to/from this file. This has the effect that games released by NPC-Companies can have the specified genre.
     - Additionally, you can change the chance with which the genre id should be added to the file. (100% = All games will have the corresponding genre as genre)
