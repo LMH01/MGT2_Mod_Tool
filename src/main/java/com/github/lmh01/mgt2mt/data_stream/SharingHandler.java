@@ -217,11 +217,9 @@ public class SharingHandler {
             if(JOptionPane.showConfirmDialog(null, "Add this licence:\nName: " + exportMap.get("NAME") + "\nType: " + exportMap.get("TYPE"), "Add licence?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 ChangeLog.addLogEntry(22, map.get("NAME EN"));
                 JOptionPane.showMessageDialog(null, "Licence " + map.get("NAME") + " has been added successfully");
-                WindowMain.checkActionAvailability();
             }
         }else{
             ChangeLog.addLogEntry(34, map.get("NAME"));
-            WindowMain.checkActionAvailability();
         }
         return "true";
     }
@@ -330,7 +328,6 @@ public class SharingHandler {
                     EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
                     ChangeLog.addLogEntry(22, map.get("NAME EN"));
                     JOptionPane.showMessageDialog(null, "Publisher " + map.get("NAME EN") + " has been added successfully");
-                    WindowMain.checkActionAvailability();
                 }
             }else{
                 EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
@@ -423,7 +420,6 @@ public class SharingHandler {
                     EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
                     ChangeLog.addLogEntry(24, map.get("NAME EN"));
                     JOptionPane.showMessageDialog(null, "Theme " + map.get("NAME EN") + " has been added successfully");
-                    WindowMain.checkActionAvailability();
                 }
             }else{
                 EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);

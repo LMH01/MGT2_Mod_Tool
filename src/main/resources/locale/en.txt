@@ -95,6 +95,7 @@ dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.
 dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2|<html>The folder(s) and it's subfolders do not contain things that could be imported.<br>Some mods where found that are not compatible with the current mod tool version
 dialog.sharingManager.importAll.error.windowTitle.var1|Unable to restore
 dialog.sharingManager.importAll.error.windowTitle.var2|Unable to import
+dialog.sharingManager.importAll.noModsAvailable|None
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Choose the folder(s) where the files are located that should be imported
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Choose the folder(s) where the
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|file is located.

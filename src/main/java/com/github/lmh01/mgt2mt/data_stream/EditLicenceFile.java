@@ -29,7 +29,9 @@ public class EditLicenceFile {
         }
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(licenceFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        LOGGER.info("Writing contents of list to file: " + licenceFile.getPath());
+        if(Settings.enableDebugLogging){
+            LOGGER.info("Writing contents of list to file: " + licenceFile.getPath());
+        }
         boolean firstLine = true;
         for(int i=1; i<=AnalyzeExistingLicences.existingLicences.size(); i++){
             if(addLicence){
@@ -58,7 +60,6 @@ public class EditLicenceFile {
             ChangeLog.addLogEntry(36, licenceName);
         }
         bw.close();
-        WindowMain.checkActionAvailability();
         return true;
     }
 }

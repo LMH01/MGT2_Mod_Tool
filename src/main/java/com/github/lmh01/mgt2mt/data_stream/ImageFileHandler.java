@@ -29,7 +29,9 @@ public class ImageFileHandler {
     public static void addGenreImageFiles(int genreID, String genreName, File genreImage, ArrayList<File> genreScreenshots) throws IOException {
         ImageFileHandler.copyScreenshotFiles(genreID, genreScreenshots);//This copies the custom screenshots into the correct folder
         if(genreImage.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
-            LOGGER.info("The default image file is in use. No need to copy a new one.");
+            if(Settings.enableDebugLogging){
+                LOGGER.info("The default image file is in use. No need to copy a new one.");
+            }
         }else{
             //This copies the .png file to the Icon_Genres directory
             copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png"));
@@ -50,7 +52,7 @@ public class ImageFileHandler {
         if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
-            LOGGER.info("Copying " + imageFile + " this file to " + outputFile);
+            LOGGER.info("Copying " + imageFile + " to " + outputFile);
             if(outputFile.exists()){
                 outputFile.delete();
             }

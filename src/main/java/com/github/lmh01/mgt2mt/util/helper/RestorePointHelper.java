@@ -47,7 +47,6 @@ public class RestorePointHelper {
                 SharingManager.exportAll(true);
             }
         }
-        WindowMain.checkActionAvailability();
         ChangeLog.addLogEntry(37);
     }
 

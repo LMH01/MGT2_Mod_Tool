@@ -95,6 +95,7 @@ dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.
 dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2|<html>Die Ordner und ihre Unterordner enthalten keine Dinge, die importiert werden könnten. <br> Einige Mods wurden gefunden, die nicht mit der aktuellen Mod-Tool-Version kompatibel sind
 dialog.sharingManager.importAll.error.windowTitle.var1|Wiederherstellung nicht möglich
 dialog.sharingManager.importAll.error.windowTitle.var2|Import kann nicht durchgeführt werden
+dialog.sharingManager.importAll.noModsAvailable|Keine
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Wähle die Ordner aus, in denen sich die zu importierenden Dateien befinden
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Wählen Sie die Ordner aus, in denen sich die
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|Datei befindet.

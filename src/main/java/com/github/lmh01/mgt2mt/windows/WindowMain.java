@@ -126,7 +126,11 @@ public class WindowMain {
         m213GetMoreMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.getMoreMods.toolTip"));
         m213GetMoreMods.addActionListener(actionEvent -> openMoreModsPage());
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
-        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> SharingManager.importAll());
+        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> {
+            TextAreaHelper.setScrollDown();
+            Thread thread = new Thread(ThreadHandler.runnableImportAll);
+            thread.start();
+        });
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
         M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ImportFromURLHelper.importFromURL());
         m221AddGenre.addActionListener(actionEvent -> addGenre());
@@ -352,8 +356,7 @@ public class WindowMain {
                 noCustomEngineFeaturesAvailable = false;
                 noCustomLicencesAvailable = false;
             }else{
-                String[] stringCustomGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                if(stringCustomGenres.length != 0){
+                if(AnalyzeExistingGenres.genreList.size() > AnalyzeExistingGenres.DEFAULT_GENRES.length){
                     noCustomGenreAvailable = false;
                 }
                 if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
@@ -606,7 +609,7 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Unable to add theme:\n\n" + e.getMessage(), "Error while adding theme", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        checkActionAvailability();
+        WindowMain.checkActionAvailability();
     }
     private static void npcGameList(){
         try {
@@ -792,7 +795,7 @@ public class WindowMain {
             JOptionPane.showMessageDialog(null, "Error while adding publisher:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        checkActionAvailability();
+        WindowMain.checkActionAvailability();
     }
     private static void addCompanyIcon(){
         String imageFilePath = Utils.getImagePath();

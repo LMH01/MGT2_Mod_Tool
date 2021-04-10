@@ -16,7 +16,7 @@ public class ThreadHandler {
     public static Runnable runnableExportGenre = () -> OperationHelper.process((string) -> SharingHandler.exportGenre(string, false), AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "exported", "Export", true);
     public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
     public static Runnable runnableUninstall = () -> Uninstaller.uninstall();
-
+    public static Runnable runnableImportAll = () -> SharingManager.importAll();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();

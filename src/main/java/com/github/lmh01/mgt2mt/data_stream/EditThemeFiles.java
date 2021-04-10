@@ -107,7 +107,6 @@ public class EditThemeFiles {
             }
             bw.close();
         }
-        WindowMain.checkActionAvailability();
         return true;
     }
 

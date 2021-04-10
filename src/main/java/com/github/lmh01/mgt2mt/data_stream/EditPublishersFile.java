@@ -109,7 +109,6 @@ public class EditPublishersFile {
                 LOGGER.info("Image file for publisher " + publisherNameEN + " has been removed.");
             }
         }
-        WindowMain.checkActionAvailability();
         return true;
     }
 

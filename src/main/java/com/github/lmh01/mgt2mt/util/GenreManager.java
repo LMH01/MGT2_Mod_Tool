@@ -178,7 +178,6 @@ public class GenreManager {
                 WindowAddGenrePage11.createFrame();
             }
         }
-        WindowMain.checkActionAvailability();
         if(returnValue == JOptionPane.YES_OPTION){
             return true;
         }else{

@@ -82,7 +82,9 @@ public class AnalyzeExistingThemes {
      */
     public static int getPositionOfThemeInFile(String themeNameEn){
         int position = 1;
-        LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + MAP_ACTIVE_THEMES_EN.size());
+        if(Settings.enableDebugLogging){
+            LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + MAP_ACTIVE_THEMES_EN.size());
+        }
         for(Map.Entry<Integer, String> entry: MAP_ACTIVE_THEMES_EN.entrySet()){
             if(Settings.enableDebugLogging){
                 LOGGER.info("Value: " + entry.getValue());

@@ -11,6 +11,7 @@ import java.util.*;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class AnalyzeExistingGenres {
     public static final File FILE_GENRES_BY_ID_HELP = new File(Settings.MGT2_MOD_MANAGER_PATH + "\\CurrentGenreIDsByName.txt");
+    public static final String[] DEFAULT_GENRES = {"Skill Game", "Puzzle Game", "Adventure", "Role-Playing Game", "Strategy", "Action", "Platformer", "Simulation", "Sport Game", "Economic Simulation", "Fighting Game", "Building Game", "Interactive Movie", "Real-Time Strategy", "First-Person Shooter", "Visual Novel", "Third-Person Shooter", "Racing"};
     public static List<Map<String, String>> genreList;
     public static int maxGenreID = 0;
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGenres.class);
@@ -188,7 +189,9 @@ public class AnalyzeExistingGenres {
         if(genreId == -1){
             LOGGER.info("Genre [" + genreName + "] does not exist");
         }else{
-            LOGGER.info("Genre [" + genreName + "] has been found. Id: " + genreId);
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Genre [" + genreName + "] has been found. Id: " + genreId);
+            }
         }
         return genreId;
     }

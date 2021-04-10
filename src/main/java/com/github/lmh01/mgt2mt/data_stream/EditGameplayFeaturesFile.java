@@ -123,7 +123,6 @@ public class EditGameplayFeaturesFile {
         }
         bw.write("[EOF]");
         bw.close();
-        WindowMain.checkActionAvailability();
         return true;
     }
 

@@ -103,8 +103,8 @@ public class ChangeLog {
             case 30: logToPrint = currentSystemTime + ": Imported gameplay feature: [" + textBody + "]"; break;
             case 31: logToPrint = currentSystemTime + ": Exported engine feature: [" + textBody + "]"; break;
             case 32: logToPrint = currentSystemTime + ": Imported engine feature: [" + textBody + "]"; break;
-            case 33: logToPrint = currentSystemTime + ": Exported licence feature: [" + textBody + "]"; break;
-            case 34: logToPrint = currentSystemTime + ": Imported licence feature: [" + textBody + "]"; break;
+            case 33: logToPrint = currentSystemTime + ": Exported licence: [" + textBody + "]"; break;
+            case 34: logToPrint = currentSystemTime + ": Imported licence: [" + textBody + "]"; break;
             case 35: logToPrint = currentSystemTime + ": Added licence: [" + textBody + "]"; break;
             case 36: logToPrint = currentSystemTime + ": Removed licence: [" + textBody + "]"; break;
             case 37: logToPrint = currentSystemTime + ": Created restore point"; break;

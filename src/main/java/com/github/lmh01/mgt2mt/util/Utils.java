@@ -298,7 +298,9 @@ public class Utils {
             charPosition++;
         }
         String.valueOf(genreNamesRaw.charAt(1));
-        LOGGER.info("Genre ids: " + genreIds);
+        if(Settings.enableDebugLogging){
+            LOGGER.info("Genre ids: " + genreIds);
+        }
         return genreIds.toString();
     }
 

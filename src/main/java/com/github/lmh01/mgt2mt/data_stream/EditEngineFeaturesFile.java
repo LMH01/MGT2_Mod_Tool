@@ -95,7 +95,6 @@ public class EditEngineFeaturesFile {
         }
         bw.write("[EOF]");
         bw.close();
-        WindowMain.checkActionAvailability();
         return true;
     }
 }

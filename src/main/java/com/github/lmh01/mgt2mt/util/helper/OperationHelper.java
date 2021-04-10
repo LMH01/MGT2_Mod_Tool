@@ -2,6 +2,8 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -94,5 +96,6 @@ public class OperationHelper {
             e.printStackTrace();
         }
         TextAreaHelper.resetAutoScroll();
+        WindowMain.checkActionAvailability();
     }
 }

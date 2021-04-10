@@ -129,7 +129,6 @@ public class SharingManager {
                 JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] has been added successfully");
             }
             ChangeLog.addLogEntry(changelogId, map.get("NAME EN"));
-            WindowMain.checkActionAvailability();
         }
         return "true";
     }
@@ -271,6 +270,7 @@ public class SharingManager {
     public static void importAll(boolean importFromRestorePoint, String folderPath){
         ArrayList<File> directories;
         if(folderPath.isEmpty()){
+            LOGGER.info("Opening window where the user can select the folders that should be searched for imports");
             directories = getFoldersAsFile();
         }else{
             directories = new ArrayList<>();
@@ -279,7 +279,7 @@ public class SharingManager {
         ArrayList<File> engineFeatures = new ArrayList<>();
         ArrayList<File> gameplayFeatures = new ArrayList<>();
         ArrayList<File> genres = new ArrayList<>();
-        ArrayList<File> publishers = new ArrayList<>();
+        ArrayList<File> publisher = new ArrayList<>();
         ArrayList<File> themes = new ArrayList<>();
         ArrayList<File> licences = new ArrayList<>();
         ArrayList<String> engineFeatureNames = new ArrayList<>();
@@ -292,6 +292,7 @@ public class SharingManager {
         AtomicInteger currentZipArchiveNumber = new AtomicInteger();
         if(directories != null){
             try {
+                LOGGER.info("Scanning selected directories for compatible mods");
                 for(int i=0; i<directories.size(); i++){
                     File file = directories.get(i);
                     Path start = Paths.get(file.getPath());
@@ -309,7 +310,7 @@ public class SharingManager {
                             }else if(string.contains("genre.txt")){
                                 addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("publisher.txt")){
-                                addIfCompatible(string, publishers, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, publisher, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("theme.txt")){
                                 addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
                             }else if(string.contains("licence.txt")){
@@ -335,6 +336,13 @@ public class SharingManager {
                         });
                     }
                 }
+                LOGGER.info("The selected directories have been successfully scanned. The following things are ready for import:");
+                LOGGER.info("Engine features: " + engineFeatures.size());
+                LOGGER.info("Gameplay features: " + gameplayFeatures.size());
+                LOGGER.info("Genres: " + genres.size());
+                LOGGER.info("Publisher: " + publisher.size());
+                LOGGER.info("Themes: " + themes.size());
+                LOGGER.info("Licences: " + licences.size());
             } catch (IOException e)  {
                 e.printStackTrace();
             }catch (NullPointerException ignored){
@@ -358,7 +366,7 @@ public class SharingManager {
             AtomicBoolean disablePublisherImport = new AtomicBoolean(true);
             AtomicBoolean disableThemeImport = new AtomicBoolean(true);
             AtomicBoolean disableLicenceImport = new AtomicBoolean(true);
-            if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publishers.isEmpty() || !themes.isEmpty() || !licences.isEmpty()) {
+            if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publisher.isEmpty() || !themes.isEmpty() || !licences.isEmpty()) {
                 if(!engineFeatures.isEmpty()){
                     setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label1"),engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
                 }
@@ -368,8 +376,8 @@ public class SharingManager {
                 if(!genres.isEmpty()){
                     setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label3"), genres, panelGenres, selectedEntriesGenres, disableGenreImport);
                 }
-                if(!publishers.isEmpty()){
-                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label4"), publishers, panelPublishers, selectedEntriesPublishers, disablePublisherImport);
+                if(!publisher.isEmpty()){
+                    setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label4"), publisher, panelPublishers, selectedEntriesPublishers, disablePublisherImport);
                 }
                 if(!themes.isEmpty()){
                     setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label5"), themes, panelThemes, selectedEntriesThemes, disableThemeImport);
@@ -415,6 +423,7 @@ public class SharingManager {
                 }else{
                     params = new Object[]{labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
                 }
+                LOGGER.info("Showing dialog where the user can select what should be imported");
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                     boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                     boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
@@ -431,7 +440,7 @@ public class SharingManager {
                         LOGGER.info("Error occurred wile importing genres");
                         errorOccurred = true;
                     }
-                    if(!importAllFiles(publishers, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                    if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                         LOGGER.info("Error occurred wile importing publishers");
                         errorOccurred = true;
                     }
@@ -688,9 +697,13 @@ public class SharingManager {
         try {
             Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
             for(Map.Entry entry : map.entrySet()){
-                LOGGER.info("Current Value: " + entry.getValue());
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Current Value: " + entry.getValue());
+                }
                 for(String string : compatibleVersions){
-                    LOGGER.info("Current compatible version: " + string);
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("Current compatible version: " + string);
+                    }
                     if(entry.getValue().toString().replace("[MGT2MT VERSION]", "").equals(string) || Settings.disableSafetyFeatures){
                         return true;
                     }
@@ -711,7 +724,9 @@ public class SharingManager {
         try {
             Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
             for(Map.Entry entry : map.entrySet()){
-                LOGGER.info("Current Value: " + entry.getValue());
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Current Value: " + entry.getValue());
+                }
                 if(entry.getValue().toString().contains("NAME EN")){
                     return entry.getValue().toString().replace("[NAME EN]", "");
                 }
