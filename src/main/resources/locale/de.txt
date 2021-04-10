@@ -136,7 +136,10 @@ window.main.file.uninstall.toolTip|<html>Enthält Optionen, mit denen alle Mod-M
 window.main.file.about|Über
 window.main.mods|Mods
 window.main.mods.import|Importieren
-window.main.mods.import.toolTip|<html>Klick hier, um Ordner auszuwählen, in denen Mods gespeichert sind, die du importieren möchtest.<br>Die ausgewählten Ordner werden dann nach kompatiblen Mods durchsucht und am Ende<br>wird eine Zusammenfassung der gefundenen Mods angezeigt, die importiert werden können.
+window.main.mods.import.importFromFileSystem|Aus Dateisystem importieren
+window.main.mods.import.importFromURL|Von URL importieren
+window.main.mods.import.importFromFileSystem.toolTip|<html>Klick hier, um Ordner auszuwählen, in denen Mods gespeichert sind, die du importieren möchtest.<br>Die ausgewählten Ordner werden dann nach kompatiblen Mods durchsucht und am Ende<br>wird eine Zusammenfassung der gefundenen Mods angezeigt, die importiert werden können.
+window.main.mods.import.importFromURL.toolTip|<html>Öffnet eine Seite, auf der eine URL zu einem ZIP-Archiv eingegeben werden kann.<br>Das Archiv wird dann heruntergeladen, extrahiert und nach Mods durchsucht.<br>Anschließend wird eine Zusammenfassung angezeigt, in der du auswählen kannst, welche Einträge importiert werden sollen.
 window.main.mods.genres|Genres
 window.main.mods.genres.addGenre|Genre hinzufügen
 window.main.mods.genres.addRandomGenre|Zufälliges Genre hinzufügen
@@ -222,6 +225,11 @@ window.main.actionAvailability.noLicenceAvailable|Deaktiviert -> Keine Lizent ve
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Deaktiviert -> Keine mods verfügbar, für die ein Wiederherstellungspunkt erstellt werden könnte
+
+window.importFromURL.labelText|<html>Geb unten die URL zum ZIP-Archiv ein.<br>Hinweis: Es muss ein direkter Download-Link sein.
+window.importFromURL.textFieldURL.toolTip|Gib die URL zum ZIP-Archiv ein
+window.importFromURL.dialog.title|Von URL importieren
+window.importFromURL.error.body|Import von URL nicht möglich!
 
 window.uninstall.labelDescription|<html>Wähle aus, was entfernt werden soll.<br>Nach der Deinstallation wird das Programm beendet.
 window.uninstall.checkBoxDeleteBackups|Backups löschen

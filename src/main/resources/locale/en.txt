@@ -136,7 +136,10 @@ window.main.file.uninstall.toolTip|<html>Includes options with which all mod man
 window.main.file.about|About
 window.main.mods|Mods
 window.main.mods.import|Import
-window.main.mods.import.toolTip|<html>Click to select folders where your import files are located.<br>The selected folders and its subfolders are scanned for imports.<br>When the folders are scanned a summary is shown of what can be imported.
+window.main.mods.import.importFromFileSystem|Import from file system
+window.main.mods.import.importFromURL|Import from URL
+window.main.mods.import.importFromFileSystem.toolTip|<html>Click to select folders where your import files are located.<br>The selected folders and its subfolders are scanned for imports.<br>When the folders are scanned a summary is shown of what can be imported.
+window.main.mods.import.importFromURL.toolTip|<html>Opens a page where you can enter a URL to a .zip archive.<br>The archive is then downloaded, extracted and searched for mods.<br>A summary is then shown where you can select what entries should be imported.
 window.main.mods.genres|Genres
 window.main.mods.genres.addGenre|Add genre
 window.main.mods.genres.addRandomGenre|Add randomized genre
@@ -222,6 +225,11 @@ window.main.actionAvailability.noLicenceAvailable|Disabled -> No licence availab
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Disabled -> No mods added for which a restore point could be created
+
+window.importFromURL.labelText|<html>Enter the URL to the .zip archive below.<br>Note: This has to be a direct download link.
+window.importFromURL.textFieldURL.toolTip|Enter the URL to the .zip archive
+window.importFromURL.dialog.title|Import from URL
+window.importFromURL.error.body|Unable to import from URL!
 
 window.uninstall.labelDescription|<html>Select what should be removed<br>After uninstalling the program is exited
 window.uninstall.checkBoxDeleteBackups|Delete Backups

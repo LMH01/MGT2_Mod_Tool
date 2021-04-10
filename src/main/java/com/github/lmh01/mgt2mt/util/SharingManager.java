@@ -255,15 +255,24 @@ public class SharingManager {
     /**
      * Opens a gui where the user can select folders where import files are located. When all folders and subfolders are scanned a summary is shown of what can be imported.
      * It is then possible to import everything at once.
-     * @param importFromRestorePoint True when this function is called from import point restore. Will change some messages and will set the directory.
      */
-    public static void importAll(boolean importFromRestorePoint) {
+    public static void importAll() {
+        importAll(false, "");
+    }
+
+    /**
+     * Opens a gui where the user can select folders where import files are located. When all folders and subfolders are scanned a summary is shown of what can be imported.
+     * It is then possible to import everything at once.
+     * @param importFromRestorePoint True when this function is called from import point restore. Will change some messages.
+     * @param folderPath If not empty, this folder will be used as root folder where the search is started. This will prevent the message to the user that folders should be selected.
+     */
+    public static void importAll(boolean importFromRestorePoint, String folderPath){
         ArrayList<File> directories;
-        if(importFromRestorePoint){
-            directories = new ArrayList<>();
-            directories.add(new File(Utils.getMGT2ModToolModRestorePointFolder()));
-        }else{
+        if(folderPath.isEmpty()){
             directories = getFoldersAsFile();
+        }else{
+            directories = new ArrayList<>();
+            directories.add(new File(folderPath));
         }
         ArrayList<File> engineFeatures = new ArrayList<>();
         ArrayList<File> gameplayFeatures = new ArrayList<>();
@@ -465,7 +474,7 @@ public class SharingManager {
     }
 
     /**
-     * Adds gui components to be displayed in the summary. May only be called by {@link SharingManager#importAll(boolean)}
+     * Adds gui components to be displayed in the summary. May only be called by {@link SharingManager#importAll()}
      * @param labelText The label text
      * @param files The array list containing the feature specific files
      * @param panel The panel where the components should be added

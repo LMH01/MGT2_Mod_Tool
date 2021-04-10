@@ -59,7 +59,7 @@ public class RestorePointHelper {
             }else{
                 LOGGER.info("All mods have been removed");
             }
-            SharingManager.importAll(true);
+            SharingManager.importAll(true, Utils.getMGT2ModToolModRestorePointFolder());
             ChangeLog.addLogEntry(38);
         }
     }

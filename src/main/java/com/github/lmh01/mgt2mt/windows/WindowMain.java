@@ -21,13 +21,15 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static final JFrame frame = new JFrame(I18n.INSTANCE.get("window.main.tile"));
+    private static final JMenu M_21_IMPORT = new JMenu(I18n.INSTANCE.get("window.main.mods.import"));
     private static final JMenu M_22_GENRES = new JMenu(I18n.INSTANCE.get("window.main.mods.genres"));
     private static final JMenu M_23_THEMES = new JMenu(I18n.INSTANCE.get("window.main.mods.themes"));
     private static final JMenu M_24_PUBLISHER = new JMenu(I18n.INSTANCE.get("window.main.mods.publisher"));
     private static final JMenu M_25_ENGINE_FEATURES = new JMenu(I18n.INSTANCE.get("window.main.mods.engineFeatures"));
     private static final JMenu M_26_GAMEPLAY_FEATURES = new JMenu(I18n.INSTANCE.get("window.main.mods.gameplayFeatures"));
     private static final JMenu M_27_LICENCES = new JMenu(I18n.INSTANCE.get("window.main.mods.licences"));
-    private static final JMenuItem M_21_IMPORT = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import"));
+    private static final JMenuItem M_211_IMPORT_FROM_FILE_SYSTEM = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem"));
+    private static final JMenuItem M_212_IMPORT_FROM_URL = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromURL"));
     private static final JMenuItem M_28_NPC_GAMES_LIST = new JMenuItem(I18n.INSTANCE.get("window.main.mods.npcGamesList"));
     private static final JMenuItem M_29_ADD_COMPANY_ICON = new JMenuItem(I18n.INSTANCE.get("window.main.mods.addCompanyIcon"));
     private static final JMenuItem M_223_REMOVE_GENRE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.removeGenre"));
@@ -78,6 +80,8 @@ public class WindowMain {
         JMenuItem m251AddEngineFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.addEngineFeature"));
         JMenuItem m261AddGameplayFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.addGameplayFeature"));
         JMenuItem m271AddLicence = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.addLicence"));
+        M_21_IMPORT.add(M_211_IMPORT_FROM_FILE_SYSTEM);
+        M_21_IMPORT.add(M_212_IMPORT_FROM_URL);
         M_22_GENRES.add(m221AddGenre);
         M_22_GENRES.add(m222AddRandomGenre);
         M_22_GENRES.add(M_223_REMOVE_GENRE);
@@ -108,8 +112,10 @@ public class WindowMain {
 
             }
         });
-        M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.toolTip"));
-        M_21_IMPORT.addActionListener(actionEvent -> SharingManager.importAll(false));
+        M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
+        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> SharingManager.importAll());
+        M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
+        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ImportFromURLHelper.importFromURL());
         m221AddGenre.addActionListener(actionEvent -> addGenre());
         m222AddRandomGenre.setToolTipText(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre.toolTip"));
         m222AddRandomGenre.addActionListener(actionEvent -> GenreHelper.addRandomizedGenre());
