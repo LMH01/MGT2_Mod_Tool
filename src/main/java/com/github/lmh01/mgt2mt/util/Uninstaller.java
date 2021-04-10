@@ -60,6 +60,7 @@ public class Uninstaller {
                         if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                             File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deleteModManagerFiles"));
+                            LogFile.stopLogging();
                             DataStreamHelper.deleteDirectory(modManagerPath);
                         }else{
                             if(checkboxDeleteBackups.isSelected()){

@@ -123,7 +123,7 @@ frame.title.about|About
 progressBar.idle|Idle
 progressBar.moddedEngineFeatures|Scanning for modded engine features
 progressBar.moddedGameplayFeatures|Scanning for modded gameplay features
-progressBar.moddedGenre|Scanning for modded gameplay features
+progressBar.moddedGenre|Scanning for modded genres
 progressBar.moddedLicences|Scanning for modded licences
 progressBar.moddedPublishers|Scanning for modded publishers
 progressBar.moddedThemes|Scanning for modded themes

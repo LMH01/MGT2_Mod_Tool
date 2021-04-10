@@ -4,7 +4,9 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.ThreadHandler;
 import com.github.lmh01.mgt2mt.windows.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,8 @@ public class MadGamesTycoon2ModTool {
             Locale locale = new Locale("de","DE");//Sets the language to english
             JOptionPane.setDefaultLocale(locale);
         }
+        LogFile.startLogging();
+        Runtime.getRuntime().addShutdownHook(new Thread(ThreadHandler.runnableDoOnShutdown));
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         UpdateChecker.checkForUpdates(false);
