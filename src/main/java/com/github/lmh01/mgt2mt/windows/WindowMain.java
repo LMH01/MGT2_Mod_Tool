@@ -68,11 +68,7 @@ public class WindowMain {
         m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         JMenuItem m13 = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
         m13.setToolTipText(I18n.INSTANCE.get("window.main.file.uninstall.toolTip"));
-        m13.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableUninstall);
-            thread.start();
-        });
+        m13.addActionListener(actionEvent -> ThreadHandler.startThread("runnableUninstall"));
         JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
         mb.add(m1);
@@ -126,11 +122,7 @@ public class WindowMain {
         m213GetMoreMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.getMoreMods.toolTip"));
         m213GetMoreMods.addActionListener(actionEvent -> openMoreModsPage());
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
-        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableImportAll);
-            thread.start();
-        });
+        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startThread("runnableImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
         M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ImportFromURLHelper.importFromURL());
         m221AddGenre.addActionListener(actionEvent -> addGenre());
@@ -151,7 +143,7 @@ public class WindowMain {
         M_272_REMOVE_LICENCE.addActionListener(actionEvent -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "removed", "Remove", false));
         M_29_ADD_COMPANY_ICON.addActionListener(actionEvent -> addCompanyIcon());
         m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
-        m210ShowActiveMods.addActionListener(actionEvent -> ActiveMods.showActiveMods());
+        m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startThread("runnableShowActiveMods"));
         mb.add(m2Mods);
         m2Mods.add(M_21_IMPORT);
         m2Mods.add(M_22_GENRES);
@@ -172,41 +164,13 @@ public class WindowMain {
         m31Export.add(M_315_EXPORT_GAMEPLAY_FEATURE);
         m31Export.add(M_316_EXPORT_LICENCE);
         m31Export.add(M_317_EXPORT_ALL);
-        M_311_EXPORT_GENRE.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportGenre);
-            thread.start();
-        });
-        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportPublisher);
-            thread.start();
-        });
-        M_313_EXPORT_THEME.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportThemes);
-            thread.start();
-        });
-        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportEngineFeatures);
-            thread.start();
-        });
-        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportGameplayFeatures);
-            thread.start();
-        });
-        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportLicence);
-            thread.start();
-        });
-        M_317_EXPORT_ALL.addActionListener(actionEvent -> {
-            TextAreaHelper.setScrollDown();
-            Thread thread = new Thread(ThreadHandler.runnableExportAll);
-            thread.start();
-        });
+        M_311_EXPORT_GENRE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportGenre"));
+        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportPublisher"));
+        M_313_EXPORT_THEME.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportThemes"));
+        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportEngineFeatures"));
+        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportGameplayFeatures"));
+        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportLicence"));
+        M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startThread("runnableExportAll"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> {
             Utils.open(Utils.getMGT2ModToolExportFolder());

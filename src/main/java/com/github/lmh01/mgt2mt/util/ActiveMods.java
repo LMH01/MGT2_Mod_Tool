@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+
 import javax.swing.*;
 
 public class ActiveMods {
@@ -48,5 +50,6 @@ public class ActiveMods {
             stringBuilder.append(I18n.INSTANCE.get("dialog.sharingManager.importAll.noModsAvailable"));
         }
         JOptionPane.showMessageDialog(null, stringBuilder.toString());
+        TextAreaHelper.resetAutoScroll();
     }
 }

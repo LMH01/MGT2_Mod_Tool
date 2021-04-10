@@ -56,7 +56,7 @@ public class AnalyzeExistingLicences {
         try{
             String[] allLicenceNamesByAlphabet = getLicenceNamesByAlphabet();
 
-            ArrayList<String> arrayListCustomThemes = new ArrayList<>();
+            ArrayList<String> arrayListCustomLicences = new ArrayList<>();
 
             ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"));
             int currentProgressBarValue = 0;
@@ -67,12 +67,12 @@ public class AnalyzeExistingLicences {
                         defaultGenre = true;
                         break;
                     }
-                    if(licenceName.contains("Chronicles of no")){
-                        LOGGER.info(licenceName);
+                    if(licenceName.contains("Chronicles of Nornio [5]")){
+                        defaultGenre = true;
                     }
                 }
                 if (!defaultGenre) {
-                    arrayListCustomThemes.add(s);
+                    arrayListCustomLicences.add(s);
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicenceFound") + " " + s);
                 }
                 currentProgressBarValue++;
@@ -80,9 +80,9 @@ public class AnalyzeExistingLicences {
             }
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicencesComplete"));
             ProgressBarHelper.resetProgressBar();
-            arrayListCustomThemes.remove("Chronicles of Nornio [5]");
-            String[] string = new String[arrayListCustomThemes.size()];
-            arrayListCustomThemes.toArray(string);
+            arrayListCustomLicences.remove("Chronicles of Nornio [5]");
+            String[] string = new String[arrayListCustomLicences.size()];
+            arrayListCustomLicences.toArray(string);
             return string;
         }catch(IOException e){
             e.printStackTrace();
