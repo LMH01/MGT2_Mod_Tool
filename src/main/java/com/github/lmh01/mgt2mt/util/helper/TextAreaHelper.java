@@ -6,12 +6,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
 public class TextAreaHelper {
-    private static AdjustmentListener adjustmentListener = new AdjustmentListener() {
-        @Override
-        public void adjustmentValueChanged(AdjustmentEvent e) {
-            e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-        }
-    };
+    private static AdjustmentListener adjustmentListener = e -> e.getAdjustable().setValue(e.getAdjustable().getMaximum());
 
     /**
      * Will append the input text to the text area. A line break is written

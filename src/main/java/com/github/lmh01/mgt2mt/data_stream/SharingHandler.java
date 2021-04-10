@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public class SharingHandler {
             fileDataFolder.mkdirs();
         }
         if(fileExportedGenreIcon.exists()){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.genreExportFailed.alreadyExported") + " " + genreName);
             return false;
         }
         if(Settings.enableDebugLogging){
@@ -87,6 +89,7 @@ public class SharingHandler {
         bw.print("[GENRE END]");
         bw.close();
         ChangeLog.addLogEntry(17, AnalyzeExistingGenres.genreList.get(positionInGenreList).get("NAME EN"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.genreExportSuccessful") + " " + genreName);
         return true;
     }
 
@@ -174,7 +177,10 @@ public class SharingHandler {
         final String EXPORTED_LICENCE_MAIN_FOLDER_PATH = exportFolder + "//Licence//" + licenceName.replaceAll("[^a-zA-Z0-9]", "");
         File fileExportMainFolder = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH);
         File fileExportedLicence = new File(EXPORTED_LICENCE_MAIN_FOLDER_PATH + "//licence.txt");
-        fileExportMainFolder.mkdirs();
+        if(fileExportMainFolder.exists()){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.licenceExportFailed.alreadyExported") + " " + licenceName);
+            return false;
+        }fileExportMainFolder.mkdirs();
         fileExportedLicence.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedLicence), StandardCharsets.UTF_8));
         bw.write("\ufeff");//Makes the file UTF8-BOM
@@ -185,6 +191,7 @@ public class SharingHandler {
         bw.write("[LICENCE END]");
         bw.close();
         ChangeLog.addLogEntry(33, licenceName);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.licenceExportSuccessful") + " " + licenceName);
         return true;
     }
 
@@ -241,6 +248,7 @@ public class SharingHandler {
             fileDataFolder.mkdirs();
         }
         if(fileExportedPublisherIcon.exists()){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.publisherExportFailed.alreadyExported") + " " + publisherNameEN);
             return false;
         }
         if(Settings.enableDebugLogging){
@@ -264,6 +272,7 @@ public class SharingHandler {
         bw.write("[PUBLISHER END]");
         bw.close();
         ChangeLog.addLogEntry(21, singlePublisherMap.get("NAME EN"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.publisherExportSuccessful") + " " + publisherNameEN);
         return true;
     }
 
@@ -350,7 +359,8 @@ public class SharingHandler {
         File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
         File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//theme.txt");
         if(fileExportedTheme.exists()){
-           return false;
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.themeExportFailed.alreadyExported") + " " + themeNameEn);
+            return false;
         }else{
             fileExportFolderPath.mkdirs();
         }
@@ -363,6 +373,7 @@ public class SharingHandler {
         bw.write("[GENRE COMB]" + getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
         bw.close();
         ChangeLog.addLogEntry(23, map.get("NAME EN"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.themeExportSuccessful") + " " + themeNameEn);
         return true;
     }
 
@@ -440,6 +451,7 @@ public class SharingHandler {
             File fileExportFolderPath = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH);
             File fileExportedEngineFeature = new File(EXPORTED_ENGINE_FEATURE_MAIN_FOLDER_PATH + "//engineFeature.txt");
             if(fileExportedEngineFeature.exists()){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.engineFeatureExportFailed.alreadyExported") + " " + engineFeatureName);
                 return false;
             }else{
                 fileExportFolderPath.mkdirs();
@@ -462,9 +474,11 @@ public class SharingHandler {
             bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
             bw.close();
             ChangeLog.addLogEntry(31, map.get("NAME EN"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.engineFeatureExportSuccessful") + " " + engineFeatureName);
             return true;
         }catch(IOException e){
             e.printStackTrace();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.ExportFailed.generalError.secondPart") + " [" + engineFeatureName + "] " + I18n.INSTANCE.get("textArea.engineFeatureExportFailed.generalError.secondPart") + " " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error while exporting engine feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
@@ -506,6 +520,7 @@ public class SharingHandler {
             File fileExportFolderPath = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH);
             File fileExportedGameplayFeature = new File(EXPORTED_GAMEPLAY_FEATURE_MAIN_FOLDER_PATH + "//gameplayFeature.txt");
             if(fileExportedGameplayFeature.exists()){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.gameplayFeatureExportFailed.alreadyExported") + " " + gameplayFeatureName);
                 return false;
             }else{
                 fileExportFolderPath.mkdirs();
@@ -535,9 +550,11 @@ public class SharingHandler {
             }
             bw.close();
             ChangeLog.addLogEntry(29, map.get("NAME EN"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.gameplayFeatureExportSuccessful") + " " + gameplayFeatureName);
             return true;
         }catch(IOException e){
             e.printStackTrace();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.ExportFailed.generalError.secondPart") + " [" + gameplayFeatureName + "] " + I18n.INSTANCE.get("textArea.gameplayFeatureExportFailed.generalError.secondPart") + " " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error while exporting gameplay feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;

@@ -127,6 +127,7 @@ progressBar.moddedGenre|Scannen nach modifizierten Genres
 progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
 progressBar.moddedPublishers|Scannen nach modifizierten Publishern
 progressBar.moddedThemes|Scannen nach modifizierten Themen
+progressBar.startingExport|Beginne export von
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -140,6 +141,22 @@ textArea.moddedLicenceFound|Modifizierte Lizenz gefunden:
 textArea.moddedLicencesComplete|Scannen nach modifizierten Lizenzen abgeschlossen
 textArea.moddedThemeFound|Modifiziertes Thema gefunden:
 textArea.moddedThemesComplete|Scannen nach modifizierten Themen abgeschlossen
+textArea.exportComplete|Export abgeschlossen
+textArea.engineFeatureExportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
+textArea.engineFeatureExportFailed.generalError.fistPart|Beim exportieren des Engine Features
+textArea.engineFeatureExportSuccessful|Das folgende Engine Feature wurde exportiert:
+textArea.gameplayFeatureExportFailed.alreadyExported|Das folgende Gameplay Feature wurde nicht exportiert, da es bereits exportiert wurde:
+textArea.gameplayFeatureExportFailed.generalError.fistPart|Beim exportieren des Gameplay Features
+textArea.gameplayFeatureExportSuccessful|Das folgende Gameplay Feature wurde exportiert:
+textArea.genreExportFailed.alreadyExported|Das folgende Genre wurde nicht exportiert, da es bereits exportiert wurde:
+textArea.genreExportSuccessful|Das folgende Genre wurde exportiert:
+textArea.publisherExportFailed.alreadyExported|Der folgende Publisher wurde nicht exportiert, da er bereits exportiert wurde:
+textArea.publisherExportSuccessful|Der folgende Publisher wurde exportiert:
+textArea.licenceExportFailed.alreadyExported|Die folgende Lizenz wurde nicht exportiert, da sie bereits exportiert wurde:
+textArea.licenceExportSuccessful|Die folgende Lizenz wurde exportiert:
+textArea.themeExportFailed.alreadyExported|Das folgende Thema wurde nicht exportiert, da es bereits exportiert wurde:
+textArea.themeExportSuccessful|Das folgende Thema wurde exportiert:
+textArea.ExportFailed.generalError.secondPart|ist folgender Fehler aufgetreten:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

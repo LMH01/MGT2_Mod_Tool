@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
@@ -582,12 +583,12 @@ public class SharingManager {
         if(exportFiles){
             StringBuilder failedExports = new StringBuilder();
             try{
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportEngineFeature(string, exportAsRestorePoint), customEngineFeatures, "Engine features"));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportGameplayFeature(string, exportAsRestorePoint), customGameplayFeatures, "Gameplay features"));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportGenre(string, exportAsRestorePoint), customGenres, "Genres"));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportPublisher(string, exportAsRestorePoint), customPublishers, "Publishers"));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportTheme(string, exportAsRestorePoint), customThemes, "Themes"));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportLicence(string, exportAsRestorePoint), customLicences, "Licences"));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportEngineFeature(string, exportAsRestorePoint), customEngineFeatures, I18n.INSTANCE.get("window.main.mods.engineFeatures")));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportGameplayFeature(string, exportAsRestorePoint), customGameplayFeatures, I18n.INSTANCE.get("window.main.mods.gameplayFeatures")));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportGenre(string, exportAsRestorePoint), customGenres, I18n.INSTANCE.get("window.main.mods.genres")));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportPublisher(string, exportAsRestorePoint), customPublishers, I18n.INSTANCE.get("window.main.mods.publisher")));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportTheme(string, exportAsRestorePoint), customThemes, I18n.INSTANCE.get("window.main.mods.themes")));
+                failedExports.append(getExportFailed((string) -> SharingHandler.exportLicence(string, exportAsRestorePoint), customLicences, I18n.INSTANCE.get("window.main.mods.licences")));
                 if(failedExports.toString().isEmpty()){
                     if(exportAsRestorePoint){
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
@@ -649,6 +650,9 @@ public class SharingManager {
         StringBuilder stringBuilder = new StringBuilder();
         boolean firstExportFailed = true;
         boolean exportFailed = false;
+        ProgressBarHelper.initializeProgressBar(0, strings.length, I18n.INSTANCE.get("progressBar.startingExport") + " " + exportName);
+        int currentProgressBarValue = 0;
+        int currentExportFailed = 1;
         for(String string : strings){
             if(!exporter.export(string)){
                 if(firstExportFailed){
@@ -656,11 +660,20 @@ public class SharingManager {
                 }else{
                     stringBuilder.append(", ");
                 }
+                if(currentExportFailed == 10){
+                    currentExportFailed = 1;
+                    stringBuilder.append(System.getProperty("line.separator"));
+                }
                 stringBuilder.append(string);
                 firstExportFailed = false;
                 exportFailed = true;
+                currentExportFailed++;
             }
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
         }
+        TextAreaHelper.appendText(exportName + " " + I18n.INSTANCE.get("textArea.exportComplete"));
+        ProgressBarHelper.resetProgressBar();
         if(exportFailed){
             stringBuilder.append(System.getProperty("line.separator"));
         }

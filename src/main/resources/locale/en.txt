@@ -127,6 +127,7 @@ progressBar.moddedGenre|Scanning for modded gameplay features
 progressBar.moddedLicences|Scanning for modded licences
 progressBar.moddedPublishers|Scanning for modded publishers
 progressBar.moddedThemes|Scanning for modded themes
+progressBar.startingExport|Starting export of
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -140,6 +141,22 @@ textArea.moddedLicenceFound|Modded licence found:
 textArea.moddedLicencesComplete|Scanning for modded licences complete
 textArea.moddedThemeFound|Modded theme found:
 textArea.moddedThemesComplete|Scanning for modded themes complete
+textArea.exportComplete|export complete
+textArea.engineFeatureExportFailed.alreadyExported|The following engine feature was not exported because it has already been exported:
+textArea.engineFeatureExportFailed.generalError.fistPart|While exporting engine feature
+textArea.engineFeatureExportSuccessful|The following engine feature has been exported:
+textArea.gameplayFeatureExportFailed.alreadyExported|The following gameplay feature was not exported because it has already been exported:
+textArea.gameplayFeatureExportFailed.generalError.fistPart|While exporting gameplay feature
+textArea.gameplayFeatureExportSuccessful|The following gameplay feature has been exported:
+textArea.genreFeatureExportFailed.alreadyExported|The following genre was not exported because it has already been exported:
+textArea.genreFeatureExportSuccessful|The following genre has been exported:
+textArea.publisherExportFailed.alreadyExported|The following publisher was not exported because it has already been exported:
+textArea.publisherExportSuccessful|The following publisher has been exported:
+textArea.licenceExportFailed.alreadyExported|The following licence was not exported because it has already been exported:
+textArea.licenceExportSuccessful|The following licence has been exported:
+textArea.themeExportFailed.alreadyExported|The following theme was not exported because it has already been exported:
+textArea.themeExportSuccessful|The following theme has been exported:
+textArea.ExportFailed.generalError.secondPart|the following error occurred:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?
