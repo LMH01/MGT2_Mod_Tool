@@ -113,6 +113,9 @@ dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is ava
 
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
+errorMessages.gameFilesNotAnalyzed|<html>The game files could not be analyzed.<br>Please check if your mgt2 folder is set correctly.<br>Try launching the tool with administrator rights.
+errorMessages.unableToOpenWebPage|Unable to open the web page:
+
 frame.title.error|Error
 frame.title.success|Success
 frame.title.about|About
@@ -140,6 +143,10 @@ window.main.mods.import.importFromFileSystem|Import from file system
 window.main.mods.import.importFromURL|Import from URL
 window.main.mods.import.importFromFileSystem.toolTip|<html>Click to select folders where your import files are located.<br>The selected folders and its subfolders are scanned for imports.<br>When the folders are scanned a summary is shown of what can be imported.
 window.main.mods.import.importFromURL.toolTip|<html>Opens a page where you can enter a URL to a .zip archive.<br>The archive is then downloaded, extracted and searched for mods.<br>A summary is then shown where you can select what entries should be imported.
+window.main.mods.import.getMoreMods|Get more mods
+window.main.mods.import.getMoreMods.toolTip|Click here to open a website where you can get more mods.
+window.main.mods.import.getMoreMods.confirmDialog|Open the page where you can get more mods?
+window.main.mods.import.getMoreMods.confirmDialog.title|Open page?
 window.main.mods.genres|Genres
 window.main.mods.genres.addGenre|Add genre
 window.main.mods.genres.addRandomGenre|Add randomized genre

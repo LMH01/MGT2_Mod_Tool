@@ -73,6 +73,7 @@ public class WindowMain {
         m1.add(m13);
         m1.add(m14About);
         JMenu m2Mods = new JMenu(I18n.INSTANCE.get("window.main.mods"));
+        JMenuItem m213GetMoreMods = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.getMoreMods"));
         JMenuItem m221AddGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addGenre"));
         JMenuItem m222AddRandomGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre"));
         JMenuItem m231AddTheme  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.addTheme"));
@@ -83,6 +84,7 @@ public class WindowMain {
         JMenuItem m210ShowActiveMods = new JMenuItem(I18n.INSTANCE.get("window.main.mods.showActiveMods"));
         M_21_IMPORT.add(M_211_IMPORT_FROM_FILE_SYSTEM);
         M_21_IMPORT.add(M_212_IMPORT_FROM_URL);
+        M_21_IMPORT.add(m213GetMoreMods);
         M_22_GENRES.add(m221AddGenre);
         M_22_GENRES.add(m222AddRandomGenre);
         M_22_GENRES.add(M_223_REMOVE_GENRE);
@@ -113,6 +115,8 @@ public class WindowMain {
 
             }
         });
+        m213GetMoreMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.getMoreMods.toolTip"));
+        m213GetMoreMods.addActionListener(actionEvent -> openMoreModsPage());
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
         M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> SharingManager.importAll());
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
@@ -824,6 +828,16 @@ public class WindowMain {
         if(JOptionPane.showConfirmDialog(null, "Open Github page?", "Open page?", JOptionPane.YES_NO_OPTION) == 0){
             try {
                 Utils.openGithubPage();
+            } catch (Exception e) {
+                Utils.showErrorMessage(2, e);
+                e.printStackTrace();
+            }
+        }
+    }
+    private static void openMoreModsPage(){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.mods.import.getMoreMods.confirmDialog"), I18n.INSTANCE.get("window.main.mods.import.getMoreMods.confirmDialog.title"), JOptionPane.YES_NO_OPTION) == 0){
+            try {
+                Utils.openMoreModsPage();
             } catch (Exception e) {
                 Utils.showErrorMessage(2, e);
                 e.printStackTrace();

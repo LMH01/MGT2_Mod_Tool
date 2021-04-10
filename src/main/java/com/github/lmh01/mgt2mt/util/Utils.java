@@ -18,6 +18,7 @@ public class Utils {
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
     public static final String GITHUB_URL = "https://github.com/LMH01/MGT2_Mod_Tool";
+    public static final String MORE_MODS_URL = "https://github.com/LMH01/MGT2_Mod_Tool/discussions/34";
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     /**
@@ -132,9 +133,9 @@ public class Utils {
     public static void showErrorMessage(int errorMessageKey, Exception e){
         switch(errorMessageKey){
             // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() or AnalyzeThemes.analyzeThemesFile() an exception.
-            case 1: JOptionPane.showMessageDialog(null, "The game files could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\nTry launching the tool with administrator rights.\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE); break;
+            case 1: JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("errorMessages.gameFilesNotAnalyzed") + "\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE); break;
             // 2 = When it is unsuccessful to open the github repository.
-            case 2: JOptionPane.showMessageDialog(null, "Unable to open Github repository:\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE); break;
+            case 2: JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("errorMessages.unableToOpenWebPage") + "\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE); break;
         }
     }
 
@@ -167,6 +168,13 @@ public class Utils {
      */
     public static void openGithubPage() throws Exception {
         Desktop.getDesktop().browse(new URL(GITHUB_URL).toURI());
+    }
+
+    /**
+     * Opens the Github page for MGT2MT in the default browser.
+     */
+    public static void openMoreModsPage() throws Exception {
+        Desktop.getDesktop().browse(new URL(MORE_MODS_URL).toURI());
     }
 
     /**

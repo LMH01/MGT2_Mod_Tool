@@ -113,6 +113,9 @@ dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version is
 
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
+errorMessages.gameFilesNotAnalyzed|<html>Die Spieledateien konnten nicht analysiert werden.<br>Überprüfe bitte, ob der mgt2-Ordner richtig eingestellt ist.<br>Starte das Tool mit Administratorrechten.
+errorMessages.unableToOpenWebPage|Die Webseite kann nicht geöffnet werden:
+
 frame.title.error|Fehler
 frame.title.success|Erfolg
 frame.title.about|Über
@@ -140,6 +143,10 @@ window.main.mods.import.importFromFileSystem|Aus Dateisystem importieren
 window.main.mods.import.importFromURL|Von URL importieren
 window.main.mods.import.importFromFileSystem.toolTip|<html>Klick hier, um Ordner auszuwählen, in denen Mods gespeichert sind, die du importieren möchtest.<br>Die ausgewählten Ordner werden dann nach kompatiblen Mods durchsucht und am Ende<br>wird eine Zusammenfassung der gefundenen Mods angezeigt, die importiert werden können.
 window.main.mods.import.importFromURL.toolTip|<html>Öffnet eine Seite, auf der eine URL zu einem ZIP-Archiv eingegeben werden kann.<br>Das Archiv wird dann heruntergeladen, extrahiert und nach Mods durchsucht.<br>Anschließend wird eine Zusammenfassung angezeigt, in der du auswählen kannst, welche Einträge importiert werden sollen.
+window.main.mods.import.getMoreMods|Mehr Mods
+window.main.mods.import.getMoreMods.toolTip|Klicke hier, um eine Website zu öffnen, auf der du weitere Mods erhalten kannst.
+window.main.mods.import.getMoreMods.confirmDialog|Soll die Webseite geöffnet werden, wo es mehr mods gibt?
+window.main.mods.import.getMoreMods.confirmDialog.title|Seite öffnen?
 window.main.mods.genres|Genres
 window.main.mods.genres.addGenre|Genre hinzufügen
 window.main.mods.genres.addRandomGenre|Zufälliges Genre hinzufügen
