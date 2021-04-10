@@ -1,5 +1,6 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.helper;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 
 public class ProgressBarHelper {

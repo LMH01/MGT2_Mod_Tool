@@ -1,5 +1,6 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.helper;
 
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
 import javax.swing.*;
 import java.awt.*;

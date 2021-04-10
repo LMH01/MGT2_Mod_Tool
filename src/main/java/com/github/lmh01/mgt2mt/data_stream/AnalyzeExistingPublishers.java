@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.ProgressBarHelper;
-import com.github.lmh01.mgt2mt.util.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
 import java.io.IOException;
 import java.util.*;
