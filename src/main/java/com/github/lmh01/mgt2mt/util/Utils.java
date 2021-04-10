@@ -549,4 +549,26 @@ public class Utils {
             return 0;
         }
     }
+
+    /**
+     * Appends the contents of the input array to the string builder
+     * @param entriesPerLine Defines how many objects should be written in one line.
+     */
+    public static void appendStringArrayToStringBuilder(StringBuilder stringBuilder, String[] inputArray, int entriesPerLine){
+        int currentLine = 1;
+        boolean firstEntry = true;
+        for(String string : inputArray){
+            if(!firstEntry){
+                stringBuilder.append(", ");
+            }
+            if(currentLine == entriesPerLine+1){
+                stringBuilder.append(System.getProperty("line.separator"));
+                currentLine = 1;
+            }
+            stringBuilder.append(string);
+            currentLine++;
+            firstEntry = false;
+        }
+        stringBuilder.append(System.getProperty("line.separator"));
+    }
 }

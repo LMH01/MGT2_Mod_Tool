@@ -80,6 +80,7 @@ public class WindowMain {
         JMenuItem m251AddEngineFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.addEngineFeature"));
         JMenuItem m261AddGameplayFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.addGameplayFeature"));
         JMenuItem m271AddLicence = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.addLicence"));
+        JMenuItem m210ShowActiveMods = new JMenuItem(I18n.INSTANCE.get("window.main.mods.showActiveMods"));
         M_21_IMPORT.add(M_211_IMPORT_FROM_FILE_SYSTEM);
         M_21_IMPORT.add(M_212_IMPORT_FROM_URL);
         M_22_GENRES.add(m221AddGenre);
@@ -133,6 +134,8 @@ public class WindowMain {
         m271AddLicence.addActionListener(actionEvent -> LicenceHelper.addLicence());
         M_272_REMOVE_LICENCE.addActionListener(actionEvent -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "removed", "Remove", false));
         M_29_ADD_COMPANY_ICON.addActionListener(actionEvent -> addCompanyIcon());
+        m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
+        m210ShowActiveMods.addActionListener(actionEvent -> ActiveMods.showActiveMods());
         mb.add(m2Mods);
         m2Mods.add(M_21_IMPORT);
         m2Mods.add(M_22_GENRES);
@@ -143,6 +146,7 @@ public class WindowMain {
         m2Mods.add(M_27_LICENCES);
         m2Mods.add(M_28_NPC_GAMES_LIST);
         m2Mods.add(M_29_ADD_COMPANY_ICON);
+        m2Mods.add(m210ShowActiveMods);
         JMenu m3Share = new JMenu(I18n.INSTANCE.get("window.main.share"));
         JMenu m31Export = new JMenu(I18n.INSTANCE.get("window.main.share.export"));
         m31Export.add(M_311_EXPORT_GENRE);

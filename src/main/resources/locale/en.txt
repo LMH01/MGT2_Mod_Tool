@@ -163,6 +163,8 @@ window.main.mods.licences.removeLicence|Remove licence
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click to add a genre id to the NPC_Games_list.
 window.main.mods.addCompanyIcon|Add company icon
+window.main.mods.showActiveMods|Show active mods
+window.main.mods.showActiveMods.toolTip|Click to show which mods are currently active
 window.main.share|Share
 window.main.share.export|Export
 window.main.share.export.genre|Genre
@@ -290,3 +292,5 @@ window.settings.safetyFeatures.warning.title|Disable safety features?
 window.settings.updateChannel.label|Update channel:
 window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
 window.settings.windowTitle|Settings
+
+window.showActiveMods.message.firstPart|These mods are currently active:

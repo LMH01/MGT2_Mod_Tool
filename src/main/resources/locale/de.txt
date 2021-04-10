@@ -163,6 +163,8 @@ window.main.mods.licences.removeLicence|Lizenz entfernen
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click, um eine genre id zu der NPC_Games_list hinzuzufügen.
 window.main.mods.addCompanyIcon|Firmenbild hinzufügen
+window.main.mods.showActiveMods|Aktive Mods anzeigen
+window.main.mods.showActiveMods.toolTip|Clicke, um dir anzeigen zu lassen, welche mods gerade aktiv sind
 window.main.share|Teilen
 window.main.share.export|Exportieren
 window.main.share.export.genre|Genre
@@ -202,7 +204,7 @@ window.main.backup.openBackupFolder.toolTip|<html>Clicke hier, um den Backup Ord
 window.main.utilities|Nützliches
 window.main.utilities.experimentalFeatures|Experimentelle Funktionen
 window.main.utilities.experimentalFeatures.toolTip|Enthält Funktionen, die experimentell sind und Probleme oder Fehler verursachen können
-window.main.utilities.experimentalFeatures.replacePublisher|Publisher mit echten Publischern ersetzen.
+window.main.utilities.experimentalFeatures.replacePublisher|Publisher mit echten Publishern ersetzen.
 window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Clicke hier, um die standart Publisher mit den "echten" Publishern zu ersetzen
 window.main.utilities.openGithubPage|Github Seite öffnen
 window.main.utilities.openMGT2Folder|MGT2 Ordner öffnen
@@ -290,3 +292,5 @@ window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
 window.settings.updateChannel.label|Update Kanal:
 window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
 window.settings.windowTitle|Einstellungen
+
+window.showActiveMods.message.firstPart|Diese Mods sind derzeit aktiv:
