@@ -70,20 +70,20 @@ public class AnalyzeExistingGameplayFeatures {
      * @return Returns the gameplay feature id for the specified name.
      */
     public static int getGameplayFeatureIdByName(String gameplayFeatureName){
-        int genreId = -1;
+        int gameplayFeatureId = -1;
         for(Map<String, String> map : gameplayFeatures){
             if(map.get("NAME EN").equals(gameplayFeatureName)){
-                genreId = Integer.parseInt(map.get("ID"));
+                gameplayFeatureId = Integer.parseInt(map.get("ID"));
             }
         }
-        if(genreId == -1){
+        if(gameplayFeatureId == -1){
             LOGGER.info("Gameplay feature [" + gameplayFeatureName + "] does not exist");
         }else{
             if(Settings.enableDebugLogging){
-                LOGGER.info("Gameplay feature [" + gameplayFeatureName + "] has been found. Id: " + genreId);
+                LOGGER.info("Gameplay feature [" + gameplayFeatureName + "] has been found. Id: " + gameplayFeatureId);
             }
         }
-        return genreId;
+        return gameplayFeatureId;
     }
 
     /**

@@ -4,7 +4,6 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -170,7 +169,6 @@ public class GenreHelper {
         }catch(IOException e){
 
         }
-        WindowMain.checkActionAvailability();
     }
 
 
@@ -466,10 +464,10 @@ public class GenreHelper {
         HashSet<Integer> hashSetGoodGameplayFeatures = new HashSet<>();
         for(String string : AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet()){
             if(Utils.getRandomNumber(1,100) > 80){
-                hashSetBadGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+                hashSetBadGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string)-1);
             }
             if(Utils.getRandomNumber(1,100) > 80){
-                hashSetGoodGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+                hashSetGoodGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string)-1);
             }
         }
         Collections.disjoint(hashSetBadGameplayFeatures, hashSetGoodGameplayFeatures);
