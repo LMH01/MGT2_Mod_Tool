@@ -710,45 +710,55 @@ public class WindowMain {
             boolean breakLoop = false;
             while(!breakLoop){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Publisher", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(textFieldName.getText().equals("") || textFieldName.getText().equals("---------Enter Name---------")){
-                        JOptionPane.showMessageDialog(null, "Please enter a name first!", "", JOptionPane.INFORMATION_MESSAGE);
-                        textFieldName.setText("---------Enter Name---------");
-                    }else if(buttonSelectGenre.getText().equals("        Select genre        ")){
-                        JOptionPane.showMessageDialog(null, "Please select a genre first!", "", JOptionPane.INFORMATION_MESSAGE);
-                    }else{
-                        ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
-                        int logoId;
-                        if(publisherImageFilePath.toString().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
-                            logoId = 87;
-                        }else{
-                            logoId = AnalyzeCompanyLogos.getLogoNumber();
+                    boolean publisherAlreadyExists = false;
+                    for(String string : AnalyzeExistingPublishers.getPublisherString()){
+                        if(textFieldName.getText().equals(string)){
+                            publisherAlreadyExists = true;
                         }
-                        if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
-                                "\nName: " + textFieldName.getText() +
-                                "\nDate: " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString() +
-                                "\nPic: See top left" +
-                                "\nDeveloper: " + checkBoxIsDeveloper.isSelected() +
-                                "\nPublisher: " + checkBoxIsPublisher.isSelected() +
-                                "\nMarketShare: " + spinnerMarketShare.getValue().toString() +
-                                "\nShare: " + spinnerShare.getValue().toString() +
-                                "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("ID", Integer.toString(AnalyzeExistingPublishers.maxPublisherID +1));
-                            hashMap.put("NAME EN", textFieldName.getText());
-                            hashMap.put("NAME GE", textFieldName.getText());
-                            hashMap.put("NAME TU", textFieldName.getText());
-                            hashMap.put("NAME FR", textFieldName.getText());
-                            hashMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
-                            hashMap.put("PIC", Integer.toString(logoId));
-                            hashMap.put("DEVELOPER", Boolean.toString(checkBoxIsDeveloper.isSelected()));
-                            hashMap.put("PUBLISHER", Boolean.toString(checkBoxIsPublisher.isSelected()));
-                            hashMap.put("MARKET", spinnerMarketShare.getValue().toString());
-                            hashMap.put("SHARE", spinnerShare.getValue().toString());
-                            hashMap.put("GENRE", genreID.toString());
-                            EditPublishersFile.addPublisher(hashMap, publisherImageFilePath.toString());
-                            JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
-                            ChangeLog.addLogEntry(19, hashMap.get("NAME EN"));
-                            breakLoop = true;
+                    }
+                    if(publisherAlreadyExists){
+                        JOptionPane.showMessageDialog(null, "Unable to add publisher: The publisher name does already exist!", I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(textFieldName.getText().equals("") || textFieldName.getText().equals("---------Enter Name---------")){
+                            JOptionPane.showMessageDialog(null, "Please enter a name first!", "", JOptionPane.INFORMATION_MESSAGE);
+                            textFieldName.setText("---------Enter Name---------");
+                        }else if(buttonSelectGenre.getText().equals("        Select genre        ")){
+                            JOptionPane.showMessageDialog(null, "Please select a genre first!", "", JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
+                            int logoId;
+                            if(publisherImageFilePath.toString().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
+                                logoId = 87;
+                            }else{
+                                logoId = AnalyzeCompanyLogos.getLogoNumber();
+                            }
+                            if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
+                                    "\nName: " + textFieldName.getText() +
+                                    "\nDate: " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString() +
+                                    "\nPic: See top left" +
+                                    "\nDeveloper: " + checkBoxIsDeveloper.isSelected() +
+                                    "\nPublisher: " + checkBoxIsPublisher.isSelected() +
+                                    "\nMarketShare: " + spinnerMarketShare.getValue().toString() +
+                                    "\nShare: " + spinnerShare.getValue().toString() +
+                                    "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+                                HashMap<String, String> hashMap = new HashMap<>();
+                                hashMap.put("ID", Integer.toString(AnalyzeExistingPublishers.maxPublisherID +1));
+                                hashMap.put("NAME EN", textFieldName.getText());
+                                hashMap.put("NAME GE", textFieldName.getText());
+                                hashMap.put("NAME TU", textFieldName.getText());
+                                hashMap.put("NAME FR", textFieldName.getText());
+                                hashMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                                hashMap.put("PIC", Integer.toString(logoId));
+                                hashMap.put("DEVELOPER", Boolean.toString(checkBoxIsDeveloper.isSelected()));
+                                hashMap.put("PUBLISHER", Boolean.toString(checkBoxIsPublisher.isSelected()));
+                                hashMap.put("MARKET", spinnerMarketShare.getValue().toString());
+                                hashMap.put("SHARE", spinnerShare.getValue().toString());
+                                hashMap.put("GENRE", genreID.toString());
+                                EditPublishersFile.addPublisher(hashMap, publisherImageFilePath.toString());
+                                JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
+                                ChangeLog.addLogEntry(19, hashMap.get("NAME EN"));
+                                breakLoop = true;
+                            }
                         }
                     }
                 }else{
