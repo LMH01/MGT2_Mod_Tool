@@ -297,7 +297,9 @@ public class SharingManager {
         AtomicInteger currentZipArchiveNumber = new AtomicInteger();
         boolean errorWhileScanning = false;
         AtomicBoolean unzipAutomatic = new AtomicBoolean(false);
-        JCheckBox checkBoxPreventZipMessage = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.disableZipMessage"));
+        AtomicBoolean showDuplicateMessage = new AtomicBoolean(true);
+        AtomicBoolean addDuplicate = new AtomicBoolean(false);
+        JCheckBox checkBoxPreventZipMessage = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.saveOption"));
         checkBoxPreventZipMessage.setSelected(false);
         if(directories != null){
             try {
@@ -324,17 +326,17 @@ public class SharingManager {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
                             }
                             if(string.contains("engineFeature.txt")){
-                                addIfCompatible(string, engineFeatures, engineFeatureNames, ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, engineFeatures, engineFeatureNames, ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                             }else if(string.contains("gameplayFeature.txt")){
-                                addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                             }else if(string.contains("genre.txt")){
-                                addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                             }else if(string.contains("publisher.txt")){
-                                addIfCompatible(string, publisher, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, publisher, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                             }else if(string.contains("theme.txt")){
-                                addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                             }else if(string.contains("licence.txt")){
-                                addIfCompatible(string, licences, licenceNames, LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, someThingsNotCompatible);
+                                addIfCompatible(string, licences, licenceNames, LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                             }else if(string.endsWith(".zip")){
                                 boolean unzipFile = false;
                                 if(!checkBoxPreventZipMessage.isSelected()){
@@ -800,13 +802,28 @@ public class SharingManager {
 
     /**
      * Uses the string and checks if the content of that file has already been added to the mod array list. If it does already exist the user is asked if the mod should be added anyway.
+     * @param showMessage The atomic boolean that stores if the already on import list message should be shown or not
+     * @param addDuplicate The atomic boolean that stores if the duplicate mod should be added to the import list or not
      */
-    private static void addIfCompatible(String string, ArrayList<File> feature, ArrayList<String> names, String[] compatibleModToolVersions, AtomicBoolean someThingsNotCompatible){
+    private static void addIfCompatible(String string, ArrayList<File> feature, ArrayList<String> names, String[] compatibleModToolVersions, AtomicBoolean someThingsNotCompatible, AtomicBoolean showMessage, AtomicBoolean addDuplicate){
         if(isImportCompatible(new File(string), compatibleModToolVersions)){
             String returnValue = getImportName(new File(string));
             if(names.contains(returnValue)){
-                if(JOptionPane.showConfirmDialog(null, "This mod has already been found: " + returnValue + "\n\nDo you want to add this mod to the import list anyway?", "Import already on the list", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                    feature.add(new File(string));
+                JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.addIfCompatible.alreadyFound.firstPart") + " " + returnValue + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.addIfCompatible.alreadyFound.secondPart"));
+                JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.saveOption"));
+                Object[] obj = {label, checkBox};
+                if(showMessage.get()){
+                    if(JOptionPane.showConfirmDialog(null, obj, I18n.INSTANCE.get("dialog.sharingManager.importAll.addIfCompatible.alreadyFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        feature.add(new File(string));
+                        addDuplicate.set(true);
+                    }
+                    if(checkBox.isSelected()){
+                        showMessage.set(false);
+                    }
+                }else{
+                    if(addDuplicate.get()){
+                        feature.add(new File(string));
+                    }
                 }
             }else{
                 if(returnValue != "false"){

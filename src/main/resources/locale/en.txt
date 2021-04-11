@@ -59,7 +59,10 @@ dialog.sharingManager.importAll.zipArchiveFound.title|Zip archive found
 dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart|Error while extracting zip archive:
 dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart|Would you like to continue anyway?
 dialog.sharingManager.importAll.zipArchiveFound.error.title|Error while extracting
-dialog.sharingManager.importAll.checkBox.disableZipMessage|<html>Activate this option if you do not want to see messages of this type again.<br>If activated, your reply will be adopted for all further messages of this type.
+dialog.sharingManager.importAll.checkBox.saveOption|<html>If activated, your reply will be adopted<br>for all further messages of this type and the message will be held back.
+dialog.sharingManager.importAll.addIfCompatible.alreadyFound.firstPart|This mod has already been found:
+dialog.sharingManager.importAll.addIfCompatible.alreadyFound.secondPart|Do you want to add this mod to the import list anyway?
+dialog.sharingManager.importAll.addIfCompatible.alreadyFound.title|Import already on the list
 dialog.sharingManager.importAll.guiComponents.label1|Engine features:
 dialog.sharingManager.importAll.guiComponents.label2|Gameplay features:
 dialog.sharingManager.importAll.guiComponents.label3|Genres:
