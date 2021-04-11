@@ -133,7 +133,7 @@ progressBar.moddedGenre|Scannen nach modifizierten Genres
 progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
 progressBar.moddedPublishers|Scannen nach modifizierten Publishern
 progressBar.moddedThemes|Scannen nach modifizierten Themen
-progressBar.startingExport|Beginne export von
+progressBar.startingExport|Exportiere
 progressBar.delete|Lösche:
 progressBar.scanningDirectories|Durchsuche Ordner
 progressBar.importingMods|Importiere Mods

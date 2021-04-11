@@ -133,7 +133,7 @@ progressBar.moddedGenre|Scanning for modded genres
 progressBar.moddedLicences|Scanning for modded licences
 progressBar.moddedPublishers|Scanning for modded publishers
 progressBar.moddedThemes|Scanning for modded themes
-progressBar.startingExport|Starting export of
+progressBar.startingExport|Exporting
 progressBar.delete|Deleting:
 progressBar.scanningDirectories|Scanning directories
 progressBar.importingMods|Importing mods

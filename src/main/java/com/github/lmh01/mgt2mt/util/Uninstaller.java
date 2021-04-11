@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -140,5 +141,12 @@ public class Uninstaller {
         Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
         ProgressBarHelper.resetProgressBar();
         return uninstallFailed;
+    }
+    public static void deleteAllExports(){
+        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all exports?", "Delete exports?", JOptionPane.YES_NO_OPTION) == 0){
+            DataStreamHelper.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
+            JOptionPane.showMessageDialog(null, "All exports have been deleted.");
+        }
+        WindowMain.lockMenuItems(false);
     }
 }

@@ -178,7 +178,7 @@ public class WindowMain {
             Utils.open(Utils.getMGT2ModToolExportFolder());
         });
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
-        m36.addActionListener(actionEvent -> deleteAllExports());
+        m36.addActionListener(actionEvent -> ThreadHandler.startThread("runnableDeleteExports"));
         M_3_SHARE.add(m31Export);
         M_3_SHARE.add(m35);
         M_3_SHARE.add(m36);
@@ -813,12 +813,6 @@ public class WindowMain {
             }
         }else{
             JOptionPane.showMessageDialog(null, "Unable to add image file: Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    private static void deleteAllExports(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all exports?", "Delete exports?", JOptionPane.YES_NO_OPTION) == 0){
-            DataStreamHelper.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
-            JOptionPane.showMessageDialog(null, "All exports have been deleted.");
         }
     }
     private static void restoreInitialBackup(){

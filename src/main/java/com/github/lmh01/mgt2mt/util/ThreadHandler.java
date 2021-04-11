@@ -20,6 +20,7 @@ public class ThreadHandler {
     private static Runnable runnableUninstall = () -> Uninstaller.uninstall();
     private static Runnable runnableImportAll = () -> SharingManager.importAll();
     private static Runnable runnableShowActiveMods = () -> ActiveMods.showActiveMods();
+    private static Runnable runnableDeleteExports = () -> Uninstaller.deleteAllExports();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
@@ -44,6 +45,7 @@ public class ThreadHandler {
             case "runnableUninstall": thread  = new Thread(ThreadHandler.runnableUninstall);break;
             case "runnableImportAll": thread  = new Thread(ThreadHandler.runnableImportAll);break;
             case "runnableShowActiveMods": thread  = new Thread(ThreadHandler.runnableShowActiveMods);break;
+            case "runnableDeleteExports": thread = new Thread(runnableDeleteExports);break;
             default:
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
