@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.SharingManager;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class PublisherHelper {
     public static void realPublishers(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             try{
+                ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"));
                 File publisherZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher.zip");
                 File publisherUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher");
                 boolean downloadFiles = true;
@@ -48,6 +50,7 @@ public class PublisherHelper {
                 LOGGER.info("Adding new publishers...");
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, false);
+                ProgressBarHelper.increment();
                 if(AnalyzeExistingPublishers.getActivePublisherIds().contains(-1)){
                     EditPublishersFile.removePublisher("Dummy");
                 }
@@ -57,5 +60,6 @@ public class PublisherHelper {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
+        WindowMain.checkActionAvailability();
     }
 }

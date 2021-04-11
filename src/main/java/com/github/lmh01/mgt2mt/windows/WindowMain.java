@@ -127,7 +127,7 @@ public class WindowMain {
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
         M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startThread("runnableImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
-        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ImportFromURLHelper.importFromURL());
+        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startThread("runnableImportFromURL"));
         m221AddGenre.addActionListener(actionEvent -> addGenre());
         m222AddRandomGenre.setToolTipText(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre.toolTip"));
         m222AddRandomGenre.addActionListener(actionEvent -> GenreHelper.addRandomizedGenre());
@@ -233,7 +233,7 @@ public class WindowMain {
         M_4_BACKUP.add(m45penBackupFolder);
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
-        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> PublisherHelper.realPublishers());
+        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ThreadHandler.startThread("runnableReplacePublisherWithRealPublishers"));
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));

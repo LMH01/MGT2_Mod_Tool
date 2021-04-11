@@ -137,6 +137,8 @@ progressBar.startingExport|Exportiere
 progressBar.delete|Lösche:
 progressBar.scanningDirectories|Durchsuche Ordner
 progressBar.importingMods|Importiere Mods
+progressBar.publisherHelper.replaceWithRealPublishers.initialize|Ersetze Publisher
+progressBar.downloadZip|Downloading zip
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -191,6 +193,7 @@ textArea.importAll.scanningDirectories.complete|Das Scannen der Ordner ist abges
 textArea.unzip.firstPart|Entpacke Ordner
 textArea.unzip.secondPart|nach
 textArea.unzip.unzippedFile|Datei entpackt:
+textArea.downloadZip.downloadSuccess|Zip Datei wurde erfolgreich heruntergeladen und abgespeichert:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

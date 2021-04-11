@@ -137,6 +137,7 @@ progressBar.startingExport|Exporting
 progressBar.delete|Deleting:
 progressBar.scanningDirectories|Scanning directories
 progressBar.importingMods|Importing mods
+progressBar.publisherHelper.replaceWithRealPublishers.initialize|Replacing publishers
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -191,6 +192,7 @@ textArea.importAll.scanningDirectories.complete|The selected directories have be
 textArea.unzip.firstPart|Unzipping folder
 textArea.unzip.secondPart|to
 textArea.unzip.unzippedFile|File unzipped:
+textArea.downloadZip.downloadSuccess|Zip file has been downloaded and saved successfully:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?

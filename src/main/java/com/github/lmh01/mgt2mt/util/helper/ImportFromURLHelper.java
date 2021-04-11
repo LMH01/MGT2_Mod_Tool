@@ -5,11 +5,10 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.SharingManager;
 import com.github.lmh01.mgt2mt.util.Utils;
-
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public class ImportFromURLHelper {
     /**
@@ -35,5 +34,6 @@ public class ImportFromURLHelper {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.importFromURL.error.body") + "\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
+        WindowMain.checkActionAvailability();
     }
 }

@@ -43,12 +43,14 @@ public class DataStreamHelper {
     }
 
     public static void downloadZip(String URL, String destination) throws IOException {
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
         File destinationFile = new File(destination);
         if(destinationFile.exists()){
             destinationFile.delete();
         }
         destinationFile.getParentFile().mkdirs();
         new FileOutputStream(destination).getChannel().transferFrom(Channels.newChannel(new URL(URL).openStream()), 0, Long.MAX_VALUE);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.downloadZip.downloadSuccess") + " " + URL + " -> " + destination);
         LOGGER.info("The zip file from " + URL + " has been successfully downloaded to " + destination);
     }
 

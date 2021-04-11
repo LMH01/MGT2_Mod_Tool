@@ -1,7 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.util.helper.ImportFromURLHelper;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
+import com.github.lmh01.mgt2mt.util.helper.PublisherHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -21,6 +23,8 @@ public class ThreadHandler {
     private static Runnable runnableImportAll = () -> SharingManager.importAll();
     private static Runnable runnableShowActiveMods = () -> ActiveMods.showActiveMods();
     private static Runnable runnableDeleteExports = () -> Uninstaller.deleteAllExports();
+    private static Runnable runnableReplacePublisherWithRealPublishers = () -> PublisherHelper.realPublishers();
+    private static Runnable runnableImportFromURL = () -> ImportFromURLHelper.importFromURL();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
@@ -46,6 +50,8 @@ public class ThreadHandler {
             case "runnableImportAll": thread  = new Thread(ThreadHandler.runnableImportAll);break;
             case "runnableShowActiveMods": thread  = new Thread(ThreadHandler.runnableShowActiveMods);break;
             case "runnableDeleteExports": thread = new Thread(runnableDeleteExports);break;
+            case "runnableReplacePublisherWithRealPublishers": thread = new Thread(runnableReplacePublisherWithRealPublishers);break;
+            case "runnableImportFromURL": thread = new Thread(runnableImportFromURL);break;
             default:
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
