@@ -69,7 +69,7 @@ public class WindowMain {
         JMenuItem m11 = new JMenuItem(I18n.INSTANCE.get("window.main.file.settings"));
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         JMenuItem m12 = new JMenuItem(I18n.INSTANCE.get("window.main.file.updateCheck"));
-        m12.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
+        m12.addActionListener(actionEvent -> ThreadHandler.startThread("runnableCheckForUpdates"));
         JMenuItem m13 = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
         m13.setToolTipText(I18n.INSTANCE.get("window.main.file.uninstall.toolTip"));
         m13.addActionListener(actionEvent -> ThreadHandler.startThread("runnableUninstall"));
@@ -131,19 +131,19 @@ public class WindowMain {
         m221AddGenre.addActionListener(actionEvent -> addGenre());
         m222AddRandomGenre.setToolTipText(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre.toolTip"));
         m222AddRandomGenre.addActionListener(actionEvent -> GenreHelper.addRandomizedGenre());
-        M_223_REMOVE_GENRE.addActionListener(actionEvent -> OperationHelper.process(EditGenreFile::removeGenre, AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId(), AnalyzeExistingGenres.getGenresByAlphabetWithoutId(), "genre", "removed", "Remove", false));
+        M_223_REMOVE_GENRE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableRemoveGenre"));
         m231AddTheme.addActionListener(actionEvent -> addTheme());
-        M_232_REMOVE_THEME.addActionListener(actionEvent ->  OperationHelper.process(EditThemeFiles::removeTheme, AnalyzeExistingThemes.getCustomThemesByAlphabet(), AnalyzeExistingThemes.getThemesByAlphabet(), "theme", "removed", "Remove", false));
+        M_232_REMOVE_THEME.addActionListener(actionEvent ->  ThreadHandler.startThread("runnableRemoveTheme"));
         M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
         M_28_NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
         m241AddPublisher.addActionListener(actionEvent -> addPublisher());
-        M_242_REMOVE_PUBLISHER.addActionListener(actionEvent -> OperationHelper.process(EditPublishersFile::removePublisher, AnalyzeExistingPublishers.getCustomPublisherString(), AnalyzeExistingPublishers.getPublisherString(), "publisher", "removed", "Remove", false));
+        M_242_REMOVE_PUBLISHER.addActionListener(actionEvent -> ThreadHandler.startThread("runnableRemovePublisher"));
         m261AddGameplayFeature .addActionListener(actionEvent -> GameplayFeatureHelper.addGameplayFeature());
-        M_262_REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> OperationHelper.process(EditGameplayFeaturesFile::removeGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), "gameplay feature", "removed", "Remove", false));
+        M_262_REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableRemoveGameplayFeature"));
         m251AddEngineFeature.addActionListener(actionEvent -> EngineFeatureHelper.addEngineFeature());
-        M_252_REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> OperationHelper.process(EditEngineFeaturesFile::removeEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), "engine feature", "removed", "Remove", false));
+        M_252_REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableRemoveEngineFeature"));
         m271AddLicence.addActionListener(actionEvent -> LicenceHelper.addLicence());
-        M_272_REMOVE_LICENCE.addActionListener(actionEvent -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), "licence", "removed", "Remove", false));
+        M_272_REMOVE_LICENCE.addActionListener(actionEvent -> ThreadHandler.startThread("runnableRemoveLicence"));
         M_29_ADD_COMPANY_ICON.addActionListener(actionEvent -> addCompanyIcon());
         m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
         m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startThread("runnableShowActiveMods"));
@@ -577,6 +577,7 @@ public class WindowMain {
                                     if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false);
                                         EditThemeFiles.addTheme(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
+                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                         breakLoop = true;
                                     }
@@ -785,6 +786,7 @@ public class WindowMain {
                                 EditPublishersFile.addPublisher(hashMap, publisherImageFilePath.toString());
                                 JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
                                 ChangeLog.addLogEntry(19, hashMap.get("NAME EN"));
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + hashMap.get("NAME EN"));
                                 breakLoop = true;
                             }
                         }

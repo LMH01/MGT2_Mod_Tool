@@ -677,6 +677,7 @@ public class SharingManager {
         }
         TextAreaHelper.resetAutoScroll();
         WindowMain.lockMenuItems(false);
+        WindowMain.checkActionAvailability();
     }
 
     /**

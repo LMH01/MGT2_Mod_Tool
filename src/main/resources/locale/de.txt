@@ -4,6 +4,20 @@ button.back|Zurück
 commonBodies.areYouSure|Bist du sicher?
 commonBodies.exception|Grund:
 
+commonText.genre|Genre
+commonText.licence|Lizenz
+commonText.publisher|Publisher
+commonText.gameplayFeature|Gameplay Feature
+commonText.engineFeature|Engine Feature
+commonText.theme|Thema
+commonText.exported|exportiert
+commonText.export|Exportieren
+commonText.exporting|Exportiere
+commonText.removed|entfernt
+commonText.remove|Entfernen
+commonText.removing|Entferne
+commonText.successfully|erfolgreich
+
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>Ein Wiederherstellungspunkt wurde bereits erstellt.<br><br>Möchtest du einen neuen Wiederherstellungspunkt erstellen und die alten Dateien in einen Speicherordner verschieben?
@@ -12,7 +26,7 @@ dialog.restorePoint.moveRestorePointFailed|<html>Beim Verschieben der alten Wied
 dialog.restorePoint.restore.mainDialog|<html>Bist du sicher, dass die Mods auf den Wiederherstellungspunkt zurückgesetzt werden sollen?<br><br>Dadurch werden alle derzeit installierten Mods entfernt und durch die Mods ersetzt, die als Wiederherstellungspunkt gesetzt wurden.<br>Beim fortfahren wird ein Dialog angezeigt, in dem du auswählen kannst, welche Mods wiederhergestellt werden sollen.<br>Hinweis: Firmenlogos werden nicht wiederhergestellt.
 dialog.restorePoint.restore.mainDialog.title|Mods wiederherstellen
 
-dialog.export.exportSuccessful|<html>Alle Einträge wurden erfolgreich exportiert!<br><br>Soll der Ordner geöffnet werden, in wlechem sie gespeichert wurden?
+dialog.export.exportSuccessful|<html>Alle Einträge wurden erfolgreich exportiert!<br><br>Soll der Ordner geöffnet werden, in welchem sie gespeichert wurden?
 dialog.export.restorePointSuccessful|Der Wiederherstellungspunkt wurde erfolgreich erstellt!
 dialog.export.error|Fehler beim Exportieren
 dialog.export.alreadyExported1|Die folgenden Einträge wurden nicht exportiert, da sie bereits exportiert wurden
@@ -126,6 +140,25 @@ frame.title.error|Fehler
 frame.title.success|Erfolg
 frame.title.about|Über
 
+processor.chooseEntries.label.firstPart|Währe die
+processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
+processor.alreadyProcessed.firstPart|Die ausgewählten
+processor.alreadyProcessed.secondPart|wurde schon
+processor.somethingWentWrong.firstPart|Etwas ist schiefgelaufen beim
+processor.somethingWentWrong.secondPart|Folgende
+processor.somethingWentWrong.thirdPart|s wurden nicht
+processor.somethingWentWrong.fourthPart|Soll der Ordner geöffnet werden, wo die Datei gespeichert wurden?
+processor.operationComplete.allSelected|Alle ausgewählten
+processor.operationComplete.firstPart|en wurden
+processor.operationComplete.secondPart|Soll der Ordner geöffnet werden, wo die Dateien gespeichert wurden?
+processor.nothingSelected.firstPart|Bitte wähle ein
+processor.nothingSelected.secondPart|zuerst.
+processor.error.unableTo|Unfähig zu
+processor.error.noCustom|Es gibt keine benutzerdefinierten
+processor.error.part.1|<html>die bearbeitet werden könnten.<br>Bitte füge ein
+processor.error.part.2|Fehler beim
+processor.error.part.3|Ein Fehler ist aufgetreten:
+
 progressBar.idle|Leerlauf
 progressBar.moddedEngineFeatures|Scannen nach modifizierten Engine Features
 progressBar.moddedGameplayFeatures|Scannen nach modifizierten Gameplay Features
@@ -139,6 +172,7 @@ progressBar.scanningDirectories|Durchsuche Ordner
 progressBar.importingMods|Importiere Mods
 progressBar.publisherHelper.replaceWithRealPublishers.initialize|Ersetze Publisher
 progressBar.downloadZip|Downloading zip
+progressBar.checkForUpdates|Suche nach updates
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -194,6 +228,8 @@ textArea.unzip.firstPart|Entpacke Ordner
 textArea.unzip.secondPart|nach
 textArea.unzip.unzippedFile|Datei entpackt:
 textArea.downloadZip.downloadSuccess|Zip Datei wurde erfolgreich heruntergeladen und abgespeichert:
+textArea.added|Hinzugefügt:
+textArea.removed|Entfernt:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

@@ -4,6 +4,8 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -22,6 +24,7 @@ public class UpdateChecker {
         new Thread("UpdateChecker"){
             public void run(){
                 try {
+                    ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.checkForUpdates"));
                     LOGGER.info("Checking for updates...");
                     updateAvailable = false;
                     java.net.URL url;
@@ -36,6 +39,7 @@ public class UpdateChecker {
                     Scanner scanner = new Scanner(url.openStream());
                     String currentLine = scanner.nextLine();
                     newestVersion = currentLine;
+                    ProgressBarHelper.increment();
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
                         if(!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)){
                             if(!MadGamesTycoon2ModTool.VERSION.contains("dev")){
@@ -70,6 +74,8 @@ public class UpdateChecker {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                ProgressBarHelper.resetProgressBar();
+                WindowMain.lockMenuItems(false);
             }
 
         }.start();

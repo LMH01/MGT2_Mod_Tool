@@ -140,6 +140,7 @@ public class Uninstaller {
         }
         Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
         ProgressBarHelper.resetProgressBar();
+        WindowMain.lockMenuItems(false);
         return uninstallFailed;
     }
     public static void deleteAllExports(){

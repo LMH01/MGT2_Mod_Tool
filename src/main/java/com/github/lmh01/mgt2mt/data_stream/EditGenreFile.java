@@ -1,7 +1,9 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +90,7 @@ public class EditGenreFile {
         EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(genreName), false, null);
         EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(genreName));
         ImageFileHandler.removeImageFiles(genreName);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + genreName);
         return true;
     }
 

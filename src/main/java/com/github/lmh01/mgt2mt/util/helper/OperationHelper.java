@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
@@ -19,12 +20,14 @@ public class OperationHelper {
      * @param exportType The type that should be processed. Eg. genre, gameplay feature
      * @param operation The operation that should be written in some windows. Eg. removed, added, exported
      * @param operationNoun The operation that should be written in some windows. Eg. Remove, Add, Export
+     * @param operationVerb The operation that should be written in some windows. Eg. Removing, Adding, Exporting
      * @param export If true a message is shown in the end where the export folder is shown when yes is clicked
      */
-    public static void process(Exporter processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, boolean export){
+    public static void process(Exporter processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, String operationVerb, boolean export){
         try {
+            ProgressBarHelper.initializeProgressBar(0, 1, operationVerb + " " + exportType);
             boolean noOperationAvailable = true;
-            JLabel labelChooseOperations = new JLabel("Select the " + exportType + "(s) that should be " + operation);
+            JLabel labelChooseOperations = new JLabel(I18n.INSTANCE.get("processor.chooseEntries.label.firstPart") + " " + exportType + I18n.INSTANCE.get("processor.chooseEntries.label.secondPart") + " " + operation);
             String[] string;
             if(Settings.disableSafetyFeatures){
                 string = stringArraySafetyFeaturesDisabled;
@@ -54,45 +57,48 @@ public class OperationHelper {
                         }
                         int numberOfOperations = listAvailableOperations.getSelectedValuesList().size();
                         StringBuilder failedOperations = new StringBuilder();
+                        ProgressBarHelper.increaseMaxValue(numberOfOperations);
+                        ProgressBarHelper.increment();
                         for(int i=0; i<listAvailableOperations.getSelectedValuesList().size(); i++){
                             String currentExport = listAvailableOperations.getSelectedValuesList().get(i);
                             if(!processor.export(currentExport)){
                                 if(!multipleExports){
-                                    JOptionPane.showMessageDialog(null, "The selected " + exportType + " has already been " + operation, "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.alreadyProcessed.firstPart") + " " + exportType + " " + I18n.INSTANCE.get("processor.alreadyProcessed.secondPart") + " " + operation, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 }
-                                failedOperations.append(currentExport).append(" - The selected ").append(exportType).append(" has already been ").append(operation).append(System.getProperty("line.separator"));
+                                failedOperations.append(currentExport).append(" - ").append(I18n.INSTANCE.get("processor.alreadyProcessed.firstPart")).append(" ").append(exportType).append(" ").append(I18n.INSTANCE.get("processor.alreadyProcessed.secondPart")).append(" ").append(operation).append(System.getProperty("line.separator"));
                                 operationFailed = true;
                             }
                             numberOfOperations--;
+                            ProgressBarHelper.increment();
                         }
                         if(numberOfOperations == 0){
                             if(operationFailed){
                                 if(export){
-                                    if(JOptionPane.showConfirmDialog(null, "Something went wrong wile exporting " + exportType + ".\nThe following " + exportType + "s where not exported:\n" + failedOperations + "\n\nDo you want to open the folder where it has been saved?", "Exported " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations + "\n\n" + I18n.INSTANCE.get("processor.somethingWentWrong.fourthPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                                         Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
                                     }
                                 }else{
-                                    JOptionPane.showMessageDialog(null, "Something went wrong while " + exportType, "Something went wrong", JOptionPane.INFORMATION_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType, I18n.INSTANCE.get("frame.title.error"), JOptionPane.INFORMATION_MESSAGE);
                                 }
                             }else{
                                 if(export){
-                                    if(JOptionPane.showConfirmDialog(null, "All selected " + exportType + "s have been exported successfully!\n\nDo you want to open the folder where they have been saved?", "Exported " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!\n\n" + I18n.INSTANCE.get("processor.operationComplete.secondPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                                         Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
                                     }
                                 }else{
-                                    JOptionPane.showMessageDialog(null, "All selected " + exportType + "s have been " + operation + " successfully!", operationNoun + " " + exportType, JOptionPane.INFORMATION_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!", operationNoun + " " + exportType, JOptionPane.INFORMATION_MESSAGE);
                                 }
                             }
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, "Please select a " + exportType + " first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.nothingSelected.firstPart") + " " + exportType + " " + I18n.INSTANCE.get("processor.nothingSelected.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Unable to export " + exportType + ":\nThere is no custom " + exportType + " that could be exported.\nPlease add a " + exportType + " first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.error.unableTo") + " " + operation + exportType + ":\n" + I18n.INSTANCE.get("processor.error.noCustom") + " " + exportType + " " + I18n.INSTANCE.get("processor.error.part.1") + " " + exportType + " " + I18n.INSTANCE.get("processor.nothingSelected.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while exporting " + exportType + ": An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.error.part.2") + " " + operation + exportType + ": " + I18n.INSTANCE.get("processor.error.part.3") + ": " + "\n\n" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
         TextAreaHelper.resetAutoScroll();

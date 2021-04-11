@@ -1,7 +1,9 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,9 @@ public class EditLicenceFile {
         return editLicenceFile(true, null, map);
     }
     public static boolean removeLicence(String licenceName) throws IOException {
-        return editLicenceFile(false, licenceName, null);
+        boolean returnValue = editLicenceFile(false, licenceName, null);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + licenceName);
+        return returnValue;
     }
     private static boolean editLicenceFile(boolean addLicence, String licenceName, Map<String, String> newLicenceMap) throws IOException {
         AnalyzeExistingLicences.analyze();
