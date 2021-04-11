@@ -32,10 +32,10 @@ public class DataStreamHelper {
         Map<Integer, String> map = getContentFromFile(file, charsetType);
         for(Map.Entry entry : map.entrySet()){
             if(entry.getValue().toString().contains("NAME EN")){
-                return entry.getValue().toString().replace("[NAME EN]", "");
+                return entry.getValue().toString().replace("[NAME EN]", "").replace("[NAME AR]", "");
             }
             if(entry.getValue().toString().contains("NAME")){
-                return entry.getValue().toString().replace("[NAME]", "");
+                return entry.getValue().toString().replace("[NAME AR]", "").replace("[NAME]", "");
             }
         }
         return "-1";

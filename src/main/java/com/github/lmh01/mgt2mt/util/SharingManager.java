@@ -517,15 +517,15 @@ public class SharingManager {
      * @return Returns a array list containing numbers of selected entries
      */
     private static ArrayList<Integer> getSelectedEntries(ArrayList<File> files){
-        ArrayList<String> engineFeatureNames = new ArrayList<>();
+        ArrayList<String> listEntries = new ArrayList<>();
         for(File file : files){
             try {
-                engineFeatureNames.add(DataStreamHelper.getNameFromFile(file, "UTF_8BOM"));
+                listEntries.add(DataStreamHelper.getNameFromFile(file, "UTF_8BOM"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return Utils.getSelectedEntries("Select what should be imported:", "Import", Utils.convertArrayListToArray(engineFeatureNames), Utils.convertArrayListToArray(engineFeatureNames),false);
+        return Utils.getSelectedEntries("Select what should be imported:", "Import", Utils.convertArrayListToArray(listEntries), Utils.convertArrayListToArray(listEntries),false);
     }
 
     /**
