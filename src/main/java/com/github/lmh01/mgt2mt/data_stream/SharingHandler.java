@@ -209,6 +209,12 @@ public class SharingHandler {
         if(!licenceCanBeImported && !Settings.disableSafetyFeatures){
             return "Licence [" + map.get("NAME") + "] could not be imported:\nThe licence is not with the current mod tool version compatible\nLicence was exported in version: " + map.get("MGT2MT VERSION");
         }
+        for(Map.Entry<Integer, String> entry : AnalyzeExistingLicences.existingLicences.entrySet()){
+            if(entry.getValue().equals(map.get("NAME") + " " + map.get("TYPE"))){
+                LOGGER.info("Licence already exists - The licence name is already taken");
+                return "false";
+            }
+        }
         Map<String, String> exportMap = new HashMap<>();
         exportMap.put("NAME", map.get("NAME"));
         exportMap.put("TYPE", map.get("TYPE"));

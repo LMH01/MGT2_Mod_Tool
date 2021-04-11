@@ -19,6 +19,7 @@ public class EditLicenceFile {
         return editLicenceFile(false, licenceName, null);
     }
     private static boolean editLicenceFile(boolean addLicence, String licenceName, Map<String, String> newLicenceMap) throws IOException {
+        AnalyzeExistingLicences.analyze();
         File licenceFile = Utils.getLicenceFile();
         if(Settings.disableSafetyFeatures){
             LOGGER.info("Deleting old publisher file.");
