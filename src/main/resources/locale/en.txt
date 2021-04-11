@@ -306,6 +306,7 @@ window.main.actionAvailability.noLicenceAvailable|Disabled -> No licence availab
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Disabled -> No mods added for which a restore point could be created
+window.main.lockMenuItems|Disabled -> A task is currently executed
 
 window.importFromURL.labelText|<html>Enter the URL to the .zip archive below.<br>Note: This has to be a direct download link.
 window.importFromURL.textFieldURL.toolTip|Enter the URL to the .zip archive

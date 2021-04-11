@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,5 +48,6 @@ public class ThreadHandler {
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
         thread.start();
+        WindowMain.lockMenuItems(true);
     }
 }

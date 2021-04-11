@@ -60,7 +60,7 @@ public class OperationHelper {
                                 if(!multipleExports){
                                     JOptionPane.showMessageDialog(null, "The selected " + exportType + " has already been " + operation, "Action unavailable", JOptionPane.ERROR_MESSAGE);
                                 }
-                                failedOperations.append(currentExport).append(" - The selected ").append(exportType).append(" has already been").append(operation).append(System.getProperty("line.separator"));
+                                failedOperations.append(currentExport).append(" - The selected ").append(exportType).append(" has already been ").append(operation).append(System.getProperty("line.separator"));
                                 operationFailed = true;
                             }
                             numberOfOperations--;

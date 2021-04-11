@@ -22,6 +22,11 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static final JFrame frame = new JFrame(I18n.INSTANCE.get("window.main.tile"));
+    private static final JMenu M_1_FILE = new JMenu(I18n.INSTANCE.get("window.main.file"));
+    private static final JMenu M_2_MODSS = new JMenu(I18n.INSTANCE.get("window.main.mods"));
+    private static final JMenu M_3_SHARE = new JMenu(I18n.INSTANCE.get("window.main.share"));
+    private static final JMenu M_4_BACKUP = new JMenu(I18n.INSTANCE.get("window.main.backup"));
+    private static final JMenu M_5_UTIL = new JMenu(I18n.INSTANCE.get("window.main.utilities"));
     private static final JMenu M_21_IMPORT = new JMenu(I18n.INSTANCE.get("window.main.mods.import"));
     private static final JMenu M_22_GENRES = new JMenu(I18n.INSTANCE.get("window.main.mods.genres"));
     private static final JMenu M_23_THEMES = new JMenu(I18n.INSTANCE.get("window.main.mods.themes"));
@@ -61,7 +66,6 @@ public class WindowMain {
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu(I18n.INSTANCE.get("window.main.file"));
         JMenuItem m11 = new JMenuItem(I18n.INSTANCE.get("window.main.file.settings"));
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         JMenuItem m12 = new JMenuItem(I18n.INSTANCE.get("window.main.file.updateCheck"));
@@ -71,12 +75,11 @@ public class WindowMain {
         m13.addActionListener(actionEvent -> ThreadHandler.startThread("runnableUninstall"));
         JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
-        mb.add(m1);
-        m1.add(m11);
-        m1.add(m12);
-        m1.add(m13);
-        m1.add(m14About);
-        JMenu m2Mods = new JMenu(I18n.INSTANCE.get("window.main.mods"));
+        mb.add(M_1_FILE);
+        M_1_FILE.add(m11);
+        M_1_FILE.add(m12);
+        M_1_FILE.add(m13);
+        M_1_FILE.add(m14About);
         JMenuItem m213GetMoreMods = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.getMoreMods"));
         JMenuItem m221AddGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addGenre"));
         JMenuItem m222AddRandomGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre"));
@@ -102,8 +105,8 @@ public class WindowMain {
         M_26_GAMEPLAY_FEATURES.add(M_262_REMOVE_GAMEPLAY_FEATURE);
         M_27_LICENCES.add(m271AddLicence);
         M_27_LICENCES.add(M_272_REMOVE_LICENCE);
-        m2Mods.addActionListener(actionEvent -> Disclaimer.showDisclaimer());
-        m2Mods.addMenuListener(new MenuListener() {
+        M_2_MODSS.addActionListener(actionEvent -> Disclaimer.showDisclaimer());
+        M_2_MODSS.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
                 Disclaimer.showDisclaimer();
@@ -144,18 +147,17 @@ public class WindowMain {
         M_29_ADD_COMPANY_ICON.addActionListener(actionEvent -> addCompanyIcon());
         m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
         m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startThread("runnableShowActiveMods"));
-        mb.add(m2Mods);
-        m2Mods.add(M_21_IMPORT);
-        m2Mods.add(M_22_GENRES);
-        m2Mods.add(M_23_THEMES);
-        m2Mods.add(M_24_PUBLISHER);
-        m2Mods.add(M_25_ENGINE_FEATURES);
-        m2Mods.add(M_26_GAMEPLAY_FEATURES);
-        m2Mods.add(M_27_LICENCES);
-        m2Mods.add(M_28_NPC_GAMES_LIST);
-        m2Mods.add(M_29_ADD_COMPANY_ICON);
-        m2Mods.add(m210ShowActiveMods);
-        JMenu m3Share = new JMenu(I18n.INSTANCE.get("window.main.share"));
+        mb.add(M_2_MODSS);
+        M_2_MODSS.add(M_21_IMPORT);
+        M_2_MODSS.add(M_22_GENRES);
+        M_2_MODSS.add(M_23_THEMES);
+        M_2_MODSS.add(M_24_PUBLISHER);
+        M_2_MODSS.add(M_25_ENGINE_FEATURES);
+        M_2_MODSS.add(M_26_GAMEPLAY_FEATURES);
+        M_2_MODSS.add(M_27_LICENCES);
+        M_2_MODSS.add(M_28_NPC_GAMES_LIST);
+        M_2_MODSS.add(M_29_ADD_COMPANY_ICON);
+        M_2_MODSS.add(m210ShowActiveMods);
         JMenu m31Export = new JMenu(I18n.INSTANCE.get("window.main.share.export"));
         m31Export.add(M_311_EXPORT_GENRE);
         m31Export.add(M_312_EXPORT_PUBLISHER);
@@ -177,11 +179,10 @@ public class WindowMain {
         });
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
         m36.addActionListener(actionEvent -> deleteAllExports());
-        m3Share.add(m31Export);
-        m3Share.add(m35);
-        m3Share.add(m36);
-        mb.add(m3Share);
-        JMenu m4 = new JMenu(I18n.INSTANCE.get("window.main.backup"));
+        M_3_SHARE.add(m31Export);
+        M_3_SHARE.add(m35);
+        M_3_SHARE.add(m36);
+        mb.add(M_3_SHARE);
         JMenu m41 = new JMenu(I18n.INSTANCE.get("window.main.backup.createBackup"));
         JMenu m42 = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
         JMenu m43RestorePoint = new JMenu(I18n.INSTANCE.get("window.main.backup.modRestorePoint"));
@@ -222,15 +223,14 @@ public class WindowMain {
         JMenuItem m45penBackupFolder = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
         m45penBackupFolder.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
         m45penBackupFolder.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
-        mb.add(m4);
-        m4.add(m41);
-        m4.add(m42);
-        m4.add(m43RestorePoint);
+        mb.add(M_4_BACKUP);
+        M_4_BACKUP.add(m41);
+        M_4_BACKUP.add(m42);
+        M_4_BACKUP.add(m43RestorePoint);
         if(Settings.disableSafetyFeatures){
-            m4.add(m44DeleteAllBackups);
+            M_4_BACKUP.add(m44DeleteAllBackups);
         }
-        m4.add(m45penBackupFolder);
-        JMenu m5 = new JMenu(I18n.INSTANCE.get("window.main.utilities"));
+        M_4_BACKUP.add(m45penBackupFolder);
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
         M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> PublisherHelper.realPublishers());
@@ -253,17 +253,17 @@ public class WindowMain {
         JMenuItem m59OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
         m59OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
         m59OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
-        mb.add(m5);
-        m5.add(m51ExperimentalFeatures);
+        mb.add(M_5_UTIL);
+        M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
-        m5.add(m52OpenGitHubPage);
-        m5.add(m53OpenMGT2Folder);
-        m5.add(m54ShowActiveGenres);
-        m5.add(m55ShowActiveThemes);
-        m5.add(m56OpenGenreFile);
-        m5.add(m57OpenGenresById);
-        m5.add(m58OpenLogFile);
-        m5.add(m59OpenSaveGameFolder);
+        M_5_UTIL.add(m52OpenGitHubPage);
+        M_5_UTIL.add(m53OpenMGT2Folder);
+        M_5_UTIL.add(m54ShowActiveGenres);
+        M_5_UTIL.add(m55ShowActiveThemes);
+        M_5_UTIL.add(m56OpenGenreFile);
+        M_5_UTIL.add(m57OpenGenresById);
+        M_5_UTIL.add(m58OpenLogFile);
+        M_5_UTIL.add(m59OpenSaveGameFolder);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -468,7 +468,35 @@ public class WindowMain {
         }
         TextAreaHelper.resetAutoScroll();
         ProgressBarHelper.resetProgressBar();
+        lockMenuItems(false);
+
     }
+
+    /**
+     * Disables all menu items so they can no longer be klicked. Used when a thread is started.
+     * @param lock True when the items should be locked. False when the items should be unlocked
+     */
+    public static void lockMenuItems(boolean lock){
+        M_1_FILE.setEnabled(!lock);
+        M_2_MODSS.setEnabled(!lock);
+        M_3_SHARE.setEnabled(!lock);
+        M_4_BACKUP.setEnabled(!lock);
+        M_5_UTIL.setEnabled(!lock);
+        if(lock){
+            M_1_FILE.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
+            M_2_MODSS.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
+            M_3_SHARE.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
+            M_4_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
+            M_5_UTIL.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
+        }else{
+            M_1_FILE.setToolTipText("");
+            M_2_MODSS.setToolTipText("");
+            M_3_SHARE.setToolTipText("");
+            M_4_BACKUP.setToolTipText("");
+            M_5_UTIL.setToolTipText("");
+        }
+    }
+
     private static void addGenre(){
         try {
             //AnalyzeExistingGenres.analyzeGenreFileDeprecated();

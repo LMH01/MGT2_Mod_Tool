@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 
 import javax.swing.*;
 
@@ -51,5 +52,6 @@ public class ActiveMods {
         }
         JOptionPane.showMessageDialog(null, stringBuilder.toString());
         TextAreaHelper.resetAutoScroll();
+        WindowMain.lockMenuItems(false);
     }
 }
