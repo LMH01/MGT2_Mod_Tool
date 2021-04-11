@@ -59,6 +59,7 @@ dialog.sharingManager.importAll.zipArchiveFound.title|Zip Archiv gefunden
 dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart|Fehler beim Extrahieren des Zip-Archivs:
 dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart|Soll trotzdem weiter gemacht werden?
 dialog.sharingManager.importAll.zipArchiveFound.error.title|Fehler beim Extrahieren
+dialog.sharingManager.importAll.checkBox.disableZipMessage|<html>Aktiviere diese Option, um Nachrichten dieser Art nicht mehr angezeigt zu bekommen.<br>Wenn aktiviert wird ihre Antwort auf alle weiteren Nachrichten dieser Art übernommen.
 dialog.sharingManager.importAll.guiComponents.label1|Engine Features:
 dialog.sharingManager.importAll.guiComponents.label2|Gameplay Features:
 dialog.sharingManager.importAll.guiComponents.label3|Genres:
@@ -95,6 +96,7 @@ dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.
 dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2|<html>Die Ordner und ihre Unterordner enthalten keine Dinge, die importiert werden könnten. <br> Einige Mods wurden gefunden, die nicht mit der aktuellen Mod-Tool-Version kompatibel sind
 dialog.sharingManager.importAll.error.windowTitle.var1|Wiederherstellung nicht möglich
 dialog.sharingManager.importAll.error.windowTitle.var2|Import kann nicht durchgeführt werden
+dialog.sharingManager.importAll.error.general|<html>Beim scannen der Ordner ist ein kritischer Fehler aufgetreten.<br>Der Scannvorgang wurde abgebrochen!
 dialog.sharingManager.importAll.noModsAvailable|Keine
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Wähle die Ordner aus, in denen sich die zu importierenden Dateien befinden
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Wählen Sie die Ordner aus, in denen sich die
@@ -130,6 +132,8 @@ progressBar.moddedPublishers|Scannen nach modifizierten Publishern
 progressBar.moddedThemes|Scannen nach modifizierten Themen
 progressBar.startingExport|Beginne export von
 progressBar.delete|Lösche:
+progressBar.scanningDirectories|Durchsuche Ordner
+progressBar.importingMods|Importiere Mods
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -169,6 +173,21 @@ textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
 textArea.deletingBackups|Lösche Backups
 textArea.deletingSettings|Lösche Einstellungen
 textArea.deletingExports|Lösche Exports
+textArea.import.importSuccess|Import erfolgreich:
+textArea.import.imported|Importiert:
+textArea.import.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
+textArea.import.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod Tool Version kompatibel ist:
+textArea.import.specialPublisherNotExisting|Der folgende Publisher wurde nicht importiert, da das Spezial Genre von ihm nicht existiert:
+textArea.importAll.start|Starte importier Prozess
+textArea.importAll.cancel|Importier Prozess wurde abgebrochen
+textArea.importAll.completed|Importier Prozess wurde abgeschlossen
+textArea.importAll.scanningDirectories|Durchsuche Ordner nach kompatiblen mods
+textArea.importAll.currentPath|Aktueller Dateipfad:
+textArea.importAll.indexingFolder|Indexing folder:
+textArea.importAll.scanningDirectories.complete|Das Scannen der Ordner ist abgeschlossen. Die folgenden Mods sind für den Import bereit:
+textArea.unzip.firstPart|Entpacke Ordner
+textArea.unzip.secondPart|nach
+textArea.unzip.unzippedFile|Datei entpackt:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

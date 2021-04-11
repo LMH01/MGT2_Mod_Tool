@@ -105,7 +105,7 @@ public class Uninstaller {
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
-        ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
+        ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
         int currentProgressBarValue = 0;
         for (String customGenre : customGenres) {
             try {

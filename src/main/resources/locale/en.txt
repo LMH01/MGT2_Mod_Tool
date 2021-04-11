@@ -59,6 +59,7 @@ dialog.sharingManager.importAll.zipArchiveFound.title|Zip archive found
 dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart|Error while extracting zip archive:
 dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart|Would you like to continue anyway?
 dialog.sharingManager.importAll.zipArchiveFound.error.title|Error while extracting
+dialog.sharingManager.importAll.checkBox.disableZipMessage|<html>Activate this option if you do not want to see messages of this type again.<br>If activated, your reply will be adopted for all further messages of this type.
 dialog.sharingManager.importAll.guiComponents.label1|Engine features:
 dialog.sharingManager.importAll.guiComponents.label2|Gameplay features:
 dialog.sharingManager.importAll.guiComponents.label3|Genres:
@@ -95,6 +96,7 @@ dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.
 dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var2|<html>The folder(s) and it's subfolders do not contain things that could be imported.<br>Some mods where found that are not compatible with the current mod tool version
 dialog.sharingManager.importAll.error.windowTitle.var1|Unable to restore
 dialog.sharingManager.importAll.error.windowTitle.var2|Unable to import
+dialog.sharingManager.importAll.error.general|<html>A critical error occurred while scanning the folders.<br>The scanning process was canceled!
 dialog.sharingManager.importAll.noModsAvailable|None
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Choose the folder(s) where the files are located that should be imported
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Choose the folder(s) where the
@@ -130,6 +132,8 @@ progressBar.moddedPublishers|Scanning for modded publishers
 progressBar.moddedThemes|Scanning for modded themes
 progressBar.startingExport|Starting export of
 progressBar.delete|Deleting:
+progressBar.scanningDirectories|Scanning directories
+progressBar.importingMods|Importing mods
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -169,6 +173,21 @@ textArea.deleteModManagerFiles|Deleting all mod manager files
 textArea.deletingBackups|Deleting backups
 textArea.deletingSettings|Deleting settings
 textArea.deletingExports|Deleting exports
+textArea.import.importSuccess|Import successful:
+textArea.import.imported|Imported:
+textArea.import.alreadyExists|The following mod has not been imported because it already exists:
+textArea.import.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
+textArea.import.specialPublisherNotExisting|The following publisher was not imported because the special genre does not exist:
+textArea.importAll.start|Starting import process
+textArea.importAll.cancel|Import process has been canceled
+textArea.importAll.completed|Import precess has been completed
+textArea.importAll.scanningDirectories|Scanning directories for compatible mods
+textArea.importAll.currentPath|Current path:
+textArea.importAll.indexingFolder|Indexing folder:
+textArea.importAll.scanningDirectories.complete|The selected directories have been scanned. The following things are ready for import:
+textArea.unzip.firstPart|Unzipping folder
+textArea.unzip.secondPart|to
+textArea.unzip.unzippedFile|File unzipped:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?

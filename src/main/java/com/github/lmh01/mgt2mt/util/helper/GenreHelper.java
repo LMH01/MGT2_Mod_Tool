@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -171,6 +172,7 @@ public class GenreHelper {
         }catch(IOException e){
 
         }
+        WindowMain.checkActionAvailability();
     }
 
 

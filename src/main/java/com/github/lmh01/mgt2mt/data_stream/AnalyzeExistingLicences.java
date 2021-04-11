@@ -58,7 +58,7 @@ public class AnalyzeExistingLicences {
 
             ArrayList<String> arrayListCustomLicences = new ArrayList<>();
 
-            ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"));
+            ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"), true);
             int currentProgressBarValue = 0;
             for (String s : allLicenceNamesByAlphabet) {
                 boolean defaultGenre = false;

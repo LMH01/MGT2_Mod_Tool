@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -149,7 +150,7 @@ public class DataStreamHelper {
         boolean firstLine = true;
         Map<Integer, String> mapCurrent = new HashMap<>();
         int currentLineNumber = 1;
-        ProgressBarHelper.setText("Analyzing file: " + file.getName());
+        //ProgressBarHelper.setText("Analyzing file: " + file.getName());
         while((currentLine = br.readLine()) != null){
             if(firstLine){
                 currentLine = Utils.removeUTF8BOM(currentLine);
@@ -159,7 +160,7 @@ public class DataStreamHelper {
             currentLineNumber++;
         }
         br.close();
-        ProgressBarHelper.resetProgressBar();
+        //ProgressBarHelper.resetProgressBar();
         return mapCurrent;
     }
 
@@ -222,6 +223,9 @@ public class DataStreamHelper {
      */
     public static void unzip(String zipFile, File destination) throws IOException {
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.secondPart") + " " + "[" + destination + "]");
+        ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.unzip.firstPart"));
+        ProgressBarHelper.increaseMaxValue(getZipInputStreamSize(zipFile));
         byte[] buffer = new byte[1024];
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
         ZipEntry zipEntry = zis.getNextEntry();
@@ -230,6 +234,7 @@ public class DataStreamHelper {
             if(Settings.enableDebugLogging){
                 LOGGER.info("Unzipped file: " + newFile.getPath());
             }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.unzippedFile") + " " + newFile.getPath());
             if (zipEntry.isDirectory()) {
                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
                     throw new IOException("Failed to create directory " + newFile);
@@ -250,6 +255,7 @@ public class DataStreamHelper {
                 fos.close();
             }
             zipEntry = zis.getNextEntry();
+            ProgressBarHelper.increment();
         }
         zis.closeEntry();
         zis.close();
@@ -267,6 +273,22 @@ public class DataStreamHelper {
         }
 
         return destFile;
+    }
+
+    /**
+     * Returns the amount of files in the input stream
+     */
+    private static int getZipInputStreamSize(String zipFile) throws IOException {
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+        ZipEntry zipEntry = zis.getNextEntry();
+        int zipEntryAmount = 0;
+        while (zipEntry != null) {
+            zipEntry = zis.getNextEntry();
+            zipEntryAmount++;
+        }
+        zis.closeEntry();
+        zis.close();
+        return zipEntryAmount;
     }
 
     /**
@@ -316,28 +338,38 @@ public class DataStreamHelper {
     }
 
     /**
-     * Copied from https://www.baeldung.com/java-delete-directory
      * Deletes a complete directory with its contents
      */
-    public static void deleteDirectory(File directoryToBeDeleted ){
-        File[] allContents = directoryToBeDeleted.listFiles();
+    public static void deleteDirectory(File directoryToBeDeleted){
         try{
-            ProgressBarHelper.initializeProgressBar(0, allContents.length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+            ProgressBarHelper.initializeProgressBar(0, directoryToBeDeleted.listFiles().length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
         }catch (NullPointerException ignored){
             ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
         }
-        int currentProgressBarValue = 0;
+        deleteDirectoryProcess(directoryToBeDeleted);
+        ProgressBarHelper.resetProgressBar();
+        directoryToBeDeleted.delete();
+    }
+
+    /**
+     * Parts copied from https://www.baeldung.com/java-delete-directory
+     */
+    private static void deleteDirectoryProcess(File directoryToBeDeleted ){
+        File[] allContents = directoryToBeDeleted.listFiles();
         if (allContents != null) {
             for (File file : allContents) {
-                deleteDirectory(file);
+                try{
+                    ProgressBarHelper.increaseMaxValue(file.listFiles().length);
+                }catch(NullPointerException ignored){
+
+                }
+                deleteDirectoryProcess(file);
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Deleting file: " + file.getPath());
                 }
-                currentProgressBarValue++;
-                ProgressBarHelper.setValue(currentProgressBarValue);
             }
         }
-        ProgressBarHelper.resetProgressBar();
+        ProgressBarHelper.increment();
         directoryToBeDeleted.delete();
     }
 

@@ -329,6 +329,5 @@ public class GenreManager {
         }else{
             NPCGameListChanger.editNPCGames(id,true, 20);
         }
-        WindowMain.checkActionAvailability();
     }
 }

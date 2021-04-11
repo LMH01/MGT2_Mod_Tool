@@ -88,7 +88,7 @@ public class AnalyzeExistingEngineFeatures {
     public static String[] getCustomEngineFeaturesString(){
         ArrayList<String> arrayListActiveEngineFeatures = new ArrayList<>();
         List<Map<String, String>> listEngineFeatures = engineFeatures;
-        ProgressBarHelper.initializeProgressBar(58, listEngineFeatures.size(), I18n.INSTANCE.get("progressBar.moddedEngineFeatures"));
+        ProgressBarHelper.initializeProgressBar(58, listEngineFeatures.size(), I18n.INSTANCE.get("progressBar.moddedEngineFeatures"), true);
         for(int i=58; i<listEngineFeatures.size(); i++){
             Map<String, String> map = listEngineFeatures.get(i);
             arrayListActiveEngineFeatures.add(map.get("NAME EN"));

@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -99,6 +100,7 @@ public class SharingHandler {
      * @return Returns "true" when the genre has been imported successfully. Returns "false" when the genre already exists. Returns mod tool version of import genre when genre is not compatible with current mod tool version.
      */
     public static String importGenre(String importFolderPath, boolean showMessages) throws IOException, NullPointerException{
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.genre"));
         AnalyzeExistingGenres.analyzeGenreFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
@@ -132,11 +134,13 @@ public class SharingHandler {
             }
         }
         if(!genreCanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN")));
             return "Genre [" + map.get("NAME EN") + "] could not be imported:\nThe genre is not with the current mod tool version compatible\nGenre was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map<String, String> map2 : AnalyzeExistingGenres.genreList){
             for(Map.Entry<String, String> entry : map2.entrySet()){
                 if(entry.getValue().equals(map.get("NAME EN"))){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN"));
                     LOGGER.info("Genre already exists - The genre name is already taken");
                     return "false";
                 }
@@ -144,7 +148,7 @@ public class SharingHandler {
         }
         if(fileScreenshotFolder.exists()){
             DataStreamHelper.deleteDirectory(fileScreenshotFolder);
-        }
+        }//Here
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
             compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string)-1);
@@ -160,6 +164,7 @@ public class SharingHandler {
         ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
         GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + ": " + map.get("NAME EN"));
         return "true";
     }
 
@@ -196,6 +201,7 @@ public class SharingHandler {
     }
 
     public static String importLicence(String importFolderPath, boolean showMessages) throws IOException {
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.licence"));
         AnalyzeExistingLicences.analyze();
         File fileGenreToImport = new File(importFolderPath + "\\licence.txt");
         List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileGenreToImport);
@@ -207,10 +213,12 @@ public class SharingHandler {
             }
         }
         if(!licenceCanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME")));
             return "Licence [" + map.get("NAME") + "] could not be imported:\nThe licence is not with the current mod tool version compatible\nLicence was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map.Entry<Integer, String> entry : AnalyzeExistingLicences.existingLicences.entrySet()){
             if(entry.getValue().equals(map.get("NAME") + " " + map.get("TYPE"))){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME"));
                 LOGGER.info("Licence already exists - The licence name is already taken");
                 return "false";
             }
@@ -227,6 +235,7 @@ public class SharingHandler {
         }else{
             ChangeLog.addLogEntry(34, map.get("NAME"));
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + ": " + map.get("NAME"));
         return "true";
     }
     /**
@@ -286,6 +295,7 @@ public class SharingHandler {
      * @return Returns "true" when the publisher has been imported successfully. Returns "false" when the publisher already exists. Returns mod tool version of import publisher when publisher is not compatible with current mod tool version.
      */
     public static String importPublisher(String importFolderPath, boolean showMessages) throws IOException {
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.mods.publisher"));
         AnalyzeExistingPublishers.analyzePublisherFile();
         int newPublisherId = AnalyzeExistingPublishers.getFreePublisherId();
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
@@ -306,11 +316,13 @@ public class SharingHandler {
             }
         }
         if(!publisherCanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN")));
             return "Publisher [" + map.get("NAME EN") + "] could not be imported:\nThe publisher is not with the current mod tool version compatible\nPublisher was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map<String, String> map2 : AnalyzeExistingPublishers.getListMap()){
             for(Map.Entry<String, String> entry : map2.entrySet()){
                 if(entry.getValue().equals(map.get("NAME EN"))){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN"));
                     LOGGER.info("Publisher already exists - The genre name is already taken");
                     return "false";
                 }
@@ -340,8 +352,10 @@ public class SharingHandler {
                 ChangeLog.addLogEntry(22, map.get("NAME EN"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.specialPublisherNotExisting") + map.get("NAME EN"));
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.mods.publisher") + ": " + map.get("NAME EN"));
         return "true";
     }
 
@@ -386,6 +400,7 @@ public class SharingHandler {
      * @return Returns "true" when the theme has been imported successfully. Returns "false" when the publisher already exists. Returns mod tool version of import theme when theme is not compatible with current mod tool version.
      */
     public static String importTheme(String importFolderPath, boolean showMessages) throws IOException{
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.theme"));
         AnalyzeExistingThemes.analyzeThemeFiles();
         File fileThemeToImport = new File(importFolderPath + "\\theme.txt");
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
@@ -412,10 +427,12 @@ public class SharingHandler {
             }
         }
         if(!themeCanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN")));
             return "Theme [" + map.get("NAME EN") + "] could not be imported:\nThe theme is not with the current mod tool version compatible\nTheme was exported in version: " + map.get("MGT2MT VERSION");
         }
         for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
             if(entry.getValue().equals(map.get("NAME EN"))){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
                 LOGGER.info("Theme already exists - The theme name is already taken");
                 return "false";
             }
@@ -434,6 +451,7 @@ public class SharingHandler {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + ": " + map.get("NAME EN"));
         return "true";
     }
 
@@ -589,12 +607,12 @@ public class SharingHandler {
         int genrePositionInList = AnalyzeExistingGenres.getPositionInGenreListByGenreId(genreId);
         String genreNumbersRaw = AnalyzeExistingGenres.genreList.get(genrePositionInList).get("GENRE COMB");
         StringBuilder genreNames = new StringBuilder();
-        int charPositon = 0;
+        int charPosition = 0;
         StringBuilder currentNumber = new StringBuilder();
         for(int i = 0; i<genreNumbersRaw.length(); i++){
-            if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals("<")){
+            if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals("<")){
                 //Nothing happens
-            }else if(String.valueOf(genreNumbersRaw.charAt(charPositon)).equals(">")){
+            }else if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals(">")){
                 int genreNumber = Integer.parseInt(currentNumber.toString());
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + genreNumber);
@@ -602,12 +620,12 @@ public class SharingHandler {
                 genreNames.append("<").append(AnalyzeExistingGenres.getGenreNameById(genreNumber)).append(">");
                 currentNumber = new StringBuilder();
             }else{
-                currentNumber.append(genreNumbersRaw.charAt(charPositon));
+                currentNumber.append(genreNumbersRaw.charAt(charPosition));
                 if(Settings.enableDebugLogging){
                     LOGGER.info("currentNumber: " + currentNumber);
                 }
             }
-            charPositon++;
+            charPosition++;
         }
         String.valueOf(genreNumbersRaw.charAt(1));
         return genreNames.toString();

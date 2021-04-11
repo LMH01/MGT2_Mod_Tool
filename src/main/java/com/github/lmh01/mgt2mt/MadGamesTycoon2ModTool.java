@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.windows.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -37,6 +38,11 @@ public class MadGamesTycoon2ModTool {
         }
         LogFile.startLogging();
         Runtime.getRuntime().addShutdownHook(new Thread(ThreadHandler.runnableDoOnShutdown));
+        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
+        if(tempFolder.exists()){
+            DataStreamHelper.deleteDirectory(tempFolder);
+            LOGGER.info("Deleted temp folder.");
+        }
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         UpdateChecker.checkForUpdates(false);

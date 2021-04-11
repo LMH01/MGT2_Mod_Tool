@@ -136,7 +136,7 @@ public class AnalyzeExistingGenres {
         String[] allGenresById = getGenresByAlphabetWithoutId();
         String[] defaultGenres = {"Action", "Adventure", "Building Game", "Economic Simulation", "Fighting Game", "First-Person Shooter", "Interactive Movie", "Platformer", "Puzzle Game", "Racing", "Real-Time Strategy", "Role-Playing Game", "Simulation", "Skill Game", "Sport Game", "Strategy", "Third-Person Shooter", "Visual Novel"};
         ArrayList<String> arrayListCustomGenres = new ArrayList<>();
-        ProgressBarHelper.initializeProgressBar(0, arrayListCustomGenres.size(), I18n.INSTANCE.get("progressBar.moddedGenre"));
+        ProgressBarHelper.initializeProgressBar(0, arrayListCustomGenres.size(), I18n.INSTANCE.get("progressBar.moddedGenre"), true);
         int currentProgressBarValue = 0;
         for (String s : allGenresById) {
             boolean defaultGenre = false;

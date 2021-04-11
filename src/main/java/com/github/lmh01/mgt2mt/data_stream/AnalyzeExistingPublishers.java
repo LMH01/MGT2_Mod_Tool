@@ -45,7 +45,7 @@ public class AnalyzeExistingPublishers {
     public static String[] getCustomPublisherString(){
         ArrayList<String> arrayListActivePublishers = new ArrayList<>();
         List<Map<String, String>> listPublishers = getListMap();
-        ProgressBarHelper.initializeProgressBar(71, listPublishers.size(), I18n.INSTANCE.get("progressBar.moddedPublishers"));
+        ProgressBarHelper.initializeProgressBar(71, listPublishers.size(), I18n.INSTANCE.get("progressBar.moddedPublishers"), true);
         for(int i=71; i<listPublishers.size(); i++){
             Map<String, String> map = listPublishers.get(i);
             arrayListActivePublishers.add(map.get("NAME EN"));

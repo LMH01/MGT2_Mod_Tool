@@ -147,7 +147,7 @@ public class AnalyzeExistingThemes {
     public static String[] getCustomThemesByAlphabet(){
         String[] allGenresById = getThemesByAlphabet();
         ArrayList<String> arrayListCustomThemes = new ArrayList<>();
-        ProgressBarHelper.initializeProgressBar(0, arrayListCustomThemes.size(), I18n.INSTANCE.get("progressBar.moddedThemes"));
+        ProgressBarHelper.initializeProgressBar(0, arrayListCustomThemes.size(), I18n.INSTANCE.get("progressBar.moddedThemes"), true);
         int currentProgressBarValue = 0;
         for (String s : allGenresById) {
             boolean defaultGenre = false;
