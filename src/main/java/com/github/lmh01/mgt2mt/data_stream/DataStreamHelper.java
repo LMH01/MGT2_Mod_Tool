@@ -44,7 +44,6 @@ public class DataStreamHelper {
     }
 
     public static void downloadZip(String URL, String destination) throws IOException {
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
         File destinationFile = new File(destination);
         if(destinationFile.exists()){
             destinationFile.delete();

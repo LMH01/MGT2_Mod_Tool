@@ -25,7 +25,7 @@ public class PublisherHelper {
     public static void realPublishers(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             try{
-                ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"));
+                ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"), false, false);
                 File publisherZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher.zip");
                 File publisherUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher");
                 boolean downloadFiles = true;
@@ -38,6 +38,7 @@ public class PublisherHelper {
                     }
                 }
                 if(downloadFiles){
+                    ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
                     DataStreamHelper.downloadZip(REAL_PUBLISHER_ZIP_URL, publisherZip.getPath());
                     DataStreamHelper.unzip(publisherZip.getPath(), publisherUnzipped);
                 }
@@ -54,6 +55,7 @@ public class PublisherHelper {
                 if(AnalyzeExistingPublishers.getActivePublisherIds().contains(-1)){
                     EditPublishersFile.removePublisher("Dummy");
                 }
+                TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
             }catch (IOException e){
                 e.printStackTrace();

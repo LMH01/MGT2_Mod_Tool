@@ -43,16 +43,17 @@ public class ProgressBarHelper {
 
     public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea, boolean disableMeasuredTime){
         secondsElapsed = 0;
+        if(!disableMeasuredTime){
+            timeEnabled = true;
+            startProgressBarTimeThread();
+        }
         WindowMain.PROGRESS_BAR.setMinimum(minValue);
         WindowMain.PROGRESS_BAR.setMaximum(maxValue);
         WindowMain.PROGRESS_BAR.setValue(minValue);
-        WindowMain.PROGRESS_BAR.setString(text + getProgressString());
         currentProgressBarString = text;
+        changeProgress();
         if(setTextArea){
             TextAreaHelper.appendText(text);
-        }
-        if(!disableMeasuredTime){
-            startProgressBarTimeThread();
         }
     }
     /**

@@ -23,9 +23,10 @@ public class ImportFromURLHelper {
         Object[] params = {labelText, textFieldUrl};
         if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("window.importFromURL.dialog.title"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE) == JOptionPane.OK_OPTION){
             try{
+                ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.downloadZip"), false, false);
                 String currentDateTime = Utils.getCurrentDateTime();
-                File downloadZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//" + currentDateTime + "publisher.zip");
-                File downloadUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//" + currentDateTime + "publisher");
+                File downloadZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//" + currentDateTime + "download.zip");
+                File downloadUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//" + currentDateTime + "download");
                 DataStreamHelper.downloadZip(textFieldUrl.getText(), downloadZip.getPath());
                 DataStreamHelper.unzip(downloadZip.getPath(), downloadUnzipped);
                 SharingManager.importAll(false, downloadUnzipped.getPath());
