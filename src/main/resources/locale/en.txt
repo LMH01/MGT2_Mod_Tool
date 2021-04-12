@@ -172,6 +172,9 @@ progressBar.scanningDirectories|Scanning directories
 progressBar.importingMods|Importing mods
 progressBar.publisherHelper.replaceWithRealPublishers.initialize|Replacing publishers
 progressBar.checkForUpdates|Checking for updates
+progressBar.importAll.indexing|Indexing files
+progressBar.unzip.preparing|Preparing to unzip folder
+progressBar.unzip.unzipping|Unzipping files
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -221,10 +224,14 @@ textArea.importAll.completed|Import precess has been completed
 textArea.importAll.scanningDirectories|Scanning directories for compatible mods
 textArea.importAll.currentPath|Current path:
 textArea.importAll.indexingFolder|Indexing folder:
+textArea.importAll.indexingFolder.indexed|Indexed:
+textArea.importAll.indexingComplete|Indexing complete: Scanning indexed folders for compatible mods
 textArea.importAll.scanningDirectories.complete|The selected directories have been scanned. The following things are ready for import:
-textArea.unzip.firstPart|Unzipping folder
-textArea.unzip.secondPart|to
+textArea.unzip.firstPart|Preparing to unzip folder
+textArea.unzip.secondPart|Indexing files to unzip: This might take a while
+textArea.unzip.thirdPart|to
 textArea.unzip.unzippedFile|File unzipped:
+textArea.unzip.startingUnzip|Indexing completed - Beginning to extract files
 textArea.downloadZip.downloadSuccess|Zip file has been downloaded and saved successfully:
 textArea.added|Added:
 textArea.removed|Removed:

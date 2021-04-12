@@ -225,12 +225,15 @@ public class DataStreamHelper {
      */
     public static void unzip(String zipFile, File destination) throws IOException {
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.secondPart") + " " + "[" + destination + "]");
-        ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.unzip.firstPart"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.secondPart"));
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.preparing"));
         ProgressBarHelper.increaseMaxValue(getZipInputStreamSize(zipFile));
         byte[] buffer = new byte[1024];
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
         ZipEntry zipEntry = zis.getNextEntry();
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip"));
         while (zipEntry != null) {
             File newFile = newFile(destination, zipEntry);
             if(Settings.enableDebugLogging){

@@ -1,13 +1,12 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.util.helper.ImportFromURLHelper;
-import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
-import com.github.lmh01.mgt2mt.util.helper.PublisherHelper;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
@@ -37,6 +36,16 @@ public class ThreadHandler {
         LogFile.stopLogging();
         LOGGER.info("Exit tasks complete. Good night");
     };
+
+    public static Thread threadDeleteTempFolder = new Thread(() -> {
+        WindowMain.lockMenuItems(true);
+        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
+        if(tempFolder.exists()){
+            DataStreamHelper.deleteDirectory(tempFolder);
+            LOGGER.info("Deleted temp folder.");
+        }
+        WindowMain.lockMenuItems(false);
+    });
 
     /**
      * Starts the given thread.

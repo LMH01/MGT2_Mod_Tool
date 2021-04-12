@@ -1,13 +1,13 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.ThreadHandler;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProgressBarHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProgressBarHelper.class);
+    private static String currentProgressBarString = "";
 
     /**
      * Initializes the progress bar in the main window to use the input values.
@@ -34,7 +34,8 @@ public class ProgressBarHelper {
         WindowMain.PROGRESS_BAR.setMinimum(minValue);
         WindowMain.PROGRESS_BAR.setMaximum(maxValue);
         WindowMain.PROGRESS_BAR.setValue(minValue);
-        WindowMain.PROGRESS_BAR.setString(text);
+        WindowMain.PROGRESS_BAR.setString(text + getProgressString());
+        currentProgressBarString = text;
         if(setTextArea){
             TextAreaHelper.appendText(text);
         }
@@ -44,7 +45,8 @@ public class ProgressBarHelper {
      * @param text The text that should be displayed
      */
     public static void setText(String text){
-        WindowMain.PROGRESS_BAR.setString(text);
+        currentProgressBarString = text;
+        changeProgress();
     }
 
     /**
@@ -52,6 +54,7 @@ public class ProgressBarHelper {
      */
     public static void increment(){
         WindowMain.PROGRESS_BAR.setValue(WindowMain.PROGRESS_BAR.getValue()+1);
+        changeProgress();
     }
 
     /**
@@ -59,6 +62,7 @@ public class ProgressBarHelper {
      */
     public static void setValue(int value){
         WindowMain.PROGRESS_BAR.setValue(value);
+        changeProgress();
     }
 
     /**
@@ -67,6 +71,7 @@ public class ProgressBarHelper {
      */
     public static void increaseMaxValue(int value) {
         WindowMain.PROGRESS_BAR.setMaximum(WindowMain.PROGRESS_BAR.getMaximum() + value);
+        changeProgress();
     }
     /**
      * Resets the progress bar in the main window
@@ -76,5 +81,19 @@ public class ProgressBarHelper {
         WindowMain.PROGRESS_BAR.setMinimum(0);
         WindowMain.PROGRESS_BAR.setMaximum(100);
         WindowMain.PROGRESS_BAR.setValue(0);
+    }
+
+    /**
+     * Returns the progress string eg. (0/100)
+     */
+    private static String getProgressString(){
+        return "(" + WindowMain.PROGRESS_BAR.getValue() + "/" + WindowMain.PROGRESS_BAR.getMaximum() + ")";
+    }
+
+    /**
+     * Changes the progress value behind the progress bar text
+     */
+    private static void changeProgress(){
+        WindowMain.PROGRESS_BAR.setString(currentProgressBarString + " " + getProgressString());
     }
 }

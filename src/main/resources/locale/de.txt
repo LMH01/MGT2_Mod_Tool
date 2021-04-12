@@ -173,6 +173,9 @@ progressBar.importingMods|Importiere Mods
 progressBar.publisherHelper.replaceWithRealPublishers.initialize|Ersetze Publisher
 progressBar.downloadZip|Downloading zip
 progressBar.checkForUpdates|Suche nach updates
+progressBar.importAll.indexing|Indizierung von Dateien
+progressBar.unzip.preparing|Vorbereitung zum Entpacken des Ordners
+progressBar.unzip.unzipping|Entpacke Dateien
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -221,11 +224,15 @@ textArea.importAll.cancel|Importier Prozess wurde abgebrochen
 textArea.importAll.completed|Importier Prozess wurde abgeschlossen
 textArea.importAll.scanningDirectories|Durchsuche Ordner nach kompatiblen mods
 textArea.importAll.currentPath|Aktueller Dateipfad:
-textArea.importAll.indexingFolder|Indexing folder:
+textArea.importAll.indexingFolder|Indizierung des Ordners:
+textArea.importAll.indexingFolder.indexed|Indiziert:
+textArea.importAll.indexingComplete|Indizierung abgeschlossen: Durchsuche Indizierte Ordner nach kompatiblen Mods
 textArea.importAll.scanningDirectories.complete|Das Scannen der Ordner ist abgeschlossen. Die folgenden Mods sind für den Import bereit:
-textArea.unzip.firstPart|Entpacke Ordner
-textArea.unzip.secondPart|nach
+textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
+textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
+textArea.unzip.thirdPart|nach
 textArea.unzip.unzippedFile|Datei entpackt:
+textArea.unzip.startingUnzip|Indizierung abgeschlossen - Beginne damit Dateien zu entpacken
 textArea.downloadZip.downloadSuccess|Zip Datei wurde erfolgreich heruntergeladen und abgespeichert:
 textArea.added|Hinzugefügt:
 textArea.removed|Entfernt:

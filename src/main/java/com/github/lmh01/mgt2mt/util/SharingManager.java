@@ -310,15 +310,18 @@ public class SharingManager {
                     File file = directories.get(i);
                     Path start = Paths.get(file.getPath());
                     try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
+                        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importAll.indexing"));
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingFolder") + " " + start);
                         List<String> collect = stream
                                 .map(obj -> {
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingFolder") + " " + obj);
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingFolder.indexed") + " " + obj);
                                     return String.valueOf(obj);
                                 })
                                 .sorted()
                                 .collect(Collectors.toList());
                         ProgressBarHelper.increaseMaxValue(collect.size());
+                        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.scanningDirectories"));
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingComplete"));
                         collect.forEach((string) -> {
                             if(string.endsWith(".zip")){
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + " " + string);
