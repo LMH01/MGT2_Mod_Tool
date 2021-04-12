@@ -204,10 +204,9 @@ textArea.themeExportSuccessful|Das folgende Thema wurde exportiert:
 textArea.ExportFailed.generalError.secondPart|ist folgender Fehler aufgetreten:
 textArea.uninstalling|Deinstalliere
 textArea.uninstalling.uninstallingAllMods|Deinstalliere alle Mods
-textArea.uninstalling.uninstallingAllMods.genre.success|Genre deinstalliert:
 textArea.uninstalling.uninstallingAllMods.genre.failed|Deinstallation des Genre fehlgeschlagen:
-textArea.uninstalling.uninstallingAllMods.publisher.success|Publisher deinstalliert:
 textArea.uninstalling.uninstallingAllMods.publisher.failed|Deinstallation des Publisher fehlgeschlagen:
+textArea.uninstalling.uninstallingAllMods.success|Spieldateien wurden zu ihrem original Zustand zurückgesetzt
 textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
 textArea.deletingBackups|Lösche Backups
 textArea.deletingSettings|Lösche Einstellungen

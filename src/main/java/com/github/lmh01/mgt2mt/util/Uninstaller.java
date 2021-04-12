@@ -105,14 +105,11 @@ public class Uninstaller {
         boolean uninstallFailed = false;
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
         ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
         int currentProgressBarValue = 0;
         for (String customGenre : customGenres) {
             try {
                 EditGenreFile.removeGenre(customGenre);
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.success") + " " + customGenre);
-                LOGGER.info("Game files have been restored to original.");
             } catch (IOException e) {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
                 LOGGER.info("Genre could not be removed: " + e.getMessage());
@@ -126,7 +123,6 @@ public class Uninstaller {
         for (String customPublisher : customPublishers) {
             try {
                 EditPublishersFile.removePublisher(customPublisher);
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.success") + " " + customPublisher);
                 LOGGER.info("Publisher files have been restored to original.");
             } catch (IOException e) {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
@@ -139,8 +135,8 @@ public class Uninstaller {
             ProgressBarHelper.setValue(currentProgressBarValue);
         }
         Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
-        ProgressBarHelper.resetProgressBar();
-        WindowMain.lockMenuItems(false);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));
+        LOGGER.info("Game files have been restored to original.");
         return uninstallFailed;
     }
     public static void deleteAllExports(){
