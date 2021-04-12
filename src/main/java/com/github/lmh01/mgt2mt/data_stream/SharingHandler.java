@@ -102,6 +102,7 @@ public class SharingHandler {
     public static String importGenre(String importFolderPath, boolean showMessages) throws IOException, NullPointerException{
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.genre"));
         AnalyzeExistingGenres.analyzeGenreFile();
+        AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
         File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId);
