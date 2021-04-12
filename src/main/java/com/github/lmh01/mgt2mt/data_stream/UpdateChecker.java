@@ -83,8 +83,8 @@ public class UpdateChecker {
                 }
                 if(useProgressBar){
                     ProgressBarHelper.resetProgressBar();
+                    WindowMain.lockMenuItems(false);
                 }
-                WindowMain.lockMenuItems(false);
             }
 
         }.start();

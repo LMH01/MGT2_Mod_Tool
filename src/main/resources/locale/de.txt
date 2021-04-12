@@ -228,7 +228,9 @@ textArea.importAll.currentPath|Aktueller Dateipfad:
 textArea.importAll.indexingFolder|Indizierung des Ordners:
 textArea.importAll.indexingFolder.indexed|Indiziert:
 textArea.importAll.indexingComplete|Indizierung abgeschlossen: Durchsuche Indizierte Ordner nach kompatiblen Mods
-textArea.importAll.scanningDirectories.complete|Das Scannen der Ordner ist abgeschlossen. Die folgenden Mods sind für den Import bereit:
+textArea.importAll.scanningDirectories.complete.firstPart|Das Scannen der Ordner ist abgeschlossen.
+textArea.importAll.scanningDirectories.complete.secondPart|Zeit:
+textArea.importAll.scanningDirectories.complete.thirdPart|Die folgenden Mods sind für den Import bereit:
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach

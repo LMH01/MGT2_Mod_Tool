@@ -304,7 +304,7 @@ public class SharingManager {
         if(directories != null){
             try {
                 LOGGER.info("Scanning selected directories for compatible mods");
-                ProgressBarHelper.initializeProgressBar(0, directories.size(), I18n.INSTANCE.get("progressBar.scanningDirectories"));
+                ProgressBarHelper.initializeProgressBar(0, directories.size(), I18n.INSTANCE.get("progressBar.scanningDirectories"), false, false);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories"));
                 for(int i=0; i<directories.size(); i++){
                     File file = directories.get(i);
@@ -389,8 +389,8 @@ public class SharingManager {
 
             }
             if(!errorWhileScanning){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.firstPart") + " " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.secondPart") + " " + Utils.convertSecondsToTime(ProgressBarHelper.getProgressBarTimer()) + "; " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.thirdPart"));
                 ProgressBarHelper.resetProgressBar();
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.engineFeatures") + " " + engineFeatures.size());
                 TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.gameplayFeatures") + " " + gameplayFeatures.size());
                 TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.genres") + " " + genres.size());
@@ -539,7 +539,10 @@ public class SharingManager {
         }
         //Delete the temp .zip extractions
         ProgressBarHelper.resetProgressBar();
-        ThreadHandler.threadDeleteTempFolder.start();
+        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
+        if(tempFolder.exists()){
+            ThreadHandler.threadDeleteTempFolder.start();
+        }
         TextAreaHelper.resetAutoScroll();
         WindowMain.checkActionAvailability();
     }

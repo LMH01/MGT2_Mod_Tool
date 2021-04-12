@@ -227,7 +227,9 @@ textArea.importAll.currentPath|Current path:
 textArea.importAll.indexingFolder|Indexing folder:
 textArea.importAll.indexingFolder.indexed|Indexed:
 textArea.importAll.indexingComplete|Indexing complete: Scanning indexed folders for compatible mods
-textArea.importAll.scanningDirectories.complete|The selected directories have been scanned. The following things are ready for import:
+textArea.importAll.scanningDirectories.complete.firstPart|The selected directories have been scanned.
+textArea.importAll.scanningDirectories.complete.secondPart|Time:
+textArea.importAll.scanningDirectories.complete.thirdPart|The following things are ready for import:
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to

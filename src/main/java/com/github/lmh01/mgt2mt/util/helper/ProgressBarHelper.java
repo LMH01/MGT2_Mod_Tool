@@ -14,6 +14,7 @@ public class ProgressBarHelper {
     private static String currentProgressBarStringWithProgress = "";
     private static boolean progressBarRunning = false;
     private static int secondsElapsed = 0;
+    private static boolean timeEnabled = false;
 
     /**
      * Initializes the progress bar in the main window to use the input values.
@@ -37,10 +38,11 @@ public class ProgressBarHelper {
      * @param setTextArea If true the text will also be written to the text area
      */
     public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea){
-        initializeProgressBar(minValue, maxValue, text, setTextArea, false);
+        initializeProgressBar(minValue, maxValue, text, setTextArea, true);
     }
 
     public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea, boolean disableMeasuredTime){
+        secondsElapsed = 0;
         WindowMain.PROGRESS_BAR.setMinimum(minValue);
         WindowMain.PROGRESS_BAR.setMaximum(maxValue);
         WindowMain.PROGRESS_BAR.setValue(minValue);
@@ -91,6 +93,7 @@ public class ProgressBarHelper {
      */
     public static void resetProgressBar(){
         progressBarRunning = false;
+        timeEnabled = false;
         WindowMain.PROGRESS_BAR.setString(I18n.INSTANCE.get("progressBar.idle"));
         WindowMain.PROGRESS_BAR.setMinimum(0);
         WindowMain.PROGRESS_BAR.setMaximum(100);
@@ -108,20 +111,30 @@ public class ProgressBarHelper {
      * Changes the progress value and time behind the progress bar text
      */
     private static void changeProgress(){
-        WindowMain.PROGRESS_BAR.setString(currentProgressBarString + " " + getProgressString() + " " + getProgressBarTime());
+        WindowMain.PROGRESS_BAR.setString(currentProgressBarString + " " + getProgressString() + getProgressBarTime());
     }
 
     private static String getProgressBarTime(){
-        return "(" + I18n.INSTANCE.get("progressBar.timeElapsed") + ": " + Utils.convertSecondsToTime(secondsElapsed) + ")";
+        if(timeEnabled){
+            return " (" + I18n.INSTANCE.get("progressBar.timeElapsed") + ": " + Utils.convertSecondsToTime(secondsElapsed) + ")";
+        }else{
+            return "";
+        }
     }
 
-
+    /**
+     * Returns how many second the progress bar is running
+     */
+    public static int getProgressBarTimer(){
+        return secondsElapsed;
+    }
     /**
      * Starts a thread that adds the time passed to the progress bar
      */
     public static void startProgressBarTimeThread(){
         Thread thread = new Thread(() -> {
             LOGGER.info("Starting to measure time");
+            timeEnabled = true;
             progressBarRunning = true;
             secondsElapsed = 0;
             while(progressBarRunning){
