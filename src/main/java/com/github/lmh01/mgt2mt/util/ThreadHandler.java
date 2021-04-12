@@ -5,12 +5,10 @@ import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
-
     private static Runnable runnableExportLicence = () -> OperationHelper.process((string) -> SharingHandler.exportLicence(string, false), AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
     private static Runnable runnableExportEngineFeatures = () -> OperationHelper.process((string) -> SharingHandler.exportEngineFeature(string, false), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
     private static Runnable runnableExportGameplayFeatures = () -> OperationHelper.process((string) -> SharingHandler.exportGameplayFeature(string, false), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
@@ -39,11 +37,14 @@ public class ThreadHandler {
 
     public static Thread threadDeleteTempFolder = new Thread(() -> {
         WindowMain.lockMenuItems(true);
-        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
-        if(tempFolder.exists()){
-            DataStreamHelper.deleteDirectory(tempFolder);
-            LOGGER.info("Deleted temp folder.");
-        }
+        deleteTempFolder();
+        WindowMain.lockMenuItems(false);
+    });
+
+    public static Thread threadPerformStartTasks = new Thread(() -> {
+        WindowMain.lockMenuItems(true);
+        UpdateChecker.checkForUpdates(false, false);
+        deleteTempFolder();
         WindowMain.lockMenuItems(false);
     });
 
@@ -80,5 +81,16 @@ public class ThreadHandler {
         }
         thread.start();
         WindowMain.lockMenuItems(true);
+    }
+
+    /**
+     * Deletes the temp folder and initializes a progress bar.
+     */
+    private static void deleteTempFolder(){
+        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
+        if(tempFolder.exists()){
+            DataStreamHelper.deleteDirectory(tempFolder);
+            LOGGER.info("Deleted temp folder.");
+        }
     }
 }

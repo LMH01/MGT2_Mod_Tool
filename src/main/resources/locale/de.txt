@@ -176,6 +176,7 @@ progressBar.checkForUpdates|Suche nach updates
 progressBar.importAll.indexing|Indizierung von Dateien
 progressBar.unzip.preparing|Vorbereitung zum Entpacken des Ordners
 progressBar.unzip.unzipping|Entpacke Dateien
+progressBar.timeElapsed|Zeit vergangen
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -232,7 +233,8 @@ textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach
 textArea.unzip.unzippedFile|Datei entpackt:
-textArea.unzip.startingUnzip|Indizierung abgeschlossen - Beginne damit Dateien zu entpacken
+textArea.unzip.startingUnzip.firstPart|Indizierung abgeschlossen nach
+textArea.unzip.startingUnzip.secondPart|Beginne damit Dateien zu entpacken
 textArea.downloadZip.downloadSuccess|Zip Datei wurde erfolgreich heruntergeladen und abgespeichert:
 textArea.added|Hinzugefügt:
 textArea.removed|Entfernt:

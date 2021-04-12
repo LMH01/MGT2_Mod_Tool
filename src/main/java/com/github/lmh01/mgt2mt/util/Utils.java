@@ -581,4 +581,14 @@ public class Utils {
         }
         stringBuilder.append(System.getProperty("line.separator"));
     }
+
+    /**
+     * Converts the input seconds to minutes and seconds
+     */
+    public static String convertSecondsToTime(int second){
+        int minutes = (second % 3600) / 60;
+        int seconds = second % 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
+    }
 }

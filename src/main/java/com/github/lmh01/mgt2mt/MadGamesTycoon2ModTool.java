@@ -40,11 +40,9 @@ public class MadGamesTycoon2ModTool {
         Runtime.getRuntime().addShutdownHook(new Thread(ThreadHandler.runnableDoOnShutdown));
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
-        UpdateChecker.checkForUpdates(false);
         WindowMain.createFrame();
         Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
-        AnalyzeExistingGenres.analyzeGenreFile();
         WindowMain.checkActionAvailability();
-        ThreadHandler.threadDeleteTempFolder.start();
+        ThreadHandler.threadPerformStartTasks.start();
     }
 }

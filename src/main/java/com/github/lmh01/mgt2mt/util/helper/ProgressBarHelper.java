@@ -1,13 +1,19 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class ProgressBarHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProgressBarHelper.class);
     private static String currentProgressBarString = "";
+    private static String currentProgressBarStringWithProgress = "";
+    private static boolean progressBarRunning = false;
+    private static int secondsElapsed = 0;
 
     /**
      * Initializes the progress bar in the main window to use the input values.
@@ -31,6 +37,10 @@ public class ProgressBarHelper {
      * @param setTextArea If true the text will also be written to the text area
      */
     public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea){
+        initializeProgressBar(minValue, maxValue, text, setTextArea, false);
+    }
+
+    public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea, boolean disableMeasuredTime){
         WindowMain.PROGRESS_BAR.setMinimum(minValue);
         WindowMain.PROGRESS_BAR.setMaximum(maxValue);
         WindowMain.PROGRESS_BAR.setValue(minValue);
@@ -38,6 +48,9 @@ public class ProgressBarHelper {
         currentProgressBarString = text;
         if(setTextArea){
             TextAreaHelper.appendText(text);
+        }
+        if(!disableMeasuredTime){
+            startProgressBarTimeThread();
         }
     }
     /**
@@ -77,6 +90,7 @@ public class ProgressBarHelper {
      * Resets the progress bar in the main window
      */
     public static void resetProgressBar(){
+        progressBarRunning = false;
         WindowMain.PROGRESS_BAR.setString(I18n.INSTANCE.get("progressBar.idle"));
         WindowMain.PROGRESS_BAR.setMinimum(0);
         WindowMain.PROGRESS_BAR.setMaximum(100);
@@ -91,9 +105,41 @@ public class ProgressBarHelper {
     }
 
     /**
-     * Changes the progress value behind the progress bar text
+     * Changes the progress value and time behind the progress bar text
      */
     private static void changeProgress(){
-        WindowMain.PROGRESS_BAR.setString(currentProgressBarString + " " + getProgressString());
+        WindowMain.PROGRESS_BAR.setString(currentProgressBarString + " " + getProgressString() + " " + getProgressBarTime());
+    }
+
+    private static String getProgressBarTime(){
+        return "(" + I18n.INSTANCE.get("progressBar.timeElapsed") + ": " + Utils.convertSecondsToTime(secondsElapsed) + ")";
+    }
+
+
+    /**
+     * Starts a thread that adds the time passed to the progress bar
+     */
+    public static void startProgressBarTimeThread(){
+        Thread thread = new Thread(() -> {
+            LOGGER.info("Starting to measure time");
+            progressBarRunning = true;
+            secondsElapsed = 0;
+            while(progressBarRunning){
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                    secondsElapsed++;
+                    if(progressBarRunning){
+                        changeProgress();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+            LOGGER.info("Stopped to measure time");
+        });
+        if(!progressBarRunning){
+            thread.start();
+        }
     }
 }

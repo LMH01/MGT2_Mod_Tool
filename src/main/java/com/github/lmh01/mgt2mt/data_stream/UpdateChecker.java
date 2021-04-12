@@ -21,10 +21,15 @@ public class UpdateChecker {
     private static final String ALPHA_UPDATE_URL = "https://www.dropbox.com/s/16lk6kyc1wdpw43/mgt2mtNewestAlphaVersion.txt?dl=1";
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static void checkForUpdates(boolean showNoUpdateAvailableDialog){
+        checkForUpdates(showNoUpdateAvailableDialog, true);
+    }
+    public static void checkForUpdates(boolean showNoUpdateAvailableDialog, boolean useProgressBar){
         new Thread("UpdateChecker"){
             public void run(){
                 try {
-                    ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.checkForUpdates"));
+                    if(useProgressBar){
+                        ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.checkForUpdates"));
+                    }
                     LOGGER.info("Checking for updates...");
                     updateAvailable = false;
                     java.net.URL url;
@@ -39,7 +44,9 @@ public class UpdateChecker {
                     Scanner scanner = new Scanner(url.openStream());
                     String currentLine = scanner.nextLine();
                     newestVersion = currentLine;
-                    ProgressBarHelper.increment();
+                    if(useProgressBar){
+                        ProgressBarHelper.increment();
+                    }
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
                         if(!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)){
                             if(!MadGamesTycoon2ModTool.VERSION.contains("dev")){
@@ -74,7 +81,9 @@ public class UpdateChecker {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                ProgressBarHelper.resetProgressBar();
+                if(useProgressBar){
+                    ProgressBarHelper.resetProgressBar();
+                }
                 WindowMain.lockMenuItems(false);
             }
 

@@ -538,9 +538,8 @@ public class SharingManager {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
         }
         //Delete the temp .zip extractions
-        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
-        DataStreamHelper.deleteDirectory(tempFolder);
         ProgressBarHelper.resetProgressBar();
+        ThreadHandler.threadDeleteTempFolder.start();
         TextAreaHelper.resetAutoScroll();
         WindowMain.checkActionAvailability();
     }
