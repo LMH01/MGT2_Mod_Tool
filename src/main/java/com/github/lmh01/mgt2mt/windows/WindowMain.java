@@ -60,8 +60,8 @@ public class WindowMain {
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
-        frame.setMinimumSize(new Dimension(270, 250));
+        frame.setSize(680, 500);
+        frame.setMinimumSize(new Dimension(250, 150));
         frame.setLocationRelativeTo(null);
 
         //Creating the MenuBar and adding components
