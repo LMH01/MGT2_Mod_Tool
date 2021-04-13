@@ -315,15 +315,18 @@ public class NewModsHandler {
         File imageFileSource = new File(imageFilePath);
         if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
             File targetImage = new File(Utils.getMGT2CompanyLogosPath() + "//" + AnalyzeCompanyLogos.getLogoNumber() + ".png");
-            try {//TODO TextArea output hinzufügen
+            try {
                 Files.copy(Paths.get(imageFileSource.getPath()), Paths.get(targetImage.getPath()));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.addCompanyIcon.success"));
                 JOptionPane.showMessageDialog(null, "Image has been added.", "Image added", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Unable to add image file:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.addCompanyIcon.error") + " " + e.getMessage());
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.addCompanyIcon.error") + "\n\n" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Unable to add image file: Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.addCompanyIcon.error") + " " + I18n.INSTANCE.get("commonText.unknownError"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
         }
+        WindowMain.checkActionAvailability();
     }
 }

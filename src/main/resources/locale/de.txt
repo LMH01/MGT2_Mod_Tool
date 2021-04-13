@@ -17,6 +17,7 @@ commonText.removed|entfernt
 commonText.remove|Entfernen
 commonText.removing|Entferne
 commonText.successfully|erfolgreich
+commonText.unknownError|Unbekannter Fehler
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -240,6 +241,8 @@ textArea.unzip.startingUnzip.secondPart|Beginne damit Dateien zu entpacken
 textArea.downloadZip.downloadSuccess|Zip Datei wurde erfolgreich heruntergeladen und abgespeichert:
 textArea.added|Hinzugefügt:
 textArea.removed|Entfernt:
+textArea.addCompanyIcon.success|Company Logo hinzugefügt.
+textArea.addCompanyIcon.error|Company Logo wurde nicht hinzugefügt:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

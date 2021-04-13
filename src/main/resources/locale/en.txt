@@ -17,6 +17,7 @@ commonText.removed|removed
 commonText.remove|Remove
 commonText.removing|Removing
 commonText.successfully|successfully
+commonText.unknownError|Unknown error
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
@@ -240,6 +241,8 @@ textArea.unzip.startingUnzip.secondPart|Beginning to extract files
 textArea.downloadZip.downloadSuccess|Zip file has been downloaded and saved successfully:
 textArea.added|Added:
 textArea.removed|Removed:
+textArea.addCompanyIcon.success|Company logo added.
+textArea.addCompanyIcon.error|Company Logo was not added:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?
