@@ -178,6 +178,7 @@ progressBar.importAll.indexing|Indexing files
 progressBar.unzip.preparing|Preparing to unzip folder
 progressBar.unzip.unzipping|Unzipping files
 progressBar.timeElapsed|Time elapsed
+progressBar.replacePublisher.removingOriginalPublishers|Removing original publishers
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete

@@ -33,29 +33,32 @@ public class PublisherHelper {
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists"), "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                         downloadFiles = false;
                     }else{
-                        DataStreamHelper.deleteDirectory(publisherZip);
-                        DataStreamHelper.deleteDirectory(publisherUnzipped);
+                        DataStreamHelper.deleteDirectory(publisherZip, false);
+                        DataStreamHelper.deleteDirectory(publisherUnzipped, false);
                     }
                 }
                 if(downloadFiles){
                     ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
                     DataStreamHelper.downloadZip(REAL_PUBLISHER_ZIP_URL, publisherZip.getPath());
+                    ProgressBarHelper.resetProgressBar();
                     DataStreamHelper.unzip(publisherZip.getPath(), publisherUnzipped);
                 }
                 LOGGER.info("Real publisher files are ready.");
                 LOGGER.info("Removing existing publishers...");
+                ProgressBarHelper.initializeProgressBar(0, AnalyzeExistingPublishers.ORIGINAL_PUBLISHERS.length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
                 for(String string : AnalyzeExistingPublishers.ORIGINAL_PUBLISHERS){
                     EditPublishersFile.removePublisher(string);
+                    ProgressBarHelper.increment();
                 }
                 LOGGER.info("Original publishers have been removed!");
                 LOGGER.info("Adding new publishers...");
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
+                ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
                 SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, false);
-                ProgressBarHelper.increment();
                 if(AnalyzeExistingPublishers.getActivePublisherIds().contains(-1)){
                     EditPublishersFile.removePublisher("Dummy");
                 }
-                TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
             }catch (IOException e){
                 e.printStackTrace();

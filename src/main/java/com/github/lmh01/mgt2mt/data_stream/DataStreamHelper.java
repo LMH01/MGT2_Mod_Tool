@@ -347,10 +347,27 @@ public class DataStreamHelper {
      * Deletes a complete directory with its contents
      */
     public static void deleteDirectory(File directoryToBeDeleted){
-        try{
-            ProgressBarHelper.initializeProgressBar(0, directoryToBeDeleted.listFiles().length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
-        }catch (NullPointerException ignored){
-            ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+        deleteDirectory(directoryToBeDeleted, true);
+    }
+
+    /**
+     * Deletes a directory with its contents
+     * @param initializeProgressBar True when the progress bar should be initialized. Otherwise only the text will be changed and the value will increment.
+     */
+    public static void deleteDirectory(File directoryToBeDeleted, boolean initializeProgressBar){
+        if(initializeProgressBar){
+            try{
+                ProgressBarHelper.initializeProgressBar(0, directoryToBeDeleted.listFiles().length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+            }catch (NullPointerException ignored){
+                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+            }
+        }else{
+            try{
+                ProgressBarHelper.increaseMaxValue(directoryToBeDeleted.listFiles().length);
+                ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.delete"));
+            }catch (NullPointerException ignored){
+                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+            }
         }
         deleteDirectoryProcess(directoryToBeDeleted);
         directoryToBeDeleted.delete();

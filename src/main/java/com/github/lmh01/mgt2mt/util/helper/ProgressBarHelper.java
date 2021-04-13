@@ -153,6 +153,7 @@ public class ProgressBarHelper {
             LOGGER.info("Stopped to measure time");
         });
         if(!progressBarRunning){
+            thread.setName("ProgressBarTimeMeasurer");
             thread.start();
         }
     }

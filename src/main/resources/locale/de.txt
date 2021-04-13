@@ -178,6 +178,7 @@ progressBar.importAll.indexing|Indizierung von Dateien
 progressBar.unzip.preparing|Vorbereitung zum Entpacken des Ordners
 progressBar.unzip.unzipping|Entpacke Dateien
 progressBar.timeElapsed|Zeit vergangen
+progressBar.replacePublisher.removingOriginalPublishers|Entferne originale Publisher
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
