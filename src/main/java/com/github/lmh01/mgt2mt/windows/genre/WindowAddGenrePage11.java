@@ -52,7 +52,7 @@ public class WindowAddGenrePage11 extends JFrame{
                     FRAME.dispose();
                     GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                     WindowMain.checkActionAvailability();
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"), true);
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"));
                 }
             }else{
                 String imageFilePath = GenreHelper.getGenreImageFilePath(true, false, textFieldImagePath);
@@ -61,7 +61,7 @@ public class WindowAddGenrePage11 extends JFrame{
                     FRAME.dispose();
                     GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                     WindowMain.checkActionAvailability();
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"), true);
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"));
                 }else if(textFieldImagePath.getText().isEmpty()){
 
                 }

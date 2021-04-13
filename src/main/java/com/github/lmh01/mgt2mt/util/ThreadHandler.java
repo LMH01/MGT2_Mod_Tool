@@ -64,7 +64,6 @@ public class ThreadHandler {
      * Also sets the scroll pane to be locked.
      */
     public static void startThread(String threadName){
-        TextAreaHelper.setScrollDown();
         Thread thread;
         switch(threadName){
             case "runnableExportEngineFeatures": thread  = new Thread(ThreadHandler.runnableExportEngineFeatures);break;

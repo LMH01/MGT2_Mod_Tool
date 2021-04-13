@@ -56,7 +56,7 @@ public class LicenceHelper {
                             try {
                                 EditLicenceFile.addLicence(newLicence);
                                 JOptionPane.showMessageDialog(null, "Licence [" + textFieldName.getText() + "] has been added successfully!");
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + textFieldName.getText(), true);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + textFieldName.getText());
                                 break;
                             } catch (IOException e) {
                                 e.printStackTrace();

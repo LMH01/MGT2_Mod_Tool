@@ -198,7 +198,7 @@ public class NewModsHandler {
                                 EditPublishersFile.addPublisher(hashMap, publisherImageFilePath.toString());
                                 JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
                                 ChangeLog.addLogEntry(19, hashMap.get("NAME EN"));
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + hashMap.get("NAME EN"), true);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + hashMap.get("NAME EN"));
                                 breakLoop = true;
                             }
                         }
@@ -280,7 +280,7 @@ public class NewModsHandler {
                                     if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false);
                                         EditThemeFiles.addTheme(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
-                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText(), true);
+                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                         breakLoop = true;
                                     }

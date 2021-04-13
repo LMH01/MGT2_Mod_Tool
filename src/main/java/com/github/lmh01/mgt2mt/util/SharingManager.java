@@ -494,7 +494,6 @@ public class SharingManager {
                             boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
                             boolean errorOccurred = false;
                             ProgressBarHelper.initializeProgressBar(0, engineFeatures.size() + gameplayFeatures.size() + genres.size() + publisher.size() + themes.size() + licences.size(), I18n.INSTANCE.get("progressBar.importingMods"));
-                            TextAreaHelper.setScrollDown();
                             if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing engine features");
                                 errorOccurred = true;
