@@ -62,6 +62,5 @@ public class PublisherHelper {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
-        WindowMain.checkActionAvailability();
     }
 }

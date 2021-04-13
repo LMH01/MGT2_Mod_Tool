@@ -73,6 +73,5 @@ public class LicenceHelper {
                 break;
             }
         }
-        WindowMain.checkActionAvailability();
     }
 }

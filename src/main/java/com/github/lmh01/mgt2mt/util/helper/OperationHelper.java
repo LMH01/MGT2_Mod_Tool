@@ -107,7 +107,5 @@ public class OperationHelper {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.error.part.2") + " " + operation + exportType + ": " + I18n.INSTANCE.get("processor.error.part.3") + ": " + "\n\n" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        TextAreaHelper.resetAutoScroll();
-        WindowMain.checkActionAvailability();
     }
 }

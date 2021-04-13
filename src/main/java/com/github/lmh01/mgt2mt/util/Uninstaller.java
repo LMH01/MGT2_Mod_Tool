@@ -92,8 +92,6 @@ public class Uninstaller {
                     }
                 }
             }
-            TextAreaHelper.resetAutoScroll();
-            WindowMain.lockMenuItems(false);
             break;
         }
     }
@@ -146,6 +144,5 @@ public class Uninstaller {
             DataStreamHelper.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
             JOptionPane.showMessageDialog(null, "All exports have been deleted.");
         }
-        WindowMain.lockMenuItems(false);
     }
 }

@@ -35,6 +35,5 @@ public class ImportFromURLHelper {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.importFromURL.error.body") + "\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
-        WindowMain.checkActionAvailability();
     }
 }

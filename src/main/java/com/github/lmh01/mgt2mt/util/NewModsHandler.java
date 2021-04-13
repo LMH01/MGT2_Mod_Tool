@@ -26,10 +26,8 @@ public class NewModsHandler {
             GenreManager.startStepByStepGuide();
         } catch (IOException e) {//TODO Remove message dialog line
             JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
-            WindowMain.checkActionAvailability();
             e.printStackTrace();
         }
-        WindowMain.checkActionAvailability();
     }
     public static void addPublisher(){
         try {
@@ -213,7 +211,6 @@ public class NewModsHandler {
             JOptionPane.showMessageDialog(null, "Error while adding publisher:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        WindowMain.checkActionAvailability();
     }
     public static void addTheme(){
         try {
@@ -308,7 +305,6 @@ public class NewModsHandler {
             JOptionPane.showMessageDialog(null, "Unable to add theme:\n\n" + e.getMessage(), "Error while adding theme", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        WindowMain.checkActionAvailability();
     }
     public static void addCompanyIcon(){
         String imageFilePath = Utils.getImagePath();
@@ -327,6 +323,5 @@ public class NewModsHandler {
         }else{
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.addCompanyIcon.error") + " " + I18n.INSTANCE.get("commonText.unknownError"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
         }
-        WindowMain.checkActionAvailability();
     }
 }

@@ -51,7 +51,5 @@ public class ActiveMods {
             stringBuilder.append(I18n.INSTANCE.get("dialog.sharingManager.importAll.noModsAvailable"));
         }
         JOptionPane.showMessageDialog(null, stringBuilder.toString());
-        TextAreaHelper.resetAutoScroll();
-        WindowMain.lockMenuItems(false);
     }
 }

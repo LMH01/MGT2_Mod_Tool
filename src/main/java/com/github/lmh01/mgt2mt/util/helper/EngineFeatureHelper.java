@@ -251,7 +251,6 @@ public class EngineFeatureHelper {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error while adding engine feature:\n\n" + e.getMessage(), "Error while adding gameplay feature", JOptionPane.ERROR_MESSAGE);
         }
-        WindowMain.checkActionAvailability();
     }
 
     /**

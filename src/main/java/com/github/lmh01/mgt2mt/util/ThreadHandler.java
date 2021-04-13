@@ -9,6 +9,7 @@ import java.io.File;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
+    private static String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
     private static Runnable runnableExportLicence = () -> OperationHelper.process((string) -> SharingHandler.exportLicence(string, false), AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
     private static Runnable runnableExportEngineFeatures = () -> OperationHelper.process((string) -> SharingHandler.exportEngineFeature(string, false), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
     private static Runnable runnableExportGameplayFeatures = () -> OperationHelper.process((string) -> SharingHandler.exportGameplayFeature(string, false), AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
@@ -51,7 +52,7 @@ public class ThreadHandler {
 
     public static Thread threadPerformStartTasks = new Thread(() -> {
         WindowMain.lockMenuItems(true);
-        UpdateChecker.checkForUpdates(false, false);
+        UpdateChecker.checkForUpdates(false, true);
         deleteTempFolder();
         WindowMain.lockMenuItems(false);
     });
@@ -95,8 +96,18 @@ public class ThreadHandler {
             default:
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
+        thread.setName(threadName.replace("Runnable", ""));
         thread.start();
         WindowMain.lockMenuItems(true);
+        boolean startControlThread = true;
+        for(String string : controlThreadBlacklist){
+            if(string.equals(threadName)){
+                startControlThread = false;
+            }
+        }
+        if(startControlThread){
+            startControlThread(thread);
+        }
     }
     /**
      * Deletes the temp folder and initializes a progress bar.
@@ -108,5 +119,20 @@ public class ThreadHandler {
             LOGGER.info("Deleted temp folder.");
         }
     }
-    //TODO Add thread that runs that checks if the currently running thread is alive. When dead the action availability is checked. -> unlock menu bar, reset scroll down
+
+    /**
+     * Starts a thread that waits until the started thread dies and performs tasks after that.
+     */
+    public static void startControlThread(Thread threadToWaitFor){
+        Thread thread = new Thread(() -> {
+            LOGGER.info("Started control thread for thread: " + threadToWaitFor.getName());
+            while(threadToWaitFor.isAlive()){
+            }
+            LOGGER.info("Thread died: " + threadToWaitFor.getName());
+            TextAreaHelper.resetAutoScroll();
+            WindowMain.checkActionAvailability();
+        });
+        thread.setName("ThreadController" + "For" + threadToWaitFor.getName().replace("runnable", "Runnable"));
+        thread.start();
+    }
 }

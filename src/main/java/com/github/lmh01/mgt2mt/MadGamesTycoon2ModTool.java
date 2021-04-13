@@ -42,7 +42,6 @@ public class MadGamesTycoon2ModTool {
         ToolTipManager.sharedInstance().setInitialDelay(500);
         WindowMain.createFrame();
         Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
-        WindowMain.checkActionAvailability();
         ThreadHandler.threadPerformStartTasks.start();
     }
 }

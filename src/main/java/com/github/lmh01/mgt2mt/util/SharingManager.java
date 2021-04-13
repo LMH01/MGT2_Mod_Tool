@@ -544,8 +544,6 @@ public class SharingManager {
         if(tempFolder.exists()){
             ThreadHandler.threadDeleteTempFolder.start();
         }
-        TextAreaHelper.resetAutoScroll();
-        WindowMain.checkActionAvailability();
     }
 
     /**
@@ -681,9 +679,6 @@ public class SharingManager {
                 e.printStackTrace();
             }
         }
-        TextAreaHelper.resetAutoScroll();
-        WindowMain.lockMenuItems(false);
-        WindowMain.checkActionAvailability();
     }
 
     /**
