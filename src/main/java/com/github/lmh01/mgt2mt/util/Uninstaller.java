@@ -88,7 +88,7 @@ public class Uninstaller {
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallSuccessful"), I18n.INSTANCE.get("window.uninstall.uninstallSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                         }
-                        //System.exit(0);
+                        System.exit(0);
                     }
                 }
             }

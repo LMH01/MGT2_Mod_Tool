@@ -97,7 +97,7 @@ public class ProgressBarHelper {
         timeEnabled = false;
         WindowMain.PROGRESS_BAR.setString(I18n.INSTANCE.get("progressBar.idle"));
         WindowMain.PROGRESS_BAR.setMinimum(0);
-        WindowMain.PROGRESS_BAR.setMaximum(100);
+        WindowMain.PROGRESS_BAR.setMaximum(1);
         WindowMain.PROGRESS_BAR.setValue(0);
     }
 

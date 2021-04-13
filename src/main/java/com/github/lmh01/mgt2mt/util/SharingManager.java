@@ -542,7 +542,7 @@ public class SharingManager {
         ProgressBarHelper.resetProgressBar();
         File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
         if(tempFolder.exists()){
-            ThreadHandler.threadDeleteTempFolder.start();
+            ThreadHandler.startThread("runnableDeleteTempFolder");
         }
     }
 

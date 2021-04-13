@@ -467,10 +467,6 @@ public class WindowMain {
             LOGGER.info("Error" + e.getMessage());
             e.printStackTrace();
         }
-        TextAreaHelper.resetAutoScroll();
-        ProgressBarHelper.resetProgressBar();
-        lockMenuItems(false);
-
     }
 
     /**

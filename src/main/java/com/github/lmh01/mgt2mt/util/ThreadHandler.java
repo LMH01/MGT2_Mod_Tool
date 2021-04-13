@@ -9,6 +9,7 @@ import java.io.File;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
+    private static int threadsRunning = 0;
     private static String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
     private static Runnable runnableExportLicence = () -> OperationHelper.process((string) -> SharingHandler.exportLicence(string, false), AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
     private static Runnable runnableExportEngineFeatures = () -> OperationHelper.process((string) -> SharingHandler.exportEngineFeature(string, false), AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
@@ -44,11 +45,11 @@ public class ThreadHandler {
         LOGGER.info("Exit tasks complete. Good night");
     };
 
-    public static Thread threadDeleteTempFolder = new Thread(() -> {
+    public static Runnable runnableDeleteTempFolder = () -> {
         WindowMain.lockMenuItems(true);
         deleteTempFolder();
         WindowMain.lockMenuItems(false);
-    });
+    };
 
     public static Thread threadPerformStartTasks = new Thread(() -> {
         WindowMain.lockMenuItems(true);
@@ -93,11 +94,15 @@ public class ThreadHandler {
             case "runnableAddNewEngineFeature": thread = new Thread(runnableAddNewEngineFeature);break;
             case "runnableAddNewGameplayFeature": thread = new Thread(runnableAddNewGameplayFeature);break;
             case "runnableAddCompanyIcon": thread = new Thread(runnableAddCompanyIcon);break;
+            case "runnableDeleteTempFolder": thread = new Thread(runnableDeleteTempFolder);break;
             default:
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
         thread.setName(threadName.replace("Runnable", ""));
         thread.start();
+        threadsRunning++;
+        LOGGER.info("Thread started: " + thread.getName());
+        LOGGER.info("Threads running: " + threadsRunning);
         WindowMain.lockMenuItems(true);
         boolean startControlThread = true;
         for(String string : controlThreadBlacklist){
@@ -128,9 +133,16 @@ public class ThreadHandler {
             LOGGER.info("Started control thread for thread: " + threadToWaitFor.getName());
             while(threadToWaitFor.isAlive()){
             }
-            LOGGER.info("Thread died: " + threadToWaitFor.getName());
-            TextAreaHelper.resetAutoScroll();
-            WindowMain.checkActionAvailability();
+            if(threadsRunning<2){
+                LOGGER.info("Thread died: " + threadToWaitFor.getName());
+                TextAreaHelper.resetAutoScroll();
+                ProgressBarHelper.resetProgressBar();
+                WindowMain.lockMenuItems(false);
+                WindowMain.checkActionAvailability();
+            }else{
+                LOGGER.info("Thread died but another thread is still running. Exit tasks are not executed. Thread that died: " + threadToWaitFor.getName());
+            }
+            threadsRunning--;
         });
         thread.setName("ThreadController" + "For" + threadToWaitFor.getName().replace("runnable", "Runnable"));
         thread.start();

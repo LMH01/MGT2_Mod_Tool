@@ -177,7 +177,7 @@ progressBar.checkForUpdates|Checking for updates
 progressBar.importAll.indexing|Indexing files
 progressBar.unzip.preparing|Preparing to unzip folder
 progressBar.unzip.unzipping|Unzipping files
-progressBar.timeElapsed|Time elapsed
+progressBar.timeElapsed|Total time elapsed
 progressBar.replacePublisher.removingOriginalPublishers|Removing original publishers
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
