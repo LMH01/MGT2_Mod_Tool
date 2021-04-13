@@ -55,6 +55,7 @@ public class ThreadHandler {
         WindowMain.lockMenuItems(true);
         UpdateChecker.checkForUpdates(false, false);
         deleteTempFolder();
+        WindowMain.checkActionAvailability();
         WindowMain.lockMenuItems(false);
     });
 
@@ -135,9 +136,6 @@ public class ThreadHandler {
             }
             if(threadsRunning<2){
                 LOGGER.info("Thread died: " + threadToWaitFor.getName());
-                TextAreaHelper.resetAutoScroll();
-                ProgressBarHelper.resetProgressBar();
-                WindowMain.lockMenuItems(false);
                 WindowMain.checkActionAvailability();
             }else{
                 LOGGER.info("Thread died but another thread is still running. Exit tasks are not executed. Thread that died: " + threadToWaitFor.getName());

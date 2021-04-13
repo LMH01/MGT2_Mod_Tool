@@ -297,6 +297,7 @@ public class WindowMain {
     }
     /**
      * Checks if specific actions are available. If they are the buttons will be enabled
+     * The following things are also done: Progress bar is reset, auto scrolling gets disabled and menu items are unlocked.
      */
     public static void checkActionAvailability(){
         try{
@@ -467,6 +468,9 @@ public class WindowMain {
             LOGGER.info("Error" + e.getMessage());
             e.printStackTrace();
         }
+        TextAreaHelper.resetAutoScroll();
+        ProgressBarHelper.resetProgressBar();
+        WindowMain.lockMenuItems(false);
     }
 
     /**

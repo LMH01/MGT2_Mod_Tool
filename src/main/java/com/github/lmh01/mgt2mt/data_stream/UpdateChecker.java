@@ -28,6 +28,7 @@ public class UpdateChecker {
         Thread updateChecker = new Thread(() -> {
             try {
                 if(useProgressBar){
+                    WindowMain.lockMenuItems(true);
                     ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.checkForUpdates"));
                 }
                 LOGGER.info("Checking for updates...");
@@ -87,6 +88,8 @@ public class UpdateChecker {
         });
         updateChecker.setName("UpdateChecker");
         updateChecker.start();
-        ThreadHandler.startControlThread(updateChecker);
+        if(useProgressBar){
+            ThreadHandler.startControlThread(updateChecker);
+        }
     }
 }
