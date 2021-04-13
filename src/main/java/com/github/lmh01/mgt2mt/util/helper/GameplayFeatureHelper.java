@@ -276,7 +276,7 @@ public class GameplayFeatureHelper {
                         if(addFeature) {
                             EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);
                             JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.gameplayFeature") + " - " + newGameplayFeature.get("NAME EN"));
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.gameplayFeature") + " - " + newGameplayFeature.get("NAME EN"), true);
                             break;
                         }
                     }

@@ -29,6 +29,14 @@ public class ThreadHandler {
     private static Runnable runnableRemoveGameplayFeature = () -> OperationHelper.process(EditGameplayFeaturesFile::removeGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     private static Runnable runnableRemoveEngineFeature = () -> OperationHelper.process(EditEngineFeaturesFile::removeEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     private static Runnable runnableRemoveLicence = () -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
+    private static Runnable runnableAddNewGenre = () -> NewModsHandler.addGenre();
+    private static Runnable runnableAddRandomizedGenre = () -> GenreHelper.addRandomizedGenre();
+    private static Runnable runnableAddNewTheme = () -> NewModsHandler.addTheme();
+    private static Runnable runnableAddNewPublisher = () -> NewModsHandler.addPublisher();
+    private static Runnable runnableAddNewLicence = () -> LicenceHelper.addLicence();
+    private static Runnable runnableAddNewEngineFeature = () -> EngineFeatureHelper.addEngineFeature();
+    private static Runnable runnableAddNewGameplayFeature = () -> GameplayFeatureHelper.addGameplayFeature();
+    private static Runnable runnableAddCompanyIcon = () -> NewModsHandler.addCompanyIcon();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
@@ -76,13 +84,20 @@ public class ThreadHandler {
             case "runnableRemoveGameplayFeature": thread = new Thread(runnableRemoveGameplayFeature);break;
             case "runnableRemoveEngineFeature": thread = new Thread(runnableRemoveEngineFeature);break;
             case "runnableRemoveLicence": thread = new Thread(runnableRemoveLicence);break;
+            case "runnableAddNewGenre": thread = new Thread(runnableAddNewGenre);break;
+            case "runnableAddRandomizedGenre": thread = new Thread(runnableAddRandomizedGenre);break;
+            case "runnableAddNewTheme": thread = new Thread(runnableAddNewTheme);break;
+            case "runnableAddNewPublisher": thread = new Thread(runnableAddNewPublisher);break;
+            case "runnableAddNewLicence": thread = new Thread(runnableAddNewLicence);break;
+            case "runnableAddNewEngineFeature": thread = new Thread(runnableAddNewEngineFeature);break;
+            case "runnableAddNewGameplayFeature": thread = new Thread(runnableAddNewGameplayFeature);break;
+            case "runnableAddCompanyIcon": thread = new Thread(runnableAddCompanyIcon);break;
             default:
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
         thread.start();
         WindowMain.lockMenuItems(true);
     }
-
     /**
      * Deletes the temp folder and initializes a progress bar.
      */
@@ -93,4 +108,5 @@ public class ThreadHandler {
             LOGGER.info("Deleted temp folder.");
         }
     }
+    //TODO Add thread that runs that checks if the currently running thread is alive. When dead the action availability is checked. -> unlock menu bar, reset scroll down
 }
