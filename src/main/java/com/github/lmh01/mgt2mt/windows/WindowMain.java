@@ -269,7 +269,15 @@ public class WindowMain {
         JPanel panel = new JPanel(); // the panel is not visible in output
         JLabel labelVersion = new JLabel("v" + MadGamesTycoon2ModTool.VERSION);
         JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.quit"));
-        buttonQuit.addActionListener(actionEvent -> disposeFrame());
+        buttonQuit.addActionListener(actionEvent -> {
+            if(ThreadHandler.getThreadsRunning() > 0){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.button.quit.taskPerformed"), I18n.INSTANCE.get("window.main.button.quit.taskPerformed.title"), JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION){
+                    disposeFrame();
+                }
+            }else{
+                disposeFrame();
+            }
+        });
         JLabel labelModCreator = new JLabel("by LMH01");
         // Components Added using Flow Layout
         panel.add(labelVersion);

@@ -145,4 +145,11 @@ public class ThreadHandler {
         thread.setName("ThreadController" + "For" + threadToWaitFor.getName().replace("runnable", "Runnable"));
         thread.start();
     }
+
+    /**
+     * Returns the amount of active threads
+     */
+    public static int getThreadsRunning(){
+        return threadsRunning;
+    }
 }

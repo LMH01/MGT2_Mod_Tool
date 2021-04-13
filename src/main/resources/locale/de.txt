@@ -361,6 +361,8 @@ window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exp
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Deaktiviert -> Keine mods verfügbar, für die ein Wiederherstellungspunkt erstellt werden könnte
 window.main.lockMenuItems|Deaktiviert -> Eine Aufgabe wird gerade ausgeführt
+window.main.button.quit.taskPerformed|<html>Eine Aufgabe wird gerade ausgeführt,<br>bist du dir sicher, dass du das Programm verlassen möchtest?<br>Die aktuelle Aufgabe wird dann abgebrochen, dies könnte zu Problemen führen.
+window.main.button.quit.taskPerformed.title|Programm verlassen?
 
 window.importFromURL.labelText|<html>Geb unten die URL zum ZIP-Archiv ein.<br>Hinweis: Es muss ein direkter Download-Link sein.
 window.importFromURL.textFieldURL.toolTip|Gib die URL zum ZIP-Archiv ein
