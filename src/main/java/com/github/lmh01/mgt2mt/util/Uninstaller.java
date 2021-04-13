@@ -92,6 +92,8 @@ public class Uninstaller {
                     }
                 }
             }
+            TextAreaHelper.resetAutoScroll();
+            WindowMain.lockMenuItems(false);
             break;
         }
     }
