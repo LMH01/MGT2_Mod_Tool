@@ -136,8 +136,7 @@ public class AnalyzeExistingGenres {
         String[] allGenresById = getGenresByAlphabetWithoutId();
         String[] defaultGenres = {"Action", "Adventure", "Building Game", "Economic Simulation", "Fighting Game", "First-Person Shooter", "Interactive Movie", "Platformer", "Puzzle Game", "Racing", "Real-Time Strategy", "Role-Playing Game", "Simulation", "Skill Game", "Sport Game", "Strategy", "Third-Person Shooter", "Visual Novel"};
         ArrayList<String> arrayListCustomGenres = new ArrayList<>();
-        ProgressBarHelper.initializeProgressBar(0, arrayListCustomGenres.size(), I18n.INSTANCE.get("progressBar.moddedGenre"), true);
-        int currentProgressBarValue = 0;
+        ProgressBarHelper.initializeProgressBar(0, allGenresById.length, I18n.INSTANCE.get("progressBar.moddedGenre"), true);
         for (String s : allGenresById) {
             boolean defaultGenre = false;
             for (String genre : defaultGenres) {
@@ -150,8 +149,7 @@ public class AnalyzeExistingGenres {
                 arrayListCustomGenres.add(s);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedGenreFound") + " " + s);
             }
-            currentProgressBarValue++;
-            ProgressBarHelper.setValue(currentProgressBarValue);
+            ProgressBarHelper.increment();
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedGenresComplete"));
         ProgressBarHelper.resetProgressBar();

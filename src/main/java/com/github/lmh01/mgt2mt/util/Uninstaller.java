@@ -53,7 +53,7 @@ public class Uninstaller {
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.confirmMessage.firstPart") + "\n\n" + stringActions + "\n" + I18n.INSTANCE.get("window.uninstall.confirmMessage.secondPart"), I18n.INSTANCE.get("window.uninstall.confirmMessage.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                         LOGGER.info("Uninstalling...");
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling"));
-                        ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.uninstalling"));
+                        ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
                         StringBuilder uninstallFailedExplanation = new StringBuilder();
                         if(checkboxRevertAllMods.isSelected()){
                             uninstallFailed = uninstallAllMods(uninstallFailedExplanation);
@@ -88,7 +88,7 @@ public class Uninstaller {
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallSuccessful"), I18n.INSTANCE.get("window.uninstall.uninstallSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                         }
-                        System.exit(0);
+                        //System.exit(0);
                     }
                 }
             }
@@ -105,38 +105,39 @@ public class Uninstaller {
         boolean uninstallFailed = false;
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-        ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
-        int currentProgressBarValue = 0;
-        for (String customGenre : customGenres) {
-            try {
-                EditGenreFile.removeGenre(customGenre);
-            } catch (IOException e) {
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                LOGGER.info("Genre could not be removed: " + e.getMessage());
-                uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                e.printStackTrace();
-                uninstallFailed = true;
+        if(customGenres.length + customPublishers.length != 0){
+            ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
+            for (String customGenre : customGenres) {
+                try {
+                    EditGenreFile.removeGenre(customGenre);
+                } catch (IOException e) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
+                    LOGGER.info("Genre could not be removed: " + e.getMessage());
+                    uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                    e.printStackTrace();
+                    uninstallFailed = true;
+                }
+                ProgressBarHelper.increment();
             }
-            currentProgressBarValue++;
-            ProgressBarHelper.setValue(currentProgressBarValue);
-        }
-        for (String customPublisher : customPublishers) {
-            try {
-                EditPublishersFile.removePublisher(customPublisher);
-                LOGGER.info("Publisher files have been restored to original.");
-            } catch (IOException e) {
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                e.printStackTrace();
-                uninstallFailed = true;
+            for (String customPublisher : customPublishers) {
+                try {
+                    EditPublishersFile.removePublisher(customPublisher);
+                    LOGGER.info("Publisher files have been restored to original.");
+                } catch (IOException e) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
+                    LOGGER.info("Publisher could not be removed: " + e.getMessage());
+                    uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                    e.printStackTrace();
+                    uninstallFailed = true;
+                }
+                ProgressBarHelper.increment();
             }
-            currentProgressBarValue++;
-            ProgressBarHelper.setValue(currentProgressBarValue);
+            Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));
+            LOGGER.info("Game files have been restored to original.");
+        }else{
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.noModsFound"));
         }
-        Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));
-        LOGGER.info("Game files have been restored to original.");
         return uninstallFailed;
     }
     public static void deleteAllExports(){

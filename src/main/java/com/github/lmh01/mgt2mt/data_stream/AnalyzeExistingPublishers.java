@@ -4,6 +4,8 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
+import javafx.scene.control.ProgressBar;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -50,7 +52,7 @@ public class AnalyzeExistingPublishers {
             Map<String, String> map = listPublishers.get(i);
             arrayListActivePublishers.add(map.get("NAME EN"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublisherFound") + " " + map.get("NAME EN"));
-            ProgressBarHelper.setValue(i);
+            ProgressBarHelper.increment();
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublishersComplete"));
         ProgressBarHelper.resetProgressBar();

@@ -213,6 +213,7 @@ textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
 textArea.uninstalling.uninstallingAllMods.genre.failed|Uninstalling genre failed:
 textArea.uninstalling.uninstallingAllMods.publisher.failed|Uninstalling publisher failed:
 textArea.uninstalling.uninstallingAllMods.success|Game files have been restored to original
+textArea.uninstalling.uninstallingAllMods.noModsFound|No mods need to be removed: No mods found
 textArea.deleteModManagerFiles|Deleting all mod manager files
 textArea.deletingBackups|Deleting backups
 textArea.deletingSettings|Deleting settings
