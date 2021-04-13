@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 public class ProgressBarHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProgressBarHelper.class);
     private static String currentProgressBarString = "";
-    private static String currentProgressBarStringWithProgress = "";
     private static boolean progressBarRunning = false;
     private static int secondsElapsed = 0;
     private static boolean timeEnabled = false;

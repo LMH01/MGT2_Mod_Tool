@@ -116,6 +116,8 @@ dialog.sharingManager.importAll.error.windowTitle.var1|Wiederherstellung nicht m
 dialog.sharingManager.importAll.error.windowTitle.var2|Import kann nicht durchgeführt werden
 dialog.sharingManager.importAll.error.general|<html>Beim scannen der Ordner ist ein kritischer Fehler aufgetreten.<br>Der Scannvorgang wurde abgebrochen!
 dialog.sharingManager.importAll.noModsAvailable|Keine
+dialog.sharingManager.importAll.manyImportFilesFound|<html>Es wurde eine so große Menge an zu durchsuchenden Dateien und Verzeichnissen gefunden,<br>dass es einige Zeit dauern könnte, bis alles nach Mods zu durchsucht wurde.<br><br>Wenn du auf "Ja" klickst werden alle weiteren Verzeichnisse durchsucht und diese Nachricht wird kein weiteres mal angezeigt.<br>Wenn du auf "Nein" klickst wird der import prozess abgebrochen.<br><br>Bist du dir sicher, dass du den richtigen Ordner ausgewählt hast und soll der Import-prozess fortgesetzt werden?
+dialog.sharingManager.importAll.manyImportFilesFound.title|Import fortsetzen?
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Wähle die Ordner aus, in denen sich die zu importierenden Dateien befinden
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Wählen Sie die Ordner aus, in denen sich die
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|Datei befindet.
