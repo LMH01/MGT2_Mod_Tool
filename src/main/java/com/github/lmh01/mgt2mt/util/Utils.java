@@ -22,14 +22,15 @@ public class Utils {
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     /**
-     * @return returns the current date time in format: YYYY-MM-DD-HH-MM
+     * @return returns the current date time in format: YYYY-MM-DD-HH-MM-SS
      */
     public static String getCurrentDateTime(){
         return LocalDateTime.now().getYear() + "-" +
                 LocalDateTime.now().getMonth() + "-"+
                 LocalDateTime.now().getDayOfMonth() + "-" +
                 LocalDateTime.now().getHour() + "-" +
-                LocalDateTime.now().getMinute();
+                LocalDateTime.now().getMinute() + "-" +
+                LocalDateTime.now().getSecond();
     }
     /**
      * @return Returns the path to \Mad Games Tycoon 2_Data\Extern\Text\DATA\
