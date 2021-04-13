@@ -183,7 +183,9 @@ public class WindowSettings extends JFrame {
                 }
             }
             unsavedChanges = false;
-            WindowMain.checkActionAvailability();
+            if(Settings.madGamesTycoonFolderIsCorrect){
+                WindowMain.checkActionAvailability();
+            }
             WindowSettings.FRAME.dispose();
         });
         contentPane.add(btnBack);
@@ -200,6 +202,8 @@ public class WindowSettings extends JFrame {
                 comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
                 unsavedChanges = false;
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.button.resetSettings.restored"));
+                FRAME.dispose();
+                WindowSettings.createFrame();
             }
 
         });
@@ -238,6 +242,13 @@ public class WindowSettings extends JFrame {
         }
         checkBoxDebugMode.setSelected(Settings.enableDebugLogging);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
+        if(Settings.madGamesTycoonFolderIsCorrect){
+            checkBoxDisableSafety.setEnabled(true);
+            checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxText"));
+        }else{
+            checkBoxDisableSafety.setEnabled(false);
+            checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
+        }
     }
 
     /**

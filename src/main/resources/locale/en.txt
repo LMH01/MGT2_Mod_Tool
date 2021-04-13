@@ -365,6 +365,7 @@ window.main.actionAvailability.notAvailableToCreateRestorePoint|Disabled -> No m
 window.main.lockMenuItems|Disabled -> A task is currently executed
 window.main.button.quit.taskPerformed|<html>A task is in progress,<br>are you sure you want to exit the program?<br>The current task will then be canceled, this could lead to problems.
 window.main.button.quit.taskPerformed.title|Exit program?
+window.main.mgt2FolderNotFound.toolTip|Disabled -> The mad games tycoon 2 folder is not set. Go into settings and select the folder manually.
 
 window.importFromURL.labelText|<html>Enter the URL to the .zip archive below.<br>Note: This has to be a direct download link.
 window.importFromURL.textFieldURL.toolTip|Enter the URL to the .zip archive

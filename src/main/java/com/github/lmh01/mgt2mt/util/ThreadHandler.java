@@ -51,13 +51,32 @@ public class ThreadHandler {
         WindowMain.lockMenuItems(false);
     };
 
-    public static Thread threadPerformStartTasks = new Thread(() -> {
-        WindowMain.lockMenuItems(true);
-        UpdateChecker.checkForUpdates(false, false);
-        deleteTempFolder();
-        WindowMain.checkActionAvailability();
-        WindowMain.lockMenuItems(false);
-    });
+    public static Thread threadPerformStartTasks(){
+        Thread thread = new Thread(() -> {
+            WindowMain.lockMenuItems(true);
+            UpdateChecker.checkForUpdates(false, false);
+            deleteTempFolder();
+            WindowMain.checkActionAvailability();
+            WindowMain.lockMenuItems(false);
+            threadCheckMGT2Folder().start();
+        });
+        thread.setName("ThreadPerformStartTasks");
+        return thread;
+    }
+
+    private static Thread threadCheckMGT2Folder(){
+        Thread thread = new Thread(() -> {
+            if(!DataStreamHelper.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
+                LOGGER.info("The MGT2 file path is invalid.");
+                Settings.setMgt2Folder(true);
+                Settings.madGamesTycoonFolderIsCorrect = false;
+            }else{
+                Settings.madGamesTycoonFolderIsCorrect = true;
+            }
+        });
+        thread.setName("ThreadCheckMGT2Folder");
+        return thread;
+    }
 
     /**
      * Starts the given thread.

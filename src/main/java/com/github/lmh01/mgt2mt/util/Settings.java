@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.AnalyzeSteamLibraries;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.data_stream.ImportSettings;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -98,11 +99,15 @@ public class Settings {
                     if (showMessages) {
                         JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically") + mgt2FilePath, I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically.windowTitle"), JOptionPane.INFORMATION_MESSAGE);
                     }
+                    ExportSettings.export();
                 }
             }
             if(!madGamesTycoonFolderIsCorrect){
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
+                if(showMessages){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
+                }
             }
+            WindowMain.setMGT2FolderAvailability(madGamesTycoonFolderIsCorrect);
         } catch (IOException e) {
             e.printStackTrace();
         }

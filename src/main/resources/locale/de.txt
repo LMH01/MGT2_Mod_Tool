@@ -365,6 +365,7 @@ window.main.actionAvailability.notAvailableToCreateRestorePoint|Deaktiviert -> K
 window.main.lockMenuItems|Deaktiviert -> Eine Aufgabe wird gerade ausgeführt
 window.main.button.quit.taskPerformed|<html>Eine Aufgabe wird gerade ausgeführt,<br>bist du dir sicher, dass du das Programm verlassen möchtest?<br>Die aktuelle Aufgabe wird dann abgebrochen, dies könnte zu Problemen führen.
 window.main.button.quit.taskPerformed.title|Programm verlassen?
+window.main.mgt2FolderNotFound.toolTip|Deaktiviert -> Der Mad Games Tycoon 2 Ordner wurde nicht gesetzt. Gehe bitte in die Einstellungen uns wähle ihn manuell aus.
 
 window.importFromURL.labelText|<html>Geb unten die URL zum ZIP-Archiv ein.<br>Hinweis: Es muss ein direkter Download-Link sein.
 window.importFromURL.textFieldURL.toolTip|Gib die URL zum ZIP-Archiv ein

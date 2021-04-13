@@ -24,8 +24,7 @@ public class NewModsHandler {
             AnalyzeExistingGenres.analyzeGenreFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             GenreManager.startStepByStepGuide();
-        } catch (IOException e) {//TODO Remove message dialog line
-            JOptionPane.showMessageDialog(null, "The step by step guide could not be started because the Genres.txt file could not be analyzed.\nPlease check if your mgt2 folder is set correctly.\n\nException: " + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
