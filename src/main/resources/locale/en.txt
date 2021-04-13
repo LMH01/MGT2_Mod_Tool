@@ -171,6 +171,7 @@ progressBar.delete|Deleting:
 progressBar.scanningDirectories|Scanning directories
 progressBar.importingMods|Importing mods
 progressBar.publisherHelper.replaceWithRealPublishers.initialize|Replacing publishers
+progressBar.downloadZip|Downloading zip
 progressBar.checkForUpdates|Checking for updates
 progressBar.importAll.indexing|Indexing files
 progressBar.unzip.preparing|Preparing to unzip folder

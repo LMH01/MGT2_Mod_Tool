@@ -47,7 +47,7 @@ public class SharingManager {
      */
 
     public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder, boolean showAlreadyExistMessage){
-        return !importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
+        return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
     }
 
     /**
@@ -76,7 +76,7 @@ public class SharingManager {
             }
             return true;
         }catch(IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();//TODO Übersetzen und TextArea output schreiben
             JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -504,11 +504,12 @@ public class SharingManager {
                             errorOccurred = true;
                         }
                         if(errorOccurred){
+                            TextAreaHelper.appendText(importErredMessage.replace("<html>", "").replace("<br>", "\n"));
                             JOptionPane.showMessageDialog(null, importErredMessage, importErredMessageTitle, JOptionPane.ERROR_MESSAGE);
                         }else{
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
                             JOptionPane.showMessageDialog(null, importSuccessfulMessage, importSuccessfulMessageTitle, JOptionPane.INFORMATION_MESSAGE);
                         }
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
                     }else{
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                     }
@@ -608,12 +609,12 @@ public class SharingManager {
             boolean failed = false;
             for(File file : files){
                 if(selectedEntryNumbers.size() == 0){
-                    if(!importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
+                    if(importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
                         failed = true;
                     }
                 }else{
                     if(selectedEntryNumbers.contains(currentFile)){
-                        if(!importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
+                        if(importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
                             failed = true;
                         }
                     }
