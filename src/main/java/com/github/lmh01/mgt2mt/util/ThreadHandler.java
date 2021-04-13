@@ -52,7 +52,7 @@ public class ThreadHandler {
 
     public static Thread threadPerformStartTasks = new Thread(() -> {
         WindowMain.lockMenuItems(true);
-        UpdateChecker.checkForUpdates(false, true);
+        UpdateChecker.checkForUpdates(false, false);
         deleteTempFolder();
         WindowMain.lockMenuItems(false);
     });

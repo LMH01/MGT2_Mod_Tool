@@ -279,6 +279,7 @@ public class WindowMain {
         //Progress Bar
         JPanel panelMiddle = new JPanel();
         panelMiddle.setLayout(new BoxLayout(panelMiddle, BoxLayout.Y_AXIS));
+        PROGRESS_BAR.setString(I18n.INSTANCE.get("progressBar.idle"));
         PROGRESS_BAR.setStringPainted(true);
         TEXT_AREA.setEditable(false);
         panelMiddle.add(PROGRESS_BAR);
