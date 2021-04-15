@@ -77,6 +77,7 @@ public class ImportSettings{
                 LOGGER.info("Import Complete!");
             }
             reader.close();
+            Settings.validateMGT2Folder();
             return true;
         } catch (FileNotFoundException | UnsupportedEncodingException var6) {
             var6.printStackTrace();

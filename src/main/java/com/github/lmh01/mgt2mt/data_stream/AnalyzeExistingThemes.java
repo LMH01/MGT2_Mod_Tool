@@ -47,7 +47,7 @@ public class AnalyzeExistingThemes {
             }
         }
         reader.close();
-        LOGGER.info("Analyzing of themes(en) complete. Found: " + MAP_ACTIVE_THEMES_GE.size());
+        LOGGER.info("Analyzing of themes(ge) complete. Found: " + MAP_ACTIVE_THEMES_GE.size());
     }
 
     private static void analyzeThemesFileEN() throws IOException {

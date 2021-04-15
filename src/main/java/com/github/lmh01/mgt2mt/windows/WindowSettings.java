@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -18,12 +17,14 @@ public class WindowSettings extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowSettings.class);
     private static boolean customFolderSetAndValid = false;
     private static boolean unsavedChanges = false;
-    private static String customFolderPath = "";
+    static String inputFolder = "";//This string contains the current mgt2folder when the program is started
+    private static String outputFolder = "";//This string contains the folder path that should be set
     JComboBox comboBoxMGT2FolderOperation = new JComboBox();
     JComboBox comboBoxLanguage = new JComboBox();
     JComboBox comboBoxUpdateChannel = new JComboBox();
     JCheckBox checkBoxDisableSafety = new JCheckBox(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxText"));
     JCheckBox checkBoxDebugMode = new JCheckBox(I18n.INSTANCE.get("window.settings.debugMode.checkBoxText"));
+    AtomicBoolean doNotPerformComboBoxActionListener = new AtomicBoolean(false);
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -112,51 +113,63 @@ public class WindowSettings extends JFrame {
         AtomicBoolean automaticWasLastSelectedOption = new AtomicBoolean(!Settings.enableCustomFolder);
         AtomicBoolean manualWasLastSelectedOption = new AtomicBoolean(Settings.enableCustomFolder);
         comboBoxMGT2FolderOperation.setBounds(117, 150, 100, 23);
-        comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip"));
         comboBoxMGT2FolderOperation.addActionListener(e -> {
             LOGGER.info("comboBoxMGT2FolderOperation action: " + e.getActionCommand());
-            if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && !customFolderSetAndValid && !manualWasLastSelectedOption.get()){
-                try {
-                    automaticWasLastSelectedOption.set(false);
-                    manualWasLastSelectedOption.set(true);
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
-                    JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
-                    fileChooser.setDialogTitle(I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.title"));
-                    fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-                    int return_value = fileChooser.showOpenDialog(null);
-                    if(return_value == JFileChooser.APPROVE_OPTION){
-                        String mgt2Folder = fileChooser.getSelectedFile().getPath();
-                        if(DataStreamHelper.doesFolderContainFile(mgt2Folder, "Mad Games Tycoon 2.exe")){
-                            JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderSet"));
-                            customFolderPath = mgt2Folder;
-                            customFolderSetAndValid = true;
+            LOGGER.info("doNotPerformComboBoxActionListener: " + doNotPerformComboBoxActionListener.get());
+            LOGGER.info("Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), \"Manual\")" + Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual"));
+            LOGGER.info("manualWasLastSelectedOption.get(): " + manualWasLastSelectedOption.get());
+            if(!doNotPerformComboBoxActionListener.get()){
+                if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && automaticWasLastSelectedOption.get()){
+                    if(!customFolderSetAndValid){
+                        try {
                             automaticWasLastSelectedOption.set(false);
                             manualWasLastSelectedOption.set(true);
-                            unsavedChanges = true;
-                        }else{
-                            JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderInvalid"), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderInvalid.title"), JOptionPane.ERROR_MESSAGE);
-                            comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
-                            automaticWasLastSelectedOption.set(true);
-                            manualWasLastSelectedOption.set(false);
-                            customFolderSetAndValid = false;
-                            customFolderPath = "";
-                            unsavedChanges = false;
+                            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+                            JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+                            fileChooser.setDialogTitle(I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.title"));
+                            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+                            int return_value = fileChooser.showOpenDialog(null);
+                            if(return_value == JFileChooser.APPROVE_OPTION){
+                                String mgt2Folder = fileChooser.getSelectedFile().getPath();
+                                if(Settings.validateMGT2Folder(mgt2Folder, false)){
+                                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderSet"));
+                                    outputFolder = mgt2Folder;
+                                    customFolderSetAndValid = true;
+                                    automaticWasLastSelectedOption.set(false);
+                                    manualWasLastSelectedOption.set(true);
+                                    unsavedChanges = true;
+                                }else{
+                                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderInvalid"), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderInvalid.title"), JOptionPane.ERROR_MESSAGE);
+                                    comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+                                    automaticWasLastSelectedOption.set(true);
+                                    manualWasLastSelectedOption.set(false);
+                                    customFolderSetAndValid = false;
+                                    unsavedChanges = false;
+                                }
+                            }else{
+                                comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+                                automaticWasLastSelectedOption.set(true);
+                                manualWasLastSelectedOption.set(false);
+                                unsavedChanges = false;
+                            }
+                            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+                        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
                         }
-                    }else{
-                        comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+                    }
+                }else if (comboBoxMGT2FolderOperation.getSelectedItem().equals("Automatic") && manualWasLastSelectedOption.get()){
+                    String mgt2Folder = Settings.getMGT2FilePath();
+                    if(!mgt2Folder.isEmpty()){
+                        outputFolder = mgt2Folder;
+                        customFolderSetAndValid = false;
+                        unsavedChanges = true;
                         automaticWasLastSelectedOption.set(true);
                         manualWasLastSelectedOption.set(false);
-                        unsavedChanges = false;
+                    }else{
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
+                        comboBoxMGT2FolderOperation.setSelectedItem("Manual");
                     }
-                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException classNotFoundException) {
-                    classNotFoundException.printStackTrace();
                 }
-            }else if (comboBoxMGT2FolderOperation.getSelectedItem().equals("Automatic")){
-                Settings.setMgt2Folder(true);
-                automaticWasLastSelectedOption.set(true);
-                manualWasLastSelectedOption.set(false);
-                unsavedChanges = true;
             }
         });
         contentPane.add(comboBoxMGT2FolderOperation);
@@ -165,8 +178,16 @@ public class WindowSettings extends JFrame {
         buttonResetCustomFolder.setBounds(230, 150, 89, 23);
         buttonResetCustomFolder.setToolTipText(I18n.INSTANCE.get("window.settings.reset.button.toolTip"));
         buttonResetCustomFolder.addActionListener(actionEvent -> {
-            customFolderSetAndValid = false;
-            comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                Settings.setMGT2Folder(true);
+                doNotPerformComboBoxActionListener.set(true);
+                automaticWasLastSelectedOption.set(true);
+                manualWasLastSelectedOption.set(false);
+                customFolderSetAndValid = false;
+                comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+                FRAME.dispose();
+                createFrame();
+            }
         });
         contentPane.add(buttonResetCustomFolder);
 
@@ -178,12 +199,14 @@ public class WindowSettings extends JFrame {
                 String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.changesNotSaved.part1") + "\n\n" + unsavedChanges + "\n" + I18n.INSTANCE.get("window.settings.changesNotSaved.part2"), I18n.INSTANCE.get("window.settings.changesNotSaved.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
+                    WindowMain.checkActionAvailability();
+                    customFolderSetAndValid = false;
                     WindowSettings.FRAME.dispose();
                     Backup.createInitialBackup();
                 }
             }
             unsavedChanges = false;
-            if(Settings.madGamesTycoonFolderIsCorrect){
+            if(Settings.mgt2FolderIsCorrect){
                 WindowMain.checkActionAvailability();
             }
             WindowSettings.FRAME.dispose();
@@ -196,6 +219,7 @@ public class WindowSettings extends JFrame {
         btnResetSettings.addActionListener(actionEvent -> {
             if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonBodies.areYouSure"), I18n.INSTANCE.get("window.settings.button.resetSettings.label"), JOptionPane.YES_NO_OPTION) == 0) {
                 Settings.resetSettings();
+                doNotPerformComboBoxActionListener.set(true);
                 checkBoxDebugMode.setSelected(false);
                 checkBoxDisableSafety.setSelected(false);
                 customFolderSetAndValid = false;
@@ -203,9 +227,8 @@ public class WindowSettings extends JFrame {
                 unsavedChanges = false;
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.button.resetSettings.restored"));
                 FRAME.dispose();
-                WindowSettings.createFrame();
+                createFrame();
             }
-
         });
         contentPane.add(btnResetSettings);
 
@@ -219,13 +242,19 @@ public class WindowSettings extends JFrame {
                 WindowMain.checkActionAvailability();
                 Backup.createInitialBackup();
                 unsavedChanges = false;
+                customFolderSetAndValid = false;
+                FRAME.dispose();
+                createFrame();
             }
         });
         contentPane.add(btnSave);
     }
 
     private void loadCurrentSelections(){
-        if(Settings.enableCustomFolder){
+        inputFolder = Settings.mgt2FilePath;
+        outputFolder = Settings.mgt2FilePath;
+        doNotPerformComboBoxActionListener.set(false);
+        if(Settings.enableCustomFolder && Settings.mgt2FolderIsCorrect){
             comboBoxMGT2FolderOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Manual", "Automatic"}));
         }else{
             comboBoxMGT2FolderOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Automatic", "Manual"}));
@@ -242,12 +271,16 @@ public class WindowSettings extends JFrame {
         }
         checkBoxDebugMode.setSelected(Settings.enableDebugLogging);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
-        if(Settings.madGamesTycoonFolderIsCorrect){
+        comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + Settings.mgt2FilePath);
+        if(Settings.mgt2FolderIsCorrect){
             checkBoxDisableSafety.setEnabled(true);
-            checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxText"));
         }else{
-            checkBoxDisableSafety.setEnabled(false);
-            checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
+            comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + I18n.INSTANCE.get("window.settings.mgt2location.toolTip.notSet"));
+        }
+        if(Settings.enableCustomFolder){
+            customFolderSetAndValid = true;
+        }else{
+            customFolderSetAndValid = false;
         }
     }
 
@@ -257,7 +290,7 @@ public class WindowSettings extends JFrame {
      * @param checkBoxDisableSafety The disable safety features checkbox
      */
     private static void setCurrentSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch){
-        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, customFolderPath, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, comboBoxLanguage.getSelectedItem().toString(), comboBoxUpdateBranch.getSelectedItem().toString());
+        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, comboBoxLanguage.getSelectedItem().toString(), comboBoxUpdateBranch.getSelectedItem().toString());
     }
 
     /**
@@ -273,8 +306,8 @@ public class WindowSettings extends JFrame {
         if(Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.disableSafetyFeatures")).append(" ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));
         }
-        if(!Settings.mgt2FilePath.equals(customFolderPath) && !customFolderPath.isEmpty() && !Settings.mgt2FilePath.isEmpty()){
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2FilePath).append(" -> ").append(customFolderPath).append(System.getProperty("line.separator"));
+        if(!inputFolder.equals(outputFolder)){
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2FilePath).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
         }
         if(!Settings.language.equals(comboBoxLanguage.getSelectedItem().toString())){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.language")).append(" ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));

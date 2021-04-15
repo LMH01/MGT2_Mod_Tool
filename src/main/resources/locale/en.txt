@@ -417,11 +417,14 @@ window.settings.language.comboBox.toolTip|<html>Select what language the ui shou
 window.settings.language.informationMessage|To apply the language please save the settings and restart the program.
 window.settings.language.informationMessageTranslationIncomplete|<html>Note:<br>The german translations are work in progress, some things might not be translated yet.<br> It can also happen that the labels of buttons etc. are not displayed correctly.
 window.settings.mgt2location.label|MGT2 Folder:
-window.settings.mgt2location.toolTip|<html>[Automatic]: The folder will be selected automatically<br>[Manual]: Use a custom path.
+window.settings.mgt2location.toolTip|<html>[Automatic]: The folder will be selected automatically<br>[Manual]: Use a custom path.<br>Current path:
+window.settings.mgt2location.toolTip.notSet|Not set
 window.settings.mgt2location.chooseFolder.title|Choose "Mad Games Tycoon 2" main folder:
 window.settings.mgt2location.chooseFolder.folderSet|Folder set.
 window.settings.mgt2location.chooseFolder.folderInvalid.title|Folder not set
 window.settings.mgt2location.chooseFolder.folderInvalid|<html>Folder is invalid:<br>Folder does not contain Mad Games Tycoon 2.exe<br>Using automatic folder.
+window.settings.mgt2location.resetFolder|Reset custom folder and use automatic folder?
+window.settings.mgt2location.resetFolder.title|Reset?
 window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
 window.settings.safetyFeatures.checkBoxText|Disable safety features

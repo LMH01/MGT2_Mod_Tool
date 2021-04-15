@@ -304,176 +304,180 @@ public class WindowMain {
      * The following things are also done: Progress bar is reset, auto scrolling gets disabled and menu items are unlocked.
      */
     public static void checkActionAvailability(){
-        try{
-            AnalyzeExistingGenres.analyzeGenreFile();
-            AnalyzeExistingThemes.analyzeThemeFiles();
-            AnalyzeExistingPublishers.analyzePublisherFile();
-            AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
-            AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
-            AnalyzeExistingLicences.analyze();
-            boolean noCustomGenreAvailable = true;
-            boolean noCustomThemesAvailable = true;
-            boolean noCustomPublishersAvailable = true;
-            boolean noCustomGameplayFeaturesAvailable = true;
-            boolean noCustomEngineFeaturesAvailable = true;
-            boolean noCustomLicencesAvailable = true;
-            boolean noModRestorePointSet = true;
-            if(Settings.disableSafetyFeatures){
-                noCustomGenreAvailable = false;
-                noCustomThemesAvailable = false;
-                noCustomPublishersAvailable = false;
-                noCustomGameplayFeaturesAvailable = false;
-                noCustomEngineFeaturesAvailable = false;
-                noCustomLicencesAvailable = false;
-            }else{
-                if(AnalyzeExistingGenres.genreList.size() > AnalyzeExistingGenres.DEFAULT_GENRES.length){
+        if(Settings.mgt2FolderIsCorrect){
+            try{
+                AnalyzeExistingGenres.analyzeGenreFile();
+                AnalyzeExistingThemes.analyzeThemeFiles();
+                AnalyzeExistingPublishers.analyzePublisherFile();
+                AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+                AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+                AnalyzeExistingLicences.analyze();
+                boolean noCustomGenreAvailable = true;
+                boolean noCustomThemesAvailable = true;
+                boolean noCustomPublishersAvailable = true;
+                boolean noCustomGameplayFeaturesAvailable = true;
+                boolean noCustomEngineFeaturesAvailable = true;
+                boolean noCustomLicencesAvailable = true;
+                boolean noModRestorePointSet = true;
+                if(Settings.disableSafetyFeatures){
                     noCustomGenreAvailable = false;
-                }
-                if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
                     noCustomThemesAvailable = false;
-                }
-                List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-                if(list.size() > 71){
                     noCustomPublishersAvailable = false;
-                }
-                List<Map<String, String>> currentGameplayFeatures = AnalyzeExistingGameplayFeatures.gameplayFeatures;
-                if(currentGameplayFeatures.size() > 61){
                     noCustomGameplayFeaturesAvailable = false;
-                }
-                List<Map<String, String>> currentEngineFeatures = AnalyzeExistingEngineFeatures.engineFeatures;
-                if(currentEngineFeatures.size() > 58){
                     noCustomEngineFeaturesAvailable = false;
-                }
-                Map<Integer, String> mapLicences = AnalyzeExistingLicences.existingLicences;
-                if(mapLicences.size() > 956){
                     noCustomLicencesAvailable = false;
+                }else{
+                    if(AnalyzeExistingGenres.genreList.size() > AnalyzeExistingGenres.DEFAULT_GENRES.length){
+                        noCustomGenreAvailable = false;
+                    }
+                    if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
+                        noCustomThemesAvailable = false;
+                    }
+                    List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+                    if(list.size() > 71){
+                        noCustomPublishersAvailable = false;
+                    }
+                    List<Map<String, String>> currentGameplayFeatures = AnalyzeExistingGameplayFeatures.gameplayFeatures;
+                    if(currentGameplayFeatures.size() > 61){
+                        noCustomGameplayFeaturesAvailable = false;
+                    }
+                    List<Map<String, String>> currentEngineFeatures = AnalyzeExistingEngineFeatures.engineFeatures;
+                    if(currentEngineFeatures.size() > 58){
+                        noCustomEngineFeaturesAvailable = false;
+                    }
+                    Map<Integer, String> mapLicences = AnalyzeExistingLicences.existingLicences;
+                    if(mapLicences.size() > 956){
+                        noCustomLicencesAvailable = false;
+                    }
+                    if(new File(Utils.getMGT2ModToolModRestorePointFolder()).exists()){
+                        noModRestorePointSet = false;
+                    }
                 }
-                if(new File(Utils.getMGT2ModToolModRestorePointFolder()).exists()){
-                    noModRestorePointSet = false;
+                M_223_REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
+                M_232_REMOVE_THEME.setEnabled(!noCustomThemesAvailable);
+                M_28_NPC_GAMES_LIST.setEnabled(!noCustomGenreAvailable);
+                M_242_REMOVE_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
+                M_311_EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
+                M_312_EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
+                M_313_EXPORT_THEME.setEnabled(!noCustomThemesAvailable);
+                M_252_REMOVE_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
+                M_314_EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
+                M_262_REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
+                M_315_EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
+                M_272_REMOVE_LICENCE.setEnabled(!noCustomLicencesAvailable);
+                M_316_EXPORT_LICENCE.setEnabled(!noCustomLicencesAvailable);
+                M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
+                if(noCustomGenreAvailable){
+                    M_223_REMOVE_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
+                    M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
+                    M_311_EXPORT_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
+                }else{
+                    M_223_REMOVE_GENRE.setToolTipText("");
+                    M_28_NPC_GAMES_LIST.setToolTipText("");
+                    M_311_EXPORT_GENRE.setToolTipText("");
                 }
+                if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable &&noCustomLicencesAvailable){
+                    M_317_EXPORT_ALL.setEnabled(false);
+                    M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
+                    M_431_CREATE_MOD_RESTORE_POINT.setEnabled(false);
+                    M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.notAvailableToCreateRestorePoint"));
+                }else{
+                    M_317_EXPORT_ALL.setEnabled(true);
+                    M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
+                    M_431_CREATE_MOD_RESTORE_POINT.setEnabled(true);
+                    M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
+                }
+                if(noCustomThemesAvailable){
+                    M_232_REMOVE_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
+                    M_313_EXPORT_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
+                }else{
+                    M_232_REMOVE_THEME.setToolTipText("");
+                }
+                if(noCustomPublishersAvailable){
+                    M_242_REMOVE_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
+                    M_312_EXPORT_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
+                }else{
+                    M_242_REMOVE_PUBLISHER.setToolTipText("");
+                    M_312_EXPORT_PUBLISHER.setToolTipText("");
+                }
+                if(noCustomEngineFeaturesAvailable){
+                    M_252_REMOVE_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
+                    M_314_EXPORT_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
+                }else{
+                    M_252_REMOVE_ENGINE_FEATURE.setToolTipText("");
+                    M_314_EXPORT_ENGINE_FEATURE.setToolTipText("");
+                }
+                if(noCustomGameplayFeaturesAvailable){
+                    M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
+                    M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
+                }else{
+                    M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
+                    M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText("");
+                }
+                if(noCustomLicencesAvailable){
+                    M_272_REMOVE_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
+                    M_316_EXPORT_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
+                }else{
+                    M_272_REMOVE_LICENCE.setToolTipText("");
+                    M_316_EXPORT_LICENCE.setToolTipText("");
+                }
+                if(noModRestorePointSet){
+                    M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip"));
+                }else{
+                    M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText("");
+                }
+                if(Settings.enableDisclaimerMessage){
+                    M_21_IMPORT.setEnabled(false);
+                    M_22_GENRES.setEnabled(false);
+                    M_23_THEMES.setEnabled(false);
+                    M_24_PUBLISHER.setEnabled(false);
+                    M_25_ENGINE_FEATURES.setEnabled(false);
+                    M_26_GAMEPLAY_FEATURES.setEnabled(false);
+                    M_27_LICENCES.setEnabled(false);
+                    M_28_NPC_GAMES_LIST.setEnabled(false);
+                    M_29_ADD_COMPANY_ICON.setEnabled(false);
+                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(false);
+                    M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_22_GENRES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_23_THEMES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_24_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_25_ENGINE_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_26_GAMEPLAY_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_27_LICENCES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_29_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                }else{
+                    M_21_IMPORT.setEnabled(true);
+                    M_22_GENRES.setEnabled(true);
+                    M_23_THEMES.setEnabled(true);
+                    M_24_PUBLISHER.setEnabled(true);
+                    M_25_ENGINE_FEATURES.setEnabled(true);
+                    M_26_GAMEPLAY_FEATURES.setEnabled(true);
+                    M_27_LICENCES.setEnabled(true);
+                    M_28_NPC_GAMES_LIST.setEnabled(true);
+                    M_29_ADD_COMPANY_ICON.setEnabled(true);
+                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
+                    M_21_IMPORT.setToolTipText("");
+                    M_22_GENRES.setToolTipText("");
+                    M_23_THEMES.setToolTipText("");
+                    M_24_PUBLISHER.setToolTipText("");
+                    M_25_ENGINE_FEATURES.setToolTipText("");
+                    M_26_GAMEPLAY_FEATURES.setToolTipText("");
+                    M_27_LICENCES.setToolTipText("");
+                    M_28_NPC_GAMES_LIST.setToolTipText("");
+                    M_29_ADD_COMPANY_ICON.setToolTipText("");
+                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
+                }
+            }catch (IOException e){
+                LOGGER.info("Error" + e.getMessage());
+                e.printStackTrace();
             }
-            M_223_REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
-            M_232_REMOVE_THEME.setEnabled(!noCustomThemesAvailable);
-            M_28_NPC_GAMES_LIST.setEnabled(!noCustomGenreAvailable);
-            M_242_REMOVE_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
-            M_311_EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
-            M_312_EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
-            M_313_EXPORT_THEME.setEnabled(!noCustomThemesAvailable);
-            M_252_REMOVE_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
-            M_314_EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
-            M_262_REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-            M_315_EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-            M_272_REMOVE_LICENCE.setEnabled(!noCustomLicencesAvailable);
-            M_316_EXPORT_LICENCE.setEnabled(!noCustomLicencesAvailable);
-            M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
-            if(noCustomGenreAvailable){
-                M_223_REMOVE_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
-                M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
-                M_311_EXPORT_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
-            }else{
-                M_223_REMOVE_GENRE.setToolTipText("");
-                M_28_NPC_GAMES_LIST.setToolTipText("");
-                M_311_EXPORT_GENRE.setToolTipText("");
-            }
-            if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable &&noCustomLicencesAvailable){
-                M_317_EXPORT_ALL.setEnabled(false);
-                M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
-                M_431_CREATE_MOD_RESTORE_POINT.setEnabled(false);
-                M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.notAvailableToCreateRestorePoint"));
-            }else{
-                M_317_EXPORT_ALL.setEnabled(true);
-                M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
-                M_431_CREATE_MOD_RESTORE_POINT.setEnabled(true);
-                M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
-            }
-            if(noCustomThemesAvailable){
-                M_232_REMOVE_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
-                M_313_EXPORT_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
-            }else{
-                M_232_REMOVE_THEME.setToolTipText("");
-            }
-            if(noCustomPublishersAvailable){
-                M_242_REMOVE_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
-                M_312_EXPORT_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
-            }else{
-                M_242_REMOVE_PUBLISHER.setToolTipText("");
-                M_312_EXPORT_PUBLISHER.setToolTipText("");
-            }
-            if(noCustomEngineFeaturesAvailable){
-                M_252_REMOVE_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
-                M_314_EXPORT_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
-            }else{
-                M_252_REMOVE_ENGINE_FEATURE.setToolTipText("");
-                M_314_EXPORT_ENGINE_FEATURE.setToolTipText("");
-            }
-            if(noCustomGameplayFeaturesAvailable){
-                M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
-                M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
-            }else{
-                M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
-                M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText("");
-            }
-            if(noCustomLicencesAvailable){
-                M_272_REMOVE_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
-                M_316_EXPORT_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
-            }else{
-                M_272_REMOVE_LICENCE.setToolTipText("");
-                M_316_EXPORT_LICENCE.setToolTipText("");
-            }
-            if(noModRestorePointSet){
-                M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip"));
-            }else{
-                M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText("");
-            }
-            if(Settings.enableDisclaimerMessage){
-                M_21_IMPORT.setEnabled(false);
-                M_22_GENRES.setEnabled(false);
-                M_23_THEMES.setEnabled(false);
-                M_24_PUBLISHER.setEnabled(false);
-                M_25_ENGINE_FEATURES.setEnabled(false);
-                M_26_GAMEPLAY_FEATURES.setEnabled(false);
-                M_27_LICENCES.setEnabled(false);
-                M_28_NPC_GAMES_LIST.setEnabled(false);
-                M_29_ADD_COMPANY_ICON.setEnabled(false);
-                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(false);
-                M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_22_GENRES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_23_THEMES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_24_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_25_ENGINE_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_26_GAMEPLAY_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_27_LICENCES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_29_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-            }else{
-                M_21_IMPORT.setEnabled(true);
-                M_22_GENRES.setEnabled(true);
-                M_23_THEMES.setEnabled(true);
-                M_24_PUBLISHER.setEnabled(true);
-                M_25_ENGINE_FEATURES.setEnabled(true);
-                M_26_GAMEPLAY_FEATURES.setEnabled(true);
-                M_27_LICENCES.setEnabled(true);
-                M_28_NPC_GAMES_LIST.setEnabled(true);
-                M_29_ADD_COMPANY_ICON.setEnabled(true);
-                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
-                M_21_IMPORT.setToolTipText("");
-                M_22_GENRES.setToolTipText("");
-                M_23_THEMES.setToolTipText("");
-                M_24_PUBLISHER.setToolTipText("");
-                M_25_ENGINE_FEATURES.setToolTipText("");
-                M_26_GAMEPLAY_FEATURES.setToolTipText("");
-                M_27_LICENCES.setToolTipText("");
-                M_28_NPC_GAMES_LIST.setToolTipText("");
-                M_29_ADD_COMPANY_ICON.setToolTipText("");
-                M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
-            }
-        }catch (IOException e){
-            LOGGER.info("Error" + e.getMessage());
-            e.printStackTrace();
+            WindowMain.lockMenuItems(false);
+        }else{
+            LOGGER.info("Action availability was not checked because the mgt2 folder is invalid!");
         }
         ProgressBarHelper.resetProgressBar();
-        WindowMain.lockMenuItems(false);
     }
 
     /**

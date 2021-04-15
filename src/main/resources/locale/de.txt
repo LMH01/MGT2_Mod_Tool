@@ -417,11 +417,14 @@ window.settings.language.comboBox.toolTip|<html>Wähle aus, welche Sprache die B
 window.settings.language.informationMessage|Um die Sprache anzuwenden, speicher bitte die Einstellungen und starte das Programm neu.
 window.settings.language.informationMessageTranslationIncomplete|Hinweis: Die deutschen Übersetzungen sind in Arbeit, einige Dinge sind möglicherweise noch nicht übersetzt.
 window.settings.mgt2location.label|MGT2 Ordner:
-window.settings.mgt2location.toolTip|<html>[Automatic]: Der Ordner wird automatisch erkannt und ausgewählt<br>[Manual]: Benutze einen benutzerdefinierten Ort.
+window.settings.mgt2location.toolTip|<html>[Automatic]: Der Ordner wird automatisch erkannt und ausgewählt<br>[Manual]: Benutze einen benutzerdefinierten Ort.<br>Aktueller Ort:
+window.settings.mgt2location.toolTip.notSet|Nicht eingestellt
 window.settings.mgt2location.chooseFolder.title|Wähle den "Mad Games Tycoon 2" haupt Ordner:
 window.settings.mgt2location.chooseFolder.folderSet|Ordner eingestellt.
 window.settings.mgt2location.chooseFolder.folderInvalid.title|Ordner nicht geändert
 window.settings.mgt2location.chooseFolder.folderInvalid|<html>Ordner ist ungültig:<br>Ordner enthält nicht Mad Games Tycoon 2.exe<br>Der automatische Ordner wird benutzt.
+window.settings.mgt2location.resetFolder|Benutzerdefinierten Ordner zurücksetzen und automatischen Ordner verwenden?
+window.settings.mgt2location.resetFolder.title|Zurücksetzen?
 window.settings.reset.label|Zurücksetzen
 window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
 window.settings.safetyFeatures.checkBoxText|Sicherheitsfunktionen deaktivieren

@@ -129,7 +129,7 @@ public class DataStreamHelper {
                 }
             }
         }else{
-            LOGGER.info("File does not exist.");
+            LOGGER.info("File \"" + content + "\"does not exist in folder \"" + folder + "\"");
         }
         return false;
     }

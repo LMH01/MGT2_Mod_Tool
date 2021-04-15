@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 public class ThreadHandler {
@@ -53,28 +54,17 @@ public class ThreadHandler {
 
     public static Thread threadPerformStartTasks(){
         Thread thread = new Thread(() -> {
-            WindowMain.lockMenuItems(true);
+            if(Settings.mgt2FolderIsCorrect){
+                WindowMain.lockMenuItems(true);
+            }
             UpdateChecker.checkForUpdates(false, false);
             deleteTempFolder();
             WindowMain.checkActionAvailability();
-            WindowMain.lockMenuItems(false);
-            threadCheckMGT2Folder().start();
-        });
-        thread.setName("ThreadPerformStartTasks");
-        return thread;
-    }
-
-    private static Thread threadCheckMGT2Folder(){
-        Thread thread = new Thread(() -> {
-            if(!DataStreamHelper.doesFolderContainFile(Settings.mgt2FilePath, "Mad Games Tycoon 2.exe")){
-                LOGGER.info("The MGT2 file path is invalid.");
-                Settings.setMgt2Folder(true);
-                Settings.madGamesTycoonFolderIsCorrect = false;
-            }else{
-                Settings.madGamesTycoonFolderIsCorrect = true;
+            if(Settings.mgt2FolderIsCorrect){
+                WindowMain.lockMenuItems(false);
             }
         });
-        thread.setName("ThreadCheckMGT2Folder");
+        thread.setName("PerformStartTasks");
         return thread;
     }
 
