@@ -426,7 +426,8 @@ window.settings.mgt2location.chooseFolder.folderInvalid.title|Ordner nicht geän
 window.settings.mgt2location.chooseFolder.folderInvalid|<html>Ordner ist ungültig:<br>Ordner enthält nicht Mad Games Tycoon 2.exe<br>Der automatische Ordner wird benutzt.
 window.settings.mgt2location.resetFolder|Benutzerdefinierten Ordner zurücksetzen und automatischen Ordner verwenden?
 window.settings.mgt2location.resetFolder.title|Zurücksetzen?
-window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>Die Suche nach dem automatischen Ordner war nicht erfolgreich.<br>Beim fortfahren wird auch der benutzerdefinierter Ordner zurückgesetzt.<br>Bist du dir sicher, dass du den Ordner zurücksetzen möchtest?
+window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>Die Suche nach dem MGT2 Ordner war nicht erfolgreich.<br>Beim fortfahren wird auch der benutzerdefinierter Ordner zurückgesetzt.<br>Bist du dir sicher, dass du den Ordner zurücksetzen möchtest?
+window.settings.mgt2location.automaticSelected.folderNotFound|<html>Die Suche nach dem MGT2 Ordner war nicht erfolgreich.<br>Der benutzerdefinierter Ordner wird beibehalten.
 window.settings.reset.label|Zurücksetzen
 window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
 window.settings.safetyFeatures.checkBoxText|Sicherheitsfunktionen deaktivieren

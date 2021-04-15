@@ -426,7 +426,8 @@ window.settings.mgt2location.chooseFolder.folderInvalid.title|Folder not set
 window.settings.mgt2location.chooseFolder.folderInvalid|<html>Folder is invalid:<br>Folder does not contain Mad Games Tycoon 2.exe<br>Using automatic folder.
 window.settings.mgt2location.resetFolder|Reset custom folder and use automatic folder?
 window.settings.mgt2location.resetFolder.title|Reset?
-window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>The search for the automatic folder was unsuccessful.<br>This will also reset your custom folder.<br>Are you sure that you would like to reset the mgt2 folder?
+window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>The search for the mgt2 folder was unsuccessful.<br>This will also reset your custom folder.<br>Are you sure that you would like to reset the mgt2 folder?
+window.settings.mgt2location.automaticSelected.folderNotFound|<html>The search for the mgt2 folder was unsuccessful.<br>The manual folder will still be used.
 window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
 window.settings.safetyFeatures.checkBoxText|Disable safety features

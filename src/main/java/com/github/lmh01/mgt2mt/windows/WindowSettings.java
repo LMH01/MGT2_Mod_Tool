@@ -167,8 +167,13 @@ public class WindowSettings extends JFrame {
                         automaticWasLastSelectedOption.set(true);
                         manualWasLastSelectedOption.set(false);
                     }else{
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
-                        comboBoxMGT2FolderOperation.setSelectedItem("Manual");
+                        if(customFolderSetAndValid){
+                            manualWasLastSelectedOption.set(true);
+                            automaticWasLastSelectedOption.set(false);
+                            comboBoxMGT2FolderOperation.setSelectedItem("Manual");
+                            Settings.validateMGT2Folder(Settings.mgt2FilePath, false, true);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.automaticSelected.folderNotFound"));
+                        }
                     }
                 }
             }
