@@ -4,7 +4,7 @@ import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.ThreadHandler;
-import com.github.lmh01.mgt2mt.windows.*;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -28,6 +28,7 @@ public class MadGamesTycoon2ModTool {
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         WindowMain.createFrame();
+        Settings.validateMGT2Folder();
         if(Settings.mgt2FolderIsCorrect){
             Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
         }else{

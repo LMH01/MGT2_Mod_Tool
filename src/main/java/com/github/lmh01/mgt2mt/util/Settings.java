@@ -49,6 +49,7 @@ public class Settings {
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
         Settings.updateBranch = updateBranch;
         Settings.mgt2FilePath = mgt2FilePath;
+        setLanguage(language);
         validateMGT2Folder(mgt2FilePath, false, true);
         ExportSettings.export();
         if(showSuccessDialog){
