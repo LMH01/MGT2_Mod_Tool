@@ -403,6 +403,7 @@ window.settings.button.save.label|Speichern
 window.settings.button.save.toolTip|klicke, um die aktuellen Einstellungen zu speichern
 window.settings.button.save.saveSettings|Die folgenden Einstellungen speichern?
 window.settings.button.save.saveSettings.title|Ungespeicherte Änderungen
+window.settings.button.save.nothingToSave|<html>Es gibt keine ungespeicherten Änderungen.
 window.settings.changesInSettings.debugLogging|Debug-Protokollierung aktivieren:
 window.settings.changesInSettings.disableSafetyFeatures|Sicherheitsfunktionen deaktivieren:
 window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon Ordner:

@@ -259,14 +259,18 @@ public class WindowSettings extends JFrame {
         btnSave.setToolTipText(I18n.INSTANCE.get("window.settings.button.save.toolTip"));
         btnSave.addActionListener(actionEvent -> {
             String unsavedChangesList = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.button.save.saveSettings") + "\n\n" + unsavedChangesList, I18n.INSTANCE.get("window.settings.button.save.saveSettings.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
-                WindowMain.checkActionAvailability();
-                Backup.createInitialBackup();
-                unsavedChanges = false;
-                customFolderSetAndValid = false;
-                FRAME.dispose();
-                createFrame();
+            if(unsavedChangesList.isEmpty()){
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.button.save.nothingToSave"));
+            }else{
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.button.save.saveSettings") + "\n\n" + unsavedChangesList, I18n.INSTANCE.get("window.settings.button.save.saveSettings.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel);
+                    WindowMain.checkActionAvailability();
+                    Backup.createInitialBackup();
+                    unsavedChanges = false;
+                    customFolderSetAndValid = false;
+                    FRAME.dispose();
+                    createFrame();
+                }
             }
         });
         contentPane.add(btnSave);

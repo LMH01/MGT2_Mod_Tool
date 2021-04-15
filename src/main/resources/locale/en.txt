@@ -403,6 +403,7 @@ window.settings.button.save.label|Save
 window.settings.button.save.toolTip|Click to save the current settings.
 window.settings.button.save.saveSettings|Save the following settings?
 window.settings.button.save.saveSettings.title|Unsaved changes
+window.settings.button.save.nothingToSave|There are no unsaved changes.
 window.settings.changesInSettings.debugLogging|Enable debug logging:
 window.settings.changesInSettings.disableSafetyFeatures|Disable safety features:
 window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon folder:
