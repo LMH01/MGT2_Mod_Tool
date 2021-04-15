@@ -120,6 +120,8 @@ dialog.sharingManager.importAll.error.general|<html>A critical error occurred wh
 dialog.sharingManager.importAll.noModsAvailable|None
 dialog.sharingManager.importAll.manyImportFilesFound|<html>So many files and directories to search were found<br>that it could take some time to search everything for mods.<br><br>If you click "Yes", all further directories will be searched for mods and this message is not displayed again.<br>If you click "No", the import process will be canceled.<br><br>Are you sure that you have selected the correct folder and do you want to continue the import process?
 dialog.sharingManager.importAll.manyImportFilesFound.title|Continue import?
+dialog.sharingManager.importThings.error.firstPart|Unable to import:
+dialog.sharingManager.importThings.error.secondPart|The file is corrupted or not compatible with the current Mod Manager Version.
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Choose the folder(s) where the files are located that should be imported
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Choose the folder(s) where the
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|file is located.

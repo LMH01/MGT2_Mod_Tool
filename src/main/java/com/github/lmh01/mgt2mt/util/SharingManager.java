@@ -76,8 +76,9 @@ public class SharingManager {
             }
             return true;
         }catch(IOException e) {
-            e.printStackTrace();//TODO Übersetzen und TextArea output schreiben
-            JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.sharingManager.importThings.error.firstPart") + " " + importName + ":\n" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.secondPart"));
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importThings.error.firstPart") + " " + importName + ":\n" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
