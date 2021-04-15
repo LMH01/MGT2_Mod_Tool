@@ -257,6 +257,7 @@ settings.settingsSaved|Settings saved.
 settings.mgt2FolderSetAutomatically|<html>Mad Games Tycoon 2 Folder has been set automatically.<br><br>Location:<br>
 settings.mgt2FolderSetAutomatically.windowTitle|Folder detected automatically
 settings.mgt2FolderNotFound|<html>The Mad Games Tycoon folder could not be detected.<br><br>Please go into the settings, select "Manual" as file folder and choose the path to the "Mad Games Tycoon 2.exe" file."
+settings.notFound|Not found
 
 window.main.tile|MGT2 Mod Tool
 window.main.file|File
@@ -425,6 +426,7 @@ window.settings.mgt2location.chooseFolder.folderInvalid.title|Folder not set
 window.settings.mgt2location.chooseFolder.folderInvalid|<html>Folder is invalid:<br>Folder does not contain Mad Games Tycoon 2.exe<br>Using automatic folder.
 window.settings.mgt2location.resetFolder|Reset custom folder and use automatic folder?
 window.settings.mgt2location.resetFolder.title|Reset?
+window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>The search for the automatic folder was unsuccessful.<br>This will also reset your custom folder.<br>Are you sure that you would like to reset the mgt2 folder?
 window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
 window.settings.safetyFeatures.checkBoxText|Disable safety features

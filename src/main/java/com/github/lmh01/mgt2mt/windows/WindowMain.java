@@ -516,6 +516,7 @@ public class WindowMain {
         M_4_BACKUP.setEnabled(folderAvailable);
         M_5_UTIL.setEnabled(folderAvailable);
         if(folderAvailable){
+            M_12_UPDATE_CHECK.setToolTipText("");
             M_13_UNINSTALL.setToolTipText("");
             M_2_MODS.setToolTipText("");
             M_3_SHARE.setToolTipText("");

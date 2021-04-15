@@ -49,6 +49,7 @@ public class Settings {
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
         Settings.updateBranch = updateBranch;
         Settings.mgt2FilePath = mgt2FilePath;
+        validateMGT2Folder(mgt2FilePath, false, true);
         ExportSettings.export();
         if(showSuccessDialog){
             JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.settingsSaved"));
@@ -79,43 +80,6 @@ public class Settings {
     }
 
     /**
-     * Sets the folder where Mad Games Tycoon 2 is located.
-     * For that all steam libraries are searched if they contain MadGamesTycoon2.exe
-     * If the folder has been found the folder is set.
-     * If the folder has not been found a error message is shown.
-     * @param showFolderDetectedMessage True when a message should be displayed if the folder has been found.
-     */
-    /*public static void setMgt2Folder(boolean showFolderDetectedMessage){//TODO DELETE
-        try {
-            ArrayList<String> arrayListSteamLibraries = AnalyzeSteamLibraries.getSteamLibraries();
-            mgt2FolderIsCorrect = false;
-            searchedForAutomaticMGT2FilePath = true;
-            boolean currentMgt2FolderIsCorrect = false;
-            for (String arrayListSteamLibrary : arrayListSteamLibraries) {
-                LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                if (validateMGT2Folder(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", false) && !currentMgt2FolderIsCorrect) {
-                    LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                    steamLibraryFolder = arrayListSteamLibrary;
-                    automaticMGT2FilePath = arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
-                    mgt2FilePath = arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
-                    currentMgt2FolderIsCorrect = true;
-                    mgt2FolderIsCorrect = true;
-                    enableCustomFolder = false;
-                    if (showFolderDetectedMessage) {
-                        JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically") + mgt2FilePath, I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically.windowTitle"), JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    ExportSettings.export();
-                }
-            }
-            if(!mgt2FolderIsCorrect){
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /**
      * Tris to set the folder where mgt2 is located automatically.
      * If the folder is found all corresponding variables are updated and the settings are exported.
      * If the folder is not found the menus are locked and a message is shown.
@@ -134,6 +98,7 @@ public class Settings {
             }
             ExportSettings.export();
         }else{
+            mgt2FilePath = I18n.INSTANCE.get("settings.notFound");
             mgt2FolderIsCorrect = false;
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
         }
@@ -147,10 +112,9 @@ public class Settings {
     public static String getMGT2FilePath(){
         try {
             ArrayList<String> arrayListSteamLibraries = AnalyzeSteamLibraries.getSteamLibraries();
-            boolean currentMgt2FolderIsCorrect = false;
             for (String arrayListSteamLibrary : arrayListSteamLibraries) {
                 LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                if (validateMGT2Folder(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", false) && !currentMgt2FolderIsCorrect) {
+                if (validateMGT2Folder(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", false, true)) {
                     LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
                     return arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
                 }
@@ -168,7 +132,7 @@ public class Settings {
      * If the folder is invalid a message is shown to the user and the steam libraries are searched for mgt2.
      */
     public static void validateMGT2Folder(){
-        if(!validateMGT2Folder(mgt2FilePath, false)){
+        if(!validateMGT2Folder(mgt2FilePath, false, true)){
             setMGT2Folder(false);
         }
     }
@@ -179,7 +143,7 @@ public class Settings {
      * @param folderPath The folder that should be checked for MGT2.
      * @return Returns true when the folder is valid, returns false when the folder is invalid.
      */
-    public static boolean validateMGT2Folder(String folderPath, boolean showMessage){
+    public static boolean validateMGT2Folder(String folderPath, boolean showMessage, boolean setFolderAvailability){
         boolean folderValid;
         LOGGER.info("Checking MGT2 folder validity: " + folderPath);
         if(DataStreamHelper.doesFolderContainFile(folderPath, "Mad Games Tycoon 2.exe")){
@@ -192,9 +156,12 @@ public class Settings {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
             }
             mgt2FolderIsCorrect = false;
+            enableCustomFolder = false;
             folderValid =  false;
         }
-        WindowMain.setMGT2FolderAvailability(folderValid);
+        if(setFolderAvailability){
+            WindowMain.setMGT2FolderAvailability(folderValid);
+        }
         return folderValid;
     }
 }

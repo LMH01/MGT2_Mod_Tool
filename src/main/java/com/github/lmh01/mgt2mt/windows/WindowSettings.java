@@ -132,7 +132,7 @@ public class WindowSettings extends JFrame {
                             int return_value = fileChooser.showOpenDialog(null);
                             if(return_value == JFileChooser.APPROVE_OPTION){
                                 String mgt2Folder = fileChooser.getSelectedFile().getPath();
-                                if(Settings.validateMGT2Folder(mgt2Folder, false)){
+                                if(Settings.validateMGT2Folder(mgt2Folder, false, false)){
                                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderSet"));
                                     outputFolder = mgt2Folder;
                                     customFolderSetAndValid = true;
@@ -179,15 +179,29 @@ public class WindowSettings extends JFrame {
         buttonResetCustomFolder.setBounds(230, 150, 89, 23);
         buttonResetCustomFolder.setToolTipText(I18n.INSTANCE.get("window.settings.reset.button.toolTip"));
         buttonResetCustomFolder.addActionListener(actionEvent -> {
+            LOGGER.info("input folder: " + inputFolder);
+            LOGGER.info("output folder: " + outputFolder);
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                Settings.setMGT2Folder(true);
-                doNotPerformComboBoxActionListener.set(true);
-                automaticWasLastSelectedOption.set(true);
-                manualWasLastSelectedOption.set(false);
-                customFolderSetAndValid = false;
-                comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
-                FRAME.dispose();
-                createFrame();
+                boolean performTasks = false;
+                if(Settings.getMGT2FilePath().isEmpty() && customFolderSetAndValid){
+                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.noAutomaticFolderFound"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        performTasks = true;
+                    }
+                }else{
+                    performTasks = true;
+                }
+                if(performTasks){
+                    Settings.setMGT2Folder(true);
+                    outputFolder = Settings.mgt2FilePath;
+                    Settings.enableCustomFolder = false;
+                    doNotPerformComboBoxActionListener.set(true);
+                    automaticWasLastSelectedOption.set(true);
+                    manualWasLastSelectedOption.set(false);
+                    customFolderSetAndValid = false;
+                    comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+                    FRAME.dispose();
+                    createFrame();
+                }
             }
         });
         contentPane.add(buttonResetCustomFolder);

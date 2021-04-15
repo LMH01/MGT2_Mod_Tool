@@ -257,6 +257,7 @@ settings.settingsSaved|Einstellungen gespeichert!
 settings.mgt2FolderSetAutomatically|<html>Mad Games Tycoon 2 Ordner wurde automatisch gesetzt.<br><br>Ort:<br>
 settings.mgt2FolderSetAutomatically.windowTitle|Ordner automatisch gefunden
 settings.mgt2FolderNotFound|<html>Der Mad Games Tycoon Ordner wurde nicht gefunden.<br><br>Bitte geh in die Einstellungen und setze ihn manuell."
+settings.notFound|Nicht gefunden
 
 window.main.tile|MGT2 Mod Tool
 window.main.file|Datei
@@ -425,6 +426,7 @@ window.settings.mgt2location.chooseFolder.folderInvalid.title|Ordner nicht geän
 window.settings.mgt2location.chooseFolder.folderInvalid|<html>Ordner ist ungültig:<br>Ordner enthält nicht Mad Games Tycoon 2.exe<br>Der automatische Ordner wird benutzt.
 window.settings.mgt2location.resetFolder|Benutzerdefinierten Ordner zurücksetzen und automatischen Ordner verwenden?
 window.settings.mgt2location.resetFolder.title|Zurücksetzen?
+window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>Die Suche nach dem automatischen Ordner war nicht erfolgreich.<br>Beim fortfahren wird auch der benutzerdefinierter Ordner zurückgesetzt.<br>Bist du dir sicher, dass du den Ordner zurücksetzen möchtest?
 window.settings.reset.label|Zurücksetzen
 window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
 window.settings.safetyFeatures.checkBoxText|Sicherheitsfunktionen deaktivieren
