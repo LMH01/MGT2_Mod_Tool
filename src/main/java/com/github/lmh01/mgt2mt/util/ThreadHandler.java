@@ -130,4 +130,10 @@ public class ThreadHandler {
     public static int getThreadsRunning(){
         return threadsRunning;
     }
+
+    public static Thread getShutdownHookThread(){
+        Thread thread = new Thread(runnableDoOnShutdown);
+        thread.setName("Shutdown");
+        return thread;
+    }
 }

@@ -24,7 +24,7 @@ public class MadGamesTycoon2ModTool {
             JOptionPane.setDefaultLocale(locale);
         }
         LogFile.startLogging();
-        Runtime.getRuntime().addShutdownHook(new Thread(ThreadHandler.runnableDoOnShutdown));
+        Runtime.getRuntime().addShutdownHook(ThreadHandler.getShutdownHookThread());
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         WindowMain.createFrame();
