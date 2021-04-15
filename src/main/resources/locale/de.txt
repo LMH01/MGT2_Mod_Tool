@@ -14,8 +14,10 @@ commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
 commonText.removed|entfernt
+commonText.removed.upperCase|Entfernt
 commonText.remove|Entfernen
 commonText.removing|Entferne
+commonText.added.upperCase|Hinzugefügt
 commonText.successfully|erfolgreich
 commonText.unknownError|Unbekannter Fehler
 
@@ -181,6 +183,7 @@ progressBar.unzip.preparing|Vorbereitung zum Entpacken des Ordners
 progressBar.unzip.unzipping|Entpacke Dateien
 progressBar.timeElapsed|Gesammt Zeit vergangen
 progressBar.replacePublisher.removingOriginalPublishers|Entferne originale Publisher
+progressBar.npcGamesList.title|Ändern der Liste der NPC-Spiele
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -438,5 +441,25 @@ window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
 window.settings.updateChannel.label|Update Kanal:
 window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
 window.settings.windowTitle|Einstellungen
+
+window.npcGamesList.title|Ändere die Liste der NPC-Spiele
+window.npcGamesList.label|<html>Wähle aus, welches Genre zur Liste der NPC-Spiele hinzugefügt / daraus entfernt werden soll.<br>Wenn das Genre in der Liste der NPC-Spiele aufgeführt ist, können NPC-Unternehmen Spiele mit dem ausgewählten Genre erstellen.
+window.npcGamesList.label.chance|Wahrscheinlichkeit:
+window.npcGamesList.label.operation|Operation:
+window.npcGamesList.label.genre|Wähle aus, welche Genres benutzt werden sollen:
+window.npcGamesList.spinner.chance.toolTip|<html>Bestimmt die Wahrscheinlichkeit, mit der die Genre-ID hinzugefügt werden soll.<br>100 = 100% Chance.
+window.npcGamesList.comboBox.operation.toolTip|<html>Hinzufügen = Fügt die Genre-ID zur Liste hinzu<br>Entfernen = Entfernt die Genre-ID aus der Liste
+window.npcGamesList.comboBox.operation.value_1|Hinzufügen
+window.npcGamesList.comboBox.operation.value_2|Entfernen
+window.npcGamesList.added|hinzugefügt
+window.npcGamesList.removed|entfernt
+window.npcGamesList.to|zu
+window.npcGamesList.from|von
+window.npcGamesList.confirmDialog.1|Die folgenden Genre(s) werden
+window.npcGamesList.confirmDialog.2|der NPC-Spieleliste.
+window.npcGamesList.confirmDialog.title|Liste der NPC-Spiele ändern?
+window.npcGamesList.errorOccurred|<html>Beim Ändern der Liste der NPC-Spiele ist ein Fehler aufgetreten.<br>Einige Änderungen wurden möglicherweise nicht abgeschlossen.<br>Weitere Informationen sind in der Konsole zu finden.
+window.npcGamesList.success|Die NPC-Spieleliste wurde erfolgreich geändert.
+window.npcGamesList.noGenreSelected|<html>Fortsetzung nicht möglich:<br>Bitte wähle mindestens ein Genre aus.
 
 window.showActiveMods.message.firstPart|Diese Mods sind derzeit aktiv:

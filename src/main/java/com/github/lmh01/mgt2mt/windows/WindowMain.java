@@ -131,7 +131,7 @@ public class WindowMain {
         m231AddTheme.addActionListener(actionEvent -> ThreadHandler.startThread("runnableAddNewTheme"));
         M_232_REMOVE_THEME.addActionListener(actionEvent ->  ThreadHandler.startThread("runnableRemoveTheme"));
         M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
-        M_28_NPC_GAMES_LIST.addActionListener(actionEvent -> npcGameList());
+        M_28_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startThread("runnableNPCGamesList"));
         m241AddPublisher.addActionListener(actionEvent -> ThreadHandler.startThread("runnableAddNewPublisher"));
         M_242_REMOVE_PUBLISHER.addActionListener(actionEvent -> ThreadHandler.startThread("runnableRemovePublisher"));
         m261AddGameplayFeature .addActionListener(actionEvent -> ThreadHandler.startThread("runnableAddNewGameplayFeature"));
@@ -455,7 +455,6 @@ public class WindowMain {
                     M_25_ENGINE_FEATURES.setEnabled(true);
                     M_26_GAMEPLAY_FEATURES.setEnabled(true);
                     M_27_LICENCES.setEnabled(true);
-                    M_28_NPC_GAMES_LIST.setEnabled(true);
                     M_29_ADD_COMPANY_ICON.setEnabled(true);
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
                     M_21_IMPORT.setToolTipText("");
@@ -465,7 +464,6 @@ public class WindowMain {
                     M_25_ENGINE_FEATURES.setToolTipText("");
                     M_26_GAMEPLAY_FEATURES.setToolTipText("");
                     M_27_LICENCES.setToolTipText("");
-                    M_28_NPC_GAMES_LIST.setToolTipText("");
                     M_29_ADD_COMPANY_ICON.setToolTipText("");
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
@@ -529,20 +527,6 @@ public class WindowMain {
             M_3_SHARE.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
             M_4_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
             M_5_UTIL.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
-        }
-    }
-
-    private static void npcGameList(){//TODO Überarbeiten, dass liste an genres wird angezeigt und das ausgewählte genre wird dann zur liste hinzugefügt
-        try {
-            AnalyzeExistingGenres.analyzeGenreFile();
-            if(AnalyzeExistingGenres.genreList.size()-1 > 17 || Settings.disableSafetyFeatures){
-                WindowNpcGameList.createFrame();
-            }else{
-                JOptionPane.showMessageDialog(new Frame(), "There is no new genre that has been added.\nAdd a new genre first fia 'Add new genre'.", "Unable to continue:", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException e) {
-            Utils.showErrorMessage(1, e);
-            e.printStackTrace();
         }
     }
     private static void restoreInitialBackup(){

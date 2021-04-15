@@ -40,6 +40,7 @@ public class ThreadHandler {
     private static Runnable runnableAddNewEngineFeature = () -> EngineFeatureHelper.addEngineFeature();
     private static Runnable runnableAddNewGameplayFeature = () -> GameplayFeatureHelper.addGameplayFeature();
     private static Runnable runnableAddCompanyIcon = () -> NewModsHandler.addCompanyIcon();
+    private static Runnable runnableNPCGamesList = () -> NPCGameListHandler.modifyNPCGameList();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
@@ -71,8 +72,9 @@ public class ThreadHandler {
     /**
      * Starts the given thread.
      * Also sets the scroll pane to be locked.
+     * When the thread starts, a control thread is started.
      */
-    public static void startThread(String threadName){
+    public static void startThread(String threadName){//TODO Parameter in Runnbale abändern und die ganzen cases entfernen
         Thread thread;
         switch(threadName){
             case "runnableExportEngineFeatures": thread  = new Thread(ThreadHandler.runnableExportEngineFeatures);break;
@@ -104,6 +106,7 @@ public class ThreadHandler {
             case "runnableAddNewGameplayFeature": thread = new Thread(runnableAddNewGameplayFeature);break;
             case "runnableAddCompanyIcon": thread = new Thread(runnableAddCompanyIcon);break;
             case "runnableDeleteTempFolder": thread = new Thread(runnableDeleteTempFolder);break;
+            case "runnableNPCGamesList": thread = new Thread(runnableNPCGamesList);break;
             default:
                 throw new IllegalStateException("This thread name is not accepted: " + threadName);
         }
