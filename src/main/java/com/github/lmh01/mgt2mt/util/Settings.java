@@ -25,12 +25,11 @@ public class Settings {
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
     public static String automaticMGT2FilePath = ""; //This string is set when setMGT2Folder is called
-    public static boolean searchedForAutomaticMGT2FilePath = false; //True when setMGT2Folder is called
     public static String language = "English";
     public static String updateBranch = "Release";
     public static void resetSettings(){
         setMGT2Folder(false);
-        setSettings(false, false, false, false, "", true, true, true, "English", "Release");
+        setSettings(false, false, false, false, mgt2FilePath, true, true, true, "English", "Release");
         LOGGER.info("Settings have been reset.");
     }
 
@@ -38,10 +37,10 @@ public class Settings {
      * Sets the settings. This is the only function that can change the settings. The changed values will be written to the settings.txt file.
      * @param enableDebugLogging True when debug logging is on.
      * @param disableSafetyFeatures True when the safety features are disabled.
-     * @param customFolderPath The custom folder path
+     * @param mgt2FilePath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String customFolderPath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch){
+    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch){
         Settings.enableDebugLogging = enableDebugLogging;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
@@ -49,8 +48,7 @@ public class Settings {
         Settings.enableGenreNameTranslationInfo = enableGenreNameTranslationInfo;
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
         Settings.updateBranch = updateBranch;
-        setLanguage(language);
-        Settings.mgt2FilePath = customFolderPath;
+        Settings.mgt2FilePath = mgt2FilePath;
         ExportSettings.export();
         if(showSuccessDialog){
             JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.settingsSaved"));
@@ -120,7 +118,7 @@ public class Settings {
     /**
      * Tris to set the folder where mgt2 is located automatically.
      * If the folder is found all corresponding variables are updated and the settings are exported.
-     * If the folder is not found nothing is done.
+     * If the folder is not found the menus are locked and a message is shown.
      * @param showFolderDetectedMessage True when a message should be displayed if the folder has been found.
      */
     public static void setMGT2Folder(boolean showFolderDetectedMessage){
@@ -136,6 +134,7 @@ public class Settings {
             }
             ExportSettings.export();
         }else{
+            mgt2FolderIsCorrect = false;
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
         }
     }
@@ -166,10 +165,12 @@ public class Settings {
 
     /**
      * Checks if the mgt2 folder is valid
-     * If the folder is invalid a message is shown to the user
+     * If the folder is invalid a message is shown to the user and the steam libraries are searched for mgt2.
      */
     public static void validateMGT2Folder(){
-        validateMGT2Folder(mgt2FilePath, true);
+        if(!validateMGT2Folder(mgt2FilePath, false)){
+            setMGT2Folder(false);
+        }
     }
 
     /**

@@ -118,6 +118,7 @@ public class WindowSettings extends JFrame {
             LOGGER.info("doNotPerformComboBoxActionListener: " + doNotPerformComboBoxActionListener.get());
             LOGGER.info("Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), \"Manual\")" + Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual"));
             LOGGER.info("manualWasLastSelectedOption.get(): " + manualWasLastSelectedOption.get());
+            LOGGER.info("customFolderSetAndValid: " + customFolderSetAndValid);
             if(!doNotPerformComboBoxActionListener.get()){
                 if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && automaticWasLastSelectedOption.get()){
                     if(!customFolderSetAndValid){
@@ -224,6 +225,8 @@ public class WindowSettings extends JFrame {
                 checkBoxDisableSafety.setSelected(false);
                 customFolderSetAndValid = false;
                 comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
+                automaticWasLastSelectedOption.set(true);
+                manualWasLastSelectedOption.set(false);
                 unsavedChanges = false;
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.button.resetSettings.restored"));
                 FRAME.dispose();
