@@ -378,7 +378,7 @@ window.importFromURL.textFieldURL.toolTip|Enter the URL to the .zip archive
 window.importFromURL.dialog.title|Import from URL
 window.importFromURL.error.body|Unable to import from URL!
 
-window.uninstall.labelDescription|<html>Select what should be removed<br>After uninstalling the program is exited
+window.uninstall.labelDescription|<html>Select what should be removed<br>If configuration files are removed,<br>the program will be closed after all files have been uninstalled.
 window.uninstall.checkBoxDeleteBackups|Delete Backups
 window.uninstall.checkBoxDeleteBackups.toolTip|Check to delete all backups upon uninstalling
 window.uninstall.checkBoxRevertAllMods|Revert all mods

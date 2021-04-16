@@ -55,6 +55,7 @@ public class Uninstaller {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling"));
                         ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
                         StringBuilder uninstallFailedExplanation = new StringBuilder();
+                        boolean exitProgram = false;
                         if(checkboxRevertAllMods.isSelected()){
                             uninstallFailed = uninstallAllMods(uninstallFailedExplanation);
                         }
@@ -63,6 +64,7 @@ public class Uninstaller {
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deleteModManagerFiles"));
                             LogFile.stopLogging();
                             DataStreamHelper.deleteDirectory(modManagerPath);
+                            exitProgram = true;
                         }else{
                             if(checkboxDeleteBackups.isSelected()){
                                 File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
@@ -75,6 +77,7 @@ public class Uninstaller {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingSettings"));
                                 configFile.deleteOnExit();
                                 LOGGER.info("Settings file has been deleted.");
+                                exitProgram = true;
                             }
                             if(checkboxDeleteExports.isSelected()){
                                 File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
@@ -88,7 +91,9 @@ public class Uninstaller {
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallSuccessful"), I18n.INSTANCE.get("window.uninstall.uninstallSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                         }
-                        System.exit(0);
+                        if(exitProgram){
+                            System.exit(0);
+                        }
                     }
                 }
             }

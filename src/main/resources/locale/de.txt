@@ -378,7 +378,7 @@ window.importFromURL.textFieldURL.toolTip|Gib die URL zum ZIP-Archiv ein
 window.importFromURL.dialog.title|Von URL importieren
 window.importFromURL.error.body|Import von URL nicht möglich!
 
-window.uninstall.labelDescription|<html>Wähle aus, was entfernt werden soll.<br>Nach der Deinstallation wird das Programm beendet.
+window.uninstall.labelDescription|<html>Wähle aus, was entfernt werden soll.<br>Werden Konfigurationsdateien entfernt,<br>wird das Programm nach der Deinstallation beendet.
 window.uninstall.checkBoxDeleteBackups|Backups löschen
 window.uninstall.checkBoxDeleteBackups.toolTip|Aktiviere diese Option, um alle Backups bei der Deinstallation zu löschen
 window.uninstall.checkBoxRevertAllMods|Alle Mods entfernen
