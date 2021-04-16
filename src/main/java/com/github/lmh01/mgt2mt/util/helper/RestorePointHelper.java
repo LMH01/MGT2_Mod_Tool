@@ -21,6 +21,7 @@ public class RestorePointHelper {
      * When a restore point has already been set the old files will be moved in a storage folder.
      */
     public static void setRestorePoint(){
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.createRestorePoint"), I18n.INSTANCE.get("dialog.restorePoint.createRestorePoint.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             if(new File(Utils.getMGT2ModToolModRestorePointFolder()).exists()){
                 LOGGER.info("Restore Point does already exist");
@@ -39,9 +40,12 @@ public class RestorePointHelper {
                         LOGGER.info("Old restore point has been deleted from folder: " + Utils.getMGT2ModToolModRestorePointFolder());
                         SharingManager.exportAll(true);
                     } catch (IOException e) {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.errorWhileMoving"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.restorePoint.moveRestorePointFailed"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
                     }
+                }else{
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restorePointNotCreatedAlreadyExists"));
                 }
             }else{
                 SharingManager.exportAll(true);
@@ -55,13 +59,7 @@ public class RestorePointHelper {
      */
     public static void restoreToRestorePoint(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog"), I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-            StringBuilder failedUninstalls = new StringBuilder();
-            boolean modRemovalFailed = Uninstaller.uninstallAllMods(failedUninstalls);
-            if(modRemovalFailed){
-                LOGGER.info("Something went wrong while uninstalling mods, however this should not impact the uninstall process: " + failedUninstalls.toString());
-            }else{
-                LOGGER.info("All mods have been removed");
-            }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreToRestorePoint"));
             SharingManager.importAll(true, Utils.getMGT2ModToolModRestorePointFolder());
             ChangeLog.addLogEntry(38);
         }

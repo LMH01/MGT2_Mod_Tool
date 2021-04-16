@@ -491,6 +491,16 @@ public class SharingManager {
                         }
                         LOGGER.info("Showing dialog where the user can select what should be imported");
                         if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            if(importFromRestorePoint){
+                                StringBuilder failedUninstalls = new StringBuilder();
+                                boolean modRemovalFailed = Uninstaller.uninstallAllMods(failedUninstalls);
+                                if(modRemovalFailed){
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.notAllModsRemoved") + " " + failedUninstalls.toString());
+                                    LOGGER.info("Something went wrong while uninstalling mods, however this should not necessarily impact the uninstall process: " + failedUninstalls.toString());
+                                }else{
+                                    LOGGER.info("All mods have been removed");
+                                }
+                            }
                             boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                             boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
                             boolean errorOccurred = false;
@@ -523,11 +533,19 @@ public class SharingManager {
                                 TextAreaHelper.appendText(importErredMessage.replace("<html>", "").replace("<br>", "\n"));
                                 JOptionPane.showMessageDialog(null, importErredMessage, importErredMessageTitle, JOptionPane.ERROR_MESSAGE);
                             }else{
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
+                                if(importFromRestorePoint){
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"));
+                                }else{
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
+                                }
                                 JOptionPane.showMessageDialog(null, importSuccessfulMessage, importSuccessfulMessageTitle, JOptionPane.INFORMATION_MESSAGE);
                             }
                         }else{
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                            if(importFromRestorePoint){
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
+                            }else{
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                            }
                         }
                     }else{
                         String noImportAvailableMessage;
@@ -549,13 +567,25 @@ public class SharingManager {
                         }
                     }
                 }else{
+                    if(importFromRestorePoint){
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
+                    }else{
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                    }
+                }
+            }else{
+                if(importFromRestorePoint){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
+                }else{
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                 }
+            }
+        }else{
+            if(importFromRestorePoint){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
             }else{
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
             }
-        }else{
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
         }
         //Delete the temp .zip extractions
         ProgressBarHelper.resetProgressBar();
@@ -682,6 +712,7 @@ public class SharingManager {
                 failedExports.append(getExportFailed((string) -> SharingHandler.exportLicence(string, exportAsRestorePoint), customLicences, I18n.INSTANCE.get("window.main.mods.licences")));
                 if(failedExports.toString().isEmpty()){
                     if(exportAsRestorePoint){
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                     }else{
                         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){

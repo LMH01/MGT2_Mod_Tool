@@ -187,6 +187,7 @@ progressBar.unzip.unzipping|Entpacke Dateien
 progressBar.timeElapsed|Gesammt Zeit vergangen
 progressBar.replacePublisher.removingOriginalPublishers|Entferne originale Publisher
 progressBar.npcGamesList.title|Ändern der Liste der NPC-Spiele
+progressBar.copyDirectory.title|Kopiere Ordner
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -253,6 +254,13 @@ textArea.added|Hinzugefügt:
 textArea.removed|Entfernt:
 textArea.addCompanyIcon.success|Company Logo hinzugefügt.
 textArea.addCompanyIcon.error|Company Logo wurde nicht hinzugefügt:
+textArea.restorePoint.startingRestorePoint|Erstelle restore point
+textArea.restorePoint.restorePointNotCreatedAlreadyExists|Der Wiederherstellungspunkt wurde nicht erstellt, da bereits ein Wiederherstellungspunkt vorhanden ist
+textArea.restorePoint.errorWhileMoving|Beim Verschieben der alten Wiederherstellungspunktdateien in den Speicherordner ist ein Problem aufgetreten. Der Wiederherstellungspunkt wurde nicht erstellt!
+textArea.restorePoint.restoreToRestorePoint|Wiederherstellen zum Wiederherstellungspunkt
+textArea.restorePoint.notAllModsRemoved|Bei der Deinstallation der Mods ist ein Fehler aufgetreten. Dies sollte sich jedoch nicht unbedingt auf den Deinstallationsprozess auswirken:
+textArea.restorePoint.restoreSuccessful|Wiederherstellung abgeschlossen: Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt.
+textArea.restorePoint.canceled|Wiederherstellungsprozess wurde abgebrochen
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

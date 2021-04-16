@@ -40,6 +40,8 @@ public class ThreadHandler {
     public static Runnable runnableAddNewGameplayFeature = () -> GameplayFeatureHelper.addGameplayFeature();
     public static Runnable runnableAddCompanyIcon = () -> NewModsHandler.addCompanyIcon();
     public static Runnable runnableNPCGamesList = () -> NPCGameListHandler.modifyNPCGameList();
+    public static Runnable runnableCreateRestorePoint = () -> RestorePointHelper.setRestorePoint();
+    public static Runnable runnableRestoreToRestorePoint = () -> RestorePointHelper.restoreToRestorePoint();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();

@@ -331,8 +331,11 @@ public class DataStreamHelper {
      */
     public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
             throws IOException {
+        ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.copyDirectory.title"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.copyDirectory.title") + ": " + sourceDirectoryLocation + " -> " + destinationDirectoryLocation);
         Files.walk(Paths.get(sourceDirectoryLocation))
                 .forEach(source -> {
+                    ProgressBarHelper.increaseMaxValue(1);
                     Path destination = Paths.get(destinationDirectoryLocation, source.toString()
                             .substring(sourceDirectoryLocation.length()));
                     try {
@@ -340,7 +343,9 @@ public class DataStreamHelper {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    ProgressBarHelper.increment();
                 });
+        ProgressBarHelper.increment();
     }
 
     /**

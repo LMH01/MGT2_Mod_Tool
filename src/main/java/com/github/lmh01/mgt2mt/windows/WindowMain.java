@@ -71,7 +71,7 @@ public class WindowMain {
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         M_12_UPDATE_CHECK.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         M_13_UNINSTALL.setToolTipText(I18n.INSTANCE.get("window.main.file.uninstall.toolTip"));
-        M_13_UNINSTALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableUninstall, "runnableUninstall"));
+        M_13_UNINSTALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableUninstall, "Uninstall"));
         JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
         mb.add(M_1_FILE);
@@ -208,9 +208,9 @@ public class WindowMain {
         M_42_RESTORE_BACKUP.add(m421RestoreInitialBackup);
         M_42_RESTORE_BACKUP.add(m423RestoreSaveGameBackup);
         M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
-        M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.setRestorePoint());
+        M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableCreateRestorePoint, "CreateRestorePoint"));
         M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip"));
-        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.restoreToRestorePoint());
+        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreToRestorePoint, "RestoreToRestorePoint"));
         m43RestorePoint.add(M_431_CREATE_MOD_RESTORE_POINT);
         m43RestorePoint.add(M_432_RESTORE_MOD_RESTORE_POINT);
         M_44_DELETE_ALL_BACKUPS.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));

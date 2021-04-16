@@ -186,6 +186,7 @@ progressBar.unzip.unzipping|Unzipping files
 progressBar.timeElapsed|Total time elapsed
 progressBar.replacePublisher.removingOriginalPublishers|Removing original publishers
 progressBar.npcGamesList.title|Modifying npc games list
+progressBar.copyDirectory.title|Copying directory
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -252,6 +253,13 @@ textArea.added|Added:
 textArea.removed|Removed:
 textArea.addCompanyIcon.success|Company logo added.
 textArea.addCompanyIcon.error|Company Logo was not added:
+textArea.restorePoint.startingRestorePoint|Creating restore point
+textArea.restorePoint.restorePointNotCreatedAlreadyExists|Restore point was not created because a restore point already exists
+textArea.restorePoint.errorWhileMoving|There was a problem moving the old restore point files to the storage folder. The restore point has not been created!
+textArea.restorePoint.restoreToRestorePoint|Restoring to restore point
+textArea.restorePoint.notAllModsRemoved|Something went wrong while uninstalling mods, however this should not necessarily impact the uninstall process:
+textArea.restorePoint.restoreSuccessful|Restoration complete: All mods have been restored to the restore point.
+textArea.restorePoint.canceled|The restoring process has been canceled
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?
