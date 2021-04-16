@@ -414,6 +414,7 @@ window.settings.changesInSettings.disableSafetyFeatures|Disable safety features:
 window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon folder:
 window.settings.changesInSettings.language|Language:
 window.settings.changesInSettings.updateChannel|Update channel:
+window.settings.changesInSettings.saveLogs|Save logs:
 window.settings.changesNotSaved.part1|You have made changes that have not been saved:
 window.settings.changesNotSaved.part2|Do you want to save them?
 window.settings.changesNotSaved.title|Unsaved changes
@@ -443,6 +444,8 @@ window.settings.safetyFeatures.warning.title|Disable safety features?
 window.settings.updateChannel.label|Update channel:
 window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
 window.settings.windowTitle|Settings
+window.settings.checkBox.saveLogs|Save logs
+window.settings.checkBox.saveLogs.toolTip|<html>Check this box to save all logs.<br>If disabled only the last log is saved.
 
 window.npcGamesList.title|Modify NPC games list
 window.npcGamesList.label|<html>Select what genre should be added/removed from the npc games list.<br>When your genre is listed on the npc games list, npc companies will be able to create games with the selected genre.

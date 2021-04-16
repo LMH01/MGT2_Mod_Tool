@@ -415,6 +415,7 @@ window.settings.changesInSettings.disableSafetyFeatures|Sicherheitsfunktionen de
 window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon Ordner:
 window.settings.changesInSettings.language|Sprache:
 window.settings.changesInSettings.updateChannel|Update Kanal:
+window.settings.changesInSettings.saveLogs|Logs speichern:
 window.settings.changesNotSaved.part1|Es wurden Änderungen gemacht, die noch nicht gespeichert wurden:
 window.settings.changesNotSaved.part2|Möchtest du sie speichern?
 window.settings.changesNotSaved.title|Ungespeicherte änderungen
@@ -444,6 +445,8 @@ window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
 window.settings.updateChannel.label|Update Kanal:
 window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
 window.settings.windowTitle|Einstellungen
+window.settings.checkBox.saveLogs|Logs speichern
+window.settings.checkBox.saveLogs.toolTip|<html>Aktiviere diese box, damit alle Logs abgespeichert werden.<br>Wenn deaktiviert, wird nur der letzte Log abgespeichert.
 
 window.npcGamesList.title|Ändere die Liste der NPC-Spiele
 window.npcGamesList.label|<html>Wähle aus, welches Genre zur Liste der NPC-Spiele hinzugefügt / daraus entfernt werden soll.<br>Wenn das Genre in der Liste der NPC-Spiele aufgeführt ist, können NPC-Unternehmen Spiele mit dem ausgewählten Genre erstellen.

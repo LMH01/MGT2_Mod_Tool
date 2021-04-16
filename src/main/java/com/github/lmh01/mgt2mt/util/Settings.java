@@ -19,6 +19,7 @@ public class Settings {
     public static boolean enableDebugLogging = false;
     public static boolean disableSafetyFeatures = false;
     public static boolean enableCustomFolder = false;
+    public static boolean saveLogs = true;
     private static final Logger LOGGER = LoggerFactory.getLogger(Settings.class);
     public static boolean mgt2FolderIsCorrect = false;
     public static boolean enableDisclaimerMessage = true;
@@ -29,7 +30,7 @@ public class Settings {
     public static String updateBranch = "Release";
     public static void resetSettings(){
         setMGT2Folder(false);
-        setSettings(false, false, false, false, mgt2FilePath, true, true, true, "English", "Release");
+        setSettings(false, false, false, false, mgt2FilePath, true, true, true, "English", "Release", true);
         LOGGER.info("Settings have been reset.");
     }
 
@@ -40,7 +41,7 @@ public class Settings {
      * @param mgt2FilePath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch){
+    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, String mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs){
         Settings.enableDebugLogging = enableDebugLogging;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
@@ -49,6 +50,7 @@ public class Settings {
         Settings.enableGenreDescriptionTranslationInfo = enableGenreDescriptionTranslationInfo;
         Settings.updateBranch = updateBranch;
         Settings.mgt2FilePath = mgt2FilePath;
+        Settings.saveLogs = saveLogs;
         setLanguage(language);
         validateMGT2Folder(mgt2FilePath, false, true);
         ExportSettings.export();

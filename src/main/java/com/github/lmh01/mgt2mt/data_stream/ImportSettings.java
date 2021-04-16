@@ -67,6 +67,13 @@ public class ImportSettings{
                     case 10:
                         Settings.updateBranch = currentLine;
                         break;
+                    case 11:
+                        if(currentLine.equals("true")){
+                            Settings.saveLogs = true;
+                        }else if(currentLine.equals("false")){
+                            Settings.saveLogs = false;
+                        }
+                        break;
                 }
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Imported Setting (" + setting + "): " + currentLine);

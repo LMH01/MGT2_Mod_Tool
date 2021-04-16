@@ -37,7 +37,8 @@ public class ExportSettings {
                     Settings.enableGenreNameTranslationInfo + "\n" +
                     Settings.enableGenreDescriptionTranslationInfo + "\n" +
                     Settings.language + "\n" +
-                    Settings.updateBranch);
+                    Settings.updateBranch+ "\n" +
+                    Settings.saveLogs);
             pw.close();
             if(Settings.enableDebugLogging){
                 LOGGER.info(Settings.mgt2FilePath);
