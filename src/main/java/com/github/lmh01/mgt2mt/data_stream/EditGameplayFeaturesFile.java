@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -32,22 +33,22 @@ public class EditGameplayFeaturesFile {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeatureFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
         for(Map<String, String> existingGameplayFeatures : AnalyzeExistingGameplayFeatures.gameplayFeatures){
-            bw.write("[ID]" + existingGameplayFeatures.get("ID"));bw.write(System.getProperty("line.separator"));
-            bw.write("[TYP]" + existingGameplayFeatures.get("TYP"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("ID", existingGameplayFeatures, bw);
+            EditHelper.printLine("TYP", existingGameplayFeatures, bw);
             TranslationManager.printLanguages(bw, existingGameplayFeatures);
-            bw.write("[DATE]" + existingGameplayFeatures.get("DATE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[RES POINTS]" + existingGameplayFeatures.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PRICE]" + existingGameplayFeatures.get("PRICE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DEV COSTS]" + existingGameplayFeatures.get("DEV COSTS"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PIC]" + existingGameplayFeatures.get("PIC"));bw.write(System.getProperty("line.separator"));
-            bw.write("[GAMEPLAY]" + existingGameplayFeatures.get("GAMEPLAY"));bw.write(System.getProperty("line.separator"));
-            bw.write("[GRAPHIC]" + existingGameplayFeatures.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
-            bw.write("[SOUND]" + existingGameplayFeatures.get("SOUND"));bw.write(System.getProperty("line.separator"));
-            bw.write("[TECH]" + existingGameplayFeatures.get("TECH"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("DATE", existingGameplayFeatures, bw);
+            EditHelper.printLine("RES POINTS", existingGameplayFeatures, bw);
+            EditHelper.printLine("PRICE", existingGameplayFeatures, bw);
+            EditHelper.printLine("DEV COSTS", existingGameplayFeatures, bw);
+            EditHelper.printLine("PIC", existingGameplayFeatures, bw);
+            EditHelper.printLine("GAMEPLAY", existingGameplayFeatures, bw);
+            EditHelper.printLine("GRAPHIC", existingGameplayFeatures, bw);
+            EditHelper.printLine("SOUND", existingGameplayFeatures, bw);
+            EditHelper.printLine("TECH", existingGameplayFeatures, bw);
             existingGameplayFeatures.putIfAbsent("GOOD", "");
             existingGameplayFeatures.putIfAbsent("BAD", "");
-            bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
-            bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("GOOD", existingGameplayFeatures, bw);
+            EditHelper.printLine("BAD", existingGameplayFeatures, bw);
             if(existingGameplayFeatures.get("NO_ARCADE") != null){
                 bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
             }
@@ -56,20 +57,22 @@ public class EditGameplayFeaturesFile {
             }
             bw.write(System.getProperty("line.separator"));
         }
-        bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
-        bw.write("[TYP]" + map.get("TYP"));bw.write(System.getProperty("line.separator"));
+        EditHelper.printLine("ID", map, bw);
+        EditHelper.printLine("TYP", map, bw);
         TranslationManager.printLanguages(bw, map);
-        bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
-        bw.write("[RES POINTS]" + map.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
-        bw.write("[PRICE]" + map.get("PRICE"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DEV COSTS]" + map.get("DEV COSTS"));bw.write(System.getProperty("line.separator"));
-        bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
-        bw.write("[GAMEPLAY]" + map.get("GAMEPLAY"));bw.write(System.getProperty("line.separator"));
-        bw.write("[GRAPHIC]" + map.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
-        bw.write("[SOUND]" + map.get("SOUND"));bw.write(System.getProperty("line.separator"));
-        bw.write("[TECH]" + map.get("TECH"));bw.write(System.getProperty("line.separator"));
-        bw.write("[GOOD]" + map.get("GOOD"));bw.write(System.getProperty("line.separator"));
-        bw.write("[BAD]" + map.get("BAD"));bw.write(System.getProperty("line.separator"));
+        EditHelper.printLine("DATE", map, bw);
+        EditHelper.printLine("RES POINTS", map, bw);
+        EditHelper.printLine("PRICE", map, bw);
+        EditHelper.printLine("DEV COSTS", map, bw);
+        EditHelper.printLine("PIC", map, bw);
+        EditHelper.printLine("GAMEPLAY", map, bw);
+        EditHelper.printLine("GRAPHIC", map, bw);
+        EditHelper.printLine("SOUND", map, bw);
+        EditHelper.printLine("TECH", map, bw);
+        map.putIfAbsent("GOOD", "");
+        map.putIfAbsent("BAD", "");
+        EditHelper.printLine("GOOD", map, bw);
+        EditHelper.printLine("BAD", map, bw);
         if(map.get("NO_ARCADE") != null){
             bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
         }
@@ -98,22 +101,22 @@ public class EditGameplayFeaturesFile {
         bw.write("\ufeff");
         for(Map<String, String> existingGameplayFeatures : AnalyzeExistingGameplayFeatures.gameplayFeatures){
             if(Integer.parseInt(existingGameplayFeatures.get("ID")) != gameplayFeatureId){
-                bw.write("[ID]" + existingGameplayFeatures.get("ID"));bw.write(System.getProperty("line.separator"));
-                bw.write("[TYP]" + existingGameplayFeatures.get("TYP"));bw.write(System.getProperty("line.separator"));
+                EditHelper.printLine("ID", existingGameplayFeatures, bw);
+                EditHelper.printLine("TYP", existingGameplayFeatures, bw);
                 TranslationManager.printLanguages(bw, existingGameplayFeatures);
-                bw.write("[DATE]" + existingGameplayFeatures.get("DATE"));bw.write(System.getProperty("line.separator"));
-                bw.write("[RES POINTS]" + existingGameplayFeatures.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
-                bw.write("[PRICE]" + existingGameplayFeatures.get("PRICE"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DEV COSTS]" + existingGameplayFeatures.get("DEV COSTS"));bw.write(System.getProperty("line.separator"));
-                bw.write("[PIC]" + existingGameplayFeatures.get("PIC"));bw.write(System.getProperty("line.separator"));
-                bw.write("[GAMEPLAY]" + existingGameplayFeatures.get("GAMEPLAY"));bw.write(System.getProperty("line.separator"));
-                bw.write("[GRAPHIC]" + existingGameplayFeatures.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
-                bw.write("[SOUND]" + existingGameplayFeatures.get("SOUND"));bw.write(System.getProperty("line.separator"));
-                bw.write("[TECH]" + existingGameplayFeatures.get("TECH"));bw.write(System.getProperty("line.separator"));
+                EditHelper.printLine("DATE", existingGameplayFeatures, bw);
+                EditHelper.printLine("RES POINTS", existingGameplayFeatures, bw);
+                EditHelper.printLine("PRICE", existingGameplayFeatures, bw);
+                EditHelper.printLine("DEV COSTS", existingGameplayFeatures, bw);
+                EditHelper.printLine("PIC", existingGameplayFeatures, bw);
+                EditHelper.printLine("GAMEPLAY", existingGameplayFeatures, bw);
+                EditHelper.printLine("GRAPHIC", existingGameplayFeatures, bw);
+                EditHelper.printLine("SOUND", existingGameplayFeatures, bw);
+                EditHelper.printLine("TECH", existingGameplayFeatures, bw);
                 existingGameplayFeatures.putIfAbsent("GOOD", "");
                 existingGameplayFeatures.putIfAbsent("BAD", "");
-                bw.write("[GOOD]" + existingGameplayFeatures.get("GOOD"));bw.write(System.getProperty("line.separator"));
-                bw.write("[BAD]" + existingGameplayFeatures.get("BAD"));bw.write(System.getProperty("line.separator"));
+                EditHelper.printLine("GOOD", existingGameplayFeatures, bw);
+                EditHelper.printLine("BAD", existingGameplayFeatures, bw);
                 if(existingGameplayFeatures.get("NO_ARCADE") != null){
                     bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
                 }
@@ -171,18 +174,18 @@ public class EditGameplayFeaturesFile {
                     activeGameplayFeature = true;
                 }
             }
-            bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
-            bw.write("[TYP]" + map.get("TYP"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("ID", map, bw);
+            EditHelper.printLine("TYP", map, bw);
             TranslationManager.printLanguages(bw, map);
-            bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[RES POINTS]" + map.get("RES POINTS"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PRICE]" + map.get("PRICE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DEV COSTS]" + map.get("DEV COSTS"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
-            bw.write("[GAMEPLAY]" + map.get("GAMEPLAY"));bw.write(System.getProperty("line.separator"));
-            bw.write("[GRAPHIC]" + map.get("GRAPHIC"));bw.write(System.getProperty("line.separator"));
-            bw.write("[SOUND]" + map.get("SOUND"));bw.write(System.getProperty("line.separator"));
-            bw.write("[TECH]" + map.get("TECH"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("DATE", map, bw);
+            EditHelper.printLine("RES POINTS", map, bw);
+            EditHelper.printLine("PRICE", map, bw);
+            EditHelper.printLine("DEV COSTS", map, bw);
+            EditHelper.printLine("PIC", map, bw);
+            EditHelper.printLine("GAMEPLAY", map, bw);
+            EditHelper.printLine("GRAPHIC", map, bw);
+            EditHelper.printLine("SOUND", map, bw);
+            EditHelper.printLine("TECH", map, bw);
             String mapValueBad = "";
             String mapValueGood = "";
             if(map.get("BAD") != null){

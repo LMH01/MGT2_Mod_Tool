@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -33,26 +34,26 @@ public class EditPublishersFile {
         LOGGER.info("Writing contents of list to file: " + publisherFile.getPath());
         List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
         for (Map<String, String> map : list) {
-            bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("ID", map, bw);
             TranslationManager.printLanguages(bw, map);
-            bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
-            bw.write("[DEVELOPER]" + map.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
-            bw.write("[PUBLISHER]" + map.get("PUBLISHER"));bw.write(System.getProperty("line.separator"));
-            bw.write("[MARKET]" + map.get("MARKET"));bw.write(System.getProperty("line.separator"));
-            bw.write("[SHARE]" + map.get("SHARE"));bw.write(System.getProperty("line.separator"));
-            bw.write("[GENRE]" + map.get("GENRE"));bw.write(System.getProperty("line.separator"));
+            EditHelper.printLine("DATE", map, bw);
+            EditHelper.printLine("PIC", map, bw);
+            EditHelper.printLine("DEVELOPER", map, bw);
+            EditHelper.printLine("PUBLISHER", map, bw);
+            EditHelper.printLine("MARKET", map, bw);
+            EditHelper.printLine("SHARE", map, bw);
+            EditHelper.printLine("GENRE", map, bw);
             bw.write(System.getProperty("line.separator"));
         }
-        bw.write("[ID]" + hashMap.get("ID"));bw.write(System.getProperty("line.separator"));
+        EditHelper.printLine("ID", hashMap, bw);
         TranslationManager.printLanguages(bw, hashMap);
-        bw.write("[DATE]" + hashMap.get("DATE"));bw.write(System.getProperty("line.separator"));
-        bw.write("[PIC]" + hashMap.get("PIC"));bw.write(System.getProperty("line.separator"));
-        bw.write("[DEVELOPER]" + hashMap.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
-        bw.write("[PUBLISHER]" + hashMap.get("PUBLISHER"));bw.write(System.getProperty("line.separator"));
-        bw.write("[MARKET]" + hashMap.get("MARKET"));bw.write(System.getProperty("line.separator"));
-        bw.write("[SHARE]" + hashMap.get("SHARE"));bw.write(System.getProperty("line.separator"));
-        bw.write("[GENRE]" + hashMap.get("GENRE"));bw.write(System.getProperty("line.separator"));
+        EditHelper.printLine("DATE", hashMap, bw);
+        EditHelper.printLine("PIC", hashMap, bw);
+        EditHelper.printLine("DEVELOPER", hashMap, bw);
+        EditHelper.printLine("PUBLISHER", hashMap, bw);
+        EditHelper.printLine("MARKET", hashMap, bw);
+        EditHelper.printLine("SHARE", hashMap, bw);
+        EditHelper.printLine("GENRE", hashMap, bw);
         bw.write(System.getProperty("line.separator"));
         bw.write("[EOF]");
         bw.close();
@@ -88,15 +89,15 @@ public class EditPublishersFile {
         for(int i=0; i<list.size(); i++){
             if(i != publisherToSkip){
                 Map<String,String> map = list.get(i);
-                bw.write("[ID]" + map.get("ID"));bw.write(System.getProperty("line.separator"));
+                EditHelper.printLine("ID", map, bw);
                 TranslationManager.printLanguages(bw, map);
-                bw.write("[DATE]" + map.get("DATE"));bw.write(System.getProperty("line.separator"));
-                bw.write("[PIC]" + map.get("PIC"));bw.write(System.getProperty("line.separator"));
-                bw.write("[DEVELOPER]" + map.get("DEVELOPER"));bw.write(System.getProperty("line.separator"));
-                bw.write("[PUBLISHER]" + map.get("PUBLISHER"));bw.write(System.getProperty("line.separator"));
-                bw.write("[MARKET]" + map.get("MARKET"));bw.write(System.getProperty("line.separator"));
-                bw.write("[SHARE]" + map.get("SHARE"));bw.write(System.getProperty("line.separator"));
-                bw.write("[GENRE]" + map.get("GENRE"));bw.write(System.getProperty("line.separator"));
+                EditHelper.printLine("DATE", map, bw);
+                EditHelper.printLine("PIC", map, bw);
+                EditHelper.printLine("DEVELOPER", map, bw);
+                EditHelper.printLine("PUBLISHER", map, bw);
+                EditHelper.printLine("MARKET", map, bw);
+                EditHelper.printLine("SHARE", map, bw);
+                EditHelper.printLine("GENRE", map, bw);
                 bw.write(System.getProperty("line.separator"));
             }
         }
