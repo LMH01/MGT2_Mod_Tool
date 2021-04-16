@@ -330,8 +330,6 @@ window.main.backup|Backup
 window.main.backup.createBackup|Create backup
 window.main.backup.createBackup.createFullBackup|Create full backup
 window.main.backup.createBackup.createFullBackup.toolTip|Click to create a backup from the files that could be modified with this tool.
-window.main.backup.createBackup.createGenreBackup|Backup genre file
-window.main.backup.createBackup.createThemeFilesBackup|Backup theme files
 window.main.backup.createBackup.createSaveGameBackup|Backup save games
 window.main.backup.restoreBackup|Restore backup
 window.main.backup.restoreBackup.restoreInitialBackup|Restore initial backup

@@ -187,15 +187,9 @@ public class WindowMain {
         JMenuItem m411CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
         m411CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
         m411CreateFullBackup.addActionListener(actionEvent -> Backup.createBackup("full"));
-        JMenuItem m412BackupGenresFile = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createGenreBackup"));
-        m412BackupGenresFile.addActionListener(actionEvent -> Backup.createBackup("genre"));
-        JMenuItem m413BackupThemesFiles = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createThemeFilesBackup"));
-        m413BackupThemesFiles.addActionListener(actionEvent -> Backup.createBackup("theme"));
         JMenuItem m414BackupSaveGames = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createSaveGameBackup"));
         m414BackupSaveGames.addActionListener(actionEvent -> Backup.createBackup("save_game"));
         m41.add(m411CreateFullBackup);
-        m41.add(m412BackupGenresFile);
-        m41.add(m413BackupThemesFiles);
         m41.add(m414BackupSaveGames);
         JMenuItem m421RestoreInitialBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup"));
         m421RestoreInitialBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup.toolTip"));

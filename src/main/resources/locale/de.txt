@@ -331,8 +331,6 @@ window.main.backup|Backup
 window.main.backup.createBackup|Backup erstellen
 window.main.backup.createBackup.createFullBackup|Komplettes Backup erstellen
 window.main.backup.createBackup.createFullBackup.toolTip|Klicke hier, um ein Backup aus den Dateien zu erstellen, die mit diesem Tool geändert werden können.
-window.main.backup.createBackup.createGenreBackup|Backup Der Genre Datei erstellen
-window.main.backup.createBackup.createThemeFilesBackup|Backup Der Themen Dateien erstellen
 window.main.backup.createBackup.createSaveGameBackup|Backup Der Spielstände erstellen
 window.main.backup.restoreBackup|Backup wiederherstellen
 window.main.backup.restoreBackup.restoreInitialBackup|Initial Backup wiederherstellen
