@@ -298,6 +298,7 @@ public class SharingHandler {
     public static String importPublisher(String importFolderPath, boolean showMessages) throws IOException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.mods.publisher"));
         AnalyzeExistingPublishers.analyzePublisherFile();
+        AnalyzeExistingGenres.analyzeGenreFile();
         int newPublisherId = AnalyzeExistingPublishers.getFreePublisherId();
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
         HashMap<String, String> map = new HashMap<>();
@@ -305,7 +306,14 @@ public class SharingHandler {
         map.put("ID", Integer.toString(newPublisherId));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE")){
-                map.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(entry.getValue())));
+                int genreID = AnalyzeExistingGenres.getGenreIdByName(entry.getValue());
+                if(genreID == -1){
+                    int randomGenreID = Utils.getRandomNumber(0, AnalyzeExistingGenres.genreList.size()-1);
+                    LOGGER.info("Genre list size: " + AnalyzeExistingGenres.genreList.size());
+                    map.put("GENRE", Integer.toString(randomGenreID));
+                }else{
+                    map.put("GENRE", Integer.toString(AnalyzeExistingGenres.getGenreIdByName(entry.getValue())));
+                }
             }else{
                 map.put(entry.getKey(), entry.getValue());
             }
