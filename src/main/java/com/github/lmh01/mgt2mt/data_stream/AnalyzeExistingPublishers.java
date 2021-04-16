@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javafx.scene.control.ProgressBar;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -45,25 +46,48 @@ public class AnalyzeExistingPublishers {
         return string;
     }
     public static String[] getCustomPublisherString(){
-        ArrayList<String> arrayListActivePublishers = new ArrayList<>();
-        List<Map<String, String>> listPublishers = getListMap();
-        ProgressBarHelper.initializeProgressBar(71, listPublishers.size(), I18n.INSTANCE.get("progressBar.moddedPublishers"), true);
-        for(int i=71; i<listPublishers.size(); i++){
-            Map<String, String> map = listPublishers.get(i);
-            arrayListActivePublishers.add(map.get("NAME EN"));
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublisherFound") + " " + map.get("NAME EN"));
-            ProgressBarHelper.increment();
-        }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublishersComplete"));
-        ProgressBarHelper.resetProgressBar();
-        try{
-            Collections.sort(arrayListActivePublishers);
-        }catch(NullPointerException ignored){
+        return getCustomPublisherString(false);
+    }
 
+    public static String[] getCustomPublisherString(boolean disableTextAreaMessage){
+        try{
+            String[] allLicenceNamesByAlphabet = getPublisherString();
+            ArrayList<String> arrayListActivePublishers = new ArrayList<>();
+            List<Map<String, String>> listPublishers = getListMap();
+            ProgressBarHelper.initializeProgressBar(71, listPublishers.size(), I18n.INSTANCE.get("progressBar.moddedPublishers"), !disableTextAreaMessage);
+            for (String s : allLicenceNamesByAlphabet) {
+                boolean defaultGenre = false;
+                for (String licenceName : ReadDefaultContent.getDefaultPublisher()) {
+                    if (s.equals(licenceName)) {
+                        defaultGenre = true;
+                        break;
+                    }
+                }
+                if (!defaultGenre) {
+                    arrayListActivePublishers.add(s);
+                    if(!disableTextAreaMessage){
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublisherFound") + " " + s);
+                    }
+                }
+                ProgressBarHelper.increment();
+            }
+            if(!disableTextAreaMessage){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedPublishersComplete"));
+            }
+            ProgressBarHelper.resetProgressBar();
+            try{
+                Collections.sort(arrayListActivePublishers);
+            }catch(NullPointerException ignored){
+
+            }
+            String[] string = new String[arrayListActivePublishers.size()];
+            arrayListActivePublishers.toArray(string);
+            return string;
+        }catch(IOException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error wile scanning publishers: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        String[] string = new String[arrayListActivePublishers.size()];
-        arrayListActivePublishers.toArray(string);
-        return string;
+        return new String[]{};
     }
 
     public static Map<String, String> getSinglePublisherByNameMap(String publisherNameEN){

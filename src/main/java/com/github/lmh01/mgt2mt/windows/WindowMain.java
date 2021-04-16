@@ -330,8 +330,7 @@ public class WindowMain {
                     if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
                         noCustomThemesAvailable = false;
                     }
-                    List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
-                    if(list.size() > 71){
+                    if(AnalyzeExistingPublishers.getCustomPublisherString(true).length > 0){
                         noCustomPublishersAvailable = false;
                     }
                     List<Map<String, String>> currentGameplayFeatures = AnalyzeExistingGameplayFeatures.gameplayFeatures;
