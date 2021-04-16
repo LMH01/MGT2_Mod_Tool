@@ -186,19 +186,19 @@ public class WindowMain {
         JMenu m43RestorePoint = new JMenu(I18n.INSTANCE.get("window.main.backup.modRestorePoint"));
         JMenuItem m411CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
         m411CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
-        m411CreateFullBackup.addActionListener(actionEvent -> Backup.createBackup("full"));
+        m411CreateFullBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableCreateFullBackup, "CreateFullBackup"));
         JMenuItem m414BackupSaveGames = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createSaveGameBackup"));
-        m414BackupSaveGames.addActionListener(actionEvent -> Backup.createBackup("save_game"));
+        m414BackupSaveGames.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableCreateSaveGameBackup, "CreateSaveGameBackup"));
         m41.add(m411CreateFullBackup);
         m41.add(m414BackupSaveGames);
         JMenuItem m421RestoreInitialBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup"));
         m421RestoreInitialBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup.toolTip"));
-        m421RestoreInitialBackup.addActionListener(actionEvent -> restoreInitialBackup());
+        m421RestoreInitialBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreInitialBackup, "RestoreInitialBackup"));
         M_422_RESTORE_LATEST_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup.toolTip"));
-        M_422_RESTORE_LATEST_BACKUP.addActionListener(actionEvent -> restoreLatestBackup());
+        M_422_RESTORE_LATEST_BACKUP.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreLatestBackup, "RestoreLatestBackup"));
         JMenuItem m423RestoreSaveGameBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup"));
         m423RestoreSaveGameBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip"));
-        m423RestoreSaveGameBackup.addActionListener(actionEvent -> Backup.restoreSaveGameBackup());
+        m423RestoreSaveGameBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreSaveGameBackup, "RestoreSaveGameBackup"));
         M_42_RESTORE_BACKUP.add(m421RestoreInitialBackup);
         M_42_RESTORE_BACKUP.add(m423RestoreSaveGameBackup);
         M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
@@ -534,7 +534,7 @@ public class WindowMain {
         }
     }
 
-    private static void restoreInitialBackup(){
+    public static void restoreInitialBackup(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
                 LOGGER.info("Creating backup beforehand.");
@@ -544,6 +544,7 @@ public class WindowMain {
                 if(!stringBuilder.toString().isEmpty()){
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder.toString(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
                 }
+                Backup.restoreBackup(true, true);
             } catch (IOException e) {
                 e.printStackTrace();
                 if(Utils.showConfirmDialog(1, e)){
@@ -555,7 +556,7 @@ public class WindowMain {
         }
         checkActionAvailability();
     }
-    private static void restoreLatestBackup(){
+    public static void restoreLatestBackup(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
                 LOGGER.info("Creating backup beforehand.");

@@ -277,7 +277,7 @@ public class NewModsHandler {
                                     }
                                     themeTranslations.put("NAME EN", textFieldThemeName.getText());
                                     if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
-                                        Backup.createThemeFilesBackup(false);
+                                        Backup.createThemeFilesBackup(false, true);
                                         EditThemeFiles.addTheme(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");

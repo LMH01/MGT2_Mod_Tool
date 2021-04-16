@@ -3,6 +3,8 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -27,7 +29,7 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup) throws IOException {
-        createBackup(fileToBackup, false);
+        createBackup(fileToBackup, false, false);
     }
     /**
      * Creates a backup of a given file. And sets it was initial backup
@@ -35,7 +37,7 @@ public class Backup {
      * @param initialBackup Set true when this is the initial backup.
      * @throws IOException Throws IOException when backup was not successful.
      */
-    public static void createBackup(File fileToBackup, boolean initialBackup) throws IOException {
+    public static void createBackup(File fileToBackup, boolean initialBackup, boolean showTextAreaMessages) throws IOException {
         String currentTimeAndDay = Utils.getCurrentDateTime();
         boolean initialBackupAlreadyExists = false;
         latestBackupFolderName = currentTimeAndDay;
@@ -72,6 +74,9 @@ public class Backup {
             File fileBackupFile = new File(fileToBackup.getPath());
             Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
             ChangeLog.addLogEntry(5, fileToBackup.getName());
+            if(showTextAreaMessages){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.backup.createBackup.success") + " " + fileToBackup.getPath());
+            }
         }
     }
 
@@ -88,25 +93,6 @@ public class Backup {
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n" + I18n.INSTANCE.get("dialog.backup.unableToCreateBackup.fileNotFound") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "genre":
-                try {
-                    Backup.createBackup(Utils.getGenreFile());
-                    Backup.createBackup(Utils.getNpcGamesFile());
-                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.createBackup.genreFileBackupCreated"), I18n.INSTANCE.get("dialog.backup.backupCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "theme":
-                try {
-                    Backup.createThemeFilesBackup(false);
-                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.createBackup.themeFileBackupCreated"), I18n.INSTANCE.get("dialog.backup.backupCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.backup.unableToCreateBackup") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + e.getMessage(), I18n.INSTANCE.get("dialog.backup.backupFailedTitle"), JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "save_game":
@@ -127,6 +113,7 @@ public class Backup {
      * @param showMessages Set true when messages should be displayed to the user
      */
     public static void restoreBackup(boolean initialBackup, boolean showMessages){
+        ProgressBarHelper.initializeProgressBar(0, 6 + TranslationManager.TRANSLATION_KEYS.length, I18n.INSTANCE.get("textArea.backup.restoringBackup"), true);
         try {
             LOGGER.info("Restoring backup.");
             File fileGenresBackup;
@@ -150,22 +137,24 @@ public class Backup {
                 fileEngineFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//EngineFeatures.txt");
                 fileLicenceBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Licence.txt");
             }
-            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileGameplayFeaturesBackup.getPath()), Paths.get(Utils.getGameplayFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileEngineFeaturesBackup.getPath()), Paths.get(Utils.getEngineFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Paths.get(fileLicenceBackup.getPath()), Paths.get(Utils.getLicenceFile().getPath()), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+            Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+            Files.copy(Paths.get(fileGameplayFeaturesBackup.getPath()), Paths.get(Utils.getGameplayFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+            Files.copy(Paths.get(fileEngineFeaturesBackup.getPath()), Paths.get(Utils.getEngineFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+            Files.copy(Paths.get(fileLicenceBackup.getPath()), Paths.get(Utils.getLicenceFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
                 ImageFileHandler.removePublisherIcons();
                 ChangeLog.addLogEntry(8);
                 if(showMessages){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
                 ChangeLog.addLogEntry(9);
                 if(showMessages){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -174,11 +163,13 @@ public class Backup {
             if(initialBackup){
                 ChangeLog.addLogEntry(10, exception.getMessage());
                 if(showMessages){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }else{
                 ChangeLog.addLogEntry(11, exception.getMessage());
                 if(showMessages){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -243,6 +234,7 @@ public class Backup {
             }
             Files.copy(Paths.get(currentBackupFile.getPath()), Paths.get(Utils.getThemeFile(i).getPath()), StandardCopyOption.REPLACE_EXISTING);
             LOGGER.info("File " + currentBackupFile.getPath() + " has been restored.");
+            ProgressBarHelper.increment();
         }
     }
 
@@ -281,14 +273,14 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createFullBackup() throws IOException {
-       Backup.createBackup(Utils.getGenreFile());
-       Backup.createBackup(Utils.getNpcGamesFile());
-       Backup.createBackup(Utils.getPublisherFile());
-       Backup.createBackup(Utils.getGameplayFeaturesFile());
-       Backup.createBackup(Utils.getEngineFeaturesFile());
-       Backup.createBackup(Utils.getLicenceFile());
+       Backup.createBackup(Utils.getGenreFile(), false, true);
+       Backup.createBackup(Utils.getNpcGamesFile(), false, true);
+       Backup.createBackup(Utils.getPublisherFile(), false, true);
+       Backup.createBackup(Utils.getGameplayFeaturesFile(), false, true);
+       Backup.createBackup(Utils.getEngineFeaturesFile(), false, true);
+       Backup.createBackup(Utils.getLicenceFile(), false, true);
        backupSaveGames(false);
-       createThemeFilesBackup(false);
+       createThemeFilesBackup(false, true);
     }
 
     /**
@@ -297,15 +289,15 @@ public class Backup {
      */
     public static String createInitialBackup(){
         try{
-            Backup.createBackup(Utils.getGenreFile(), true);
-            Backup.createBackup(Utils.getNpcGamesFile(), true);
-            Backup.createBackup(Utils.getThemesGeFile(), true);
-            Backup.createBackup(Utils.getPublisherFile(), true);
-            Backup.createBackup(Utils.getGameplayFeaturesFile(), true);
-            Backup.createBackup(Utils.getEngineFeaturesFile(), true);
-            Backup.createBackup(Utils.getLicenceFile(), true);
+            Backup.createBackup(Utils.getGenreFile(), true, false);
+            Backup.createBackup(Utils.getNpcGamesFile(), true, false);
+            Backup.createBackup(Utils.getThemesGeFile(), true, false);
+            Backup.createBackup(Utils.getPublisherFile(), true, false);
+            Backup.createBackup(Utils.getGameplayFeaturesFile(), true, false);
+            Backup.createBackup(Utils.getEngineFeaturesFile(), true, false);
+            Backup.createBackup(Utils.getLicenceFile(), true, false);
             backupSaveGames(true);
-            createThemeFilesBackup(true);
+            createThemeFilesBackup(true, false);
             ChangeLog.addLogEntry(6);
             return "";
         }catch(IOException e) {
@@ -329,9 +321,9 @@ public class Backup {
                         LOGGER.info("Savefile to backup found: " + backupFile);
                     }
                     if(initialBackup){
-                        createBackup(backupFile, true);
+                        createBackup(backupFile, true, true);
                     }else{
-                        createBackup(backupFile);
+                        createBackup(backupFile, false, true);
                     }
                 }
                 if(Settings.enableDebugLogging){
@@ -345,9 +337,9 @@ public class Backup {
      * Creates a backup of each Theme file.
      * @param initialBackup True if this is the initial backup.
      */
-    public static void createThemeFilesBackup(boolean initialBackup) throws IOException {
+    public static void createThemeFilesBackup(boolean initialBackup, boolean showTextAreaMessages) throws IOException {
         for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
-            Backup.createBackup(Utils.getThemeFile(i), initialBackup);
+            Backup.createBackup(Utils.getThemeFile(i), initialBackup, showTextAreaMessages);
         }
     }
 }

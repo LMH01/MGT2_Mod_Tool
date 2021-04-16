@@ -46,8 +46,6 @@ dialog.backup.initialBackupCreated.title|Initial-Backup
 dialog.backup.initialBackupNotCreated|<html>Das Initial-Backup wurde nicht erstellt:<br>Datei nicht gefunden: Bitte überprüfe, ob dein mgt2-Ordner richtig eingestellt ist.<br><br>Fehler:
 dialog.backup.initialBackupNotCreated.title|Backup nicht erfolgreich
 dialog.backup.createBackup.fullBackupCreated|Das komplette Backup wurde erfolgreich erstellt.
-dialog.backup.createBackup.genreFileBackupCreated|Die Sicherung der Genre-Dateien wurde erfolgreich erstellt.
-dialog.backup.createBackup.themeFileBackupCreated|Die Sicherung der Themendateien wurde erfolgreich erstellt.
 dialog.backup.createBackup.saveGamesFileBackupCreated|Das Backup der gespeicherten Spiele wurde erfolgreich erstellt.
 dialog.backup.backupCreatedTitle|Backup erstellt
 dialog.backup.backupFailedTitle|Backup fehlgeschlagen
@@ -261,6 +259,8 @@ textArea.restorePoint.restoreToRestorePoint|Wiederherstellen zum Wiederherstellu
 textArea.restorePoint.notAllModsRemoved|Bei der Deinstallation der Mods ist ein Fehler aufgetreten. Dies sollte sich jedoch nicht unbedingt auf den Deinstallationsprozess auswirken:
 textArea.restorePoint.restoreSuccessful|Wiederherstellung abgeschlossen: Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt.
 textArea.restorePoint.canceled|Wiederherstellungsprozess wurde abgebrochen
+textArea.backup.createBackup.success|Backup wurde erstellt:
+textArea.backup.restoringBackup|Backup wird wiederhergestellt
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

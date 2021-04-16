@@ -3,10 +3,12 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
+import com.github.lmh01.mgt2mt.windows.WindowSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
@@ -31,17 +33,22 @@ public class ThreadHandler {
     public static Runnable runnableRemoveGameplayFeature = () -> OperationHelper.process(EditGameplayFeaturesFile::removeGameplayFeature, AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString(), AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     public static Runnable runnableRemoveEngineFeature = () -> OperationHelper.process(EditEngineFeaturesFile::removeEngineFeature, AnalyzeExistingEngineFeatures.getCustomEngineFeaturesString(), AnalyzeExistingEngineFeatures.getEngineFeaturesByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     public static Runnable runnableRemoveLicence = () -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet(), AnalyzeExistingLicences.getLicenceNamesByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableAddNewGenre = () -> NewModsHandler.addGenre();
-    public static Runnable runnableAddRandomizedGenre = () -> GenreHelper.addRandomizedGenre();
-    public static Runnable runnableAddNewTheme = () -> NewModsHandler.addTheme();
-    public static Runnable runnableAddNewPublisher = () -> NewModsHandler.addPublisher();
-    public static Runnable runnableAddNewLicence = () -> LicenceHelper.addLicence();
-    public static Runnable runnableAddNewEngineFeature = () -> EngineFeatureHelper.addEngineFeature();
-    public static Runnable runnableAddNewGameplayFeature = () -> GameplayFeatureHelper.addGameplayFeature();
-    public static Runnable runnableAddCompanyIcon = () -> NewModsHandler.addCompanyIcon();
-    public static Runnable runnableNPCGamesList = () -> NPCGameListHandler.modifyNPCGameList();
-    public static Runnable runnableCreateRestorePoint = () -> RestorePointHelper.setRestorePoint();
-    public static Runnable runnableRestoreToRestorePoint = () -> RestorePointHelper.restoreToRestorePoint();
+    public static Runnable runnableAddNewGenre = NewModsHandler::addGenre;
+    public static Runnable runnableAddRandomizedGenre = GenreHelper::addRandomizedGenre;
+    public static Runnable runnableAddNewTheme = NewModsHandler::addTheme;
+    public static Runnable runnableAddNewPublisher = NewModsHandler::addPublisher;
+    public static Runnable runnableAddNewLicence = LicenceHelper::addLicence;
+    public static Runnable runnableAddNewEngineFeature = EngineFeatureHelper::addEngineFeature;
+    public static Runnable runnableAddNewGameplayFeature = GameplayFeatureHelper::addGameplayFeature;
+    public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
+    public static Runnable runnableNPCGamesList = NPCGameListHandler::modifyNPCGameList;
+    public static Runnable runnableCreateRestorePoint = RestorePointHelper::setRestorePoint;
+    public static Runnable runnableRestoreToRestorePoint = RestorePointHelper::restoreToRestorePoint;
+    public static Runnable runnableCreateFullBackup = () -> Backup.createBackup("full");
+    public static Runnable runnableCreateSaveGameBackup = () -> Backup.createBackup("save_game");
+    public static Runnable runnableRestoreInitialBackup = WindowMain::restoreInitialBackup;
+    public static Runnable runnableRestoreLatestBackup = WindowMain::restoreLatestBackup;
+    public static Runnable runnableRestoreSaveGameBackup = () -> Backup.restoreSaveGameBackup();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
