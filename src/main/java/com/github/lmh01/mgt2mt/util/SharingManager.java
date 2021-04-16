@@ -46,7 +46,7 @@ public class SharingManager {
      * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
 
-    public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder, boolean showAlreadyExistMessage){
+    public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder, AtomicBoolean showAlreadyExistMessage){
         return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
     }
 
@@ -60,7 +60,7 @@ public class SharingManager {
      * @param importFolder The import folder where the files are stored. The folder is used when ask for import folder is false.
      * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
-    private static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder, boolean showAlreadyExistMessage){
+    private static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder, AtomicBoolean showAlreadyExistMessage){
         try {
             if(askForImportFolder){
                 ArrayList<String> importFolders = getImportFolderPath(fileName);
@@ -237,11 +237,17 @@ public class SharingManager {
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
-    private static void analyzeReturnValue(String importName, String returnValue, String[] compatibleModToolVersions, boolean showAlreadyExistMessage){
+    private static void analyzeReturnValue(String importName, String returnValue, String[] compatibleModToolVersions, AtomicBoolean showAlreadyExistMessage){
         try{
             if(returnValue.equals("false")){
-                if(showAlreadyExistMessage){
-                    JOptionPane.showMessageDialog(null, "The selected " + importName + " already exists.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                if(!showAlreadyExistMessage.get()){
+                    JLabel label = new JLabel(I18n.INSTANCE.get("processor.alreadyProcessed.firstPart") + " " + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.analyzeReturnValue.alreadyExists") + ".");
+                    JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip"));
+                    Object[] obj = {label, checkBox};
+                    JOptionPane.showMessageDialog(null, obj, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    if(checkBox.isSelected()){
+                        showAlreadyExistMessage.set(true);
+                    }
                 }
             }else{
                 if(!returnValue.equals("true")){
@@ -249,12 +255,12 @@ public class SharingManager {
                     for(String string : compatibleModToolVersions){
                         supportedModToolVersions.append("[").append(string).append("]");
                     }
-                    JOptionPane.showMessageDialog(null, returnValue + "\nSupported versions: " + supportedModToolVersions.toString(), "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, returnValue + "\n" + I18n.INSTANCE.get("dialog.sharingManager.analyzeReturnValue.supportedVersions") + " " + supportedModToolVersions.toString(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }catch(NullPointerException e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Unable to import " + importName + ":\nThe file is corrupted or not compatible with the current Mod Manager Version", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2") + " " + importName + ":\n" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -502,30 +508,30 @@ public class SharingManager {
                                 }
                             }
                             boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
-                            boolean showAlreadyExistPopups = checkBoxDisableAlreadyExistPopups.isSelected();
+                            AtomicBoolean showAlreadyExistPopups = new AtomicBoolean(checkBoxDisableAlreadyExistPopups.isSelected());
                             boolean errorOccurred = false;
                             ProgressBarHelper.initializeProgressBar(0, engineFeatures.size() + gameplayFeatures.size() + genres.size() + publisher.size() + themes.size() + licences.size(), I18n.INSTANCE.get("progressBar.importingMods"));
-                            if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                            if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing engine features");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing gameplay features");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing genres");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing publishers");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName5"), (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, !showAlreadyExistPopups)){
+                            if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName5"), (string) -> SharingHandler.importTheme(string, !showMessageDialogs), SharingManager.THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing themes");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName6"), (string) -> SharingHandler.importLicence(string, !showMessageDialogs), SharingManager.LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, !showAlreadyExistPopups)){
+                            if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName6"), (string) -> SharingHandler.importLicence(string, !showMessageDialogs), SharingManager.LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing licences");
                                 errorOccurred = true;
                             }
@@ -650,7 +656,7 @@ public class SharingManager {
      * @param showAlreadyExistPopups When true a message is displayed that the choose import does already exist
      * @return Returns true when the import was successful. Returns false when something went wrong
      */
-    public static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean showAlreadyExistPopups){
+    public static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, AtomicBoolean showAlreadyExistPopups){
         int currentFile = 0;
         if(!importNothing){
             boolean failed = false;

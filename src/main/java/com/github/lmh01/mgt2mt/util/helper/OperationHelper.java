@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.util.helper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 
 import javax.swing.*;
 import java.awt.*;

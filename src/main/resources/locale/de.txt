@@ -120,6 +120,8 @@ dialog.sharingManager.importAll.error.general|<html>Beim scannen der Ordner ist 
 dialog.sharingManager.importAll.noModsAvailable|Keine
 dialog.sharingManager.importAll.manyImportFilesFound|<html>Es wurde eine so große Menge an zu durchsuchenden Dateien und Verzeichnissen gefunden,<br>dass es einige Zeit dauern könnte, bis alles nach Mods zu durchsucht wurde.<br><br>Wenn du auf "Ja" klickst werden alle weiteren Verzeichnisse durchsucht und diese Nachricht wird kein weiteres mal angezeigt.<br>Wenn du auf "Nein" klickst wird der import prozess abgebrochen.<br><br>Bist du dir sicher, dass du den richtigen Ordner ausgewählt hast und soll der Import-prozess fortgesetzt werden?
 dialog.sharingManager.importAll.manyImportFilesFound.title|Import fortsetzen?
+dialog.sharingManager.analyzeReturnValue.alreadyExists|existiert bereits
+dialog.sharingManager.analyzeReturnValue.supportedVersions|Unterstützte Versionen:
 dialog.sharingManager.importThings.error.firstPart|Import unmöglich:
 dialog.sharingManager.importThings.error.secondPart|Die Datei ist beschädigt oder nicht mit der aktuellen Mod Manager-Version kompatibel.
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Wähle die Ordner aus, in denen sich die zu importierenden Dateien befinden

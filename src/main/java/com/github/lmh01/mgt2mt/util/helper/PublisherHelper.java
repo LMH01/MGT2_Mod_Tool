@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PublisherHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherHelper.class);
@@ -54,7 +55,7 @@ public class PublisherHelper {
                 LOGGER.info("Adding new publishers...");
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
-                SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, false);
+                SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, new AtomicBoolean(false));
                 if(AnalyzeExistingPublishers.getActivePublisherIds().contains(-1)){
                     EditPublishersFile.removePublisher("Dummy");
                 }
