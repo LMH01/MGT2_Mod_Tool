@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Uninstaller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Uninstaller.class);
@@ -67,9 +68,18 @@ public class Uninstaller {
                             exitProgram = true;
                         }else{
                             if(checkboxDeleteBackups.isSelected()){
-                                File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingBackups"));
-                                DataStreamHelper.deleteDirectory(backupFolder);
+                                File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
+                                if(Settings.disableSafetyFeatures){
+                                    DataStreamHelper.deleteDirectory(backupFolder);
+                                }else{
+                                    ArrayList<File> filesInBackupFolder = DataStreamHelper.getFilesInFolder(backupFolder.getPath());
+                                    for(File file : filesInBackupFolder){
+                                        if(!file.getPath().endsWith(".initialBackup")){
+                                            DataStreamHelper.deleteDirectory(file);
+                                        }
+                                    }
+                                }
                                 LOGGER.info("Backups have been deleted.");
                             }
                             if(checkboxDeleteConfigFiles.isSelected()){
