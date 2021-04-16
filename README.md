@@ -50,7 +50,7 @@ This is a little program that can modify some files from Mad Games Tycoon 2.
     - Additionally, you can change the chance with which the genre id should be added to the file. (100% = All games will have the corresponding genre as genre)
     - Example: When you add the genre "Sandbox" as genre to MGT2, and you use this feature to add the corresponding genre id to the `NpcGames.txt` file, NPC-Games will have a chance to use "Sandbox" as genre.
 - **Create backups**
-    - Every time you change the game files a backup is created. This backup will be stored as latest backup until another backup is made. This latest backup can be restored with the click of one button.
+    - Every time you change the game files a backup is created. This backup will be stored as latest backup until another backup is made. It is not recommended however to restore these backups, if you would like to remove mods please do so by using the respective menu. If you would like to restore the backup anyway, you have to disable the safety features.
     - Backups can be created manually
     - When starting this program for the first time an initial backup is created that can be restored later with the click of one button.
     - Backups of your saved games will be created but not automatically restored. To restore a save game backup go into the **Backup** menu, click **Restore Backup** and then **Restore Save Game Backup**. 

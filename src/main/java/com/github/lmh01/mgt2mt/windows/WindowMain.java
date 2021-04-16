@@ -49,8 +49,11 @@ public class WindowMain {
     private static final JMenuItem M_272_REMOVE_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.removeLicence"));
     private static final JMenuItem M_316_EXPORT_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.licence"));
     private static final JMenuItem M_317_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
+    private static final JMenu M_42_RESTORE_BACKUP = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
+    private static final JMenuItem M_422_RESTORE_LATEST_BACKUP = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup"));
     private static final JMenuItem M_431_CREATE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
     private static final JMenuItem M_432_RESTORE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint"));
+    private static final JMenuItem M_44_DELETE_ALL_BACKUPS = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
     private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
     public static final JProgressBar PROGRESS_BAR = new JProgressBar();
     public static final JTextArea TEXT_AREA = new JTextArea();
@@ -180,7 +183,6 @@ public class WindowMain {
         M_3_SHARE.add(m36);
         mb.add(M_3_SHARE);
         JMenu m41 = new JMenu(I18n.INSTANCE.get("window.main.backup.createBackup"));
-        JMenu m42 = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
         JMenu m43RestorePoint = new JMenu(I18n.INSTANCE.get("window.main.backup.modRestorePoint"));
         JMenuItem m411CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
         m411CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
@@ -198,35 +200,30 @@ public class WindowMain {
         JMenuItem m421RestoreInitialBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup"));
         m421RestoreInitialBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup.toolTip"));
         m421RestoreInitialBackup.addActionListener(actionEvent -> restoreInitialBackup());
-        JMenuItem m422RestoreLatestBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup"));
-        m422RestoreLatestBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup.toolTip"));
-        m422RestoreLatestBackup.addActionListener(actionEvent -> restoreLatestBackup());
+        M_422_RESTORE_LATEST_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup.toolTip"));
+        M_422_RESTORE_LATEST_BACKUP.addActionListener(actionEvent -> restoreLatestBackup());
         JMenuItem m423RestoreSaveGameBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup"));
         m423RestoreSaveGameBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip"));
         m423RestoreSaveGameBackup.addActionListener(actionEvent -> Backup.restoreSaveGameBackup());
-        m42.add(m421RestoreInitialBackup);
-        m42.add(m422RestoreLatestBackup);
-        m42.add(m423RestoreSaveGameBackup);
+        M_42_RESTORE_BACKUP.add(m421RestoreInitialBackup);
+        M_42_RESTORE_BACKUP.add(m423RestoreSaveGameBackup);
         M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
         M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.setRestorePoint());
         M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip"));
         M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> RestorePointHelper.restoreToRestorePoint());
         m43RestorePoint.add(M_431_CREATE_MOD_RESTORE_POINT);
         m43RestorePoint.add(M_432_RESTORE_MOD_RESTORE_POINT);
-        JMenuItem m44DeleteAllBackups = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
-        m44DeleteAllBackups.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));
-        m44DeleteAllBackups.addActionListener(actionEvent -> Backup.deleteAllBackups());
+        M_44_DELETE_ALL_BACKUPS.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));
+        M_44_DELETE_ALL_BACKUPS.addActionListener(actionEvent -> Backup.deleteAllBackups());
         JMenuItem m45penBackupFolder = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
         m45penBackupFolder.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
         m45penBackupFolder.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
         mb.add(M_4_BACKUP);
         M_4_BACKUP.add(m41);
-        M_4_BACKUP.add(m42);
+        M_4_BACKUP.add(M_42_RESTORE_BACKUP);
         M_4_BACKUP.add(m43RestorePoint);
-        if(Settings.disableSafetyFeatures){
-            M_4_BACKUP.add(m44DeleteAllBackups);
-        }
         M_4_BACKUP.add(m45penBackupFolder);
+        setSafetyFeatureComponents();
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
         M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableReplacePublisherWithRealPublishers, "runnableReplacePublisherWithRealPublishers"));
@@ -472,6 +469,7 @@ public class WindowMain {
                 e.printStackTrace();
             }
             WindowMain.lockMenuItems(false);
+            setSafetyFeatureComponents();
         }else{
             LOGGER.info("Action availability was not checked because the mgt2 folder is invalid!");
         }
@@ -529,6 +527,20 @@ public class WindowMain {
             M_5_UTIL.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
         }
     }
+
+    /**
+     * This will cause some menu items to be reloaded, for the safety feature setting to be applied.
+     */
+    public static void setSafetyFeatureComponents(){
+        if(Settings.disableSafetyFeatures){
+            M_4_BACKUP.add(M_44_DELETE_ALL_BACKUPS);
+            M_42_RESTORE_BACKUP.add(M_422_RESTORE_LATEST_BACKUP);
+        }else{
+            M_4_BACKUP.remove(M_44_DELETE_ALL_BACKUPS);
+            M_42_RESTORE_BACKUP.remove(M_422_RESTORE_LATEST_BACKUP);
+        }
+    }
+
     private static void restoreInitialBackup(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
