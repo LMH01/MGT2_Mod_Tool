@@ -298,7 +298,6 @@ public class Backup {
             Backup.createBackup(Utils.getLicenceFile(), true, false);
             backupSaveGames(true);
             createThemeFilesBackup(true, false);
-            ChangeLog.addLogEntry(6);
             return "";
         }catch(IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());

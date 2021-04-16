@@ -76,7 +76,6 @@ public class ChangeLog {
             case 3: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the npc games list"; break;
             case 4: logToPrint = currentSystemTime + ": Removed genre with id [" + textBody + "] from the Genres.txt file"; break;
             case 5: logToPrint = currentSystemTime + ": A backup of file " + textBody + " has been created."; break;
-            case 6: logToPrint = currentSystemTime + ": The initial backup has been created if it did not already exist."; break;
             case 7: logToPrint = currentSystemTime + ": The initial backup failed. Exception: " + textBody; break;
             case 8: logToPrint = currentSystemTime + ": The initial backup has been restored."; break;
             case 9: logToPrint = currentSystemTime + ": The latest backup has been restored."; break;
