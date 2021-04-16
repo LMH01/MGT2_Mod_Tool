@@ -534,27 +534,11 @@ public class WindowMain {
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
-                String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
-                for (String customGenre : customGenres) {
-                    try {
-                        EditGenreFile.removeGenre(customGenre);
-                        LOGGER.info("Game files have been restored to original.");
-                    } catch (IOException e) {
-                        LOGGER.info("Genre could not be removed: " + e.getMessage());
-                        e.printStackTrace();
-                    }
+                StringBuilder stringBuilder = new StringBuilder();
+                Uninstaller.uninstallAllMods(stringBuilder);
+                if(!stringBuilder.toString().isEmpty()){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder.toString(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
                 }
-                String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-                for (String customPublisher : customPublishers) {
-                    try {
-                        EditPublishersFile.removePublisher(customPublisher);
-                        LOGGER.info("Publisher files have been restored to original.");
-                    } catch (IOException e) {
-                        LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                Backup.restoreBackup(true, true);
             } catch (IOException e) {
                 e.printStackTrace();
                 if(Utils.showConfirmDialog(1, e)){

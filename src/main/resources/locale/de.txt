@@ -69,6 +69,7 @@ dialog.backup.restoreBackup.title|Backup wiederherstellen?
 dialog.backup.restoreBackup.initialBackup.notRestored|Das Initiale-Backup wurde nicht wiederhergestellt.
 dialog.backup.restoreBackup.latestBackup.message|<html>Bist du sicher, dass du das neueste Backup wiederherstellen möchtest?<br>Die Sicherungen der Spielstände werden nicht wiederhergestellt.<br>Ein Backup der aktuellen Dateien wird erstellt.
 dialog.backup.restoreBackup.latestBackup.notRestored|Das letzte Backup wurde nicht wiederhergestellt.
+dialog.backup.restoreBackup.initialBackup.notRestored.mods|Beim entfernen der Mods ist ein Problem aufgetreten:
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|Ein .zip Archiv wurde gefunden:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Soll es extrahiert und nach Mods durchsucht werden?
