@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.SharingManager;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +31,13 @@ public class ImportFromURLHelper {
                 SharingManager.importAll(false, downloadUnzipped.getPath());
             }catch(IOException e){
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.importFromURL.error.body") + "\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                String errorMessageToDisplay;
+                if(e.getMessage().equals("www.dropbox.com")){
+                    errorMessageToDisplay = I18n.INSTANCE.get("commonText.noInternet");
+                }else{
+                    errorMessageToDisplay = e.getMessage();
+                }
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.importFromURL.error.body") + "\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + errorMessageToDisplay, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

@@ -81,6 +81,9 @@ public class UpdateChecker {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                if(showNoUpdateAvailableDialog){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.updateFailed"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                }
             }
             if(useProgressBar){
                 ProgressBarHelper.resetProgressBar();

@@ -62,7 +62,13 @@ public class PublisherHelper {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
             }catch (IOException e){
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                String errorMessageToDisplay;
+                if(e.getMessage().equals("www.dropbox.com")){
+                    errorMessageToDisplay = I18n.INSTANCE.get("commonText.noInternet");
+                }else{
+                    errorMessageToDisplay = e.getMessage();
+                }
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + " " + errorMessageToDisplay, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

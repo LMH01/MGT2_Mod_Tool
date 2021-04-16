@@ -20,6 +20,7 @@ commonText.removing|Removing
 commonText.added.upperCase|Added
 commonText.successfully|successfully
 commonText.unknownError|Unknown error
+commonText.noInternet|No internet connection
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
@@ -135,6 +136,7 @@ dialog.updateChecker.updateAvailable|<html>It is recommended to always use the n
 dialog.updateChecker.updateAvailable.title|New version available
 dialog.updateChecker.updateAvailable.versionType.ver1|A new release is available:
 dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is available:
+dialog.updateChecker.updateFailed|Update check failed: No internet connection
 
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 

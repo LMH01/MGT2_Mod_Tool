@@ -20,6 +20,7 @@ commonText.removing|Entferne
 commonText.added.upperCase|Hinzugefügt
 commonText.successfully|erfolgreich
 commonText.unknownError|Unbekannter Fehler
+commonText.noInternet|Keine Verbindung zum Internet
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -136,6 +137,7 @@ dialog.updateChecker.updateAvailable|<html>Es wird empfohlen, immer die neueste 
 dialog.updateChecker.updateAvailable.title|Neue Version verfügbar
 dialog.updateChecker.updateAvailable.versionType.ver1|Eine neue Version ist verfügbar:
 dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version ist verfügbar:
+dialog.updateChecker.updateFailed|Prüfen nach Updates fehlgeschlagen: Keine Verbindung zum Internet
 
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
