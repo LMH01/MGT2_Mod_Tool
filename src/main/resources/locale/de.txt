@@ -124,7 +124,7 @@ dialog.sharingManager.importAll.manyImportFilesFound.title|Import fortsetzen?
 dialog.sharingManager.importThings.error.firstPart|Import unmöglich:
 dialog.sharingManager.importThings.error.secondPart|Die Datei ist beschädigt oder nicht mit der aktuellen Mod Manager-Version kompatibel.
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version1|Wähle die Ordner aus, in denen sich die zu importierenden Dateien befinden
-dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Wählen Sie die Ordner aus, in denen sich die
+dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.firstPart|Wähle die Ordner aus, in denen sich die
 dialog.sharingManager.getImportFolderPath.fileChooser.title.version2.secondPart|Datei befindet.
 dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip Dateien
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|Der ausgewählte Ordner enthält keinen gültigen
@@ -254,7 +254,7 @@ textArea.removed|Entfernt:
 textArea.addCompanyIcon.success|Company Logo hinzugefügt.
 textArea.addCompanyIcon.error|Company Logo wurde nicht hinzugefügt:
 
-publisherHelper.replaceWithRealPublishers.mainMessage|<html>Sind Sie sicher, dass Sie die vorhandenen Publisher durch die realen Publisher ersetzen möchten?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn Sie fortfahren, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden von folgendem Guide benutzt:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
+publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
 publisherHelper.replaceWithRealPublishers.success|Alle vorhandenen Publisher wurden mit den echten Publishern ersetzt.
 publisherHelper.replaceWithRealPublishers.somethingWentWrong|<html>Irgendwas ist schief gelaufen:<br><br>Fehler:
@@ -398,7 +398,7 @@ window.uninstall.uninstallIncomplete|Bei der Deinstallation ist ein Problem aufg
 window.uninstall.uninstallIncomplete.title|Deinstallation unvollstäding
 window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved|Genre konnte nicht entfernt werden:
 window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved|Publisher konnte nicht entfernt werden:
-window.uninstall.uninstallSuccessful|Ihre ausgewählten Dateien wurden erfolgreich deinstalliert!
+window.uninstall.uninstallSuccessful|Die ausgewählten Dateien wurden erfolgreich deinstalliert!
 window.uninstall.uninstallSuccessful.title|Deinstallation erfolgreich
 
 window.settings.button.back.toolTip|Klicke, um zum Hauptmenü zurück zu kommen
@@ -438,7 +438,7 @@ window.settings.mgt2location.automaticSelected.folderNotFound|<html>Die Suche na
 window.settings.reset.label|Zurücksetzen
 window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
 window.settings.safetyFeatures.checkBoxText|Sicherheitsfunktionen deaktivieren
-window.settings.safetyFeatures.checkBoxToolTip|<html>Aktiviere dieses Kontrollkästchen, um die automatische Zuweisung von Genre-IDs zu deaktivieren.<br>Wenn diese Option aktiviert ist, haben die meisten Spinner keinen Maximalwert.<br>Aktivieren Sie diese Option nur, wenn Sie Ihr eigenes Genre-ID-System verwenden und die Spinner erforderlicherweise freigeschaltet sein müssen.
+window.settings.safetyFeatures.checkBoxToolTip|<html>Aktiviere dieses Kontrollkästchen, um die automatische Zuweisung von Genre-IDs zu deaktivieren.<br>Wenn diese Option aktiviert ist, haben die meisten Spinner keinen Maximalwert.<br>Aktiviere diese Option nur, wenn du dein eigenes Genre-ID-System verwendest und die Spinner erforderlicherweise freigeschaltet sein müssen.
 window.settings.safetyFeatures.warning|<html>Bist du sicher, dass du die Sicherheitsfunktionen deaktivieren möchtest?<br>Dies kann zu Problemen führen.<br><br>VERWENDE DIESE FUNKTION AUF EIGENES RISIKO!<br>ICH ÜBERNEHME KEINE VERANTWORTUNG, WENN ETWAS KAPUTT GEHT! <br><br>Sicherheitsfunktionen deaktivieren?
 window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
 window.settings.updateChannel.label|Update Kanal:
