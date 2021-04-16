@@ -356,11 +356,6 @@ window.main.utilities.experimentalFeatures.replacePublisher|Publisher mit echten
 window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Clicke hier, um die standart Publisher mit den "echten" Publishern zu ersetzen
 window.main.utilities.openGithubPage|Github Seite öffnen
 window.main.utilities.openMGT2Folder|MGT2 Ordner öffnen
-window.main.utilities.showActiveGenres|Aktive Genres anzeigen
-window.main.utilities.showActiveThemes|Aktive Themen anzeigen
-window.main.utilities.openGenresTXTFile|genres.txt Datei öffnen
-window.main.utilities.openGenresById|Öffne Genres nach Id sortiert
-window.main.utilities.openGenresById.toolTip|<html>Klicke hier, um eine Datei zu öffnen, in der alle erkannten Genres nach ID aufgelistet sind.<br>Nützlich, wenn die Genre-ID für eine Funktion benötigt wird
 window.main.utilities.openLogFile|Änderungsprotokoll öffnen
 window.main.utilities.openLogFile.toolTip|<html>Klicke hier, um das Änderungsprotokoll zu öffnen.<br>Zeigt alle Änderungen an, die an den Spieledateien vorgenommen wurden.
 window.main.utilities.openSaveGameFolder|Spielstand Ordner öffnen

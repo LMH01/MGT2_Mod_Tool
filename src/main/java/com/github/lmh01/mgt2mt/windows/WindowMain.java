@@ -225,32 +225,19 @@ public class WindowMain {
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
         m53OpenMGT2Folder.addActionListener(actionEvent -> Utils.open(Settings.mgt2FilePath));
-        JMenuItem m54ShowActiveGenres = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.showActiveGenres"));
-        m54ShowActiveGenres.addActionListener(actionEvent -> showActiveGenres());
-        JMenuItem m55ShowActiveThemes = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.showActiveThemes"));
-        m55ShowActiveThemes.addActionListener(actionEvent -> showActiveThemes());
-        JMenuItem m56OpenGenreFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGenresTXTFile"));
-        m56OpenGenreFile.addActionListener(actionEvent -> Utils.open(Utils.getGenreFile().getPath()));
-        JMenuItem m57OpenGenresById = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGenresById"));
-        m57OpenGenresById.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openGenresById.toolTip"));
-        m57OpenGenresById.addActionListener(actionEvent -> Utils.open(AnalyzeExistingGenres.FILE_GENRES_BY_ID_HELP.getPath()));
-        JMenuItem m58OpenLogFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openLogFile"));
-        m58OpenLogFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openLogFile.toolTip"));
-        m58OpenLogFile.addActionListener(actionEvent -> Utils.open(ChangeLog.FILE_CHANGES_LOG.getPath()));
-        JMenuItem m59OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
-        m59OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
-        m59OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
+        JMenuItem m54OpenLogFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openLogFile"));
+        m54OpenLogFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openLogFile.toolTip"));
+        m54OpenLogFile.addActionListener(actionEvent -> Utils.open(ChangeLog.FILE_CHANGES_LOG.getPath()));
+        JMenuItem m55OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
+        m55OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
+        m55OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
         mb.add(M_5_UTIL);
         M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
-        M_5_UTIL.add(m54ShowActiveGenres);
-        M_5_UTIL.add(m55ShowActiveThemes);
-        M_5_UTIL.add(m56OpenGenreFile);
-        M_5_UTIL.add(m57OpenGenresById);
-        M_5_UTIL.add(m58OpenLogFile);
-        M_5_UTIL.add(m59OpenSaveGameFolder);
+        M_5_UTIL.add(m54OpenLogFile);
+        M_5_UTIL.add(m55OpenSaveGameFolder);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -592,38 +579,6 @@ public class WindowMain {
                 Utils.showErrorMessage(2, e);
                 e.printStackTrace();
             }
-        }
-    }
-    private static void showActiveGenres(){
-        String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
-
-        JList<String> listAvailableGenres = new JList<>(string);
-        listAvailableGenres.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
-        listAvailableGenres.setVisibleRowCount(-1);
-
-        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-        scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
-
-        JOptionPane.showMessageDialog(null, scrollPaneAvailableGenres, "The following genres are currently active.", JOptionPane.INFORMATION_MESSAGE);
-    }
-    private static void showActiveThemes(){
-        try {
-            AnalyzeExistingThemes.analyzeThemeFiles();
-            String[] string = AnalyzeExistingThemes.getThemesByAlphabet();
-
-            JList<String> listAvailableThemes = new JList<>(string);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-            listAvailableThemes.setVisibleRowCount(-1);
-
-            JScrollPane scrollPaneAvailableThemes = new JScrollPane(listAvailableThemes);
-            scrollPaneAvailableThemes.setPreferredSize(new Dimension(315,140));
-
-            JOptionPane.showMessageDialog(null, scrollPaneAvailableThemes, "The following themes are currently active.", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            Utils.showErrorMessage(1, e);
-            e.printStackTrace();
         }
     }
 }

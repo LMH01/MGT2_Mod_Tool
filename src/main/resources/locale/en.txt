@@ -355,11 +355,6 @@ window.main.utilities.experimentalFeatures.replacePublisher|Replace publishers w
 window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Click to replace the original publishers with real publishers
 window.main.utilities.openGithubPage|Open Github page
 window.main.utilities.openMGT2Folder|Open MGT2 folder
-window.main.utilities.showActiveGenres|Show active genres
-window.main.utilities.showActiveThemes|Show active themes
-window.main.utilities.openGenresTXTFile|Open genres.txt file
-window.main.utilities.openGenresById|Open genres by id
-window.main.utilities.openGenresById.toolTip|<html>Click to open a file where all detected genres are listed by id.<br>Useful if you need the genre id for a function
 window.main.utilities.openLogFile|Open log file
 window.main.utilities.openLogFile.toolTip|<html>Click to open the change log.<br>Shows all changes that have been made to the game files.
 window.main.utilities.openSaveGameFolder|Open save game folder
