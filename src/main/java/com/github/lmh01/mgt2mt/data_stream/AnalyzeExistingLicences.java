@@ -67,7 +67,7 @@ public class AnalyzeExistingLicences {
                         defaultGenre = true;
                         break;
                     }
-                    if(licenceName.equals("Chronicles of Nornio [5]")){
+                    if(s.equals("Chronicles of Nornio [5]")){
                         defaultGenre = true;
                     }
                 }
