@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -392,6 +393,7 @@ public class DataStreamHelper {
 
                 }
                 deleteDirectoryProcess(file);
+                LogFile.write(I18n.INSTANCE.get("progressBar.delete") + " " + file.getPath());
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Deleting file: " + file.getPath());
                 }

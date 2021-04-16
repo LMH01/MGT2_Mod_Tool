@@ -320,7 +320,7 @@ public class Backup {
                         LOGGER.info("Savefile to backup found: " + backupFile);
                     }
                     if(initialBackup){
-                        createBackup(backupFile, true, true);
+                        createBackup(backupFile, true, false);
                     }else{
                         createBackup(backupFile, false, true);
                     }
