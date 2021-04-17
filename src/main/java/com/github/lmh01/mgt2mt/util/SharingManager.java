@@ -306,7 +306,7 @@ public class SharingManager {
         AtomicBoolean unzipAutomatic = new AtomicBoolean(false);
         AtomicBoolean showDuplicateMessage = new AtomicBoolean(true);
         AtomicBoolean addDuplicate = new AtomicBoolean(false);
-        boolean abortImport = false;
+        AtomicBoolean abortImport = new AtomicBoolean(false);
         JCheckBox checkBoxPreventZipMessage = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.saveOption"));
         checkBoxPreventZipMessage.setSelected(false);
         if(directories != null){
@@ -316,7 +316,7 @@ public class SharingManager {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories"));
                 boolean askedForAbortImport = false;
                 for(int i=0; i<directories.size(); i++){
-                    if(!abortImport) {
+                    if(!abortImport.get()) {
                         File file = directories.get(i);
                         Path start = Paths.get(file.getPath());
                         try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
@@ -332,70 +332,74 @@ public class SharingManager {
                             ProgressBarHelper.increaseMaxValue(collect.size());
                             ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.scanningDirectories"));
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingComplete"));
-                            if(directories.size() > 2000 || collect.size() > 10000 || WindowMain.PROGRESS_BAR.getValue() > 10000 && !askedForAbortImport){
-                                LOGGER.info("Directories: " + directories.size());
-                                LOGGER.info("List: " + collect.size());
-                                LOGGER.info("Progress bar: " + WindowMain.PROGRESS_BAR.getValue());
-                                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.manyImportFilesFound"), I18n.INSTANCE.get("dialog.sharingManager.importAll.manyImportFilesFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                    askedForAbortImport = true;
-                                }else{
-                                    abortImport = true;
+                            if(directories.size() > 2000 || collect.size() > 10000 || WindowMain.PROGRESS_BAR.getValue() > 10000){
+                                if(!askedForAbortImport){
+                                    LOGGER.info("Directories: " + directories.size());
+                                    LOGGER.info("List: " + collect.size());
+                                    LOGGER.info("Progress bar: " + WindowMain.PROGRESS_BAR.getValue());
+                                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.manyImportFilesFound"), I18n.INSTANCE.get("dialog.sharingManager.importAll.manyImportFilesFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                        askedForAbortImport = true;
+                                    }else{
+                                        abortImport.set(true);
+                                    }
                                 }
                             }
-                            if(!abortImport){
+                            if(!abortImport.get()){
                                 collect.forEach((string) -> {
-                                    if(string.endsWith(".zip")){
-                                        TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + " " + string);
-                                    }else{
-                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
-                                    }
-                                    if(string.contains("engineFeature.txt")){
-                                        addIfCompatible(string, engineFeatures, engineFeatureNames, ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                    }else if(string.contains("gameplayFeature.txt")){
-                                        addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                    }else if(string.contains("genre.txt")){
-                                        addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                    }else if(string.contains("publisher.txt")){
-                                        addIfCompatible(string, publisher, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                    }else if(string.contains("theme.txt")){
-                                        addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                    }else if(string.contains("licence.txt")){
-                                        addIfCompatible(string, licences, licenceNames, LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                    }else if(string.endsWith(".zip")){
-                                        boolean unzipFile = false;
-                                        if(!checkBoxPreventZipMessage.isSelected()){
-                                            JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + "<br><br>" + string + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.secondPart"));
-                                            Object[] obj = {label, checkBoxPreventZipMessage};
-                                            if(JOptionPane.showConfirmDialog(null, obj, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                                unzipFile = true;
-                                                if(checkBoxPreventZipMessage.isSelected()){
-                                                    unzipAutomatic.set(true);
-                                                }
-                                            }
+                                    if(!abortImport.get()){
+                                        if(string.endsWith(".zip")){
+                                            TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + " " + string);
                                         }else{
-                                            if(unzipAutomatic.get()){
-                                                unzipFile = true;
-                                            }
+                                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
                                         }
-                                        if(unzipFile){
-                                            try {
-                                                File extractedFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//" + currentZipArchiveNumber);
-                                                DataStreamHelper.unzip(string, extractedFolder);
-                                                ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.scanningDirectories"));
-                                                currentZipArchiveNumber.getAndIncrement();
-                                                directories.add(extractedFolder);
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart") + "\n\n" + string + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage() + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
-                                                    return;
+                                        if(string.contains("engineFeature.txt")){
+                                            addIfCompatible(string, engineFeatures, engineFeatureNames, ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                        }else if(string.contains("gameplayFeature.txt")){
+                                            addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                        }else if(string.contains("genre.txt")){
+                                            addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                        }else if(string.contains("publisher.txt")){
+                                            addIfCompatible(string, publisher, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                        }else if(string.contains("theme.txt")){
+                                            addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                        }else if(string.contains("licence.txt")){
+                                            addIfCompatible(string, licences, licenceNames, LICENCE_IMPORT_COMPATIBLE_MOD_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                        }else if(string.endsWith(".zip")){
+                                            boolean unzipFile = false;
+                                            if(!checkBoxPreventZipMessage.isSelected()){
+                                                JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + "<br><br>" + string + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.secondPart"));
+                                                Object[] obj = {label, checkBoxPreventZipMessage};
+                                                if(JOptionPane.showConfirmDialog(null, obj, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                                    unzipFile = true;
+                                                    if(checkBoxPreventZipMessage.isSelected()){
+                                                        unzipAutomatic.set(true);
+                                                    }
+                                                }
+                                            }else{
+                                                if(unzipAutomatic.get()){
+                                                    unzipFile = true;
+                                                }
+                                            }
+                                            if(unzipFile){
+                                                try {
+                                                    File extractedFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//" + currentZipArchiveNumber);
+                                                    DataStreamHelper.unzip(string, extractedFolder);
+                                                    ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.scanningDirectories"));
+                                                    currentZipArchiveNumber.getAndIncrement();
+                                                    directories.add(extractedFolder);
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart") + "\n\n" + string + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage() + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                                                        abortImport.set(true);
+                                                    }
                                                 }
                                             }
                                         }
+                                        if(Settings.enableDebugLogging){
+                                            LOGGER.info("current file: " + string);
+                                        }
+                                        ProgressBarHelper.increment();
                                     }
-                                    if(Settings.enableDebugLogging){
-                                        LOGGER.info("current file: " + string);
-                                    }
-                                    ProgressBarHelper.increment();
                                 });
                                 ProgressBarHelper.increment();
                             }
@@ -410,7 +414,7 @@ public class SharingManager {
             }catch (NullPointerException ignored){
 
             }
-            if(!abortImport){
+            if(!abortImport.get()){
                 if(!errorWhileScanning){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.firstPart") + " " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.secondPart") + " " + Utils.convertSecondsToTime(ProgressBarHelper.getProgressBarTimer()) + "; " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.thirdPart"));
                     ProgressBarHelper.resetProgressBar();
