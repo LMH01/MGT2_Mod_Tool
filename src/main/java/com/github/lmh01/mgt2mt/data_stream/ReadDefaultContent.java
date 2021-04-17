@@ -31,4 +31,16 @@ public class ReadDefaultContent {
         arrayList.toArray(strings);
         return strings;
     }
+    public static String[] getDefault(String fileName) throws IOException{
+        ArrayList<String> arrayList = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("default_content/" + fileName), StandardCharsets.UTF_8));
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            arrayList.add(currentLine);
+        }
+        reader.close();
+        String[] strings = new String[arrayList.size()];
+        arrayList.toArray(strings);
+        return strings;
+    }
 }

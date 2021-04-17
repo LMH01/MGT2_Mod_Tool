@@ -96,6 +96,8 @@ public class Utils {
 
     public static File getGameplayFeaturesFile(){return new File(getMGT2DataPath() + "//GameplayFeatures.txt");}
 
+    public static File getPlatformsFile(){return new File(getMGT2DataPath() + "Platforms.txt");}
+
     /**
      * @return Returns the EngineFeatures.txt file.
      */

@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class EngineFeatureHelper {
     public static void addEngineFeature(){
         try{
             Backup.createBackup(Utils.getEngineFeaturesFile());
-            AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+            AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
             AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
@@ -222,7 +223,7 @@ public class EngineFeatureHelper {
                             newEngineFeature.put("NAME EN", textFieldName.getText());
                             newEngineFeature.put("DESC EN", textFieldDescription.getText());
                         }
-                        newEngineFeature.put("ID", Integer.toString(AnalyzeExistingEngineFeatures.getFreeEngineFeatureId()));
+                        newEngineFeature.put("ID", Integer.toString(AnalyzeManager.engineFeatureAnalyzer.getFreeId()));
                         newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
                         newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                         newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());

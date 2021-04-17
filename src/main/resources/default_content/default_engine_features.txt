@@ -1,0 +1,58 @@
+ASCII Graphics
+2D Line Graphics
+Primitive 2D Block Graphics
+Modern 2D Block Graphics
+2D 8-Bit Graphics
+Primitive 3D Vector Graphics
+2D 16-Bit Graphics
+Modern 3D Vector Graphics
+Primitive Pseudo 3D Graphics
+3D Voxel Graphics
+Modern Pseudo 3D Graphics
+3D Graphics
+Modern 3D Voxel Graphics
+Advanced 3D Graphics
+Modern 3D Graphics
+OpenWorld 3D Graphics
+Advanced OpenWorld 3D Graphics
+Modern OpenWorld 3D Graphics
+High-End OpenWorld 3D Graphics
+Real 3D Graphics
+Speaker Sound
+Primitive Mono Sound
+Primitive Stereo Sound
+8 Bit Sound
+Advanced 8 Bit Sound
+16 Bit Sound
+Advanced 16 Bit Sound
+32 Bit Sound
+Advanced 32 Bit Sound
+Surround Sound Technology
+3D Sound 3.1
+3D Sound 5.1
+3D Sound 7.1
+Real 3D Sound
+Primitive AI [Level 1]
+Primitive AI [Level 2]
+Primitive AI [Level 3]
+Improved AI [Level 1]
+Improved AI [Level 2]
+Improved AI [Level 3]
+Advanced AI [Level 1]
+Advanced AI [Level 2]
+Advanced AI [Level 3]
+Highly Advanced AI [Level 1]
+Highly Advanced AI [Level 2]
+Highly Advanced AI [Level 3]
+Primitive Physics [Level 1]
+Primitive Physics [Level 2]
+Primitive Physics [Level 3]
+Improved Physics [Level 1]
+Improved Physics [Level 2]
+Improved Physics [Level 3]
+Advanced Physics [Level 1]
+Advanced Physics [Level 2]
+Advanced Physics [Level 3]
+Highly Advanced Physics [Level 1]
+Highly Advanced Physics [Level 2]
+Highly Advanced Physics [Level 3]

@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -20,7 +21,7 @@ public class EditEngineFeaturesFile {
      * @param map The values that stand in this map are used to print the file. This includes the translations.
      */
     public static void addEngineFeature(Map<String, String> map) throws IOException {
-        AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+        AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
         LOGGER.info("Adding new engine feature...");
         File engineFeatureFile = Utils.getEngineFeaturesFile();
         if(engineFeatureFile.exists()){
@@ -29,7 +30,7 @@ public class EditEngineFeaturesFile {
         engineFeatureFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(engineFeatureFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> existingEngineFeatures : AnalyzeExistingEngineFeatures.engineFeatures){
+        for(Map<String, String> existingEngineFeatures : AnalyzeManager.engineFeatureAnalyzer.getFileContent()){
             EditHelper.printLine("ID", existingEngineFeatures, bw);
             EditHelper.printLine("TYP", existingEngineFeatures, bw);
             TranslationManager.printLanguages(bw, existingEngineFeatures);
@@ -68,8 +69,8 @@ public class EditEngineFeaturesFile {
      * @param engineFeatureName The gameplay feature id for which the gameplay feature should be removed
      */
     public static boolean removeEngineFeature(String engineFeatureName) throws IOException {
-        int engineFeatureId = AnalyzeExistingEngineFeatures.getEngineFeatureIdByName(engineFeatureName);
-        AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+        int engineFeatureId = AnalyzeManager.engineFeatureAnalyzer.getContentIdByName(engineFeatureName);
+        AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
         LOGGER.info("Removing engine feature...");
         File engineFeatureFile = Utils.getEngineFeaturesFile();
         if (engineFeatureFile.exists()) {
@@ -78,7 +79,7 @@ public class EditEngineFeaturesFile {
         engineFeatureFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(engineFeatureFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for (Map<String, String> existingEngineFeatures : AnalyzeExistingEngineFeatures.engineFeatures) {
+        for (Map<String, String> existingEngineFeatures : AnalyzeManager.engineFeatureAnalyzer.getFileContent()) {
             if (Integer.parseInt(existingEngineFeatures.get("ID")) != engineFeatureId) {
                 EditHelper.printLine("ID", existingEngineFeatures, bw);
                 EditHelper.printLine("TYP", existingEngineFeatures, bw);

@@ -79,6 +79,11 @@ commonText.isThisCorrect|Is this correct and do you want to continue?
 commonText.browse|Browse
 commonText.multipleFilesSelected|Multiple files selected
 
+analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning engine features:
+analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modded engine feature found:
+analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded engine features complete
+analyzer.engineFeature.getCustomContentString.progressBar|Scanning for modded engine features
+
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>A restore point has already been created.<br><br>Would you like to create a new restore point and move the old files into a storage folder?
@@ -203,8 +208,8 @@ dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is ava
 dialog.updateChecker.updateFailed|Update check failed: No internet connection
 
 dialog.analyzeExistingLicences.errorWhileScanningLicences|Error wile scanning licences:
-
 dialog.analyzeExistingLicences.errorWhileScanningPublishers|Error wile scanning publishers:
+dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Error wile scanning platforms:
 
 dialog.dataStreamHelper.newFile.entryOutOfTarget|Entry is outside of the target dir:
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Failed to create directory
@@ -286,6 +291,7 @@ progressBar.moddedGenre|Scanning for modded genres
 progressBar.moddedLicences|Scanning for modded licences
 progressBar.moddedPublishers|Scanning for modded publishers
 progressBar.moddedThemes|Scanning for modded themes
+progressBar.moddedPlatforms|Scanning for modded platforms
 progressBar.startingExport|Exporting
 progressBar.delete|Deleting:
 progressBar.scanningDirectories|Scanning directories
@@ -313,6 +319,8 @@ textArea.moddedLicenceFound|Modded licence found:
 textArea.moddedLicencesComplete|Scanning for modded licences complete
 textArea.moddedThemeFound|Modded theme found:
 textArea.moddedThemesComplete|Scanning for modded themes complete
+textArea.moddedPlatformFound|Modded platform found:
+textArea.moddedPlatformsComplete|Scanning for modded platforms complete
 textArea.exportComplete|export complete
 textArea.engineFeatureExportFailed.alreadyExported|The following engine feature was not exported because it has already been exported:
 textArea.engineFeatureExportFailed.generalError.fistPart|While exporting engine feature

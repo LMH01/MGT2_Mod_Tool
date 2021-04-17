@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -468,7 +469,7 @@ public class SharingHandler {
      */
     public static boolean exportEngineFeature(String engineFeatureName, boolean exportAsRestorePoint){
         try{
-            Map<String, String> map = AnalyzeExistingEngineFeatures.getSingleEngineFeatureByNameMap(engineFeatureName);
+            Map<String, String> map = AnalyzeManager.engineFeatureAnalyzer.getSingleContentMapByName(engineFeatureName);
             String exportFolder;
             if(exportAsRestorePoint){
                 exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
@@ -518,14 +519,14 @@ public class SharingHandler {
      * @param showMessages True when message about adding engine feature should be shown. False if not.
      */
     public static String importEngineFeature(String importFolderPath, boolean showMessages) throws IOException {
-        AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+        AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
         String returnValue = SharingManager.importGeneral("engineFeature.txt",
                 I18n.INSTANCE.get("window.main.share.export.engineFeature"),
                 importFolderPath,
-                AnalyzeExistingEngineFeatures.engineFeatures,
+                AnalyzeManager.engineFeatureAnalyzer.getFileContent(),
                 SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
                 EditEngineFeaturesFile::addEngineFeature,
-                AnalyzeExistingEngineFeatures::getFreeEngineFeatureId,
+                AnalyzeManager.engineFeatureAnalyzer::getFreeId,
                 32,
                 Summaries::showEngineFeatureMessage,
                 showMessages);

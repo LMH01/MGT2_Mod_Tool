@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import org.slf4j.Logger;
@@ -288,7 +289,7 @@ public class WindowMain {
                 AnalyzeExistingThemes.analyzeThemeFiles();
                 AnalyzeExistingPublishers.analyzePublisherFile();
                 AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
-                AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
+                AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
                 AnalyzeExistingLicences.analyze();
                 boolean noCustomGenreAvailable = true;
                 boolean noCustomThemesAvailable = true;
@@ -318,8 +319,7 @@ public class WindowMain {
                     if(currentGameplayFeatures.size() > 61){
                         noCustomGameplayFeaturesAvailable = false;
                     }
-                    List<Map<String, String>> currentEngineFeatures = AnalyzeExistingEngineFeatures.engineFeatures;
-                    if(currentEngineFeatures.size() > 58){
+                    if(AnalyzeManager.engineFeatureAnalyzer.getCustomContentString(true).length > 0){
                         noCustomEngineFeaturesAvailable = false;
                     }
                     Map<Integer, String> mapLicences = AnalyzeExistingLicences.existingLicences;

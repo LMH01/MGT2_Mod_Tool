@@ -79,6 +79,11 @@ commonText.isThisCorrect|Ist das richtig und möchtest du weiter machen?
 commonText.browse|Durchsuchen
 commonText.multipleFilesSelected|Mehrere Dateien ausgewählt
 
+analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von engine features:
+analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Engine Feature gefunden:
+analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Engine Features abgeschlossen
+analyzer.engineFeature.getCustomContentString.progressBar|Scannen nach modifizierten Publishern
+
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>Ein Wiederherstellungspunkt wurde bereits erstellt.<br><br>Möchtest du einen neuen Wiederherstellungspunkt erstellen und die alten Dateien in einen Speicherordner verschieben?
@@ -203,8 +208,8 @@ dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version is
 dialog.updateChecker.updateFailed|Prüfen nach Updates fehlgeschlagen: Keine Verbindung zum Internet
 
 dialog.analyzeExistingLicences.errorWhileScanningLicences|Fehler beim scannen von Lizenzen:
-
 dialog.analyzeExistingLicences.errorWhileScanningPublishers|Fehler beim scannen von Publishern:
+dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Fehler beim scannen von Platformen:
 
 dialog.dataStreamHelper.newFile.entryOutOfTarget|Der Eintrag befindet sich außerhalb des Zielverzeichnisses:
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Verzeichnis konnte nicht erstellt werden
@@ -286,6 +291,7 @@ progressBar.moddedGenre|Scannen nach modifizierten Genres
 progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
 progressBar.moddedPublishers|Scannen nach modifizierten Publishern
 progressBar.moddedThemes|Scannen nach modifizierten Themen
+progressBar.moddedPlatforms|Scannen nach modifizierten Platformen
 progressBar.startingExport|Exportiere
 progressBar.delete|Lösche:
 progressBar.scanningDirectories|Durchsuche Ordner
@@ -311,6 +317,8 @@ textArea.moddedPublisherFound|Modifizierten Publisher gefunden:
 textArea.moddedPublishersComplete|Scannen nach modifizierten Publishern abgeschlossen
 textArea.moddedLicenceFound|Modifizierte Lizenz gefunden:
 textArea.moddedLicencesComplete|Scannen nach modifizierten Lizenzen abgeschlossen
+textArea.moddedPlatformFound|Modifizierte Platform gefunden:
+textArea.moddedPlatformsComplete|Scannen nach modifizierten Platformen abgeschlossen
 textArea.moddedThemeFound|Modifiziertes Thema gefunden:
 textArea.moddedThemesComplete|Scannen nach modifizierten Themen abgeschlossen
 textArea.exportComplete|Export abgeschlossen
