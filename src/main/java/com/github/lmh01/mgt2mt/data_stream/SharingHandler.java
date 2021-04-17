@@ -4,7 +4,6 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -135,8 +134,8 @@ public class SharingHandler {
             }
         }
         if(!genreCanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN")));
-            return "Genre [" + map.get("NAME EN") + "] could not be imported:\nThe genre is not with the current mod tool version compatible\nGenre was exported in version: " + map.get("MGT2MT VERSION");
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
+            return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
         for(Map<String, String> map2 : AnalyzeExistingGenres.genreList){
             for(Map.Entry<String, String> entry : map2.entrySet()){
@@ -214,8 +213,8 @@ public class SharingHandler {
             }
         }
         if(!licenceCanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME")));
-            return "Licence [" + map.get("NAME") + "] could not be imported:\nThe licence is not with the current mod tool version compatible\nLicence was exported in version: " + map.get("MGT2MT VERSION");
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
+            return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
         for(Map.Entry<Integer, String> entry : AnalyzeExistingLicences.existingLicences.entrySet()){
             if(entry.getValue().equals(map.get("NAME") + " " + map.get("TYPE"))){
@@ -229,9 +228,9 @@ public class SharingHandler {
         exportMap.put("TYPE", map.get("TYPE"));
         EditLicenceFile.addLicence(exportMap);
         if(showMessages){
-            if(JOptionPane.showConfirmDialog(null, "Add this licence:\nName: " + exportMap.get("NAME") + "\nType: " + exportMap.get("TYPE"), "Add licence?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + " " + exportMap.get("NAME") + "\n" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + exportMap.get("TYPE"), I18n.INSTANCE.get("window.npcGamesList.comboBox.operation.value_1") + " " + I18n.INSTANCE.get("commonText.licence"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 ChangeLog.addLogEntry(22, map.get("NAME EN"));
-                JOptionPane.showMessageDialog(null, "Licence " + map.get("NAME") + " has been added successfully");
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.licence") + " " + map.get("NAME") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
         }else{
             ChangeLog.addLogEntry(34, map.get("NAME"));
@@ -325,8 +324,8 @@ public class SharingHandler {
             }
         }
         if(!publisherCanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN")));
-            return "Publisher [" + map.get("NAME EN") + "] could not be imported:\nThe publisher is not with the current mod tool version compatible\nPublisher was exported in version: " + map.get("MGT2MT VERSION");
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
+            return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
         for(Map<String, String> map2 : AnalyzeExistingPublishers.getListMap()){
             for(Map.Entry<String, String> entry : map2.entrySet()){
@@ -351,10 +350,10 @@ public class SharingHandler {
                         "\nPublisher: " + map.get("PUBLISHER") +
                         "\nMarketShare: " + map.get("MARKET") +
                         "\nShare: " + map.get("SHARE") +
-                        "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(map.get("GENRE"))), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
+                        "\nGenre: " + AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(map.get("GENRE"))), I18n.INSTANCE.get("window.main.mods.publisher.addPublisher") + "?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
                     EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
                     ChangeLog.addLogEntry(22, map.get("NAME EN"));
-                    JOptionPane.showMessageDialog(null, "Publisher " + map.get("NAME EN") + " has been added successfully");
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.main.mods.publisher") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
                 EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
@@ -362,7 +361,7 @@ public class SharingHandler {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.specialPublisherNotExisting") + map.get("NAME EN"));
-            JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher") + ":\n\n" + I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher.2"), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.mods.publisher") + ": " + map.get("NAME EN"));
         return "true";
@@ -436,8 +435,8 @@ public class SharingHandler {
             }
         }
         if(!themeCanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN")));
-            return "Theme [" + map.get("NAME EN") + "] could not be imported:\nThe theme is not with the current mod tool version compatible\nTheme was exported in version: " + map.get("MGT2MT VERSION");
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
+            return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
         for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
             if(entry.getValue().equals(map.get("NAME EN"))){
@@ -448,17 +447,17 @@ public class SharingHandler {
         }
         try {
             if(showMessages){
-                if(JOptionPane.showConfirmDialog(null, "Add this theme?\n\n" + map.get("NAME EN"), "Add theme?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
                     ChangeLog.addLogEntry(24, map.get("NAME EN"));
-                    JOptionPane.showMessageDialog(null, "Theme " + map.get("NAME EN") + " has been added successfully");
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
                 EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
                 ChangeLog.addLogEntry(24, map.get("NAME EN"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Unable to add publisher:\n\nThe special genre for for the requested publisher does not exist!", "Unable to add publisher", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + ": " + map.get("NAME EN"));
         return "true";
@@ -508,7 +507,7 @@ public class SharingHandler {
         }catch(IOException e){
             e.printStackTrace();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.ExportFailed.generalError.secondPart") + " [" + engineFeatureName + "] " + I18n.INSTANCE.get("textArea.engineFeatureExportFailed.generalError.secondPart") + " " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Error while exporting engine feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.ExportFailed.generalError.secondPart") + " [" + engineFeatureName + "] " + I18n.INSTANCE.get("textArea.engineFeatureExportFailed.generalError.secondPart") + " " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -521,7 +520,7 @@ public class SharingHandler {
     public static String importEngineFeature(String importFolderPath, boolean showMessages) throws IOException {
         AnalyzeExistingEngineFeatures.analyzeEngineFeatures();
         String returnValue = SharingManager.importGeneral("engineFeature.txt",
-                "Engine feature",
+                I18n.INSTANCE.get("window.main.share.export.engineFeature"),
                 importFolderPath,
                 AnalyzeExistingEngineFeatures.engineFeatures,
                 SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
@@ -584,7 +583,7 @@ public class SharingHandler {
         }catch(IOException e){
             e.printStackTrace();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.ExportFailed.generalError.secondPart") + " [" + gameplayFeatureName + "] " + I18n.INSTANCE.get("textArea.gameplayFeatureExportFailed.generalError.secondPart") + " " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Error while exporting gameplay feature: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.ExportFailed.generalError.secondPart") + " [" + gameplayFeatureName + "] " + I18n.INSTANCE.get("textArea.gameplayFeatureExportFailed.generalError.secondPart") + " " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -597,7 +596,7 @@ public class SharingHandler {
     public static String importGameplayFeature(String importFolderPath, boolean showMessages) throws IOException {
         AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
         return SharingManager.importGeneral("gameplayFeature.txt",
-                "Gameplay feature",
+                I18n.INSTANCE.get("window.main.share.export.gameplayFeature"),
                 importFolderPath,
                 AnalyzeExistingGameplayFeatures.gameplayFeatures,
                 SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
@@ -666,7 +665,6 @@ public class SharingHandler {
             }
             charPosition++;
         }
-        //String.valueOf(genreNumbersRaw.charAt(1));
         return genreNames.toString();
     }
 }

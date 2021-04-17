@@ -153,7 +153,6 @@ public class DataStreamHelper {
         boolean firstLine = true;
         Map<Integer, String> mapCurrent = new HashMap<>();
         int currentLineNumber = 1;
-        //ProgressBarHelper.setText("Analyzing file: " + file.getName());
         while((currentLine = br.readLine()) != null){
             if(firstLine){
                 currentLine = Utils.removeUTF8BOM(currentLine);
@@ -163,7 +162,6 @@ public class DataStreamHelper {
             currentLineNumber++;
         }
         br.close();
-        //ProgressBarHelper.resetProgressBar();
         return mapCurrent;
     }
 
@@ -244,13 +242,13 @@ public class DataStreamHelper {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.unzippedFile") + " " + newFile.getPath());
             if (zipEntry.isDirectory()) {
                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
-                    throw new IOException("Failed to create directory " + newFile);
+                    throw new IOException(I18n.INSTANCE.get("dialog.dataStreamHelper.newFile.failedToCreateDirectory") + " " + newFile);
                 }
             } else {
                 // fix for Windows-created archives
                 File parent = newFile.getParentFile();
                 if (!parent.isDirectory() && !parent.mkdirs()) {
-                    throw new IOException("Failed to create directory " + parent);
+                    throw new IOException(I18n.INSTANCE.get("dialog.dataStreamHelper.newFile.failedToCreateDirectory") + " " + parent);
                 }
 
                 // write file content
@@ -276,7 +274,7 @@ public class DataStreamHelper {
         String destFilePath = destFile.getCanonicalPath();
 
         if (!destFilePath.startsWith(destDirPath + File.separator)) {
-            throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
+            throw new IOException(I18n.INSTANCE.get("dialog.dataStreamHelper.newFile.entryOutOfTarget") + " " + zipEntry.getName());
         }
 
         return destFile;

@@ -10,6 +10,7 @@ commonText.publisher|publisher
 commonText.gameplayFeature|gameplay feature
 commonText.engineFeature|engine feature
 commonText.theme|theme
+commonText.theme.upperCase|Theme
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -21,6 +22,40 @@ commonText.added.upperCase|Added
 commonText.successfully|successfully
 commonText.unknownError|Unknown error
 commonText.noInternet|No internet connection
+commonText.id|Id
+commonText.name|Name
+commonText.description|Description
+commonText.unlockDate|Unlock date
+commonText.researchPointCost|Research point cost
+commonText.researchCost|Research cost
+commonText.developmentCost|Development cost
+commonText.targetGroup|Target group
+commonText.compatibleGenres|Compatible genres
+commonText.compatibleThemes|Compatible themes
+commonText.goodGameplayFeatures|Good gameplay features
+commonText.badGameplayFeatures|Bad gameplay features
+commonText.designFocus|Design focus
+commonText.gameLength|Game length
+commonText.gameDepth|Game depth
+commonText.beginnerFriendliness|Beginner friendliness
+commonText.innovation|Innovation
+commonText.story|Story
+commonText.characterDesign|Character design
+commonText.levelDesign|Level design
+commonText.missionDesign|Mission design
+commonText.designDirection|Design direction
+commonText.coreGamersCasualGamers|Core-gamer/Casual-gamer
+commonText.nonviolentExtremeViolent|Nonviolent/Extreme violence
+commonText.easyHard|Easy/Hard
+commonText.workPriority|Work priority
+commonText.gameplay|Gameplay
+commonText.graphic|Graphic
+commonText.sound|Sound
+commonText.control|Control
+commonText.kid|Kid
+commonText.teen|Teen
+commonText.adult|Adult
+commonText.senior|Senior
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
@@ -68,6 +103,7 @@ dialog.backup.restoreBackup.title|Restore backup?
 dialog.backup.restoreBackup.initialBackup.notRestored|The initial backup was not restored.
 dialog.backup.restoreBackup.latestBackup.message|<html>Are you sure that you want to restore the latest backup?<br>The savegame backups will not be restored.<br>A backup of the current files will be created.
 dialog.backup.restoreBackup.latestBackup.notRestored|The latest backup was not restored.
+dialog.backup.restoreBackup.initialBackup.notRestored.mods|There was a problem removing the mods:
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|A .zip archive has been found:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Would you like to extract it and search it for mods?
@@ -130,6 +166,10 @@ dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip fil
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|The selected folder does not contain a valid
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|The selected folder does not contain the
 dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>file.<br>Please select the correct folder.
+dialog.sharingManager.couldNotBeImported|could not be imported
+dialog.sharingManager.couldNotBeImported.2|is not with the current mod tool version compatible
+dialog.sharingManager.couldNotBeImported.3|was exported in version:
+dialog.sharingManager.nameTaken|name is already taken
 
 dialog.updateChecker.noUpdateAvailable|<html>You are using the newest version.<br>No update available.
 dialog.updateChecker.noUpdateAvailable.title|No update available
@@ -140,6 +180,37 @@ dialog.updateChecker.updateAvailable.versionType.ver1|A new release is available
 dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is available:
 dialog.updateChecker.updateFailed|Update check failed: No internet connection
 
+dialog.analyzeExistingLicences.errorWhileScanningLicences|Error wile scanning licences:
+
+dialog.analyzeExistingLicences.errorWhileScanningPublishers|Error wile scanning publishers:
+
+dialog.dataStreamHelper.newFile.entryOutOfTarget|Entry is outside of the target dir:
+dialog.dataStreamHelper.newFile.failedToCreateDirectory|Failed to create directory
+
+dialog.sharingHandler.licence.addLicence|<html>Add this licence:<br>Name:
+dialog.sharingHandler.theme.addTheme|Add this theme?
+dialog.sharingHandler.theme.addTheme.title|Add theme?
+dialog.sharingHandler.type|Type:
+dialog.sharingHandler.hasBeenAdded|has been added successfully
+dialog.sharingHandler.unableToAddPublisher|Unable to add publisher
+dialog.sharingHandler.unableToAddPublisher.2|The special genre for for the requested publisher does not exist!
+dialog.sharingHandler.unableToAddTheme|Unable to add theme
+
+dialog.genreManager.addGenre.bodyButtonExplanation.var1|<html>Click yes to add this genre.<br>Click no cancel this operation.
+dialog.genreManager.addGenre.bodyButtonExplanation.var2|<html>Click yes to add this genre.<br>Click no to return to the step by step guide.<br>Click cancel to quit this guide.
+dialog.genreManager.addGenre.title|Add this genre?
+dialog.genreManager.addGenre.mainBody.genreIsReady|Your genre is ready:
+dialog.genreManager.addGenre.pic|Pic: see top left
+dialog.genreManager.addGenre.error.var1|<html>Error while processing image files.<br>Do you wan't to add you new genre anyway?
+dialog.genreManager.addGenre.error.var2|The genre was not added:<br>Error while editing Genres.txt<br>Please try again with administrator rights.
+dialog.genreManager.addGenre.error.var3|Your genre was not added.
+dialog.genreManager.addGenre.genreAdded.title|Genre added successfully!
+dialog.genreManager.addGenre.genreAdded.1|<html>Your new genre
+dialog.genreManager.addGenre.genreAdded.2|has been added successfully.<br>Do you want to edit the NPC_Games list to include your new genre?<br>Note: this can be undone with the feature [NPC_Games_List].
+dialog.genreManager.addGenre.npcGamesList.added|<html>has successfully<br>been added to the NpcGames list.
+dialog.genreManager.addGenre.npcGamesList.error.1|Error while adding genre with id
+dialog.genreManager.addGenre.npcGamesList.error.2|to NpcGames.txt.<br>Please try again with administrator rights.<br>Exception:
+
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
 errorMessages.gameFilesNotAnalyzed|<html>The game files could not be analyzed.<br>Please check if your mgt2 folder is set correctly.<br>Try launching the tool with administrator rights.
@@ -148,6 +219,7 @@ errorMessages.unableToOpenWebPage|Unable to open the web page:
 frame.title.error|Error
 frame.title.success|Success
 frame.title.about|About
+frame.title.continueAnyway|Continue anyway?
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be
@@ -232,6 +304,7 @@ textArea.import.importSuccess|Import successful:
 textArea.import.imported|Imported:
 textArea.import.alreadyExists|The following mod has not been imported because it already exists:
 textArea.import.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
+textArea.import.notCompatible.2|Genre was exported in version:
 textArea.import.specialPublisherNotExisting|The following publisher was not imported because the special genre does not exist:
 textArea.importAll.start|Starting import process
 textArea.importAll.cancel|Import process has been canceled

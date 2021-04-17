@@ -10,6 +10,7 @@ commonText.publisher|Publisher
 commonText.gameplayFeature|Gameplay Feature
 commonText.engineFeature|Engine Feature
 commonText.theme|Thema
+commonText.theme.upperCase|Thema
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -21,6 +22,40 @@ commonText.added.upperCase|Hinzugefügt
 commonText.successfully|erfolgreich
 commonText.unknownError|Unbekannter Fehler
 commonText.noInternet|Keine Verbindung zum Internet
+commonText.id|Id
+commonText.name|Name
+commonText.description|Beschreibung
+commonText.unlockDate|Freischaltdatum
+commonText.researchPointCost|Forschungspunktkosten
+commonText.researchCost|Forschungskosten
+commonText.developmentCost|Entwicklungskosten
+commonText.targetGroup|Zielgruppe
+commonText.compatibleGenres|Kompatible Genres
+commonText.compatibleThemes|Kompatible Themen
+commonText.goodGameplayFeatures|Gute Spielfunktionen
+commonText.badGameplayFeatures|Schlechte Spielfunktionen
+commonText.designFocus|Designschwerpunkte
+commonText.gameLength|Spiellänge
+commonText.gameDepth|Spieltiefe
+commonText.beginnerFriendliness|Zugänglichkeit
+commonText.innovation|Innovation
+commonText.story|Story
+commonText.characterDesign|Charakterdesign
+commonText.levelDesign|Leveldesign
+commonText.missionDesign|Missionsdesign
+commonText.designDirection|Ausrichtung
+commonText.coreGamersCasualGamers|Core-gamer/Casual-gamers
+commonText.nonviolentExtremeViolent|Jugendfrei/Explizite Inhalte
+commonText.easyHard|Einfach/Schwierig
+commonText.workPriority|Designpriorität
+commonText.gameplay|Gameplay
+commonText.graphic|Grafik
+commonText.sound|Sound
+commonText.control|Technik
+commonText.kid|Kinder
+commonText.teen|Teenager
+commonText.adult|Erwachsene
+commonText.senior|Senioren
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -131,6 +166,10 @@ dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip Dat
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|Der ausgewählte Ordner enthält keinen gültigen
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|Der ausgewählte Ordner enthält nicht die
 dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>Datei.<br>Bitte wähle den richtigen Ordner.
+dialog.sharingManager.couldNotBeImported|konnte nicht importiert werden
+dialog.sharingManager.couldNotBeImported.2|ist nicht mit der aktuellen Mod-Tool Version kompatiebel
+dialog.sharingManager.couldNotBeImported.3|wurde dieser Version exportiert:
+dialog.sharingManager.nameTaken|Name ist schon vergeben
 
 dialog.updateChecker.noUpdateAvailable|<html>Du benutzt die neueste Version. Kein Update verfügbar.
 dialog.updateChecker.noUpdateAvailable.title|Kein Update verfügbar
@@ -141,6 +180,37 @@ dialog.updateChecker.updateAvailable.versionType.ver1|Eine neue Version ist verf
 dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version ist verfügbar:
 dialog.updateChecker.updateFailed|Prüfen nach Updates fehlgeschlagen: Keine Verbindung zum Internet
 
+dialog.analyzeExistingLicences.errorWhileScanningLicences|Fehler beim scannen von Lizenzen:
+
+dialog.analyzeExistingLicences.errorWhileScanningPublishers|Fehler beim scannen von Publishern:
+
+dialog.dataStreamHelper.newFile.entryOutOfTarget|Der Eintrag befindet sich außerhalb des Zielverzeichnisses:
+dialog.dataStreamHelper.newFile.failedToCreateDirectory|Verzeichnis konnte nicht erstellt werden
+
+dialog.sharingHandler.licence.addLicence|<html>Diese Lizenz hinzufügen:
+dialog.sharingHandler.theme.addTheme|Dieses Thema hinzufügen?
+dialog.sharingHandler.theme.addTheme.title|Thema hinzufügen?
+dialog.sharingHandler.type|Typ:
+dialog.sharingHandler.hasBeenAdded|wurde erfolgreich hinzugefügt
+dialog.sharingHandler.unableToAddPublisher|Publisher kann nicht hinzugefügt werden
+dialog.sharingHandler.unableToAddPublisher.2|Das spezielle Genre für den Publisher existiert nicht!
+dialog.sharingHandler.unableToAddTheme|Thema kann nicht hinzugefügt werden
+
+dialog.genreManager.addGenre.bodyButtonExplanation.var1|<html>Klicke auf Ja, um dieses Genre hinzuzufügen.<br>Klicke auf Nein, um diesen Vorgang abzubrechen.
+dialog.genreManager.addGenre.bodyButtonExplanation.var2|<html>Klicke auf Ja, um dieses Genre hinzuzufügen.<br>Klicke auf Nein, um zur Schritt-für-Schritt-Anleitung zurückzukehren.<br>Klicke auf Abbrechen, um das Hinzufügen von Genres abzubrechen.
+dialog.genreManager.addGenre.title|Dieses Genre hinzufügen?
+dialog.genreManager.addGenre.mainBody.genreIsReady|Dein Genre ist bereit:
+dialog.genreManager.addGenre.pic|Bild: siehe oben links
+dialog.genreManager.addGenre.error.var1|<html>Fehler beim Verarbeiten von Bilddateien.<br>Soll das neue Genre trotzdem hinzugefügt werden?
+dialog.genreManager.addGenre.error.var2|Das Genre wurde nicht hinzugefügt:<br>Fehler beim Bearbeiten von der Genres.txt Datei<br>Bitte versuche es mit Administratorrechten erneut.
+dialog.genreManager.addGenre.error.var3|Genre wurde nicht hinzugefügt.
+dialog.genreManager.addGenre.genreAdded.title|Genre erfolgreich hinzugefügt!
+dialog.genreManager.addGenre.genreAdded.1|<html>Dein neues Genre
+dialog.genreManager.addGenre.genreAdded.2|wurde erfolgreich hinzugefügt.<br>Möchtest du die NPC_Games-Liste bearbeiten, um dein neues Genre aufzunehmen?<br>Hinweis: Dies kann mit der Funktion [NPC_Games_List] rückgängig gemacht werden.
+dialog.genreManager.addGenre.npcGamesList.added|wurde erfolgreich<br>zur Npc_Games_List hinzugefügt.
+dialog.genreManager.addGenre.npcGamesList.error.1|Fehler beim hinzufügen der genre id
+dialog.genreManager.addGenre.npcGamesList.error.2|zur NpcGamesList<br>Bitte versuche es mit Administartorrechten erneut.<br>Fehler:
+
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
 errorMessages.gameFilesNotAnalyzed|<html>Die Spieledateien konnten nicht analysiert werden.<br>Überprüfe bitte, ob der mgt2-Ordner richtig eingestellt ist.<br>Starte das Tool mit Administratorrechten.
@@ -149,6 +219,7 @@ errorMessages.unableToOpenWebPage|Die Webseite kann nicht geöffnet werden:
 frame.title.error|Fehler
 frame.title.success|Erfolg
 frame.title.about|Über
+frame.title.continueAnyway|Trotzdem weiter machen?
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
@@ -233,6 +304,7 @@ textArea.import.importSuccess|Import erfolgreich:
 textArea.import.imported|Importiert:
 textArea.import.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
 textArea.import.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod Tool Version kompatibel ist:
+textArea.import.notCompatible.2|Genre wurde exportiert in version:
 textArea.import.specialPublisherNotExisting|Der folgende Publisher wurde nicht importiert, da das Spezial Genre von ihm nicht existiert:
 textArea.importAll.start|Starte importier Prozess
 textArea.importAll.cancel|Importier Prozess wurde abgebrochen
@@ -274,7 +346,7 @@ publisherHelper.replaceWithRealPublishers.somethingWentWrong|<html>Irgendwas ist
 settings.settingsSaved|Einstellungen gespeichert!
 settings.mgt2FolderSetAutomatically|<html>Mad Games Tycoon 2 Ordner wurde automatisch gesetzt.<br><br>Ort:<br>
 settings.mgt2FolderSetAutomatically.windowTitle|Ordner automatisch gefunden
-settings.mgt2FolderNotFound|<html>Der Mad Games Tycoon Ordner wurde nicht gefunden.<br><br>Bitte geh in die Einstellungen und setze ihn manuell."
+settings.mgt2FolderNotFound|<html>Der Mad Games Tycoon Ordner wurde nicht gefunden.<br><br>Bitte geh in die Einstellungen und setze ihn manuell.
 settings.notFound|Nicht gefunden
 
 window.main.tile|MGT2 Mod Tool

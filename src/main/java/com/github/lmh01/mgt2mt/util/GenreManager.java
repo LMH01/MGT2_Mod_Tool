@@ -99,49 +99,49 @@ public class GenreManager {
     public static boolean addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
-        String messageBody = "Your genre is ready:\n\n" +
-                "Id:" + map.get("ID") + "\n" +
-                "Name: " + map.get("NAME EN") + "\n" +
-                "Description: " + map.get("DESC EN") + "\n" +
-                "Unlock date: " + map.get("DATE") + "\n" +
-                "Research point cost: " + map.get("RES POINTS") + "\n" +
-                "Research cost " + map.get("PRICE") + "\n" +
-                "Development cost: " + map.get("DEV COSTS") + "\n" +
-                "Pic: see top left\n" +
-                "Target group: " + getTargetGroups(map) + "\n" +
-                "\n*Compatible genres*\n\n" + getCompatibleGenres(map) + "\n" +
-                "\n*Compatible themes*\n\n" + getMapEntryToDisplay(map, "THEME COMB", 15) + "\n" +
-                "\n*Good gameplay features*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE GOOD", 10) + "\n" +
-                "\n*Bad gameplay features*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE BAD", 10) + "\n" +
-                "\n*Design focus*\n\n" +
-                "Game length: " + map.get("FOCUS0") + "\n" +
-                "Game depth: " + map.get("FOCUS1") + "\n" +
-                "Beginner friendliness: " + map.get("FOCUS2") + "\n" +
-                "Innovation: " + map.get("FOCUS3") + "\n" +
-                "Story: " + map.get("FOCUS4") + "\n" +
-                "Character design: " + map.get("FOCUS5") + "\n" +
-                "Level design: " + map.get("FOCUS6") + "\n" +
-                "Mission design: " + map.get("FOCUS7") + "\n" +
-                "\n*Design direction*\n\n" +
-                "Core gamers/Casual gamers: " + map.get("ALIGN0") + "\n" +
-                "Nonviolent/Extreme violence: " + map.get("ALIGN1") + "\n" +
-                "Easy/Hard: " + map.get("ALIGN2") + "\n" +
-                "\n*Work priority*\n\n" +
-                "Gameplay: " + map.get("GAMEPLAY") + "%\n" +
-                "Graphic: " + map.get("GRAPHIC") + "%\n" +
-                "Sound: " + map.get("SOUND") + "%\n" +
-                "Control: " + map.get("CONTROL") + "%\n";
+        String messageBody = I18n.INSTANCE.get("dialog.genreManager.addGenre.mainBody.genreIsReady") + "\n\n" +
+                I18n.INSTANCE.get("commonText.id") + ":" + map.get("ID") + "\n" +
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
+                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
+                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
+                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
+                I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "\n" +
+                I18n.INSTANCE.get("commonText.targetGroup") + ": " + getTargetGroups(map) + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.compatibleGenres") + "*\n\n" + getCompatibleGenres(map) + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.compatibleThemes") + "*\n\n" + getMapEntryToDisplay(map, "THEME COMB", 15) + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.goodGameplayFeatures") + "*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE GOOD", 10) + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.badGameplayFeatures") + "*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE BAD", 10) + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.designFocus") + "*\n\n" +
+                I18n.INSTANCE.get("commonText.gameLength") + ": " + map.get("FOCUS0") + "\n" +
+                I18n.INSTANCE.get("commonText.gameDepth") + ": " + map.get("FOCUS1") + "\n" +
+                I18n.INSTANCE.get("commonText.beginnerFriendliness") + ": " + map.get("FOCUS2") + "\n" +
+                I18n.INSTANCE.get("commonText.innovation") + ": " + map.get("FOCUS3") + "\n" +
+                I18n.INSTANCE.get("commonText.story") + ": " + map.get("FOCUS4") + "\n" +
+                I18n.INSTANCE.get("commonText.characterDesign") + ": " + map.get("FOCUS5") + "\n" +
+                I18n.INSTANCE.get("commonText.levelDesign") + ": " + map.get("FOCUS6") + "\n" +
+                I18n.INSTANCE.get("commonText.missionDesign") + ": " + map.get("FOCUS7") + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.designDirection") + "*\n\n" +
+                I18n.INSTANCE.get("commonText.coreGamersCasualGamers") + ": " + map.get("ALIGN0") + "\n" +
+                I18n.INSTANCE.get("commonText.nonviolentExtremeViolent") + ": " + map.get("ALIGN1") + "\n" +
+                I18n.INSTANCE.get("commonText.easyHard") + ": " + map.get("ALIGN2") + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.workPriority") + "*\n\n" +
+                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "%\n" +
+                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "%\n" +
+                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "%\n" +
+                I18n.INSTANCE.get("commonText.control") + ": " + map.get("CONTROL") + "%\n";
         int returnValue;
         if(showSummaryFromImport){
             if(showMessages){
-                String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no cancel this operation.";
-                returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+                String messageBodyButtonExplanation = "\n" + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var1");
+                returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
             }else{
                 returnValue = 0;
             }
         }else{
-            String messageBodyButtonExplanation = "\nClick yes to add this genre.\nClick no to return to the step by step guide.\nClick cancel to quit this guide.";
-            returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, "Add this genre?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+            String messageBodyButtonExplanation = "\n" + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var2");
+            returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
         }
         if(returnValue == 0){
             //click yes
@@ -152,7 +152,7 @@ public class GenreManager {
                 imageFileAccessedSuccess = true;
             } catch (IOException e) {
                 e.printStackTrace();
-                if(JOptionPane.showConfirmDialog(null, "Error while processing image files.\nDo you wan't to add you new genre anyway?", "Continue anyway?", JOptionPane.YES_NO_OPTION) == 0){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var1"), I18n.INSTANCE.get("frame.title.continueAnyway"), JOptionPane.YES_NO_OPTION) == 0){
                     //click yes
                     continueAnyway = true;
                 }
@@ -167,10 +167,10 @@ public class GenreManager {
                     GenreManager.genreAdded(map, showSummaryFromImport, genreIcon, showMessages);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), "The genre was not added:\nError while editing Genres.txt\nPlease try again with administrator rights.", "Unable to edit Genres.txt", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var2"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Your genre was not added.");
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var3"));
             }
         }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
             //Click no or close window
@@ -193,27 +193,27 @@ public class GenreManager {
         String targetGroups = "";
         if(map.get("TGROUP").contains("KID")){
             if(map.get("TGROUP").contains("TEEN") || map.get("TGROUP").contains("ADULT") || map.get("TGROUP").contains("OLD")){
-                targetGroups = targetGroups + "Kid, ";
+                targetGroups = targetGroups + I18n.INSTANCE.get("commonText.kid") + ", ";
             }else{
-                targetGroups = targetGroups + "Kid";
+                targetGroups = targetGroups + I18n.INSTANCE.get("commonText.kid");
             }
         }
         if(map.get("TGROUP").contains("true")){
             if(map.get("TGROUP").contains("ADULT") || map.get("TGROUP").contains("OLD")){
-                targetGroups = targetGroups + "Teen, ";
+                targetGroups = targetGroups + I18n.INSTANCE.get("commonText.teen") + ", ";
             }else{
-                targetGroups = targetGroups + "Teen";
+                targetGroups = targetGroups + I18n.INSTANCE.get("commonText.teen");
             }
         }
         if(map.get("TGROUP").contains("ADULT")){
             if(map.get("TGROUP").contains("OLD")){
-                targetGroups = targetGroups + "Adult, ";
+                targetGroups = targetGroups + I18n.INSTANCE.get("commonText.adult") + ", ";
             }else{
-                targetGroups = targetGroups + "Adult";
+                targetGroups = targetGroups + I18n.INSTANCE.get("commonText.adult");
             }
         }
         if(map.get("TGROUP").contains("OLD")){
-            targetGroups = targetGroups + "Senior";
+            targetGroups = targetGroups + I18n.INSTANCE.get("commonText.senior");
         }
         return targetGroups;
     }
@@ -271,7 +271,7 @@ public class GenreManager {
             if(String.valueOf(inputGenres.charAt(i)).equals("<")){
                 //Nothing happens
             }else if (String.valueOf(inputGenres.charAt(i)).equals(">")){
-                outputGenres.add(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(currentGenre.toString())));
+                outputGenres.add(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(currentGenre.toString()), true));
                 currentGenre = new StringBuilder();
             }else{
                 currentGenre.append(inputGenres.charAt(i));
@@ -317,13 +317,13 @@ public class GenreManager {
         }
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         if(showMessages){
-            if(JOptionPane.showConfirmDialog(null, "Your new genre [" + name + "] has been added successfully.\nDo you wan't to edit the NPC_Games list to include your new genre?\nNote: this can be undone with the feature [Add genre to NPC_Games].", "Genre added successfully!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.1") + " [" + name + "] " + I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.2"), I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){
                 try {
                     NPCGameListChanger.editNPCGames(id, true, 20);
-                    JOptionPane.showMessageDialog(new Frame(), "Genre ID [" + id + "] has successfully\nbeen added to the NpcGames list.");
+                    JOptionPane.showMessageDialog(new Frame(), "<html>" + I18n.INSTANCE.get("commonText.genre") + " " + I18n.INSTANCE.get("commonText.id") + " [" + id + "] " + I18n.INSTANCE.get("dialog.genreManager.addGenre.npcGamesList.added"));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), "Error while adding genre with id [" + id + "] to NpcGames.txt.\nnPlease try again with administrator rights.\nException: " + e.getMessage(), "Unable to edit NpcGames.txt", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), "<html>" + I18n.INSTANCE.get("dialog.genreManager.addGenre.npcGamesList.error.1") + " [" + id + "] " + I18n.INSTANCE.get("dialog.genreManager.addGenre.npcGamesList.error.2") + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }else{

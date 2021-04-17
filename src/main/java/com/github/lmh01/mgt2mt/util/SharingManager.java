@@ -110,12 +110,12 @@ public class SharingManager {
         }
         if(!CanBeImported && !Settings.disableSafetyFeatures){
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + importName + " - " + map.get("NAME EN")));
-            return importName + " [" + map.get("NAME EN") + "] could not be imported:\n" + importName + " is not with the current mod tool version compatible\n" + importName + " was exported in version: " + map.get("MGT2MT VERSION");
+            return importName + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingManager.couldNotBeImported") + ":\n" + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.couldNotBeImported.2") + "\n" + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.couldNotBeImported.3") + " " + map.get("MGT2MT VERSION");
         }
         for(Map<String, String> existingFeatures : existingFeatureList){
             for(Map.Entry<String, String> entry : existingFeatures.entrySet()){
                 if(entry.getValue().equals(map.get("NAME EN"))){
-                    LOGGER.info(importName + " already exists - " + importName + " name is already taken");
+                    LOGGER.info(importName + " " + I18n.INSTANCE.get("dialog.sharingManager.analyzeReturnValue.alreadyExists") + " - " + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.nameTaken"));
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + importName + " - " + map.get("NAME EN"));
                     return "false";
                 }
@@ -130,7 +130,7 @@ public class SharingManager {
         if(addFeature){
             importFunction.importer(map);
             if(showMessages){
-                JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] has been added successfully");
+                JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
             ChangeLog.addLogEntry(changelogId, map.get("NAME EN"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + importName + ": " + map.get("NAME EN"));

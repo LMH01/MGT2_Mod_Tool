@@ -20,7 +20,7 @@ public class EditGenreFile {
      * @param map The values that stand in this map are used to print the file
      * @param genreTranslations The map that includes the genre name translations
      */
-    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations) throws IOException {
+    public static void addGenre(Map<String, String> map, Map<String, String> genreTranslations) throws IOException {//TODO Schauen, ob der 2. Parameter weg kann
         LOGGER.info("Adding new genre...");
         File genreFile = Utils.getGenreFile();
         if(genreFile.exists()){

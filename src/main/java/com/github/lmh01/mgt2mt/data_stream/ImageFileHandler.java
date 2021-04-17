@@ -47,7 +47,7 @@ public class ImageFileHandler {
      * Moves the given file to the target location
      * @param imageFile This is the file that should be moved
      * @param outputFile This is the file that should be created
-     */
+     *///TODO rename function to copyGenreImages
     private static void copyImages(File imageFile, File outputFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
         if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
             LOGGER.info("The default image file is in use. No need to copy a new one.");

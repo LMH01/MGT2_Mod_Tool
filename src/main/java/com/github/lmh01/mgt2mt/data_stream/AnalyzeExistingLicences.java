@@ -86,7 +86,7 @@ public class AnalyzeExistingLicences {
             return string;
         }catch(IOException e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error wile scanning licences: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.analyzeExistingLicences.errorWhileScanningLicences") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }

@@ -164,9 +164,21 @@ public class AnalyzeExistingGenres {
      * @throws ArrayIndexOutOfBoundsException Is thrown when the requested genre id does not exist in the map.
      */
     public static String getGenreNameById(int id) throws ArrayIndexOutOfBoundsException{
+        return getGenreNameById(id, false);
+    }
+
+    public static String getGenreNameById(int id, boolean changeableLanguage){
         for(int i=0; i<genreList.size(); i++){
             if(genreList.get(i).get("ID").equals(Integer.toString(id))){
-                return genreList.get(i).get("NAME EN");
+                if(changeableLanguage){
+                    if(Settings.language.equals("English")){
+                        return genreList.get(i).get("NAME EN");
+                    }else if(Settings.language.equals("Deutsch")){
+                        return genreList.get(i).get("NAME GE");
+                    }
+                }else{
+                    return genreList.get(i).get("NAME EN");
+                }
             }
         }
         return "Genre not available";

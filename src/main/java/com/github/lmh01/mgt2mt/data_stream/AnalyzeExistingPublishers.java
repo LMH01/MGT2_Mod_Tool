@@ -85,7 +85,7 @@ public class AnalyzeExistingPublishers {
             return string;
         }catch(IOException e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error wile scanning publishers: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.analyzeExistingLicences.errorWhileScanningPublishers") + " " + e.getMessage(), I18n.INSTANCE.get("dialog.analyzeExistingLicences.errorWhileScanningPublishers"), JOptionPane.ERROR_MESSAGE);
         }
         return new String[]{};
     }
