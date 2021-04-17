@@ -18,13 +18,16 @@ commonText.removed|removed
 commonText.removed.upperCase|Removed
 commonText.remove|Remove
 commonText.removing|Removing
+commonText.added|added
 commonText.added.upperCase|Added
 commonText.successfully|successfully
 commonText.unknownError|Unknown error
 commonText.noInternet|No internet connection
 commonText.id|Id
 commonText.name|Name
+commonText.name.var1|Name
 commonText.description|Description
+commonText.description.var1|Description
 commonText.unlockDate|Unlock date
 commonText.researchPointCost|Research point cost
 commonText.researchCost|Research cost
@@ -56,6 +59,25 @@ commonText.kid|Kid
 commonText.teen|Teen
 commonText.adult|Adult
 commonText.senior|Senior
+commonText.addNameTranslations|Add name translations
+commonText.addNameTranslations.added|Name Translations Added
+commonText.addDescriptionTranslations|Add description translations
+commonText.addDescriptionTranslations.added|Description translations added
+commonText.addScreenshots|Add screenshots
+commonText.addGenreIcon|Add genre icon
+commonText.translationsAlreadyAdded|translations have already been added.<br>Do you want to clear the translations and add new ones?
+commonText.successfullyAdded|has been added successfully!
+commonText.imageFileSet|Image file set
+commonText.screenshots.added|Screenshots set
+commonText.imageFile.doesNotExist|<html>The entered image file does not exist.<br>Please select a valid file.
+commonText.imageFile.selectPngFile|Please select a .png file.
+commonText.imageFile.selectPngFiles.fileChooser|Please select .png files:
+commonText.imageFile.selectOnlyPngFile|Please select only .png files.
+commonText.imageFile.selectPngFile.fileChooser|Choose a genre image (.png):
+commonText.followingImageFilesHaveBeenAdded.firstPart|<html>The following image files have been added:
+commonText.isThisCorrect|Is this correct and do you want to continue?
+commonText.browse|Browse
+commonText.multipleFilesSelected|Multiple files selected
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
@@ -211,6 +233,20 @@ dialog.genreManager.addGenre.npcGamesList.added|<html>has successfully<br>been a
 dialog.genreManager.addGenre.npcGamesList.error.1|Error while adding genre with id
 dialog.genreManager.addGenre.npcGamesList.error.2|to NpcGames.txt.<br>Please try again with administrator rights.<br>Exception:
 
+dialog.genreHelper.addRandomizedGenre.title|Add Random Genre
+dialog.genreHelper.addRandomizedGenre.enterGenreName|ENTER GENRE NAME
+dialog.genreHelper.addRandomizedGenre.enterGenreDescription|ENTER GENRE DESCRIPTION
+dialog.genreHelper.addRandomizedGenre.button.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
+dialog.genreHelper.addRandomizedGenre.button.addDescriptionTranslations.toolTip|<html>Click to add description translations<br>The value entered in the main text field will be used as the english translation
+dialog.genreHelper.addRandomizedGenre.button.addGenreIcon.toolTip|Click to select a .png file that should be the genre icon
+dialog.genreHelper.addRandomizedGenre.button.addGenreScreenshots.toolTip|Click to select .png images that should be used as game screenshots
+dialog.genreHelper.addRandomizedGenre.checkBox.showSummary|Show Genre Summary
+dialog.genreHelper.addRandomizedGenre.checkBox.showSummary.toolTip|Check to show the genre summary
+dialog.genreHelper.addRandomizedGenre.addGenreIcon.iconSet|Genre Icon set
+dialog.genreHelper.getGenreScreenshots.message|<html>Click browse or enter enter the image path manually.<br>When the image path is set click okay.<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page.<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3
+dialog.genreHelper.getGenreScreenshots.imageFileAdded|Image file has been added.
+dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Image files have been added.
+
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
 errorMessages.gameFilesNotAnalyzed|<html>The game files could not be analyzed.<br>Please check if your mgt2 folder is set correctly.<br>Try launching the tool with administrator rights.
@@ -220,6 +256,9 @@ frame.title.error|Error
 frame.title.success|Success
 frame.title.about|About
 frame.title.continueAnyway|Continue anyway?
+frame.title.isThisCorrect|Is this correct?
+frame.title.addScreenshot|Add a screenshot
+frame.title.fileNotFound|File not found
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be

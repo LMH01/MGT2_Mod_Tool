@@ -31,20 +31,20 @@ public class GenreHelper {
             AtomicReference<String> iconPath = new AtomicReference<>(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
 
             JPanel panelName = new JPanel();
-            JLabel labelName = new JLabel("Name:");
-            JTextField textFieldName = new JTextField("ENTER GENRE NAME");
+            JLabel labelName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
+            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.enterGenreName"));
             panelName.add(labelName);
             panelName.add(textFieldName);
 
-            JButton buttonAddNameTranslations = new JButton("Add Name Translations");
-            buttonAddNameTranslations.setToolTipText("<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation");
+            JButton buttonAddNameTranslations = new JButton(I18n.INSTANCE.get("commonText.addNameTranslations"));
+            buttonAddNameTranslations.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.button.addNameTranslations.toolTip"));
             buttonAddNameTranslations.addActionListener(actionEvent -> {
                 if(!nameTranslationsAdded.get()){
                     mapNameTranslations[0] = TranslationManager.getTranslationsMap();
                     nameTranslationsAdded.set(true);
-                    buttonAddNameTranslations.setText("Name Translations Added");
+                    buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
                 }else{
-                    if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.name.var1") + " " + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                         mapNameTranslations[0] = TranslationManager.getTranslationsMap();
                         nameTranslationsAdded.set(true);
                     }
@@ -52,50 +52,50 @@ public class GenreHelper {
             });
 
             JPanel panelDescription = new JPanel();
-            JLabel labelDescription = new JLabel("Description:");
-            JTextField textFieldDescription = new JTextField("ENTER GENRE DESCRIPTION");
+            JLabel labelDescription = new JLabel(I18n.INSTANCE.get("commonText.description") + ":");
+            JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.enterGenreDescription"));
             panelDescription.add(labelDescription);
             panelDescription.add(textFieldDescription);
 
-            JButton buttonAddDescriptionTranslations = new JButton("Add description translations");
-            buttonAddDescriptionTranslations.setToolTipText("<html>Click to add description translations<br>The value entered in the main text field will be used as the english translation");
+            JButton buttonAddDescriptionTranslations = new JButton(I18n.INSTANCE.get("commonText.addDescriptionTranslations"));
+            buttonAddDescriptionTranslations.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.button.addDescriptionTranslations.toolTip"));
             buttonAddDescriptionTranslations.addActionListener(actionEvent -> {
                 if(!descriptionTranslationsAdded.get()){
                     mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
-                    buttonAddDescriptionTranslations.setText("Description Translations Added");
+                    buttonAddDescriptionTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
                     descriptionTranslationsAdded.set(true);
                 }else{
-                    if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.description.var1") + " " + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                         mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
                         descriptionTranslationsAdded.set(true);
                     }
                 }
             });
 
-            JButton buttonSetIcon = new JButton("Add Genre Icon");
-            buttonSetIcon.setToolTipText("Click to select a .png file that should be the genre icon");
+            JButton buttonSetIcon = new JButton(I18n.INSTANCE.get("commonText.addGenreIcon"));
+            buttonSetIcon.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.button.addGenreIcon.toolTip"));
             buttonSetIcon.addActionListener(actionEvent -> {
                 iconPath.set(getGenreImageFilePath(false, true, null));
                 if(!iconPath.equals("error")){
-                    buttonSetIcon.setText("Genre Icon Set");
+                    buttonSetIcon.setText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.addGenreIcon.iconSet"));
                 }else{
                     iconPath.set(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    buttonSetIcon.setText("Add Genre Icon");
+                    buttonSetIcon.setText(I18n.INSTANCE.get("commonText.addGenreIcon"));
                 }
             });
 
-            JButton buttonSetScreenshots = new JButton("Add Screenshots");
-            buttonSetScreenshots.setToolTipText("Click to select .png images that should be used as game screenshots");
+            JButton buttonSetScreenshots = new JButton(I18n.INSTANCE.get("commonText.addScreenshots"));
+            buttonSetScreenshots.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.button.addGenreScreenshots.toolTip"));
             buttonSetScreenshots.addActionListener(actionEvent -> {
                 setGenreScreenshots(screenshotFiles, buttonSetScreenshots);
             });
 
-            JCheckBox checkBoxShowSummary = new JCheckBox("Show Genre Summary");
-            checkBoxShowSummary.setToolTipText("Check to show the genre summary");
+            JCheckBox checkBoxShowSummary = new JCheckBox(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.checkBox.showSummary"));
+            checkBoxShowSummary.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.checkBox.showSummary.toolTip"));
 
             Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, buttonSetIcon, buttonSetScreenshots, checkBoxShowSummary};
             while(true){
-                if(JOptionPane.showConfirmDialog(null, params, "Add Random Genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     Map<String, String> map = new HashMap<>();
                     for(Map.Entry<String, String> entry : mapNameTranslations[0].entrySet()){
                         map.put("NAME " + entry.getKey(), entry.getValue());
@@ -110,10 +110,10 @@ public class GenreHelper {
                     map.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
                     String genreName = textFieldName.getText();
                     String genreDescription = textFieldDescription.getText();
-                    if(textFieldName.getText().equals("ENTER GENRE NAME") || textFieldName.getText().isEmpty()){
+                    if(textFieldName.getText().equals(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.enterGenreName")) || textFieldName.getText().isEmpty()){
                         genreName = "Randomized Genre";
                     }
-                    if(textFieldDescription.getText().equals("ENTER GENRE DESCRIPTION") || textFieldDescription.getText().isEmpty()){
+                    if(textFieldDescription.getText().equals(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.enterGenreDescription")) || textFieldDescription.getText().isEmpty()){
                         genreDescription = "Genre created by the MGT2 Mod Tool using random values";
                     }
                     if(map.containsKey("NAME EN")){
@@ -158,7 +158,7 @@ public class GenreHelper {
                     setGameplayFeatureCompatibility(map, gameplayFeatures.get(0), gameplayFeatures.get(1));
                     File iconFile = new File(iconPath.toString());
                     if(GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected())){
-                        JOptionPane.showMessageDialog(null, "Genre [" + genreName + "] has been added successfully!", "Genre added", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.genre") + " [" + genreName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("commonText.genre") + " " + I18n.INSTANCE.get("commonText.added"), JOptionPane.INFORMATION_MESSAGE);
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + genreName);
                     }
                     break;
@@ -179,15 +179,15 @@ public class GenreHelper {
                 File imageFile = new File(textFieldPath);
                 if(imageFile.exists()){
                     if(showDialog){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                        JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFileSet"));
                     }
                     return textFieldPath;
                 }else{
-                    JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.doesNotExist"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     return "error";
                 }
             }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
                 return "error";
             }
         }else{
@@ -211,16 +211,16 @@ public class GenreHelper {
 
                 JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
                 fileChooser.setFileFilter(fileFilter);
-                fileChooser.setDialogTitle("Choose a genre image (.png):");
+                fileChooser.setDialogTitle(I18n.INSTANCE.get("commonText.imageFile.selectPngFile.fileChooser"));
 
                 int return_value = fileChooser.showOpenDialog(null);
                 if (return_value == 0) {
                     if(fileChooser.getSelectedFile().getName().contains(".png")){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                        JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFileSet"));
                         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                         return fileChooser.getSelectedFile().getPath();
                     }else{
-                        JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                        JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
                         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                         return "error";
                     }
@@ -247,12 +247,12 @@ public class GenreHelper {
                 for (File arrayListScreenshotFile : genreScreenshots.get()) {
                     filePaths.append("<br>").append(arrayListScreenshotFile);
                 }
-                if(JOptionPane.showConfirmDialog(null, "<html>The following image files have been added:<br>" + filePaths + "<br><br>Is this correct and do you want to continue?", "Is this correct?", JOptionPane.YES_NO_OPTION) == 0){
-                    button.setText("Screenshots Set");
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.followingImageFilesHaveBeenAdded.firstPart") + "<br>" + filePaths + "<br><br>" + I18n.INSTANCE.get("commonText.isThisCorrect"), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == 0){
+                    button.setText(I18n.INSTANCE.get("commonText.screenshots.added"));
                     break;
                 }
             }else{
-                button.setText("Add Screenshots");
+                button.setText(I18n.INSTANCE.get("commonText.addScreenshots"));
                 break;
             }
         }
@@ -266,11 +266,8 @@ public class GenreHelper {
         ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
         ArrayList<File> arrayListScreenshotFilesSelected = new ArrayList<>();
         JTextField textFieldScreenshotFile = new JTextField();
-        JLabel labelMessage = new JLabel("<html>Click browse or enter enter the image path manually." +
-                "<br>When the image path is set click okay." +
-                "<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page." +
-                "<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3");
-        JButton buttonBrowse = new JButton("Browse");
+        JLabel labelMessage = new JLabel(I18n.INSTANCE.get("dialog.genreHelper.getGenreScreenshots.message"));
+        JButton buttonBrowse = new JButton(I18n.INSTANCE.get("commonText.browse"));
         AtomicBoolean multipleFilesSelected = new AtomicBoolean(false);
         AtomicInteger numberOfScreenshotsToAdd = new AtomicInteger();
         buttonBrowse.addActionListener(actionEventSmall ->{
@@ -294,7 +291,7 @@ public class GenreHelper {
 
                 JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
                 fileChooser.setFileFilter(fileFilter);
-                fileChooser.setDialogTitle("Choose a genre image (.png):");
+                fileChooser.setDialogTitle(I18n.INSTANCE.get("commonText.imageFile.selectPngFiles.fileChooser"));
                 fileChooser.setMultiSelectionEnabled(true);
 
                 int return_value = fileChooser.showOpenDialog(null);
@@ -312,12 +309,12 @@ public class GenreHelper {
                                 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                                 if(multipleFilesSelected.get()){
                                     arrayListScreenshotFilesSelected.add(screenshots[i]);
-                                    textFieldScreenshotFile.setText("Multiple files selected");
+                                    textFieldScreenshotFile.setText(I18n.INSTANCE.get("commonText.multipleFilesSelected"));
                                 }else{
                                     textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
                                 }
                             }else{
-                                JOptionPane.showMessageDialog(new Frame(), "Please select only .png files.");
+                                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectOnlyPngFile"));
                                 failed = true;
                                 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                             }
@@ -330,23 +327,23 @@ public class GenreHelper {
             }
         });
         Object[] params = {labelMessage,textFieldScreenshotFile, buttonBrowse};
-        if(JOptionPane.showConfirmDialog(null, params, "Add a screenshot", JOptionPane.OK_CANCEL_OPTION) == 0){
+        if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("frame.title.addScreenshot"), JOptionPane.OK_CANCEL_OPTION) == 0){
             String textFieldPath = textFieldScreenshotFile.getText();
             if(textFieldPath.endsWith(".png")){
                 File imageFile = new File(textFieldPath);
                 if(imageFile.exists()){
                     arrayListScreenshotFiles.add(new File(textFieldPath));
-                    JOptionPane.showMessageDialog(new Frame(), "Image file has been added.");
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreHelper.getGenreScreenshots.imageFileAdded"));
                 }else{
-                    JOptionPane.showMessageDialog(new Frame(), "The entered image file does not exist.\nPlease select a valid file.", "File not found", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.doesNotExist"), I18n.INSTANCE.get("frame.title.fileNotFound"), JOptionPane.ERROR_MESSAGE);
                 }
             }else if(multipleFilesSelected.get()){
                 for(int i = 0; i< numberOfScreenshotsToAdd.get(); i++){
                     arrayListScreenshotFiles.add(arrayListScreenshotFilesSelected.get(i));
                 }
-                JOptionPane.showMessageDialog(new Frame(), "Image files have been added.");
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreHelper.getGenreScreenshots.imageFilesAdded"));
             }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
 
             }
             return arrayListScreenshotFiles;

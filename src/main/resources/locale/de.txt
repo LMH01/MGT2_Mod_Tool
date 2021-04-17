@@ -18,13 +18,16 @@ commonText.removed|entfernt
 commonText.removed.upperCase|Entfernt
 commonText.remove|Entfernen
 commonText.removing|Entferne
+commonText.added|hinzugefügt
 commonText.added.upperCase|Hinzugefügt
 commonText.successfully|erfolgreich
 commonText.unknownError|Unbekannter Fehler
 commonText.noInternet|Keine Verbindung zum Internet
 commonText.id|Id
 commonText.name|Name
+commonText.name.var1|Namens
 commonText.description|Beschreibung
+commonText.description.var1|Beschreibungs
 commonText.unlockDate|Freischaltdatum
 commonText.researchPointCost|Forschungspunktkosten
 commonText.researchCost|Forschungskosten
@@ -56,6 +59,25 @@ commonText.kid|Kinder
 commonText.teen|Teenager
 commonText.adult|Erwachsene
 commonText.senior|Senioren
+commonText.addNameTranslations|Übersetzungen für Namen hinzufügen
+commonText.addNameTranslations.added|Übersetzungen hinzugefügt
+commonText.addDescriptionTranslations|Übersetzungen für Beschreibungen hinzufügen
+commonText.addDescriptionTranslations.added|Übersetzungen hinzugefügt
+commonText.addScreenshots|Screenshots hinzufügen
+commonText.addGenreIcon|Genre Icon hinzufügen
+commonText.translationsAlreadyAdded|übersetzungen wurden bereits hinzugefügt.<br>Sollen die Übersetzungen gelöscht werden und möchtest du neue hinzufügen?
+commonText.successfullyAdded|wurde erfolgreich hinzugefügt!
+commonText.imageFileSet|Bilddatei eingestellt
+commonText.screenshots.added|Screenhots eingestellt
+commonText.imageFile.doesNotExist|<html>Die eingegebene Bilddatei existiert nicht.<br>Wähle bitte eine gültige Datei aus.
+commonText.imageFile.selectPngFile|Wähle bitte eine .png Datei aus.
+commonText.imageFile.selectOnlyPngFile|Wähle bitte nur .png Dateien aus.
+commonText.imageFile.selectPngFile.fileChooser|Wähle ein Genre Bild aus (png.):
+commonText.imageFile.selectPngFiles.fileChooser|Wähle .png Dateien aus:
+commonText.followingImageFilesHaveBeenAdded.firstPart|<html>Die folgenden Bilddateien wurden hinzugefügt:
+commonText.isThisCorrect|Ist das richtig und möchtest du weiter machen?
+commonText.browse|Durchsuchen
+commonText.multipleFilesSelected|Mehrere Dateien ausgewählt
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -211,6 +233,20 @@ dialog.genreManager.addGenre.npcGamesList.added|wurde erfolgreich<br>zur Npc_Gam
 dialog.genreManager.addGenre.npcGamesList.error.1|Fehler beim hinzufügen der genre id
 dialog.genreManager.addGenre.npcGamesList.error.2|zur NpcGamesList<br>Bitte versuche es mit Administartorrechten erneut.<br>Fehler:
 
+dialog.genreHelper.addRandomizedGenre.title|Zufälliges Genre hinzufügen
+dialog.genreHelper.addRandomizedGenre.enterGenreName|GIB EINEN GENRE NAMEN EIN
+dialog.genreHelper.addRandomizedGenre.enterGenreDescription|GIB EINE BESCHREIBUNG EIN
+dialog.genreHelper.addRandomizedGenre.button.addNameTranslations.toolTip|<html>Klicke hier, um Übersetzungen für den Genre Namen hinzuzufügen.<br>Der im Haupttextfeld eingegebene Wert wird als englische Übersetzung verwendet
+dialog.genreHelper.addRandomizedGenre.button.addDescriptionTranslations.toolTip|<html>Klicke hier, um Übersetzungen für die Genre Beschreibung hinzuzufügen.<br>Der im Haupttextfeld eingegebene Wert wird als englische Übersetzung verwendet
+dialog.genreHelper.addRandomizedGenre.button.addGenreIcon.toolTip|Klicke, um eine PNG-Datei auszuwählen, die das Genresymbol sein soll
+dialog.genreHelper.addRandomizedGenre.button.addGenreScreenshots.toolTip|Klicke hier, um PNG-Bilder auszuwählen, die als Spiel-Screenshots verwendet werden sollen
+dialog.genreHelper.addRandomizedGenre.checkBox.showSummary|Genre Zusammenfassung anzeigen
+dialog.genreHelper.addRandomizedGenre.checkBox.showSummary.toolTip|Aktiviere diese Option, um die Genreübersicht angezeigt zu bekommen
+dialog.genreHelper.addRandomizedGenre.addGenreIcon.iconSet|Genre Icon ausgewählt
+dialog.genreHelper.getGenreScreenshots.message|<html>Klicken auf Durchsuchen oder gib den Bildpfad manuell ein.<br>Klicke auf OK, wenn der Bildpfad festgelegt ist.<br> Dadurch wird der Screenshot zu einer Liste von Screenshots hinzugefügt, die auf der Entwicklungsfortschrittsseite angezeigt werden.<br>Hinweis: Die Bilddatei sollte eine ".png" -Datei sein und das Seitenverhältnis sollte 4: 3 betragen
+dialog.genreHelper.getGenreScreenshots.imageFileAdded|Bild wurde hinzugefügt.
+dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Bilder wurden hinzugefügt.
+
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
 errorMessages.gameFilesNotAnalyzed|<html>Die Spieledateien konnten nicht analysiert werden.<br>Überprüfe bitte, ob der mgt2-Ordner richtig eingestellt ist.<br>Starte das Tool mit Administratorrechten.
@@ -220,6 +256,9 @@ frame.title.error|Fehler
 frame.title.success|Erfolg
 frame.title.about|Über
 frame.title.continueAnyway|Trotzdem weiter machen?
+frame.title.isThisCorrect|Ist das richtig?
+frame.title.addScreenshot|Screenshot hinzufügen
+frame.title.fileNotFound|Datei wurde nicht gefunden
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
