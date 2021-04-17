@@ -510,7 +510,7 @@ public class SharingManager {
                             boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                             AtomicBoolean showAlreadyExistPopups = new AtomicBoolean(checkBoxDisableAlreadyExistPopups.isSelected());
                             boolean errorOccurred = false;
-                            ProgressBarHelper.initializeProgressBar(0, engineFeatures.size() + gameplayFeatures.size() + genres.size() + publisher.size() + themes.size() + licences.size(), I18n.INSTANCE.get("progressBar.importingMods"));
+                            ProgressBarHelper.initializeProgressBar(0, getNumberOfModsToImport(selectedEntriesEngineFeatures, selectedEntriesGameplayFeatures, selectedEntriesGenres, selectedEntriesLicences, selectedEntriesPublishers, selectedEntriesThemes, engineFeatures, gameplayFeatures, genres, licences, publisher, themes), I18n.INSTANCE.get("progressBar.importingMods"));
                             if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> SharingHandler.importEngineFeature(string, !showMessageDialogs), SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing engine features");
                                 errorOccurred = true;
@@ -893,5 +893,51 @@ public class SharingManager {
         }else{
             someThingsNotCompatible.set(true);
         }
+    }
+
+    private static int getNumberOfModsToImport(AtomicReference<ArrayList<Integer>> selectedEntriesEngineFeatures,
+                                               AtomicReference<ArrayList<Integer>> selectedEntriesGameplayFeatures,
+                                               AtomicReference<ArrayList<Integer>> selectedEntriesGenres,
+                                               AtomicReference<ArrayList<Integer>> selectedEntriesLicences,
+                                               AtomicReference<ArrayList<Integer>> selectedEntriesPublishers,
+                                               AtomicReference<ArrayList<Integer>> selectedEntriesThemes,
+                                               ArrayList<File> engineFeatures,
+                                               ArrayList<File> gameplayFeatures,
+                                               ArrayList<File> genres,
+                                               ArrayList<File> licences,
+                                               ArrayList<File> publisher,
+                                               ArrayList<File> themes){
+        int maxValue = 0;
+        if(selectedEntriesEngineFeatures.get().size() > 0){
+            maxValue = maxValue + selectedEntriesEngineFeatures.get().size();
+        }else{
+            maxValue = maxValue + engineFeatures.size();
+        }
+        if(selectedEntriesGameplayFeatures.get().size() > 0){
+            maxValue = maxValue + selectedEntriesGameplayFeatures.get().size();
+        }else{
+            maxValue = maxValue + gameplayFeatures.size();
+        }
+        if(selectedEntriesGenres.get().size() > 0){
+            maxValue = maxValue + selectedEntriesGenres.get().size();
+        }else{
+            maxValue = maxValue + genres.size();
+        }
+        if(selectedEntriesLicences.get().size() > 0){
+            maxValue = maxValue + selectedEntriesLicences.get().size();
+        }else{
+            maxValue = maxValue + licences.size();
+        }
+        if(selectedEntriesPublishers.get().size() > 0){
+            maxValue = maxValue + selectedEntriesPublishers.get().size();
+        }else{
+            maxValue = maxValue + publisher.size();
+        }
+        if(selectedEntriesThemes.get().size() > 0){
+            maxValue = maxValue + selectedEntriesThemes.get().size();
+        }else{
+            maxValue = maxValue + themes.size();
+        }
+        return maxValue;
     }
 }
