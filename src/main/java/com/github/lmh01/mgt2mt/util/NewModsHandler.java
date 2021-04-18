@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
@@ -21,7 +22,7 @@ public class NewModsHandler {
 
     public static void addGenre(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeManager.genreAnalyzer.analyzeFile();
             AnalyzeExistingThemes.analyzeThemeFiles();
             GenreManager.startStepByStepGuide();
         } catch (IOException e) {
@@ -116,10 +117,10 @@ public class NewModsHandler {
             buttonSelectGenre.setToolTipText("Click to select what genre the fan base of your publisher likes the most");
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
-                    AnalyzeExistingGenres.analyzeGenreFile();
+                    AnalyzeManager.genreAnalyzer.analyzeFile();
                     JLabel labelChooseGenre = new JLabel("Select what main genre your publisher should have:");
                     String[] string;
-                    string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
+                    string = AnalyzeManager.genreAnalyzer.getContentByAlphabet();
                     JList<String> listAvailableGenres = new JList<>(string);
                     listAvailableGenres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
@@ -132,7 +133,7 @@ public class NewModsHandler {
                     if(JOptionPane.showConfirmDialog(null, params, "Select genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                         if(!listAvailableGenres.isSelectionEmpty()){
                             String currentGenre = listAvailableGenres.getSelectedValue();
-                            genreID.set(AnalyzeExistingGenres.getGenreIdByName(currentGenre));
+                            genreID.set(AnalyzeManager.genreAnalyzer.getContentIdByName(currentGenre));
                             buttonSelectGenre.setText(currentGenre);
                         }else{
                             JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
@@ -216,7 +217,7 @@ public class NewModsHandler {
             AnalyzeExistingThemes.analyzeThemeFiles();
             final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
             ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
-            String[] string = AnalyzeExistingGenres.getGenresByAlphabetWithoutId();
+            String[] string = AnalyzeManager.genreAnalyzer.getContentByAlphabet();
             JLabel labelEnterThemeName = new JLabel("Enter the theme name:");
             JTextField textFieldThemeName = new JTextField();
             JButton buttonAddTranslations = new JButton("Add translations");
@@ -256,7 +257,7 @@ public class NewModsHandler {
                             if(!AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.containsValue(textFieldThemeName.getText()) && !AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.containsValue(textFieldThemeName.getText())){
                                 if(!textFieldThemeName.getText().matches(".*\\d.*")){
                                     arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
-                                    for(Map<String, String> map : AnalyzeExistingGenres.genreList){
+                                    for(Map<String, String> map : AnalyzeManager.genreAnalyzer.getFileContent()){
                                         for(String name : arrayListCompatibleGenreNames){
                                             if(map.get("NAME EN").equals(name)){
                                                 arrayListCompatibleGenreIds.add(Integer.parseInt(map.get("ID")));

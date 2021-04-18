@@ -24,7 +24,6 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
     //
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedAnalyzer.class);
-    private static int maxId;
 
     /**
      * Analyzes the file and puts its values in the map.
@@ -42,16 +41,21 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
                 }
             }
         }
-        maxId = currentMaxId;
+        setMaxId(currentMaxId);
         LOGGER.info("Max" + getAnalyzerType() + "Id: " + currentMaxId);
         return fileContent;
     }
 
     /**
+     * returns that analyzed file
+     */
+    public abstract List<Map<String, String>> getFileContent();
+
+    /**
      * @return Returns the next free id.
      */
     public int getFreeId(){
-        return maxId+1;
+        return getMaxId()+1;
     }
 
     /**
@@ -176,5 +180,18 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
             }
         }
         return mapSingleContent;
+    }
+
+    /**
+     * @param genreId The content id for which the position should be returned
+     * @return Returns the position in the fileContent list where the input id is stored in.
+     */
+    public int getPositionInFileContentListById(int genreId){
+        for(int i=0; i<getFileContent().size(); i++){
+            if(getFileContent().get(i).get("ID").equals(Integer.toString(genreId))){
+                return i;
+            }
+        }
+        return -1;
     }
 }

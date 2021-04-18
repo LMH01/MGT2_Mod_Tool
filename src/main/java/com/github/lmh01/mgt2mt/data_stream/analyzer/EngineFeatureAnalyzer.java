@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     List<Map<String, String>> fileContent;
+    int maxId = 0;
 
     @Override
     public File getFileToAnalyze() {
@@ -38,5 +39,15 @@ public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     @Override
     public void analyzeFile() throws IOException {
         fileContent = getAnalyzedFile();
+    }
+
+    @Override
+    public int getMaxId() {
+        return maxId;
+    }
+
+    @Override
+    public void setMaxId(int id) {
+        maxId = id;
     }
 }

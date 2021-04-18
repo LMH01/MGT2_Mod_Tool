@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.Map;
 
 public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer{
     List<Map<String, String>> fileContent;
+    int maxId = 0;
 
     @Override
     public File getFileToAnalyze() {
@@ -39,5 +39,15 @@ public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer{
     @Override
     public void analyzeFile() throws IOException {
         fileContent = getAnalyzedFile();
+    }
+
+    @Override
+    public int getMaxId() {
+        return maxId;
+    }
+
+    @Override
+    public void setMaxId(int id) {
+        maxId = id;
     }
 }

@@ -1,0 +1,18 @@
+Skill Game
+Puzzle Game
+Adventure
+Role-Playing Game
+Strategy
+Action
+Platformer
+Simulation
+Sport Game
+Economic Simulation
+Fighting Game
+Building Game
+Interactive Movie
+Real-Time Strategy
+First-Person Shooter
+Visual Novel
+Third-Person Shooter
+Racing

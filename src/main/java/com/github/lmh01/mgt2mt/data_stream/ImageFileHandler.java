@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -126,7 +127,7 @@ public class ImageFileHandler {
      * @param genreId The genre id
      */
     public static void removeImageFiles(String genreName) throws IOException {
-        int genreId = AnalyzeExistingGenres.getGenreIdByName(genreName);
+        int genreId = AnalyzeManager.genreAnalyzer.getContentIdByName(genreName);
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
         File screenshotFolder = new File(getScreenshotsDirectory() + "\\" + genreId + "\\");

@@ -1,9 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.helper.EngineFeatureHelper;
 import com.github.lmh01.mgt2mt.util.helper.GameplayFeatureHelper;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -41,10 +40,10 @@ public class Summaries {
             ArrayList<Integer> badGenreIds = new ArrayList<>();
             ArrayList<Integer> goodGenreIds = new ArrayList<>();
             for(String string : badGenreNames){
-                badGenreIds.add(AnalyzeExistingGenres.getGenreIdByName(string));
+                badGenreIds.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
             }
             for(String string : goodGenreNames){
-                goodGenreIds.add(AnalyzeExistingGenres.getGenreIdByName(string));
+                goodGenreIds.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
             }
             map.remove("BAD");
             map.remove("GOOD");
@@ -62,7 +61,7 @@ public class Summaries {
                 }else{
                     firstBadFeature = false;
                 }
-                badGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(string)));
+                badGenresFeatures.append(AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(string)));
             }
         }
         StringBuilder goodGenresFeatures = new StringBuilder();
@@ -76,7 +75,7 @@ public class Summaries {
                 }else{
                     firstGoodFeature = false;
                 }
-                goodGenresFeatures.append(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(string)));
+                goodGenresFeatures.append(AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(string)));
             }
         }
         String arcadeCompatibility = "yes";

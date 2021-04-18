@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
@@ -119,7 +119,7 @@ public class WindowAddGenrePage1 extends JFrame{
             contentPane.add(buttonExplainGenreID);
         }else{
             setBounds(100, 100, 335, 160);
-            spinnerId.setModel(new SpinnerNumberModel(AnalyzeExistingGenres.getFreeGenreID(), AnalyzeExistingGenres.getFreeGenreID(), AnalyzeExistingGenres.getFreeGenreID(), 1));
+            spinnerId.setModel(new SpinnerNumberModel(AnalyzeManager.genreAnalyzer.getFreeId(), AnalyzeManager.genreAnalyzer.getFreeId(), AnalyzeManager.genreAnalyzer.getFreeId(), 1));
             spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
             spinnerId.setVisible(false);
@@ -173,10 +173,10 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeExistingGenres.getGenreIdsInUse().contains(spinnerId.getValue())){
+        if(AnalyzeManager.genreAnalyzer.getGenreIdsInUse().contains(spinnerId.getValue())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
-        }else if(AnalyzeExistingGenres.getGenreNamesInUse().contains(textFieldGenreName.getToolTipText())){
+        }else if(AnalyzeManager.genreAnalyzer.getGenreIdsInUse().contains(textFieldGenreName.getToolTipText())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
             return false;
         }else if(textFieldGenreName.getText().isEmpty()){

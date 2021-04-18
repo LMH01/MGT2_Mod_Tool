@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
@@ -22,7 +21,7 @@ public class GenreHelper {
 
     public static void addRandomizedGenre(){
         try{
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeManager.genreAnalyzer.analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
             AtomicReference<ArrayList<File>> screenshotFiles = new AtomicReference<>(new ArrayList<>());
@@ -107,7 +106,7 @@ public class GenreHelper {
                     //Randomized value allocation
                     String unlockMonth = convertMonthNumberToMonthName(Utils.getRandomNumber(1, 12));
                     int unlockYear = Utils.getRandomNumber(1976, 2010);
-                    map.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
+                    map.put("ID", Integer.toString(AnalyzeManager.genreAnalyzer.getFreeId()));
                     String genreName = textFieldName.getText();
                     String genreDescription = textFieldDescription.getText();
                     if(textFieldName.getText().equals(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.enterGenreName")) || textFieldName.getText().isEmpty()){
@@ -435,7 +434,7 @@ public class GenreHelper {
 
     private static String getRandomGenreCombs(){
         StringBuilder stringBuilder = new StringBuilder();
-        for(Integer integer : AnalyzeExistingGenres.getGenreIdsInUse()){
+        for(Integer integer : AnalyzeManager.genreAnalyzer.getGenreIdsInUse()){
             if(Utils.getRandomNumber(1,10) > 5){
                 stringBuilder.append("<").append(integer).append(">");
             }

@@ -24,7 +24,7 @@ public class GenreManager {
      * Adds a new genre to mad games tycoon 2
      */
     public static void startStepByStepGuide() throws IOException {
-        AnalyzeExistingGenres.analyzeGenreFile();
+        AnalyzeManager.genreAnalyzer.getAnalyzedFile();
         resetVariables();
         try {
             Backup.createBackup(Utils.getGenreFile());
@@ -59,7 +59,7 @@ public class GenreManager {
      */
     public static void resetVariables(){
         mapNewGenre.clear();
-        mapNewGenre.put("ID", Integer.toString(AnalyzeExistingGenres.getFreeGenreID()));
+        mapNewGenre.put("ID", Integer.toString(AnalyzeManager.genreAnalyzer.getFreeId()));
         mapNewGenre.put("UNLOCK YEAR", "1976");
         mapNewGenre.put("UNLOCK MONTH", "JAN");
         mapNewGenre.put("RES POINTS", "1000");
@@ -272,7 +272,7 @@ public class GenreManager {
             if(String.valueOf(inputGenres.charAt(i)).equals("<")){
                 //Nothing happens
             }else if (String.valueOf(inputGenres.charAt(i)).equals(">")){
-                outputGenres.add(AnalyzeExistingGenres.getGenreNameById(Integer.parseInt(currentGenre.toString()), true));
+                outputGenres.add(AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(currentGenre.toString()), true));
                 currentGenre = new StringBuilder();
             }else{
                 currentGenre.append(inputGenres.charAt(i));
@@ -310,7 +310,7 @@ public class GenreManager {
      */
     public static void genreAdded(Map<String, String> map, boolean showSummaryFromImport, File genreIcon, boolean showMessages) throws IOException {
         String name = map.get("NAME EN");
-        int id = AnalyzeExistingGenres.getFreeGenreID();
+        int id = AnalyzeManager.genreAnalyzer.getFreeId();
         if(showSummaryFromImport){
             ChangeLog.addLogEntry(1, name);
         }else{

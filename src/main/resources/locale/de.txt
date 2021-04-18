@@ -5,6 +5,7 @@ commonBodies.areYouSure|Bist du sicher?
 commonBodies.exception|Grund:
 
 commonText.genre|Genre
+commonText.genre.upperCase|Genre
 commonText.licence|Lizenz
 commonText.publisher|Publisher
 commonText.gameplayFeature|Gameplay Feature
@@ -85,10 +86,14 @@ analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|F
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Gameplay Features abgeschlossen
 analyzer.gameplayFeature.getCustomContentString.progressBar|Scannen nach modifizierten Gameplay Features
-analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von engine features:
+analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Engine Features:
 analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Engine Features abgeschlossen
 analyzer.engineFeature.getCustomContentString.progressBar|Scannen nach modifizierten Engine Features
+analyzer.genre.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Genres:
+analyzer.genre.getCustomContentString.customEngineFeatureFound|Modifiziertes Genre gefunden:
+analyzer.genre.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Genres abgeschlossen
+analyzer.genre.getCustomContentString.progressBar|Scannen nach modifizierten Genres
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?

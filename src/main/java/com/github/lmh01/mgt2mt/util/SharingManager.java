@@ -693,7 +693,7 @@ public class SharingManager {
     public static void exportAll(boolean exportAsRestorePoint){
         String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
         String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
-        String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+        String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
         String[] customLicences = AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet();

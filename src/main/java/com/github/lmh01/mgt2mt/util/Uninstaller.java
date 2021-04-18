@@ -119,7 +119,7 @@ public class Uninstaller {
      */
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation){
         boolean uninstallFailed = false;
-        String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
+        String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();

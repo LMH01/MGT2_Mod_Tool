@@ -286,7 +286,7 @@ public class WindowMain {
     public static void checkActionAvailability(){
         if(Settings.mgt2FolderIsCorrect){
             try{
-                AnalyzeExistingGenres.analyzeGenreFile();
+                AnalyzeManager.genreAnalyzer.analyzeFile();
                 AnalyzeExistingThemes.analyzeThemeFiles();
                 AnalyzeExistingPublishers.analyzePublisherFile();
                 AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
@@ -307,7 +307,7 @@ public class WindowMain {
                     noCustomEngineFeaturesAvailable = false;
                     noCustomLicencesAvailable = false;
                 }else{
-                    if(AnalyzeExistingGenres.genreList.size() > AnalyzeExistingGenres.DEFAULT_GENRES.length){
+                    if(AnalyzeManager.genreAnalyzer.getCustomContentString(true).length > 0){
                         noCustomGenreAvailable = false;
                     }
                     if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){

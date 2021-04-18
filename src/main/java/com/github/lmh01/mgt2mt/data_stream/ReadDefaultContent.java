@@ -7,6 +7,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class ReadDefaultContent {
+
+    /**
+     * @deprecated use {@link ReadDefaultContent#getDefault(String)} instead
+     */
+    @Deprecated
     public static String[] getDefaultLicences() throws IOException {
         ArrayList<String> arrayList = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("default_content/default_licences.txt"), StandardCharsets.UTF_8));
@@ -19,6 +24,11 @@ public class ReadDefaultContent {
         arrayList.toArray(strings);
         return strings;
     }
+
+    /**
+     * @deprecated use {@link ReadDefaultContent#getDefault(String)} instead
+     */
+    @Deprecated
     public static String[] getDefaultPublisher() throws IOException {
         ArrayList<String> arrayList = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("default_content/default_publisher.txt"), StandardCharsets.UTF_8));

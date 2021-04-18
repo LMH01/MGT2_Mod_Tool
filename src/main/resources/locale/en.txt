@@ -5,6 +5,7 @@ commonBodies.areYouSure|Are you sure?
 commonBodies.exception|Exception:
 
 commonText.genre|genre
+commonText.genre.upperCase|Genre
 commonText.licence|licence
 commonText.publisher|publisher
 commonText.gameplayFeature|gameplay feature
@@ -89,6 +90,10 @@ analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Err
 analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modded engine feature found:
 analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded engine features complete
 analyzer.engineFeature.getCustomContentString.progressBar|Scanning for modded engine features
+analyzer.genre.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning genres:
+analyzer.genre.getCustomContentString.customEngineFeatureFound|Modded genre found:
+analyzer.genre.getCustomContentString.customEngineFeatureComplete|Scanning for modded genres complete
+analyzer.genre.getCustomContentString.progressBar|Scanning for modded genres
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?

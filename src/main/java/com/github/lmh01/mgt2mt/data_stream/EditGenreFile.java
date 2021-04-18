@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -29,7 +30,7 @@ public class EditGenreFile {
         genreFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getGenreFile()), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> mapExistingGenres : AnalyzeExistingGenres.genreList){
+        for(Map<String, String> mapExistingGenres : AnalyzeManager.genreAnalyzer.getFileContent()){
             EditHelper.printLine("ID", mapExistingGenres, bw);
             TranslationManager.printLanguages(bw, mapExistingGenres);
             EditHelper.printLine("DATE", mapExistingGenres, bw);
@@ -86,9 +87,9 @@ public class EditGenreFile {
     }
 
     public static boolean removeGenre(String genreName) throws IOException {
-        removeGenre(AnalyzeExistingGenres.getGenreIdByName(genreName));
-        EditThemeFiles.editGenreAllocation(AnalyzeExistingGenres.getGenreIdByName(genreName), false, null);
-        EditGameplayFeaturesFile.removeGenreId(AnalyzeExistingGenres.getGenreIdByName(genreName));
+        removeGenre(AnalyzeManager.genreAnalyzer.getContentIdByName(genreName));
+        EditThemeFiles.editGenreAllocation(AnalyzeManager.genreAnalyzer.getContentIdByName(genreName), false, null);
+        EditGameplayFeaturesFile.removeGenreId(AnalyzeManager.genreAnalyzer.getContentIdByName(genreName));
         ImageFileHandler.removeImageFiles(genreName);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + genreName);
         return true;
@@ -98,7 +99,7 @@ public class EditGenreFile {
      * @param genreId The genre id that should be removed.
      */
     private static void removeGenre(int genreId) throws IOException {
-        AnalyzeExistingGenres.analyzeGenreFile();
+        AnalyzeManager.genreAnalyzer.analyzeFile();
         LOGGER.info("Removing genre...");
         File genreFile = Utils.getGenreFile();
         if(genreFile.exists()){
@@ -107,7 +108,7 @@ public class EditGenreFile {
         genreFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Utils.getGenreFile()), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> mapExistingGenres : AnalyzeExistingGenres.genreList){
+        for(Map<String, String> mapExistingGenres : AnalyzeManager.genreAnalyzer.getFileContent()){
             if(!mapExistingGenres.get("ID").equals(Integer.toString(genreId))){
                 EditHelper.printLine("ID", mapExistingGenres, bw);
                 TranslationManager.printLanguages(bw, mapExistingGenres);

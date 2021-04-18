@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -287,7 +286,7 @@ public class Utils {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreName: " + currentName);
                 }
-                int genreId = AnalyzeExistingGenres.getGenreIdByName(currentName.toString());
+                int genreId = AnalyzeManager.genreAnalyzer.getContentIdByName(currentName.toString());
                 if(genreId != -1){
                     genreIds.append("<").append(genreId).append(">");
                 }
@@ -428,7 +427,7 @@ public class Utils {
             if(!listAvailableEntries.isSelectionEmpty()){
                 for(String string : listAvailableEntries.getSelectedValuesList()){
                     if(returnGenreIds){
-                        returnValues.add(AnalyzeExistingGenres.getGenreIdByName(string));
+                        returnValues.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
                     }else{
                         returnValues.add(getPositionInList(string, existingListContent));
                     }

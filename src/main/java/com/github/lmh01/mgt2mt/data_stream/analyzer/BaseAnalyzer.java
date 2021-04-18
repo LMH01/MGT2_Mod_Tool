@@ -2,20 +2,24 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 public interface BaseAnalyzer {
-
-    /**
-     * returns that analyzed file
-     */
-    List<Map<String, String>> getFileContent ();
 
     /**
      * analyzes the file
      */
     void analyzeFile() throws IOException;
+
+
+    /**
+     * Returns the currently highest id
+     */
+    int getMaxId();
+
+    /**
+     * Sets the maximum id
+     */
+    void setMaxId(int id);
 
     /**
      * The file that should be analyzed

@@ -1,10 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.Objects;
 public class NPCGameListHandler {
     public static void modifyNPCGameList(){
         try {
-            AnalyzeExistingGenres.analyzeGenreFile();
+            AnalyzeManager.genreAnalyzer.analyzeFile();
             JLabel labelNPCGameList = new JLabel(I18n.INSTANCE.get("window.npcGamesList.label"));
 
             JPanel panelChance = new JPanel();
@@ -35,7 +34,7 @@ public class NPCGameListHandler {
 
             JLabel labelGenre = new JLabel(I18n.INSTANCE.get("window.npcGamesList.label.genre"));
 
-            JList<String> listAvailableOperations = new JList<>(AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId());
+            JList<String> listAvailableOperations = new JList<>(AnalyzeManager.genreAnalyzer.getCustomContentString());
             listAvailableOperations.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listAvailableOperations.setLayoutOrientation(JList.VERTICAL);
             listAvailableOperations.setVisibleRowCount(-1);
@@ -67,7 +66,7 @@ public class NPCGameListHandler {
                             boolean errorOccurred = false;
                             for(String string : listAvailableOperations.getSelectedValuesList()){
                                 try {
-                                    NPCGameListChanger.editNPCGames(AnalyzeExistingGenres.getGenreIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
+                                    NPCGameListChanger.editNPCGames(AnalyzeManager.genreAnalyzer.getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
                                     if(addGenreID){
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.added.upperCase") + " " + string + " " + I18n.INSTANCE.get("window.npcGamesList.to") + " " + I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2").replace(".", ""));
                                     }else{

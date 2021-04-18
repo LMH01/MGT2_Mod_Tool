@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -93,10 +93,10 @@ public class WindowAddGenrePage5 extends JFrame{
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
         int currentGenre = 0;
-        for(String string : AnalyzeExistingGenres.getGenresByAlphabetWithoutId()){
+        for(String string : AnalyzeManager.genreAnalyzer.getCustomContentString()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("GENRE COMB")){
-                if(GenreManager.mapNewGenre.get("GENRE COMB").contains(Integer.toString(AnalyzeExistingGenres.getGenreIdByName(string)))) {
+                if(GenreManager.mapNewGenre.get("GENRE COMB").contains(Integer.toString(AnalyzeManager.genreAnalyzer.getContentIdByName(string)))) {
                     genresSelected.add(currentGenre);
                 }
             }
