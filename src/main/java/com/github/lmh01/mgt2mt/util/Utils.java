@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -364,7 +364,7 @@ public class Utils {
     public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) throws IOException {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if(goodFeature){
-            for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+            for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
                 if(map.get("GOOD") != null){
                     if(map.get("GOOD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -372,7 +372,7 @@ public class Utils {
                 }
             }
         }else{
-            for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+            for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
                 if(map.get("BAD") != null){
                     if(map.get("BAD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");

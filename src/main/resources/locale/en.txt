@@ -8,7 +8,9 @@ commonText.genre|genre
 commonText.licence|licence
 commonText.publisher|publisher
 commonText.gameplayFeature|gameplay feature
+commonText.gameplayFeature.upperCase|Gameplay feature
 commonText.engineFeature|engine feature
+commonText.engineFeature.upperCase|Engine feature
 commonText.theme|theme
 commonText.theme.upperCase|Theme
 commonText.exported|exported
@@ -79,6 +81,10 @@ commonText.isThisCorrect|Is this correct and do you want to continue?
 commonText.browse|Browse
 commonText.multipleFilesSelected|Multiple files selected
 
+analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
+analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
+analyzer.gameplayFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded gameplay features complete
+analyzer.gameplayFeature.getCustomContentString.progressBar|Scanning for modded gameplay features
 analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning engine features:
 analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modded engine feature found:
 analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded engine features complete

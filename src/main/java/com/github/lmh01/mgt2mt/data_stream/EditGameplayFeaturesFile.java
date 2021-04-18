@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
@@ -23,7 +24,7 @@ public class EditGameplayFeaturesFile {
      * @param map The values that stand in this map are used to print the file. This includes the translations.
      */
     public static void addGameplayFeature(Map<String, String> map) throws IOException {
-        AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+        AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
         LOGGER.info("Adding new gameplay feature...");
         File gameplayFeatureFile = Utils.getGameplayFeaturesFile();
         if(gameplayFeatureFile.exists()){
@@ -32,7 +33,7 @@ public class EditGameplayFeaturesFile {
         gameplayFeatureFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeatureFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> existingGameplayFeatures : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+        for(Map<String, String> existingGameplayFeatures : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
             EditHelper.printLine("ID", existingGameplayFeatures, bw);
             EditHelper.printLine("TYP", existingGameplayFeatures, bw);
             TranslationManager.printLanguages(bw, existingGameplayFeatures);
@@ -89,8 +90,8 @@ public class EditGameplayFeaturesFile {
      * @param gameplayFeatureName The gameplay feature name that should be removed
      */
     public static boolean removeGameplayFeature(String gameplayFeatureName) throws IOException {
-        int gameplayFeatureId = AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(gameplayFeatureName);
-        AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+        AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
+        int gameplayFeatureId = AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(gameplayFeatureName);
         LOGGER.info("Removing gameplay feature...");
         File gameplayFeatureFile = Utils.getGameplayFeaturesFile();
         if(gameplayFeatureFile.exists()){
@@ -99,7 +100,7 @@ public class EditGameplayFeaturesFile {
         gameplayFeatureFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeatureFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> existingGameplayFeatures : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+        for(Map<String, String> existingGameplayFeatures : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
             if(Integer.parseInt(existingGameplayFeatures.get("ID")) != gameplayFeatureId){
                 EditHelper.printLine("ID", existingGameplayFeatures, bw);
                 EditHelper.printLine("TYP", existingGameplayFeatures, bw);
@@ -167,7 +168,7 @@ public class EditGameplayFeaturesFile {
         gameplayFeaturesFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeaturesFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures) {
+        for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()) {
             boolean activeGameplayFeature = false;
             for(Integer integer : gameplayFeaturesIdsToEdit){
                 if(map.get("ID").equals(Integer.toString(integer))){

@@ -89,7 +89,7 @@ public class SharingManager {
      * @param importFile This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
      * @param importName The name that is written is some JOptionPanes. Eg. Engine feature, Gameplay feature
      * @param importFolderPath The folder where the importFile is located.
-     * @param existingFeatureList The list where the existing features are listed. Eg. {@link AnalyzeExistingGameplayFeatures#gameplayFeatures}
+     * @param existingFeatureList The list where the existing features are listed. Eg. {@link AnalyzeManager#gameplayFeatureAnalyzer#getFileContent}
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param importFunction The function that edits the file
      * @param freeId The function that returns the free id
@@ -692,7 +692,7 @@ public class SharingManager {
      */
     public static void exportAll(boolean exportAsRestorePoint){
         String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
-        String[] customGameplayFeatures = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
+        String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();

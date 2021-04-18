@@ -121,7 +121,7 @@ public class Uninstaller {
         boolean uninstallFailed = false;
         String[] customGenres = AnalyzeExistingGenres.getCustomGenresByAlphabetWithoutId();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
-        String[] customGameplayFeatures = AnalyzeExistingGameplayFeatures.getCustomGameplayFeaturesString();
+        String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
         String[] customLicences = AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet();

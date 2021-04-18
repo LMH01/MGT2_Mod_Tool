@@ -15,17 +15,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
-public abstract class AbstractAnalyzer {
+/**
+ * The advanced analyzer is used to analyze files that use this system:
+ * [KeyX]ValueX
+ * When a blank line is found a new entry is created see {@link DataStreamHelper#parseDataFile(File)}
+ */
+public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
+    //
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAnalyzer.class);
-    private static List<Map<String, String>> fileContent;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedAnalyzer.class);
     private static int maxId;
 
     /**
      * Analyzes the file and puts its values in the map.
      */
-    public void analyzeFile() throws IOException {
-        fileContent = DataStreamHelper.parseDataFile(getFileToAnalyze());
+    public List<Map<String, String>> getAnalyzedFile() throws IOException {
+        List<Map<String, String>> fileContent = DataStreamHelper.parseDataFile(getFileToAnalyze());
         int currentMaxId = 0;
         for (Map<String, String> map : fileContent) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -39,22 +44,6 @@ public abstract class AbstractAnalyzer {
         }
         maxId = currentMaxId;
         LOGGER.info("Max" + getAnalyzerType() + "Id: " + currentMaxId);
-    }
-    public abstract File getFileToAnalyze();
-
-    /**
-     * The analyzer type indicates what is written in the log, textArea, progress bar and JOptionPanes
-     * Eg. Gameplay feature
-     */
-    public abstract String getAnalyzerType();
-
-    /**
-     * The translation key that is specific to the analyzer
-     * Eg. GameplayFeature
-     */
-    public abstract String getMainTranslationKey();
-
-    public List<Map<String, String>> getFileContent(){
         return fileContent;
     }
 
@@ -70,7 +59,7 @@ public abstract class AbstractAnalyzer {
      */
     public String[] getContentByAlphabet(){
         ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
-        for(Map<String, String> map : fileContent){
+        for(Map<String, String> map : getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 if(entry.getKey().equals("NAME EN")){
                     arrayListAvailableThingsSorted.add(entry.getValue());
@@ -92,7 +81,7 @@ public abstract class AbstractAnalyzer {
             String[] contentByAlphabet = getContentByAlphabet();
             ArrayList<String> arrayListCustomContent = new ArrayList<>();
             String[] defaultContent = ReadDefaultContent.getDefault(getDefaultContentFile());
-            ProgressBarHelper.initializeProgressBar(defaultContent.length, fileContent.size(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
+            ProgressBarHelper.initializeProgressBar(defaultContent.length, getFileContent().size(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
             for (String s : contentByAlphabet) {
                 boolean isDefaultContent = false;
                 for (String contentName : defaultContent) {
@@ -129,9 +118,29 @@ public abstract class AbstractAnalyzer {
     }
 
     /**
-     * The String containing the default content file
+     * @param id The id
+     * @return Returns the specified content name by id.
+     * @throws ArrayIndexOutOfBoundsException Is thrown when the requested content id does not exist in the map.
      */
-    public abstract String getDefaultContentFile();
+    public String getContentNameById(int id) throws ArrayIndexOutOfBoundsException{
+        return getContentNamesInUse().get(id);
+    }
+
+    /**
+     * @return Returns an ArrayList containing all names that are in use.
+     */
+    public ArrayList<String> getContentNamesInUse(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        for(Map<String, String> map : getFileContent()){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("NAME EN")){
+                    arrayList.add(entry.getValue());
+                }
+            }
+        }
+        return arrayList;
+    }
+
     /**
      * Returns -1 when name does not exist.
      * @param name The name
@@ -139,7 +148,7 @@ public abstract class AbstractAnalyzer {
      */
     public int getContentIdByName(String name){
         int id = -1;
-        for(Map<String, String> map : fileContent){
+        for(Map<String, String> map : getFileContent()){
             if(map.get("NAME EN").equals(name)){
                 id = Integer.parseInt(map.get("ID"));
             }
@@ -158,7 +167,7 @@ public abstract class AbstractAnalyzer {
      * @return Returns a map containing all values for the specified content.
      */
     public Map<String, String> getSingleContentMapByName(String contentNameEn){
-        List<Map<String, String>> list = fileContent;
+        List<Map<String, String>> list = getFileContent();
         Map<String, String> mapSingleContent = null;
         int contentPosition = getContentIdByName(contentNameEn);
         for(int i=0; i<list.size(); i++){

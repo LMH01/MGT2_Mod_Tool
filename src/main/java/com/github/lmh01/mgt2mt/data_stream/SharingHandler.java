@@ -102,7 +102,7 @@ public class SharingHandler {
     public static String importGenre(String importFolderPath, boolean showMessages) throws IOException, NullPointerException{
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.genre"));
         AnalyzeExistingGenres.analyzeGenreFile();
-        AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+        AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
         int newGenreId = AnalyzeExistingGenres.getFreeGenreID();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
         File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId);
@@ -157,10 +157,10 @@ public class SharingHandler {
         Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
         Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE BAD"))){
-            gameplayFeaturesBadIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+            gameplayFeaturesBadIds.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(string));
         }
         for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE GOOD"))){
-            gameplayFeaturesGoodIds.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string));
+            gameplayFeaturesGoodIds.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(string));
         }
         ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
@@ -538,7 +538,7 @@ public class SharingHandler {
      */
     public static boolean exportGameplayFeature(String gameplayFeatureName, boolean exportAsRestorePoint){
         try{
-            Map<String, String> map = AnalyzeExistingGameplayFeatures.getSingleGameplayFeatureByNameMap(gameplayFeatureName);
+            Map<String, String> map = AnalyzeManager.gameplayFeatureAnalyzer.getSingleContentMapByName(gameplayFeatureName);
             String exportFolder;
             if(exportAsRestorePoint){
                 exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
@@ -595,14 +595,14 @@ public class SharingHandler {
      * @param showMessages True when message about adding gameplay feature should be shown. False if not.
      */
     public static String importGameplayFeature(String importFolderPath, boolean showMessages) throws IOException {
-        AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+        AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
         return SharingManager.importGeneral("gameplayFeature.txt",
                 I18n.INSTANCE.get("window.main.share.export.gameplayFeature"),
                 importFolderPath,
-                AnalyzeExistingGameplayFeatures.gameplayFeatures,
+                AnalyzeManager.gameplayFeatureAnalyzer.getFileContent(),
                 SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
                 EditGameplayFeaturesFile::addGameplayFeature,
-                AnalyzeExistingGameplayFeatures::getFreeGameplayFeatureId,
+                AnalyzeManager.gameplayFeatureAnalyzer::getFreeId,
                 30,
                 Summaries::showGameplayFeatureMessage,
                 showMessages);

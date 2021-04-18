@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGameplayFeatures;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingGenres;
 import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -459,12 +459,12 @@ public class GenreHelper {
     private static List<HashSet<Integer>> getRandomGameplayFeatureIds(){
         HashSet<Integer> hashSetBadGameplayFeatures = new HashSet<>();
         HashSet<Integer> hashSetGoodGameplayFeatures = new HashSet<>();
-        for(String string : AnalyzeExistingGameplayFeatures.getGameplayFeaturesByAlphabet()){
+        for(String string : AnalyzeManager.gameplayFeatureAnalyzer.getContentByAlphabet()){
             if(Utils.getRandomNumber(1,100) > 80){
-                hashSetBadGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string)-1);
+                hashSetBadGameplayFeatures.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(string)-1);
             }
             if(Utils.getRandomNumber(1,100) > 80){
-                hashSetGoodGameplayFeatures.add(AnalyzeExistingGameplayFeatures.getGameplayFeatureIdByName(string)-1);
+                hashSetGoodGameplayFeatures.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(string)-1);
             }
         }
         Collections.disjoint(hashSetBadGameplayFeatures, hashSetGoodGameplayFeatures);
@@ -488,12 +488,12 @@ public class GenreHelper {
     private static void setGameplayFeatureCompatibility(Map<String, String> map1, HashSet<Integer> badGameplayFeatures, HashSet<Integer> goodGameplayFeatures){
         StringBuilder gameplayFeaturesBad = new StringBuilder();
         StringBuilder gameplayFeaturesGood = new StringBuilder();
-        for(Map<String, String> map : AnalyzeExistingGameplayFeatures.gameplayFeatures){
+        for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 for(Integer integer : badGameplayFeatures){
                     if(entry.getKey().equals("ID")){
                         if(entry.getValue().equals(Integer.toString(integer))){
-                            gameplayFeaturesBad.append("<").append(AnalyzeExistingGameplayFeatures.getGameplayFeatureNameById(integer)).append(">");
+                            gameplayFeaturesBad.append("<").append(AnalyzeManager.gameplayFeatureAnalyzer.getContentNameById(integer)).append(">");
                             if(Settings.enableDebugLogging){
                                 LOGGER.info("Gameplay feature bad: " + entry.getKey() + " | " + entry.getValue());
                             }
@@ -503,7 +503,7 @@ public class GenreHelper {
                 for(Integer integer : goodGameplayFeatures){
                     if(entry.getKey().equals("ID")){
                         if(entry.getValue().equals(Integer.toString(integer))){
-                            gameplayFeaturesGood.append("<").append(AnalyzeExistingGameplayFeatures.getGameplayFeatureNameById(integer)).append(">");
+                            gameplayFeaturesGood.append("<").append(AnalyzeManager.gameplayFeatureAnalyzer.getContentNameById(integer)).append(">");
                             if(Settings.enableDebugLogging){
                                 LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
                             }

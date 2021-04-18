@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class EditEngineFeaturesFile {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeExistingGameplayFeatures.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditEngineFeaturesFile.class);
 
     /**
      * Adds a new genre to the EngineFeatures.txt file

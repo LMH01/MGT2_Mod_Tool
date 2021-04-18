@@ -275,6 +275,7 @@ public class WindowMain {
         frame.setVisible(true);
     }
     public static void disposeFrame(){
+        Debug.writeHelpFile();
         frame.dispose();
         System.exit(0);
     }
@@ -288,7 +289,7 @@ public class WindowMain {
                 AnalyzeExistingGenres.analyzeGenreFile();
                 AnalyzeExistingThemes.analyzeThemeFiles();
                 AnalyzeExistingPublishers.analyzePublisherFile();
-                AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+                AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                 AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
                 AnalyzeExistingLicences.analyze();
                 boolean noCustomGenreAvailable = true;
@@ -315,8 +316,7 @@ public class WindowMain {
                     if(AnalyzeExistingPublishers.getCustomPublisherString(true).length > 0){
                         noCustomPublishersAvailable = false;
                     }
-                    List<Map<String, String>> currentGameplayFeatures = AnalyzeExistingGameplayFeatures.gameplayFeatures;
-                    if(currentGameplayFeatures.size() > 61){
+                    if(AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString(true).length > 0){
                         noCustomGameplayFeaturesAvailable = false;
                     }
                     if(AnalyzeManager.engineFeatureAnalyzer.getCustomContentString(true).length > 0){

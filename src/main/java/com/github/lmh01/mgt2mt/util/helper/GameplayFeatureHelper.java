@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class GameplayFeatureHelper {
     public static void addGameplayFeature(){
         try{
             Backup.createBackup(Utils.getGameplayFeaturesFile());
-            AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+            AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
             final ArrayList<Integer>[] badGenreIds = new ArrayList[]{new ArrayList<>()};
@@ -253,7 +254,7 @@ public class GameplayFeatureHelper {
                             newGameplayFeature.put("NAME EN", textFieldName.getText());
                             newGameplayFeature.put("DESC EN", textFieldDescription.getText());
                         }
-                        newGameplayFeature.put("ID", Integer.toString(AnalyzeExistingGameplayFeatures.getFreeGameplayFeatureId()));
+                        newGameplayFeature.put("ID", Integer.toString(AnalyzeManager.gameplayFeatureAnalyzer.getFreeId()));
                         newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(comboBoxFeatureType.getSelectedItem().toString())));
                         newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                         newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());

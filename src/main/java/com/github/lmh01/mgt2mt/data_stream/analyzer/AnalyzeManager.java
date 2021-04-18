@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 public class AnalyzeManager {
-    public static AbstractAnalyzer engineFeatureAnalyzer = new EngineFeatureAnalyzer();
+    public static AbstractAdvancedAnalyzer engineFeatureAnalyzer = new EngineFeatureAnalyzer();
+    public static AbstractAdvancedAnalyzer gameplayFeatureAnalyzer = new GameplayFeatureAnalyzer();
 }

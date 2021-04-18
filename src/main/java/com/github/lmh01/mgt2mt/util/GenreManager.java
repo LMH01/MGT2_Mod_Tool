@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
@@ -162,7 +163,7 @@ public class GenreManager {
                     EditGenreFile.addGenre(map, genreTranslations);
                     EditThemeFiles.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
                     EditGameplayFeaturesFile.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
-                    AnalyzeExistingGameplayFeatures.analyzeGameplayFeatures();
+                    AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                     EditGameplayFeaturesFile.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, showSummaryFromImport, genreIcon, showMessages);
                 } catch (IOException e) {
