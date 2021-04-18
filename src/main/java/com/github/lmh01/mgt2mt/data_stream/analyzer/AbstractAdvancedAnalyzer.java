@@ -180,11 +180,11 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
      */
     public Map<String, String> getSingleContentMapByName(String contentNameEn){
         List<Map<String, String>> list = getFileContent();
+        String idToSearch = Integer.toString(getContentIdByName(contentNameEn));
         Map<String, String> mapSingleContent = null;
-        int contentPosition = getContentIdByName(contentNameEn);
-        for(int i=0; i<list.size(); i++){
-            if(i == contentPosition){
-                mapSingleContent = list.get(i);
+        for(Map<String, String> map : list){
+            if(map.get("ID").equals(idToSearch)){
+                mapSingleContent = map;
             }
         }
         return mapSingleContent;

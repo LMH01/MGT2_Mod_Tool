@@ -276,7 +276,7 @@ public class WindowMain {
         frame.setVisible(true);
     }
     public static void disposeFrame(){
-        Debug.writeHelpFile();
+        Debug.test();
         frame.dispose();
         System.exit(0);
     }
