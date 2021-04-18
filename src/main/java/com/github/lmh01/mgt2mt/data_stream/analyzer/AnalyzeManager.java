@@ -6,4 +6,6 @@ public class AnalyzeManager {
     public static GenreAnalyzer genreAnalyzer = new GenreAnalyzer();
     public static LicenceAnalyzer licenceAnalyzer = new LicenceAnalyzer();
     public static PublisherAnalyzer publisherAnalyzer = new PublisherAnalyzer();
+    public static ThemeFileEnAnalyzer themeFileEnAnalyzer = new ThemeFileEnAnalyzer();
+    public static ThemeFileGeAnalyzer themeFileGeAnalyzer = new ThemeFileGeAnalyzer();
 }

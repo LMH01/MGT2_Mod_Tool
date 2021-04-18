@@ -104,6 +104,14 @@ analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Error w
 analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modded publisher found:
 analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scanning for modded publisher complete
 analyzer.publisher.getCustomContentString.progressBar|Scanning for modded publisher
+analyzer.themeEn.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning themes:
+analyzer.themeEn.getCustomContentString.customEngineFeatureFound|Modded theme found:
+analyzer.themeEn.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes complete
+analyzer.themeEn.getCustomContentString.progressBar|Scanning for modded themes
+analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning themes (GE):
+analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modded theme (GE):
+analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes (GE) complete
+analyzer.themeGe.getCustomContentString.progressBar|Scanning for modded themes (GE)
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?

@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -444,7 +444,7 @@ public class GenreHelper {
 
     public static HashSet<Integer> getRandomThemeIds(){
         HashSet<Integer> hashSet = new HashSet<>();
-        for(Integer integer : AnalyzeExistingThemes.getThemeIdsInUse()){
+        for(Integer integer : ThemeFileAnalyzer.getThemeIdsInUse()){
             if(Utils.getRandomNumber(1,100) > 30){
                 hashSet.add(integer);
             }
@@ -476,7 +476,7 @@ public class GenreHelper {
 
     private static String getCompatibleThemes(HashSet<Integer> themeIds){
         StringBuilder stringBuilder = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+        for(Map.Entry<Integer, String> entry : AnalyzeManager.themeFileEnAnalyzer.getFileContent().entrySet()){
             if(themeIds.contains(entry.getKey())){
                 stringBuilder.append("<").append(entry.getValue()).append(">");
             }

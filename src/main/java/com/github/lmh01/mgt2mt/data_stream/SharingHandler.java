@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -122,7 +123,7 @@ public class SharingHandler {
                     if(Settings.enableDebugLogging){
                         LOGGER.info("Current id to search: " + idToSearch);
                     }
-                    themeIds.append("<").append(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.get(idToSearch)).append(">");
+                    themeIds.append("<").append(AnalyzeManager.themeFileEnAnalyzer.getFileContent().get(idToSearch)).append(">");
                 }
                 map.put("THEME COMB", themeIds.toString());
             }else{
@@ -153,7 +154,7 @@ public class SharingHandler {
         }//Here
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
-            compatibleThemeIds.add(AnalyzeExistingThemes.getPositionOfThemeInFile(string)-1);
+            compatibleThemeIds.add(ThemeFileAnalyzer.getPositionOfThemeInFile(string)-1);
         }
         Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
         Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
@@ -375,7 +376,7 @@ public class SharingHandler {
      * @return Returns true when the theme has been exported successfully. Returns false when the theme has already been exported.
      */
     public static boolean exportTheme(String themeNameEn, boolean exportAsRestorePoint) throws IOException {
-        Map<String, String> map = AnalyzeExistingThemes.getSingleThemeByNameMap(themeNameEn);
+        Map<String, String> map = ThemeFileAnalyzer.getSingleThemeByNameMap(themeNameEn);
         String exportFolder;
         if(exportAsRestorePoint){
             exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
@@ -411,7 +412,7 @@ public class SharingHandler {
      */
     public static String importTheme(String importFolderPath, boolean showMessages) throws IOException{
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.theme"));
-        AnalyzeExistingThemes.analyzeThemeFiles();
+        ThemeFileAnalyzer.analyzeThemeFiles();
         File fileThemeToImport = new File(importFolderPath + "\\theme.txt");
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
@@ -440,7 +441,7 @@ public class SharingHandler {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
             return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
-        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+        for(Map.Entry<Integer, String> entry : AnalyzeManager.themeFileEnAnalyzer.getFileContent().entrySet()){
             if(entry.getValue().equals(map.get("NAME EN"))){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
                 LOGGER.info("Theme already exists - The theme name is already taken");

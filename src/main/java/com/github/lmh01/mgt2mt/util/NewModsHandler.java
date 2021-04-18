@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class NewModsHandler {
     public static void addGenre(){
         try {
             AnalyzeManager.genreAnalyzer.analyzeFile();
-            AnalyzeExistingThemes.analyzeThemeFiles();
+            ThemeFileAnalyzer.analyzeThemeFiles();
             GenreManager.startStepByStepGuide();
         } catch (IOException e) {
             e.printStackTrace();
@@ -214,7 +215,7 @@ public class NewModsHandler {
     }
     public static void addTheme(){
         try {
-            AnalyzeExistingThemes.analyzeThemeFiles();
+            ThemeFileAnalyzer.analyzeThemeFiles();
             final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
             ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
             String[] string = AnalyzeManager.genreAnalyzer.getContentByAlphabet();
@@ -254,7 +255,7 @@ public class NewModsHandler {
                 if(JOptionPane.showConfirmDialog(null, params, "Add new theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         if(!textFieldThemeName.getText().isEmpty()){
-                            if(!AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.containsValue(textFieldThemeName.getText()) && !AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.containsValue(textFieldThemeName.getText())){
+                            if(!AnalyzeManager.themeFileEnAnalyzer.getFileContent().containsValue(textFieldThemeName.getText()) && !AnalyzeManager.themeFileGeAnalyzer.getFileContent().containsValue(textFieldThemeName.getText())){
                                 if(!textFieldThemeName.getText().matches(".*\\d.*")){
                                     arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
                                     for(Map<String, String> map : AnalyzeManager.genreAnalyzer.getFileContent()){

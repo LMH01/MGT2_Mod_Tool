@@ -695,7 +695,7 @@ public class SharingManager {
         String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
         String[] customPublishers = AnalyzeManager.publisherAnalyzer.getCustomContentString();
-        String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+        String[] customThemes = AnalyzeManager.themeFileEnAnalyzer.getCustomContentString();
         String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
         StringBuilder exportList = new StringBuilder();
         exportList.append(getExportListPart(customEngineFeatures, "Engine features"));

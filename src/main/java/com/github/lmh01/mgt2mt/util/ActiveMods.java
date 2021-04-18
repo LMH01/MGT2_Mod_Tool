@@ -1,10 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
-
 import javax.swing.*;
 
 public class ActiveMods {
@@ -13,7 +9,7 @@ public class ActiveMods {
         String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
         String[] customPublishers = AnalyzeManager.genreAnalyzer.getCustomContentString();
-        String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
+        String[] customThemes = AnalyzeManager.themeFileEnAnalyzer.getCustomContentString();
         String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(I18n.INSTANCE.get("window.showActiveMods.message.firstPart")).append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));

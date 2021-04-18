@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import org.slf4j.Logger;
@@ -287,7 +288,7 @@ public class WindowMain {
         if(Settings.mgt2FolderIsCorrect){
             try{
                 AnalyzeManager.genreAnalyzer.analyzeFile();
-                AnalyzeExistingThemes.analyzeThemeFiles();
+                ThemeFileAnalyzer.analyzeThemeFiles();
                 AnalyzeManager.publisherAnalyzer.analyzeFile();
                 AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                 AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
@@ -310,7 +311,7 @@ public class WindowMain {
                     if(AnalyzeManager.genreAnalyzer.getCustomContentString(true).length > 0){
                         noCustomGenreAvailable = false;
                     }
-                    if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
+                    if(AnalyzeManager.themeFileEnAnalyzer.getFileContent().size() > 215){
                         noCustomThemesAvailable = false;
                     }
                     if(AnalyzeManager.publisherAnalyzer.getCustomContentString(true).length > 0){

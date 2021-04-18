@@ -1,5 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
@@ -29,7 +31,7 @@ public class EditThemeFiles {
      * @param themeNameEn The theme name that should be removed
      */
     public static boolean removeTheme(String themeNameEn) throws IOException {
-        boolean returnValue = editThemeFiles(null, null, false, AnalyzeExistingThemes.getPositionOfThemeInFile(themeNameEn), 0);
+        boolean returnValue = editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(themeNameEn), 0);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + themeNameEn);
         return returnValue;
     }
@@ -121,16 +123,16 @@ public class EditThemeFiles {
      * @param compatibleThemeIds A set containing all compatible theme ids.
      */
     public static void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
-        AnalyzeExistingThemes.analyzeThemeFiles();
+        ThemeFileAnalyzer.analyzeThemeFiles();
         File fileTopicsGe = Utils.getThemesGeFile();
         if(fileTopicsGe.exists()){
             fileTopicsGe.delete();
         }
         fileTopicsGe.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGe), StandardCharsets.UTF_16LE));
-        Map<Integer, String> map = AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE;
+        Map<Integer, String> map = AnalyzeManager.themeFileGeAnalyzer.getFileContent();
         boolean firstLine = true;
-        for(int i=0; i<map.size(); i++){
+        for(Integer i : map.keySet()){
             if(addGenreID){
                 if(compatibleThemeIds.contains(i)){
                     if (Settings.enableDebugLogging) {

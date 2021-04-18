@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingThemes;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -99,7 +99,7 @@ public class WindowAddGenrePage6 extends JFrame{
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : AnalyzeExistingThemes.getThemesByAlphabet()){
+        for(String string : AnalyzeManager.themeFileEnAnalyzer.getContentByAlphabet()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("THEME COMB")){
                 if(GenreManager.mapNewGenre.get("THEME COMB").contains(string)) {
@@ -128,7 +128,7 @@ public class WindowAddGenrePage6 extends JFrame{
     private static boolean saveInputs(JList<String> listAvailableThemes){
         LOGGER.info("Cleared array list with compatible genres.");
         StringBuilder compatibleThemes = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : AnalyzeExistingThemes.MAP_ACTIVE_THEMES_EN.entrySet()){
+        for(Map.Entry<Integer, String> entry : AnalyzeManager.themeFileEnAnalyzer.getFileContent().entrySet()){
             for(String string : listAvailableThemes.getSelectedValuesList()){
                 if(entry.getValue().equals(string)){
                     compatibleThemeIds.add(entry.getKey());

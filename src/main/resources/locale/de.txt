@@ -104,6 +104,14 @@ analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Fehler 
 analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modifizierten Publisher gefunden:
 analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Publishern abgeschlossen
 analyzer.publisher.getCustomContentString.progressBar|Scannen nach modifizierten Publishern
+analyzer.themeEe.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Themen:
+analyzer.themeEe.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema gefunden:
+analyzer.themeEe.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen abgeschlossen
+analyzer.themeEe.getCustomContentString.progressBar|Scannen nach modifizierten Themen
+analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Themen (GE):
+analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema (GE) gefunden:
+analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen (GE) abgeschlossen
+analyzer.themeGe.getCustomContentString.progressBar|Scannen nach modifizierten Themen (GE)
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
