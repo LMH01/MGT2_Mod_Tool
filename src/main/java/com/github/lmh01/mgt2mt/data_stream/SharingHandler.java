@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -526,7 +527,7 @@ public class SharingHandler {
                 importFolderPath,
                 AnalyzeManager.engineFeatureAnalyzer.getFileContent(),
                 SharingManager.ENGINE_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
-                EditEngineFeaturesFile::addEngineFeature,
+                EditorManager.engineFeatureEditor::addMod,
                 AnalyzeManager.engineFeatureAnalyzer::getFreeId,
                 32,
                 Summaries::showEngineFeatureMessage,

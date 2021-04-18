@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class ThreadHandler {
     public static Runnable runnableRemoveTheme = () -> OperationHelper.process(EditThemeFiles::removeTheme, AnalyzeManager.themeFileEnAnalyzer.getCustomContentString(), AnalyzeManager.themeFileEnAnalyzer.getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     public static Runnable runnableRemovePublisher = () -> OperationHelper.process(EditPublishersFile::removePublisher, AnalyzeManager.publisherAnalyzer.getCustomContentString(), AnalyzeManager.publisherAnalyzer.getContentByAlphabet(), I18n.INSTANCE.get("commonText.publisher"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     public static Runnable runnableRemoveGameplayFeature = () -> OperationHelper.process(EditGameplayFeaturesFile::removeGameplayFeature, AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString(), AnalyzeManager.gameplayFeatureAnalyzer.getContentByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableRemoveEngineFeature = () -> OperationHelper.process(EditEngineFeaturesFile::removeEngineFeature, AnalyzeManager.engineFeatureAnalyzer.getCustomContentString(), AnalyzeManager.engineFeatureAnalyzer.getContentByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
+    public static Runnable runnableRemoveEngineFeature = () -> OperationHelper.process(EditorManager.engineFeatureEditor::removeMod, AnalyzeManager.engineFeatureAnalyzer.getCustomContentString(), AnalyzeManager.engineFeatureAnalyzer.getContentByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     public static Runnable runnableRemoveLicence = () -> OperationHelper.process(EditLicenceFile::removeLicence, AnalyzeManager.licenceAnalyzer.getCustomContentString(), AnalyzeManager.licenceAnalyzer.getContentByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
     public static Runnable runnableAddNewGenre = NewModsHandler::addGenre;
     public static Runnable runnableAddRandomizedGenre = GenreHelper::addRandomizedGenre;

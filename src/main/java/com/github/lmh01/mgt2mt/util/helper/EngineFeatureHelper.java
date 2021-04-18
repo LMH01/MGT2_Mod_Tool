@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -237,7 +238,7 @@ public class EngineFeatureHelper {
                         newEngineFeature.put("TECH", spinnerTech.getValue().toString());
                         boolean addFeature = Summaries.showEngineFeatureMessage(newEngineFeature);
                         if(addFeature){
-                            EditEngineFeaturesFile.addEngineFeature(newEngineFeature);
+                            EditorManager.engineFeatureEditor.addMod(newEngineFeature);
                             JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
                             ChangeLog.addLogEntry(27, newEngineFeature.get("NAME EN"));
