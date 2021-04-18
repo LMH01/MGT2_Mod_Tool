@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeSteamLibraries;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeSteamLibraries;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.data_stream.ImportSettings;
