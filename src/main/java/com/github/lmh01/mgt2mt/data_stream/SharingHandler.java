@@ -123,7 +123,7 @@ public class SharingHandler {
                     if(Settings.enableDebugLogging){
                         LOGGER.info("Current id to search: " + idToSearch);
                     }
-                    themeIds.append("<").append(AnalyzeManager.themeFileEnAnalyzer.getFileContent().get(idToSearch)).append(">");
+                    themeIds.append("<").append(AnalyzeManager.themeFileEnAnalyzer.getFileContent().get(idToSearch+1)).append(">");
                 }
                 map.put("THEME COMB", themeIds.toString());
             }else{
@@ -154,7 +154,7 @@ public class SharingHandler {
         }//Here
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
-            compatibleThemeIds.add(ThemeFileAnalyzer.getPositionOfThemeInFile(string)-1);
+            compatibleThemeIds.add(ThemeFileAnalyzer.getPositionOfThemeInFile(string));
         }
         Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
         Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
@@ -167,7 +167,6 @@ public class SharingHandler {
         ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
         GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + ": " + map.get("NAME EN"));
         return "true";
     }
 

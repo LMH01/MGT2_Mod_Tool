@@ -93,7 +93,7 @@ public class WindowAddGenrePage5 extends JFrame{
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
         int currentGenre = 0;
-        for(String string : AnalyzeManager.genreAnalyzer.getCustomContentString()){
+        for(String string : AnalyzeManager.genreAnalyzer.getContentByAlphabet()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("GENRE COMB")){
                 if(GenreManager.mapNewGenre.get("GENRE COMB").contains(Integer.toString(AnalyzeManager.genreAnalyzer.getContentIdByName(string)))) {

@@ -8,7 +8,7 @@ public class ActiveMods {
         String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
         String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
-        String[] customPublishers = AnalyzeManager.genreAnalyzer.getCustomContentString();
+        String[] customPublishers = AnalyzeManager.publisherAnalyzer.getCustomContentString();
         String[] customThemes = AnalyzeManager.themeFileEnAnalyzer.getCustomContentString();
         String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
         StringBuilder stringBuilder = new StringBuilder();

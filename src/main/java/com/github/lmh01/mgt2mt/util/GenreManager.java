@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
@@ -166,6 +167,9 @@ public class GenreManager {
                     AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                     EditGameplayFeaturesFile.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, showSummaryFromImport, genreIcon, showMessages);
+                    if(showSummaryFromImport){
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + ": " + map.get("NAME EN"));
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var2"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
