@@ -288,7 +288,7 @@ public class WindowMain {
             try{
                 AnalyzeManager.genreAnalyzer.analyzeFile();
                 AnalyzeExistingThemes.analyzeThemeFiles();
-                AnalyzeExistingPublishers.analyzePublisherFile();
+                AnalyzeManager.publisherAnalyzer.analyzeFile();
                 AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                 AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
                 AnalyzeManager.licenceAnalyzer.analyzeFile();
@@ -313,7 +313,7 @@ public class WindowMain {
                     if(AnalyzeExistingThemes.MAP_ACTIVE_THEMES_GE.size() > AnalyzeExistingThemes.DEFAULT_THEMES.length){
                         noCustomThemesAvailable = false;
                     }
-                    if(AnalyzeExistingPublishers.getCustomPublisherString(true).length > 0){
+                    if(AnalyzeManager.publisherAnalyzer.getCustomContentString(true).length > 0){
                         noCustomPublishersAvailable = false;
                     }
                     if(AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString(true).length > 0){

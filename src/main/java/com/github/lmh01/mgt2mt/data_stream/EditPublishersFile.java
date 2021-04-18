@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
@@ -32,7 +33,7 @@ public class EditPublishersFile {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(publisherFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
         LOGGER.info("Writing contents of list to file: " + publisherFile.getPath());
-        List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+        List<Map<String, String>> list = AnalyzeManager.publisherAnalyzer.getFileContent();
         for (Map<String, String> map : list) {
             EditHelper.printLine("ID", map, bw);
             TranslationManager.printLanguages(bw, map);
@@ -70,7 +71,7 @@ public class EditPublishersFile {
      * @param publisherNameEN The english publisher name.
      */
     public static boolean removePublisher(String publisherNameEN) throws IOException {
-        AnalyzeExistingPublishers.analyzePublisherFile();
+        AnalyzeManager.publisherAnalyzer.analyzeFile();
         LOGGER.info("Removing publisher: " + publisherNameEN);
         File publisherFile = Utils.getPublisherFile();
         if(Settings.disableSafetyFeatures){
@@ -85,7 +86,7 @@ public class EditPublishersFile {
         bw.write("\ufeff");
         LOGGER.info("Writing contents of list to file: " + publisherFile.getPath());
         int publisherToSkip = getPublisherPositionInList(publisherNameEN);
-        List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+        List<Map<String, String>> list = AnalyzeManager.publisherAnalyzer.getFileContent();
         for(int i=0; i<list.size(); i++){
             if(i != publisherToSkip){
                 Map<String,String> map = list.get(i);
@@ -122,7 +123,7 @@ public class EditPublishersFile {
      */
     public static int getPublisherPositionInList(String publisherNameEN){
         int returnValue = 0;
-        List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+        List<Map<String, String>> list = AnalyzeManager.publisherAnalyzer.getFileContent();
         try{
             for(int i=0; i<list.size(); i++){
                 Map<String, String> map = list.get(i);
@@ -138,7 +139,7 @@ public class EditPublishersFile {
 
     private static int getPublisherIconIdByName(String publisherNameEN){
         int returnValue = 0;
-        List<Map<String, String>> list = AnalyzeExistingPublishers.getListMap();
+        List<Map<String, String>> list = AnalyzeManager.publisherAnalyzer.getFileContent();
         try{
             for (Map<String, String> map : list) {
                 if (map.get("NAME EN").equals(publisherNameEN)) {

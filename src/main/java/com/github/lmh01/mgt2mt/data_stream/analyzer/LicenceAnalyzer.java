@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class LicenceAnalyzer extends AbstractSimpleAnalyzer implements LicenceAnalyzerInterface{
     Map<Integer, String> fileContent;
+    String[] defaultContent = {};
 
     @Override
     public Map<Integer, String> getFileContent() {
@@ -40,8 +41,16 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer implements LicenceAn
     }
 
     @Override
-    public String getDefaultContentFile() {
-        return "default_licences.txt";
+    public String[] getDefaultContent() {
+        if(defaultContent.length == 0){
+            try {
+                defaultContent = ReadDefaultContent.getDefault("default_licences.txt", this::getReplacedLine);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return defaultContent;
     }
 
     @Override
@@ -63,45 +72,39 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer implements LicenceAn
 
     @Override
     public String[] getCustomContentString(boolean disableTextAreaMessage) {
-        try{
-            String[] allLicenceNamesByAlphabet = getContentByAlphabet();
+        String[] allLicenceNamesByAlphabet = getContentByAlphabet();
 
-            ArrayList<String> arrayListCustomLicences = new ArrayList<>();
+        ArrayList<String> arrayListCustomLicences = new ArrayList<>();
 
-            ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"), !disableTextAreaMessage);
-            int currentProgressBarValue = 0;
-            for (String s : allLicenceNamesByAlphabet) {
-                boolean defaultGenre = false;
-                for (String licenceName : ReadDefaultContent.getDefault(getDefaultContentFile(), this::getReplacedLine)) {
-                    if (s.equals(licenceName)) {
-                        defaultGenre = true;
-                        break;
-                    }
-                    if(s.equals("Chronicles of Nornio [5]")){
-                        defaultGenre = true;
-                    }
+        ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"), !disableTextAreaMessage);
+        int currentProgressBarValue = 0;
+        for (String s : allLicenceNamesByAlphabet) {
+            boolean defaultGenre = false;
+            for (String licenceName : getDefaultContent()) {
+                if (s.equals(licenceName)) {
+                    defaultGenre = true;
+                    break;
                 }
-                if (!defaultGenre) {
-                    arrayListCustomLicences.add(s);
-                    if(!disableTextAreaMessage){
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicenceFound") + " " + s);
-                    }
+                if(s.equals("Chronicles of Nornio [5]")){
+                    defaultGenre = true;
                 }
-                currentProgressBarValue++;
-                ProgressBarHelper.setValue(currentProgressBarValue);
             }
-            if(!disableTextAreaMessage){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicencesComplete"));
+            if (!defaultGenre) {
+                arrayListCustomLicences.add(s);
+                if(!disableTextAreaMessage){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicenceFound") + " " + s);
+                }
             }
-            ProgressBarHelper.resetProgressBar();
-            arrayListCustomLicences.remove("Chronicles of Nornio [5]");
-            String[] string = new String[arrayListCustomLicences.size()];
-            arrayListCustomLicences.toArray(string);
-            return string;
-        }catch(IOException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.analyzeExistingLicences.errorWhileScanningLicences") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
         }
-        return null;
+        if(!disableTextAreaMessage){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicencesComplete"));
+        }
+        ProgressBarHelper.resetProgressBar();
+        arrayListCustomLicences.remove("Chronicles of Nornio [5]");
+        String[] string = new String[arrayListCustomLicences.size()];
+        arrayListCustomLicences.toArray(string);
+        return string;
     }
 }

@@ -9,6 +9,7 @@ commonText.genre.upperCase|Genre
 commonText.licence|Lizenz
 commonText.licence.upperCase|Lizenz
 commonText.publisher|Publisher
+commonText.publisher.upperCase|Publisher
 commonText.gameplayFeature|Gameplay Feature
 commonText.gameplayFeature.upperCase|Gameplay Feature
 commonText.engineFeature|Engine Feature
@@ -99,6 +100,10 @@ analyzer.licence.getCustomContentString.errorWhileScanningDefaultFiles|Fehler be
 analyzer.licence.getCustomContentString.customEngineFeatureFound|Modifizierte Lizenz gefunden:
 analyzer.licence.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Lizenzen abgeschlossen
 analyzer.licence.getCustomContentString.progressBar|Scannen nach modifizierten Lizenzen
+analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Publishern:
+analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modifizierten Publisher gefunden:
+analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Publishern abgeschlossen
+analyzer.publisher.getCustomContentString.progressBar|Scannen nach modifizierten Publishern
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?

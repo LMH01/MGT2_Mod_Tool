@@ -1,13 +1,12 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingPublishers;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.EditPublishersFile;
 import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.SharingManager;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -46,8 +45,8 @@ public class PublisherHelper {
                 }
                 LOGGER.info("Real publisher files are ready.");
                 LOGGER.info("Removing existing publishers...");
-                ProgressBarHelper.initializeProgressBar(0, AnalyzeExistingPublishers.ORIGINAL_PUBLISHERS.length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
-                for(String string : AnalyzeExistingPublishers.ORIGINAL_PUBLISHERS){
+                ProgressBarHelper.initializeProgressBar(0, AnalyzeManager.publisherAnalyzer.getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
+                for(String string : AnalyzeManager.publisherAnalyzer.getDefaultContent()){
                     EditPublishersFile.removePublisher(string);
                     ProgressBarHelper.increment();
                 }
@@ -56,7 +55,7 @@ public class PublisherHelper {
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
                 SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, new AtomicBoolean(false));
-                if(AnalyzeExistingPublishers.getActivePublisherIds().contains(-1)){
+                if(AnalyzeManager.publisherAnalyzer.getFileContent().contains(-1)){
                     EditPublishersFile.removePublisher("Dummy");
                 }
                 TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));

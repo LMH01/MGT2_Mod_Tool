@@ -1,16 +1,18 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
+import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GenreAnalyzer extends AbstractAdvancedAnalyzer implements GenreAnalyzerInterface{
     List<Map<String, String>> fileContent;
+    String[] defaultContent = {};
     int maxId = 0;
 
     @Override
@@ -49,26 +51,16 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer implements GenreAnal
     }
 
     @Override
-    public String getDefaultContentFile() {
-        return "default_genres.txt";
-    }
-
-    @Override
-    public ArrayList<Integer> getGenreIdsInUse() {
-        try {
-            ArrayList<Integer> arrayList = new ArrayList<>();
-            for(Map<String, String> map : getAnalyzedFile()){
-                for(Map.Entry<String, String> entry : map.entrySet()){
-                    if(entry.getKey().equals("ID")){
-                        arrayList.add(Integer.parseInt(entry.getValue()));
-                    }
-                }
+    public String[] getDefaultContent() {
+        if(defaultContent.length == 0){
+            try {
+                defaultContent = ReadDefaultContent.getDefault("default_genres.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
             }
-            return arrayList;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
         }
+        return defaultContent;
     }
 
     @Override

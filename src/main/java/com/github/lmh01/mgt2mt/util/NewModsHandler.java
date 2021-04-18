@@ -1,10 +1,10 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
-import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -31,7 +31,7 @@ public class NewModsHandler {
     }
     public static void addPublisher(){
         try {
-            AnalyzeExistingPublishers.analyzePublisherFile();
+            AnalyzeManager.publisherAnalyzer.analyzeFile();
             JPanel panelName = new JPanel();
             JLabel labelName = new JLabel("Name:");
             JTextField textFieldName = new JTextField("---------Enter Name---------");
@@ -152,7 +152,7 @@ public class NewModsHandler {
             while(!breakLoop){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Publisher", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     boolean publisherAlreadyExists = false;
-                    for(String string : AnalyzeExistingPublishers.getPublisherString()){
+                    for(String string : AnalyzeManager.publisherAnalyzer.getContentByAlphabet()){
                         if(textFieldName.getText().equals(string)){
                             publisherAlreadyExists = true;
                         }
@@ -171,7 +171,7 @@ public class NewModsHandler {
                             if(publisherImageFilePath.toString().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
                                 logoId = 87;
                             }else{
-                                logoId = AnalyzeCompanyLogos.getLogoNumber();
+                                logoId = CompanyLogoAnalyzer.getLogoNumber();
                             }
                             if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
                                     "\nName: " + textFieldName.getText() +
@@ -183,7 +183,7 @@ public class NewModsHandler {
                                     "\nShare: " + spinnerShare.getValue().toString() +
                                     "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
                                 HashMap<String, String> hashMap = new HashMap<>();
-                                hashMap.put("ID", Integer.toString(AnalyzeExistingPublishers.maxPublisherID +1));
+                                hashMap.put("ID", Integer.toString(AnalyzeManager.publisherAnalyzer.getFreeId()));
                                 hashMap.put("NAME EN", textFieldName.getText());
                                 hashMap.put("NAME GE", textFieldName.getText());
                                 hashMap.put("NAME TU", textFieldName.getText());
@@ -310,7 +310,7 @@ public class NewModsHandler {
         String imageFilePath = Utils.getImagePath();
         File imageFileSource = new File(imageFilePath);
         if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
-            File targetImage = new File(Utils.getMGT2CompanyLogosPath() + "//" + AnalyzeCompanyLogos.getLogoNumber() + ".png");
+            File targetImage = new File(Utils.getMGT2CompanyLogosPath() + "//" + CompanyLogoAnalyzer.getLogoNumber() + ".png");
             try {
                 Files.copy(Paths.get(imageFileSource.getPath()), Paths.get(targetImage.getPath()));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.addCompanyIcon.success"));

@@ -173,10 +173,10 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeManager.genreAnalyzer.getGenreIdsInUse().contains(spinnerId.getValue())){
+        if(AnalyzeManager.genreAnalyzer.getActiveIds().contains(spinnerId.getValue())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
-        }else if(AnalyzeManager.genreAnalyzer.getGenreIdsInUse().contains(textFieldGenreName.getToolTipText())){
+        }else if(AnalyzeManager.genreAnalyzer.getActiveIds().contains(textFieldGenreName.getToolTipText())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
             return false;
         }else if(textFieldGenreName.getText().isEmpty()){

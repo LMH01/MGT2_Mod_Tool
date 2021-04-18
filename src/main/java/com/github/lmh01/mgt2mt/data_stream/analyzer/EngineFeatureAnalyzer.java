@@ -1,7 +1,10 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
+import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.Map;
 
 public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     List<Map<String, String>> fileContent;
+    String[] defaultContent = {};
     int maxId = 0;
 
     @Override
@@ -27,8 +31,16 @@ public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     }
 
     @Override
-    public String getDefaultContentFile() {
-        return "default_engine_features.txt";
+    public String[] getDefaultContent() {
+        if(defaultContent.length == 0){
+            try {
+                defaultContent = ReadDefaultContent.getDefault("default_engine_features.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return defaultContent;
     }
 
     @Override

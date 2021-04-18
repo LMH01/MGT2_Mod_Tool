@@ -96,44 +96,37 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
     }
 
     public String[] getCustomContentString(boolean disableTextAreaMessage){
-        try{
-            String[] contentByAlphabet = getContentByAlphabet();
-            ArrayList<String> arrayListCustomContent = new ArrayList<>();
-            String[] defaultContent = ReadDefaultContent.getDefault(getDefaultContentFile());
-            ProgressBarHelper.initializeProgressBar(defaultContent.length, getFileContent().size(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
-            for (String s : contentByAlphabet) {
-                boolean isDefaultContent = false;
-                for (String contentName : defaultContent) {
-                    if (s.equals(contentName)) {
-                        isDefaultContent = true;
-                        break;
-                    }
+        String[] contentByAlphabet = getContentByAlphabet();
+        ArrayList<String> arrayListCustomContent = new ArrayList<>();
+        ProgressBarHelper.initializeProgressBar(getDefaultContent().length, getFileContent().size(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
+        for (String s : contentByAlphabet) {
+            boolean isDefaultContent = false;
+            for (String contentName : getDefaultContent()) {
+                if (s.equals(contentName)) {
+                    isDefaultContent = true;
+                    break;
                 }
-                if (!isDefaultContent) {
-                    arrayListCustomContent.add(s);
-                    if(!disableTextAreaMessage){
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.customEngineFeatureFound") + " " + s);
-                    }
+            }
+            if (!isDefaultContent) {
+                arrayListCustomContent.add(s);
+                if(!disableTextAreaMessage){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.customEngineFeatureFound") + " " + s);
                 }
-                ProgressBarHelper.increment();
             }
-            if(!disableTextAreaMessage){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.customEngineFeatureComplete"));
-            }
-            ProgressBarHelper.resetProgressBar();
-            try{
-                Collections.sort(arrayListCustomContent);
-            }catch(NullPointerException ignored){
-
-            }
-            String[] string = new String[arrayListCustomContent.size()];
-            arrayListCustomContent.toArray(string);
-            return string;
-        }catch(IOException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+            ProgressBarHelper.increment();
         }
-        return new String[]{};
+        if(!disableTextAreaMessage){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.customEngineFeatureComplete"));
+        }
+        ProgressBarHelper.resetProgressBar();
+        try{
+            Collections.sort(arrayListCustomContent);
+        }catch(NullPointerException ignored){
+
+        }
+        String[] string = new String[arrayListCustomContent.size()];
+        arrayListCustomContent.toArray(string);
+        return string;
     }
 
     /**
@@ -208,5 +201,20 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
             }
         }
         return -1;
+    }
+
+    /**
+     * @return Returns a array list containing all active ids
+     */
+    public ArrayList<Integer> getActiveIds(){
+        ArrayList<Integer> activeIds = new ArrayList<>();
+        for(Map<String, String> map : getFileContent()){
+            try{
+                activeIds.add(Integer.parseInt(map.get("ID")));
+            }catch(NumberFormatException ignored){
+
+            }
+        }
+        return activeIds;
     }
 }

@@ -22,7 +22,7 @@ public interface BaseAnalyzer {
     String getMainTranslationKey();
 
     /**
-     * The String containing the default content file
+     * The String[] containing all default values
      */
-    String getDefaultContentFile();
+    String[] getDefaultContent();
 }

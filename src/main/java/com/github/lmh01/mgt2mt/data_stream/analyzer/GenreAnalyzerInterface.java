@@ -5,6 +5,5 @@ import java.util.ArrayList;
 
 public interface GenreAnalyzerInterface {
     /*Contains functions that are only used by the GenreAnalyzer*/
-    ArrayList<Integer> getGenreIdsInUse() throws IOException;
     String getContentNameById(int id, boolean changeableLanguage);
 }

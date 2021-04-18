@@ -9,6 +9,7 @@ commonText.genre.upperCase|Genre
 commonText.licence|licence
 commonText.licence.upperCase|Licence
 commonText.publisher|publisher
+commonText.publisher.upperCase|Publisher
 commonText.gameplayFeature|gameplay feature
 commonText.gameplayFeature.upperCase|Gameplay feature
 commonText.engineFeature|engine feature
@@ -99,6 +100,10 @@ analyzer.licence.getCustomContentString.errorWhileScanningDefaultFiles|Error wil
 analyzer.licence.getCustomContentString.customEngineFeatureFound|Modded licence found:
 analyzer.licence.getCustomContentString.customEngineFeatureComplete|Scanning for modded licences complete
 analyzer.licence.getCustomContentString.progressBar|Scanning for modded licences
+analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning publisher:
+analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modded publisher found:
+analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scanning for modded publisher complete
+analyzer.publisher.getCustomContentString.progressBar|Scanning for modded publisher
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?

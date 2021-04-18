@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -245,7 +246,7 @@ public class SharingHandler {
      * @return Returns true when the publisher has been exported successfully. Returns false when the publisher has already been exported.
      */
     public static boolean exportPublisher(String publisherNameEN, boolean exportAsRestorePoint) throws IOException {
-        Map<String, String> singlePublisherMap = AnalyzeExistingPublishers.getSinglePublisherByNameMap(publisherNameEN);
+        Map<String, String> singlePublisherMap = AnalyzeManager.publisherAnalyzer.getSingleContentMapByName(publisherNameEN);
         String exportFolder;
         if(exportAsRestorePoint){
             exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
@@ -297,9 +298,9 @@ public class SharingHandler {
      */
     public static String importPublisher(String importFolderPath, boolean showMessages) throws IOException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.mods.publisher"));
-        AnalyzeExistingPublishers.analyzePublisherFile();
+        AnalyzeManager.publisherAnalyzer.analyzeFile();
         AnalyzeManager.genreAnalyzer.analyzeFile();
-        int newPublisherId = AnalyzeExistingPublishers.getFreePublisherId();
+        int newPublisherId = AnalyzeManager.publisherAnalyzer.getFreeId();
         File fileGenreToImport = new File(importFolderPath + "\\publisher.txt");
         HashMap<String, String> map = new HashMap<>();
         List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileGenreToImport);
@@ -328,7 +329,7 @@ public class SharingHandler {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
             return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
-        for(Map<String, String> map2 : AnalyzeExistingPublishers.getListMap()){
+        for(Map<String, String> map2 : AnalyzeManager.publisherAnalyzer.getFileContent()){
             for(Map.Entry<String, String> entry : map2.entrySet()){
                 if(entry.getValue().equals(map.get("NAME EN"))){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN"));
@@ -337,7 +338,7 @@ public class SharingHandler {
                 }
             }
         }
-        int logoId = AnalyzeCompanyLogos.getLogoNumber();
+        int logoId = CompanyLogoAnalyzer.getLogoNumber();
         map.put("PIC", Integer.toString(logoId));
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));

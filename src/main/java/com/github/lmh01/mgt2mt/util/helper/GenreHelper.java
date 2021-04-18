@@ -434,7 +434,7 @@ public class GenreHelper {
 
     private static String getRandomGenreCombs(){
         StringBuilder stringBuilder = new StringBuilder();
-        for(Integer integer : AnalyzeManager.genreAnalyzer.getGenreIdsInUse()){
+        for(Integer integer : AnalyzeManager.genreAnalyzer.getActiveIds()){
             if(Utils.getRandomNumber(1,10) > 5){
                 stringBuilder.append("<").append(integer).append(">");
             }

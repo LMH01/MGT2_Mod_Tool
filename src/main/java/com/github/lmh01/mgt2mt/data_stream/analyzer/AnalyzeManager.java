@@ -5,4 +5,5 @@ public class AnalyzeManager {
     public static GameplayFeatureAnalyzer gameplayFeatureAnalyzer = new GameplayFeatureAnalyzer();
     public static GenreAnalyzer genreAnalyzer = new GenreAnalyzer();
     public static LicenceAnalyzer licenceAnalyzer = new LicenceAnalyzer();
+    public static PublisherAnalyzer publisherAnalyzer = new PublisherAnalyzer();
 }

@@ -1,5 +1,6 @@
-package com.github.lmh01.mgt2mt.data_stream;
+package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -7,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ArrayList;
 
-public class AnalyzeCompanyLogos {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeCompanyLogos.class);
+public class CompanyLogoAnalyzer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompanyLogoAnalyzer.class);
 
     /**
      * @return Returns a free logo number for a company logo.
