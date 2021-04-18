@@ -47,9 +47,24 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
     }
 
     /**
+     * The file that should be analyzed
+     */
+    public abstract File getFileToAnalyze();
+
+    /**
      * returns that analyzed file
      */
     public abstract List<Map<String, String>> getFileContent();
+
+    /**
+     * Returns the currently highest id
+     */
+    public abstract int getMaxId();
+
+    /**
+     * Sets the maximum id
+     */
+    public abstract void setMaxId(int id);
 
     /**
      * @return Returns the next free id.

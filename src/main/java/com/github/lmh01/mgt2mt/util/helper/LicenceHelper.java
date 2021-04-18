@@ -1,12 +1,10 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.AnalyzeExistingLicences;
 import com.github.lmh01.mgt2mt.data_stream.EditLicenceFile;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,7 +39,7 @@ public class LicenceHelper {
                         newLicence.put("TYPE", "[SPORT]");
                     }
                     boolean licenceAlreadyExists = false;
-                    for(Map.Entry<Integer, String> entry : AnalyzeExistingLicences.existingLicences.entrySet()){
+                    for(Map.Entry<Integer, String> entry : AnalyzeManager.licenceAnalyzer.getFileContent().entrySet()){
                         if(entry.getValue().equals(textFieldName.getText() + " " + newLicence.get("TYPE"))){
                             LOGGER.info("Licence already exists");
                             licenceAlreadyExists = true;

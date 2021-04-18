@@ -14,7 +14,7 @@ public class ActiveMods {
         String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
         String[] customPublishers = AnalyzeExistingPublishers.getCustomPublisherString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
-        String[] customLicences = AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet();
+        String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(I18n.INSTANCE.get("window.showActiveMods.message.firstPart")).append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
         boolean noModsActive = true;

@@ -124,7 +124,7 @@ public class Uninstaller {
         String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
         String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
         String[] customThemes = AnalyzeExistingThemes.getCustomThemesByAlphabet();
-        String[] customLicences = AnalyzeExistingLicences.getCustomLicenceNamesByAlphabet();
+        String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
         if(customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length!= 0){
             ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (String customGenre : customGenres) {

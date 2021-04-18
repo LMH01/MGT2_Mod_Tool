@@ -193,7 +193,7 @@ public class SharingHandler {
         bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION);bw.write(System.getProperty("line.separator"));
         bw.write("[LICENCE START]");bw.write(System.getProperty("line.separator"));
         bw.write("[NAME]" + licenceName);bw.write(System.getProperty("line.separator"));
-        bw.write("[TYPE]" + AnalyzeExistingLicences.getTypeForLicence(licenceName));bw.write(System.getProperty("line.separator"));
+        bw.write("[TYPE]" + AnalyzeManager.licenceAnalyzer.getTypeForLicence(licenceName));bw.write(System.getProperty("line.separator"));
         bw.write("[LICENCE END]");
         bw.close();
         ChangeLog.addLogEntry(33, licenceName);
@@ -203,7 +203,7 @@ public class SharingHandler {
 
     public static String importLicence(String importFolderPath, boolean showMessages) throws IOException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.licence"));
-        AnalyzeExistingLicences.analyze();
+        AnalyzeManager.licenceAnalyzer.analyzeFile();
         File fileGenreToImport = new File(importFolderPath + "\\licence.txt");
         List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileGenreToImport);
         Map<String, String> map = list.get(0);
@@ -217,7 +217,7 @@ public class SharingHandler {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
             return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
-        for(Map.Entry<Integer, String> entry : AnalyzeExistingLicences.existingLicences.entrySet()){
+        for(Map.Entry<Integer, String> entry : AnalyzeManager.licenceAnalyzer.getFileContent().entrySet()){
             if(entry.getValue().equals(map.get("NAME") + " " + map.get("TYPE"))){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + map.get("NAME"));
                 LOGGER.info("Licence already exists - The licence name is already taken");

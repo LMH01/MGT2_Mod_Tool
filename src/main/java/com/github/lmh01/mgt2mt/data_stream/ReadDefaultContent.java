@@ -5,25 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ReadDefaultContent {
-
-    /**
-     * @deprecated use {@link ReadDefaultContent#getDefault(String)} instead
-     */
-    @Deprecated
-    public static String[] getDefaultLicences() throws IOException {
-        ArrayList<String> arrayList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("default_content/default_licences.txt"), StandardCharsets.UTF_8));
-        String currentLine;
-        while((currentLine=reader.readLine()) != null){
-            arrayList.add(currentLine.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim());
-        }
-        reader.close();
-        String[] strings = new String[arrayList.size()];
-        arrayList.toArray(strings);
-        return strings;
-    }
 
     /**
      * @deprecated use {@link ReadDefaultContent#getDefault(String)} instead
@@ -41,12 +25,20 @@ public class ReadDefaultContent {
         arrayList.toArray(strings);
         return strings;
     }
+
     public static String[] getDefault(String fileName) throws IOException{
+        return getDefault(fileName, null);
+    }
+    public static String[] getDefault(String fileName, Replacer replacer) throws IOException{
         ArrayList<String> arrayList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("default_content/" + fileName), StandardCharsets.UTF_8));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/" + fileName)), StandardCharsets.UTF_8));
         String currentLine;
         while ((currentLine = reader.readLine()) != null) {
-            arrayList.add(currentLine);
+            if(replacer != null){
+                arrayList.add(replacer.replace(currentLine));
+            }else{
+                arrayList.add(currentLine);
+            }
         }
         reader.close();
         String[] strings = new String[arrayList.size()];

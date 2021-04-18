@@ -291,7 +291,7 @@ public class WindowMain {
                 AnalyzeExistingPublishers.analyzePublisherFile();
                 AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                 AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
-                AnalyzeExistingLicences.analyze();
+                AnalyzeManager.licenceAnalyzer.analyzeFile();
                 boolean noCustomGenreAvailable = true;
                 boolean noCustomThemesAvailable = true;
                 boolean noCustomPublishersAvailable = true;
@@ -322,7 +322,7 @@ public class WindowMain {
                     if(AnalyzeManager.engineFeatureAnalyzer.getCustomContentString(true).length > 0){
                         noCustomEngineFeaturesAvailable = false;
                     }
-                    Map<Integer, String> mapLicences = AnalyzeExistingLicences.existingLicences;
+                    Map<Integer, String> mapLicences = AnalyzeManager.licenceAnalyzer.getFileContent();
                     if(mapLicences.size() > 956){
                         noCustomLicencesAvailable = false;
                     }
