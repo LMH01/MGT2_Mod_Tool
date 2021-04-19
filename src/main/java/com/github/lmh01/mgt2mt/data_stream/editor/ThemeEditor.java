@@ -1,5 +1,8 @@
-package com.github.lmh01.mgt2mt.data_stream;
+package com.github.lmh01.mgt2mt.data_stream.editor;
 
+import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -7,32 +10,69 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class EditThemeFiles {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EditThemeFiles.class);
+public class ThemeEditor extends AbstractSimpleEditor{
+    private static final Logger LOGGER = LoggerFactory.getLogger(ThemeEditor.class);
+
+    @Override
+    AbstractSimpleAnalyzer getAnalyzer() {
+        return null;
+    }
+
+    @Override
+    public String getReplacedLine(String inputString) {
+        return null;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
+    }
+
+    @Override
+    public String getEditorType() {
+        return I18n.INSTANCE.get("commonText.theme");
+    }
+
+    @Override
+    public File getFileToEdit() {
+        return null;
+    }
+
+    @Override
+    public Charset getCharset() {
+        return null;
+    }
+
+    /**
+     * Do not use this method!
+     * Use {@link ThemeEditor#addMod(Map, ArrayList, int)} instead!
+     * @param lineToWrite The line that should be written
+     */
+    @Override
+    public void addMod(String lineToWrite) throws IOException {
+        addMod(null, null, 1);
+    }
 
     /**
      * Adds a new theme to the theme files
      * @param map The map containing the theme translations
      * @param arrayListCompatibleGenres The array list containing the compatible genres
      */
-    public static void addTheme(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, int violenceLevel) throws IOException {
+    public void addMod(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, int violenceLevel) throws IOException {
         editThemeFiles(map, arrayListCompatibleGenres, true, 0, violenceLevel);
     }
 
-    /**
-     * Removes a theme from the theme files.
-     * @param themeNameEn The theme name that should be removed
-     */
-    public static boolean removeTheme(String themeNameEn) throws IOException {
-        boolean returnValue = editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(themeNameEn), 0);
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + themeNameEn);
+    @Override
+    public boolean removeMod(String name) throws IOException {
+        boolean returnValue = editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(name), 0);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
         return returnValue;
     }
 
@@ -44,7 +84,7 @@ public class EditThemeFiles {
      * @param removeThemePosition The position where the theme is positioned that should be removed.
      * @param violenceLevel This is the number that will be added to the theme entry in the german file. This declares how much the age rating should be influenced when a game is made with this topic
      */
-    public static boolean editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition, int violenceLevel) throws IOException {
+    public boolean editThemeFiles(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition, int violenceLevel) throws IOException {
         for(String string : TranslationManager.TRANSLATION_KEYS){
             File themeFile = Utils.getThemeFile(string);
             Map<Integer, String> currentThemeFileContent;
@@ -122,7 +162,7 @@ public class EditThemeFiles {
      * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the file.
      * @param compatibleThemeIds A set containing all compatible theme ids.
      */
-    public static void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
+    public void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
         ThemeFileAnalyzer.analyzeThemeFiles();
         File fileTopicsGe = Utils.getThemesGeFile();
         if(fileTopicsGe.exists()){

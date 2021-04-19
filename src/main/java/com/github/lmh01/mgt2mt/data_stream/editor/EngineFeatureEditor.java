@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.TranslationManager;
@@ -12,16 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 public class EngineFeatureEditor extends AbstractAdvancedEditor{
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureEditor.class);
-
-    @Override
-    public void analyzeFile() throws IOException {
-        AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
-    }
 
     @Override
     public void sendLogMessage(String string) {
@@ -44,11 +39,6 @@ public class EngineFeatureEditor extends AbstractAdvancedEditor{
     }
 
     @Override
-    public List<Map<String, String>> getFileContent() {
-        return AnalyzeManager.engineFeatureAnalyzer.getFileContent();
-    }
-
-    @Override
     public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         EditHelper.printLine("ID", map, bw);
         EditHelper.printLine("TYP", map, bw);
@@ -66,7 +56,7 @@ public class EngineFeatureEditor extends AbstractAdvancedEditor{
     }
 
     @Override
-    public int getContentIdByName(String name) {
-        return AnalyzeManager.engineFeatureAnalyzer.getContentIdByName(name);
+    public AbstractAdvancedAnalyzer getAnalyzer() {
+        return AnalyzeManager.engineFeatureAnalyzer;
     }
 }

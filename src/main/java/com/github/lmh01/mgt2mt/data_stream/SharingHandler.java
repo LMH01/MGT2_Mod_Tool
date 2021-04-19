@@ -226,12 +226,13 @@ public class SharingHandler {
                 return "false";
             }
         }
-        Map<String, String> exportMap = new HashMap<>();
-        exportMap.put("NAME", map.get("NAME"));
-        exportMap.put("TYPE", map.get("TYPE"));
-        EditLicenceFile.addLicence(exportMap);
+        StringBuilder exportLicence = new StringBuilder();
+        String name = map.get("NAME");
+        String type = map.get("TYPE");
+        exportLicence.append(name).append(" ").append(type);
+        EditorManager.licenceEditor.addMod(exportLicence.toString());
         if(showMessages){
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + " " + exportMap.get("NAME") + "\n" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + exportMap.get("TYPE"), I18n.INSTANCE.get("window.npcGamesList.comboBox.operation.value_1") + " " + I18n.INSTANCE.get("commonText.licence"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + " " + name + "\n" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + type, I18n.INSTANCE.get("window.npcGamesList.comboBox.operation.value_1") + " " + I18n.INSTANCE.get("commonText.licence"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 ChangeLog.addLogEntry(22, map.get("NAME EN"));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.licence") + " " + map.get("NAME") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
@@ -354,12 +355,12 @@ public class SharingHandler {
                         "\nMarketShare: " + map.get("MARKET") +
                         "\nShare: " + map.get("SHARE") +
                         "\nGenre: " + AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(map.get("GENRE"))), I18n.INSTANCE.get("window.main.mods.publisher.addPublisher") + "?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
-                    EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
+                    EditorManager.publisherEditor.addMod(map, publisherImageFilePath.getPath());
                     ChangeLog.addLogEntry(22, map.get("NAME EN"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.main.mods.publisher") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
-                EditPublishersFile.addPublisher(map, publisherImageFilePath.getPath());
+                EditorManager.publisherEditor.addMod(map, publisherImageFilePath.getPath());
                 ChangeLog.addLogEntry(22, map.get("NAME EN"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -451,12 +452,12 @@ public class SharingHandler {
         try {
             if(showMessages){
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
+                    EditorManager.themeEditor.addMod(map, compatibleGenreIds, violenceRating);
                     ChangeLog.addLogEntry(24, map.get("NAME EN"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
-                EditThemeFiles.addTheme(map, compatibleGenreIds, violenceRating);
+                EditorManager.themeEditor.addMod(map, compatibleGenreIds, violenceRating);
                 ChangeLog.addLogEntry(24, map.get("NAME EN"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -603,7 +604,7 @@ public class SharingHandler {
                 importFolderPath,
                 AnalyzeManager.gameplayFeatureAnalyzer.getFileContent(),
                 SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS,
-                EditGameplayFeaturesFile::addGameplayFeature,
+                EditorManager.gameplayFeatureEditor::addMod,
                 AnalyzeManager.gameplayFeatureAnalyzer::getFreeId,
                 30,
                 Summaries::showGameplayFeatureMessage,

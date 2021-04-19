@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.data_stream.EditGenreFile;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.GenreManager;

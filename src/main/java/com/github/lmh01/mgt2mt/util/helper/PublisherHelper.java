@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.EditPublishersFile;
 import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.SharingManager;
@@ -47,7 +47,7 @@ public class PublisherHelper {
                 LOGGER.info("Removing existing publishers...");
                 ProgressBarHelper.initializeProgressBar(0, AnalyzeManager.publisherAnalyzer.getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
                 for(String string : AnalyzeManager.publisherAnalyzer.getDefaultContent()){
-                    EditPublishersFile.removePublisher(string);
+                    EditorManager.publisherEditor.removeMod(string);
                     ProgressBarHelper.increment();
                 }
                 LOGGER.info("Original publishers have been removed!");
@@ -55,8 +55,9 @@ public class PublisherHelper {
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
                 SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, new AtomicBoolean(false));
-                if(AnalyzeManager.publisherAnalyzer.getFileContent().contains(-1)){
-                    EditPublishersFile.removePublisher("Dummy");
+                AnalyzeManager.publisherAnalyzer.analyzeFile();
+                if(AnalyzeManager.publisherAnalyzer.getActiveIds().contains(-1)){
+                    EditorManager.publisherEditor.removeMod("Dummy");
                 }
                 TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));

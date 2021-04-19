@@ -16,10 +16,10 @@ import java.util.Map;
 
 /**
  * The simple analyzer is used to analyze files that use this system:
- * [KeyX]ValueX
+ * ValueX [Some data]
  * When a blank line is found a new entry is created see {@link DataStreamHelper#parseDataFile(File)}
  */
-abstract class AbstractSimpleAnalyzer implements BaseAnalyzer{
+public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer{
     /**
      * returns that analyzed file
      */
@@ -81,4 +81,17 @@ abstract class AbstractSimpleAnalyzer implements BaseAnalyzer{
      * Replaces the input string and returns the replaced string
      */
     public abstract String getReplacedLine(String inputString);
+
+    /**
+     * @param name The content name for which the position should be returned
+     * @return Returns the position in the fileContent list where the input id is stored in.
+     */
+    public int getPositionInFileContentListByName(String name){
+        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
+            if(getReplacedLine(entry.getValue()).equals(name)){
+                return entry.getKey();
+            }
+        }
+        return -1;
+    }
 }

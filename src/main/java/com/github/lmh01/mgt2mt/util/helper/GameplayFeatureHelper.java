@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -275,7 +276,7 @@ public class GameplayFeatureHelper {
                         }
                         boolean addFeature = Summaries.showGameplayFeatureMessage(newGameplayFeature);
                         if(addFeature) {
-                            EditGameplayFeaturesFile.addGameplayFeature(newGameplayFeature);
+                            EditorManager.gameplayFeatureEditor.addMod(newGameplayFeature);
                             JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.gameplayFeature") + " - " + newGameplayFeature.get("NAME EN"));
                             break;

@@ -2,8 +2,8 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,11 +161,11 @@ public class GenreManager {
             }
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
-                    EditGenreFile.addGenre(map, genreTranslations);
-                    EditThemeFiles.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
-                    EditGameplayFeaturesFile.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
+                    EditorManager.genreEditor.addMod(map);
+                    EditorManager.themeEditor.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
+                    EditorManager.gameplayFeatureEditor.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
                     AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
-                    EditGameplayFeaturesFile.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
+                    EditorManager.gameplayFeatureEditor.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, showSummaryFromImport, genreIcon, showMessages);
                     if(showSummaryFromImport){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + ": " + map.get("NAME EN"));
