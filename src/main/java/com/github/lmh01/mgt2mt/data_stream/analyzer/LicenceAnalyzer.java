@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class LicenceAnalyzer extends AbstractSimpleAnalyzer implements LicenceAnalyzerInterface{
+public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
     Map<Integer, String> fileContent;
     String[] defaultContent = {};
 
@@ -54,23 +54,6 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer implements LicenceAn
     }
 
     @Override
-    public String getTypeForLicence(String licenceName) {
-        for(int i=1; i<=fileContent.size(); i++){
-            String currentLicence = fileContent.get(i);
-            if(currentLicence.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim().equals(licenceName)){
-                if(currentLicence.contains("[MOVIE]")){
-                    return "[MOVIE]";
-                }else if(currentLicence.contains("[BOOK]")){
-                    return "[BOOK]";
-                }else if(currentLicence.contains("[SPORT]")){
-                    return "[SPORT]";
-                }
-            }
-        }
-        return "";
-    }
-
-    @Override
     public String[] getCustomContentString(boolean disableTextAreaMessage) {
         String[] allLicenceNamesByAlphabet = getContentByAlphabet();
 
@@ -106,5 +89,21 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer implements LicenceAn
         String[] string = new String[arrayListCustomLicences.size()];
         arrayListCustomLicences.toArray(string);
         return string;
+    }
+
+    public String getTypeForLicence(String licenceName) {
+        for(int i=1; i<=fileContent.size(); i++){
+            String currentLicence = fileContent.get(i);
+            if(currentLicence.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim().equals(licenceName)){
+                if(currentLicence.contains("[MOVIE]")){
+                    return "[MOVIE]";
+                }else if(currentLicence.contains("[BOOK]")){
+                    return "[BOOK]";
+                }else if(currentLicence.contains("[SPORT]")){
+                    return "[SPORT]";
+                }
+            }
+        }
+        return "";
     }
 }

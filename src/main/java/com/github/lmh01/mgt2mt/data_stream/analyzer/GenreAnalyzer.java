@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class GenreAnalyzer extends AbstractAdvancedAnalyzer implements GenreAnalyzerInterface{
+public class GenreAnalyzer extends AbstractAdvancedAnalyzer{
     List<Map<String, String>> fileContent;
     String[] defaultContent = {};
     int maxId = 0;
@@ -63,7 +63,6 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer implements GenreAnal
         return defaultContent;
     }
 
-    @Override
     public String getContentNameById(int id, boolean changeableLanguage) {
         try {
             List<Map<String, String>> list = getAnalyzedFile();

@@ -1,10 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.TranslationManager;
-import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import java.io.*;
 import java.nio.charset.Charset;
