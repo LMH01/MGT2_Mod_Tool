@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public class GenreEditor extends AbstractAdvancedEditor{
+public class GenreEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreEditor.class);
 
     @Override
@@ -25,7 +25,7 @@ public class GenreEditor extends AbstractAdvancedEditor{
     }
 
     @Override
-    public String getEditorType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.genre");
     }
 

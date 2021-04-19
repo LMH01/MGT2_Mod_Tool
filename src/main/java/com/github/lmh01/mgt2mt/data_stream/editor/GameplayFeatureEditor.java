@@ -8,7 +8,6 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GameplayFeatureEditor extends AbstractAdvancedEditor{
+public class GameplayFeatureEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureEditor.class);
 
     @Override
@@ -25,7 +24,7 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor{
     }
 
     @Override
-    public String getEditorType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.gameplayFeature");
     }
 

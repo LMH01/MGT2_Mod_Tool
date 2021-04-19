@@ -1,7 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
+import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.SimpleAnalyzer;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -10,7 +11,7 @@ import java.nio.charset.StandardCharsets;
  * The simple editor is used to edit files that use this system:
  * ValueX [Some data]
  */
-abstract class AbstractSimpleEditor implements BaseEditor{
+abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions, SimpleAnalyzer {
     /**
      * Adds a mod to the file
      * @param lineToWrite The line that should be written
@@ -74,11 +75,6 @@ abstract class AbstractSimpleEditor implements BaseEditor{
         bw.close();
         return true;
     }
-
-    /**
-     * @return Returns the analyzer for the mod
-     */
-    abstract AbstractSimpleAnalyzer getAnalyzer();
 
     /**
      * Replaces the input string and returns the replaced string

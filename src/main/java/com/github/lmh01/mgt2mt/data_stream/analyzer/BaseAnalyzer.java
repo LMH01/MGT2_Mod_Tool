@@ -10,12 +10,6 @@ public interface BaseAnalyzer {
     void analyzeFile() throws IOException;
 
     /**
-     * The analyzer type indicates what is written in the log, textArea, progress bar and JOptionPanes
-     * Eg. Gameplay feature
-     */
-    String getAnalyzerType();
-
-    /**
      * The translation key that is specific to the analyzer
      * Eg. gameplayFeature
      */

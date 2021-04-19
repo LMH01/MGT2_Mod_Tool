@@ -6,18 +6,26 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
+    private static final Logger LOGGER = LoggerFactory.getLogger(LicenceAnalyzer.class);
     Map<Integer, String> fileContent;
     String[] defaultContent = {};
 
     @Override
     public Map<Integer, String> getFileContent() {
         return fileContent;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
     }
 
     @Override
@@ -31,7 +39,7 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
     }
 
     @Override
-    public String getAnalyzerType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.licence.upperCase");
     }
 

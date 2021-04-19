@@ -3,7 +3,8 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer{
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureAnalyzer.class);
     List<Map<String, String>> fileContent;
     String[] defaultContent = {};
     int maxId = 0;
@@ -21,7 +23,12 @@ public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer{
     }
 
     @Override
-    public String getAnalyzerType() {
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
+    }
+
+    @Override
+    public String getType() {
         return I18n.INSTANCE.get("commonText.gameplayFeature.upperCase");
     }
 

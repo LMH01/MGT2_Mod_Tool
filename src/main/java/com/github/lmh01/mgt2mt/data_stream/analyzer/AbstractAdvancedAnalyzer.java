@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
+import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import java.io.File;
 import java.io.IOException;
@@ -7,20 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
 
 /**
  * The advanced analyzer is used to analyze files that use this system:
  * [KeyX]ValueX
  * When a blank line is found a new entry is created see {@link DataStreamHelper#parseDataFile(File)}
  */
-public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
+public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunctions {
     //
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedAnalyzer.class);
@@ -42,7 +41,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
             }
         }
         setMaxId(currentMaxId);
-        LOGGER.info("Max" + getAnalyzerType() + "Id: " + currentMaxId);
+        LOGGER.info("Max" + getType() + "Id: " + currentMaxId);
         return fileContent;
     }
 
@@ -166,9 +165,9 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer{
             }
         }
         if(id == -1){
-            LOGGER.info(getAnalyzerType() + " [" + name + "] does not exist");
+            LOGGER.info(getType() + " [" + name + "] does not exist");
         }else{
-            LOGGER.info(getAnalyzerType() + " [" + name + "] has been found. Id: " + id);
+            LOGGER.info(getType() + " [" + name + "] has been found. Id: " + id);
         }
         return id;
     }

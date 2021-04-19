@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-public class PublisherEditor extends AbstractAdvancedEditor{
+public class PublisherEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherEditor.class);
 
     /**
@@ -62,7 +62,7 @@ public class PublisherEditor extends AbstractAdvancedEditor{
     }
 
     @Override
-    public String getEditorType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.publisher");
     }
 

@@ -4,18 +4,25 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.Map;
 
 public class ThemeFileEnAnalyzer extends AbstractSimpleAnalyzer{
+    private static final Logger LOGGER = LoggerFactory.getLogger(ThemeFileEnAnalyzer.class);
     Map<Integer, String> fileContent;
     String[] defaultContent = {};
 
     @Override
     public Map<Integer, String> getFileContent() {
         return fileContent;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
     }
 
     @Override
@@ -29,7 +36,7 @@ public class ThemeFileEnAnalyzer extends AbstractSimpleAnalyzer{
     }
 
     @Override
-    public String getAnalyzerType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.theme.upperCase") + " EN";
     }
 

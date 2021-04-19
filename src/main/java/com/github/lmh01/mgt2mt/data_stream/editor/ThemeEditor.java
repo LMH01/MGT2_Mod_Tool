@@ -17,11 +17,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class ThemeEditor extends AbstractSimpleEditor{
+public class ThemeEditor extends AbstractSimpleEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThemeEditor.class);
 
     @Override
-    AbstractSimpleAnalyzer getAnalyzer() {
+    public AbstractSimpleAnalyzer getAnalyzer() {
         return null;
     }
 
@@ -36,7 +36,7 @@ public class ThemeEditor extends AbstractSimpleEditor{
     }
 
     @Override
-    public String getEditorType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.theme");
     }
 

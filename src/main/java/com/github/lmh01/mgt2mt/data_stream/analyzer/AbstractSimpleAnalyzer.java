@@ -1,14 +1,11 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
+import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-
-import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -19,7 +16,7 @@ import java.util.Map;
  * ValueX [Some data]
  * When a blank line is found a new entry is created see {@link DataStreamHelper#parseDataFile(File)}
  */
-public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer{
+public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFunctions {
     /**
      * returns that analyzed file
      */

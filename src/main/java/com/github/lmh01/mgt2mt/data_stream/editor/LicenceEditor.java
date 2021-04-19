@@ -10,11 +10,11 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class LicenceEditor extends AbstractSimpleEditor{
+public class LicenceEditor extends AbstractSimpleEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceEditor.class);
 
     @Override
-    AbstractSimpleAnalyzer getAnalyzer() {
+    public AbstractSimpleAnalyzer getAnalyzer() {
         return AnalyzeManager.licenceAnalyzer;
     }
 
@@ -29,7 +29,7 @@ public class LicenceEditor extends AbstractSimpleEditor{
     }
 
     @Override
-    public String getEditorType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.licence");
     }
 

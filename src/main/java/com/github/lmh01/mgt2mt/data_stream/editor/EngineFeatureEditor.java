@@ -15,7 +15,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public class EngineFeatureEditor extends AbstractAdvancedEditor{
+public class EngineFeatureEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureEditor.class);
 
     @Override
@@ -24,7 +24,7 @@ public class EngineFeatureEditor extends AbstractAdvancedEditor{
     }
 
     @Override
-    public String getEditorType() {
+    public String getType() {
         return I18n.INSTANCE.get("commonText.engineFeature");
     }
 
