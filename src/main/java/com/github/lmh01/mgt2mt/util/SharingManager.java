@@ -32,10 +32,7 @@ import java.util.stream.Stream;
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingManager.class);
-    public static final String[] GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.3b","1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
-    public static final String[] PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
     public static final String[] THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
-    public static final String[] GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS = {MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
 
     /**
      * Uses the import function to import the content of the import folder.
@@ -81,61 +78,6 @@ public class SharingManager {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importThings.error.firstPart") + " " + importName + ":\n" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-    }
-
-    /**
-     * Loads the contents of import file into a map and imports feature with this map
-     * @param importFile This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
-     * @param importName The name that is written is some JOptionPanes. Eg. Engine feature, Gameplay feature
-     * @param importFolderPath The folder where the importFile is located.
-     * @param existingFeatureList The list where the existing features are listed. Eg. {@link AnalyzeManager#gameplayFeatureAnalyzer#getFileContent}
-     * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
-     * @param importFunction The function that edits the file
-     * @param freeId The function that returns the free id
-     * @param changelogId The id that should be used when the changelog file is being edited
-     * @param summary The summary function that should be used
-     * @param showMessages True when the messages should be shown. False if not.
-     * @return Returns true when the import was successful. Returns false if not. Returns a string containing version numbers when import file is not compatible with current mgt2mt version.
-     */
-    public static String importGeneral(String importFile, String importName, String importFolderPath, List<Map<String, String>> existingFeatureList, String[] compatibleModToolVersions, Importer importFunction, FreeId freeId, int changelogId, Summary summary, boolean showMessages) throws IOException{
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + importName);
-        File fileToImport = new File(importFolderPath + "\\" + importFile);
-        Map<String, String> map = DataStreamHelper.parseDataFile(fileToImport).get(0);
-        map.put("ID", Integer.toString(freeId.getFreeId()));
-        boolean CanBeImported = false;
-        for(String string : compatibleModToolVersions){
-            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
-                CanBeImported = true;
-            }
-        }
-        if(!CanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + importName + " - " + map.get("NAME EN")));
-            return importName + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingManager.couldNotBeImported") + ":\n" + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.couldNotBeImported.2") + "\n" + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.couldNotBeImported.3") + " " + map.get("MGT2MT VERSION");
-        }
-        for(Map<String, String> existingFeatures : existingFeatureList){
-            for(Map.Entry<String, String> entry : existingFeatures.entrySet()){
-                if(entry.getValue().equals(map.get("NAME EN"))){
-                    LOGGER.info(importName + " " + I18n.INSTANCE.get("dialog.sharingManager.analyzeReturnValue.alreadyExists") + " - " + importName + " " + I18n.INSTANCE.get("dialog.sharingManager.nameTaken"));
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + importName + " - " + map.get("NAME EN"));
-                    return "false";
-                }
-            }
-        }
-        boolean addFeature;
-        if(showMessages){
-            addFeature = summary.showSummary(map);
-        }else{
-            addFeature = true;
-        }
-        if(addFeature){
-            importFunction.importer(map);
-            if(showMessages){
-                JOptionPane.showMessageDialog(null, importName + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
-            }
-            ChangeLog.addLogEntry(changelogId, map.get("NAME EN"));
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + importName + ": " + map.get("NAME EN"));
-        }
-        return "true";
     }
 
     /**
@@ -355,11 +297,11 @@ public class SharingManager {
                                         if(string.contains("engineFeature.txt")){
                                             addIfCompatible(string, engineFeatures, engineFeatureNames, SharingManagerNew.engineFeatureSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("gameplayFeature.txt")){
-                                            addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, SharingManagerNew.gameplayFeatureSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("genre.txt")){
-                                            addIfCompatible(string, genres, genreNames, GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, genres, genreNames, SharingManagerNew.genreSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("publisher.txt")){
-                                            addIfCompatible(string, publisher, publisherNames, PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, publisher, publisherNames, SharingManagerNew.publisherSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("theme.txt")){
                                             addIfCompatible(string, themes, themeNames, THEME_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("licence.txt")){
@@ -519,15 +461,15 @@ public class SharingManager {
                                 LOGGER.info("Error occurred wile importing engine features");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> SharingHandler.importGameplayFeature(string, !showMessageDialogs), SharingManager.GAMEPLAY_FEATURE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
+                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> SharingManagerNew.gameplayFeatureSharer.importMod(string, !showMessageDialogs), SharingManagerNew.gameplayFeatureSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing gameplay features");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> SharingHandler.importGenre(string, !showMessageDialogs), SharingManager.GENRE_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
+                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> SharingManagerNew.genreSharer.importMod(string, !showMessageDialogs), SharingManagerNew.genreSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing genres");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingHandler.importPublisher(string, !showMessageDialogs), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, showAlreadyExistPopups)){
+                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> SharingManagerNew.publisherSharer.importMod(string, !showMessageDialogs), SharingManagerNew.publisherSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing publishers");
                                 errorOccurred = true;
                             }
@@ -715,9 +657,9 @@ public class SharingManager {
             StringBuilder failedExports = new StringBuilder();
             try{
                 failedExports.append(getExportFailed((string) -> SharingManagerNew.engineFeatureSharer.exportMod(string, exportAsRestorePoint), customEngineFeatures, I18n.INSTANCE.get("window.main.mods.engineFeatures")));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportGameplayFeature(string, exportAsRestorePoint), customGameplayFeatures, I18n.INSTANCE.get("window.main.mods.gameplayFeatures")));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportGenre(string, exportAsRestorePoint), customGenres, I18n.INSTANCE.get("window.main.mods.genres")));
-                failedExports.append(getExportFailed((string) -> SharingHandler.exportPublisher(string, exportAsRestorePoint), customPublishers, I18n.INSTANCE.get("window.main.mods.publisher")));
+                failedExports.append(getExportFailed((string) -> SharingManagerNew.gameplayFeatureSharer.exportMod(string, exportAsRestorePoint), customGameplayFeatures, I18n.INSTANCE.get("window.main.mods.gameplayFeatures")));
+                failedExports.append(getExportFailed((string) -> SharingManagerNew.genreSharer.exportMod(string, exportAsRestorePoint), customGenres, I18n.INSTANCE.get("window.main.mods.genres")));
+                failedExports.append(getExportFailed((string) -> SharingManagerNew.publisherSharer.exportMod(string, exportAsRestorePoint), customPublishers, I18n.INSTANCE.get("window.main.mods.publisher")));
                 failedExports.append(getExportFailed((string) -> SharingHandler.exportTheme(string, exportAsRestorePoint), customThemes, I18n.INSTANCE.get("window.main.mods.themes")));
                 failedExports.append(getExportFailed((string) -> SharingManagerNew.licenceSharer.exportMod(string, exportAsRestorePoint), customLicences, I18n.INSTANCE.get("window.main.mods.licences")));
                 if(failedExports.toString().isEmpty()){

@@ -7,7 +7,6 @@ import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EngineFeatureHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
-import com.github.lmh01.mgt2mt.util.interfaces.Summary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
@@ -18,13 +17,8 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureSharer.class);
 
     @Override
-    int getFreeId() {
-        return getAnalyzer().getFreeId();
-    }
-
-    @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "1.13.0"};
     }
 
     @Override
@@ -33,8 +27,8 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    String getOptionPaneMessage(Map<String, String> map) {
-        String messageBody = "Your engine feature is ready:\n\n" +
+    String getOptionPaneMessage(Map<String, String> map) {//TODO Übersetzung hinzufügen
+        String messageBody = I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
                 "Unlock date: " + map.get("DATE") + "\n" +
@@ -57,7 +51,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    void doOtherExportThings(String name) {
+    void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
 
     }
 
@@ -78,7 +72,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
 
     @Override
     public String getExportFolder() {
-        return Utils.getMGT2ModToolExportFolder() + "//Engine features//";
+        return "//Engine features//";
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.interfaces.SimpleImporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class LicenceSharer extends AbstractSimpleSharer{
 
     @Override
     public String getExportFolder() {
-        return Utils.getMGT2ModToolExportFolder() + "//Licence//";
+        return "//Licence//";
     }
 
     @Override

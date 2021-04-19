@@ -26,8 +26,10 @@ public class PublisherEditor extends AbstractAdvancedEditor {
      * Do not use this method!
      * Use {@link PublisherEditor#addMod(Map, String)} instead!
      * @param map The values that stand in this map are used to print the file. This includes the translations.
+     * @deprecated Use {@link PublisherEditor#addMod(Map, String)} instead!
      */
     @Override
+    @Deprecated
     public void addMod(Map<String, String> map) throws IOException {
         addMod(map, "");
     }

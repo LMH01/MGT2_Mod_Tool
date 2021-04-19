@@ -38,7 +38,7 @@ abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions
             if(exportAsRestorePoint){
                 exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
             }else{
-                exportFolder = getExportFolder();
+                exportFolder = Utils.getMGT2ModToolExportFolder() + getExportFolder();
             }
             final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
@@ -57,7 +57,7 @@ abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
-            doOtherExportThings(name);
+            doOtherExportThings(name, exportFolder + "//DATA//", map);
             return true;
         }catch(IOException e){
             e.printStackTrace();
@@ -77,7 +77,7 @@ abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
         File fileToImport = new File(importFolderPath + "\\" + getFileName());
         Map<String, String> map = DataStreamHelper.parseDataFile(fileToImport).get(0);
-        map.put("ID", Integer.toString(getFreeId()));
+        map.put("ID", Integer.toString(getAnalyzer().getFreeId()));
         boolean CanBeImported = false;
         for(String string : getCompatibleModToolVersions()){
             if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
@@ -115,11 +115,6 @@ abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions
     }
 
     /**
-     * @return Returns a free id for the mod
-     */
-    abstract int getFreeId();
-
-    /**
      * Put things in this function that should be executed when the txt file has been imported.
      */
     abstract void doOtherImportThings(String importFolderPath);
@@ -127,7 +122,7 @@ abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions
     /**
      * Put things in this function that should be executed when the txt file has been exported.
      */
-    abstract void doOtherExportThings(String name);
+    abstract void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException;
 
     /**
      * Writes the values that are stored in the map to the file

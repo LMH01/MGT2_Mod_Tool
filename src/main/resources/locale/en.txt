@@ -117,6 +117,13 @@ sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:
 sharer.engineFeature.exportFailed.alreadyExported|The following engine feature was not exported because it has already been exported:
 sharer.engineFeature.exportSuccessful|The following engine feature has been exported:
+sharer.engineFeature.optionPaneMessage.main|Your engine feature is ready:
+sharer.gameplayFeature.exportFailed.alreadyExported|The following gameplay feature was not exported because it has already been exported:
+sharer.gameplayFeature.exportSuccessful|The following gameplay feature has been exported:
+sharer.publisher.exportFailed.alreadyExported|The following publisher was not exported because it has already been exported:
+sharer.publisher.exportSuccessful|The following publisher has been exported:
+sharer.genre.exportFailed.alreadyExported|The following genre was not exported because it has already been exported:
+sharer.genre.exportSuccessful|The following genre has been exported:
 sharer.licence.exportFailed.alreadyExported|The following licence was not exported because it has already been exported:
 sharer.licence.exportSuccessful|The following licence has been exported:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:

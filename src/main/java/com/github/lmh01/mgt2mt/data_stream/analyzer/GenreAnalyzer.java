@@ -93,4 +93,66 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer{
         return "Genre not available";
     }
 
+
+    /**
+     * @param genreId The genre id from which the genre comb names should be transformed
+     * @return Returns a list of genre names
+     */
+    public String getGenreNames(int genreId){
+        int genrePositionInList = getPositionInFileContentListById(genreId);
+        String genreNumbersRaw = getFileContent().get(genrePositionInList).get("GENRE COMB");
+        StringBuilder genreNames = new StringBuilder();
+        int charPosition = 0;
+        StringBuilder currentNumber = new StringBuilder();
+        for(int i = 0; i<genreNumbersRaw.length(); i++){
+            if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals("<")){
+                //Nothing happens
+            }else if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals(">")){
+                int genreNumber = Integer.parseInt(currentNumber.toString());
+                if(Settings.enableDebugLogging){
+                    sendLogMessage("genreNumber: " + genreNumber);
+                }
+                genreNames.append("<").append(getContentNameById(genreNumber)).append(">");
+                currentNumber = new StringBuilder();
+            }else{
+                currentNumber.append(genreNumbersRaw.charAt(charPosition));
+                if(Settings.enableDebugLogging){
+                    sendLogMessage("currentNumber: " + currentNumber);
+                }
+            }
+            charPosition++;
+        }
+        String.valueOf(genreNumbersRaw.charAt(1));
+        return genreNames.toString();
+    }
+
+    /**
+     * @param genreNumbersRaw The string containing the genre ids that should be transformed
+     * @return Returns a list of genre names
+     */
+    public String getGenreNames(String genreNumbersRaw){
+        StringBuilder genreNames = new StringBuilder();
+        int charPosition = 0;
+        StringBuilder currentNumber = new StringBuilder();
+        for(int i = 0; i<genreNumbersRaw.length(); i++){
+            if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals("<")){
+                //Nothing happens
+            }else if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals(">")){
+                int genreNumber = Integer.parseInt(currentNumber.toString().replaceAll("[^0-9]", ""));
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("genreNumber: " + genreNumber);
+                }
+                genreNames.append("<").append(AnalyzeManager.genreAnalyzer.getContentNameById(genreNumber)).append(">");
+                currentNumber = new StringBuilder();
+            }else{
+                currentNumber.append(genreNumbersRaw.charAt(charPosition));
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("currentNumber: " + currentNumber);
+                }
+            }
+            charPosition++;
+        }
+        return genreNames.toString();
+    }
+
 }

@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.SharingHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.data_stream.sharer.SharingManagerNew;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.SharingManager;
@@ -54,7 +55,7 @@ public class PublisherHelper {
                 LOGGER.info("Adding new publishers...");
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
-                SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingHandler.importPublisher(string, false), SharingManager.PUBLISHER_IMPORT_COMPATIBLE_MOD_TOOL_VERSIONS, new AtomicBoolean(false));
+                SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingManagerNew.publisherSharer.importMod(string, false), SharingManagerNew.publisherSharer.getCompatibleModToolVersions(), new AtomicBoolean(false));
                 AnalyzeManager.publisherAnalyzer.analyzeFile();
                 if(AnalyzeManager.publisherAnalyzer.getActiveIds().contains(-1)){
                     EditorManager.publisherEditor.removeMod("Dummy");
