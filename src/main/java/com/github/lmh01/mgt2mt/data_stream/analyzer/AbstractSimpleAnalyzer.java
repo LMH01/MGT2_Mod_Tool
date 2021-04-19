@@ -91,4 +91,11 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
         }
         return -1;
     }
+
+    /**
+     * @return Returns the line content where the name stands
+     */
+    public String getLine(String name){
+        return getFileContent().get(getPositionInFileContentListByName(name));
+    }
 }

@@ -113,6 +113,20 @@ analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modded theme (G
 analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes (GE) complete
 analyzer.themeGe.getCustomContentString.progressBar|Scanning for modded themes (GE)
 
+sharer.exportFailed.generalError.firstPart|Unable to export:
+sharer.exportFailed.generalError.secondPart|The following error occurred:
+sharer.engineFeature.exportFailed.alreadyExported|The following engine feature was not exported because it has already been exported:
+sharer.engineFeature.exportSuccessful|The following engine feature has been exported:
+sharer.licence.exportFailed.alreadyExported|The following licence was not exported because it has already been exported:
+sharer.licence.exportSuccessful|The following licence has been exported:
+sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
+sharer.importMod.alreadyExists|The following mod has not been imported because it already exists:
+sharer.importMod.alreadyExists.short|already exists
+sharer.importMod.nameTaken|name is already taken
+sharer.importMod.couldNotBeImported.firstPart|could not be imported
+sharer.importMod.couldNotBeImported.secondPart|is not with the current mod tool version compatible
+sharer.importMod.couldNotBeImported.thirdPart|was exported in version:
+
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>A restore point has already been created.<br><br>Would you like to create a new restore point and move the old files into a storage folder?
