@@ -20,6 +20,7 @@ public class ThemeFileAnalyzer {
         try{
             AnalyzeManager.themeFileEnAnalyzer.analyzeFile();
             AnalyzeManager.themeFileGeAnalyzer.analyzeFile();
+            writeHelpFile();
         }catch (IOException e){
             e.printStackTrace();
         }
