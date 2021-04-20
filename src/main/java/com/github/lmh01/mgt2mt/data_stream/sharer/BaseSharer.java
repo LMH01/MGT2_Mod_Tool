@@ -1,12 +1,5 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.util.interfaces.Importer;
-import com.github.lmh01.mgt2mt.util.interfaces.Summary;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.Map;
-
 public interface BaseSharer {
 
     /**

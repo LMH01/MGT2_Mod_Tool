@@ -10,8 +10,6 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
-import com.github.lmh01.mgt2mt.util.interfaces.Summary;
-
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +20,7 @@ import java.util.Map;
  * Optionally other tasks may be performed when the editing of the files is complete.
  * For that use {@link}
  */
-abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions, BaseSharer {
+public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFunctions, BaseSharer {
 
     /**
      * Exports the mod

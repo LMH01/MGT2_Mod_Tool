@@ -1,10 +1,8 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;

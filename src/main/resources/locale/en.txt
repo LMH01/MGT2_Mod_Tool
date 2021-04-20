@@ -124,6 +124,8 @@ sharer.publisher.exportFailed.alreadyExported|The following publisher was not ex
 sharer.publisher.exportSuccessful|The following publisher has been exported:
 sharer.genre.exportFailed.alreadyExported|The following genre was not exported because it has already been exported:
 sharer.genre.exportSuccessful|The following genre has been exported:
+sharer.theme.exportSuccessful|The following theme has been exported:
+sharer.theme.optionPaneMessage.main|Your theme is ready:
 sharer.licence.exportFailed.alreadyExported|The following licence was not exported because it has already been exported:
 sharer.licence.exportSuccessful|The following licence has been exported:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:

@@ -9,10 +9,7 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.util.interfaces.SimpleImporter;
-import org.omg.PortableInterceptor.LOCATION_FORWARD;
-
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -21,7 +18,7 @@ import java.util.Map;
 /**
  * The simple sharer is used to export/import mods that use only text and one line per file
  */
-abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer, SimpleAnalyzer {
+public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer, SimpleAnalyzer {
 
     /**
      * Exports the mod
