@@ -83,6 +83,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     @Override
     public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
+        bw.write("[TYP]" + map.get("TYP") + System.getProperty("line.separator"));
         bw.write("[DATE]" + map.get("DATE") + System.getProperty("line.separator"));
         bw.write("[RES POINTS]" + map.get("RES POINTS") + System.getProperty("line.separator"));
         bw.write("[PRICE]" + map.get("PRICE") + System.getProperty("line.separator"));

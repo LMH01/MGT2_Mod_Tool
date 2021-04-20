@@ -31,6 +31,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
     @Override
     public String importMod(String importFolderPath, boolean showMessages) throws IOException {
         getAnalyzer().analyzeFile();
+        AnalyzeManager.genreAnalyzer.analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
         File fileToImport = new File(importFolderPath + "\\" + getFileName());
         HashMap<String, String> map = new HashMap<>();
@@ -96,6 +97,9 @@ public class PublisherSharer extends AbstractAdvancedSharer{
     @Override
     void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
         File fileExportedPublisherIcon = new File(exportFolderDataPath + "//icon.png");
+        if(!fileExportedPublisherIcon.exists()){
+            new File(exportFolderDataPath).mkdirs();
+        }
         File fileGenreIconToExport = new File(Utils.getMGT2CompanyLogosPath() + singleContentMap.get("PIC") + ".png");
         Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedPublisherIcon.getPath()));
     }

@@ -47,7 +47,11 @@ public class GenreEditor extends AbstractAdvancedEditor {
         EditHelper.printLine("RES POINTS", map, bw);
         EditHelper.printLine("PRICE", map, bw);
         EditHelper.printLine("DEV COSTS", map, bw);
-        EditHelper.printLine("PIC", map, bw);
+        if(map.containsKey("PIC")){
+            EditHelper.printLine("PIC", map, bw);
+        }else{
+            bw.write("[PIC]icon" + map.get("NAME EN").replaceAll(" ", "") + ".png");bw.write(System.getProperty("line.separator"));
+        }
         EditHelper.printLine("TGROUP", map, bw);
         EditHelper.printLine("GAMEPLAY", map, bw);
         EditHelper.printLine("GRAPHIC", map, bw);

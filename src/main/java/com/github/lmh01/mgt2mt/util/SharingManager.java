@@ -807,7 +807,12 @@ public class SharingManager {
                     return entry.getValue().toString().replace("[NAME EN]", "");
                 }
                 if(entry.getValue().toString().contains("NAME")){
-                    return entry.getValue().toString().replace("[NAME AR]", "").replace("[NAME]", "");
+                    String returnString = entry.getValue().toString();
+                    for(String string : TranslationManager.TRANSLATION_KEYS) {
+                        returnString.replace("[NAME " + string + "]", "");
+                    }
+                    returnString.replace("[NAME]", "");
+                    return returnString;
                 }
             }
         } catch (IOException e){

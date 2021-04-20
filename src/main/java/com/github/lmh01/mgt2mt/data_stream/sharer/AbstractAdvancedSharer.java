@@ -36,9 +36,9 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             if(exportAsRestorePoint){
                 exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
             }else{
-                exportFolder = Utils.getMGT2ModToolExportFolder() + getExportFolder();
+                exportFolder = Utils.getMGT2ModToolExportFolder();
             }
-            final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
+            final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
             File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getFileName());
             if(fileExportedMod.exists()){
@@ -55,7 +55,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
-            doOtherExportThings(name, exportFolder + "//DATA//", map);
+            doOtherExportThings(name, EXPORTED_MOD_MAIN_FOLDER_PATH + "//DATA//", map);
             return true;
         }catch(IOException e){
             e.printStackTrace();
@@ -96,7 +96,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             }
         }
         boolean addFeature = true;
-        if(showMessages){
+        if(showMessages){//TODO Ggf. hier noch eine Methode einbauen, mit der man das Bild sehen kann
             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(map)) != JOptionPane.YES_OPTION){
                 addFeature = false;
             }

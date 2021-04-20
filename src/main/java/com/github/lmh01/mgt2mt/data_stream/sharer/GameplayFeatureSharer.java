@@ -120,7 +120,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
 
     @Override
     public String getType() {
-        return I18n.INSTANCE.get("commonText.engineFeature");
+        return I18n.INSTANCE.get("commonText.gameplayFeature");
     }
 
     @Override
