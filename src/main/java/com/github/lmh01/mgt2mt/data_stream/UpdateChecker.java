@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class UpdateChecker {
     public static String newestVersion = "";
     public static String newestVersionKeyFeatures = "";
+    public static boolean latestGameVersionCompatible = true;
     public static boolean updateAvailable = false;
     private static final String RELEASE_UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
     private static final String ALPHA_UPDATE_URL = "https://www.dropbox.com/s/16lk6kyc1wdpw43/mgt2mtNewestAlphaVersion.txt?dl=1";
@@ -48,19 +49,30 @@ public class UpdateChecker {
                 if(useProgressBar){
                     ProgressBarHelper.increment();
                 }
+
+                StringBuilder stringBuilder = new StringBuilder();
+                while(scanner.hasNextLine()){
+                    currentLine = scanner.nextLine();
+                    if(currentLine.equals("latestversioncompatible=true")){
+                        latestGameVersionCompatible = true;
+                    }else if(currentLine.equals("latestversioncompatible=false")){
+                        latestGameVersionCompatible = false;
+                    }else{
+                        LOGGER.info(currentLine);
+                        stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
+                    }
+                }
+                newestVersionKeyFeatures = stringBuilder.toString();
+
+                if(!latestGameVersionCompatible){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updatechecker.latestGameVersionNotCompatible"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
+                }
                 if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)){
                         if(!MadGamesTycoon2ModTool.VERSION.contains("dev")){
                             updateAvailable = true;
                             LOGGER.info("New version found: " + newestVersion);
                             LOGGER.info("Key features:");
-                            StringBuilder stringBuilder = new StringBuilder();
-                            while(scanner.hasNextLine()){
-                                currentLine = scanner.nextLine();
-                                LOGGER.info(currentLine);
-                                stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
-                            }
-                            newestVersionKeyFeatures = stringBuilder.toString();
 
                             if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0){
                                 try {

@@ -235,6 +235,7 @@ dialog.updateChecker.updateAvailable.title|Neue Version verfügbar
 dialog.updateChecker.updateAvailable.versionType.ver1|Eine neue Version ist verfügbar:
 dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version ist verfügbar:
 dialog.updateChecker.updateFailed|Prüfen nach Updates fehlgeschlagen: Keine Verbindung zum Internet
+dialog.updatechecker.latestGameVersionNotCompatible|<html>Warnung:<br><br>Dieses Tool ist nicht mit der aktuellen Spielversion kompatibel!<br>Du kannst das Tool trotzdem verwenden, aber einige Dinge könnten möglicherweise nicht richtig funkionieren.<br><br>Ich werde mein bestes geben, um das Tool so schnell wie möglich wieder mit dem Spiel kompatibel zu machen.
 
 dialog.analyzeExistingLicences.errorWhileScanningLicences|Fehler beim scannen von Lizenzen:
 dialog.analyzeExistingLicences.errorWhileScanningPublishers|Fehler beim scannen von Publishern:
@@ -287,6 +288,7 @@ errorMessages.gameFilesNotAnalyzed|<html>Die Spieledateien konnten nicht analysi
 errorMessages.unableToOpenWebPage|Die Webseite kann nicht geöffnet werden:
 
 frame.title.error|Fehler
+frame.title.warning|Warnung
 frame.title.success|Erfolg
 frame.title.about|Über
 frame.title.continueAnyway|Trotzdem weiter machen?
