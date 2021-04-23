@@ -508,8 +508,6 @@ window.main.utilities.experimentalFeatures.replacePublisher|Publisher mit echten
 window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Clicke hier, um die standart Publisher mit den "echten" Publishern zu ersetzen
 window.main.utilities.openGithubPage|Github Seite öffnen
 window.main.utilities.openMGT2Folder|MGT2 Ordner öffnen
-window.main.utilities.openLogFile|Änderungsprotokoll öffnen
-window.main.utilities.openLogFile.toolTip|<html>Klicke hier, um das Änderungsprotokoll zu öffnen.<br>Zeigt alle Änderungen an, die an den Spieledateien vorgenommen wurden.
 window.main.utilities.openSaveGameFolder|Spielstand Ordner öffnen
 window.main.utilities.openSaveGameFolder.toolTip|Klicke hier, um den Ordner zu öffnen, wo die Spielstände gespeichert sind.
 window.main.actionAvailability.acceptMessageFirst|Deaktiviert -> Du musst erst akzeptieren, dass du die Nachricht gelesen hast!

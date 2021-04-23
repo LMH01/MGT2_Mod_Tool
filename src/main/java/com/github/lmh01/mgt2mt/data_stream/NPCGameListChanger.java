@@ -42,10 +42,5 @@ public class NPCGameListChanger {
         bw.close();
         Utils.getNpcGamesFile().delete();
         fileNpcGamesTemp.renameTo(Utils.getNpcGamesFile());
-        if(addGenreID){
-            ChangeLog.addLogEntry(2, Integer.toString(genreID));
-        }else{
-            ChangeLog.addLogEntry(3, Integer.toString(genreID));
-        }
     }
 }

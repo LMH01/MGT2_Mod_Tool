@@ -199,7 +199,6 @@ public class NewModsHandler {
                                 hashMap.put("GENRE", genreID.toString());
                                 EditorManager.publisherEditor.addMod(hashMap, publisherImageFilePath.toString());
                                 JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
-                                ChangeLog.addLogEntry(19, hashMap.get("NAME EN"));
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + hashMap.get("NAME EN"));
                                 breakLoop = true;
                             }

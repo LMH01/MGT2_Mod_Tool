@@ -166,7 +166,7 @@ public class GenreManager {
                     EditorManager.gameplayFeatureEditor.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
                     AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
                     EditorManager.gameplayFeatureEditor.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), false);
-                    GenreManager.genreAdded(map, showSummaryFromImport, genreIcon, showMessages);
+                    GenreManager.genreAdded(map, genreIcon, showMessages);
                     if(showSummaryFromImport){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + ": " + map.get("NAME EN"));
                     }
@@ -309,17 +309,11 @@ public class GenreManager {
     /**
      * Shows a message to the user that the genre has been added successfully and asks if the NPC_GAMES file should be modified.
      * @param map The map containing the genre name.
-     * @param showSummaryFromImport determines what log information to write to the log file.
      * @param genreIcon The genre icon.
      */
-    public static void genreAdded(Map<String, String> map, boolean showSummaryFromImport, File genreIcon, boolean showMessages) throws IOException {
+    public static void genreAdded(Map<String, String> map, File genreIcon, boolean showMessages) throws IOException {
         String name = map.get("NAME EN");
         int id = AnalyzeManager.genreAnalyzer.getFreeId();
-        if(showSummaryFromImport){
-            ChangeLog.addLogEntry(1, name);
-        }else{
-            ChangeLog.addLogEntry(18,  name);
-        }
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         if(showMessages){
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.1") + " [" + name + "] " + I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.2"), I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){

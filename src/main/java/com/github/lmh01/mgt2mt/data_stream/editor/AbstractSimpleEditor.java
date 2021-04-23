@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.SimpleAnalyzer;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -68,9 +67,6 @@ abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions, Simple
         if(addMod){
             bw.write(System.getProperty("line.separator"));
             bw.write(mod);
-            ChangeLog.addLogEntry(35, mod);
-        }else{
-            ChangeLog.addLogEntry(36, mod);
         }
         bw.close();
         return true;

@@ -531,8 +531,6 @@ window.main.utilities.experimentalFeatures.replacePublisher|Replace publishers w
 window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Click to replace the original publishers with real publishers
 window.main.utilities.openGithubPage|Open Github page
 window.main.utilities.openMGT2Folder|Open MGT2 folder
-window.main.utilities.openLogFile|Open log file
-window.main.utilities.openLogFile.toolTip|<html>Click to open the change log.<br>Shows all changes that have been made to the game files.
 window.main.utilities.openSaveGameFolder|Open save game folder
 window.main.utilities.openSaveGameFolder.toolTip|Click to open the folder where the save games are stored
 window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!

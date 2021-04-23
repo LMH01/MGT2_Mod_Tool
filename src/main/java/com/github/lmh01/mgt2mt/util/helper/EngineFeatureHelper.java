@@ -241,7 +241,6 @@ public class EngineFeatureHelper {
                             EditorManager.engineFeatureEditor.addMod(newEngineFeature);
                             JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
-                            ChangeLog.addLogEntry(27, newEngineFeature.get("NAME EN"));
                             break;
                         }
                     }

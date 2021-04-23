@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public class LogFile {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogFile.class);
     private static BufferedWriter bw;
-    private static File logFile;
+    public static File logFile;
 
     static {
         try {

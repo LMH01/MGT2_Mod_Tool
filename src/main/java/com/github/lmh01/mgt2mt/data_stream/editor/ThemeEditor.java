@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
@@ -200,10 +199,5 @@ public class ThemeEditor extends AbstractSimpleEditor {
             firstLine = false;
         }
         bw.close();
-        if (addGenreID) {
-            ChangeLog.addLogEntry(2, Integer.toString(genreID));
-        } else {
-            ChangeLog.addLogEntry(3, Integer.toString(genreID));
-        }
     }
 }

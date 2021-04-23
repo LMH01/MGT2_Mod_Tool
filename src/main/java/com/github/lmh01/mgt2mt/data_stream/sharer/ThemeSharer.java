@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
@@ -105,12 +104,10 @@ public class ThemeSharer extends AbstractSimpleSharer{
             if(showMessages){
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     EditorManager.themeEditor.addMod(map, compatibleGenreIds, violenceRating);
-                    ChangeLog.addLogEntry(24, map.get("NAME EN"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
                 EditorManager.themeEditor.addMod(map, compatibleGenreIds, violenceRating);
-                ChangeLog.addLogEntry(24, map.get("NAME EN"));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);

@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
@@ -98,7 +97,6 @@ public class GenreSharer extends AbstractAdvancedSharer{
             bw.print("[GAMEPLAYFEATURE BAD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, false) + System.getProperty("line.separator"));
             bw.print("[GENRE END]");
             bw.close();
-            ChangeLog.addLogEntry(17, AnalyzeManager.genreAnalyzer.getFileContent().get(positionInGenreList).get("NAME EN"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.genreExportSuccessful") + " " + name);
             return true;
         }catch (IOException e){

@@ -1,12 +1,9 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.SharingManager;
-import com.github.lmh01.mgt2mt.util.Uninstaller;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +48,6 @@ public class RestorePointHelper {
                 SharingManager.exportAll(true);
             }
         }
-        ChangeLog.addLogEntry(37);
     }
 
     /**
@@ -61,7 +57,6 @@ public class RestorePointHelper {
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog"), I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreToRestorePoint"));
             SharingManager.importAll(true, Utils.getMGT2ModToolModRestorePointFolder());
-            ChangeLog.addLogEntry(38);
         }
     }
 }

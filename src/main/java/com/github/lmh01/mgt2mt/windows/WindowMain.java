@@ -227,19 +227,15 @@ public class WindowMain {
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
         m53OpenMGT2Folder.addActionListener(actionEvent -> Utils.open(Settings.mgt2FilePath));
-        JMenuItem m54OpenLogFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openLogFile"));
-        m54OpenLogFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openLogFile.toolTip"));
-        m54OpenLogFile.addActionListener(actionEvent -> Utils.open(ChangeLog.FILE_CHANGES_LOG.getPath()));
-        JMenuItem m55OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
-        m55OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
-        m55OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
+        JMenuItem m54OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
+        m54OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
+        m54OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
         mb.add(M_5_UTIL);
         M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
-        M_5_UTIL.add(m54OpenLogFile);
-        M_5_UTIL.add(m55OpenSaveGameFolder);
+        M_5_UTIL.add(m54OpenSaveGameFolder);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -550,12 +546,10 @@ public class WindowMain {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
                 Backup.restoreBackup(false, true);
-                ChangeLog.addLogEntry(9);
             } catch (IOException e) {
                 e.printStackTrace();
                 if(Utils.showConfirmDialog(1, e)){
                     Backup.restoreBackup(false, true);
-                    ChangeLog.addLogEntry(9);
                 }else{
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }

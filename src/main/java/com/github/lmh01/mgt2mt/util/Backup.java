@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.ChangeLog;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -73,7 +72,6 @@ public class Backup {
             }
             File fileBackupFile = new File(fileToBackup.getPath());
             Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
-            ChangeLog.addLogEntry(5, fileToBackup.getName());
             if(showTextAreaMessages){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.backup.createBackup.success") + " " + fileToBackup.getPath());
             }
@@ -146,13 +144,11 @@ public class Backup {
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
                 ImageFileHandler.removePublisherIcons();
-                ChangeLog.addLogEntry(8);
                 if(showMessages){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
-                ChangeLog.addLogEntry(9);
                 if(showMessages){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
@@ -161,13 +157,11 @@ public class Backup {
         } catch (IOException exception) {
             exception.printStackTrace();
             if(initialBackup){
-                ChangeLog.addLogEntry(10, exception.getMessage());
                 if(showMessages){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                ChangeLog.addLogEntry(11, exception.getMessage());
                 if(showMessages){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
@@ -251,14 +245,12 @@ public class Backup {
                             .map(Path::toFile)
                             .forEach(File::delete);
                 }
-                ChangeLog.addLogEntry(12);
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title"), JOptionPane.YES_NO_OPTION) == 0){
                     String returnValue = Backup.createInitialBackup();
                     if(returnValue.equals("")) {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupCreated"), I18n.INSTANCE.get("dialog.backup.initialBackupCreated.title"), JOptionPane.INFORMATION_MESSAGE);
                     }else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated") + returnValue, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated.title"), JOptionPane.ERROR_MESSAGE);
-                        ChangeLog.addLogEntry(7, returnValue);
                     }
                 }
             } catch (IOException e) {
@@ -301,7 +293,6 @@ public class Backup {
             return "";
         }catch(IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
-            ChangeLog.addLogEntry(7, e.getMessage());
             e.printStackTrace();
             return e.getMessage();
         }
