@@ -441,8 +441,8 @@ public class WindowMain {
                     M_29_ADD_COMPANY_ICON.setToolTipText("");
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
-            }catch (IOException e){
-                LOGGER.info("Error" + e.getMessage());
+            }catch (IOException | IndexOutOfBoundsException e){
+                LOGGER.info("Error: " + e.getMessage());
                 e.printStackTrace();
             }
             WindowMain.lockMenuItems(false);
