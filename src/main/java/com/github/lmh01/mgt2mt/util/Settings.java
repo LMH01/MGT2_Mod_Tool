@@ -54,6 +54,8 @@ public class Settings {
         setLanguage(language);
         validateMGT2Folder(mgt2FilePath, false, true);
         ExportSettings.export();
+        LogFile.write("Settings set:");
+        LogFile.printCurrentSettings();
         if(showSuccessDialog){
             JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.settingsSaved"));
         }

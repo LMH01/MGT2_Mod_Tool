@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,10 @@ public class ExportSettings {
                 LOGGER.info("Writing to file successful!");
             }
             LOGGER.info("Settings have been saved.");
+            LogFile.write("Settings have been saved to file: " + file.getPath());
         } catch (Exception e) {
+            LogFile.write("Something went wrong wile saving the settings: ");
+            LogFile.printStacktrace(e);
             e.printStackTrace();
         }
 

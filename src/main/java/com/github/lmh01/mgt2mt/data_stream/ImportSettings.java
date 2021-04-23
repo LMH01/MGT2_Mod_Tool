@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +89,8 @@ public class ImportSettings{
         } catch (FileNotFoundException | UnsupportedEncodingException var6) {
             var6.printStackTrace();
             LOGGER.info("Unable to import settings: File not found! Using default settings!");
+            LogFile.write("Something went wrong wile importing the settings: ");
+            LogFile.printStacktrace(var6);
             Settings.resetSettings();
             return false;
         } catch (IOException e) {

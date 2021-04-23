@@ -34,6 +34,39 @@ public class LogFile {
             bw.write(System.getProperty("line.separator"));
             bw.write("Current date: " + Utils.getCurrentDateTime());
             bw.write(System.getProperty("line.separator"));
+            bw.write("Current settings:");
+            bw.write(System.getProperty("line.separator"));
+            printCurrentSettings();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Prints the stacktrace to file
+     * @param e
+     */
+    public static void printStacktrace(Exception e){
+        e.printStackTrace(new PrintWriter(bw));
+    }
+
+    /**
+     * Writes the current settings to the file
+     */
+    public static void printCurrentSettings(){
+        try {
+            bw.write("Language: " + Settings.language + "\n" +
+                    "MGT2 file path: " + Settings.mgt2FilePath + "\n" +
+                    "Steam library folder: " + Settings.steamLibraryFolder + "\n" +
+                    "Update branch: " + Settings.updateBranch+ "\n" +
+                    "Disable safety features: " + Settings.disableSafetyFeatures + "\n" +
+                    "Enable disclaimer message: " + Settings.enableDisclaimerMessage + "\n" +
+                    "Enable debug logging: " + Settings.enableDebugLogging + "\n" +
+                    "Enable custom folder: " + Settings.enableCustomFolder + "\n" +
+                    "Enable genre name translation info: " + Settings.enableGenreNameTranslationInfo + "\n" +
+                    "Enable genre description translation info: " + Settings.enableGenreDescriptionTranslationInfo + "\n" +
+                    "Save logs: " + Settings.saveLogs);
+            bw.write(System.getProperty("line.separator"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,8 +78,10 @@ public class LogFile {
      */
     public static void write(String string){
         try {
-            bw.write(Utils.getCurrentDateTime() + ": " + string);
+            String logOut = Utils.getCurrentDateTime() + ": " + string;
+            bw.write(logOut);
             bw.write(System.getProperty("line.separator"));
+            LOGGER.info("LogOut: " + logOut);
         } catch (IOException ignored) {
 
         }
