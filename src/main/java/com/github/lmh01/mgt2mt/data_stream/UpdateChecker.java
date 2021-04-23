@@ -3,7 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;

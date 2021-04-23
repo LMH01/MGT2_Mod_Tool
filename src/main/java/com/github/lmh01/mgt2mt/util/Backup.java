@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -219,7 +220,7 @@ public class Backup {
      * Restores all theme file backups
      */
     private static void restoreThemeFileBackups(boolean initialBackup) throws IOException {
-        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
+        for(int i = 0; i< TranslationManager.TRANSLATION_KEYS.length; i++){
             File currentBackupFile;
             if(initialBackup){
                 currentBackupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");

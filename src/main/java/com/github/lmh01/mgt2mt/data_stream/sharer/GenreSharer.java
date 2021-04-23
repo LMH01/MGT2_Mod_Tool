@@ -10,6 +10,8 @@ import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
+import com.github.lmh01.mgt2mt.util.manager.GenreManager;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;

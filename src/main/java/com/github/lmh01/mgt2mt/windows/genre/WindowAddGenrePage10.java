@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.util.helper.GenreHelper;
-import com.github.lmh01.mgt2mt.util.GenreManager;
+import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

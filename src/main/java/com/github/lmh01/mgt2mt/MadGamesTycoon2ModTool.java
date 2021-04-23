@@ -3,7 +3,7 @@ package com.github.lmh01.mgt2mt;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

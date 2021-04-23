@@ -1,8 +1,11 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.util.helper.GameplayFeatureHelper;
 import org.slf4j.Logger;

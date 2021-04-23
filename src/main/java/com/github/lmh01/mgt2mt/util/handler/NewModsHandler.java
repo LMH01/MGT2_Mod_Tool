@@ -1,11 +1,13 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.handler;
 
-import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.manager.GenreManager;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
 import java.awt.*;

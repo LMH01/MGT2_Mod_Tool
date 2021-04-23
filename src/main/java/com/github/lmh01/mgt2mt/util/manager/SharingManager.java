@@ -1,8 +1,13 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.sharer.*;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Uninstaller;
+import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.*;

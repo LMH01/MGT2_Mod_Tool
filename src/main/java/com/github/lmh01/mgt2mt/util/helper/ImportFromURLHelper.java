@@ -3,7 +3,7 @@ package com.github.lmh01.mgt2mt.util.helper;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.SharingManager;
+import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
 import java.io.File;

@@ -6,7 +6,7 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.TranslationManager;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;

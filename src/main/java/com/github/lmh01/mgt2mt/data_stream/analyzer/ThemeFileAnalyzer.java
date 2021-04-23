@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.TranslationManager;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

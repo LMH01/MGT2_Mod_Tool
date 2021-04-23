@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
-import com.github.lmh01.mgt2mt.util.GenreManager;
+import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

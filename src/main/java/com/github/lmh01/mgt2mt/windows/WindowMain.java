@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);

@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EngineFeatureHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
