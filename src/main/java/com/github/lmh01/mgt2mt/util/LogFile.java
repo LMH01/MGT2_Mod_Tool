@@ -15,11 +15,16 @@ public class LogFile {
     static {
         try {
             logFile = new File(Settings.MGT2_MOD_MANAGER_PATH + Utils.getCurrentDateTime() + ".log");
+            File mainFolder = new File(Settings.MGT2_MOD_MANAGER_PATH);
+            if(!mainFolder.exists()){
+                mainFolder.mkdirs();
+            }
             if(logFile.exists()){
                 logFile.delete();
             }
+            logFile.createNewFile();
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logFile)));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -82,8 +87,9 @@ public class LogFile {
             bw.write(logOut);
             bw.write(System.getProperty("line.separator"));
             LOGGER.info("LogOut: " + logOut);
-        } catch (IOException ignored) {
-
+        } catch (IOException e) {
+            LOGGER.info("Something went wrong while writing log: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
