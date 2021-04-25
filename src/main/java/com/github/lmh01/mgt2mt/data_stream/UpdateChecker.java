@@ -21,11 +21,13 @@ public class UpdateChecker {
     public static boolean updateAvailable = false;
     private static final String RELEASE_UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
     private static final String ALPHA_UPDATE_URL = "https://www.dropbox.com/s/16lk6kyc1wdpw43/mgt2mtNewestAlphaVersion.txt?dl=1";
+    private static final String COMPATIBILITY_CHECK_URL = "https://www.dropbox.com/s/8bbob53h13dvspj/mgt2mtCompatibleWithLatestVersion.txt?dl=1";
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static void checkForUpdates(boolean showNoUpdateAvailableDialog){
         checkForUpdates(showNoUpdateAvailableDialog, true);
     }
     public static void checkForUpdates(boolean showNoUpdateAvailableDialog, boolean useProgressBar){
+        checkForVersionCompatibility();
         Thread updateChecker = new Thread(() -> {
             try {
                 if(useProgressBar){
@@ -53,20 +55,10 @@ public class UpdateChecker {
                 StringBuilder stringBuilder = new StringBuilder();
                 while(scanner.hasNextLine()){
                     currentLine = scanner.nextLine();
-                    if(currentLine.equals("latestversioncompatible=true")){
-                        latestGameVersionCompatible = true;
-                    }else if(currentLine.equals("latestversioncompatible=false")){
-                        latestGameVersionCompatible = false;
-                    }else{
-                        LOGGER.info(currentLine);
-                        stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
-                    }
+                    LOGGER.info(currentLine);
+                    stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
                 }
                 newestVersionKeyFeatures = stringBuilder.toString();
-
-                if(!latestGameVersionCompatible){
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updatechecker.latestGameVersionNotCompatible"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
-                }
                 if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)){
                         if(!MadGamesTycoon2ModTool.VERSION.contains("dev")){
@@ -106,5 +98,31 @@ public class UpdateChecker {
         if(useProgressBar){
             ThreadHandler.startControlThread(updateChecker);
         }
+    }
+
+    /**
+     * Checks if this tool is compatible with the newest MGT2 version
+     */
+    public static void checkForVersionCompatibility(){
+        Thread compatibilityCheck = new Thread(() -> {
+            try {
+                Scanner scanner = new Scanner(new URL(COMPATIBILITY_CHECK_URL).openStream());
+                String currentLine = scanner.nextLine();
+                if(currentLine.equals("true")){
+                    latestGameVersionCompatible = true;
+                    LOGGER.info("Latest mod tool version is compatible with mgt2");
+                }else if(currentLine.equals("false")){
+                    latestGameVersionCompatible = false;
+                    LOGGER.info("Latest mod tool version is not compatible with mgt2");
+                }
+                if(!latestGameVersionCompatible){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        compatibilityCheck.setName("CompatibilityChecker");
+        compatibilityCheck.start();
     }
 }
