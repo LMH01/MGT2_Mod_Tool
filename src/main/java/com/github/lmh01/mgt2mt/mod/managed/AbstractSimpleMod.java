@@ -6,11 +6,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
 import java.io.IOException;
 import java.util.Map;
 
-public abstract class AbstractSimpleMod implements BaseMod, SimpleMod{
-    @Override
-    public void initializeMod() {
-
-    }
+public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseMod, SimpleMod{
 
     @Override
     public void addMod(String lineToWrite) throws IOException {

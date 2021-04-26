@@ -7,12 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractAdvancedMod implements AdvancedMod, BaseMod{
-
-    @Override
-    public void initializeMod() {
-
-    }
+public abstract class AbstractAdvancedMod extends AbstractBaseMod implements AdvancedMod, BaseMod{
 
     @Override
     public void addMod(Map<String, String> map) throws IOException {

@@ -34,4 +34,7 @@ public interface BaseMod {
      * @return Returns a string that contains the compatible mod tool versions
      */
     String[] getCompatibleModToolVersions();
+
+
+    String getType();
 }

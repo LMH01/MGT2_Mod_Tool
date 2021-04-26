@@ -170,6 +170,6 @@ public class ThemeSharer extends AbstractSimpleSharer{
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
+        return ModManager.themeMod.getCompatibleModToolVersions();
     }
 }

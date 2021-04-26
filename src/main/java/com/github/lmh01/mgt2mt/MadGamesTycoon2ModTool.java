@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt;
 
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -25,6 +26,7 @@ public class MadGamesTycoon2ModTool {
         }
         LogFile.startLogging();
         Runtime.getRuntime().addShutdownHook(ThreadHandler.getShutdownHookThread());
+        ModManager.initializeMods();
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         WindowMain.createFrame();

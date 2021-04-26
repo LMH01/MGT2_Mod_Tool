@@ -48,8 +48,7 @@ public class LicenceSharer extends AbstractSimpleSharer{
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "1.13.0"};
-    }
+        return ModManager.licenceMod.getCompatibleModToolVersions();    }
 
     @Override
     SimpleImporter getSimpleImporter() {

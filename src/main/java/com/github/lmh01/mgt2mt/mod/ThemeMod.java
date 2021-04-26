@@ -5,9 +5,15 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileEnAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileGeAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.ThemeEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.ThemeSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.I18n;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ThemeMod extends AbstractSimpleMod {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ThemeMod.class);
     ThemeFileGeAnalyzer themeFileGeAnalyzer = new ThemeFileGeAnalyzer();
     ThemeFileEnAnalyzer themeFileEnAnalyzer = new ThemeFileEnAnalyzer();
     ThemeEditor themeEditor = new ThemeEditor();
@@ -65,5 +71,20 @@ public class ThemeMod extends AbstractSimpleMod {
     @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
+    }
+
+    @Override
+    public String getType() {
+        return I18n.INSTANCE.get("commonText.theme");
+    }
+
+    @Override
+    protected AbstractBaseMod getMod() {
+        return ModManager.themeMod;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
     }
 }
