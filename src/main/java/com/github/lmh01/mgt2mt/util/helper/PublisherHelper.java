@@ -52,7 +52,7 @@ public class PublisherHelper {
                 LOGGER.info("Adding new publishers...");
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
-                SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingManager.publisherSharer.importMod(string, false), SharingManager.publisherSharer.getCompatibleModToolVersions(), new AtomicBoolean(false));
+                SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.getSharer().importMod(string, false), ModManager.publisherMod.getSharer().getCompatibleModToolVersions(), new AtomicBoolean(false));
                 ModManager.publisherMod.getAnalyzer().analyzeFile();
                 if(ModManager.publisherMod.getAnalyzer().getActiveIds().contains(-1)){
                     ModManager.publisherMod.getEditor().removeMod("Dummy");

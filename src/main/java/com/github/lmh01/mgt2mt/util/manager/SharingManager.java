@@ -36,12 +36,6 @@ import java.util.stream.Stream;
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
     private static final Logger LOGGER = LoggerFactory.getLogger(SharingManager.class);
-    public static EngineFeatureSharer engineFeatureSharer = new EngineFeatureSharer();
-    public static GameplayFeatureSharer gameplayFeatureSharer = new GameplayFeatureSharer();
-    public static LicenceSharer licenceSharer = new LicenceSharer();
-    public static GenreSharer genreSharer = new GenreSharer();
-    public static PublisherSharer publisherSharer = new PublisherSharer();
-    public static ThemeSharer themeSharer = new ThemeSharer();
 
     /**
      * Uses the import function to import the content of the import folder.
@@ -304,17 +298,17 @@ public class SharingManager {
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
                                         }
                                         if(string.contains("engineFeature.txt")){
-                                            addIfCompatible(string, engineFeatures, engineFeatureNames, engineFeatureSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, engineFeatures, engineFeatureNames, ModManager.engineFeatureMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("gameplayFeature.txt")){
-                                            addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, gameplayFeatureSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, ModManager.gameplayFeatureMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("genre.txt")){
-                                            addIfCompatible(string, genres, genreNames, genreSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, genres, genreNames, ModManager.genreMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("publisher.txt")){
-                                            addIfCompatible(string, publisher, publisherNames, publisherSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, publisher, publisherNames, ModManager.publisherMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("theme.txt")){
-                                            addIfCompatible(string, themes, themeNames, themeSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, themes, themeNames, ModManager.themeMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.contains("licence.txt")){
-                                            addIfCompatible(string, licences, licenceNames, licenceSharer.getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            addIfCompatible(string, licences, licenceNames, ModManager.licenceMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                         }else if(string.endsWith(".zip")){
                                             boolean unzipFile = false;
                                             if(!checkBoxPreventZipMessage.isSelected()){
@@ -466,27 +460,27 @@ public class SharingManager {
                             AtomicBoolean showAlreadyExistPopups = new AtomicBoolean(checkBoxDisableAlreadyExistPopups.isSelected());
                             boolean errorOccurred = false;
                             ProgressBarHelper.initializeProgressBar(0, getNumberOfModsToImport(selectedEntriesEngineFeatures, selectedEntriesGameplayFeatures, selectedEntriesGenres, selectedEntriesLicences, selectedEntriesPublishers, selectedEntriesThemes, engineFeatures, gameplayFeatures, genres, licences, publisher, themes), I18n.INSTANCE.get("progressBar.importingMods"));
-                            if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> engineFeatureSharer.importMod(string, !showMessageDialogs), engineFeatureSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                            if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> ModManager.engineFeatureMod.getSharer().importMod(string, !showMessageDialogs), ModManager.engineFeatureMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing engine features");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> gameplayFeatureSharer.importMod(string, !showMessageDialogs), gameplayFeatureSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> ModManager.gameplayFeatureMod.getSharer().importMod(string, !showMessageDialogs), ModManager.gameplayFeatureMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing gameplay features");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> genreSharer.importMod(string, !showMessageDialogs), genreSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> ModManager.genreMod.getSharer().importMod(string, !showMessageDialogs), ModManager.genreMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing genres");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> publisherSharer.importMod(string, !showMessageDialogs), publisherSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> ModManager.publisherMod.getSharer().importMod(string, !showMessageDialogs), ModManager.publisherMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing publishers");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName5"), (string) -> themeSharer.importMod(string, !showMessageDialogs), themeSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                            if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName5"), (string) -> ModManager.themeMod.getSharer().importMod(string, !showMessageDialogs), ModManager.themeMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing themes");
                                 errorOccurred = true;
                             }
-                            if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName6"), (string) -> licenceSharer.importMod(string, !showMessageDialogs), licenceSharer.getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                            if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName6"), (string) -> ModManager.licenceMod.getSharer().importMod(string, !showMessageDialogs), ModManager.licenceMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                 LOGGER.info("Error occurred wile importing licences");
                                 errorOccurred = true;
                             }
@@ -665,12 +659,12 @@ public class SharingManager {
         if(exportFiles){
             StringBuilder failedExports = new StringBuilder();
             try{
-                failedExports.append(getExportFailed((string) -> engineFeatureSharer.exportMod(string, exportAsRestorePoint), customEngineFeatures, I18n.INSTANCE.get("window.main.mods.engineFeatures")));
-                failedExports.append(getExportFailed((string) -> gameplayFeatureSharer.exportMod(string, exportAsRestorePoint), customGameplayFeatures, I18n.INSTANCE.get("window.main.mods.gameplayFeatures")));
-                failedExports.append(getExportFailed((string) -> genreSharer.exportMod(string, exportAsRestorePoint), customGenres, I18n.INSTANCE.get("window.main.mods.genres")));
-                failedExports.append(getExportFailed((string) -> publisherSharer.exportMod(string, exportAsRestorePoint), customPublishers, I18n.INSTANCE.get("window.main.mods.publisher")));
-                failedExports.append(getExportFailed((string) -> themeSharer.exportMod(string, exportAsRestorePoint), customThemes, I18n.INSTANCE.get("window.main.mods.themes")));
-                failedExports.append(getExportFailed((string) -> licenceSharer.exportMod(string, exportAsRestorePoint), customLicences, I18n.INSTANCE.get("window.main.mods.licences")));
+                failedExports.append(getExportFailed((string) -> ModManager.engineFeatureMod.getSharer().exportMod(string, exportAsRestorePoint), customEngineFeatures, I18n.INSTANCE.get("window.main.mods.engineFeatures")));
+                failedExports.append(getExportFailed((string) -> ModManager.gameplayFeatureMod.getSharer().exportMod(string, exportAsRestorePoint), customGameplayFeatures, I18n.INSTANCE.get("window.main.mods.gameplayFeatures")));
+                failedExports.append(getExportFailed((string) -> ModManager.genreMod.getSharer().exportMod(string, exportAsRestorePoint), customGenres, I18n.INSTANCE.get("window.main.mods.genres")));
+                failedExports.append(getExportFailed((string) -> ModManager.publisherMod.getSharer().exportMod(string, exportAsRestorePoint), customPublishers, I18n.INSTANCE.get("window.main.mods.publisher")));
+                failedExports.append(getExportFailed((string) -> ModManager.themeMod.getSharer().exportMod(string, exportAsRestorePoint), customThemes, I18n.INSTANCE.get("window.main.mods.themes")));
+                failedExports.append(getExportFailed((string) -> ModManager.licenceMod.getSharer().exportMod(string, exportAsRestorePoint), customLicences, I18n.INSTANCE.get("window.main.mods.licences")));
                 if(failedExports.toString().isEmpty()){
                     if(exportAsRestorePoint){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
