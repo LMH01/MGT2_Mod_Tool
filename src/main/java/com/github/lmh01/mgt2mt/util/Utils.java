@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -287,7 +287,7 @@ public class Utils {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreName: " + currentName);
                 }
-                int genreId = AnalyzeManager.genreAnalyzer.getContentIdByName(currentName.toString());
+                int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(currentName.toString());
                 if(genreId != -1){
                     genreIds.append("<").append(genreId).append(">");
                 }
@@ -364,7 +364,7 @@ public class Utils {
     public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) throws IOException {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if(goodFeature){
-            for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
+            for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
                 if(map.get("GOOD") != null){
                     if(map.get("GOOD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -372,7 +372,7 @@ public class Utils {
                 }
             }
         }else{
-            for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
+            for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
                 if(map.get("BAD") != null){
                     if(map.get("BAD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -428,7 +428,7 @@ public class Utils {
             if(!listAvailableEntries.isSelectionEmpty()){
                 for(String string : listAvailableEntries.getSelectedValuesList()){
                     if(returnGenreIds){
-                        returnValues.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
+                        returnValues.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
                     }else{
                         returnValues.add(getPositionInList(string, existingListContent));
                     }

@@ -14,37 +14,52 @@ public abstract class AbstractSimpleMod implements BaseMod, SimpleMod{
 
     @Override
     public void addMod(String lineToWrite) throws IOException {
-        getEditor().addMod(lineToWrite);
+        getBaseEditor().addMod(lineToWrite);
     }
 
     @Override
     public void removeMod(String name) throws IOException {
-        getEditor().removeMod(name);
+        getBaseEditor().removeMod(name);
     }
 
     @Override
     public void exportMod(String name, boolean exportAsRestorePoint) {
-        getSharer().exportMod(name, exportAsRestorePoint);
+        getBaseSharer().exportMod(name, exportAsRestorePoint);
     }
 
     @Override
     public void importMod(String importFolderPath, boolean showMessages) throws IOException {
-        getSharer().importMod(importFolderPath, showMessages);
+        getBaseSharer().importMod(importFolderPath, showMessages);
     }
 
     @Override
     public void analyze() throws IOException {
-        getAnalyzer().analyzeFile();
+        getBaseAnalyzer().analyzeFile();
     }
 
     @Override
     public Map<Integer, String> getFileContent() {
-        return getAnalyzer().getFileContent();
+        return getBaseAnalyzer().getFileContent();
     }
 
-    public abstract AbstractSimpleAnalyzer getAnalyzer();
+    /**
+     * @return Returns the analyzer that is extended from {@link AbstractSimpleAnalyzer} for the specified mod.
+     * Info: when using this method, only the functions from {@link AbstractSimpleAnalyzer} can be used.
+     * If you would like to use all functions for the analyzer use {@code MOD.getAnalyzer} instead.
+     */
+    public abstract AbstractSimpleAnalyzer getBaseAnalyzer();
 
-    public abstract AbstractSimpleEditor getEditor();
+    /**
+     * @return Returns the editor that is extended from {@link AbstractSimpleEditor} for the specified mod.
+     * Info: when using this method, only the functions from {@link AbstractSimpleEditor} can be used.
+     * If you would like to use all functions for the editor use {@code MOD.getEditor} instead.
+     */
+    public abstract AbstractSimpleEditor getBaseEditor();
 
-    public abstract AbstractSimpleSharer getSharer();
+    /**
+     * @return Returns the sharer that is extended from {@link AbstractSimpleSharer} for the specified mod.
+     * Info: when using this method, only the functions from {@link AbstractSimpleSharer} can be used.
+     * If you would like to use all functions for the sharer use {@code MOD.getSharer} instead.
+     */
+    public abstract AbstractSimpleSharer getBaseSharer();
 }

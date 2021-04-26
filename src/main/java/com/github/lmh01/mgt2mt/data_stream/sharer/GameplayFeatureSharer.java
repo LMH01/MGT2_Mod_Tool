@@ -2,8 +2,8 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -37,10 +37,10 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
             ArrayList<Integer> badGenreIds = new ArrayList<>();
             ArrayList<Integer> goodGenreIds = new ArrayList<>();
             for(String string : badGenreNames){
-                badGenreIds.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
+                badGenreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
             }
             for(String string : goodGenreNames){
-                goodGenreIds.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
+                goodGenreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
             }
             map.remove("BAD");
             map.remove("GOOD");
@@ -58,7 +58,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
                 }else{
                     firstBadFeature = false;
                 }
-                badGenresFeatures.append(AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(string)));
+                badGenresFeatures.append(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(string)));
             }
         }
         StringBuilder goodGenresFeatures = new StringBuilder();
@@ -72,7 +72,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
                 }else{
                     firstGoodFeature = false;
                 }
-                goodGenresFeatures.append(AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(string)));
+                goodGenresFeatures.append(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(string)));
             }
         }
         String arcadeCompatibility = "yes";
@@ -125,7 +125,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return AnalyzeManager.gameplayFeatureAnalyzer;
+        return ModManager.gameplayFeatureMod.getAnalyzer();
     }
 
     @Override
@@ -151,8 +151,8 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
         bw.write("[GRAPHIC]" + map.get("GRAPHIC") + System.getProperty("line.separator"));
         bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
         bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
-        bw.write("[BAD]" + AnalyzeManager.genreAnalyzer.getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
-        bw.write("[GOOD]" + AnalyzeManager.genreAnalyzer.getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
+        bw.write("[BAD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
+        bw.write("[GOOD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
         if(map.get("NO_ARCADE") != null){
             bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
         }

@@ -10,23 +10,46 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.PublisherSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 
 public class PublisherMod extends AbstractAdvancedMod {
-    AbstractAdvancedAnalyzer publisherAnalyzer = new PublisherAnalyzer();
-    AbstractAdvancedEditor publisherEditor = new PublisherEditor();
-    AbstractAdvancedSharer publisherSharer = new PublisherSharer();
+    PublisherAnalyzer publisherAnalyzer = new PublisherAnalyzer();
+    PublisherEditor publisherEditor = new PublisherEditor();
+    PublisherSharer publisherSharer = new PublisherSharer();
 
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     */
+    public PublisherAnalyzer getAnalyzer(){
+        return publisherAnalyzer;
+    }
+
+    /**
+     * @return Returns the editor for the mod.
+     * Using this function you can use all specific functions for this editor.
+     */
+    public PublisherEditor getEditor(){
+        return publisherEditor;
+    }
+
+    /**
+     * @return Returns the sharer for the mod.
+     * Using this function you can use all specific functions for this sharer.
+     */
+    public PublisherSharer getSharer(){
+        return publisherSharer;
+    }
 
     @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
         return publisherAnalyzer;
     }
 
     @Override
-    public AbstractAdvancedEditor getEditor() {
+    public AbstractAdvancedEditor getBaseEditor() {
         return publisherEditor;
     }
 
     @Override
-    public AbstractAdvancedSharer getSharer() {
+    public AbstractAdvancedSharer getBaseSharer() {
         return publisherSharer;
     }
 

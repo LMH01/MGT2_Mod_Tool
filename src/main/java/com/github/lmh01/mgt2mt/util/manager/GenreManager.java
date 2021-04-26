@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -28,7 +28,7 @@ public class GenreManager {
      * Adds a new genre to mad games tycoon 2
      */
     public static void startStepByStepGuide() throws IOException {
-        AnalyzeManager.genreAnalyzer.getAnalyzedFile();
+        ModManager.genreMod.getAnalyzer().analyzeFile();
         resetVariables();
         try {
             Backup.createBackup(Utils.getGenreFile());
@@ -63,7 +63,7 @@ public class GenreManager {
      */
     public static void resetVariables(){
         mapNewGenre.clear();
-        mapNewGenre.put("ID", Integer.toString(AnalyzeManager.genreAnalyzer.getFreeId()));
+        mapNewGenre.put("ID", Integer.toString(ModManager.genreMod.getAnalyzer().getFreeId()));
         mapNewGenre.put("UNLOCK YEAR", "1976");
         mapNewGenre.put("UNLOCK MONTH", "JAN");
         mapNewGenre.put("RES POINTS", "1000");
@@ -167,7 +167,7 @@ public class GenreManager {
                     EditorManager.genreEditor.addMod(map);
                     EditorManager.themeEditor.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
                     EditorManager.gameplayFeatureEditor.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
-                    AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
+                    ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
                     EditorManager.gameplayFeatureEditor.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, genreIcon, showMessages);
                     if(showSummaryFromImport){
@@ -279,7 +279,7 @@ public class GenreManager {
             if(String.valueOf(inputGenres.charAt(i)).equals("<")){
                 //Nothing happens
             }else if (String.valueOf(inputGenres.charAt(i)).equals(">")){
-                outputGenres.add(AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(currentGenre.toString()), true));
+                outputGenres.add(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(currentGenre.toString()), true));
                 currentGenre = new StringBuilder();
             }else{
                 currentGenre.append(inputGenres.charAt(i));
@@ -316,7 +316,7 @@ public class GenreManager {
      */
     public static void genreAdded(Map<String, String> map, File genreIcon, boolean showMessages) throws IOException {
         String name = map.get("NAME EN");
-        int id = AnalyzeManager.genreAnalyzer.getFreeId();
+        int id = ModManager.genreMod.getAnalyzer().getFreeId();
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         if(showMessages){
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.1") + " [" + name + "] " + I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.2"), I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){

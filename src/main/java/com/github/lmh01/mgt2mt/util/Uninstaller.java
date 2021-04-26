@@ -1,11 +1,10 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -120,12 +119,12 @@ public class Uninstaller {
      */
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation){
         boolean uninstallFailed = false;
-        String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
-        String[] customPublishers = AnalyzeManager.publisherAnalyzer.getCustomContentString();
-        String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
-        String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
-        String[] customThemes = AnalyzeManager.themeFileEnAnalyzer.getCustomContentString();
-        String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
+        String[] customEngineFeatures = ModManager.engineFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customGameplayFeatures = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customGenres = ModManager.genreMod.getAnalyzer().getCustomContentString();
+        String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
+        String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
+        String[] customLicences = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
         if(customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length!= 0){
             ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (String customGenre : customGenres) {

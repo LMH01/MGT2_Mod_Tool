@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -42,7 +42,7 @@ public class DataStreamHelper {
                 return entry.getValue().toString().replace("[NAME AR]", "").replace("[NAME]", "");
             }
             if(entry.getValue().toString().contains("LINE")){
-                return AnalyzeManager.licenceAnalyzer.getReplacedLine(entry.getValue().toString().replace("[LINE]", ""));
+                return ModManager.licenceMod.getAnalyzer().getReplacedLine(entry.getValue().toString().replace("[LINE]", ""));
             }
         }
         return "-1";

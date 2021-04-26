@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -73,7 +73,7 @@ public class GenreEditor extends AbstractAdvancedEditor {
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return AnalyzeManager.genreAnalyzer;
+        return ModManager.genreMod.getAnalyzer();
     }
 
     /**

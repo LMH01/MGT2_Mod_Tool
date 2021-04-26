@@ -2,8 +2,8 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
@@ -283,12 +283,13 @@ public class WindowMain {
     public static void checkActionAvailability(){
         if(Settings.mgt2FolderIsCorrect){
             try{
-                AnalyzeManager.genreAnalyzer.analyzeFile();
-                ThemeFileAnalyzer.analyzeThemeFiles();
-                AnalyzeManager.publisherAnalyzer.analyzeFile();
-                AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
-                AnalyzeManager.engineFeatureAnalyzer.analyzeFile();
-                AnalyzeManager.licenceAnalyzer.analyzeFile();
+                ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
+                ModManager.engineFeatureMod.getAnalyzer().analyzeFile();
+                ModManager.genreMod.getAnalyzer().analyzeFile();
+                ModManager.themeMod.getAnalyzerEn().analyzeFile();
+                ModManager.themeMod.getAnalyzerGe().analyzeFile();
+                ModManager.publisherMod.getAnalyzer().analyzeFile();
+                ModManager.licenceMod.getAnalyzer().analyzeFile();
                 boolean noCustomGenreAvailable = true;
                 boolean noCustomThemesAvailable = true;
                 boolean noCustomPublishersAvailable = true;
@@ -304,22 +305,22 @@ public class WindowMain {
                     noCustomEngineFeaturesAvailable = false;
                     noCustomLicencesAvailable = false;
                 }else{
-                    if(AnalyzeManager.genreAnalyzer.getCustomContentString(true).length > 0){
+                    if(ModManager.genreMod.getAnalyzer().getCustomContentString(true).length > 0){
                         noCustomGenreAvailable = false;
                     }
-                    if(AnalyzeManager.themeFileEnAnalyzer.getFileContent().size() > 215){
+                    if(ModManager.themeMod.getAnalyzerEn().getFileContent().size() > 215){
                         noCustomThemesAvailable = false;
                     }
-                    if(AnalyzeManager.publisherAnalyzer.getCustomContentString(true).length > 0){
+                    if(ModManager.publisherMod.getAnalyzer().getCustomContentString(true).length > 0){
                         noCustomPublishersAvailable = false;
                     }
-                    if(AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString(true).length > 0){
+                    if(ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString(true).length > 0){
                         noCustomGameplayFeaturesAvailable = false;
                     }
-                    if(AnalyzeManager.engineFeatureAnalyzer.getCustomContentString(true).length > 0){
+                    if(ModManager.engineFeatureMod.getAnalyzer().getCustomContentString(true).length > 0){
                         noCustomEngineFeaturesAvailable = false;
                     }
-                    Map<Integer, String> mapLicences = AnalyzeManager.licenceAnalyzer.getFileContent();
+                    Map<Integer, String> mapLicences = ModManager.licenceMod.getAnalyzer().getFileContent();
                     if(mapLicences.size() > 956){
                         noCustomLicencesAvailable = false;
                     }

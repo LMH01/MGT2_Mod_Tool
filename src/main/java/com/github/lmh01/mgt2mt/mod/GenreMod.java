@@ -10,27 +10,51 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.GenreSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 
 public class GenreMod extends AbstractAdvancedMod {
-    AbstractAdvancedAnalyzer genreAnalyzer = new GenreAnalyzer();
-    AbstractAdvancedEditor genreEditor = new GenreEditor();
-    AbstractAdvancedSharer genreSharer = new GenreSharer();
+    GenreAnalyzer genreAnalyzer = new GenreAnalyzer();
+    GenreEditor genreEditor = new GenreEditor();
+    GenreSharer genreSharer = new GenreSharer();
 
-    @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     */
+    public GenreAnalyzer getAnalyzer(){
         return genreAnalyzer;
     }
 
-    @Override
-    public AbstractAdvancedEditor getEditor() {
+    /**
+     * @return Returns the editor for the mod.
+     * Using this function you can use all specific functions for this editor.
+     */
+    public GenreEditor getEditor(){
         return genreEditor;
     }
 
-    @Override
-    public AbstractAdvancedSharer getSharer() {
+    /**
+     * @return Returns the sharer for the mod.
+     * Using this function you can use all specific functions for this sharer.
+     */
+    public GenreSharer getSharer(){
         return genreSharer;
     }
 
     @Override
-    public String[] getCompatibleModToolVersions() {
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
+        return genreAnalyzer;
+    }
+
+    @Override
+    public AbstractAdvancedEditor getBaseEditor() {
+        return genreEditor;
+    }
+
+    @Override
+    public AbstractAdvancedSharer getBaseSharer() {
+        return genreSharer;
+    }
+
+    @Override
+    public String[] getCompatibleModToolVersions() {//TODO getCompatibleModToolVersions aus sharer raus nehmen
         return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.3b","1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "1.13.0"};
     }
 }

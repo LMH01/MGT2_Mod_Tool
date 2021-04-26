@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ public class LicenceEditor extends AbstractSimpleEditor {
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return AnalyzeManager.licenceAnalyzer;
+        return ModManager.licenceMod.getAnalyzer();
     }
 
     @Override

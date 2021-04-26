@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.sharer.*;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Uninstaller;
@@ -641,12 +641,12 @@ public class SharingManager {
      * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
      */
     public static void exportAll(boolean exportAsRestorePoint){
-        String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
-        String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
-        String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
-        String[] customPublishers = AnalyzeManager.publisherAnalyzer.getCustomContentString();
-        String[] customThemes = AnalyzeManager.themeFileEnAnalyzer.getCustomContentString();
-        String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
+        String[] customEngineFeatures = ModManager.engineFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customGameplayFeatures = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customGenres = ModManager.genreMod.getAnalyzer().getCustomContentString();
+        String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
+        String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
+        String[] customLicences = ModManager.licenceMod.getAnalyzer().getCustomContentString();
         StringBuilder exportList = new StringBuilder();
         exportList.append(getExportListPart(customEngineFeatures, "Engine features"));
         exportList.append(getExportListPart(customGameplayFeatures, "Gameplay features"));

@@ -2,8 +2,8 @@ package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -169,7 +169,7 @@ public class ThemeEditor extends AbstractSimpleEditor {
         }
         fileTopicsGe.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGe), StandardCharsets.UTF_16LE));
-        Map<Integer, String> map = AnalyzeManager.themeFileGeAnalyzer.getFileContent();
+        Map<Integer, String> map = ModManager.themeMod.getAnalyzerGe().getFileContent();
         boolean firstLine = true;
         for(Integer i : map.keySet()){
             if(addGenreID){

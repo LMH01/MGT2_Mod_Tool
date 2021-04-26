@@ -16,5 +16,10 @@ public class ModManager {
      */
     public static void initializeMods(){
         engineFeatureMod.initializeMod();
+        gameplayFeatureMod.initializeMod();
+        genreMod.initializeMod();
+        licenceMod.initializeMod();
+        publisherMod.initializeMod();
+        themeMod.initializeMod();
     }
 }

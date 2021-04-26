@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class GameplayFeatureHelper {
     public static void addGameplayFeature(){
         try{
             Backup.createBackup(Utils.getGameplayFeaturesFile());
-            AnalyzeManager.gameplayFeatureAnalyzer.analyzeFile();
+            ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
             final ArrayList<Integer>[] badGenreIds = new ArrayList[]{new ArrayList<>()};
@@ -193,7 +193,7 @@ public class GameplayFeatureHelper {
             JButton buttonBadGenres = new JButton("Select Bad Genres");
             buttonBadGenres.setToolTipText("Click to select what genres don't work good with your gameplay feature");
             buttonBadGenres.addActionListener(actionEvent -> {
-                badGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", "Choose genre(s)", AnalyzeManager.genreAnalyzer.getContentByAlphabet(), AnalyzeManager.genreAnalyzer.getContentByAlphabet(), true);
+                badGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", "Choose genre(s)", ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
                 if(badGenreIds[0].size() != 0){
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
                     if(Settings.disableSafetyFeatures || !mutualEntries){
@@ -209,7 +209,7 @@ public class GameplayFeatureHelper {
             });
             JButton buttonGoodGenres = new JButton("Select Good Genres");
             buttonGoodGenres.addActionListener(actionEvent -> {
-                goodGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", "Choose genre(s)", AnalyzeManager.genreAnalyzer.getContentByAlphabet(), AnalyzeManager.genreAnalyzer.getContentByAlphabet(), true);
+                goodGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", "Choose genre(s)", ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
                 if(goodGenreIds[0].size() != 0){
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
                     if(Settings.disableSafetyFeatures || !mutualEntries){
@@ -254,7 +254,7 @@ public class GameplayFeatureHelper {
                             newGameplayFeature.put("NAME EN", textFieldName.getText());
                             newGameplayFeature.put("DESC EN", textFieldDescription.getText());
                         }
-                        newGameplayFeature.put("ID", Integer.toString(AnalyzeManager.gameplayFeatureAnalyzer.getFreeId()));
+                        newGameplayFeature.put("ID", Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getFreeId()));
                         newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(comboBoxFeatureType.getSelectedItem().toString())));
                         newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                         newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());

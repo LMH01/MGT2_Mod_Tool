@@ -1,16 +1,17 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+
 import javax.swing.*;
 
 public class ActiveMods {
     public static void showActiveMods() {
-        String[] customEngineFeatures = AnalyzeManager.engineFeatureAnalyzer.getCustomContentString();
-        String[] customGameplayFeatures = AnalyzeManager.gameplayFeatureAnalyzer.getCustomContentString();
-        String[] customGenres = AnalyzeManager.genreAnalyzer.getCustomContentString();
-        String[] customPublishers = AnalyzeManager.publisherAnalyzer.getCustomContentString();
-        String[] customThemes = AnalyzeManager.themeFileEnAnalyzer.getCustomContentString();
-        String[] customLicences = AnalyzeManager.licenceAnalyzer.getCustomContentString();
+        String[] customEngineFeatures = ModManager.engineFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customGameplayFeatures = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customGenres = ModManager.genreMod.getAnalyzer().getCustomContentString();
+        String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
+        String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
+        String[] customLicences = ModManager.licenceMod.getAnalyzer().getCustomContentString();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(I18n.INSTANCE.get("window.showActiveMods.message.firstPart")).append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
         boolean noModsActive = true;

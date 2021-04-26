@@ -1,14 +1,13 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -26,7 +25,7 @@ public class NewModsHandler {
 
     public static void addGenre(){
         try {
-            AnalyzeManager.genreAnalyzer.analyzeFile();
+            ModManager.genreMod.getAnalyzer().analyzeFile();
             ThemeFileAnalyzer.analyzeThemeFiles();
             GenreManager.startStepByStepGuide();
         } catch (IOException e) {
@@ -35,7 +34,7 @@ public class NewModsHandler {
     }
     public static void addPublisher(){
         try {
-            AnalyzeManager.publisherAnalyzer.analyzeFile();
+            ModManager.publisherMod.getAnalyzer().analyzeFile();
             JPanel panelName = new JPanel();
             JLabel labelName = new JLabel("Name:");
             JTextField textFieldName = new JTextField("---------Enter Name---------");
@@ -121,10 +120,10 @@ public class NewModsHandler {
             buttonSelectGenre.setToolTipText("Click to select what genre the fan base of your publisher likes the most");
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
-                    AnalyzeManager.genreAnalyzer.analyzeFile();
+                    ModManager.genreMod.getAnalyzer().analyzeFile();
                     JLabel labelChooseGenre = new JLabel("Select what main genre your publisher should have:");
                     String[] string;
-                    string = AnalyzeManager.genreAnalyzer.getContentByAlphabet();
+                    string = ModManager.genreMod.getAnalyzer().getContentByAlphabet();
                     JList<String> listAvailableGenres = new JList<>(string);
                     listAvailableGenres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
@@ -137,7 +136,7 @@ public class NewModsHandler {
                     if(JOptionPane.showConfirmDialog(null, params, "Select genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                         if(!listAvailableGenres.isSelectionEmpty()){
                             String currentGenre = listAvailableGenres.getSelectedValue();
-                            genreID.set(AnalyzeManager.genreAnalyzer.getContentIdByName(currentGenre));
+                            genreID.set(ModManager.genreMod.getAnalyzer().getContentIdByName(currentGenre));
                             buttonSelectGenre.setText(currentGenre);
                         }else{
                             JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
@@ -156,7 +155,7 @@ public class NewModsHandler {
             while(!breakLoop){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Publisher", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     boolean publisherAlreadyExists = false;
-                    for(String string : AnalyzeManager.publisherAnalyzer.getContentByAlphabet()){
+                    for(String string : ModManager.publisherMod.getAnalyzer().getContentByAlphabet()){
                         if(textFieldName.getText().equals(string)){
                             publisherAlreadyExists = true;
                         }
@@ -187,7 +186,7 @@ public class NewModsHandler {
                                     "\nShare: " + spinnerShare.getValue().toString() +
                                     "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
                                 HashMap<String, String> hashMap = new HashMap<>();
-                                hashMap.put("ID", Integer.toString(AnalyzeManager.publisherAnalyzer.getFreeId()));
+                                hashMap.put("ID", Integer.toString(ModManager.publisherMod.getAnalyzer().getFreeId()));
                                 hashMap.put("NAME EN", textFieldName.getText());
                                 hashMap.put("NAME GE", textFieldName.getText());
                                 hashMap.put("NAME TU", textFieldName.getText());
@@ -220,7 +219,7 @@ public class NewModsHandler {
             ThemeFileAnalyzer.analyzeThemeFiles();
             final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
             ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
-            String[] string = AnalyzeManager.genreAnalyzer.getContentByAlphabet();
+            String[] string = ModManager.genreMod.getAnalyzer().getContentByAlphabet();
             JLabel labelEnterThemeName = new JLabel("Enter the theme name:");
             JTextField textFieldThemeName = new JTextField();
             JButton buttonAddTranslations = new JButton("Add translations");
@@ -257,10 +256,10 @@ public class NewModsHandler {
                 if(JOptionPane.showConfirmDialog(null, params, "Add new theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         if(!textFieldThemeName.getText().isEmpty()){
-                            if(!AnalyzeManager.themeFileEnAnalyzer.getFileContent().containsValue(textFieldThemeName.getText()) && !AnalyzeManager.themeFileGeAnalyzer.getFileContent().containsValue(textFieldThemeName.getText())){
+                            if(!ModManager.themeMod.getAnalyzerEn().getFileContent().containsValue(textFieldThemeName.getText()) && !ModManager.themeMod.getAnalyzerGe().getFileContent().containsValue(textFieldThemeName.getText())){
                                 if(!textFieldThemeName.getText().matches(".*\\d.*")){
                                     arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
-                                    for(Map<String, String> map : AnalyzeManager.genreAnalyzer.getFileContent()){
+                                    for(Map<String, String> map : ModManager.genreMod.getAnalyzer().getFileContent()){
                                         for(String name : arrayListCompatibleGenreNames){
                                             if(map.get("NAME EN").equals(name)){
                                                 arrayListCompatibleGenreIds.add(Integer.parseInt(map.get("ID")));

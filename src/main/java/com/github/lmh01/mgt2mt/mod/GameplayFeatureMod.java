@@ -14,18 +14,42 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     GameplayFeatureEditor gameplayFeatureEditor = new GameplayFeatureEditor();
     GameplayFeatureSharer gameplayFeatureSharer = new GameplayFeatureSharer();
 
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     */
+    public GameplayFeatureAnalyzer getAnalyzer(){
+        return gameplayFeatureAnalyzer;
+    }
+
+    /**
+     * @return Returns the editor for the mod.
+     * Using this function you can use all specific functions for this editor.
+     */
+    public GameplayFeatureEditor getEditor(){
+        return gameplayFeatureEditor;
+    }
+
+    /**
+     * @return Returns the sharer for the mod.
+     * Using this function you can use all specific functions for this sharer.
+     */
+    public GameplayFeatureSharer getSharer(){
+        return gameplayFeatureSharer;
+    }
+
     @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
         return gameplayFeatureAnalyzer;
     }
 
     @Override
-    public AbstractAdvancedEditor getEditor() {
+    public AbstractAdvancedEditor getBaseEditor() {
         return gameplayFeatureEditor;
     }
 
     @Override
-    public AbstractAdvancedSharer getSharer() {
+    public AbstractAdvancedSharer getBaseSharer() {
         return gameplayFeatureSharer;
     }
 

@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -107,7 +107,7 @@ public class WindowAddGenrePage7 extends JFrame{
         LIST_GAMEPLAY_FEATURES_GOOD.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : AnalyzeManager.gameplayFeatureAnalyzer.getContentByAlphabet()){
+        for(String string : ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("GAMEPLAYFEATURE GOOD")){
                 if(GenreManager.mapNewGenre.get("GAMEPLAYFEATURE GOOD").contains(string)) {
@@ -140,7 +140,7 @@ public class WindowAddGenrePage7 extends JFrame{
         LIST_GAMEPLAY_FEATURES_BAD.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : AnalyzeManager.gameplayFeatureAnalyzer.getContentByAlphabet()){
+        for(String string : ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("GAMEPLAYFEATURE BAD")){
                 if(GenreManager.mapNewGenre.get("GAMEPLAYFEATURE BAD").contains(string)) {
@@ -181,12 +181,12 @@ public class WindowAddGenrePage7 extends JFrame{
         LOGGER.info("Cleared map entries for good/bad gameplay features.");
         StringBuilder gameplayFeaturesGood = new StringBuilder();
         StringBuilder gameplayFeaturesBad = new StringBuilder();
-        for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
+        for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
                     if(entry.getKey().equals("NAME EN")){
                         if(entry.getValue().equals(string)){
-                            gameplayFeaturesBadIds.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(entry.getValue()));
+                            gameplayFeaturesBadIds.add(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(entry.getValue()));
                             gameplayFeaturesBad.append("<").append(string).append(">");
                             LOGGER.info("Gameplay feature bad: " + entry.getKey() + " | " + entry.getValue());
                         }
@@ -195,7 +195,7 @@ public class WindowAddGenrePage7 extends JFrame{
                 for(String string : listGameplayFeaturesGood.getSelectedValuesList()){
                     if(entry.getKey().equals("NAME EN")){
                         if(entry.getValue().equals(string)){
-                            gameplayFeaturesGoodIds.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(entry.getValue()));
+                            gameplayFeaturesGoodIds.add(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(entry.getValue()));
                             gameplayFeaturesGood.append("<").append(string).append(">");
                             LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
                         }

@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -93,12 +93,12 @@ public class PublisherEditor extends AbstractAdvancedEditor {
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return AnalyzeManager.publisherAnalyzer;
+        return ModManager.publisherMod.getAnalyzer();
     }
 
     private int getPublisherIconIdByName(String publisherNameEN){
         int returnValue = 0;
-        List<Map<String, String>> list = AnalyzeManager.publisherAnalyzer.getFileContent();
+        List<Map<String, String>> list = ModManager.publisherMod.getAnalyzer().getFileContent();
         try{
             for (Map<String, String> map : list) {
                 if (map.get("NAME EN").equals(publisherNameEN)) {

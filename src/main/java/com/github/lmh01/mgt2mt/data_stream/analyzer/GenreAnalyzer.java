@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -142,7 +143,7 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer{
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + genreNumber);
                 }
-                genreNames.append("<").append(AnalyzeManager.genreAnalyzer.getContentNameById(genreNumber)).append(">");
+                genreNames.append("<").append(ModManager.genreMod.getAnalyzer().getContentNameById(genreNumber)).append(">");
                 currentNumber = new StringBuilder();
             }else{
                 currentNumber.append(genreNumbersRaw.charAt(charPosition));

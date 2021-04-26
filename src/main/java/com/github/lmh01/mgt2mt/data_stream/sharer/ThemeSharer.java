@@ -3,9 +3,9 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -49,7 +49,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
             bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
             bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + System.getProperty("line.separator"));
             TranslationManager.printLanguages(bw, map);
-            bw.write("[GENRE COMB]" + AnalyzeManager.genreAnalyzer.getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+            bw.write("[GENRE COMB]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
@@ -75,7 +75,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
             if(entry.getKey().equals("GENRE COMB")){
                 ArrayList<String> compatibleGenreNames = Utils.getEntriesFromString(entry.getValue());
                 for(String string : compatibleGenreNames){
-                    compatibleGenreIds.add(AnalyzeManager.genreAnalyzer.getContentIdByName(string));
+                    compatibleGenreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
                 }
             }else if(entry.getKey().equals("VIOLENCE LEVEL")){
                 violenceRating = Integer.parseInt(entry.getValue());
@@ -94,7 +94,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
             return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
-        for(Map.Entry<Integer, String> entry : AnalyzeManager.themeFileEnAnalyzer.getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
             if(entry.getValue().equals(map.get("NAME EN"))){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
                 LOGGER.info("Theme already exists - The theme name is already taken");
@@ -146,7 +146,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
      */
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return AnalyzeManager.themeFileGeAnalyzer;
+        return ModManager.themeMod.getAnalyzerGe();
     }
 
     @Override

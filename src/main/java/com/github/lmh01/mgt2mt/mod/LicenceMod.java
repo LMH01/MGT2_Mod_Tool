@@ -10,22 +10,46 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.LicenceSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 
 public class LicenceMod extends AbstractSimpleMod {
-    AbstractSimpleAnalyzer licenceAnalyzer = new LicenceAnalyzer();
-    AbstractSimpleEditor licenceEditor = new LicenceEditor();
-    AbstractSimpleSharer licenceSharer = new LicenceSharer();
+    LicenceAnalyzer licenceAnalyzer = new LicenceAnalyzer();
+    LicenceEditor licenceEditor = new LicenceEditor();
+    LicenceSharer licenceSharer = new LicenceSharer();
+
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     */
+    public LicenceAnalyzer getAnalyzer(){
+        return licenceAnalyzer;
+    }
+
+    /**
+     * @return Returns the editor for the mod.
+     * Using this function you can use all specific functions for this editor.
+     */
+    public LicenceEditor getEditor(){
+        return licenceEditor;
+    }
+
+    /**
+     * @return Returns the sharer for the mod.
+     * Using this function you can use all specific functions for this sharer.
+     */
+    public LicenceSharer getSharer(){
+        return licenceSharer;
+    }
 
     @Override
-    public AbstractSimpleAnalyzer getAnalyzer() {
+    public AbstractSimpleAnalyzer getBaseAnalyzer() {
         return licenceAnalyzer;
     }
 
     @Override
-    public AbstractSimpleEditor getEditor() {
+    public AbstractSimpleEditor getBaseEditor() {
         return licenceEditor;
     }
 
     @Override
-    public AbstractSimpleSharer getSharer() {
+    public AbstractSimpleSharer getBaseSharer() {
         return licenceSharer;
     }
 

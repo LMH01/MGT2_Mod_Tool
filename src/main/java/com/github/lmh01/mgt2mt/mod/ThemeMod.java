@@ -1,33 +1,64 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileEnAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileGeAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.ThemeEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.ThemeSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 
 public class ThemeMod extends AbstractSimpleMod {
-    AbstractSimpleAnalyzer themeFileGeAnalyzer = new ThemeFileGeAnalyzer();
-    AbstractSimpleAnalyzer themeFileEnAnalyzer = new ThemeFileEnAnalyzer();
-    AbstractSimpleEditor themeEditor = new ThemeEditor();
-    AbstractSimpleSharer themeSharer = new ThemeSharer();
+    ThemeFileGeAnalyzer themeFileGeAnalyzer = new ThemeFileGeAnalyzer();
+    ThemeFileEnAnalyzer themeFileEnAnalyzer = new ThemeFileEnAnalyzer();
+    ThemeEditor themeEditor = new ThemeEditor();
+    ThemeSharer themeSharer = new ThemeSharer();
+
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     * This function will analyze the theme file ge.
+     */
+    public ThemeFileGeAnalyzer getAnalyzerGe(){
+        return themeFileGeAnalyzer;
+    }
+
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     * This function will analyze the theme file en.
+     */
+    public ThemeFileEnAnalyzer getAnalyzerEn(){
+        return themeFileEnAnalyzer;
+    }
+
+    /**
+     * @return Returns the editor for the mod.
+     * Using this function you can use all specific functions for this editor.
+     */
+    public ThemeEditor getEditor(){
+        return themeEditor;
+    }
+
+    /**
+     * @return Returns the sharer for the mod.
+     * Using this function you can use all specific functions for this sharer.
+     */
+    public ThemeSharer getSharer(){
+        return themeSharer;
+    }
 
     @Override
-    public AbstractSimpleAnalyzer getAnalyzer() {
+    public ThemeFileGeAnalyzer getBaseAnalyzer() {
         return themeFileGeAnalyzer;
     }
 
     @Override
-    public AbstractSimpleEditor getEditor() {
+    public ThemeEditor getBaseEditor() {
         return themeEditor;
     }
 
     @Override
-    public AbstractSimpleSharer getSharer() {
+    public ThemeSharer getBaseSharer() {
         return themeSharer;
     }
 

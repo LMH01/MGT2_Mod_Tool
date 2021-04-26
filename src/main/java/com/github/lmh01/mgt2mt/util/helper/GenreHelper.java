@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -23,7 +23,7 @@ public class GenreHelper {
 
     public static void addRandomizedGenre(){
         try{
-            AnalyzeManager.genreAnalyzer.analyzeFile();
+            ModManager.genreMod.getAnalyzer().analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
             AtomicReference<ArrayList<File>> screenshotFiles = new AtomicReference<>(new ArrayList<>());
@@ -108,7 +108,7 @@ public class GenreHelper {
                     //Randomized value allocation
                     String unlockMonth = convertMonthNumberToMonthName(Utils.getRandomNumber(1, 12));
                     int unlockYear = Utils.getRandomNumber(1976, 2010);
-                    map.put("ID", Integer.toString(AnalyzeManager.genreAnalyzer.getFreeId()));
+                    map.put("ID", Integer.toString(ModManager.genreMod.getAnalyzer().getFreeId()));
                     String genreName = textFieldName.getText();
                     String genreDescription = textFieldDescription.getText();
                     if(textFieldName.getText().equals(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.enterGenreName")) || textFieldName.getText().isEmpty()){
@@ -436,7 +436,7 @@ public class GenreHelper {
 
     private static String getRandomGenreCombs(){
         StringBuilder stringBuilder = new StringBuilder();
-        for(Integer integer : AnalyzeManager.genreAnalyzer.getActiveIds()){
+        for(Integer integer : ModManager.genreMod.getAnalyzer().getActiveIds()){
             if(Utils.getRandomNumber(1,10) > 5){
                 stringBuilder.append("<").append(integer).append(">");
             }
@@ -460,12 +460,12 @@ public class GenreHelper {
     private static List<HashSet<Integer>> getRandomGameplayFeatureIds(){
         HashSet<Integer> hashSetBadGameplayFeatures = new HashSet<>();
         HashSet<Integer> hashSetGoodGameplayFeatures = new HashSet<>();
-        for(String string : AnalyzeManager.gameplayFeatureAnalyzer.getContentByAlphabet()){
+        for(String string : ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet()){
             if(Utils.getRandomNumber(1,100) > 80){
-                hashSetBadGameplayFeatures.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(string)-1);
+                hashSetBadGameplayFeatures.add(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(string)-1);
             }
             if(Utils.getRandomNumber(1,100) > 80){
-                hashSetGoodGameplayFeatures.add(AnalyzeManager.gameplayFeatureAnalyzer.getContentIdByName(string)-1);
+                hashSetGoodGameplayFeatures.add(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(string)-1);
             }
         }
         Collections.disjoint(hashSetBadGameplayFeatures, hashSetGoodGameplayFeatures);
@@ -478,7 +478,7 @@ public class GenreHelper {
 
     private static String getCompatibleThemes(HashSet<Integer> themeIds){
         StringBuilder stringBuilder = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : AnalyzeManager.themeFileEnAnalyzer.getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
             if(themeIds.contains(entry.getKey())){
                 stringBuilder.append("<").append(entry.getValue()).append(">");
             }
@@ -489,12 +489,12 @@ public class GenreHelper {
     private static void setGameplayFeatureCompatibility(Map<String, String> map1, HashSet<Integer> badGameplayFeatures, HashSet<Integer> goodGameplayFeatures){
         StringBuilder gameplayFeaturesBad = new StringBuilder();
         StringBuilder gameplayFeaturesGood = new StringBuilder();
-        for(Map<String, String> map : AnalyzeManager.gameplayFeatureAnalyzer.getFileContent()){
+        for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 for(Integer integer : badGameplayFeatures){
                     if(entry.getKey().equals("ID")){
                         if(entry.getValue().equals(Integer.toString(integer))){
-                            gameplayFeaturesBad.append("<").append(AnalyzeManager.gameplayFeatureAnalyzer.getContentNameById(integer)).append(">");
+                            gameplayFeaturesBad.append("<").append(ModManager.gameplayFeatureMod.getAnalyzer().getContentNameById(integer)).append(">");
                             if(Settings.enableDebugLogging){
                                 LOGGER.info("Gameplay feature bad: " + entry.getKey() + " | " + entry.getValue());
                             }
@@ -504,7 +504,7 @@ public class GenreHelper {
                 for(Integer integer : goodGameplayFeatures){
                     if(entry.getKey().equals("ID")){
                         if(entry.getValue().equals(Integer.toString(integer))){
-                            gameplayFeaturesGood.append("<").append(AnalyzeManager.gameplayFeatureAnalyzer.getContentNameById(integer)).append(">");
+                            gameplayFeaturesGood.append("<").append(ModManager.gameplayFeatureMod.getAnalyzer().getContentNameById(integer)).append(">");
                             if(Settings.enableDebugLogging){
                                 LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
                             }

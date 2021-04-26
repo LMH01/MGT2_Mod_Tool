@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
  * The simple editor is used to edit files that use this system:
  * ValueX [Some data]
  */
-abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions, SimpleAnalyzer {
+public abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions, SimpleAnalyzer {
     /**
      * Adds a mod to the file
      * @param lineToWrite The line that should be written

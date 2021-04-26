@@ -3,9 +3,9 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -31,7 +31,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
     @Override
     public String importMod(String importFolderPath, boolean showMessages) throws IOException {
         getAnalyzer().analyzeFile();
-        AnalyzeManager.genreAnalyzer.analyzeFile();
+        ModManager.genreMod.getAnalyzer().analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
         File fileToImport = new File(importFolderPath + "\\" + getFileName());
         HashMap<String, String> map = new HashMap<>();
@@ -39,13 +39,13 @@ public class PublisherSharer extends AbstractAdvancedSharer{
         map.put("ID", Integer.toString(getAnalyzer().getFreeId()));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE")){
-                int genreID = AnalyzeManager.genreAnalyzer.getContentIdByName(entry.getValue());
+                int genreID = ModManager.genreMod.getAnalyzer().getContentIdByName(entry.getValue());
                 if(genreID == -1){
-                    int randomGenreID = Utils.getRandomNumber(0, AnalyzeManager.genreAnalyzer.getFileContent().size()-1);
-                    LOGGER.info("Genre list size: " + AnalyzeManager.genreAnalyzer.getFileContent().size());
+                    int randomGenreID = Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getFileContent().size()-1);
+                    LOGGER.info("Genre list size: " + ModManager.genreMod.getAnalyzer().getFileContent().size());
                     map.put("GENRE", Integer.toString(randomGenreID));
                 }else{
-                    map.put("GENRE", Integer.toString(AnalyzeManager.genreAnalyzer.getContentIdByName(entry.getValue())));
+                    map.put("GENRE", Integer.toString(ModManager.genreMod.getAnalyzer().getContentIdByName(entry.getValue())));
                 }
             }else{
                 map.put(entry.getKey(), entry.getValue());
@@ -112,7 +112,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
         bw.write("[PUBLISHER]" + map.get("PUBLISHER") + System.getProperty("line.separator"));
         bw.write("[MARKET]" + map.get("MARKET") + System.getProperty("line.separator"));
         bw.write("[SHARE]" + map.get("SHARE") + System.getProperty("line.separator"));
-        bw.write("[GENRE]" + AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(map.get("GENRE"))) + System.getProperty("line.separator"));
+        bw.write("[GENRE]" + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE"))) + System.getProperty("line.separator"));
     }
 
     @Override
@@ -130,7 +130,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
                 "\nPublisher: " + map.get("PUBLISHER") +
                 "\nMarketShare: " + map.get("MARKET") +
                 "\nShare: " + map.get("SHARE") +
-                "\nGenre: " + AnalyzeManager.genreAnalyzer.getContentNameById(Integer.parseInt(map.get("GENRE")));
+                "\nGenre: " + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE")));
     }
 
     @Override
@@ -145,7 +145,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return AnalyzeManager.publisherAnalyzer;
+        return ModManager.publisherMod.getAnalyzer();
     }
 
     @Override

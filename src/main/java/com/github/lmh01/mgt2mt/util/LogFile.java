@@ -87,9 +87,8 @@ public class LogFile {
             bw.write(logOut);
             bw.write(System.getProperty("line.separator"));
             LOGGER.info("LogOut: " + logOut);
-        } catch (IOException e) {
-            LOGGER.info("Something went wrong while writing log: " + e.getMessage());
-            e.printStackTrace();
+        } catch (IOException ignored) {
+
         }
     }
 

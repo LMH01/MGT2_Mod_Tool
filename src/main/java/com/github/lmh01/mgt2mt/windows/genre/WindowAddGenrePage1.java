@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -118,7 +118,7 @@ public class WindowAddGenrePage1 extends JFrame{
             contentPane.add(buttonExplainGenreID);
         }else{
             setBounds(100, 100, 335, 160);
-            spinnerId.setModel(new SpinnerNumberModel(AnalyzeManager.genreAnalyzer.getFreeId(), AnalyzeManager.genreAnalyzer.getFreeId(), AnalyzeManager.genreAnalyzer.getFreeId(), 1));
+            spinnerId.setModel(new SpinnerNumberModel(ModManager.genreMod.getAnalyzer().getFreeId(), ModManager.genreMod.getAnalyzer().getFreeId(), ModManager.genreMod.getAnalyzer().getFreeId(), 1));
             spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
             spinnerId.setVisible(false);
@@ -172,10 +172,10 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        if(AnalyzeManager.genreAnalyzer.getActiveIds().contains(spinnerId.getValue())){
+        if(ModManager.genreMod.getAnalyzer().getActiveIds().contains(spinnerId.getValue())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
-        }else if(AnalyzeManager.genreAnalyzer.getActiveIds().contains(textFieldGenreName.getToolTipText())){
+        }else if(ModManager.genreMod.getAnalyzer().getActiveIds().contains(textFieldGenreName.getToolTipText())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
             return false;
         }else if(textFieldGenreName.getText().isEmpty()){
@@ -243,7 +243,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
     /**
      * Uses the maps {@link WindowAddGenrePage1#mapNameTranslations} and {@link WindowAddGenrePage1#mapDescriptionTranslations} to parse new map that contains evey translation. When the maps are empty all translation will be set to english
-     * @return Returns a map containg all genre translations in the format that they are read in {@link EditGenreFile}
+     * @return Returns a map containg all genre translations in the format that they are read in {@link com.github.lmh01.mgt2mt.data_stream.editor.GenreEditor}
      */
     public static Map<String, String> getMapGenreTranslations(){
         Map<String, String> mapGenreTranslation = new HashMap<>();

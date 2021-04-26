@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeManager;
 import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
@@ -44,8 +44,8 @@ public class PublisherHelper {
                 }
                 LOGGER.info("Real publisher files are ready.");
                 LOGGER.info("Removing existing publishers...");
-                ProgressBarHelper.initializeProgressBar(0, AnalyzeManager.publisherAnalyzer.getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
-                for(String string : AnalyzeManager.publisherAnalyzer.getDefaultContent()){
+                ProgressBarHelper.initializeProgressBar(0, ModManager.publisherMod.getAnalyzer().getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
+                for(String string : ModManager.publisherMod.getAnalyzer().getDefaultContent()){
                     EditorManager.publisherEditor.removeMod(string);
                     ProgressBarHelper.increment();
                 }
@@ -54,8 +54,8 @@ public class PublisherHelper {
                 ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
                 ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
                 SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingManager.publisherSharer.importMod(string, false), SharingManager.publisherSharer.getCompatibleModToolVersions(), new AtomicBoolean(false));
-                AnalyzeManager.publisherAnalyzer.analyzeFile();
-                if(AnalyzeManager.publisherAnalyzer.getActiveIds().contains(-1)){
+                ModManager.publisherMod.getAnalyzer().analyzeFile();
+                if(ModManager.publisherMod.getAnalyzer().getActiveIds().contains(-1)){
                     EditorManager.publisherEditor.removeMod("Dummy");
                 }
                 TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
