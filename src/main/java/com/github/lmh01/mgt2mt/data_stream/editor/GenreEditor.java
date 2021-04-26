@@ -87,8 +87,8 @@ public class GenreEditor extends AbstractAdvancedEditor {
 
     private boolean removeGenre(String genreName) throws IOException {
         super.removeMod(genreName);
-        EditorManager.themeEditor.editGenreAllocation(getAnalyzer().getContentIdByName(genreName), false, null);
-        EditorManager.gameplayFeatureEditor.removeGenreId(getAnalyzer().getContentIdByName(genreName));
+        ModManager.themeMod.getEditor().editGenreAllocation(getAnalyzer().getContentIdByName(genreName), false, null);
+        ModManager.gameplayFeatureMod.getEditor().removeGenreId(getAnalyzer().getContentIdByName(genreName));
         ImageFileHandler.removeImageFiles(genreName);
         return true;
     }

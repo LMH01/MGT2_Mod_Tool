@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.interfaces.SimpleImporter;
@@ -54,7 +53,7 @@ public class LicenceSharer extends AbstractSimpleSharer{
 
     @Override
     SimpleImporter getSimpleImporter() {
-        return EditorManager.licenceEditor::addMod;
+        return ModManager.licenceMod.getEditor()::addMod;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -237,7 +236,7 @@ public class EngineFeatureHelper {
                         newEngineFeature.put("TECH", spinnerTech.getValue().toString());
                         boolean addFeature = Summaries.showEngineFeatureMessage(newEngineFeature);
                         if(addFeature){
-                            EditorManager.engineFeatureEditor.addMod(newEngineFeature);
+                            ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
                             JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
                             break;

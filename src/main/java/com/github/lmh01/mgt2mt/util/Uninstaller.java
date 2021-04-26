@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -129,7 +128,7 @@ public class Uninstaller {
             ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (String customGenre : customGenres) {
                 try {
-                    EditorManager.genreEditor.removeMod(customGenre);
+                    ModManager.genreMod.getEditor().removeMod(customGenre);
                 } catch (IOException e) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
                     LOGGER.info("Genre could not be removed: " + e.getMessage());
@@ -141,7 +140,7 @@ public class Uninstaller {
             }
             for (String customPublisher : customPublishers) {
                 try {
-                    EditorManager.publisherEditor.removeMod(customPublisher);
+                    ModManager.publisherMod.getEditor().removeMod(customPublisher);
                     LOGGER.info("Publisher files have been restored to original.");
                 } catch (IOException e) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());

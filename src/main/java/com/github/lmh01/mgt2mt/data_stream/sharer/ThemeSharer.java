@@ -4,7 +4,6 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -104,11 +103,11 @@ public class ThemeSharer extends AbstractSimpleSharer{
         try {
             if(showMessages){
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    EditorManager.themeEditor.addMod(map, compatibleGenreIds, violenceRating);
+                    ModManager.themeMod.getEditor().addMod(map, compatibleGenreIds, violenceRating);
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
-                EditorManager.themeEditor.addMod(map, compatibleGenreIds, violenceRating);
+                ModManager.themeMod.getEditor().addMod(map, compatibleGenreIds, violenceRating);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);
@@ -119,7 +118,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
 
     @Override
     SimpleImporter getSimpleImporter() {
-        return EditorManager.themeEditor::addMod;
+        return ModManager.themeMod.getEditor()::addMod;
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -46,7 +45,7 @@ public class PublisherHelper {
                 LOGGER.info("Removing existing publishers...");
                 ProgressBarHelper.initializeProgressBar(0, ModManager.publisherMod.getAnalyzer().getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
                 for(String string : ModManager.publisherMod.getAnalyzer().getDefaultContent()){
-                    EditorManager.publisherEditor.removeMod(string);
+                    ModManager.publisherMod.getEditor().removeMod(string);
                     ProgressBarHelper.increment();
                 }
                 LOGGER.info("Original publishers have been removed!");
@@ -56,7 +55,7 @@ public class PublisherHelper {
                 SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> SharingManager.publisherSharer.importMod(string, false), SharingManager.publisherSharer.getCompatibleModToolVersions(), new AtomicBoolean(false));
                 ModManager.publisherMod.getAnalyzer().analyzeFile();
                 if(ModManager.publisherMod.getAnalyzer().getActiveIds().contains(-1)){
-                    EditorManager.publisherEditor.removeMod("Dummy");
+                    ModManager.publisherMod.getEditor().removeMod("Dummy");
                 }
                 TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));

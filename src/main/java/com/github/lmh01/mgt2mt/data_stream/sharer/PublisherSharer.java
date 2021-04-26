@@ -4,7 +4,6 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.EditorManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -79,7 +78,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         map.put("PIC", Integer.toString(CompanyLogoAnalyzer.getLogoNumber()));
         if(addFeature){
-            EditorManager.publisherEditor.addMod(map, publisherImageFilePath.getPath());
+            ModManager.publisherMod.getEditor().addMod(map, publisherImageFilePath.getPath());
             doOtherImportThings(importFolderPath);
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
