@@ -20,7 +20,7 @@ public class EngineFeatureHelper {
      */
     public static void addEngineFeature(){
         try{
-            Backup.createBackup(Utils.getEngineFeaturesFile());
+            Backup.createBackup(ModManager.engineFeatureMod.getFile());
             ModManager.engineFeatureMod.getAnalyzer().analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};

@@ -15,7 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
+
+import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class LicenceMod extends AbstractSimpleMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceMod.class);
@@ -129,5 +132,10 @@ public class LicenceMod extends AbstractSimpleMod {
     @Override
     public void removeModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableRemoveLicence, "runnableRemoveLicence");
+    }
+
+    @Override
+    public File getFile() {
+        return new File(getMGT2DataPath() + "//Licence.txt");
     }
 }

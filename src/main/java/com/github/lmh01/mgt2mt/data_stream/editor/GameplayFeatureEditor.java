@@ -30,7 +30,7 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return Utils.getGameplayFeaturesFile();
+        return ModManager.gameplayFeatureMod.getFile();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor {
      */
     private void editGenreIdAllocation(Set<Integer> gameplayFeaturesIdsToEdit, int genreId, boolean addGenreId, boolean goodFeature) throws IOException {
         LOGGER.info("Editing GameplayFeatures.txt file");
-        File gameplayFeaturesFile = Utils.getGameplayFeaturesFile();
+        File gameplayFeaturesFile = ModManager.gameplayFeatureMod.getFile();
         if(gameplayFeaturesFile.exists()){
             gameplayFeaturesFile.delete();
         }

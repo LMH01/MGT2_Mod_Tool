@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -36,7 +37,7 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
 
     @Override
     public void analyzeFile() throws IOException {
-        fileContent = DataStreamHelper.getContentFromFile(Utils.getLicenceFile(), "UTF_8BOM");
+        fileContent = DataStreamHelper.getContentFromFile(ModManager.licenceMod.getFile(), "UTF_8BOM");
     }
 
     @Override

@@ -30,7 +30,7 @@ public class GenreManager {
         ModManager.genreMod.getAnalyzer().analyzeFile();
         resetVariables();
         try {
-            Backup.createBackup(Utils.getGenreFile());
+            Backup.createBackup(ModManager.genreMod.getFile());
             LOGGER.info("Adding new genre");
             openStepWindow(1);
         } catch (IOException e) {

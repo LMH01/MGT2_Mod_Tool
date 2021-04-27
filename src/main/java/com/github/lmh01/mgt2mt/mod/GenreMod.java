@@ -14,7 +14,10 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
+
+import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class GenreMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreMod.class);
@@ -144,5 +147,10 @@ public class GenreMod extends AbstractAdvancedMod {
     @Override
     public void removeModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableRemoveGenre, "runnableRemoveGenre");
+    }
+
+    @Override
+    public File getFile() {
+        return new File(getMGT2DataPath() + "//Genres.txt");
     }
 }

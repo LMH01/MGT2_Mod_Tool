@@ -30,7 +30,7 @@ public class EngineFeatureEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return Utils.getEngineFeaturesFile();
+        return ModManager.engineFeatureMod.getFile();
     }
 
     @Override

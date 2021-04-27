@@ -21,7 +21,7 @@ public class GameplayFeatureHelper {
      */
     public static void addGameplayFeature(){
         try{
-            Backup.createBackup(Utils.getGameplayFeaturesFile());
+            Backup.createBackup(ModManager.gameplayFeatureMod.getFile());
             ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};

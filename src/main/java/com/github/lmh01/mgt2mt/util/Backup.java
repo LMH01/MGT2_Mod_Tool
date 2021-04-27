@@ -2,6 +2,9 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -112,36 +115,18 @@ public class Backup {
      * @param showMessages Set true when messages should be displayed to the user
      */
     public static void restoreBackup(boolean initialBackup, boolean showMessages){
-        ProgressBarHelper.initializeProgressBar(0, 6 + TranslationManager.TRANSLATION_KEYS.length, I18n.INSTANCE.get("textArea.backup.restoringBackup"), true);
+        ProgressBarHelper.initializeProgressBar(0, getBackupFiles().size() + TranslationManager.TRANSLATION_KEYS.length, I18n.INSTANCE.get("textArea.backup.restoringBackup"), true);
         try {
             LOGGER.info("Restoring backup.");
-            File fileGenresBackup;
-            File fileNpcGamesBackup;
-            File filePublisherBackup;
-            File fileGameplayFeaturesBackup;
-            File fileEngineFeaturesBackup;
-            File fileLicenceBackup;
-            if(initialBackup){
-                fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Genres.txt.initialBackup");
-                fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//NpcGames.txt.initialBackup");
-                filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Publisher.txt.initialBackup");
-                fileGameplayFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//GameplayFeatures.txt.initialBackup");
-                fileEngineFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//EngineFeatures.txt.initialBackup");
-                fileLicenceBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Licence.txt.initialBackup");
-            }else{
-                fileGenresBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Genres.txt");
-                fileNpcGamesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//NpcGames.txt");
-                filePublisherBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Publisher.txt");
-                fileGameplayFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//GameplayFeatures.txt");
-                fileEngineFeaturesBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//EngineFeatures.txt");
-                fileLicenceBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Licence.txt");
+            for(File file : getBackupFiles()){
+                File backupFile;
+                if(initialBackup){
+                    backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + file.getName() + ".initialBackup");
+                }else{
+                    backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//" + file.getName());
+                }
+                Files.copy(Paths.get(backupFile.getPath()), Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
             }
-            Files.copy(Paths.get(fileGenresBackup.getPath()), Paths.get(Utils.getGenreFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
-            Files.copy(Paths.get(fileNpcGamesBackup.getPath()), Paths.get(Utils.getNpcGamesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
-            Files.copy(Paths.get(filePublisherBackup.getPath()), Paths.get(Utils.getPublisherFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
-            Files.copy(Paths.get(fileGameplayFeaturesBackup.getPath()), Paths.get(Utils.getGameplayFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
-            Files.copy(Paths.get(fileEngineFeaturesBackup.getPath()), Paths.get(Utils.getEngineFeaturesFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
-            Files.copy(Paths.get(fileLicenceBackup.getPath()), Paths.get(Utils.getLicenceFile().getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
                 ImageFileHandler.removePublisherIcons();
@@ -266,14 +251,30 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createFullBackup() throws IOException {
-       Backup.createBackup(Utils.getGenreFile(), false, true);
-       Backup.createBackup(Utils.getNpcGamesFile(), false, true);
-       Backup.createBackup(Utils.getPublisherFile(), false, true);
-       Backup.createBackup(Utils.getGameplayFeaturesFile(), false, true);
-       Backup.createBackup(Utils.getEngineFeaturesFile(), false, true);
-       Backup.createBackup(Utils.getLicenceFile(), false, true);
-       backupSaveGames(false);
-       createThemeFilesBackup(false, true);
+        for(File file : getBackupFiles()){
+            Backup.createBackup(file, false, true);
+        }
+        backupSaveGames(false);
+        createThemeFilesBackup(false, true);
+    }
+
+    /**
+     * @return Returns a array list that contains all files that should be backed up
+     * Does not include save games
+     * Does not include themes
+     */
+    private static ArrayList<File> getBackupFiles(){
+        ArrayList<File> backupFiles = new ArrayList<>();
+        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+            backupFiles.add(advancedMod.getFile());
+        }
+        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+            if(!simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
+                backupFiles.add(simpleMod.getFile());
+            }
+        }
+        backupFiles.add(Utils.getNpcGamesFile());
+        return backupFiles;
     }
 
     /**
@@ -282,13 +283,9 @@ public class Backup {
      */
     public static String createInitialBackup(){
         try{
-            Backup.createBackup(Utils.getGenreFile(), true, false);
-            Backup.createBackup(Utils.getNpcGamesFile(), true, false);
-            Backup.createBackup(Utils.getThemesGeFile(), true, false);
-            Backup.createBackup(Utils.getPublisherFile(), true, false);
-            Backup.createBackup(Utils.getGameplayFeaturesFile(), true, false);
-            Backup.createBackup(Utils.getEngineFeaturesFile(), true, false);
-            Backup.createBackup(Utils.getLicenceFile(), true, false);
+            for(File file : getBackupFiles()){
+                Backup.createBackup(file, true, false);
+            }
             backupSaveGames(true);
             createThemeFilesBackup(true, false);
             return "";

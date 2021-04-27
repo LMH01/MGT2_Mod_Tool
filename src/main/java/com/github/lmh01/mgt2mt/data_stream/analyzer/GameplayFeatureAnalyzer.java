@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer{
 
     @Override
     public File getFileToAnalyze() {
-        return Utils.getGameplayFeaturesFile();
+        return ModManager.gameplayFeatureMod.getFile();
     }
 
     @Override

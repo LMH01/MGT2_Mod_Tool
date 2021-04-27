@@ -163,7 +163,7 @@ public class ThemeEditor extends AbstractSimpleEditor {
      */
     public void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
         ThemeFileAnalyzer.analyzeThemeFiles();
-        File fileTopicsGe = Utils.getThemesGeFile();
+        File fileTopicsGe = ModManager.themeMod.getFileGe();
         if(fileTopicsGe.exists()){
             fileTopicsGe.delete();
         }

@@ -31,7 +31,7 @@ public class GenreEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return Utils.getGenreFile();
+        return ModManager.genreMod.getFile();
     }
 
     @Override

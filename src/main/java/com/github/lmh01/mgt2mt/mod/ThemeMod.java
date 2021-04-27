@@ -12,7 +12,11 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
+
+import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
+import static com.github.lmh01.mgt2mt.util.Utils.getMGT2TextFolderPath;
 
 public class ThemeMod extends AbstractSimpleMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThemeMod.class);
@@ -160,5 +164,18 @@ public class ThemeMod extends AbstractSimpleMod {
     @Override
     public void removeModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableRemoveTheme, "runnableRemoveTheme");
+    }
+
+    @Override
+    public File getFile() {
+        return getFileGe();
+    }
+
+    public File getFileGe() {
+        return new File(getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
+    }
+
+    public File getFileEn() {
+        return new File(getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");
     }
 }

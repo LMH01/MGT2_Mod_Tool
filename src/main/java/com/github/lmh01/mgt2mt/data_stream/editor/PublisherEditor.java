@@ -70,7 +70,7 @@ public class PublisherEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return Utils.getPublisherFile();
+        return ModManager.publisherMod.getFile();
     }
 
     @Override

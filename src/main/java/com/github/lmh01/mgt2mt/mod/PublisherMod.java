@@ -15,7 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
+
+import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class PublisherMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherMod.class);
@@ -129,5 +132,10 @@ public class PublisherMod extends AbstractAdvancedMod {
     @Override
     public void removeModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableRemovePublisher, "runnableRemovePublisher");
+    }
+
+    @Override
+    public File getFile() {
+        return new File(getMGT2DataPath() + "//Publisher.txt");
     }
 }

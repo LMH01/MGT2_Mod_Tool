@@ -35,7 +35,7 @@ public class LicenceEditor extends AbstractSimpleEditor {
 
     @Override
     public File getFileToEdit() {
-        return Utils.getLicenceFile();
+        return ModManager.licenceMod.getFile();
     }
 
     @Override

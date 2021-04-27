@@ -66,42 +66,10 @@ public class Utils {
     /**
      * @return Returns the genre file inside the mgt2 folder.
      */
-    public static File getGenreFile(){
-        return new File(getMGT2DataPath() + "\\Genres.txt");
-    }
-
-    /**
-     * @return Returns the publisher.txt file.
-     */
-    public static File getPublisherFile(){
-        return new File(getMGT2DataPath() + "\\Publisher.txt");
-    }
-
-    /**
-     * @return Returns the genre file inside the mgt2 folder.
-     */
     public static File getNpcGamesFile(){
         return new File(getMGT2DataPath() + "\\NpcGames.txt");
     }
 
-    /**
-     * @return Returns the Themes_GE.txt file.
-     */
-    public static File getThemesGeFile(){return new File(getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");}
-
-    /**
-     * @return Returns the Themes_EN.txt file.
-     */
-    public static File getThemesEnFile(){return new File(getMGT2TextFolderPath() + "\\EN\\Themes_EN.txt");}
-
-    public static File getGameplayFeaturesFile(){return new File(getMGT2DataPath() + "//GameplayFeatures.txt");}
-
-    public static File getPlatformsFile(){return new File(getMGT2DataPath() + "Platforms.txt");}
-
-    /**
-     * @return Returns the EngineFeatures.txt file.
-     */
-    public static File getEngineFeaturesFile(){return new File(getMGT2DataPath() + "//EngineFeatures.txt");}
     /**
      * @param saveGameNumber The save game number
      * @return Returns the save game file for the input save game number
@@ -205,13 +173,6 @@ public class Utils {
      */
     public static File getThemeFile(String languageKey){
         return new File(Utils.getMGT2TextFolderPath() + "//" + languageKey + "//Themes_" + languageKey + ".txt");
-    }
-
-    /**
-     * @return Returns the Licence.txt file
-     */
-    public static File getLicenceFile(){
-        return new File(Utils.getMGT2DataPath() + "//Licence.txt");
     }
 
     /**
@@ -333,7 +294,7 @@ public class Utils {
      * @return Returns a String containing theme ids
      */
     public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemesGeFile()), StandardCharsets.UTF_16LE));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getFileGe()), StandardCharsets.UTF_16LE));
         boolean firstLine = true;
         int lineNumber = 1;
         StringBuilder compatibleThemes = new StringBuilder();

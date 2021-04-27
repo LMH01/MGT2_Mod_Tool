@@ -47,7 +47,7 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer{
 
     @Override
     public File getFileToAnalyze() {
-        return Utils.getGenreFile();
+        return ModManager.genreMod.getFile();
     }
 
     @Override
