@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
-
 /**
  * The simple analyzer is used to analyze files that use this system:
  * ValueX [Some data]
@@ -40,6 +39,10 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
         return getCustomContentString(false);
     }
 
+    /**
+     * @param disableTextAreaMessage True when the messages should not be written to the text area.
+     * @return Returns a array that contains all custom contents
+     */
     public String[] getCustomContentString(boolean disableTextAreaMessage){
         String[] contentByAlphabet = getContentByAlphabet();
         ArrayList<String> arrayListCustomContent = new ArrayList<>();
@@ -71,8 +74,20 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
         }
         String[] string = new String[arrayListCustomContent.size()];
         arrayListCustomContent.toArray(string);
+        setFinishedCustomContentString(string);
         return string;
     }
+
+    /**
+     * @return Returns the custom content string that has been computed previously
+     */
+    public abstract String[] getFinishedCustomContentString();
+
+    /**
+     * Sets the custom content string that should be returned when {@link AbstractSimpleAnalyzer#getFinishedCustomContentString()} is called.
+     * @param customContent
+     */
+    abstract void setFinishedCustomContentString(String[] customContent);
 
     /**
      * Replaces the input string and returns the replaced string

@@ -94,6 +94,10 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
         return getCustomContentString(false);
     }
 
+    /**
+     * @param disableTextAreaMessage True when the messages should not be written to the text area.
+     * @return Returns a array that contains all custom contents
+     */
     public String[] getCustomContentString(boolean disableTextAreaMessage){
         String[] contentByAlphabet = getContentByAlphabet();
         ArrayList<String> arrayListCustomContent = new ArrayList<>();
@@ -125,9 +129,20 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
         }
         String[] string = new String[arrayListCustomContent.size()];
         arrayListCustomContent.toArray(string);
+        setFinishedCustomContentString(string);
         return string;
     }
 
+    /**
+     * @return Returns the custom content string that has been computed previously
+     */
+    public abstract String[] getFinishedCustomContentString();
+
+    /**
+     * Sets the custom content string that should be returned when {@link AbstractAdvancedAnalyzer#getFinishedCustomContentString()} is called.
+     * @param customContent
+     */
+    abstract void setFinishedCustomContentString(String[] customContent);
     /**
      * @param id The id
      * @return Returns the specified content name by id.

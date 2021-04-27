@@ -660,12 +660,12 @@ public class SharingManager {
             StringBuilder failedExports = new StringBuilder();
             try{
                 for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
-                    failedExports.append(getExportFailed((string) -> advancedMod.getBaseSharer().exportMod(string, exportAsRestorePoint), advancedMod.getBaseAnalyzer().getCustomContentString(), advancedMod.getType()));
+                    failedExports.append(getExportFailed((string) -> advancedMod.getBaseSharer().exportMod(string, exportAsRestorePoint), advancedMod.getBaseAnalyzer().getFinishedCustomContentString(), advancedMod.getType()));
                 }
 
                 for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
                     if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                        failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), simpleMod.getType()));
+                        failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), ModManager.themeMod.getAnalyzerEn().getFinishedCustomContentString(), simpleMod.getType()));
                     }else{
                         failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), simpleMod.getBaseAnalyzer().getCustomContentString(), simpleMod.getType()));
                     }

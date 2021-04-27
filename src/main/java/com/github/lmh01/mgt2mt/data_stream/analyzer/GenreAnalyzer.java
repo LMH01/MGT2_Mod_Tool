@@ -17,6 +17,7 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer{
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreAnalyzer.class);
     List<Map<String, String>> fileContent;
     String[] defaultContent = {};
+    String[] customContent = {};
     int maxId = 0;
 
     @Override
@@ -70,6 +71,16 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer{
             }
         }
         return defaultContent;
+    }
+
+    @Override
+    public String[] getFinishedCustomContentString() {
+        return customContent;
+    }
+
+    @Override
+    void setFinishedCustomContentString(String[] customContent) {
+        this.customContent = customContent;
     }
 
     public String getContentNameById(int id, boolean changeableLanguage) {

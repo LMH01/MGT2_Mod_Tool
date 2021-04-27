@@ -14,6 +14,7 @@ public class ThemeFileEnAnalyzer extends AbstractSimpleAnalyzer{
     private static final Logger LOGGER = LoggerFactory.getLogger(ThemeFileEnAnalyzer.class);
     Map<Integer, String> fileContent;
     String[] defaultContent = {};
+    String[] customContent = {};
 
     @Override
     public Map<Integer, String> getFileContent() {
@@ -56,5 +57,15 @@ public class ThemeFileEnAnalyzer extends AbstractSimpleAnalyzer{
             }
         }
         return defaultContent;
+    }
+
+    @Override
+    public String[] getFinishedCustomContentString() {
+        return customContent;
+    }
+
+    @Override
+    void setFinishedCustomContentString(String[] customContent) {
+        this.customContent = customContent;
     }
 }

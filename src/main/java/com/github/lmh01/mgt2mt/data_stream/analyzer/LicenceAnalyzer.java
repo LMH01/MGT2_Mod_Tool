@@ -17,6 +17,7 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceAnalyzer.class);
     Map<Integer, String> fileContent;
     String[] defaultContent = {};
+    String[] customContent = {};
 
     @Override
     public Map<Integer, String> getFileContent() {
@@ -113,5 +114,15 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
             }
         }
         return "";
+    }
+
+    @Override
+    public String[] getFinishedCustomContentString() {
+        return customContent;
+    }
+
+    @Override
+    void setFinishedCustomContentString(String[] customContent) {
+        this.customContent = customContent;
     }
 }

@@ -15,6 +15,7 @@ public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureAnalyzer.class);
     List<Map<String, String>> fileContent;
     String[] defaultContent = {};
+    String[] customContent = {};
     int maxId = 0;
 
     @Override
@@ -68,5 +69,15 @@ public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     @Override
     public void setMaxId(int id) {
         maxId = id;
+    }
+
+    @Override
+    public String[] getFinishedCustomContentString() {
+        return customContent;
+    }
+
+    @Override
+    void setFinishedCustomContentString(String[] customContent) {
+        this.customContent = customContent;
     }
 }
