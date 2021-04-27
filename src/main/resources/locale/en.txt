@@ -221,12 +221,6 @@ dialog.sharingManager.importAll.checkBox.saveOption|<html>If activated, your rep
 dialog.sharingManager.importAll.addIfCompatible.alreadyFound.firstPart|This mod has already been found:
 dialog.sharingManager.importAll.addIfCompatible.alreadyFound.secondPart|Do you want to add this mod to the import list anyway?
 dialog.sharingManager.importAll.addIfCompatible.alreadyFound.title|Import already on the list
-dialog.sharingManager.importAll.guiComponents.label1|Engine features:
-dialog.sharingManager.importAll.guiComponents.label2|Gameplay features:
-dialog.sharingManager.importAll.guiComponents.label3|Genres:
-dialog.sharingManager.importAll.guiComponents.label4|Publishers:
-dialog.sharingManager.importAll.guiComponents.label5|Themes:
-dialog.sharingManager.importAll.guiComponents.label6|Licences:
 dialog.sharingManager.importAll.guiComponents.checkBox.disableImportPopups|Disable popups
 dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups|Disable already exists popups
 dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip|<html>Check to disable popups that something already exists
@@ -245,12 +239,6 @@ dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2|<html>Impor
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1|Restoration complete
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2|Import complete
 dialog.sharingManager.importAll.importReady.message.title|Import ready
-dialog.sharingManager.importAll.importName1|engine feature
-dialog.sharingManager.importAll.importName2|gameplay feature
-dialog.sharingManager.importAll.importName3|genre
-dialog.sharingManager.importAll.importName4|publisher
-dialog.sharingManager.importAll.importName5|theme
-dialog.sharingManager.importAll.importName6|licence
 dialog.sharingManager.importAll.error.noImportAvailable.var1|<html>Unable to restore to restore point:<br>The restore point files do not exist.
 dialog.sharingManager.importAll.error.noImportAvailable.var2|The folder(s) and it's subfolders do not contain things that could be imported.
 dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var1|<html>Unable to restore to restore point:<br>The restore point files do not exist and/or are not compatible with the current mod tool version.

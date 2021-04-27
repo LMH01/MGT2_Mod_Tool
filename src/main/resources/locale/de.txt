@@ -199,12 +199,6 @@ dialog.sharingManager.importAll.checkBox.saveOption|<html>Wenn aktiviert, wird d
 dialog.sharingManager.importAll.addIfCompatible.alreadyFound.firstPart|Dieser mod wurde schon gefunden:
 dialog.sharingManager.importAll.addIfCompatible.alreadyFound.secondPart|Möchtest du ihn trotzdem zur Importliste hinzufügen?
 dialog.sharingManager.importAll.addIfCompatible.alreadyFound.title|Import bereits auf Liste
-dialog.sharingManager.importAll.guiComponents.label1|Engine Features:
-dialog.sharingManager.importAll.guiComponents.label2|Gameplay Features:
-dialog.sharingManager.importAll.guiComponents.label3|Genres:
-dialog.sharingManager.importAll.guiComponents.label4|Publisher:
-dialog.sharingManager.importAll.guiComponents.label5|Themen:
-dialog.sharingManager.importAll.guiComponents.label6|Lizenzen:
 dialog.sharingManager.importAll.guiComponents.checkBox.disableImportPopups|Popups deaktivieren
 dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups|Popups deaktivieren, die zeigen, dass etwas bereits exisitert
 dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip|<html>Aktiviere diese Option, um Popups zu deaktivieren, die sagen, dass etwas bereits vorhanden ist
@@ -223,12 +217,6 @@ dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2|<html>Impor
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1|Wiederherstellung abgeschlossen
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2|Import abgeschlossen
 dialog.sharingManager.importAll.importReady.message.title|Import bereit
-dialog.sharingManager.importAll.importName1|Engine Feature
-dialog.sharingManager.importAll.importName2|Gameplay Feature
-dialog.sharingManager.importAll.importName3|Genre
-dialog.sharingManager.importAll.importName4|Publisher
-dialog.sharingManager.importAll.importName5|Thema
-dialog.sharingManager.importAll.importName6|Lizenz
 dialog.sharingManager.importAll.error.noImportAvailable.var1|<html>Wiederherstellung auf Wiederherstellungspunkt nicht möglich:<br>Die Wiederherstellungspunktdateien sind nicht vorhanden.
 dialog.sharingManager.importAll.error.noImportAvailable.var2|Die Ordner und ihre Unterordner enthalten keine Dinge, die importiert werden könnten.
 dialog.sharingManager.importAll.error.noImportAvailableButIncompatibleModsFound.var1|<html>Wiederherstellung auf Wiederherstellungspunkt nicht möglich:<br>Die Wiederherstellungspunktdateien sind nicht vorhanden und / oder nicht mit der aktuellen Mod-Tool-Version kompatibel.
