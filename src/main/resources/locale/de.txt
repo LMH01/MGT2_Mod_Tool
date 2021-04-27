@@ -254,6 +254,7 @@ dialog.sharingManager.couldNotBeImported|konnte nicht importiert werden
 dialog.sharingManager.couldNotBeImported.2|ist nicht mit der aktuellen Mod-Tool Version kompatiebel
 dialog.sharingManager.couldNotBeImported.3|wurde dieser Version exportiert:
 dialog.sharingManager.nameTaken|Name ist schon vergeben
+dialog.sharingManager.exportAll.mainMessage|Die folgenden Einträge werden exportiert:
 
 dialog.updateChecker.noUpdateAvailable|<html>Du benutzt die neueste Version. Kein Update verfügbar.
 dialog.updateChecker.noUpdateAvailable.title|Kein Update verfügbar

@@ -2,6 +2,8 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.sharer.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -635,36 +637,39 @@ public class SharingManager {
      * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
      */
     public static void exportAll(boolean exportAsRestorePoint){
-        String[] customEngineFeatures = ModManager.engineFeatureMod.getAnalyzer().getCustomContentString();
-        String[] customGameplayFeatures = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
-        String[] customGenres = ModManager.genreMod.getAnalyzer().getCustomContentString();
-        String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
-        String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
-        String[] customLicences = ModManager.licenceMod.getAnalyzer().getCustomContentString();
         StringBuilder exportList = new StringBuilder();
-        exportList.append(getExportListPart(customEngineFeatures, "Engine features"));
-        exportList.append(getExportListPart(customGameplayFeatures, "Gameplay features"));
-        exportList.append(getExportListPart(customGenres, "Genres"));
-        exportList.append(getExportListPart(customPublishers, "Publishers"));
-        exportList.append(getExportListPart(customThemes, "Themes"));
-        exportList.append(getExportListPart(customLicences, "Licences"));
+        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+            exportList.append(getExportListPart(advancedMod.getBaseAnalyzer().getCustomContentString(), advancedMod.getType()));
+        }
+        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+            if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
+                exportList.append(getExportListPart(ModManager.themeMod.getAnalyzerEn().getCustomContentString(), simpleMod.getType()));
+            }else{
+                exportList.append(getExportListPart(simpleMod.getBaseAnalyzer().getCustomContentString(), simpleMod.getType()));
+            }
+        }
         boolean exportFiles = false;
         if(exportAsRestorePoint){
             exportFiles = true;
         }else{
-            if(JOptionPane.showConfirmDialog(null, "The following entries will be exported:\n\n" + exportList.toString(), "Export", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage") + "\n\n" + exportList.toString(), I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                 exportFiles = true;
             }
         }
         if(exportFiles){
             StringBuilder failedExports = new StringBuilder();
             try{
-                failedExports.append(getExportFailed((string) -> ModManager.engineFeatureMod.getSharer().exportMod(string, exportAsRestorePoint), customEngineFeatures, I18n.INSTANCE.get("window.main.mods.engineFeatures")));
-                failedExports.append(getExportFailed((string) -> ModManager.gameplayFeatureMod.getSharer().exportMod(string, exportAsRestorePoint), customGameplayFeatures, I18n.INSTANCE.get("window.main.mods.gameplayFeatures")));
-                failedExports.append(getExportFailed((string) -> ModManager.genreMod.getSharer().exportMod(string, exportAsRestorePoint), customGenres, I18n.INSTANCE.get("window.main.mods.genres")));
-                failedExports.append(getExportFailed((string) -> ModManager.publisherMod.getSharer().exportMod(string, exportAsRestorePoint), customPublishers, I18n.INSTANCE.get("window.main.mods.publisher")));
-                failedExports.append(getExportFailed((string) -> ModManager.themeMod.getSharer().exportMod(string, exportAsRestorePoint), customThemes, I18n.INSTANCE.get("window.main.mods.themes")));
-                failedExports.append(getExportFailed((string) -> ModManager.licenceMod.getSharer().exportMod(string, exportAsRestorePoint), customLicences, I18n.INSTANCE.get("window.main.mods.licences")));
+                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                    failedExports.append(getExportFailed((string) -> advancedMod.getBaseSharer().exportMod(string, exportAsRestorePoint), advancedMod.getBaseAnalyzer().getCustomContentString(), advancedMod.getType()));
+                }
+
+                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                    if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
+                        failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), simpleMod.getType()));
+                    }else{
+                        failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), simpleMod.getBaseAnalyzer().getCustomContentString(), simpleMod.getType()));
+                    }
+                }
                 if(failedExports.toString().isEmpty()){
                     if(exportAsRestorePoint){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
