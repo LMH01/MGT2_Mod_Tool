@@ -215,7 +215,7 @@ public class GenreSharer extends AbstractAdvancedSharer{
 
     @Override
     public String getFileName() {
-        return "genre.txt";
+        return ModManager.genreMod.getFileName();
     }
 
     @Override

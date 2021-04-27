@@ -154,7 +154,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
 
     @Override
     public String getFileName() {
-        return "publisher.txt";
+        return ModManager.publisherMod.getFileName();
     }
 
     @Override

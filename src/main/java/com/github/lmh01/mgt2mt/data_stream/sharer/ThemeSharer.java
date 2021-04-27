@@ -155,7 +155,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
 
     @Override
     public String getFileName() {
-        return "theme.txt";
+        return ModManager.themeMod.getFileName();
     }
 
     @Override

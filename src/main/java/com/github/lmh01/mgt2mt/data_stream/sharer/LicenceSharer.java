@@ -33,7 +33,7 @@ public class LicenceSharer extends AbstractSimpleSharer{
 
     @Override
     public String getFileName() {
-        return "licence.txt";
+        return ModManager.licenceMod.getFileName();
     }
 
     @Override

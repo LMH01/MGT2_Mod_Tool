@@ -117,6 +117,11 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getFileName() {
+        return "publisher.txt";
+    }
+
+    @Override
     public void addModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableAddNewPublisher, "runnableAddNewPublisher");
     }

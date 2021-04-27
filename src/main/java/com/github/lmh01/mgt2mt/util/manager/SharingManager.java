@@ -2,9 +2,7 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.sharer.*;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Uninstaller;
@@ -27,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -235,18 +234,16 @@ public class SharingManager {
             directories = new ArrayList<>();
             directories.add(new File(folderPath));
         }
-        ArrayList<File> engineFeatures = new ArrayList<>();
-        ArrayList<File> gameplayFeatures = new ArrayList<>();
-        ArrayList<File> genres = new ArrayList<>();
-        ArrayList<File> publisher = new ArrayList<>();
-        ArrayList<File> themes = new ArrayList<>();
-        ArrayList<File> licences = new ArrayList<>();
-        ArrayList<String> engineFeatureNames = new ArrayList<>();
-        ArrayList<String> gameplayFeatureNames = new ArrayList<>();
-        ArrayList<String> genreNames = new ArrayList<>();
-        ArrayList<String> publisherNames = new ArrayList<>();
-        ArrayList<String> themeNames = new ArrayList<>();
-        ArrayList<String> licenceNames = new ArrayList<>();
+        Map<AbstractBaseMod, ArrayList<File>> importModFiles = new HashMap<>();
+        Map<AbstractBaseMod, ArrayList<String>> importModNames = new HashMap<>();
+        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+            importModFiles.put(advancedMod, new ArrayList<>());
+            importModNames.put(advancedMod, new ArrayList<>());
+        }
+        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+            importModFiles.put(simpleMod, new ArrayList<>());
+            importModNames.put(simpleMod, new ArrayList<>());
+        }
         AtomicBoolean someThingsNotCompatible = new AtomicBoolean(false);
         AtomicInteger currentZipArchiveNumber = new AtomicInteger();
         boolean errorWhileScanning = false;
@@ -299,19 +296,17 @@ public class SharingManager {
                                         }else{
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
                                         }
-                                        if(string.contains("engineFeature.txt")){
-                                            addIfCompatible(string, engineFeatures, engineFeatureNames, ModManager.engineFeatureMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                        }else if(string.contains("gameplayFeature.txt")){
-                                            addIfCompatible(string, gameplayFeatures, gameplayFeatureNames, ModManager.gameplayFeatureMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                        }else if(string.contains("genre.txt")){
-                                            addIfCompatible(string, genres, genreNames, ModManager.genreMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                        }else if(string.contains("publisher.txt")){
-                                            addIfCompatible(string, publisher, publisherNames, ModManager.publisherMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                        }else if(string.contains("theme.txt")){
-                                            addIfCompatible(string, themes, themeNames, ModManager.themeMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                        }else if(string.contains("licence.txt")){
-                                            addIfCompatible(string, licences, licenceNames, ModManager.licenceMod.getSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
-                                        }else if(string.endsWith(".zip")){
+                                        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                                            if(string.contains(advancedMod.getFileName())){
+                                                addIfCompatible(string, importModFiles.get(advancedMod), importModNames.get(advancedMod), advancedMod.getBaseSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            }
+                                        }
+                                        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                                            if(string.contains(simpleMod.getFileName())){
+                                                addIfCompatible(string, importModFiles.get(simpleMod), importModNames.get(simpleMod), simpleMod.getBaseSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
+                                            }
+                                        }
+                                        if(string.endsWith(".zip")){
                                             boolean unzipFile = false;
                                             if(!checkBoxPreventZipMessage.isSelected()){
                                                 JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + "<br><br>" + string + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.secondPart"));
@@ -365,48 +360,33 @@ public class SharingManager {
                 if(!errorWhileScanning){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.firstPart") + " " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.secondPart") + " " + Utils.convertSecondsToTime(ProgressBarHelper.getProgressBarTimer()) + "; " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.thirdPart"));
                     ProgressBarHelper.resetProgressBar();
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.engineFeatures") + " " + engineFeatures.size());
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.gameplayFeatures") + " " + gameplayFeatures.size());
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.genres") + " " + genres.size());
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.publisher") + " " + publisher.size());
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.themes") + " " + themes.size());
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("window.main.mods.licences") + " " + licences.size());
-                    JPanel panelEngineFeatures = new JPanel();
-                    JPanel panelGameplayFeatures = new JPanel();
-                    JPanel panelGenres = new JPanel();
-                    JPanel panelPublishers = new JPanel();
-                    JPanel panelThemes = new JPanel();
-                    JPanel panelLicences = new JPanel();
-                    AtomicReference<ArrayList<Integer>> selectedEntriesEngineFeatures = new AtomicReference<>(new ArrayList<>());
-                    AtomicReference<ArrayList<Integer>> selectedEntriesGameplayFeatures = new AtomicReference<>(new ArrayList<>());
-                    AtomicReference<ArrayList<Integer>> selectedEntriesGenres = new AtomicReference<>(new ArrayList<>());
-                    AtomicReference<ArrayList<Integer>> selectedEntriesPublishers = new AtomicReference<>(new ArrayList<>());
-                    AtomicReference<ArrayList<Integer>> selectedEntriesThemes = new AtomicReference<>(new ArrayList<>());
-                    AtomicReference<ArrayList<Integer>> selectedEntriesLicences = new AtomicReference<>(new ArrayList<>());
-                    AtomicBoolean disableEngineFeatureImport = new AtomicBoolean(true);
-                    AtomicBoolean disableGameplayFeatureImport = new AtomicBoolean(true);
-                    AtomicBoolean disableGenreImport = new AtomicBoolean(true);
-                    AtomicBoolean disablePublisherImport = new AtomicBoolean(true);
-                    AtomicBoolean disableThemeImport = new AtomicBoolean(true);
-                    AtomicBoolean disableLicenceImport = new AtomicBoolean(true);
-                    if(!engineFeatures.isEmpty() || !gameplayFeatures.isEmpty() || !genres.isEmpty() || !publisher.isEmpty() || !themes.isEmpty() || !licences.isEmpty()) {
-                        if(!engineFeatures.isEmpty()){
-                            setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label1"),engineFeatures, panelEngineFeatures, selectedEntriesEngineFeatures, disableEngineFeatureImport);
+                    Map<AbstractBaseMod, JPanel> importModPanels = new HashMap<>();
+                    Map<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> selectedMods = new HashMap<>();
+                    Map<AbstractBaseMod, AtomicBoolean> disableMods = new HashMap<>();
+                    for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                        TextAreaHelper.appendText(advancedMod.getType() + importModFiles.get(advancedMod).size());
+                        importModPanels.put(advancedMod, new JPanel());
+                        selectedMods.put(advancedMod, new AtomicReference<>(new ArrayList<>()));
+                        disableMods.put(advancedMod, new AtomicBoolean(true));
+                    }
+                    for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                        TextAreaHelper.appendText(simpleMod.getType() + importModFiles.get(simpleMod).size());
+                        importModPanels.put(simpleMod, new JPanel());
+                        selectedMods.put(simpleMod, new AtomicReference<>(new ArrayList<>()));
+                        disableMods.put(simpleMod, new AtomicBoolean(true));
+                    }
+                    int importModFilesListsFilled = 0;
+                    for(Map.Entry<AbstractBaseMod, ArrayList<File>> entry : importModFiles.entrySet()){
+                        if(!entry.getValue().isEmpty()){
+                            importModFilesListsFilled++;
                         }
-                        if(!gameplayFeatures.isEmpty()){
-                            setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label2"),gameplayFeatures, panelGameplayFeatures, selectedEntriesGameplayFeatures, disableGameplayFeatureImport);
+                    }
+                    if(importModFilesListsFilled != 0) {
+                        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                            setFeatureAvailableGuiComponents(advancedMod.getType(),importModFiles.get(advancedMod), importModPanels.get(advancedMod), selectedMods.get(advancedMod), disableMods.get(advancedMod));
                         }
-                        if(!genres.isEmpty()){
-                            setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label3"), genres, panelGenres, selectedEntriesGenres, disableGenreImport);
-                        }
-                        if(!publisher.isEmpty()){
-                            setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label4"), publisher, panelPublishers, selectedEntriesPublishers, disablePublisherImport);
-                        }
-                        if(!themes.isEmpty()){
-                            setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label5"), themes, panelThemes, selectedEntriesThemes, disableThemeImport);
-                        }
-                        if(!licences.isEmpty()){
-                            setFeatureAvailableGuiComponents(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.label6"), licences, panelLicences, selectedEntriesLicences, disableLicenceImport);
+                        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                            setFeatureAvailableGuiComponents(simpleMod.getType(),importModFiles.get(simpleMod), importModPanels.get(simpleMod), selectedMods.get(simpleMod), disableMods.get(simpleMod));
                         }
                         String labelStartText;
                         String labelEndText;
@@ -440,11 +420,16 @@ public class SharingManager {
                         checkBoxDisableAlreadyExistPopups.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip"));
                         checkBoxDisableAlreadyExistPopups.setSelected(true);
                         Object[] params;
+                        checkBoxDisableImportPopups.setSelected(true);
+                        ArrayList<JPanel> panels = new ArrayList<>();
+                        for(Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()){
+                            panels.add(entry.getValue());
+                        }
+                        Object[] modPanels = panels.toArray(new Object[panels.size()]);
                         if(importFromRestorePoint){
-                            checkBoxDisableImportPopups.setSelected(true);
-                            params = new Object[]{labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups};
+                            params = new Object[]{labelStart, modPanels, labelEnd, checkBoxDisableImportPopups};
                         }else{
-                            params = new Object[]{labelStart, panelEngineFeatures, panelGameplayFeatures, panelGenres, panelPublishers, panelThemes, panelLicences, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
+                            params = new Object[]{labelStart, modPanels, labelEnd, checkBoxDisableImportPopups, checkBoxDisableAlreadyExistPopups};
                         }
                         LOGGER.info("Showing dialog where the user can select what should be imported");
                         if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -461,30 +446,18 @@ public class SharingManager {
                             boolean showMessageDialogs = checkBoxDisableImportPopups.isSelected();
                             AtomicBoolean showAlreadyExistPopups = new AtomicBoolean(checkBoxDisableAlreadyExistPopups.isSelected());
                             boolean errorOccurred = false;
-                            ProgressBarHelper.initializeProgressBar(0, getNumberOfModsToImport(selectedEntriesEngineFeatures, selectedEntriesGameplayFeatures, selectedEntriesGenres, selectedEntriesLicences, selectedEntriesPublishers, selectedEntriesThemes, engineFeatures, gameplayFeatures, genres, licences, publisher, themes), I18n.INSTANCE.get("progressBar.importingMods"));
-                            if(!importAllFiles(engineFeatures, selectedEntriesEngineFeatures.get(), disableEngineFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName1"), (string) -> ModManager.engineFeatureMod.getSharer().importMod(string, !showMessageDialogs), ModManager.engineFeatureMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                LOGGER.info("Error occurred wile importing engine features");
-                                errorOccurred = true;
+                            ProgressBarHelper.initializeProgressBar(0, getNumberOfModsToImport(selectedMods, importModFiles), I18n.INSTANCE.get("progressBar.importingMods"));
+                            for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                                if(!importAllFiles(importModFiles.get(advancedMod), selectedMods.get(advancedMod).get(), disableMods.get(advancedMod).get(), I18n.INSTANCE.get("commonText." + advancedMod.getMainTranslationKey()), (string) -> advancedMod.getBaseSharer().importMod(string, !showMessageDialogs), advancedMod.getBaseSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                                    LOGGER.info("Error occurred wile importing " + advancedMod.getType());
+                                    errorOccurred = true;
+                                }
                             }
-                            if(!importAllFiles(gameplayFeatures, selectedEntriesGameplayFeatures.get(), disableGameplayFeatureImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName2"), (string) -> ModManager.gameplayFeatureMod.getSharer().importMod(string, !showMessageDialogs), ModManager.gameplayFeatureMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                LOGGER.info("Error occurred wile importing gameplay features");
-                                errorOccurred = true;
-                            }
-                            if(!importAllFiles(genres, selectedEntriesGenres.get(), disableGenreImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName3"), (string) -> ModManager.genreMod.getSharer().importMod(string, !showMessageDialogs), ModManager.genreMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                LOGGER.info("Error occurred wile importing genres");
-                                errorOccurred = true;
-                            }
-                            if(!importAllFiles(publisher, selectedEntriesPublishers.get(), disablePublisherImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName4"), (string) -> ModManager.publisherMod.getSharer().importMod(string, !showMessageDialogs), ModManager.publisherMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                LOGGER.info("Error occurred wile importing publishers");
-                                errorOccurred = true;
-                            }
-                            if(!importAllFiles(themes, selectedEntriesThemes.get(), disableThemeImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName5"), (string) -> ModManager.themeMod.getSharer().importMod(string, !showMessageDialogs), ModManager.themeMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                LOGGER.info("Error occurred wile importing themes");
-                                errorOccurred = true;
-                            }
-                            if(!importAllFiles(licences, selectedEntriesLicences.get(), disableLicenceImport.get(), I18n.INSTANCE.get("dialog.sharingManager.importAll.importName6"), (string) -> ModManager.licenceMod.getSharer().importMod(string, !showMessageDialogs), ModManager.licenceMod.getSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                LOGGER.info("Error occurred wile importing licences");
-                                errorOccurred = true;
+                            for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                                if(!importAllFiles(importModFiles.get(simpleMod), selectedMods.get(simpleMod).get(), disableMods.get(simpleMod).get(), I18n.INSTANCE.get("commonText." + simpleMod.getMainTranslationKey()), (string) -> simpleMod.getBaseSharer().importMod(string, !showMessageDialogs), simpleMod.getBaseSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
+                                    LOGGER.info("Error occurred wile importing " + simpleMod.getType());
+                                    errorOccurred = true;
+                                }
                             }
                             if(errorOccurred){
                                 TextAreaHelper.appendText(importErredMessage.replace("<html>", "").replace("<br>", "\n"));
@@ -862,48 +835,14 @@ public class SharingManager {
         }
     }
 
-    private static int getNumberOfModsToImport(AtomicReference<ArrayList<Integer>> selectedEntriesEngineFeatures,
-                                               AtomicReference<ArrayList<Integer>> selectedEntriesGameplayFeatures,
-                                               AtomicReference<ArrayList<Integer>> selectedEntriesGenres,
-                                               AtomicReference<ArrayList<Integer>> selectedEntriesLicences,
-                                               AtomicReference<ArrayList<Integer>> selectedEntriesPublishers,
-                                               AtomicReference<ArrayList<Integer>> selectedEntriesThemes,
-                                               ArrayList<File> engineFeatures,
-                                               ArrayList<File> gameplayFeatures,
-                                               ArrayList<File> genres,
-                                               ArrayList<File> licences,
-                                               ArrayList<File> publisher,
-                                               ArrayList<File> themes){
+    private static int getNumberOfModsToImport(Map<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> selectedMods, Map<AbstractBaseMod, ArrayList<File>> importModFiles){
         int maxValue = 0;
-        if(selectedEntriesEngineFeatures.get().size() > 0){
-            maxValue = maxValue + selectedEntriesEngineFeatures.get().size();
-        }else{
-            maxValue = maxValue + engineFeatures.size();
-        }
-        if(selectedEntriesGameplayFeatures.get().size() > 0){
-            maxValue = maxValue + selectedEntriesGameplayFeatures.get().size();
-        }else{
-            maxValue = maxValue + gameplayFeatures.size();
-        }
-        if(selectedEntriesGenres.get().size() > 0){
-            maxValue = maxValue + selectedEntriesGenres.get().size();
-        }else{
-            maxValue = maxValue + genres.size();
-        }
-        if(selectedEntriesLicences.get().size() > 0){
-            maxValue = maxValue + selectedEntriesLicences.get().size();
-        }else{
-            maxValue = maxValue + licences.size();
-        }
-        if(selectedEntriesPublishers.get().size() > 0){
-            maxValue = maxValue + selectedEntriesPublishers.get().size();
-        }else{
-            maxValue = maxValue + publisher.size();
-        }
-        if(selectedEntriesThemes.get().size() > 0){
-            maxValue = maxValue + selectedEntriesThemes.get().size();
-        }else{
-            maxValue = maxValue + themes.size();
+        for(Map.Entry<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> entry : selectedMods.entrySet()){
+            if(entry.getValue().get().size() > 0){
+                maxValue = maxValue + entry.getValue().get().size();
+            }else{
+                maxValue = maxValue + importModFiles.get(entry.getKey()).size();
+            }
         }
         return maxValue;
     }

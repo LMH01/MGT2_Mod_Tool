@@ -117,6 +117,11 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getFileName() {
+        return "gameplayFeature.txt";
+    }
+
+    @Override
     public String getTypePlural() {
         return I18n.INSTANCE.get("commonText.gameplayFeature.upperCase.plural");
     }

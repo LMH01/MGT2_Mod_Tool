@@ -117,6 +117,11 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
+    public String getFileName() {
+        return "licence.txt";
+    }
+
+    @Override
     public void addModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableAddNewLicence, "runnableAddNewLicence");
     }

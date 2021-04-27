@@ -101,6 +101,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getFileName() {
+        return "engineFeature.txt";
+    }
+
+    @Override
     public String getType() {
         return I18n.INSTANCE.get("commonText.engineFeature.upperCase");
     }

@@ -125,6 +125,11 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
+    public String getFileName() {
+        return "theme.txt";
+    }
+
+    @Override
     public void setMainMenuButtonAvailability() {
         String[] customContentString = getAnalyzerEn().getCustomContentString(true);
         for(JMenuItem menuItem : getModMenuItems()){

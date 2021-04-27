@@ -132,6 +132,11 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getFileName() {
+        return "genre.txt";
+    }
+
+    @Override
     public void addModMenuItemAction() {
         ThreadHandler.startThread(ThreadHandler.runnableAddNewGenre, "runnableAddNewGenre");
     }

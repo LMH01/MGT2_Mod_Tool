@@ -76,7 +76,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
 
     @Override
     public String getFileName() {
-        return "engineFeature.txt";
+        return ModManager.engineFeatureMod.getFileName();
     }
 
     @Override

@@ -133,7 +133,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
 
     @Override
     public String getFileName() {
-        return "gameplayFeature.txt";
+        return ModManager.gameplayFeatureMod.getFileName();
     }
 
     @Override
