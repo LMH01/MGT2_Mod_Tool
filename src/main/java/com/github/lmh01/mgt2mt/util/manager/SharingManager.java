@@ -612,13 +612,13 @@ public class SharingManager {
     public static void exportAll(boolean exportAsRestorePoint){
         StringBuilder exportList = new StringBuilder();
         for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
-            exportList.append(getExportListPart(advancedMod.getBaseAnalyzer().getCustomContentString(), advancedMod.getType()));
+            exportList.append(getExportListPart(advancedMod.getBaseAnalyzer().getCustomContentString(true), advancedMod.getType()));
         }
         for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
             if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                exportList.append(getExportListPart(ModManager.themeMod.getAnalyzerEn().getCustomContentString(), simpleMod.getType()));
+                exportList.append(getExportListPart(ModManager.themeMod.getAnalyzerEn().getCustomContentString(true), simpleMod.getType()));
             }else{
-                exportList.append(getExportListPart(simpleMod.getBaseAnalyzer().getCustomContentString(), simpleMod.getType()));
+                exportList.append(getExportListPart(simpleMod.getBaseAnalyzer().getCustomContentString(true), simpleMod.getType()));
             }
         }
         boolean exportFiles = false;

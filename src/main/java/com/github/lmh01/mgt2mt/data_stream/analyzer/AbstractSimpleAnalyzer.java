@@ -36,7 +36,7 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
     }
 
     public String[] getCustomContentString(){
-        return getCustomContentString(false);
+        return getCustomContentString(true);
     }
 
     /**

@@ -11,7 +11,7 @@ public class ActiveMods {
         stringBuilder.append(I18n.INSTANCE.get("window.showActiveMods.message.firstPart")).append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
         boolean noModsActive = true;
         for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
-            String[] customContent = advancedMod.getBaseAnalyzer().getCustomContentString();
+            String[] customContent = advancedMod.getBaseAnalyzer().getCustomContentString(true);
             if(customContent.length > 0){
                 stringBuilder.append(advancedMod.getTypePlural()).append(": ");
                 Utils.appendStringArrayToStringBuilder(stringBuilder, customContent, 10);
@@ -21,9 +21,9 @@ public class ActiveMods {
         for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
             String[] customContent;
             if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                customContent = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
+                customContent = ModManager.themeMod.getAnalyzerEn().getCustomContentString(true);
             }else {
-                customContent = simpleMod.getBaseAnalyzer().getCustomContentString();
+                customContent = simpleMod.getBaseAnalyzer().getCustomContentString(true);
             }
             if(customContent.length > 0){
                 stringBuilder.append(simpleMod.getTypePlural()).append(": ");

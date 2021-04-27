@@ -91,7 +91,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     }
 
     public String[] getCustomContentString(){
-        return getCustomContentString(false);
+        return getCustomContentString(true);
     }
 
     /**
