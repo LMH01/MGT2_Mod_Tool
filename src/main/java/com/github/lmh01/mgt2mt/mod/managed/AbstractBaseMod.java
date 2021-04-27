@@ -1,19 +1,33 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.github.lmh01.mgt2mt.util.I18n;
+import javax.swing.*;
+import java.util.ArrayList;
 
-public abstract class AbstractBaseMod implements BaseMod, BaseFunctions {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBaseMod.class);
-    /**
-     * Initializes the mod and adds it to the mod array list
-     */
+public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
+
     @Override
-    public void initializeMod() {
-        LOGGER.info("Initializing mod: " + getType());
-        ModManager.mods.add(getMod());
+    public ArrayList<JMenuItem> getInitialModMenuItems() {
+        ArrayList<JMenuItem> menuItems = new ArrayList<>();
+        JMenuItem addModItem = new JMenuItem(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.addMod"));
+        addModItem.addActionListener(actionEvent -> addModMenuItemAction());
+        JMenuItem removeModItem = new JMenuItem(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod"));
+        removeModItem.addActionListener(actionEvent -> removeModMenuItemAction());
+        menuItems.add(addModItem);
+        menuItems.add(removeModItem);
+        return menuItems;
     }
 
-    protected abstract AbstractBaseMod getMod();
+    public abstract ArrayList<JMenuItem> getModMenuItems();
+
+    /**
+     * This function is called when the button add mod is clicked in the main menu
+     */
+    public abstract void addModMenuItemAction();
+
+    /**
+     * This function is called when the button remove mod is clicked in the main menu
+     */
+    public abstract void removeModMenuItemAction();
 }

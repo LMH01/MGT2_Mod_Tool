@@ -6,16 +6,22 @@ commonBodies.exception|Exception:
 
 commonText.genre|genre
 commonText.genre.upperCase|Genre
+commonText.genre.upperCase.plural|Genres
 commonText.licence|licence
 commonText.licence.upperCase|Licence
+commonText.licence.upperCase.plural|Licences
 commonText.publisher|publisher
 commonText.publisher.upperCase|Publisher
+commonText.publisher.upperCase.plural|Publisher
 commonText.gameplayFeature|gameplay feature
 commonText.gameplayFeature.upperCase|Gameplay feature
+commonText.gameplayFeature.upperCase.plural|Gameplay features
 commonText.engineFeature|engine feature
 commonText.engineFeature.upperCase|Engine feature
+commonText.engineFeature.upperCase.plural|Engine features
 commonText.theme|theme
 commonText.theme.upperCase|Theme
+commonText.theme.upperCase.plural|Themes
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -83,6 +89,8 @@ commonText.followingImageFilesHaveBeenAdded.firstPart|<html>The following image 
 commonText.isThisCorrect|Is this correct and do you want to continue?
 commonText.browse|Browse
 commonText.multipleFilesSelected|Multiple files selected
+commonText.add|add
+commonText.remove|remove
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -112,6 +120,25 @@ analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Error wil
 analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modded theme (GE):
 analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes (GE) complete
 analyzer.themeGe.getCustomContentString.progressBar|Scanning for modded themes (GE)
+
+modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
+modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
+modManager.gameplayFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No gameplay feature available
+modManager.engineFeature.windowMain.modButton.addMod|Add gameplay feature
+modManager.engineFeature.windowMain.modButton.removeMod|Remove gameplay feature
+modManager.engineFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No engine feature available
+modManager.genre.windowMain.modButton.addMod|Add genre
+modManager.genre.windowMain.modButton.removeMod|Remove genre
+modManager.genre.windowMain.modButton.removeMod.toolTip|Disabled -> No genre available
+modManager.licence.windowMain.modButton.addMod|Add licence
+modManager.licence.windowMain.modButton.removeMod|Remove licence
+modManager.licence.windowMain.modButton.removeMod.toolTip|Disabled -> No licence available
+modManager.publisher.windowMain.modButton.addMod|Add publisher
+modManager.publisher.windowMain.modButton.removeMod|Remove publisher
+modManager.publisher.windowMain.modButton.removeMod.toolTip|Disabled -> No publisher available
+modManager.theme.windowMain.modButton.addMod|Add theme
+modManager.theme.windowMain.modButton.removeMod|Remove theme
+modManager.theme.windowMain.modButton.removeMod.toolTip|Disabled -> No theme available
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:
@@ -536,12 +563,6 @@ window.main.utilities.openMGT2Folder|Open MGT2 folder
 window.main.utilities.openSaveGameFolder|Open save game folder
 window.main.utilities.openSaveGameFolder.toolTip|Click to open the folder where the save games are stored
 window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!
-window.main.actionAvailability.noThemeAvailable|Disabled -> No theme available
-window.main.actionAvailability.noPublisherAvailable|Disabled -> No publisher available
-window.main.actionAvailability.noEngineFeatureAvailable|Disabled -> No engine feature available
-window.main.actionAvailability.noGameplayFeatureAvailable|Disabled -> No gameplay feature available
-window.main.actionAvailability.noGenreAvailable|Disabled -> No genre available
-window.main.actionAvailability.noLicenceAvailable|Disabled -> No licence available
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Disabled -> No mods added for which a restore point could be created

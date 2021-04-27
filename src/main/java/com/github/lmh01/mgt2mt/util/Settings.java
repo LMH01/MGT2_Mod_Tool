@@ -28,6 +28,7 @@ public class Settings {
     public static String automaticMGT2FilePath = ""; //This string is set when setMGT2Folder is called
     public static String language = "English";
     public static String updateBranch = "Release";
+    public static boolean useAutomaticModMenus = false;//Manual value: Set true to enable the automatic setting of mod menus. If false the mod menus will have to be added manually.
     public static void resetSettings(){
         setMGT2Folder(false);
         setSettings(false, false, false, false, mgt2FilePath, true, true, true, "English", "Release", true);

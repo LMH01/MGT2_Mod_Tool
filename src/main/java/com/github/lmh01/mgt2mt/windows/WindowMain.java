@@ -2,8 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
@@ -20,6 +19,7 @@ import java.util.*;
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
     private static final JFrame frame = new JFrame(I18n.INSTANCE.get("window.main.tile"));
+    private static final JMenuBar MB = new JMenuBar();
     private static final JMenu M_1_FILE = new JMenu(I18n.INSTANCE.get("window.main.file"));
     private static final JMenu M_2_MODS = new JMenu(I18n.INSTANCE.get("window.main.mods"));
     private static final JMenu M_3_SHARE = new JMenu(I18n.INSTANCE.get("window.main.share"));
@@ -28,28 +28,11 @@ public class WindowMain {
     private static final JMenuItem M_12_UPDATE_CHECK = new JMenuItem(I18n.INSTANCE.get("window.main.file.updateCheck"));
     private static final JMenuItem M_13_UNINSTALL = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
     private static final JMenu M_21_IMPORT = new JMenu(I18n.INSTANCE.get("window.main.mods.import"));
-    private static final JMenu M_22_GENRES = new JMenu(I18n.INSTANCE.get("window.main.mods.genres"));
-    private static final JMenu M_23_THEMES = new JMenu(I18n.INSTANCE.get("window.main.mods.themes"));
-    private static final JMenu M_24_PUBLISHER = new JMenu(I18n.INSTANCE.get("window.main.mods.publisher"));
-    private static final JMenu M_25_ENGINE_FEATURES = new JMenu(I18n.INSTANCE.get("window.main.mods.engineFeatures"));
-    private static final JMenu M_26_GAMEPLAY_FEATURES = new JMenu(I18n.INSTANCE.get("window.main.mods.gameplayFeatures"));
-    private static final JMenu M_27_LICENCES = new JMenu(I18n.INSTANCE.get("window.main.mods.licences"));
     private static final JMenuItem M_211_IMPORT_FROM_FILE_SYSTEM = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem"));
     private static final JMenuItem M_212_IMPORT_FROM_URL = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromURL"));
-    private static final JMenuItem M_28_NPC_GAMES_LIST = new JMenuItem(I18n.INSTANCE.get("window.main.mods.npcGamesList"));
-    private static final JMenuItem M_29_ADD_COMPANY_ICON = new JMenuItem(I18n.INSTANCE.get("window.main.mods.addCompanyIcon"));
-    private static final JMenuItem M_223_REMOVE_GENRE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.removeGenre"));
-    private static final JMenuItem M_311_EXPORT_GENRE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.genre"));
-    private static final JMenuItem M_313_EXPORT_THEME = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.theme"));
-    private static final JMenuItem M_312_EXPORT_PUBLISHER = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.publisher"));
-    private static final JMenuItem M_314_EXPORT_ENGINE_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.engineFeature"));
-    private static final JMenuItem M_315_EXPORT_GAMEPLAY_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.gameplayFeature"));
-    private static final JMenuItem M_232_REMOVE_THEME = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.removeTheme"));
-    private static final JMenuItem M_242_REMOVE_PUBLISHER = new JMenuItem(I18n.INSTANCE.get("window.main.mods.publisher.removePublisher"));
-    private static final JMenuItem M_262_REMOVE_GAMEPLAY_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.removeGameplayFeature"));
-    private static final JMenuItem M_252_REMOVE_ENGINE_FEATURE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.removeEngineFeature"));
-    private static final JMenuItem M_272_REMOVE_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.removeLicence"));
-    private static final JMenuItem M_316_EXPORT_LICENCE = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.licence"));
+    private static final JMenuItem M_22_NPC_GAMES_LIST = new JMenuItem(I18n.INSTANCE.get("window.main.mods.npcGamesList"));
+    private static final JMenuItem M_23_ADD_COMPANY_ICON = new JMenuItem(I18n.INSTANCE.get("window.main.mods.addCompanyIcon"));
+    private static final JMenu M_31_EXPORT = new JMenu(I18n.INSTANCE.get("window.main.share.export"));
     private static final JMenuItem M_317_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
     private static final JMenu M_42_RESTORE_BACKUP = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
     private static final JMenuItem M_422_RESTORE_LATEST_BACKUP = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup"));
@@ -60,6 +43,7 @@ public class WindowMain {
     public static final JProgressBar PROGRESS_BAR = new JProgressBar();
     public static final JTextArea TEXT_AREA = new JTextArea();
     public static final JScrollPane SCROLL_PANE = new JScrollPane(TEXT_AREA, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    private static boolean modMenusInitialized = false;
     public static void createFrame(){
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +52,6 @@ public class WindowMain {
         frame.setLocationRelativeTo(null);
 
         //Creating the MenuBar and adding components
-        JMenuBar mb = new JMenuBar();
         JMenuItem m11 = new JMenuItem(I18n.INSTANCE.get("window.main.file.settings"));
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         M_12_UPDATE_CHECK.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
@@ -76,36 +59,16 @@ public class WindowMain {
         M_13_UNINSTALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableUninstall, "Uninstall"));
         JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
-        mb.add(M_1_FILE);
+        MB.add(M_1_FILE);
         M_1_FILE.add(m11);
         M_1_FILE.add(M_12_UPDATE_CHECK);
         M_1_FILE.add(M_13_UNINSTALL);
         M_1_FILE.add(m14About);
         JMenuItem m213GetMoreMods = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.getMoreMods"));
-        JMenuItem m221AddGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addGenre"));
-        JMenuItem m222AddRandomGenre  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre"));
-        JMenuItem m231AddTheme  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.addTheme"));
-        JMenuItem m241AddPublisher  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.publisher.addPublisher"));
-        JMenuItem m251AddEngineFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.engineFeatures.addEngineFeature"));
-        JMenuItem m261AddGameplayFeature  = new JMenuItem(I18n.INSTANCE.get("window.main.mods.gameplayFeatures.addGameplayFeature"));
-        JMenuItem m271AddLicence = new JMenuItem(I18n.INSTANCE.get("window.main.mods.licences.addLicence"));
         JMenuItem m210ShowActiveMods = new JMenuItem(I18n.INSTANCE.get("window.main.mods.showActiveMods"));
         M_21_IMPORT.add(M_211_IMPORT_FROM_FILE_SYSTEM);
         M_21_IMPORT.add(M_212_IMPORT_FROM_URL);
         M_21_IMPORT.add(m213GetMoreMods);
-        M_22_GENRES.add(m221AddGenre);
-        M_22_GENRES.add(m222AddRandomGenre);
-        M_22_GENRES.add(M_223_REMOVE_GENRE);
-        M_23_THEMES.add(m231AddTheme);
-        M_23_THEMES.add(M_232_REMOVE_THEME);
-        M_24_PUBLISHER.add(m241AddPublisher);
-        M_24_PUBLISHER.add(M_242_REMOVE_PUBLISHER);
-        M_25_ENGINE_FEATURES.add(m251AddEngineFeature);
-        M_25_ENGINE_FEATURES.add(M_252_REMOVE_ENGINE_FEATURE);
-        M_26_GAMEPLAY_FEATURES.add(m261AddGameplayFeature );
-        M_26_GAMEPLAY_FEATURES.add(M_262_REMOVE_GAMEPLAY_FEATURE);
-        M_27_LICENCES.add(m271AddLicence);
-        M_27_LICENCES.add(M_272_REMOVE_LICENCE);
         M_2_MODS.addActionListener(actionEvent -> Disclaimer.showDisclaimer());
         M_2_MODS.addMenuListener(new MenuListener() {
             @Override
@@ -129,50 +92,18 @@ public class WindowMain {
         M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableImportAll, "runnableImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
         M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableImportFromURL, "runnableImportFromURL"));
-        m221AddGenre.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddNewGenre, "runnableAddNewGenre"));
-        m222AddRandomGenre.setToolTipText(I18n.INSTANCE.get("window.main.mods.genres.addRandomGenre.toolTip"));
-        m222AddRandomGenre.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddRandomizedGenre, "runnableAddRandomizedGenre"));
-        M_223_REMOVE_GENRE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRemoveGenre, "runnableRemoveGenre"));
-        m231AddTheme.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddNewTheme, "runnableAddNewTheme"));
-        M_232_REMOVE_THEME.addActionListener(actionEvent ->  ThreadHandler.startThread(ThreadHandler.runnableRemoveTheme, "runnableRemoveTheme"));
-        M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
-        M_28_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableNPCGamesList, "runnableNPCGamesList"));
-        m241AddPublisher.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddNewPublisher, "runnableAddNewPublisher"));
-        M_242_REMOVE_PUBLISHER.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRemovePublisher, "runnableRemovePublisher"));
-        m261AddGameplayFeature .addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddNewGameplayFeature, "runnableAddNewGameplayFeature"));
-        M_262_REMOVE_GAMEPLAY_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRemoveGameplayFeature, "runnableRemoveGameplayFeature"));
-        m251AddEngineFeature.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddNewEngineFeature,"runnableAddNewEngineFeature"));
-        M_252_REMOVE_ENGINE_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRemoveEngineFeature, "runnableRemoveEngineFeature"));
-        m271AddLicence.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddNewLicence, "runnableAddNewLicence"));
-        M_272_REMOVE_LICENCE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRemoveLicence, "runnableRemoveLicence"));
-        M_29_ADD_COMPANY_ICON.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddCompanyIcon, "runnableAddCompanyIcon"));
+        M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
+        M_22_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableNPCGamesList, "runnableNPCGamesList"));
+        M_23_ADD_COMPANY_ICON.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddCompanyIcon, "runnableAddCompanyIcon"));
         m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
         m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableShowActiveMods, "runnableShowActiveMods"));
-        mb.add(M_2_MODS);
+        MB.add(M_2_MODS);
         M_2_MODS.add(M_21_IMPORT);
-        M_2_MODS.add(M_22_GENRES);
-        M_2_MODS.add(M_23_THEMES);
-        M_2_MODS.add(M_24_PUBLISHER);
-        M_2_MODS.add(M_25_ENGINE_FEATURES);
-        M_2_MODS.add(M_26_GAMEPLAY_FEATURES);
-        M_2_MODS.add(M_27_LICENCES);
-        M_2_MODS.add(M_28_NPC_GAMES_LIST);
-        M_2_MODS.add(M_29_ADD_COMPANY_ICON);
+        initializeModMenus();
+        M_2_MODS.add(M_22_NPC_GAMES_LIST);
+        M_2_MODS.add(M_23_ADD_COMPANY_ICON);
         M_2_MODS.add(m210ShowActiveMods);
-        JMenu m31Export = new JMenu(I18n.INSTANCE.get("window.main.share.export"));
-        m31Export.add(M_311_EXPORT_GENRE);
-        m31Export.add(M_312_EXPORT_PUBLISHER);
-        m31Export.add(M_313_EXPORT_THEME);
-        m31Export.add(M_314_EXPORT_ENGINE_FEATURE);
-        m31Export.add(M_315_EXPORT_GAMEPLAY_FEATURE);
-        m31Export.add(M_316_EXPORT_LICENCE);
-        m31Export.add(M_317_EXPORT_ALL);
-        M_311_EXPORT_GENRE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportGenre, "runnableExportGenre"));
-        M_312_EXPORT_PUBLISHER.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportPublisher, "runnableExportPublisher"));
-        M_313_EXPORT_THEME.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportThemes, "runnableExportThemes"));
-        M_314_EXPORT_ENGINE_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportEngineFeatures, "runnableExportEngineFeatures"));
-        M_315_EXPORT_GAMEPLAY_FEATURE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportGameplayFeatures, "runnableExportGameplayFeatures"));
-        M_316_EXPORT_LICENCE.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportLicence, "runnableExportLicence"));
+        M_31_EXPORT.add(M_317_EXPORT_ALL);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportAll, "runnableExportAll"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> {
@@ -180,10 +111,10 @@ public class WindowMain {
         });
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
         m36.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableDeleteExports, "runnableDeleteExports"));
-        M_3_SHARE.add(m31Export);
+        M_3_SHARE.add(M_31_EXPORT);
         M_3_SHARE.add(m35);
         M_3_SHARE.add(m36);
-        mb.add(M_3_SHARE);
+        MB.add(M_3_SHARE);
         JMenu m41 = new JMenu(I18n.INSTANCE.get("window.main.backup.createBackup"));
         JMenu m43RestorePoint = new JMenu(I18n.INSTANCE.get("window.main.backup.modRestorePoint"));
         JMenuItem m411CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
@@ -214,7 +145,7 @@ public class WindowMain {
         JMenuItem m45penBackupFolder = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
         m45penBackupFolder.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
         m45penBackupFolder.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
-        mb.add(M_4_BACKUP);
+        MB.add(M_4_BACKUP);
         M_4_BACKUP.add(m41);
         M_4_BACKUP.add(M_42_RESTORE_BACKUP);
         M_4_BACKUP.add(m43RestorePoint);
@@ -230,7 +161,7 @@ public class WindowMain {
         JMenuItem m54OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
         m54OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
         m54OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
-        mb.add(M_5_UTIL);
+        MB.add(M_5_UTIL);
         M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
         M_5_UTIL.add(m52OpenGitHubPage);
@@ -267,7 +198,7 @@ public class WindowMain {
 
         //Adding Components to the frame.
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.NORTH, mb);
+        frame.getContentPane().add(BorderLayout.NORTH, MB);
         frame.getContentPane().add(BorderLayout.CENTER, panelMiddle);
         frame.setVisible(true);
     }
@@ -283,75 +214,41 @@ public class WindowMain {
     public static void checkActionAvailability(){
         if(Settings.mgt2FolderIsCorrect){
             try{
-                ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
-                ModManager.engineFeatureMod.getAnalyzer().analyzeFile();
-                ModManager.genreMod.getAnalyzer().analyzeFile();
-                ModManager.themeMod.getAnalyzerEn().analyzeFile();
-                ModManager.themeMod.getAnalyzerGe().analyzeFile();
-                ModManager.publisherMod.getAnalyzer().analyzeFile();
-                ModManager.licenceMod.getAnalyzer().analyzeFile();
-                boolean noCustomGenreAvailable = true;
-                boolean noCustomThemesAvailable = true;
-                boolean noCustomPublishersAvailable = true;
-                boolean noCustomGameplayFeaturesAvailable = true;
-                boolean noCustomEngineFeaturesAvailable = true;
-                boolean noCustomLicencesAvailable = true;
+                boolean noModsAvailable = true;
+                ModManager.analyzeMods();
                 boolean noModRestorePointSet = true;
-                if(Settings.disableSafetyFeatures){
-                    noCustomGenreAvailable = false;
-                    noCustomThemesAvailable = false;
-                    noCustomPublishersAvailable = false;
-                    noCustomGameplayFeaturesAvailable = false;
-                    noCustomEngineFeaturesAvailable = false;
-                    noCustomLicencesAvailable = false;
-                }else{
-                    if(ModManager.genreMod.getAnalyzer().getCustomContentString(true).length > 0){
-                        noCustomGenreAvailable = false;
-                    }
-                    if(ModManager.themeMod.getAnalyzerEn().getFileContent().size() > 215){
-                        noCustomThemesAvailable = false;
-                    }
-                    if(ModManager.publisherMod.getAnalyzer().getCustomContentString(true).length > 0){
-                        noCustomPublishersAvailable = false;
-                    }
-                    if(ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString(true).length > 0){
-                        noCustomGameplayFeaturesAvailable = false;
-                    }
-                    if(ModManager.engineFeatureMod.getAnalyzer().getCustomContentString(true).length > 0){
-                        noCustomEngineFeaturesAvailable = false;
-                    }
-                    Map<Integer, String> mapLicences = ModManager.licenceMod.getAnalyzer().getFileContent();
-                    if(mapLicences.size() > 956){
-                        noCustomLicencesAvailable = false;
-                    }
+                if(!Settings.disableSafetyFeatures) {
                     if(new File(Utils.getMGT2ModToolModRestorePointFolder()).exists()){
                         noModRestorePointSet = false;
                     }
                 }
-                M_223_REMOVE_GENRE.setEnabled(!noCustomGenreAvailable);
-                M_232_REMOVE_THEME.setEnabled(!noCustomThemesAvailable);
-                M_28_NPC_GAMES_LIST.setEnabled(!noCustomGenreAvailable);
-                M_242_REMOVE_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
-                M_311_EXPORT_GENRE.setEnabled(!noCustomGenreAvailable);
-                M_312_EXPORT_PUBLISHER.setEnabled(!noCustomPublishersAvailable);
-                M_313_EXPORT_THEME.setEnabled(!noCustomThemesAvailable);
-                M_252_REMOVE_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
-                M_314_EXPORT_ENGINE_FEATURE.setEnabled(!noCustomEngineFeaturesAvailable);
-                M_262_REMOVE_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-                M_315_EXPORT_GAMEPLAY_FEATURE.setEnabled(!noCustomGameplayFeaturesAvailable);
-                M_272_REMOVE_LICENCE.setEnabled(!noCustomLicencesAvailable);
-                M_316_EXPORT_LICENCE.setEnabled(!noCustomLicencesAvailable);
-                M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
-                if(noCustomGenreAvailable){
-                    M_223_REMOVE_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
-                    M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
-                    M_311_EXPORT_GENRE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGenreAvailable"));
-                }else{
-                    M_223_REMOVE_GENRE.setToolTipText("");
-                    M_28_NPC_GAMES_LIST.setToolTipText("");
-                    M_311_EXPORT_GENRE.setToolTipText("");
+                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                    simpleMod.setMainMenuButtonAvailability();
+                    if(!simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
+                        if(simpleMod.getBaseAnalyzer().getCustomContentString(true).length > 0){
+                            noModsAvailable = false;
+                        }
+                    }else{
+                        if(ModManager.themeMod.getAnalyzerEn().getCustomContentString(true).length > 0){
+                            noModsAvailable = false;
+                        }
+                    }
                 }
-                if(noCustomEngineFeaturesAvailable && noCustomGameplayFeaturesAvailable && noCustomGenreAvailable && noCustomPublishersAvailable && noCustomThemesAvailable &&noCustomLicencesAvailable){
+                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                    advancedMod.setMainMenuButtonAvailability();
+                    if(advancedMod.getBaseAnalyzer().getCustomContentString(true).length > 0){
+                        noModsAvailable = false;
+                    }
+                }
+                if(ModManager.genreMod.getAnalyzer().getCustomContentString(true).length > 0){
+                    M_22_NPC_GAMES_LIST.setEnabled(true);
+                    M_22_NPC_GAMES_LIST.setToolTipText("");
+                }else{
+                    M_22_NPC_GAMES_LIST.setEnabled(false);
+                    M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("modManager.genre.windowMain.modButton.removeMod.toolTip"));
+                }
+                M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
+                if(noModsAvailable){
                     M_317_EXPORT_ALL.setEnabled(false);
                     M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
                     M_431_CREATE_MOD_RESTORE_POINT.setEnabled(false);
@@ -362,40 +259,6 @@ public class WindowMain {
                     M_431_CREATE_MOD_RESTORE_POINT.setEnabled(true);
                     M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
                 }
-                if(noCustomThemesAvailable){
-                    M_232_REMOVE_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
-                    M_313_EXPORT_THEME.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noThemeAvailable"));
-                }else{
-                    M_232_REMOVE_THEME.setToolTipText("");
-                }
-                if(noCustomPublishersAvailable){
-                    M_242_REMOVE_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
-                    M_312_EXPORT_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noPublisherAvailable"));
-                }else{
-                    M_242_REMOVE_PUBLISHER.setToolTipText("");
-                    M_312_EXPORT_PUBLISHER.setToolTipText("");
-                }
-                if(noCustomEngineFeaturesAvailable){
-                    M_252_REMOVE_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
-                    M_314_EXPORT_ENGINE_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noEngineFeatureAvailable"));
-                }else{
-                    M_252_REMOVE_ENGINE_FEATURE.setToolTipText("");
-                    M_314_EXPORT_ENGINE_FEATURE.setToolTipText("");
-                }
-                if(noCustomGameplayFeaturesAvailable){
-                    M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
-                    M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noGameplayFeatureAvailable"));
-                }else{
-                    M_262_REMOVE_GAMEPLAY_FEATURE.setToolTipText("");
-                    M_315_EXPORT_GAMEPLAY_FEATURE.setToolTipText("");
-                }
-                if(noCustomLicencesAvailable){
-                    M_272_REMOVE_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
-                    M_316_EXPORT_LICENCE.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noLicenceAvailable"));
-                }else{
-                    M_272_REMOVE_LICENCE.setToolTipText("");
-                    M_316_EXPORT_LICENCE.setToolTipText("");
-                }
                 if(noModRestorePointSet){
                     M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip"));
                 }else{
@@ -403,46 +266,30 @@ public class WindowMain {
                 }
                 if(Settings.enableDisclaimerMessage){
                     M_21_IMPORT.setEnabled(false);
-                    M_22_GENRES.setEnabled(false);
-                    M_23_THEMES.setEnabled(false);
-                    M_24_PUBLISHER.setEnabled(false);
-                    M_25_ENGINE_FEATURES.setEnabled(false);
-                    M_26_GAMEPLAY_FEATURES.setEnabled(false);
-                    M_27_LICENCES.setEnabled(false);
-                    M_28_NPC_GAMES_LIST.setEnabled(false);
-                    M_29_ADD_COMPANY_ICON.setEnabled(false);
+                    for(JMenu menu : MOD_MENUS){
+                        menu.setEnabled(false);
+                        menu.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    }
+                    M_22_NPC_GAMES_LIST.setEnabled(false);
+                    M_23_ADD_COMPANY_ICON.setEnabled(false);
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(false);
                     M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_22_GENRES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_23_THEMES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_24_PUBLISHER.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_25_ENGINE_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_26_GAMEPLAY_FEATURES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_27_LICENCES.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_28_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_29_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_23_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                 }else{
                     M_21_IMPORT.setEnabled(true);
-                    M_22_GENRES.setEnabled(true);
-                    M_23_THEMES.setEnabled(true);
-                    M_24_PUBLISHER.setEnabled(true);
-                    M_25_ENGINE_FEATURES.setEnabled(true);
-                    M_26_GAMEPLAY_FEATURES.setEnabled(true);
-                    M_27_LICENCES.setEnabled(true);
-                    M_29_ADD_COMPANY_ICON.setEnabled(true);
+                    for(JMenu menu : MOD_MENUS){
+                        menu.setEnabled(true);
+                        menu.setToolTipText("");
+                    }
+                    M_23_ADD_COMPANY_ICON.setEnabled(true);
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
                     M_21_IMPORT.setToolTipText("");
-                    M_22_GENRES.setToolTipText("");
-                    M_23_THEMES.setToolTipText("");
-                    M_24_PUBLISHER.setToolTipText("");
-                    M_25_ENGINE_FEATURES.setToolTipText("");
-                    M_26_GAMEPLAY_FEATURES.setToolTipText("");
-                    M_27_LICENCES.setToolTipText("");
-                    M_29_ADD_COMPANY_ICON.setToolTipText("");
+                    M_23_ADD_COMPANY_ICON.setToolTipText("");
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
-            }catch (IOException | IndexOutOfBoundsException e){
+            }catch (IndexOutOfBoundsException e){
                 LOGGER.info("Error: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -516,6 +363,79 @@ public class WindowMain {
         }else{
             M_4_BACKUP.remove(M_44_DELETE_ALL_BACKUPS);
             M_42_RESTORE_BACKUP.remove(M_422_RESTORE_LATEST_BACKUP);
+        }
+    }
+
+    private static final ArrayList<JMenu> MOD_MENUS = new ArrayList<>();
+
+    public static void initializeModMenus(){
+        if(!modMenusInitialized){
+            if(Settings.useAutomaticModMenus){
+                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){//Use this when the menus should be allocated automatically
+                    JMenu menu = new JMenu(simpleMod.getTypePlural());
+                    for(JMenuItem menuItem : simpleMod.getModMenuItems()){
+                        menu.add(menuItem);
+                    }
+                    MOD_MENUS.add(menu);
+                    M_31_EXPORT.add(simpleMod.getExportMenuItem());
+                }
+                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                    JMenu menu = new JMenu(advancedMod.getTypePlural());
+                    for(JMenuItem menuItem : advancedMod.getModMenuItems()){
+                        menu.add(menuItem);
+                    }
+                    MOD_MENUS.add(menu);
+                    M_31_EXPORT.add(advancedMod.getExportMenuItem());
+                }
+                for(JMenu menu : MOD_MENUS){
+                    M_2_MODS.add(menu);
+                }
+            }else{
+                //Manual menu allocation:
+                JMenu menu = new JMenu(ModManager.genreMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.genreMod.getModMenuItems()){
+                    menu.add(menuItem);
+                }
+                JMenu menu2 = new JMenu(ModManager.themeMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.themeMod.getModMenuItems()){
+                    menu2.add(menuItem);
+                }
+                JMenu menu3 = new JMenu(ModManager.publisherMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.publisherMod.getModMenuItems()){
+                    menu3.add(menuItem);
+                }
+                JMenu menu4 = new JMenu(ModManager.engineFeatureMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.engineFeatureMod.getModMenuItems()){
+                    menu4.add(menuItem);
+                }
+                JMenu menu5 = new JMenu(ModManager.gameplayFeatureMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.gameplayFeatureMod.getModMenuItems()){
+                    menu5.add(menuItem);
+                }
+                JMenu menu6 = new JMenu(ModManager.licenceMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.licenceMod.getModMenuItems()){
+                    menu6.add(menuItem);
+                }
+                MOD_MENUS.add(menu);
+                MOD_MENUS.add(menu2);
+                MOD_MENUS.add(menu3);
+                MOD_MENUS.add(menu4);
+                MOD_MENUS.add(menu5);
+                MOD_MENUS.add(menu6);
+                M_2_MODS.add(menu);
+                M_2_MODS.add(menu2);
+                M_2_MODS.add(menu3);
+                M_2_MODS.add(menu4);
+                M_2_MODS.add(menu5);
+                M_2_MODS.add(menu6);
+                M_31_EXPORT.add(ModManager.genreMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.themeMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.publisherMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.engineFeatureMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.gameplayFeatureMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.licenceMod.getExportMenuItem());
+            }
+            modMenusInitialized = true;
         }
     }
 

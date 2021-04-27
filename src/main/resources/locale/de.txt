@@ -6,16 +6,22 @@ commonBodies.exception|Grund:
 
 commonText.genre|Genre
 commonText.genre.upperCase|Genre
+commonText.genre.upperCase.plural|Genres
 commonText.licence|Lizenz
 commonText.licence.upperCase|Lizenz
+commonText.licence.upperCase.plural|Lizenzen
 commonText.publisher|Publisher
 commonText.publisher.upperCase|Publisher
+commonText.publisher.upperCase.plural|Publisher
 commonText.gameplayFeature|Gameplay Feature
 commonText.gameplayFeature.upperCase|Gameplay Feature
+commonText.gameplayFeature.upperCase.plural|Gameplay Features
 commonText.engineFeature|Engine Feature
 commonText.engineFeature.upperCase|Engine Feature
+commonText.engineFeature.upperCase.plural|Engine Features
 commonText.theme|Thema
 commonText.theme.upperCase|Thema
+commonText.theme.upperCase.plural|Themen
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -83,6 +89,8 @@ commonText.followingImageFilesHaveBeenAdded.firstPart|<html>Die folgenden Bildda
 commonText.isThisCorrect|Ist das richtig und möchtest du weiter machen?
 commonText.browse|Durchsuchen
 commonText.multipleFilesSelected|Mehrere Dateien ausgewählt
+commonText.add|hinzufügen
+commonText.remove|entfernen
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -112,6 +120,26 @@ analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Fehler be
 analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema (GE) gefunden:
 analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen (GE) abgeschlossen
 analyzer.themeGe.getCustomContentString.progressBar|Scannen nach modifizierten Themen (GE)
+
+modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
+modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
+modManager.gameplayFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Gameplay feature verfügbar
+modManager.gameplayFeature.windowMain.export.noExportAvailable|
+modManager.engineFeature.windowMain.modButton.addMod|Engine Feature hinzufügen
+modManager.engineFeature.windowMain.modButton.removeMod|Engine Feature entfernen
+modManager.engineFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Engine feature verfügbar
+modManager.genre.windowMain.modButton.addMod|Genre hinzufügen
+modManager.genre.windowMain.modButton.removeMod|Genre entfernen
+modManager.genre.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Genre verfügbar
+modManager.licence.windowMain.modButton.addMod|Lizenz hinzufügen
+modManager.licence.windowMain.modButton.removeMod|Lizenz entfernen
+modManager.licence.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Lizenz verfügbar
+modManager.publisher.windowMain.modButton.addMod|Publisher hinzufügen
+modManager.publisher.windowMain.modButton.removeMod|Publisher entfernen
+modManager.publisher.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Publisher verfügbar
+modManager.theme.windowMain.modButton.addMod|Thema hinzufügen
+modManager.theme.windowMain.modButton.removeMod|Thema entfernen
+modManager.theme.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Thema verfügbar
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -513,12 +541,6 @@ window.main.utilities.openMGT2Folder|MGT2 Ordner öffnen
 window.main.utilities.openSaveGameFolder|Spielstand Ordner öffnen
 window.main.utilities.openSaveGameFolder.toolTip|Klicke hier, um den Ordner zu öffnen, wo die Spielstände gespeichert sind.
 window.main.actionAvailability.acceptMessageFirst|Deaktiviert -> Du musst erst akzeptieren, dass du die Nachricht gelesen hast!
-window.main.actionAvailability.noThemeAvailable|Deaktiviert -> Kein Thema verfügbar
-window.main.actionAvailability.noPublisherAvailable|Deaktiviert -> Kein Publisher verfügbar
-window.main.actionAvailability.noEngineFeatureAvailable|Deaktiviert -> Kein Engine feature verfügbar
-window.main.actionAvailability.noGameplayFeatureAvailable|Deaktiviert -> Kein Gameplay feature verfügbar
-window.main.actionAvailability.noGenreAvailable|Deaktiviert -> Kein Genre verfügbar
-window.main.actionAvailability.noLicenceAvailable|Deaktiviert -> Keine Lizent verfügbar
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
 window.main.actionAvailability.notAvailableToCreateRestorePoint|Deaktiviert -> Keine mods verfügbar, für die ein Wiederherstellungspunkt erstellt werden könnte

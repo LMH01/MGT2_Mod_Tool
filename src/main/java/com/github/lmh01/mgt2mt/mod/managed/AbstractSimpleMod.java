@@ -1,12 +1,47 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
+import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
+import com.github.lmh01.mgt2mt.util.I18n;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Map;
 
-public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseMod, SimpleMod{
+public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseFunctions, BaseMod, SimpleMod{
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSimpleMod.class);
+
+    @Override
+    public void initializeMod() {
+        LOGGER.info("Initializing simple mod: " + getType());
+        ModManager.simpleMods.add(getSimpleMod());
+    }
+
+    @Override
+    public void setMainMenuButtonAvailability() {
+        String[] customContentString = getBaseAnalyzer().getCustomContentString(true);
+        for(JMenuItem menuItem : getModMenuItems()){
+            if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
+                if(customContentString.length > 0){
+                    menuItem.setEnabled(true);
+                    menuItem.setToolTipText("");
+                }else{
+                    menuItem.setEnabled(false);
+                    menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+                }
+            }
+        }
+        if(customContentString.length > 0){
+            getExportMenuItem().setEnabled(true);
+            getExportMenuItem().setToolTipText("");
+        }else{
+            getExportMenuItem().setEnabled(false);
+            getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+        }
+    }
 
     @Override
     public void addMod(String lineToWrite) throws IOException {
@@ -58,4 +93,9 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseM
      * If you would like to use all functions for the sharer use {@code MOD.getSharer} instead.
      */
     public abstract AbstractSimpleSharer getBaseSharer();
+
+    /**
+     * @return Returns the simple mod that is extended from this abstract simple mod
+     */
+    public abstract AbstractSimpleMod getSimpleMod();
 }

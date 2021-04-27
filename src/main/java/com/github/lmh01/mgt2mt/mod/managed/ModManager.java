@@ -3,12 +3,13 @@ package com.github.lmh01.mgt2mt.mod.managed;
 import com.github.lmh01.mgt2mt.mod.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ModManager{
     private static final Logger LOGGER = LoggerFactory.getLogger(ModManager.class);
-    public static ArrayList<AbstractBaseMod> mods = new ArrayList<>();//This array list contains all registered mods
+    public static ArrayList<AbstractSimpleMod> simpleMods = new ArrayList<>();
+    public static ArrayList<AbstractAdvancedMod> advancedMods = new ArrayList<>();
     public static EngineFeatureMod engineFeatureMod = new EngineFeatureMod();
     public static GameplayFeatureMod gameplayFeatureMod = new GameplayFeatureMod();
     public static GenreMod genreMod = new GenreMod();
@@ -27,5 +28,22 @@ public class ModManager{
         licenceMod.initializeMod();
         publisherMod.initializeMod();
         themeMod.initializeMod();
+    }
+
+    /**
+     * Analyzes all mods and calls MOD.getAnalyzer().analyze();
+     */
+    public static void analyzeMods(){
+        try {
+            gameplayFeatureMod.getAnalyzer().analyzeFile();
+            engineFeatureMod.getAnalyzer().analyzeFile();
+            genreMod.getAnalyzer().analyzeFile();
+            themeMod.getAnalyzerEn().analyzeFile();
+            themeMod.getAnalyzerGe().analyzeFile();
+            publisherMod.getAnalyzer().analyzeFile();
+            licenceMod.getAnalyzer().analyzeFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

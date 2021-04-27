@@ -7,19 +7,23 @@ import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.LicenceEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.LicenceSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class LicenceMod extends AbstractSimpleMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceMod.class);
     LicenceAnalyzer licenceAnalyzer = new LicenceAnalyzer();
     LicenceEditor licenceEditor = new LicenceEditor();
     LicenceSharer licenceSharer = new LicenceSharer();
+    public ArrayList<JMenuItem> licenceModMenuItems = getInitialModMenuItems();
+    public JMenuItem exportMenuItem = getInitialExportMenuItem();
 
     /**
      * @return Returns the analyzer for the mod.
@@ -61,22 +65,64 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
+    public AbstractSimpleMod getSimpleMod() {
+        return ModManager.licenceMod;
+    }
+
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "1.13.0"};
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.licence");
+    public void menuActionAddMod() {
+        LOGGER.info("Action4");
     }
 
     @Override
-    protected AbstractBaseMod getMod() {
-        return ModManager.licenceMod;
+    public String getMainTranslationKey() {
+        return "licence";
+    }
+
+    @Override
+    public String getType() {
+        return I18n.INSTANCE.get("commonText.licence.upperCase");
+    }
+
+    @Override
+    public String getTypePlural() {
+        return I18n.INSTANCE.get("commonText.licence.upperCase.plural");
     }
 
     @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
+    }
+
+    @Override
+    public ArrayList<JMenuItem> getModMenuItems() {
+        return licenceModMenuItems;
+    }
+
+    @Override
+    public JMenuItem getExportMenuItem() {
+        return exportMenuItem;
+    }
+
+    @Override
+    public JMenuItem getInitialExportMenuItem() {
+        JMenuItem menuItem = new JMenuItem(getTypePlural());
+        menuItem.addActionListener(e -> ThreadHandler.startThread(ThreadHandler.runnableExportLicence, "runnableExportLicence"));
+        return menuItem;
+    }
+
+    @Override
+    public void addModMenuItemAction() {
+        ThreadHandler.startThread(ThreadHandler.runnableAddNewLicence, "runnableAddNewLicence");
+    }
+
+    @Override
+    public void removeModMenuItemAction() {
+        ThreadHandler.startThread(ThreadHandler.runnableRemoveLicence, "runnableRemoveLicence");
     }
 }

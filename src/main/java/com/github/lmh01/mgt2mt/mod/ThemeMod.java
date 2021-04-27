@@ -5,12 +5,14 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileEnAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileGeAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.ThemeEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.ThemeSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class ThemeMod extends AbstractSimpleMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThemeMod.class);
@@ -18,6 +20,8 @@ public class ThemeMod extends AbstractSimpleMod {
     ThemeFileEnAnalyzer themeFileEnAnalyzer = new ThemeFileEnAnalyzer();
     ThemeEditor themeEditor = new ThemeEditor();
     ThemeSharer themeSharer = new ThemeSharer();
+    public ArrayList<JMenuItem> themeModMenuItems = getInitialModMenuItems();
+    public JMenuItem exportMenuItem = getInitialExportMenuItem();
 
     /**
      * @return Returns the analyzer for the mod.
@@ -69,22 +73,87 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
+    public AbstractSimpleMod getSimpleMod() {
+        return ModManager.themeMod;
+    }
+
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0"};
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.theme");
+    public void menuActionAddMod() {
+        LOGGER.info("Action6");
     }
 
     @Override
-    protected AbstractBaseMod getMod() {
-        return ModManager.themeMod;
+    public String getMainTranslationKey() {
+        return "theme";
+    }
+
+    @Override
+    public String getType() {
+        return I18n.INSTANCE.get("commonText.theme.upperCase");
+    }
+
+    @Override
+    public String getTypePlural() {
+        return I18n.INSTANCE.get("commonText.theme.upperCase.plural");
     }
 
     @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
+    }
+
+    @Override
+    public ArrayList<JMenuItem> getModMenuItems() {
+        return themeModMenuItems;
+    }
+
+    @Override
+    public JMenuItem getExportMenuItem() {
+        return exportMenuItem;
+    }
+
+    @Override
+    public JMenuItem getInitialExportMenuItem() {
+        JMenuItem menuItem = new JMenuItem(getTypePlural());
+        menuItem.addActionListener(e -> ThreadHandler.startThread(ThreadHandler.runnableExportThemes, "runnableExportThemes"));
+        return menuItem;
+    }
+
+    @Override
+    public void setMainMenuButtonAvailability() {
+        String[] customContentString = getAnalyzerEn().getCustomContentString(true);
+        for(JMenuItem menuItem : getModMenuItems()){
+            if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
+                if(customContentString.length > 0){
+                    menuItem.setEnabled(true);
+                    menuItem.setToolTipText("");
+                }else{
+                    menuItem.setEnabled(false);
+                    menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+                }
+            }
+        }
+        if(customContentString.length > 0){
+            getExportMenuItem().setEnabled(true);
+            getExportMenuItem().setToolTipText("");
+        }else{
+            getExportMenuItem().setEnabled(false);
+            getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+        }
+    }
+
+    @Override
+    public void addModMenuItemAction() {
+        ThreadHandler.startThread(ThreadHandler.runnableAddNewTheme, "runnableAddNewTheme");
+    }
+
+    @Override
+    public void removeModMenuItemAction() {
+        ThreadHandler.startThread(ThreadHandler.runnableRemoveTheme, "runnableRemoveTheme");
     }
 }
