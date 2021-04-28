@@ -135,5 +135,5 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     /**
      * @return Returns the objects that should be displayed in the option pane
      */
-    abstract String getOptionPaneMessage(Map<String, String> map);
+    public abstract String getOptionPaneMessage(Map<String, String> map);
 }

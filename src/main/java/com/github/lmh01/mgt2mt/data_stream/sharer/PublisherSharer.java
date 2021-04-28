@@ -120,7 +120,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    String getOptionPaneMessage(Map<String, String> map) {//TODO Übersetzung hinzufügen
+    public String getOptionPaneMessage(Map<String, String> map) {//TODO Übersetzung hinzufügen
         return "Add this publisher?\n" +
                 "\nName: " + map.get("NAME EN") +
                 "\nDate: " + map.get("DATE") +

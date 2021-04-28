@@ -25,7 +25,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    String getOptionPaneMessage(Map<String, String> map) {//TODO Übersetzung hinzufügen
+    public String getOptionPaneMessage(Map<String, String> map) {//TODO Übersetzung hinzufügen
         String messageBody = I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +

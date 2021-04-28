@@ -1,12 +1,5 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractAdvancedEditor;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractAdvancedSharer;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;

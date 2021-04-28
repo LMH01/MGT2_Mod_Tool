@@ -22,6 +22,9 @@ commonText.engineFeature.upperCase.plural|Engine Features
 commonText.theme|Thema
 commonText.theme.upperCase|Thema
 commonText.theme.upperCase.plural|Themen
+commonText.npcGames|Npc Spiel
+commonText.npcGames.upperCase|Npc Spiel
+commonText.npcGames.upperCase.plural|Npc Spiele
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -36,7 +39,7 @@ commonText.unknownError|Unbekannter Fehler
 commonText.noInternet|Keine Verbindung zum Internet
 commonText.id|Id
 commonText.name|Name
-commonText.name.var1|Namens
+commonText.name.var1|Namen
 commonText.description|Beschreibung
 commonText.description.var1|Beschreibungs
 commonText.unlockDate|Freischaltdatum
@@ -90,7 +93,12 @@ commonText.isThisCorrect|Ist das richtig und möchtest du weiter machen?
 commonText.browse|Durchsuchen
 commonText.multipleFilesSelected|Mehrere Dateien ausgewählt
 commonText.add|hinzufügen
+commonText.add.upperCase|Hinzufügen
 commonText.remove|entfernen
+commonText.addMod|Mod hinzufügen?
+commonText.unableToAdd|Hinzufügen unmöglich:
+commonText.modAlreadyExists|Der Mod existiert bereits!
+commonText.chooseGenreFirst|Bitte wähle zu erst mindestens ein Genre aus!
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -120,6 +128,10 @@ analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Fehler be
 analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema (GE) gefunden:
 analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen (GE) abgeschlossen
 analyzer.themeGe.getCustomContentString.progressBar|Scannen nach modifizierten Themen (GE)
+analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Npc Spielen:
+analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modifiziertes Npc Spiel gefunden:
+analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Spielen abgeschlossen
+analyzer.npcGames.getCustomContentString.progressBar|Scannen nach modifizierten Npc Spielen
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -139,6 +151,15 @@ modManager.publisher.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein 
 modManager.theme.windowMain.modButton.addMod|Thema hinzufügen
 modManager.theme.windowMain.modButton.removeMod|Thema entfernen
 modManager.theme.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Thema verfügbar
+modManager.npcGames.windowMain.modButton.addMod|Npc Spiel hinzufügen
+modManager.npcGames.windowMain.modButton.removeMod|Npc Spiel entfernen
+modManager.npcGames.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Npc Spiel verfügbar
+modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
+
+mod.npcGames.addMod.selectGenres|Wähle die Genres aus, die mit dem neuen Npc Spiel kompatibel sein sollen:
+nod.npcGames.addMod.button.label1|Genres auswählen
+nod.npcGames.addMod.button.label2|Genres ausgewählt
+mod.npcGames.addMod.optionPaneMessage.firstPart|Dieses Npc Spiel hinzufügen?
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
@@ -334,6 +355,7 @@ frame.title.continueAnyway|Trotzdem weiter machen?
 frame.title.isThisCorrect|Ist das richtig?
 frame.title.addScreenshot|Screenshot hinzufügen
 frame.title.fileNotFound|Datei wurde nicht gefunden
+frame.title.unableToContinue|Fortsetzen nicht möglich
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
@@ -344,7 +366,7 @@ processor.somethingWentWrong.secondPart|Folgende
 processor.somethingWentWrong.thirdPart|s wurden nicht
 processor.somethingWentWrong.fourthPart|Soll der Ordner geöffnet werden, wo die Datei gespeichert wurden?
 processor.operationComplete.allSelected|Alle ausgewählten
-processor.operationComplete.firstPart|en wurden
+processor.operationComplete.firstPart| wurden
 processor.operationComplete.secondPart|Soll der Ordner geöffnet werden, wo die Dateien gespeichert wurden?
 processor.nothingSelected.firstPart|Bitte wähle ein
 processor.nothingSelected.secondPart|zuerst.

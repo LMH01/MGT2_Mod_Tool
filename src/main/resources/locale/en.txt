@@ -22,6 +22,9 @@ commonText.engineFeature.upperCase.plural|Engine features
 commonText.theme|theme
 commonText.theme.upperCase|Theme
 commonText.theme.upperCase.plural|Themes
+commonText.npcGames|npc game
+commonText.npcGames.upperCase|Npc game
+commonText.npcGames.upperCase.plural|Npc games
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -90,7 +93,12 @@ commonText.isThisCorrect|Is this correct and do you want to continue?
 commonText.browse|Browse
 commonText.multipleFilesSelected|Multiple files selected
 commonText.add|add
+commonText.add.upperCase|Add
 commonText.remove|remove
+commonText.addMod|Add mod?
+commonText.unableToAdd|Unable to add:
+commonText.modAlreadyExists|The mod already exists!
+commonText.chooseGenreFirst|Please select at least one genre first!
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -120,6 +128,10 @@ analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Error wil
 analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modded theme (GE):
 analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes (GE) complete
 analyzer.themeGe.getCustomContentString.progressBar|Scanning for modded themes (GE)
+analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc game:
+analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modded npc game:
+analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc games complete
+analyzer.npcGames.getCustomContentString.progressBar|Scanning for modded npc games
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
@@ -139,6 +151,15 @@ modManager.publisher.windowMain.modButton.removeMod.toolTip|Disabled -> No publi
 modManager.theme.windowMain.modButton.addMod|Add theme
 modManager.theme.windowMain.modButton.removeMod|Remove theme
 modManager.theme.windowMain.modButton.removeMod.toolTip|Disabled -> No theme available
+modManager.npcGames.windowMain.modButton.addMod|Add npc game
+modManager.npcGames.windowMain.modButton.removeMod|Remove npc game
+modManager.npcGames.windowMain.modButton.removeMod.toolTip|Disabled -> No npc game available
+modManager.general.enterNameFirst|Please enter a name first!
+
+mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
+nod.npcGames.addMod.button.label1|Select genres
+nod.npcGames.addMod.button.label2|Genres selected
+mod.npcGames.addMod.optionPaneMessage.firstPart|Add this npc game?
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:
@@ -334,6 +355,7 @@ frame.title.continueAnyway|Continue anyway?
 frame.title.isThisCorrect|Is this correct?
 frame.title.addScreenshot|Add a screenshot
 frame.title.fileNotFound|File not found
+frame.title.unableToContinue|Unable to continue
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be

@@ -126,7 +126,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
      */
     @Override
     @Deprecated
-    String getOptionPaneMessage(String line) {
+    public String getOptionPaneMessage(String line) {
         return null;
     }
 

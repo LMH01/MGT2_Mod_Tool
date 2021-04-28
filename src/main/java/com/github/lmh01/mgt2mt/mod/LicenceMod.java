@@ -75,12 +75,7 @@ public class LicenceMod extends AbstractSimpleMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "1.13.0"};
-    }
-
-    @Override
-    public void menuActionAddMod() {
-        LOGGER.info("Action4");
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.0.0"};
     }
 
     @Override
@@ -109,7 +104,7 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    public void addModMenuItemAction() {
+    public void menuActionAddMod() {
         JLabel labelAddLicence = new JLabel("Name: ");
         JTextField textFieldName = new JTextField();
 

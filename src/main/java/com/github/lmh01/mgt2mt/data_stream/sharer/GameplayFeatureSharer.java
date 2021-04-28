@@ -27,7 +27,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    String getOptionPaneMessage(Map<String, String> map) {
+    public String getOptionPaneMessage(Map<String, String> map) {
         if(!map.get("BAD").matches(".*\\d.*")){
             ArrayList<String> badGenreNames = Utils.getEntriesFromString(map.get("BAD"));
             ArrayList<String> goodGenreNames = Utils.getEntriesFromString(map.get("GOOD"));

@@ -87,12 +87,7 @@ public class PublisherMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "1.13.0"};
-    }
-
-    @Override
-    public void menuActionAddMod() {
-        LOGGER.info("Action5");
+        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "2.0.0"};
     }
 
     @Override
@@ -121,7 +116,7 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void addModMenuItemAction() {
+    public void menuActionAddMod() {
         try {
             ModManager.publisherMod.getAnalyzer().analyzeFile();
             JPanel panelName = new JPanel();

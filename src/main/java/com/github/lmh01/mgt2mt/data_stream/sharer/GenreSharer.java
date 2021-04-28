@@ -189,7 +189,7 @@ public class GenreSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    String getOptionPaneMessage(Map<String, String> map) {
+    public String getOptionPaneMessage(Map<String, String> map) {
         return null;
     }
 

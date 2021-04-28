@@ -114,5 +114,5 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
     /**
      * @return Returns the objects that should be displayed in the option pane
      */
-    abstract String getOptionPaneMessage(String line);
+    public abstract String getOptionPaneMessage(String line);
 }

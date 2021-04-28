@@ -3,10 +3,13 @@ package com.github.lmh01.mgt2mt.mod.managed;
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
 
@@ -33,7 +36,7 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
 
     public void doAddModMenuItemAction(){
         Thread thread = new Thread(() -> {
-            addModMenuItemAction();
+            menuActionAddMod();
         });
         ThreadHandler.startThread(thread, "runnableAddNew" + getType());
     }
@@ -42,11 +45,6 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
      * @return Returns an array list that contains all JMenuItems that have been created for the corresponding mod menu
      */
     public abstract ArrayList<JMenuItem> getModMenuItems();
-
-    /**
-     * This function is called when the button add mod is clicked in the main menu
-     */
-    public abstract void addModMenuItemAction();
 
     /**
      * This function is called when the button remove mod is clicked in the main menu

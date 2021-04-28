@@ -416,24 +416,31 @@ public class WindowMain {
                 for(JMenuItem menuItem : ModManager.licenceMod.getModMenuItems()){
                     menu6.add(menuItem);
                 }
+                JMenu menu7 = new JMenu(ModManager.npcGamesMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.npcGamesMod.getModMenuItems()){
+                    menu7.add(menuItem);
+                }
                 MOD_MENUS.add(menu);
                 MOD_MENUS.add(menu2);
                 MOD_MENUS.add(menu3);
                 MOD_MENUS.add(menu4);
                 MOD_MENUS.add(menu5);
                 MOD_MENUS.add(menu6);
+                MOD_MENUS.add(menu7);
                 M_2_MODS.add(menu);
                 M_2_MODS.add(menu2);
                 M_2_MODS.add(menu3);
                 M_2_MODS.add(menu4);
                 M_2_MODS.add(menu5);
                 M_2_MODS.add(menu6);
+                M_2_MODS.add(menu7);
                 M_31_EXPORT.add(ModManager.genreMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.themeMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.publisherMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.engineFeatureMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.gameplayFeatureMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.licenceMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.npcGamesMod.getExportMenuItem());
             }
             modMenusInitialized = true;
         }

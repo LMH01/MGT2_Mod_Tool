@@ -56,7 +56,7 @@ public class LicenceSharer extends AbstractSimpleSharer{
     }
 
     @Override
-    String getOptionPaneMessage(String line) {
+    public String getOptionPaneMessage(String line) {
         String type = "Not found";
         if(line.contains("[BOOK]")){
             type = "Book";
