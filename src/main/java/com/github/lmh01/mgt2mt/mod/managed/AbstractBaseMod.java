@@ -2,6 +2,8 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+
 import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
     public ArrayList<JMenuItem> getInitialModMenuItems() {
         ArrayList<JMenuItem> menuItems = new ArrayList<>();
         JMenuItem addModItem = new JMenuItem(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.addMod"));
-        addModItem.addActionListener(actionEvent -> addModMenuItemAction());
+        addModItem.addActionListener(actionEvent -> this.doAddModMenuItemAction());
         JMenuItem removeModItem = new JMenuItem(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod"));
         removeModItem.addActionListener(actionEvent -> removeModMenuItemAction());
         menuItems.add(addModItem);
@@ -27,6 +29,13 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
         JMenuItem menuItem = new JMenuItem(getTypePlural());
         menuItem.addActionListener(e -> exportMenuItemAction());
         return menuItem;
+    }
+
+    public void doAddModMenuItemAction(){
+        Thread thread = new Thread(() -> {
+            addModMenuItemAction();
+        });
+        ThreadHandler.startThread(thread, "runnableAddNew" + getType());
     }
 
     /**

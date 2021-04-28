@@ -136,6 +136,17 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public void addModMenuItemAction() {
+        try {
+            ModManager.genreMod.getAnalyzer().analyzeFile();
+            ThemeFileAnalyzer.analyzeThemeFiles();
+            GenreManager.startStepByStepGuide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public JMenuItem getExportMenuItem() {
         return exportMenuItem;
     }
@@ -146,23 +157,10 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void addModMenuItemAction() {
-        Thread thread = new Thread(() -> {
-            try {
-                ModManager.genreMod.getAnalyzer().analyzeFile();
-                ThemeFileAnalyzer.analyzeThemeFiles();
-                GenreManager.startStepByStepGuide();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        ThreadHandler.startThread(thread, "runnableAddNewGenre");
-    }
-
-    @Override
     public File getFile() {
         return new File(getMGT2DataPath() + "//Genres.txt");
     }
+
     public void addRandomizedGenre(){
         Thread thread = new Thread(() -> {
             try{
