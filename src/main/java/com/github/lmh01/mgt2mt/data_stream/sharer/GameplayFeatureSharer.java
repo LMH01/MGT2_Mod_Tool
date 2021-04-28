@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.GameplayFeatureHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +84,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
                 "Unlock date: " + map.get("DATE") + "\n" +
-                "Type: " + GameplayFeatureHelper.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                "Type: " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
                 "Research point cost: " + map.get("RES POINTS") + "\n" +
                 "Research cost " + map.get("PRICE") + "\n" +
                 "Development cost: " + map.get("DEV COSTS") + "\n" +

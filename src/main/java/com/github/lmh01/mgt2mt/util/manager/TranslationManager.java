@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
-import com.github.lmh01.mgt2mt.util.helper.GameplayFeatureHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TranslationManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TranslationManager.class);
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "JA", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR","CH","CT","IT", "ES", "RO", "JA", "RU", "TU"};

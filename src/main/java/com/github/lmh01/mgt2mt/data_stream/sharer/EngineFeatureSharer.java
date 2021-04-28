@@ -3,7 +3,6 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.util.helper.EngineFeatureHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
@@ -31,7 +30,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
                 "Unlock date: " + map.get("DATE") + "\n" +
-                "Type: " + EngineFeatureHelper.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                "Type: " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
                 "Research point cost: " + map.get("RES POINTS") + "\n" +
                 "Research cost " + map.get("PRICE") + "\n" +
                 "Development cost: " + map.get("DEV COSTS") + "\n" +

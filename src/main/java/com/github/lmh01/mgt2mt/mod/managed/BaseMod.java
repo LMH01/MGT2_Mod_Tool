@@ -70,8 +70,6 @@ public interface BaseMod {
 
     JMenuItem getExportMenuItem();
 
-    JMenuItem getInitialExportMenuItem();
-
     /**
      * Returns the export/import file name under which the mod can be found
      * Eg. gameplayFeature.txt, engineFeature.txt

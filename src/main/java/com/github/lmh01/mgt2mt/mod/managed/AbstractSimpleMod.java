@@ -5,6 +5,8 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -71,6 +73,20 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseF
     @Override
     public Map<Integer, String> getFileContent() {
         return getBaseAnalyzer().getFileContent();
+    }
+
+    @Override
+    public void removeModMenuItemAction() {
+        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
+        ThreadHandler.startThread(thread, "runnableRemove" + getType());
+    }
+
+    @Override
+    public void exportMenuItemAction() {
+        Thread thread = new Thread(() -> {
+            OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
+        });
+        ThreadHandler.startThread(thread, "runnableExport" + getType());
     }
 
     /**

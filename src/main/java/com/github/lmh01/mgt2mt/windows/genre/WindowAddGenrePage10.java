@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.util.helper.GenreHelper;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
@@ -34,7 +34,7 @@ public class WindowAddGenrePage10 extends JFrame{
 
     public WindowAddGenrePage10() {
         buttonAddScreenshot.addActionListener(actionEvent -> {
-            GenreHelper.setGenreScreenshots(screenshotFiles, buttonAddScreenshot);
+            ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot);
         });
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
             if(JOptionPane.showConfirmDialog(null, "<html>Are you sure that you want to reset<br> the added screenshots?", "Reset?", JOptionPane.YES_NO_OPTION) == 0){

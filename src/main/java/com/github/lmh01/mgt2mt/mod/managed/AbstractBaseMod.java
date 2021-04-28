@@ -20,6 +20,18 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
         return menuItems;
     }
 
+    /**
+     * @return Returns a new JMenuItem that is used to be added to the export menu.
+     */
+    public JMenuItem getInitialExportMenuItem(){
+        JMenuItem menuItem = new JMenuItem(getTypePlural());
+        menuItem.addActionListener(e -> exportMenuItemAction());
+        return menuItem;
+    }
+
+    /**
+     * @return Returns an array list that contains all JMenuItems that have been created for the corresponding mod menu
+     */
     public abstract ArrayList<JMenuItem> getModMenuItems();
 
     /**
@@ -31,6 +43,11 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
      * This function is called when the button remove mod is clicked in the main menu
      */
     public abstract void removeModMenuItemAction();
+
+    /**
+     * This function is called when the button export mod is clicked in the export menu
+     */
+    public abstract void exportMenuItemAction();
 
     /**
      * @return Returns the file that is modified when the mod is added/removed

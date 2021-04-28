@@ -1,21 +1,28 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileEnAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileGeAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.ThemeEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.ThemeSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
+import java.util.HashMap;
+import java.util.Map;
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2TextFolderPath;
 
 public class ThemeMod extends AbstractSimpleMod {
@@ -122,13 +129,6 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    public JMenuItem getInitialExportMenuItem() {
-        JMenuItem menuItem = new JMenuItem(getTypePlural());
-        menuItem.addActionListener(e -> ThreadHandler.startThread(ThreadHandler.runnableExportThemes, "runnableExportThemes"));
-        return menuItem;
-    }
-
-    @Override
     public String getFileName() {
         return "theme.txt";
     }
@@ -158,17 +158,120 @@ public class ThemeMod extends AbstractSimpleMod {
 
     @Override
     public void addModMenuItemAction() {
-        ThreadHandler.startThread(ThreadHandler.runnableAddNewTheme, "runnableAddNewTheme");
-    }
+        Thread thread = new Thread(() -> {
+            try {
+                ThemeFileAnalyzer.analyzeThemeFiles();
+                final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
+                ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
+                String[] string = ModManager.genreMod.getAnalyzer().getContentByAlphabet();
+                JLabel labelEnterThemeName = new JLabel("Enter the theme name:");
+                JTextField textFieldThemeName = new JTextField();
+                JButton buttonAddTranslations = new JButton("Add translations");
+                buttonAddTranslations.setToolTipText("Click to add translations for your theme.");
+                buttonAddTranslations.addActionListener(actionEvent2 -> {
+                    if(!arrayListThemeTranslations[0].isEmpty()){
+                        if(JOptionPane.showConfirmDialog(null, "Theme translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                            arrayListThemeTranslations[0].clear();
+                            arrayListThemeTranslations[0] = TranslationManager.getTranslationsArrayList();
+                        }
+                    }else{
+                        arrayListThemeTranslations[0] = TranslationManager.getTranslationsArrayList();
+                    }
+                });
+                JPanel panelChooseViolenceLevel = new JPanel();
+                JLabel labelViolenceLevel = new JLabel("Choose the violence level:");
+                JComboBox comboBoxViolenceLevel = new JComboBox();
+                comboBoxViolenceLevel.setToolTipText("<html>This declares how much the age rating should be influenced when a game is made with this topic<br>0 - The theme will not influence your age rating<br>1-3 - The higher the number the more the age rating of your game with this topic will be influenced");
+                comboBoxViolenceLevel.setModel(new DefaultComboBoxModel<>(new String[]{"0", "1", "2", "3"}));
+                panelChooseViolenceLevel.add(labelViolenceLevel);
+                panelChooseViolenceLevel.add(comboBoxViolenceLevel);
+                JLabel labelExplainList = new JLabel("<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)");
+                JList<String> listAvailableThemes = new JList<>(string);
+                listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
+                listAvailableThemes.setVisibleRowCount(-1);
+                JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
+                scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
-    @Override
-    public void removeModMenuItemAction() {
-        ThreadHandler.startThread(ThreadHandler.runnableRemoveTheme, "runnableRemoveTheme");
+                Object[] params = {labelEnterThemeName, textFieldThemeName, buttonAddTranslations, panelChooseViolenceLevel, labelExplainList, scrollPaneAvailableGenres};
+                ArrayList<String> arrayListCompatibleGenreNames = new ArrayList<>();
+                boolean breakLoop = false;
+                while(!breakLoop){
+                    if(JOptionPane.showConfirmDialog(null, params, "Add new theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                        if(listAvailableThemes.getSelectedValuesList().size() != 0){
+                            if(!textFieldThemeName.getText().isEmpty()){
+                                if(!ModManager.themeMod.getAnalyzerEn().getFileContent().containsValue(textFieldThemeName.getText()) && !ModManager.themeMod.getAnalyzerGe().getFileContent().containsValue(textFieldThemeName.getText())){
+                                    if(!textFieldThemeName.getText().matches(".*\\d.*")){
+                                        arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
+                                        for(Map<String, String> map : ModManager.genreMod.getAnalyzer().getFileContent()){
+                                            for(String name : arrayListCompatibleGenreNames){
+                                                if(map.get("NAME EN").equals(name)){
+                                                    arrayListCompatibleGenreIds.add(Integer.parseInt(map.get("ID")));
+                                                }
+                                            }
+                                        }
+                                        Map<String, String> themeTranslations = new HashMap<>();
+                                        int currentTranslationKey = 0;
+                                        if(arrayListThemeTranslations[0].isEmpty()){
+                                            for(String translationKey : TranslationManager.TRANSLATION_KEYS){
+                                                themeTranslations.put("NAME " + translationKey, textFieldThemeName.getText());
+                                            }
+                                        }else{
+                                            for(String translation : arrayListThemeTranslations[0]){
+                                                themeTranslations.put("NAME " + TranslationManager.TRANSLATION_KEYS[currentTranslationKey], translation);
+                                                currentTranslationKey++;
+                                            }
+                                        }
+                                        themeTranslations.put("NAME EN", textFieldThemeName.getText());
+                                        if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
+                                            Backup.createThemeFilesBackup(false, true);
+                                            ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
+                                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
+                                            JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
+                                            breakLoop = true;
+                                        }
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Unable to add theme:\nThe theme name can not contain numbers!", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Unable to add theme:\nThe selected name is already in use.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                                    arrayListCompatibleGenreNames.clear();
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Unable to add theme:\nPlease enter a name for your theme.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Unable to add theme:\nPlease select at least one genre.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }else{
+                        breakLoop = true;
+                    }
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Unable to add theme:\n\n" + e.getMessage(), "Error while adding theme", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        });
+        ThreadHandler.startThread(thread, "runnableAddNewTheme");
     }
 
     @Override
     public File getFile() {
         return getFileGe();
+    }
+
+    @Override
+    public void removeModMenuItemAction() {
+        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getAnalyzerEn().getCustomContentString(), getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
+        ThreadHandler.startThread(thread, "runnableRemove" + getType());
+    }
+
+    @Override
+    public void exportMenuItemAction() {
+        Thread thread = new Thread(() -> {
+            OperationHelper.process((string) -> ModManager.themeMod.getSharer().exportMod(string, false), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
+        });
+        ThreadHandler.startThread(thread, "runnableExport" + getType());
     }
 
     public File getFileGe() {

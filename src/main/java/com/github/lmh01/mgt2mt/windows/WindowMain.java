@@ -153,7 +153,7 @@ public class WindowMain {
         setSafetyFeatureComponents();
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
-        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableReplacePublisherWithRealPublishers, "runnableReplacePublisherWithRealPublishers"));
+        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherMod.realPublishers());
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));

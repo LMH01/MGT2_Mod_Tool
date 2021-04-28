@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
@@ -15,32 +14,12 @@ public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
     private static String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
-    public static Runnable runnableExportLicence = () -> OperationHelper.process((string) -> ModManager.licenceMod.getSharer().exportMod(string, false), ModManager.licenceMod.getAnalyzer().getCustomContentString(), ModManager.licenceMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-    public static Runnable runnableExportEngineFeatures = () -> OperationHelper.process((string) -> ModManager.engineFeatureMod.getSharer().exportMod(string, false), ModManager.engineFeatureMod.getAnalyzer().getCustomContentString(), ModManager.engineFeatureMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-    public static Runnable runnableExportGameplayFeatures = () -> OperationHelper.process((string) -> ModManager.gameplayFeatureMod.getSharer().exportMod(string, false), ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString(), ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-    public static Runnable runnableExportThemes = () -> OperationHelper.process((string) -> ModManager.themeMod.getSharer().exportMod(string, false), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-    public static Runnable runnableExportPublisher = () -> OperationHelper.process((string) -> ModManager.publisherMod.getSharer().exportMod(string, false), ModManager.publisherMod.getAnalyzer().getCustomContentString(), ModManager.publisherMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.publisher"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-    public static Runnable runnableExportGenre = () -> OperationHelper.process((string) -> ModManager.genreMod.getSharer().exportMod(string, false), ModManager.genreMod.getAnalyzer().getCustomContentString(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.genre"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
     public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
     public static Runnable runnableUninstall = Uninstaller::uninstall;
     public static Runnable runnableImportAll = SharingManager::importAll;
     public static Runnable runnableShowActiveMods = ActiveMods::showActiveMods;
     public static Runnable runnableDeleteExports = Uninstaller::deleteAllExports;
-    public static Runnable runnableReplacePublisherWithRealPublishers = PublisherHelper::realPublishers;
     public static Runnable runnableImportFromURL = ImportFromURLHelper::importFromURL;
-    public static Runnable runnableRemoveGenre = () -> OperationHelper.process(ModManager.genreMod.getEditor()::removeMod, ModManager.genreMod.getAnalyzer().getCustomContentString(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.genre"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableRemoveTheme = () -> OperationHelper.process(ModManager.themeMod.getEditor()::removeMod, ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableRemovePublisher = () -> OperationHelper.process(ModManager.publisherMod.getEditor()::removeMod, ModManager.publisherMod.getAnalyzer().getCustomContentString(), ModManager.publisherMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.publisher"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableRemoveGameplayFeature = () -> OperationHelper.process(ModManager.gameplayFeatureMod.getEditor()::removeMod, ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString(), ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.gameplayFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableRemoveEngineFeature = () -> OperationHelper.process(ModManager.engineFeatureMod.getEditor()::removeMod, ModManager.engineFeatureMod.getAnalyzer().getCustomContentString(), ModManager.engineFeatureMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.engineFeature"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableRemoveLicence = () -> OperationHelper.process(ModManager.licenceMod.getEditor()::removeMod, ModManager.licenceMod.getAnalyzer().getCustomContentString(), ModManager.licenceMod.getAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText.licence"), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-    public static Runnable runnableAddNewGenre = NewModsHandler::addGenre;
-    public static Runnable runnableAddRandomizedGenre = GenreHelper::addRandomizedGenre;
-    public static Runnable runnableAddNewTheme = NewModsHandler::addTheme;
-    public static Runnable runnableAddNewPublisher = NewModsHandler::addPublisher;
-    public static Runnable runnableAddNewLicence = LicenceHelper::addLicence;
-    public static Runnable runnableAddNewEngineFeature = EngineFeatureHelper::addEngineFeature;
-    public static Runnable runnableAddNewGameplayFeature = GameplayFeatureHelper::addGameplayFeature;
     public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
     public static Runnable runnableNPCGamesList = NPCGameListHandler::modifyNPCGameList;
     public static Runnable runnableCreateRestorePoint = RestorePointHelper::setRestorePoint;
@@ -49,7 +28,7 @@ public class ThreadHandler {
     public static Runnable runnableCreateSaveGameBackup = () -> Backup.createBackup("save_game");
     public static Runnable runnableRestoreInitialBackup = WindowMain::restoreInitialBackup;
     public static Runnable runnableRestoreLatestBackup = WindowMain::restoreLatestBackup;
-    public static Runnable runnableRestoreSaveGameBackup = () -> Backup.restoreSaveGameBackup();
+    public static Runnable runnableRestoreSaveGameBackup = Backup::restoreSaveGameBackup;
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();

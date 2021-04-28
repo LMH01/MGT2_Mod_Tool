@@ -1,13 +1,12 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.helper.GenreHelper;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -37,7 +36,7 @@ public class WindowAddGenrePage11 extends JFrame{
 
     public WindowAddGenrePage11() {
         buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = GenreHelper.getGenreImageFilePath(false, true, textFieldImagePath);
+            String imageFilePath = ModManager.genreMod.getGenreImageFilePath(false, true, textFieldImagePath);
             if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
@@ -55,7 +54,7 @@ public class WindowAddGenrePage11 extends JFrame{
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"));
                 }
             }else{
-                String imageFilePath = GenreHelper.getGenreImageFilePath(true, false, textFieldImagePath);
+                String imageFilePath = ModManager.genreMod.getGenreImageFilePath(true, false, textFieldImagePath);
                 if(!imageFilePath.equals("error")){
                     genreIcon = new File(imageFilePath);
                     FRAME.dispose();

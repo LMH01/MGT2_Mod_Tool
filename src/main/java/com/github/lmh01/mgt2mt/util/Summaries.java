@@ -1,8 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.util.helper.EngineFeatureHelper;
-import com.github.lmh01.mgt2mt.util.helper.GameplayFeatureHelper;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,7 +18,7 @@ public class Summaries {
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
                 "Unlock date: " + map.get("DATE") + "\n" +
-                "Type: " + EngineFeatureHelper.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                "Type: " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
                 "Research point cost: " + map.get("RES POINTS") + "\n" +
                 "Research cost " + map.get("PRICE") + "\n" +
                 "Development cost: " + map.get("DEV COSTS") + "\n" +
@@ -90,7 +88,7 @@ public class Summaries {
                 "Name: " + map.get("NAME EN") + "\n" +
                 "Description: " + map.get("DESC EN") + "\n" +
                 "Unlock date: " + map.get("DATE") + "\n" +
-                "Type: " + GameplayFeatureHelper.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                "Type: " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
                 "Research point cost: " + map.get("RES POINTS") + "\n" +
                 "Research cost " + map.get("PRICE") + "\n" +
                 "Development cost: " + map.get("DEV COSTS") + "\n" +
