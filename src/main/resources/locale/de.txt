@@ -176,6 +176,8 @@ sharer.theme.exportSuccessful|Das folgende Thema wurde exportiert:
 sharer.theme.optionPaneMessage.main|Dein Thema is bereit:
 sharer.licence.exportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
 sharer.licence.exportSuccessful|Die folgende Lizenz wurde exportiert:
+sharer.npcGames.exportFailed.alreadyExported|Das folgende Npc Spiel wurde nicht exportiert, da es bereits exportiert wurde:
+sharer.npcGames.exportSuccessful|Das folgende Npc Spiel wurde exportiert:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
 sharer.importMod.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
 sharer.importMod.alreadyExists.short|bereits vorhanden ist

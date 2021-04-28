@@ -2,6 +2,9 @@ package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.SimpleAnalyzer;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -67,6 +70,8 @@ public abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions,
         if(addMod){
             bw.write(System.getProperty("line.separator"));
             bw.write(mod);
+        }else{
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
         }
         bw.close();
         return true;
