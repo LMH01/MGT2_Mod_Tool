@@ -170,7 +170,7 @@ public class GenreManager {
                     ModManager.gameplayFeatureMod.getEditor().addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, genreIcon, showMessages);
                     if(showSummaryFromImport){
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + ": " + map.get("NAME EN"));
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN"));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

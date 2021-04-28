@@ -124,7 +124,6 @@ analyzer.themeGe.getCustomContentString.progressBar|Scannen nach modifizierten T
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
 modManager.gameplayFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Gameplay feature verfügbar
-modManager.gameplayFeature.windowMain.export.noExportAvailable|
 modManager.engineFeature.windowMain.modButton.addMod|Engine Feature hinzufügen
 modManager.engineFeature.windowMain.modButton.removeMod|Engine Feature entfernen
 modManager.engineFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Engine feature verfügbar
@@ -140,6 +139,29 @@ modManager.publisher.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein 
 modManager.theme.windowMain.modButton.addMod|Thema hinzufügen
 modManager.theme.windowMain.modButton.removeMod|Thema entfernen
 modManager.theme.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Thema verfügbar
+
+sharer.exportFailed.generalError.firstPart|Export nicht möglich:
+sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
+sharer.engineFeature.exportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
+sharer.engineFeature.exportSuccessful|Das folgende Engine Feature wurde exportiert:
+sharer.engineFeature.optionPaneMessage.main|Dein Engine Feature ist bereit:
+sharer.gameplayFeature.exportFailed.alreadyExported|Das folgende Gameplay Feature wurde nicht exportiert, da es bereits exportiert wurde:
+sharer.gameplayFeature.exportSuccessful|Das folgende Gameplay Feature wurde exportiert:
+sharer.publisher.exportFailed.alreadyExported|Der folgende Publisher wurde nicht exportiert, da er bereits exportiert wurde:
+sharer.publisher.exportSuccessful|Der folgende Publisher wurde exportiert:
+sharer.genre.exportFailed.alreadyExported|Das folgende Genre wurde nicht exportiert, da es bereits exportiert wurde:
+sharer.genre.exportSuccessful|Das folgende Genre wurde exportiert:
+sharer.theme.exportSuccessful|Das folgende Thema wurde exportiert:
+sharer.theme.optionPaneMessage.main|Dein Thema is bereit:
+sharer.licence.exportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
+sharer.licence.exportSuccessful|Die folgende Lizenz wurde exportiert:
+sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
+sharer.importMod.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
+sharer.importMod.alreadyExists.short|bereits vorhanden ist
+sharer.importMod.nameTaken|Name ist bereits vergeben
+sharer.importMod.couldNotBeImported.firstPart|konnte nicht importiert werden
+sharer.importMod.couldNotBeImported.secondPart|nicht mit der aktuellen Mod Tool Version kompatibel ist
+sharer.importMod.couldNotBeImported.thirdPart|wurde exportiert in Version:
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?

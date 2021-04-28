@@ -83,7 +83,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + ": " + map.get("NAME EN"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("NAME EN"));
         }
         return "true";
     }

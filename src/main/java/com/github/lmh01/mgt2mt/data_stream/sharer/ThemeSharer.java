@@ -112,7 +112,7 @@ public class ThemeSharer extends AbstractSimpleSharer{
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);
         }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + ": " + map.get("NAME EN"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
         return "true";
     }
 

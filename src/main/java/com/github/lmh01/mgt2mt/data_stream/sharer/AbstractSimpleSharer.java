@@ -101,7 +101,7 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + getAnalyzer().getReplacedLine(importMap.get("LINE")) + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + ": " + getAnalyzer().getReplacedLine(importMap.get("LINE")));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + getAnalyzer().getReplacedLine(importMap.get("LINE")));
         }
         return "true";
     }

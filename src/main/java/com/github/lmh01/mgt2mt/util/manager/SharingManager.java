@@ -364,13 +364,13 @@ public class SharingManager {
                     Map<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> selectedMods = new HashMap<>();
                     Map<AbstractBaseMod, AtomicBoolean> disableMods = new HashMap<>();
                     for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
-                        TextAreaHelper.appendText(advancedMod.getType() + importModFiles.get(advancedMod).size());
+                        TextAreaHelper.appendText(advancedMod.getType() + ": " + importModFiles.get(advancedMod).size());
                         importModPanels.put(advancedMod, new JPanel());
                         selectedMods.put(advancedMod, new AtomicReference<>(new ArrayList<>()));
                         disableMods.put(advancedMod, new AtomicBoolean(true));
                     }
                     for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
-                        TextAreaHelper.appendText(simpleMod.getType() + importModFiles.get(simpleMod).size());
+                        TextAreaHelper.appendText(simpleMod.getType() + ": " + importModFiles.get(simpleMod).size());
                         importModPanels.put(simpleMod, new JPanel());
                         selectedMods.put(simpleMod, new AtomicReference<>(new ArrayList<>()));
                         disableMods.put(simpleMod, new AtomicBoolean(true));
@@ -449,14 +449,19 @@ public class SharingManager {
                             ProgressBarHelper.initializeProgressBar(0, getNumberOfModsToImport(selectedMods, importModFiles), I18n.INSTANCE.get("progressBar.importingMods"));
                             for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
                                 if(!importAllFiles(importModFiles.get(advancedMod), selectedMods.get(advancedMod).get(), disableMods.get(advancedMod).get(), I18n.INSTANCE.get("commonText." + advancedMod.getMainTranslationKey()), (string) -> advancedMod.getBaseSharer().importMod(string, !showMessageDialogs), advancedMod.getBaseSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
-                                    LOGGER.info("Error occurred wile importing " + advancedMod.getType());
-                                    errorOccurred = true;
+                                    if(importModFiles.get(advancedMod).size() > 0){
+                                        LOGGER.info("Error occurred wile importing " + advancedMod.getType());
+                                        errorOccurred = true;
+                                    }
                                 }
                             }
                             for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
                                 if(!importAllFiles(importModFiles.get(simpleMod), selectedMods.get(simpleMod).get(), disableMods.get(simpleMod).get(), I18n.INSTANCE.get("commonText." + simpleMod.getMainTranslationKey()), (string) -> simpleMod.getBaseSharer().importMod(string, !showMessageDialogs), simpleMod.getBaseSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                     LOGGER.info("Error occurred wile importing " + simpleMod.getType());
-                                    errorOccurred = true;
+                                    if(importModFiles.get(simpleMod).size() > 0){
+                                        LOGGER.info("Error occurred wile importing " + simpleMod.getType());
+                                        errorOccurred = true;
+                                    }
                                 }
                             }
                             if(errorOccurred){
