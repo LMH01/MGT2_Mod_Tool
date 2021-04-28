@@ -25,21 +25,21 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    public String getOptionPaneMessage(Map<String, String> map) {//TODO Übersetzung hinzufügen
+    public String getOptionPaneMessage(Map<String, String> map) {
         String messageBody = I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
-                "Name: " + map.get("NAME EN") + "\n" +
-                "Description: " + map.get("DESC EN") + "\n" +
-                "Unlock date: " + map.get("DATE") + "\n" +
-                "Type: " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
-                "Research point cost: " + map.get("RES POINTS") + "\n" +
-                "Research cost " + map.get("PRICE") + "\n" +
-                "Development cost: " + map.get("DEV COSTS") + "\n" +
-                "Tech level: " + map.get("TECHLEVEL") + "\n" +
-                "\n*Points*\n\n" +
-                "Gameplay: " + map.get("GAMEPLAY") + "\n" +
-                "Graphic: " + map.get("GRAPHIC") + "\n" +
-                "Sound: " + map.get("SOUND") + "\n" +
-                "Tech: " + map.get("TECH") + "\n";
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
+                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
+                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
+                I18n.INSTANCE.get("commonText.techLevel") + ": " + map.get("TECHLEVEL") + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.points") + "*\n\n" +
+                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "\n" +
+                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "\n" +
+                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "\n" +
+                I18n.INSTANCE.get("commonText.tech") + ": " + map.get("TECH") + "\n";
         return messageBody;
     }
 

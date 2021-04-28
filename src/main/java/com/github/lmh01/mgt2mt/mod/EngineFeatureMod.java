@@ -337,7 +337,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                         newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
                         newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
                         newEngineFeature.put("TECH", spinnerTech.getValue().toString());
-                        boolean addFeature = Summaries.showEngineFeatureMessage(newEngineFeature);
+                        boolean addFeature = Summaries.showSummary(ModManager.engineFeatureMod.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                         if(addFeature){
                             ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
                             JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);

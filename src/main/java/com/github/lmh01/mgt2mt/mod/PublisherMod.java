@@ -260,15 +260,15 @@ public class PublisherMod extends AbstractAdvancedMod {
                             }else{
                                 logoId = CompanyLogoAnalyzer.getLogoNumber();
                             }
-                            if(JOptionPane.showConfirmDialog(null, "Add this publisher?\n" +
-                                    "\nName: " + textFieldName.getText() +
-                                    "\nDate: " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString() +
-                                    "\nPic: See top left" +
-                                    "\nDeveloper: " + checkBoxIsDeveloper.isSelected() +
-                                    "\nPublisher: " + checkBoxIsPublisher.isSelected() +
-                                    "\nMarketShare: " + spinnerMarketShare.getValue().toString() +
-                                    "\nShare: " + spinnerShare.getValue().toString() +
-                                    "\nGenre: " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+                            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.firstPart") + "\n\n" +
+                                    I18n.INSTANCE.get("commonText.name") + ": " + textFieldName.getText() + "\n" +
+                                    I18n.INSTANCE.get("commonText.date") + ": " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString() + "\n" +
+                                    I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "\n" +
+                                    I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.developer") + ": " + Utils.getTranslatedValueFromBoolean(checkBoxIsDeveloper.isSelected()) + "\n" +
+                                    I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher") + ": " + Utils.getTranslatedValueFromBoolean(checkBoxIsPublisher.isSelected()) + "\n" +
+                                    I18n.INSTANCE.get("commonText.marketShare") + ": " + spinnerMarketShare.getValue().toString() + "\n" +
+                                    I18n.INSTANCE.get("commonText.share") + ": " + spinnerShare.getValue().toString() + "\n" +
+                                    I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
                                 HashMap<String, String> hashMap = new HashMap<>();
                                 hashMap.put("ID", Integer.toString(ModManager.publisherMod.getAnalyzer().getFreeId()));
                                 hashMap.put("NAME EN", textFieldName.getText());

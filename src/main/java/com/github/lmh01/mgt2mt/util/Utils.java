@@ -555,4 +555,15 @@ public class Utils {
 
         return String.format("%02d:%02d", minutes, seconds);
     }
+
+    /**
+     * @return Returns the value of the boolean translated
+     */
+    public static String getTranslatedValueFromBoolean(boolean value){
+        if(value){
+            return I18n.INSTANCE.get("commonText.yes");
+        }else{
+            return I18n.INSTANCE.get("commonText.no");
+        }
+    }
 }

@@ -125,13 +125,13 @@ public class ThemeMod extends AbstractSimpleMod {
             final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
             ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
             String[] string = ModManager.genreMod.getAnalyzer().getContentByAlphabet();
-            JLabel labelEnterThemeName = new JLabel("Enter the theme name:");
+            JLabel labelEnterThemeName = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.themeName"));
             JTextField textFieldThemeName = new JTextField();
-            JButton buttonAddTranslations = new JButton("Add translations");
-            buttonAddTranslations.setToolTipText("Click to add translations for your theme.");
+            JButton buttonAddTranslations = new JButton(I18n.INSTANCE.get("commonText.addNameTranslations"));
+            buttonAddTranslations.setToolTipText(I18n.INSTANCE.get("mod.theme.addTheme.components.button.addTranslations.toolTip"));
             buttonAddTranslations.addActionListener(actionEvent2 -> {
                 if(!arrayListThemeTranslations[0].isEmpty()){
-                    if(JOptionPane.showConfirmDialog(null, "Theme translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                         arrayListThemeTranslations[0].clear();
                         arrayListThemeTranslations[0] = TranslationManager.getTranslationsArrayList();
                     }
@@ -140,13 +140,13 @@ public class ThemeMod extends AbstractSimpleMod {
                 }
             });
             JPanel panelChooseViolenceLevel = new JPanel();
-            JLabel labelViolenceLevel = new JLabel("Choose the violence level:");
+            JLabel labelViolenceLevel = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.violenceLevel"));
             JComboBox comboBoxViolenceLevel = new JComboBox();
-            comboBoxViolenceLevel.setToolTipText("<html>This declares how much the age rating should be influenced when a game is made with this topic<br>0 - The theme will not influence your age rating<br>1-3 - The higher the number the more the age rating of your game with this topic will be influenced");
+            comboBoxViolenceLevel.setToolTipText(I18n.INSTANCE.get("mod.theme.addTheme.components.comboBox.violenceLevel"));
             comboBoxViolenceLevel.setModel(new DefaultComboBoxModel<>(new String[]{"0", "1", "2", "3"}));
             panelChooseViolenceLevel.add(labelViolenceLevel);
             panelChooseViolenceLevel.add(comboBoxViolenceLevel);
-            JLabel labelExplainList = new JLabel("<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)");
+            JLabel labelExplainList = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.explainList"));
             JList<String> listAvailableThemes = new JList<>(string);
             listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
@@ -158,7 +158,7 @@ public class ThemeMod extends AbstractSimpleMod {
             ArrayList<String> arrayListCompatibleGenreNames = new ArrayList<>();
             boolean breakLoop = false;
             while(!breakLoop){
-                if(JOptionPane.showConfirmDialog(null, params, "Add new theme", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.theme.addTheme.main.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         if(!textFieldThemeName.getText().isEmpty()){
                             if(!ModManager.themeMod.getAnalyzerEn().getFileContent().containsValue(textFieldThemeName.getText()) && !ModManager.themeMod.getAnalyzerGe().getFileContent().containsValue(textFieldThemeName.getText())){
@@ -184,7 +184,7 @@ public class ThemeMod extends AbstractSimpleMod {
                                         }
                                     }
                                     themeTranslations.put("NAME EN", textFieldThemeName.getText());
-                                    if(JOptionPane.showConfirmDialog(null, "Do you wan't to add this theme?:\n" + textFieldThemeName.getText(), "Add this theme?", JOptionPane.YES_NO_OPTION) == 0){
+                                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false, true);
                                         ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
@@ -192,24 +192,24 @@ public class ThemeMod extends AbstractSimpleMod {
                                         breakLoop = true;
                                     }
                                 }else{
-                                    JOptionPane.showMessageDialog(null, "Unable to add theme:\nThe theme name can not contain numbers!", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n" + I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme.error4"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 }
                             }else{
-                                JOptionPane.showMessageDialog(null, "Unable to add theme:\nThe selected name is already in use.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n" + I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme.error3"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 arrayListCompatibleGenreNames.clear();
                             }
                         }else{
-                            JOptionPane.showMessageDialog(null, "Unable to add theme:\nPlease enter a name for your theme.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n" + I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme.error2"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, "Unable to add theme:\nPlease select at least one genre.", "Unable to add theme", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n" + I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme.error1"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     breakLoop = true;
                 }
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Unable to add theme:\n\n" + e.getMessage(), "Error while adding theme", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n\n" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }

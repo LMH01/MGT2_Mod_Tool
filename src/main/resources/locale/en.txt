@@ -43,14 +43,24 @@ commonText.name.var1|Name
 commonText.description|Description
 commonText.description.var1|Description
 commonText.unlockDate|Unlock date
+commonText.date|Date
+commonText.type|Type
 commonText.researchPointCost|Research point cost
 commonText.researchCost|Research cost
 commonText.developmentCost|Development cost
+commonText.marketShare|Market share
+commonText.share|Share
+commonText.techLevel|Tech level
+commonText.points|Points
 commonText.targetGroup|Target group
 commonText.compatibleGenres|Compatible genres
+commonText.badGenres|Bad genres
+commonText.goodGenres|Good genres
 commonText.compatibleThemes|Compatible themes
 commonText.goodGameplayFeatures|Good gameplay features
 commonText.badGameplayFeatures|Bad gameplay features
+commonText.arcadeCompatibility|Arcade compatibility
+commonText.mobileCompatibility|Mobile compatibility
 commonText.designFocus|Design focus
 commonText.gameLength|Game length
 commonText.gameDepth|Game depth
@@ -69,6 +79,7 @@ commonText.gameplay|Gameplay
 commonText.graphic|Graphic
 commonText.sound|Sound
 commonText.control|Control
+commonText.tech|Tech
 commonText.kid|Kid
 commonText.teen|Teen
 commonText.adult|Adult
@@ -99,6 +110,8 @@ commonText.addMod|Add mod?
 commonText.unableToAdd|Unable to add:
 commonText.modAlreadyExists|The mod already exists!
 commonText.chooseGenreFirst|Please select at least one genre first!
+commonText.yes|yes
+commonText.no|no
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -156,6 +169,29 @@ modManager.npcGames.windowMain.modButton.removeMod|Remove npc game
 modManager.npcGames.windowMain.modButton.removeMod.toolTip|Disabled -> No npc game available
 modManager.general.enterNameFirst|Please enter a name first!
 
+mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
+mod.publisher.addMod.optionPaneMessage.developer|Developer
+mod.publisher.addMod.optionPaneMessage.publisher|Publisher
+mod.licence.addMod.optionPaneMessage.book|Book
+mod.licence.addMod.optionPaneMessage.movie|Movie
+mod.licence.addMod.optionPaneMessage.sport|Sport
+mod.engineFeature.addMod.title|Add engine feature?
+mod.gameplayFeature.addMod.title|Add gameplay feature?
+mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Your gameplay feature is ready:
+mod.gameplayFeature.addMod.optionPaneMessage.none|None
+mod.theme.addTheme.unableToAddTheme|Unable to add theme:
+mod.theme.addTheme.unableToAddTheme.error1|Please select at least one genre.
+mod.theme.addTheme.unableToAddTheme.error2|Please enter a name for your theme.
+mod.theme.addTheme.unableToAddTheme.error3|The selected name is already in use.
+mod.theme.addTheme.unableToAddTheme.error4|The theme name can not contain numbers!
+mod.theme.addTheme.addTheme.question|Do you want to add this theme?
+mod.theme.addTheme.addTheme.title|Add this theme?
+mod.theme.addTheme.main.title|Add new theme
+mod.theme.addTheme.components.label.themeName|Enter the theme name:
+mod.theme.addTheme.components.button.addTranslations.toolTip|Click to add translations for your theme
+mod.theme.addTheme.components.label.violenceLevel|Choose the violence level:
+mod.theme.addTheme.components.comboBox.violenceLevel|<html>This declares how much the age rating should be influenced when a game is made with this topic<br>0 - The theme will not influence your age rating<br>1-3 - The higher the number the more the age rating of your game with this topic will be influenced
+mod.theme.addTheme.components.label.explainList|<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)
 mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
 nod.npcGames.addMod.button.label1|Select genres
 nod.npcGames.addMod.button.label2|Genres selected

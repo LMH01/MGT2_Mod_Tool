@@ -57,13 +57,13 @@ public class LicenceSharer extends AbstractSimpleSharer{
 
     @Override
     public String getOptionPaneMessage(String line) {
-        String type = "Not found";
+        String type = I18n.INSTANCE.get("settings.notFound");
         if(line.contains("[BOOK]")){
-            type = "Book";
+            type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book");
         }else if(line.contains("MOVIE")){
-            type = "Movie";
+            type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie");
         }else if(line.contains("SPORT")){
-            type = "Sport";
+            type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport");
         }
         String message = I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + getAnalyzer().getReplacedLine(line) + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + type;
         return message;

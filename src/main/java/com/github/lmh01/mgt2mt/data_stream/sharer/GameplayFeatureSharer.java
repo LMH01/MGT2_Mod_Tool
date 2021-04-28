@@ -47,7 +47,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
         StringBuilder badGenresFeatures = new StringBuilder();
         boolean firstBadFeature = true;
         if(map.get("BAD").equals("")){
-            badGenresFeatures.append("None");
+            badGenresFeatures.append(I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.none"));
         }else{
             for(String string : Utils.getEntriesFromString(map.get("BAD"))){
                 if(!firstBadFeature){
@@ -61,7 +61,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
         StringBuilder goodGenresFeatures = new StringBuilder();
         boolean firstGoodFeature = true;
         if(map.get("GOOD").equals("")){
-            goodGenresFeatures.append("None");
+            goodGenresFeatures.append(I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.none"));
         }else{
             for(String string : Utils.getEntriesFromString(map.get("GOOD"))){
                 if(!firstGoodFeature){
@@ -72,31 +72,31 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer{
                 goodGenresFeatures.append(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(string)));
             }
         }
-        String arcadeCompatibility = "yes";
-        String mobileCompatibility = "yes";
+        String arcadeCompatibility = I18n.INSTANCE.get("commonText.yes");
+        String mobileCompatibility = I18n.INSTANCE.get("commonText.yes");
         if(map.get("NO_ARCADE") != null){
-            arcadeCompatibility = "no";
+            arcadeCompatibility = I18n.INSTANCE.get("commonText.no");
         }
         if(map.get("NO_MOBILE") != null){
-            mobileCompatibility = "no";
+            mobileCompatibility = I18n.INSTANCE.get("commonText.no");
         }
-        String messageBody = "Your gameplay feature is ready:\n\n" +//TODO Übersetzung hinzufügen
-                "Name: " + map.get("NAME EN") + "\n" +
-                "Description: " + map.get("DESC EN") + "\n" +
-                "Unlock date: " + map.get("DATE") + "\n" +
-                "Type: " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
-                "Research point cost: " + map.get("RES POINTS") + "\n" +
-                "Research cost " + map.get("PRICE") + "\n" +
-                "Development cost: " + map.get("DEV COSTS") + "\n" +
-                "\n*Bad genres*\n\n" + badGenresFeatures.toString() + "\n" +
-                "\n*Good genres*\n\n" + goodGenresFeatures.toString() + "\n" +
-                "\n*Points*\n\n" +
-                "Gameplay: " + map.get("GAMEPLAY") + "\n" +
-                "Graphic: " + map.get("GRAPHIC") + "\n" +
-                "Sound: " + map.get("SOUND") + "\n" +
-                "Tech: " + map.get("TECH") + "\n\n" +
-                "Arcade compatibility: " + arcadeCompatibility + "\n" +
-                "Mobile compatibility: " + mobileCompatibility + "\n";
+        String messageBody = I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.firstPart") + "\n\n" +
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
+                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
+                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.badGenres") + "*\n\n" + badGenresFeatures.toString() + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.goodGenres") + "*\n\n" + goodGenresFeatures.toString() + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.points") + "*\n\n" +
+                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "\n" +
+                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "\n" +
+                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "\n" +
+                I18n.INSTANCE.get("commonText.tech") + ": " + map.get("TECH") + "\n" +
+                I18n.INSTANCE.get("commonText.arcadeCompatibility") + ": " + arcadeCompatibility + "\n" +
+                I18n.INSTANCE.get("commonText.mobileCompatibility") + ": " + mobileCompatibility + "\n";
         return messageBody;
     }
 
