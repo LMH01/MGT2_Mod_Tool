@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import javax.swing.*;
 
 public class ActiveMods {
@@ -10,6 +11,7 @@ public class ActiveMods {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(I18n.INSTANCE.get("window.showActiveMods.message.firstPart")).append(System.getProperty("line.separator")).append(System.getProperty("line.separator"));
         boolean noModsActive = true;
+        WindowMain.checkActionAvailability();
         for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
             String[] customContent = advancedMod.getBaseAnalyzer().getCustomContentString(true);
             if(customContent.length > 0){
