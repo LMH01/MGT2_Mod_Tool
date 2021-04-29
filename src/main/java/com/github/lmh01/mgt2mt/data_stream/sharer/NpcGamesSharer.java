@@ -56,10 +56,11 @@ public class NpcGamesSharer extends AbstractSimpleSharer{
             }else{
                 genreNamesToDisplay.append(", ");
             }
-            genreNamesToDisplay.append(ModManager.genreMod.getBaseAnalyzer().getContentNameById(integer));
-            if(currentInt == 10){
-                genreNamesToDisplay.append(System.getProperty("<br>"));
+            if(currentInt == 8){
+                genreNamesToDisplay.append("<br>");
+                currentInt = 0;
             }
+            genreNamesToDisplay.append(ModManager.genreMod.getBaseAnalyzer().getContentNameById(integer));
             currentInt++;
         }
         message.append(ModManager.genreMod.getTypePlural()).append(": ").append(genreNamesToDisplay.toString());

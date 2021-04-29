@@ -112,6 +112,7 @@ commonText.modAlreadyExists|The mod already exists!
 commonText.chooseGenreFirst|Please select at least one genre first!
 commonText.yes|yes
 commonText.no|no
+commonText.scrollExplanation|(Tip: Hold STRG and click with your mouse)
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -193,8 +194,7 @@ mod.theme.addTheme.components.label.violenceLevel|Choose the violence level:
 mod.theme.addTheme.components.comboBox.violenceLevel|<html>This declares how much the age rating should be influenced when a game is made with this topic<br>0 - The theme will not influence your age rating<br>1-3 - The higher the number the more the age rating of your game with this topic will be influenced
 mod.theme.addTheme.components.label.explainList|<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)
 mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
-nod.npcGames.addMod.button.label1|Select genres
-nod.npcGames.addMod.button.label2|Genres selected
+mod.npcGames.addMod.components.labelName|Enter the name for the npc game:
 mod.npcGames.addMod.optionPaneMessage.firstPart|Add this npc game?
 
 sharer.exportFailed.generalError.firstPart|Unable to export:

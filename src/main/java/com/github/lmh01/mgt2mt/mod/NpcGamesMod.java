@@ -15,9 +15,11 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
@@ -76,30 +78,23 @@ public class NpcGamesMod extends AbstractSimpleMod {
 
     @Override
     public void menuActionAddMod() {
-        final ArrayList<Integer>[] genreIds = new ArrayList[]{new ArrayList<>()};
-        JLabel labelModName = new JLabel(I18n.INSTANCE.get("commonText.name"));
+        JLabel labelModName = new JLabel(I18n.INSTANCE.get("mod.npcGames.addMod.components.labelName"));
         JTextField textFieldName = new JTextField();
 
-        JPanel panelGenre = new JPanel();
-        JLabel labelGenre = new JLabel(I18n.INSTANCE.get("mod.npcGames.addMod.selectGenres"));
-        JButton buttonGenres = new JButton(I18n.INSTANCE.get("nod.npcGames.addMod.button.label1"));
-        buttonGenres.addActionListener(actionEvent -> {
-            genreIds[0] = Utils.getSelectedEntries(I18n.INSTANCE.get("mod.npcGames.addMod.selectGenres"), I18n.INSTANCE.get(""), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true, true);
-            if(genreIds[0].size() == 0){
-                buttonGenres.setText(I18n.INSTANCE.get("nod.npcGames.addMod.button.label1"));
-            }else{
-                buttonGenres.setText(I18n.INSTANCE.get("nod.npcGames.addMod.button.label2"));
-            }
-        });
-        panelGenre.add(labelGenre);
-        panelGenre.add(buttonGenres);
+        JLabel labelExplainList = new JLabel("<html>" + I18n.INSTANCE.get("mod.npcGames.addMod.selectGenres") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
+        JList<String> listAvailableThemes = new JList<>(ModManager.genreMod.getAnalyzer().getContentByAlphabet());
+        listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
+        listAvailableThemes.setVisibleRowCount(-1);
+        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
+        scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
 
-        Object[] params = {labelModName, textFieldName, panelGenre};
+        Object[] params = {labelModName, textFieldName, labelExplainList, scrollPaneAvailableGenres};
         while(true){
             if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                 String newModName = textFieldName.getText();
                 if(!newModName.isEmpty()){
-                    if(genreIds[0].size() != 0){
+                    if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         boolean modAlreadyExists = false;
                         for(String string : ModManager.npcGamesMod.getBaseAnalyzer().getContentByAlphabet()){
                             if(newModName.equals(string)){
@@ -109,7 +104,12 @@ public class NpcGamesMod extends AbstractSimpleMod {
                         if(!modAlreadyExists){
                             StringBuilder newModLine = new StringBuilder();
                             newModLine.append(newModName).append(" ");
-                            for(Integer integer : genreIds[0]){
+                            ArrayList<Integer> genreIds = new ArrayList<>();
+                            for(String string : listAvailableThemes.getSelectedValuesList()){
+                                genreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
+                            }
+                            Collections.sort(genreIds);
+                            for(Integer integer : genreIds){
                                 newModLine.append("<").append(integer).append(">");
                             }
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
