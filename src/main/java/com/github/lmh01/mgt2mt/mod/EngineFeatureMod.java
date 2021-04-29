@@ -340,8 +340,8 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                         boolean addFeature = Summaries.showSummary(ModManager.engineFeatureMod.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                         if(addFeature){
                             ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
-                            JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
+                            JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
                     }

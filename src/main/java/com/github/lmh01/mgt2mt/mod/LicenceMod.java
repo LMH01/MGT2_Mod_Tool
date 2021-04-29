@@ -144,8 +144,8 @@ public class LicenceMod extends AbstractSimpleMod {
                         if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), "Add this licence?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             try {
                                 ModManager.licenceMod.getEditor().addMod(newLicence.toString());
-                                JOptionPane.showMessageDialog(null, "Licence [" + textFieldName.getText() + "] has been added successfully!");
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + textFieldName.getText());
+                                JOptionPane.showMessageDialog(null, "Licence [" + textFieldName.getText() + "] has been added successfully!");
                                 break;
                             } catch (IOException e) {
                                 e.printStackTrace();

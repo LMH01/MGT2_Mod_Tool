@@ -44,7 +44,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    void doOtherImportThings(String importFolderPath) {
+    void doOtherImportThings(String importFolderPath, String name) {
 
     }
 

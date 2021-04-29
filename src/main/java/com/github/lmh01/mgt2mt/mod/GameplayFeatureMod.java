@@ -359,8 +359,8 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                         boolean addFeature = Summaries.showSummary(ModManager.gameplayFeatureMod.getSharer().getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
                         if(addFeature) {
                             ModManager.gameplayFeatureMod.getEditor().addMod(newGameplayFeature);
-                            JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.gameplayFeature") + " - " + newGameplayFeature.get("NAME EN"));
+                            JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
                     }

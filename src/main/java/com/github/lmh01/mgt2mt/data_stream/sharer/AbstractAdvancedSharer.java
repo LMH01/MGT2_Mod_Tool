@@ -103,7 +103,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
         }
         if(addFeature){
             getImporter().importer(map);
-            doOtherImportThings(importFolderPath);
+            doOtherImportThings(importFolderPath, map.get("NAME EN"));
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
@@ -115,7 +115,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     /**
      * Put things in this function that should be executed when the txt file has been imported.
      */
-    abstract void doOtherImportThings(String importFolderPath);
+    abstract void doOtherImportThings(String importFolderPath, String name);
 
     /**
      * Put things in this function that should be executed when the txt file has been exported.

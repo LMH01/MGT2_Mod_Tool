@@ -79,7 +79,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
         map.put("PIC", Integer.toString(CompanyLogoAnalyzer.getLogoNumber()));
         if(addFeature){
             ModManager.publisherMod.getEditor().addMod(map, publisherImageFilePath.getPath());
-            doOtherImportThings(importFolderPath);
+            doOtherImportThings(importFolderPath, map.get("NAME EN"));
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
@@ -89,7 +89,7 @@ public class PublisherSharer extends AbstractAdvancedSharer{
     }
 
     @Override
-    void doOtherImportThings(String importFolderPath) {
+    void doOtherImportThings(String importFolderPath, String name) {
 
     }
 

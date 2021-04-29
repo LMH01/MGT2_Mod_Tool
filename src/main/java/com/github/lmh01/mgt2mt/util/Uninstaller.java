@@ -124,7 +124,8 @@ public class Uninstaller {
         String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
         String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
         String[] customLicences = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
-        if(customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length!= 0){
+        String[] customPlatforms = ModManager.platformMod.getBaseAnalyzer().getCustomContentString();
+        if(customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length + customPlatforms.length != 0){
             ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (String customGenre : customGenres) {
                 try {
@@ -150,6 +151,17 @@ public class Uninstaller {
                     uninstallFailed = true;
                 }
                 ProgressBarHelper.increment();
+            }
+            for(String customPlatform : customPlatforms){
+                try {
+                    ModManager.platformMod.removeMod(customPlatform);
+                    LOGGER.info("Platform files have been restored to original.");
+                } catch (IOException e) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.platform.failed") + " " + customPlatform + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
+                    uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.platformCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                    LOGGER.info("Platform could not be removed: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
             Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));

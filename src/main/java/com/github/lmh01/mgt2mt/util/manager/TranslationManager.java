@@ -132,6 +132,14 @@ public class TranslationManager {
         return returnMap;
     }
 
+    public static Map<String, String> getDefaultManufacturerTranslations(String manufacturerEN){
+        Map<String, String> returnMap = new HashMap<>();
+        for(String string : TranslationManager.TRANSLATION_KEYS){
+            returnMap.put("MANUFACTURER " + string, manufacturerEN);
+        }
+        return returnMap;
+    }
+
     /**
      * The input map just has the language keys and the translations. This function changes the key to include the type. Eg. input map is "Key: GE" "Value: Hey" this is transformed to "Key: NAME GE" "Value Hey"
      * @param map The input map

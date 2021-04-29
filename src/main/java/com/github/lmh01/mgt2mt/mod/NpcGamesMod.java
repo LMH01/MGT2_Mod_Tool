@@ -115,8 +115,8 @@ public class NpcGamesMod extends AbstractSimpleMod {
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                 try {
                                     ModManager.npcGamesMod.getBaseEditor().addMod(newModLine.toString());
-                                    JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getType() + " - " + newModName);
+                                    JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));
                                     break;
                                 } catch (IOException e) {
                                     e.printStackTrace();

@@ -25,6 +25,9 @@ commonText.theme.upperCase.plural|Themes
 commonText.npcGames|npc game
 commonText.npcGames.upperCase|Npc game
 commonText.npcGames.upperCase.plural|Npc games
+commonText.platform|platform
+commonText.platform.upperCase|Platform
+commonText.platform.upperCase.plural|Platforms
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -42,15 +45,25 @@ commonText.name|Name
 commonText.name.var1|Name
 commonText.description|Description
 commonText.description.var1|Description
+commonText.manufacturer|Manufacturer
 commonText.unlockDate|Unlock date
+commonText.unlockYear.toolTip|<html>[Range: 1976 - 2999]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.
+commonText.range|Range
 commonText.date|Date
+commonText.releaseDate|Release date
+commonText.productionEnd|Production end
 commonText.type|Type
 commonText.researchPointCost|Research point cost
 commonText.researchCost|Research cost
 commonText.developmentCost|Development cost
+commonText.devKitCost|Dev kit cost
 commonText.marketShare|Market share
 commonText.share|Share
 commonText.techLevel|Tech level
+commonText.units|Units
+commonText.neededGameplayFeatures|Needed gameplay features
+commonText.complexity|Complexity
+commonText.internet|Internet
 commonText.points|Points
 commonText.targetGroup|Target group
 commonText.compatibleGenres|Compatible genres
@@ -85,6 +98,7 @@ commonText.teen|Teen
 commonText.adult|Adult
 commonText.senior|Senior
 commonText.addNameTranslations|Add name translations
+commonText.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
 commonText.addNameTranslations.added|Name Translations Added
 commonText.addDescriptionTranslations|Add description translations
 commonText.addDescriptionTranslations.added|Description translations added
@@ -113,6 +127,9 @@ commonText.chooseGenreFirst|Please select at least one genre first!
 commonText.yes|yes
 commonText.no|no
 commonText.scrollExplanation|(Tip: Hold STRG and click with your mouse)
+commonText.default|Default
+commonText.imageSelected|Image selected
+commonText.selectImage|Select image
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -146,6 +163,10 @@ analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Error wi
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modded npc game:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc games complete
 analyzer.npcGames.getCustomContentString.progressBar|Scanning for modded npc games
+analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning platform:
+analyzer.platform.getCustomContentString.customEngineFeatureFound|Modded platform found:
+analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scanning for modded platforms complete
+analyzer.platform.getCustomContentString.progressBar|Scanning for modded platform
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
@@ -168,6 +189,9 @@ modManager.theme.windowMain.modButton.removeMod.toolTip|Disabled -> No theme ava
 modManager.npcGames.windowMain.modButton.addMod|Add npc game
 modManager.npcGames.windowMain.modButton.removeMod|Remove npc game
 modManager.npcGames.windowMain.modButton.removeMod.toolTip|Disabled -> No npc game available
+modManager.platform.windowMain.modButton.addMod|Add platform
+modManager.platform.windowMain.modButton.removeMod|Remove platform
+modManager.platform.windowMain.modButton.removeMod.toolTip|Disabled -> No platform available
 modManager.general.enterNameFirst|Please enter a name first!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
@@ -196,6 +220,37 @@ mod.theme.addTheme.components.label.explainList|<html>Chose what genres should w
 mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
 mod.npcGames.addMod.components.labelName|Enter the name for the npc game:
 mod.npcGames.addMod.optionPaneMessage.firstPart|Add this npc game?
+mod.platform.addPlatform.optionPaneMessage.firstPart|Add this platform?
+mod.platform.addPlatform.components.textFieldName.initialValue|ENTER PLATFORM NAME
+mod.platform.addPlatform.components.textFieldManufacturer.initialValue|ENTER MANUFACTURER NAME
+mod.platform.addPlatform.components.button.addManufacturerTranslations.label|Add manufacturer translations
+mod.platform.addPlatform.components.comboBox.type.toolTip|Select what type your engine feature should be
+mod.platform.addPlatform.components.comboBox.type.computer|Computer
+mod.platform.addPlatform.components.comboBox.type.console|Console
+mod.platform.addPlatform.components.comboBox.type.handheld|Handheld
+mod.platform.addPlatform.components.comboBox.type.cellPhone|Cell Phone
+mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard|Arcade System Board
+mod.platform.addPlatform.components.checkBox.enableEndDate|<html>Activate so that the platform<br>is taken off the market<br>when the date below has passed.
+mod.platform.addPlatform.components.label.endDate|End date
+mod.platform.addPlatform.components.spinner.techLevel.tooltip|<br>The tech level of the platform.<br>Indicates how advanced the platforms technology level is.
+mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Set the development cost for a game with this platform.<br>This cost will be added when developing a game with this platform.
+mod.platform.addPlatform.components.spinner.price.toolTip|This is the price that is payed for the devkit.
+mod.platform.addPlatform.components.checkBox.internet.toolTip|Check this option to indicate that this console can use the internet
+mod.platform.addPlatform.components.spinner.complexity.toolTip|Indicates how much work it is to develop for this platform
+mod.platform.addPlatform.components.spinner.units.toolTip|Indicates how many platforms of this type have been manufactured
+mod.platform.addPlatform.components.button.addPicture|Add platform picture(s)
+mod.platform.addPlatform.components.button.addPicture.maxPicturesSelectedMessage|Unfortunately, it is not possible to add more pictures,<br>because the game does not currently support it.
+mod.platform.addPlatform.components.button.addPicture.noPictureSelected|Please select a picture first!
+mod.platform.addPlatform.components.button.addPicture.picturesSet|Platform pictures have been set successfully!
+mod.platform.addPlatform.components.button.addPicture.picturesSelected|Platform pictures selected
+mod.platform.addPlatform.components.button.addPicture.toolTip|Click to select one or more images to use as platform images
+mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture|Add picture
+mod.platform.addPlatform.components.button.addPicture.actionListener.label.textAreaExplanation|<html>The entries in this list will be added as platform pictures.<br>To add a picture click the button below.<br>When you are finished click ok to set these pictures as platform pictures.
+mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded|<html>Platform pictures have already been added.<br>Would you like to reset them and add new pictures?<br><br>Warning: This can not be undone!
+mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title|Pictures already added
+mod.platform.addPlatform.title|Add platform
+mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the manufacturer first!
+mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:
@@ -471,6 +526,7 @@ textArea.uninstalling|Uninstalling
 textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
 textArea.uninstalling.uninstallingAllMods.genre.failed|Uninstalling genre failed:
 textArea.uninstalling.uninstallingAllMods.publisher.failed|Uninstalling publisher failed:
+textArea.uninstalling.uninstallingAllMods.platform.failed|Uninstalling platform failed:
 textArea.uninstalling.uninstallingAllMods.success|Game files have been restored to original
 textArea.uninstalling.uninstallingAllMods.noModsFound|No mods need to be removed: No mods found
 textArea.deleteModManagerFiles|Deleting all mod manager files
@@ -644,6 +700,7 @@ window.uninstall.uninstallIncomplete|There was a problem while uninstalling:
 window.uninstall.uninstallIncomplete.title|Uninstalling incomplete
 window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved|Genre could not be removed:
 window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved|Publisher could not be removed:
+window.uninstall.uninstallIncomplete.platformCouldNotBeRemoved|Platform could not be removed:
 window.uninstall.uninstallSuccessful|Your selected files have been uninstalled successfully!
 window.uninstall.uninstallSuccessful.title|Uninstalling successful
 

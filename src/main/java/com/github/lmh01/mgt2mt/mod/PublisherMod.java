@@ -283,8 +283,8 @@ public class PublisherMod extends AbstractAdvancedMod {
                                 hashMap.put("SHARE", spinnerShare.getValue().toString());
                                 hashMap.put("GENRE", genreID.toString());
                                 ModManager.publisherMod.getEditor().addMod(hashMap, publisherImageFilePath.toString());
-                                JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + hashMap.get("NAME EN"));
+                                JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
                                 breakLoop = true;
                             }
                         }

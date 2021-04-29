@@ -25,6 +25,9 @@ commonText.theme.upperCase.plural|Themen
 commonText.npcGames|Npc Spiel
 commonText.npcGames.upperCase|Npc Spiel
 commonText.npcGames.upperCase.plural|Npc Spiele
+commonText.platform|Platform
+commonText.platform.upperCase|Platform
+commonText.platform.upperCase.plural|Platformen
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -42,15 +45,25 @@ commonText.name|Name
 commonText.name.var1|Namen
 commonText.description|Beschreibung
 commonText.description.var1|Beschreibungs
+commonText.manufacturer|Hersteller
 commonText.unlockDate|Freischaltdatum
+commonText.unlockYear.toolTip|Dies ist das Jahr, in welchem der Mod freigeschaltet wird.<br>Info: Aktuell ist das späteste Jahr, in welchem das Spiel gestartet werden kann 2015.
+commonText.range|Bereich
 commonText.date|Datum
+commonText.releaseDate|Markteinführung
+commonText.productionEnd|Produktionsende
 commonText.type|Typ
 commonText.researchPointCost|Forschungspunktkosten
 commonText.researchCost|Forschungskosten
 commonText.developmentCost|Entwicklungskosten
+commonText.devKitCost|Kosten für das Development Kit
 commonText.marketShare|Marktanteil
 commonText.share|Verkaufsanteil
 commonText.techLevel|Technik Level
+commonText.units|Einheiten
+commonText.neededGameplayFeatures|Benötigte Gameplay Features
+commonText.complexity|Komplexität
+commonText.internet|Internet
 commonText.points|Punkte
 commonText.targetGroup|Zielgruppe
 commonText.compatibleGenres|Kompatible Genres
@@ -85,6 +98,7 @@ commonText.teen|Teenager
 commonText.adult|Erwachsene
 commonText.senior|Senioren
 commonText.addNameTranslations|Übersetzungen für Namen hinzufügen
+commonText.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
 commonText.addNameTranslations.added|Übersetzungen hinzugefügt
 commonText.addDescriptionTranslations|Übersetzungen für Beschreibungen hinzufügen
 commonText.addDescriptionTranslations.added|Übersetzungen hinzugefügt
@@ -113,6 +127,9 @@ commonText.chooseGenreFirst|Bitte wähle zu erst mindestens ein Genre aus!
 commonText.yes|ja
 commonText.no|nein
 commonText.scrollExplanation|(Tipp: Halte STRG gedrückt und klicke mit der Maus)
+commonText.default|Standard
+commonText.imageSelected|Bild ausgewählt
+commonText.selectImage|Bild auswählen
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -146,6 +163,10 @@ analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Fehler b
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modifiziertes Npc Spiel gefunden:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Spielen abgeschlossen
 analyzer.npcGames.getCustomContentString.progressBar|Scannen nach modifizierten Npc Spielen
+analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Platform:
+analyzer.platform.getCustomContentString.customEngineFeatureFound|Modifizierte Platform gefunden:
+analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Platformen abgeschlossen
+analyzer.platform.getCustomContentString.progressBar|Scannen nach modifizierten Platformen
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -168,6 +189,9 @@ modManager.theme.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Them
 modManager.npcGames.windowMain.modButton.addMod|Npc Spiel hinzufügen
 modManager.npcGames.windowMain.modButton.removeMod|Npc Spiel entfernen
 modManager.npcGames.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Npc Spiel verfügbar
+modManager.platform.windowMain.modButton.addMod|Platform hinzufügen
+modManager.platform.windowMain.modButton.removeMod|Platform entfernen
+modManager.platform.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Platform verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
@@ -197,6 +221,39 @@ mod.theme.addTheme.components.label.explainList|<html>Wähle aus, welche Genres 
 mod.npcGames.addMod.selectGenres|Wähle die Genres aus, die mit dem neuen Npc Spiel kompatibel sein sollen:
 mod.npcGames.addMod.components.labelName|Gib den Namen für das Npc Spiel ein:
 mod.npcGames.addMod.optionPaneMessage.firstPart|Dieses Npc Spiel hinzufügen?
+mod.platform.addPlatform.optionPaneMessage.firstPart|Diese Platform hinzufügen?
+mod.platform.addPlatform.components.textFieldName.initialValue|GIB EINEN PLATFORMNAMEN EIN
+mod.platform.addPlatform.components.textFieldManufacturer.initialValue|GIB DEN NAMEN DES HERSTELLERS EIN
+mod.platform.addPlatform.components.button.addManufacturerTranslations.label|Übersetzungen für den Hersteller hinzufügen
+mod.platform.addPlatform.components.comboBox.type.toolTip|Wähle aus, von welechem Typ die Platform sein soll
+mod.platform.addPlatform.components.comboBox.type.computer|Computer
+mod.platform.addPlatform.components.comboBox.type.console|Konsole
+mod.platform.addPlatform.components.comboBox.type.handheld|Handheld
+mod.platform.addPlatform.components.comboBox.type.cellPhone|Mobiltelefon
+mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard|Arcade System Board
+mod.platform.addPlatform.components.checkBox.enableEndDate|<html>Aktiviere diese Option,<br>damit die Plattform vom Markt genommen wird,<br>wenn das unten stehende Datum erreicht ist.
+mod.platform.addPlatform.components.spinner.endYear.toolTip|Dies ist das Jahr, in welchem die Plattform vom Markt genommen wird, sofern die check box oben aktiviert ist
+mod.platform.addPlatform.components.label.endDate|Enddatum
+mod.platform.addPlatform.components.spinner.techLevel.tooltip|<br>Das Technologie-Level der Plattform.<br>Gibt an, welche Technologie unterstützt wird.
+mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Setze die Entwicklungskosten für ein Spiel, welches diese Plattform benutzt.<br>Dieser Preis wird draufgerechnet, wenn ein Spiel mit dieser Plattform erstellt wird.
+mod.platform.addPlatform.components.spinner.researchCost.toolTip|Dies ist der Preis, der für das Dev Kit bezahlt werden muss.
+mod.platform.addPlatform.components.checkBox.internet.toolTip|Aktiviere diese Option, um zu kennzeichnen, dass diese Konsole das Internet benutzen kann
+mod.platform.addPlatform.components.spinner.complexity.toolTip|Gibt an, wie viel Arbeit es ist, für diese Plattform zu entwickeln
+mod.platform.addPlatform.components.spinner.units.toolTip|Gibt an, wie viele Plattformen dieser Art produziert wurden
+mod.platform.addPlatform.components.button.addPicture|Plattform-Bild(er) hinzufügen
+mod.platform.addPlatform.components.button.addPicture.picturesSelected|Plattform-Bild(er) ausgewählt
+mod.platform.addPlatform.components.button.addPicture.maxPicturesSelectedMessage|Das Hinzufügen von weiteren Bildern ist leider nicht möglich,<br>da das Spiel es aktuell nicht unterstützt.
+mod.platform.addPlatform.components.button.addPicture.noPictureSelected|Bitte wähle zuerst ein Bild aus!
+mod.platform.addPlatform.components.button.addPicture.picturesSet|Plattform-Bilder wurden erfolgreich eingestellt!
+mod.platform.addPlatform.components.button.addPicture.toolTip|Klicke, um ein oder mehrere Bilder auszuwählen, die als Plattformbilder verwendet werden sollen
+mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture|Bild hinzufügen
+mod.platform.addPlatform.components.button.addPicture.actionListener.label.textAreaExplanation|<html>Die Einträge in dieser Liste werden als Plattformbilder hinzugefügt.<br>Um ein Bild hinzuzufügen, klicke auf die Schaltfläche unten.<br>Wenn du fertig bist, klicke auf OK, um diese Bilder als Plattformbilder festzulegen.
+mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip|Dies ist das Jahr, in welchem das Bild aktiv wird
+mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded|<html>Plattform-Bilder wurden bereits hinzugefügt.<br>Möchtest du sie zurücksetzen und neue Bilder hinzufügen?<br><br>Warnung: Das kann nicht rückgängig gemacht werden!
+mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title|Bilder bereits hinzugefügt
+mod.platform.addPlatform.title|Plattform hinzufügen
+mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Namen für den Hersteller ein!
+mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
@@ -472,6 +529,7 @@ textArea.uninstalling|Deinstalliere
 textArea.uninstalling.uninstallingAllMods|Deinstalliere alle Mods
 textArea.uninstalling.uninstallingAllMods.genre.failed|Deinstallation des Genre fehlgeschlagen:
 textArea.uninstalling.uninstallingAllMods.publisher.failed|Deinstallation des Publisher fehlgeschlagen:
+textArea.uninstalling.uninstallingAllMods.platform.failed|Deinstallation der Platform fehlgeschlagen:
 textArea.uninstalling.uninstallingAllMods.success|Spieldateien wurden zu ihrem original Zustand zurückgesetzt
 textArea.uninstalling.uninstallingAllMods.noModsFound|Es müssen keine Mods entfernt werde: Keine Mods gefunden
 textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
@@ -645,6 +703,7 @@ window.uninstall.uninstallIncomplete|Bei der Deinstallation ist ein Problem aufg
 window.uninstall.uninstallIncomplete.title|Deinstallation unvollstäding
 window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved|Genre konnte nicht entfernt werden:
 window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved|Publisher konnte nicht entfernt werden:
+window.uninstall.uninstallIncomplete.platformCouldNotBeRemoved|Platform konnte nicht entfernt werden:
 window.uninstall.uninstallSuccessful|Die ausgewählten Dateien wurden erfolgreich deinstalliert!
 window.uninstall.uninstallSuccessful.title|Deinstallation erfolgreich
 

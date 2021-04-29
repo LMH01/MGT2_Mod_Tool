@@ -24,7 +24,7 @@ public class GenreSharer extends AbstractAdvancedSharer{
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreSharer.class);
 
     @Override
-    void doOtherImportThings(String importFolderPath) {
+    void doOtherImportThings(String importFolderPath, String name) {
 
     }
 

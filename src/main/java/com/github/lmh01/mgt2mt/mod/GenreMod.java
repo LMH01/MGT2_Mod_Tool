@@ -85,7 +85,7 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String[] getCompatibleModToolVersions() {//TODO getCompatibleModToolVersions aus sharer raus nehmen
+    public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.3b","1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "2.0.0"};
     }
 
@@ -295,8 +295,8 @@ public class GenreMod extends AbstractAdvancedMod {
                         setGameplayFeatureCompatibility(map, gameplayFeatures.get(0), gameplayFeatures.get(1));
                         File iconFile = new File(iconPath.toString());
                         if(GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected())){
-                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.genre") + " [" + genreName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("commonText.genre") + " " + I18n.INSTANCE.get("commonText.added"), JOptionPane.INFORMATION_MESSAGE);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + genreName);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.genre") + " [" + genreName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("commonText.genre") + " " + I18n.INSTANCE.get("commonText.added"), JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
                     }else{
