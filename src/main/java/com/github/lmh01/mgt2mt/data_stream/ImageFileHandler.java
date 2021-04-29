@@ -112,7 +112,7 @@ public class ImageFileHandler {
         ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(Utils.getMGT2CompanyLogosPath(), ".png");
         for(File file : files){
             try{
-                if(Integer.parseInt(file.getName().replace(".png", "")) > 146){
+                if(Integer.parseInt(file.getName().replace(".png", "")) > 155){
                     file.delete();
                 }
             }catch(NumberFormatException e){
