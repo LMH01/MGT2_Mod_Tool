@@ -231,8 +231,10 @@ mod.platform.addPlatform.components.comboBox.type.handheld|Handheld
 mod.platform.addPlatform.components.comboBox.type.cellPhone|Cell Phone
 mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard|Arcade System Board
 mod.platform.addPlatform.components.checkBox.enableEndDate|<html>Activate so that the platform<br>is taken off the market<br>when the date below has passed.
+mod.platform.addPlatform.components.spinner.endYear.toolTip|This is the year in which the platform will be taken off the market, provided the check box above is activated
 mod.platform.addPlatform.components.label.endDate|End date
 mod.platform.addPlatform.components.spinner.techLevel.tooltip|<br>The tech level of the platform.<br>Indicates how advanced the platforms technology level is.
+mod.platform.addPlatform.components.spinner.researchCost.toolTip|This is the price to be paid for the dev kit.
 mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Set the development cost for a game with this platform.<br>This cost will be added when developing a game with this platform.
 mod.platform.addPlatform.components.spinner.price.toolTip|This is the price that is payed for the devkit.
 mod.platform.addPlatform.components.checkBox.internet.toolTip|Check this option to indicate that this console can use the internet
@@ -246,6 +248,7 @@ mod.platform.addPlatform.components.button.addPicture.picturesSelected|Platform 
 mod.platform.addPlatform.components.button.addPicture.toolTip|Click to select one or more images to use as platform images
 mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture|Add picture
 mod.platform.addPlatform.components.button.addPicture.actionListener.label.textAreaExplanation|<html>The entries in this list will be added as platform pictures.<br>To add a picture click the button below.<br>When you are finished click ok to set these pictures as platform pictures.
+mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip|This is the year in which the image becomes active
 mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded|<html>Platform pictures have already been added.<br>Would you like to reset them and add new pictures?<br><br>Warning: This can not be undone!
 mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title|Pictures already added
 mod.platform.addPlatform.title|Add platform
