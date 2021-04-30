@@ -269,6 +269,7 @@ mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the
 mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Add this npc engine?
 mod.npcEngine.addMod.components.textFieldName.initialValue|ENTER NPC ENGINE NAME
+mod.npcEngine.addMod.components.unlockYear.additionalToolTip|This determines the technology level and the amout of engine features the engine has.
 mod.npcEngine.addMod.components.selectGenre|Select the genre which should be the special genre for the engine:<br>If several genres are selected, several engines will be created, one for each selected genre.<br>The name of the genre will then be written after the name of the engine.
 mod.npcEngine.addMod.components.selectPlatform|Select the platform which should be the special platform for the engine:
 mod.npcEngine.addMod.components.spinner.share.toolTip|<br>Set the profit share for the engine.<br>When a game is created with this engine the amount (in %) will be paid to the engine developer.

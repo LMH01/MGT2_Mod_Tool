@@ -124,11 +124,11 @@ public class NpcEngineMod extends AbstractAdvancedMod {
 
             JSpinner spinnerUnlockYear = new JSpinner();
             if(Settings.disableSafetyFeatures){
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
+                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip") + "<br>" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.unlockYear.additionalToolTip"));
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
                 ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
             }else{
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
+                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip") + "<br>" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.unlockYear.additionalToolTip"));
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
                 ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
             }
