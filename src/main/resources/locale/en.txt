@@ -31,6 +31,9 @@ commonText.platform.upperCase.plural|Platforms
 commonText.npcEngine|npc engine
 commonText.npcEngine.upperCase|Npc engine
 commonText.npcEngine.upperCase.plural|Npc engines
+commonText.antiCheat|anti cheat
+commonText.antiCheat.upperCase|Anti cheat
+commonText.antiCheat.upperCase.plural|Anti cheats
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -50,7 +53,7 @@ commonText.description|Description
 commonText.description.var1|Description
 commonText.manufacturer|Manufacturer
 commonText.unlockDate|Unlock date
-commonText.unlockYear.toolTip|<html>[Range: 1976 - 2999]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.
+commonText.unlockYear.toolTip|<html>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.
 commonText.range|Range
 commonText.date|Date
 commonText.releaseDate|Release date
@@ -136,6 +139,7 @@ commonText.default|Default
 commonText.imageSelected|Image selected
 commonText.selectImage|Select image
 commonText.nameAlreadyInUse|The selected name is already in use.
+commonText.developmentCost.spinner|This price must be paid when creating a game with this feature.
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -177,6 +181,10 @@ analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Error w
 analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modded npc engine found:
 analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc engines complete
 analyzer.npcEngine.getCustomContentString.progressBar|Scanning for modded npc engines
+analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning anti cheats:
+analyzer.antiCheat.getCustomContentString.customEngineFeatureFound|Modded anti cheat found:
+analyzer.antiCheat.getCustomContentString.customEngineFeatureComplete|Scanning for modded anti cheats complete
+analyzer.antiCheat.getCustomContentString.progressBar|Scanning for modded anti cheats
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
@@ -205,6 +213,9 @@ modManager.platform.windowMain.modButton.removeMod.toolTip|Disabled -> No platfo
 modManager.npcEngine.windowMain.modButton.addMod|Add npc engine
 modManager.npcEngine.windowMain.modButton.removeMod|Remove npc engine
 modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Disabled -> No npc engine available
+modManager.antiCheat.windowMain.modButton.addMod|Add anti cheat
+modManager.antiCheat.windowMain.modButton.removeMod|Remove anti cheat
+modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Disabled -> No anti cheat available
 modManager.general.enterNameFirst|Please enter a name first!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
@@ -278,6 +289,9 @@ mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Several genres have 
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|engines have been added successfully!
 mod.npcEngine.addMod.noPlatformSelected|Please select a platform first!
 mod.npcEngine.addMod.noGenreSelected|Please select a genre first!
+mod.antiCheat.addMod.optionPaneMessage.firstPart|Add this anti cheat?
+mod.antiCheat.addMod.components.textFieldName.initialValue|ENTER ANTI CHEAT NAME
+mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Set the cost for the anti cheat.<br>In order to use the anti cheat in game you will have to pay this price to unlock it.
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:

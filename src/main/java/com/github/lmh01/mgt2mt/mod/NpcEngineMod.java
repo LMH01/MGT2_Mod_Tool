@@ -151,7 +151,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
             panelShare.add(spinnerShare);
 
             JPanel panelCost = new JPanel();
-            JLabel labelCost = new JLabel(I18n.INSTANCE.get("commonText.profitShare") + ":");
+            JLabel labelCost = new JLabel(I18n.INSTANCE.get("commonText.price") + ":");
             JSpinner spinnerCost = new JSpinner();
             spinnerCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 30.000]" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.spinner.cost.toolTip"));
             if(Settings.disableSafetyFeatures){

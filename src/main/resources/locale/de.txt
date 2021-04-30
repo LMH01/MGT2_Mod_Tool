@@ -31,6 +31,9 @@ commonText.platform.upperCase.plural|Platformen
 commonText.npcEngine|Npc Engine
 commonText.npcEngine.upperCase|Npc Engine
 commonText.npcEngine.upperCase.plural|Npc Engines
+commonText.antiCheat|Anti Cheat
+commonText.antiCheat.upperCase|Anti Cheat
+commonText.antiCheat.upperCase.plural|Anti Cheats
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -136,6 +139,7 @@ commonText.default|Standard
 commonText.imageSelected|Bild ausgewählt
 commonText.selectImage|Bild auswählen
 commonText.nameAlreadyInUse|Der eigegebene Name wird schon benutzt.
+commonText.developmentCost.spinner|Der eingestellte Preis muss bezahlt werden, wenn ein Spiel mit diesem Feature erstellt wird.
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -169,14 +173,18 @@ analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Fehler b
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modifiziertes Npc Spiel gefunden:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Spielen abgeschlossen
 analyzer.npcGames.getCustomContentString.progressBar|Scannen nach modifizierten Npc Spielen
-analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Platform:
+analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Platformen:
 analyzer.platform.getCustomContentString.customEngineFeatureFound|Modifizierte Platform gefunden:
 analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Platformen abgeschlossen
 analyzer.platform.getCustomContentString.progressBar|Scannen nach modifizierten Platformen
-analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc Engine:
+analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc Engines:
 analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modifizierte Npc Engine gefunden:
 analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Engines abgeschlossen
 analyzer.npcEngine.getCustomContentString.progressBar|Scannen nach modifizierten Npc Engines
+analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen des Anti Cheatss:
+analyzer.antiCheat.getCustomContentString.customEngineFeatureFound|Modifizierten Anti Cheat gefunden:
+analyzer.antiCheat.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Anti Cheats abgeschlossen
+analyzer.antiCheat.getCustomContentString.progressBar|Scannen nach modifizierten Anti Cheats
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -205,6 +213,9 @@ modManager.platform.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine 
 modManager.npcEngine.windowMain.modButton.addMod|Npc Engine hinzufügen
 modManager.npcEngine.windowMain.modButton.removeMod|Npc Engine entfernen
 modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Npc Engine verfügbar
+modManager.antiCheat.windowMain.modButton.addMod|Anti Cheat hinzufügen
+modManager.antiCheat.windowMain.modButton.removeMod|Anti Cheat entfernen
+modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Anti Cheat verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
@@ -278,6 +289,9 @@ mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Es wurden mehrere Ge
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|Engines wurden erfolgreich hinzugefügt!
 mod.npcEngine.addMod.noPlatformSelected|Bitte wähle zu erst eine Plattform aus!
 mod.npcEngine.addMod.noGenreSelected|Bitte wähle zu erst ein Genre aus!
+mod.antiCheat.addMod.optionPaneMessage.firstPart|Diesen Anti Cheat hinzufügen?
+mod.antiCheat.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN ANTI CHEAT EIN
+mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Anti Cheat fest.<br>Dieser Preis muss bezahlt werden, damit der Anti Cheat für ein Spiel verwendet werden kann.
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
