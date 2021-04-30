@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -172,13 +173,17 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
+        for(String string : ModManager.genreMod.getAnalyzer().getContentByAlphabet()){
+            if(string.equals(textFieldGenreName.getText())){
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"));
+                return false;
+            }
+        }
         if(ModManager.genreMod.getAnalyzer().getActiveIds().contains(spinnerId.getValue())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
-        }else if(ModManager.genreMod.getAnalyzer().getActiveIds().contains(textFieldGenreName.getToolTipText())){
-            JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre name.\nYour name is already in use!");
-            return false;
-        }else if(textFieldGenreName.getText().isEmpty()){
+        }
+        if(textFieldGenreName.getText().isEmpty()){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a genre name first!");
             return false;
         }else if(textFieldGenreDescription.getText().isEmpty()){

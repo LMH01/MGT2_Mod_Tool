@@ -165,22 +165,36 @@ public class CopyProtectMod extends AbstractAdvancedMod {
             Object[] params = {panelName, buttonAddNameTranslations, panelUnlockDate, panelCost, panelDevelopmentCost};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    Map<String, String> copyProtectMap = new HashMap<>();
-                    copyProtectMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
-                    if(!nameTranslationsAdded.get()){
-                        copyProtectMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                    if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.copyProtect.addMod.components.textFieldName.initialValue"))){
+                        boolean modAlreadyExists = false;
+                        for(String string : getBaseAnalyzer().getContentByAlphabet()){
+                            if(textFieldName.getText().equals(string)){
+                                modAlreadyExists = true;
+                            }
+                        }
+                        if(!modAlreadyExists){
+                            Map<String, String> copyProtectMap = new HashMap<>();
+                            copyProtectMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
+                            if(!nameTranslationsAdded.get()){
+                                copyProtectMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                            }else{
+                                copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                copyProtectMap.put("NAME EN", textFieldName.getText());
+                            }
+                            copyProtectMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                            copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
+                            copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                            if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                getBaseEditor().addMod(copyProtectMap);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.copyProtect.upperCase") + " - " + copyProtectMap.get("NAME EN"));
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.copyProtect.upperCase") + ": [" + copyProtectMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                        }
                     }else{
-                        copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                        copyProtectMap.put("NAME EN", textFieldName.getText());
-                    }
-                    copyProtectMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
-                    copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
-                    copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                    if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                        getBaseEditor().addMod(copyProtectMap);
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.copyProtect.upperCase") + " - " + copyProtectMap.get("NAME EN"));
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.copyProtect.upperCase") + ": [" + copyProtectMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
-                        break;
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     break;

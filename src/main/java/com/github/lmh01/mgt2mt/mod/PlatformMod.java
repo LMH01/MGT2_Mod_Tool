@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Summaries;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
@@ -412,98 +413,108 @@ public class PlatformMod extends AbstractAdvancedMod {
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))){
                         if(!textFieldManufacturer.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldManufacturer.initialValue"))){
-                            Map<String, String> platformMap = new HashMap<>();
-                            Map<Integer, File> finalPictureMap = new HashMap<>();
-                            platformMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
-                            if(!nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
-                                platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                                platformMap.putAll(TranslationManager.getDefaultManufacturerTranslations(textFieldManufacturer.getText()));
-                            }else if(!nameTranslationsAdded.get() && manufacturerTranslationsAdded.get()){
-                                platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                                platformMap.putAll(TranslationManager.transformTranslationMap(mapManufacturerTranslations[0], "MANUFACTURER"));
-                            }else if(nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
-                                platformMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                platformMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldManufacturer.getText()));
-                            }else{
-                                platformMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                platformMap.putAll(TranslationManager.transformTranslationMap(mapManufacturerTranslations[0], "MANUFACTURER"));
-                                platformMap.put("NAME EN", textFieldName.getText());
-                                platformMap.put("MANUFACTURER EN", textFieldManufacturer.getText());
+                            boolean modAlreadyExists = false;
+                            for(String string : getBaseAnalyzer().getContentByAlphabet()){
+                                if(textFieldName.getText().equals(string)){
+                                    modAlreadyExists = true;
+                                }
                             }
-                            platformMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
-                            if(checkBoxEnableEndDate.isSelected()){
-                                platformMap.put("DATE END", comboBoxEndDateMonth.getSelectedItem().toString() + " " + spinnerEndYear.getValue().toString());
-                            }
-                            platformMap.put("PRICE", spinnerDevKitCost.getValue().toString());
-                            platformMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                            platformMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
-                            platformMap.put("UNITS", spinnerUnits.getValue().toString());
-                            if(pictureMap.isEmpty()){
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
-                                    platformMap.put("PIC-1", "AmstradCPC.png");
+                            if(!modAlreadyExists) {
+                                Map<String, String> platformMap = new HashMap<>();
+                                Map<Integer, File> finalPictureMap = new HashMap<>();
+                                platformMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
+                                if(!nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
+                                    platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                                    platformMap.putAll(TranslationManager.getDefaultManufacturerTranslations(textFieldManufacturer.getText()));
+                                }else if(!nameTranslationsAdded.get() && manufacturerTranslationsAdded.get()){
+                                    platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                                    platformMap.putAll(TranslationManager.transformTranslationMap(mapManufacturerTranslations[0], "MANUFACTURER"));
+                                }else if(nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
+                                    platformMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                    platformMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldManufacturer.getText()));
+                                }else{
+                                    platformMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                    platformMap.putAll(TranslationManager.transformTranslationMap(mapManufacturerTranslations[0], "MANUFACTURER"));
+                                    platformMap.put("NAME EN", textFieldName.getText());
+                                    platformMap.put("MANUFACTURER EN", textFieldManufacturer.getText());
                                 }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
-                                    platformMap.put("PIC-1", "N64.png");
+                                platformMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                                if(checkBoxEnableEndDate.isSelected()){
+                                    platformMap.put("DATE END", comboBoxEndDateMonth.getSelectedItem().toString() + " " + spinnerEndYear.getValue().toString());
                                 }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
-                                    platformMap.put("PIC-1", "Nintendo3DS.png");
-                                }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
-                                    platformMap.put("PIC-1", "iPhone4.png");
-                                }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
-                                    platformMap.put("PIC-1", "ASB6.png");
-                                }
-                            }else{
-                                ArrayList<Integer> pictureYears = new ArrayList<>();
-                                for(Map.Entry<Integer, File> entry : pictureMap.entrySet()){
-                                    pictureYears.add(entry.getKey());
-                                }
-                                int pictureNumber = 1;
-                                for(Integer integer : pictureYears){
-                                    finalPictureMap.put(pictureNumber, pictureMap.get(integer));
-                                    if(pictureNumber>1){
-                                        platformMap.put("PIC-" + pictureNumber + " YEAR", Integer.toString(integer));
+                                platformMap.put("PRICE", spinnerDevKitCost.getValue().toString());
+                                platformMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                                platformMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
+                                platformMap.put("UNITS", spinnerUnits.getValue().toString());
+                                if(pictureMap.isEmpty()){
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
+                                        platformMap.put("PIC-1", "AmstradCPC.png");
                                     }
-                                    pictureNumber++;
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
+                                        platformMap.put("PIC-1", "N64.png");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
+                                        platformMap.put("PIC-1", "Nintendo3DS.png");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
+                                        platformMap.put("PIC-1", "iPhone4.png");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
+                                        platformMap.put("PIC-1", "ASB6.png");
+                                    }
+                                }else{
+                                    ArrayList<Integer> pictureYears = new ArrayList<>();
+                                    for(Map.Entry<Integer, File> entry : pictureMap.entrySet()){
+                                        pictureYears.add(entry.getKey());
+                                    }
+                                    int pictureNumber = 1;
+                                    for(Integer integer : pictureYears){
+                                        finalPictureMap.put(pictureNumber, pictureMap.get(integer));
+                                        if(pictureNumber>1){
+                                            platformMap.put("PIC-" + pictureNumber + " YEAR", Integer.toString(integer));
+                                        }
+                                        pictureNumber++;
+                                    }
                                 }
-                            }
-                            if(listAvailableGameplayFeatures.getSelectedValuesList().isEmpty()){
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
-                                    platformMap.put("NEED-1", "44");
+                                if(listAvailableGameplayFeatures.getSelectedValuesList().isEmpty()){
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
+                                        platformMap.put("NEED-1", "44");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
+                                        platformMap.put("NEED-1", "45");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
+                                        platformMap.put("NEED-1", "45");
+                                        platformMap.put("NEED-2", "56");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
+                                        platformMap.put("NEED-1", "56");
+                                    }
+                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
+                                        platformMap.put("NEED-1", "59");
+                                    }
+                                }else{
+                                    int currentNeededGameplayFeatureNumber = 1;
+                                    for(String string : listAvailableGameplayFeatures.getSelectedValuesList()){
+                                        platformMap.put("NEED-" + currentNeededGameplayFeatureNumber, Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(string)));
+                                        currentNeededGameplayFeatureNumber++;
+                                    }
                                 }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
-                                    platformMap.put("NEED-1", "45");
+                                platformMap.put("COMPLEX", spinnerComplexity.getValue().toString());
+                                if(checkBoxInternet.isSelected()){
+                                    platformMap.put("INTERNET", "1");
+                                }else{
+                                    platformMap.put("INTERNET", "0");
                                 }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
-                                    platformMap.put("NEED-1", "45");
-                                    platformMap.put("NEED-2", "56");
-                                }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
-                                    platformMap.put("NEED-1", "56");
-                                }
-                                if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
-                                    platformMap.put("NEED-1", "59");
+                                platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(comboBoxFeatureType.getSelectedItem().toString())));
+                                if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                    getEditor().addMod(platformMap, finalPictureMap);
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase") + " - " + platformMap.get("NAME EN"));
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.platform.upperCase") + ": [" + platformMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase"), JOptionPane.INFORMATION_MESSAGE);
+                                    break;
                                 }
                             }else{
-                                int currentNeededGameplayFeatureNumber = 1;
-                                for(String string : listAvailableGameplayFeatures.getSelectedValuesList()){
-                                    platformMap.put("NEED-" + currentNeededGameplayFeatureNumber, Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(string)));
-                                    currentNeededGameplayFeatureNumber++;
-                                }
-                            }
-                            platformMap.put("COMPLEX", spinnerComplexity.getValue().toString());
-                            if(checkBoxInternet.isSelected()){
-                                platformMap.put("INTERNET", "1");
-                            }else{
-                                platformMap.put("INTERNET", "0");
-                            }
-                            platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(comboBoxFeatureType.getSelectedItem().toString())));
-                            if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                getEditor().addMod(platformMap, finalPictureMap);
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase") + " - " + platformMap.get("NAME EN"));
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.platform.upperCase") + ": [" + platformMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase"), JOptionPane.INFORMATION_MESSAGE);
-                                break;
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                             }
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.platform.addPlatform.manufacturer.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);

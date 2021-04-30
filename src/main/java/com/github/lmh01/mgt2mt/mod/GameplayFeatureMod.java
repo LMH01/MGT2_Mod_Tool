@@ -318,51 +318,61 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelGameplay, panelGraphic, panelSound, panelTech, buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Gameplay Feature", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(textFieldName.getText().isEmpty() || textFieldName.getText().equals("ENTER FEATURE NAME") || textFieldDescription.getText().isEmpty() || textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")){
-                        JOptionPane.showMessageDialog(null, "Unable to add gameplay feature: please enter a name/description first!", "Unable to continue", JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        Map<String, String> newGameplayFeature = new HashMap<>();
-                        if(!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
-                            newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                            newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                        }else if(!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()){
-                            newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                        }else if(nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
-                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                            newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                    if (!textFieldName.getText().isEmpty() && !textFieldName.getText().equals("ENTER FEATURE NAME") && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")) {
+                        boolean modAlreadyExists = false;
+                        for(String string : getBaseAnalyzer().getContentByAlphabet()){
+                            if(textFieldName.getText().equals(string)){
+                                modAlreadyExists = true;
+                            }
+                        }
+                        if(!modAlreadyExists) {
+                            Map<String, String> newGameplayFeature = new HashMap<>();
+                            if(!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
+                                newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                                newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                            }else if(!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()){
+                                newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                            }else if(nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
+                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                            }else{
+                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                                newGameplayFeature.put("NAME EN", textFieldName.getText());
+                                newGameplayFeature.put("DESC EN", textFieldDescription.getText());
+                            }
+                            newGameplayFeature.put("ID", Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getFreeId()));
+                            newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(comboBoxFeatureType.getSelectedItem().toString())));
+                            newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
+                            newGameplayFeature.put("PRICE", spinnerPrice.getValue().toString());
+                            newGameplayFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                            newGameplayFeature.put("PIC", "");
+                            newGameplayFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
+                            newGameplayFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
+                            newGameplayFeature.put("SOUND", spinnerSound.getValue().toString());
+                            newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
+                            newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
+                            newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
+                            if(!checkBoxCompatibleWithArcadeCabinets.isSelected()){
+                                newGameplayFeature.put("NO_ARCADE", "");
+                            }
+                            if(!checkBoxCompatibleWithMobile.isSelected()){
+                                newGameplayFeature.put("NO_MOBILE", "");
+                            }
+                            boolean addFeature = Summaries.showSummary(ModManager.gameplayFeatureMod.getSharer().getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
+                            if(addFeature) {
+                                ModManager.gameplayFeatureMod.getEditor().addMod(newGameplayFeature);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.gameplayFeature") + " - " + newGameplayFeature.get("NAME EN"));
+                                JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
                         }else{
-                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                            newGameplayFeature.put("NAME EN", textFieldName.getText());
-                            newGameplayFeature.put("DESC EN", textFieldDescription.getText());
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }
-                        newGameplayFeature.put("ID", Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getFreeId()));
-                        newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(comboBoxFeatureType.getSelectedItem().toString())));
-                        newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
-                        newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
-                        newGameplayFeature.put("PRICE", spinnerPrice.getValue().toString());
-                        newGameplayFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                        newGameplayFeature.put("PIC", "");
-                        newGameplayFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
-                        newGameplayFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
-                        newGameplayFeature.put("SOUND", spinnerSound.getValue().toString());
-                        newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
-                        newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
-                        newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-                        if(!checkBoxCompatibleWithArcadeCabinets.isSelected()){
-                            newGameplayFeature.put("NO_ARCADE", "");
-                        }
-                        if(!checkBoxCompatibleWithMobile.isSelected()){
-                            newGameplayFeature.put("NO_MOBILE", "");
-                        }
-                        boolean addFeature = Summaries.showSummary(ModManager.gameplayFeatureMod.getSharer().getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
-                        if(addFeature) {
-                            ModManager.gameplayFeatureMod.getEditor().addMod(newGameplayFeature);
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.gameplayFeature") + " - " + newGameplayFeature.get("NAME EN"));
-                            JOptionPane.showMessageDialog(null, "Gameplay feature: [" + newGameplayFeature.get("NAME EN") + "] has been added successfully!", "Gameplay feature added", JOptionPane.INFORMATION_MESSAGE);
-                            break;
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Unable to add gameplay feature: please enter a name/description first!", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     break;

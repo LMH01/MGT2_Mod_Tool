@@ -306,44 +306,54 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelTechLevel, panelGameplay, panelGraphic, panelSound, panelTech};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, "Add Engine Feature", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(textFieldName.getText().isEmpty() || textFieldName.getText().equals("ENTER FEATURE NAME") || textFieldDescription.getText().isEmpty() || textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")){
-                        JOptionPane.showMessageDialog(null, "Unable to add engine feature: please enter a name/description first!", "Unable to continue", JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        Map<String, String> newEngineFeature = new HashMap<>();
-                        if(!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
-                            newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                            newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                        }else if(!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()){
-                            newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                        }else if(nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
-                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                            newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                    if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals("ENTER FEATURE NAME") && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")) {
+                        boolean modAlreadyExists = false;
+                        for(String string : getBaseAnalyzer().getContentByAlphabet()){
+                            if(textFieldName.getText().equals(string)){
+                                modAlreadyExists = true;
+                            }
+                        }
+                        if(!modAlreadyExists) {
+                            Map<String, String> newEngineFeature = new HashMap<>();
+                            if (!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
+                                newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                                newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                            } else if (!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()) {
+                                newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                            } else if (nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
+                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                            } else {
+                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                                newEngineFeature.put("NAME EN", textFieldName.getText());
+                                newEngineFeature.put("DESC EN", textFieldDescription.getText());
+                            }
+                            newEngineFeature.put("ID", Integer.toString(ModManager.engineFeatureMod.getAnalyzer().getFreeId()));
+                            newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
+                            newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
+                            newEngineFeature.put("PRICE", spinnerPrice.getValue().toString());
+                            newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                            newEngineFeature.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
+                            newEngineFeature.put("PIC", "");
+                            newEngineFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
+                            newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
+                            newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
+                            newEngineFeature.put("TECH", spinnerTech.getValue().toString());
+                            boolean addFeature = Summaries.showSummary(ModManager.engineFeatureMod.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
+                            if (addFeature) {
+                                ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
+                                JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
                         }else{
-                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                            newEngineFeature.put("NAME EN", textFieldName.getText());
-                            newEngineFeature.put("DESC EN", textFieldDescription.getText());
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }
-                        newEngineFeature.put("ID", Integer.toString(ModManager.engineFeatureMod.getAnalyzer().getFreeId()));
-                        newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                        newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
-                        newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
-                        newEngineFeature.put("PRICE", spinnerPrice.getValue().toString());
-                        newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                        newEngineFeature.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
-                        newEngineFeature.put("PIC", "");
-                        newEngineFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
-                        newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
-                        newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
-                        newEngineFeature.put("TECH", spinnerTech.getValue().toString());
-                        boolean addFeature = Summaries.showSummary(ModManager.engineFeatureMod.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
-                        if(addFeature){
-                            ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
-                            JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
-                            break;
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Unable to add engine feature: please enter a name/description first!", "Unable to continue", JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     break;
