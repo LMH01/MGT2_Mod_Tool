@@ -34,6 +34,9 @@ commonText.npcEngine.upperCase.plural|Npc engines
 commonText.antiCheat|anti cheat
 commonText.antiCheat.upperCase|Anti cheat
 commonText.antiCheat.upperCase.plural|Anti cheats
+commonText.copyProtect|copy protection
+commonText.copyProtect.upperCase|Copy protection
+commonText.copyProtect.upperCase.plural|Copy protections
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -185,6 +188,10 @@ analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Error w
 analyzer.antiCheat.getCustomContentString.customEngineFeatureFound|Modded anti cheat found:
 analyzer.antiCheat.getCustomContentString.customEngineFeatureComplete|Scanning for modded anti cheats complete
 analyzer.antiCheat.getCustomContentString.progressBar|Scanning for modded anti cheats
+analyzer.copyProtect.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning copy protections:
+analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modded copy protection found:
+analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scanning for modded copy protections complete
+analyzer.copyProtect.getCustomContentString.progressBar|Scanning for modded copy protections
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
@@ -216,6 +223,9 @@ modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Disabled -> No npc e
 modManager.antiCheat.windowMain.modButton.addMod|Add anti cheat
 modManager.antiCheat.windowMain.modButton.removeMod|Remove anti cheat
 modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Disabled -> No anti cheat available
+modManager.copyProtect.windowMain.modButton.addMod|Add copy protection
+modManager.copyProtect.windowMain.modButton.removeMod|Remove copy protection
+modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Disabled -> No copy protection available
 modManager.general.enterNameFirst|Please enter a name first!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
@@ -292,6 +302,8 @@ mod.npcEngine.addMod.noGenreSelected|Please select a genre first!
 mod.antiCheat.addMod.optionPaneMessage.firstPart|Add this anti cheat?
 mod.antiCheat.addMod.components.textFieldName.initialValue|ENTER ANTI CHEAT NAME
 mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Set the cost for the anti cheat.<br>In order to use the anti cheat in game you will have to pay this price to unlock it.
+mod.copyProtect.addMod.components.textFieldName.initialValue|ENTER COPY PROTECTION NAME
+mod.copyProtect.addMod.components.spinner.cost.toolTip|<br>Set the cost for the copy protection.<br>In order to use the copy protection in game you will have to pay this price to unlock it.
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:

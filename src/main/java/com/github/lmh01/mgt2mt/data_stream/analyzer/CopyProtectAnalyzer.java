@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class AntiCheatAnalyzer extends AbstractAdvancedAnalyzer {
+public class CopyProtectAnalyzer extends AbstractAdvancedAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(AntiCheatAnalyzer.class);
     List<Map<String, String>> fileContent;
     String[] defaultContent = {};
@@ -21,7 +21,7 @@ public class AntiCheatAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.antiCheatMod.getFile();
+        return ModManager.copyProtectMod.getFile();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AntiCheatAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.antiCheatMod.getType();
+        return ModManager.copyProtectMod.getType();
     }
 
     @Override
@@ -66,14 +66,14 @@ public class AntiCheatAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.antiCheatMod.getMainTranslationKey();
+        return ModManager.copyProtectMod.getMainTranslationKey();
     }
 
     @Override
     public String[] getDefaultContent() {
         if(defaultContent.length == 0){
             try {
-                defaultContent = ReadDefaultContent.getDefault("default_anti_cheat.txt");
+                defaultContent = ReadDefaultContent.getDefault("default_copy_protect.txt");
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);

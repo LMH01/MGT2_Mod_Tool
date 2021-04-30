@@ -1,11 +1,11 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AntiCheatAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CopyProtectAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AntiCheatEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.CopyProtectEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AntiCheatSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.CopyProtectSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -25,42 +25,42 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
-public class AntiCheatMod extends AbstractAdvancedMod {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureMod.class);
-    AntiCheatAnalyzer antiCheatAnalyzer = new AntiCheatAnalyzer();
-    AntiCheatEditor antiCheatEditor = new AntiCheatEditor();
-    AntiCheatSharer antiCheatSharer = new AntiCheatSharer();
-    public ArrayList<JMenuItem> antiCheatModMenuItems = getInitialModMenuItems();
+public class CopyProtectMod extends AbstractAdvancedMod {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CopyProtectMod.class);
+    CopyProtectAnalyzer copyProtectAnalyzer = new CopyProtectAnalyzer();
+    CopyProtectEditor copyProtectEditor = new CopyProtectEditor();
+    CopyProtectSharer copyProtectSharer = new CopyProtectSharer();
+    public ArrayList<JMenuItem> copyModMenuItems = getInitialModMenuItems();
     public JMenuItem exportMenuItem = getInitialExportMenuItem();
 
     @Override
     public AbstractAdvancedAnalyzer getBaseAnalyzer() {
-        return antiCheatAnalyzer;
+        return copyProtectAnalyzer;
     }
 
     @Override
     public AbstractAdvancedEditor getBaseEditor() {
-        return antiCheatEditor;
+        return copyProtectEditor;
     }
 
     @Override
     public AbstractAdvancedSharer getBaseSharer() {
-        return antiCheatSharer;
+        return copyProtectSharer;
     }
 
     @Override
     public AbstractAdvancedMod getAdvancedMod() {
-        return ModManager.antiCheatMod;
+        return ModManager.copyProtectMod;
     }
 
     @Override
     public ArrayList<JMenuItem> getModMenuItems() {
-        return antiCheatModMenuItems;
+        return copyModMenuItems;
     }
 
     @Override
     public File getFile() {
-        return new File(getMGT2DataPath() + "//AntiCheat.txt");
+        return new File(getMGT2DataPath() + "//CopyProtect.txt");
     }
 
     @Override
@@ -70,7 +70,7 @@ public class AntiCheatMod extends AbstractAdvancedMod {
 
     @Override
     public String getType() {
-        return I18n.INSTANCE.get("commonText.antiCheat.upperCase");
+        return I18n.INSTANCE.get("commonText.copyProtect.upperCase");
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AntiCheatMod extends AbstractAdvancedMod {
             AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
             JPanel panelName = new JPanel();
             JLabel labelName = new JLabel(getType() + " " + I18n.INSTANCE.get("commonText.name") + ":");
-            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.antiCheat.addMod.components.textFieldName.initialValue"));
+            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.copyProtect.addMod.components.textFieldName.initialValue"));
             panelName.add(labelName);
             panelName.add(textFieldName);
 
@@ -137,7 +137,7 @@ public class AntiCheatMod extends AbstractAdvancedMod {
             JPanel panelCost = new JPanel();
             JLabel labelCost = new JLabel(I18n.INSTANCE.get("commonText.price") + ":");
             JSpinner spinnerCost = new JSpinner();
-            spinnerCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 30.000]" + I18n.INSTANCE.get("mod.antiCheat.addMod.components.spinner.cost.toolTip"));
+            spinnerCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 30.000]" + I18n.INSTANCE.get("mod.copyProtect.addMod.components.spinner.cost.toolTip"));
             if(Settings.disableSafetyFeatures){
                 spinnerCost.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE,5000));
                 ((JSpinner.DefaultEditor)spinnerCost.getEditor()).getTextField().setEditable(true);
@@ -165,21 +165,21 @@ public class AntiCheatMod extends AbstractAdvancedMod {
             Object[] params = {panelName, buttonAddNameTranslations, panelUnlockDate, panelCost, panelDevelopmentCost};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    Map<String, String> antiCheatMap = new HashMap<>();
-                    antiCheatMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
+                    Map<String, String> copyProtectMap = new HashMap<>();
+                    copyProtectMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
                     if(!nameTranslationsAdded.get()){
-                        antiCheatMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                        copyProtectMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                     }else{
-                        antiCheatMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                        antiCheatMap.put("NAME EN", textFieldName.getText());
+                        copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                        copyProtectMap.put("NAME EN", textFieldName.getText());
                     }
-                    antiCheatMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
-                    antiCheatMap.put("PRICE", spinnerCost.getValue().toString());
-                    antiCheatMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                    if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(antiCheatMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                        getBaseEditor().addMod(antiCheatMap);
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.antiCheat.upperCase") + " - " + antiCheatMap.get("NAME EN"));
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.antiCheat.upperCase") + ": [" + antiCheatMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                    copyProtectMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                    copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
+                    copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                    if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        getBaseEditor().addMod(copyProtectMap);
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.copyProtect.upperCase") + " - " + copyProtectMap.get("NAME EN"));
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.copyProtect.upperCase") + ": [" + copyProtectMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
                 }else{
@@ -193,12 +193,12 @@ public class AntiCheatMod extends AbstractAdvancedMod {
 
     @Override
     public String getMainTranslationKey() {
-        return "antiCheat";
+        return "copyProtect";
     }
 
     @Override
     public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.antiCheat.upperCase.plural");
+        return I18n.INSTANCE.get("commonText.copyProtect.upperCase.plural");
     }
 
     @Override
@@ -208,6 +208,6 @@ public class AntiCheatMod extends AbstractAdvancedMod {
 
     @Override
     public String getFileName() {
-        return "antiCheat.txt";
+        return "copyProtect.txt";
     }
 }

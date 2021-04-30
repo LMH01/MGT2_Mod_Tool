@@ -34,6 +34,9 @@ commonText.npcEngine.upperCase.plural|Npc Engines
 commonText.antiCheat|Anti Cheat
 commonText.antiCheat.upperCase|Anti Cheat
 commonText.antiCheat.upperCase.plural|Anti Cheats
+commonText.copyProtect|Kopierschutz
+commonText.copyProtect.upperCase|Kopierschutz
+commonText.copyProtect.upperCase.plural|Kopierschutze
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -181,10 +184,14 @@ analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Fehler 
 analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modifizierte Npc Engine gefunden:
 analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Engines abgeschlossen
 analyzer.npcEngine.getCustomContentString.progressBar|Scannen nach modifizierten Npc Engines
-analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen des Anti Cheatss:
+analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Anti Cheats:
 analyzer.antiCheat.getCustomContentString.customEngineFeatureFound|Modifizierten Anti Cheat gefunden:
 analyzer.antiCheat.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Anti Cheats abgeschlossen
 analyzer.antiCheat.getCustomContentString.progressBar|Scannen nach modifizierten Anti Cheats
+analyzer.copyProtect.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Kopierschutze:
+analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modifizierten Kopierschutz gefunden:
+analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Kopierschutzen abgeschlossen
+analyzer.copyProtect.getCustomContentString.progressBar|Scannen nach modifizierten Kopierschutzen
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -216,6 +223,9 @@ modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine
 modManager.antiCheat.windowMain.modButton.addMod|Anti Cheat hinzufügen
 modManager.antiCheat.windowMain.modButton.removeMod|Anti Cheat entfernen
 modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Anti Cheat verfügbar
+modManager.copyProtect.windowMain.modButton.addMod|Kopierschutz hinzufügen
+modManager.copyProtect.windowMain.modButton.removeMod|Kopierschutz entfernen
+modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Kopierschutz verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
@@ -292,6 +302,8 @@ mod.npcEngine.addMod.noGenreSelected|Bitte wähle zu erst ein Genre aus!
 mod.antiCheat.addMod.optionPaneMessage.firstPart|Diesen Anti Cheat hinzufügen?
 mod.antiCheat.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN ANTI CHEAT EIN
 mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Anti Cheat fest.<br>Dieser Preis muss bezahlt werden, damit der Anti Cheat für ein Spiel verwendet werden kann.
+mod.copyProtect.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN KOPIERSCHUTZ EIN
+mod.copyProtect.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Kopierschutz fest.<br>Dieser Preis muss bezahlt werden, damit der Kopierschutz für ein Spiel verwendet werden kann.
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:

@@ -20,6 +20,7 @@ public class ModManager{
     public static PlatformMod platformMod = new PlatformMod();
     public static NpcEngineMod npcEngineMod = new NpcEngineMod();
     public static AntiCheatMod antiCheatMod = new AntiCheatMod();
+    public static CopyProtectMod copyProtectMod = new CopyProtectMod();
 
     /**
      * Initializes all mods
@@ -36,6 +37,7 @@ public class ModManager{
         platformMod.initializeMod();
         npcEngineMod.initializeMod();
         antiCheatMod.initializeMod();
+        copyProtectMod.initializeMod();
     }
 
     /**
@@ -54,6 +56,7 @@ public class ModManager{
             platformMod.getBaseAnalyzer().analyzeFile();
             npcEngineMod.getBaseAnalyzer().analyzeFile();
             antiCheatMod.getBaseAnalyzer().analyzeFile();
+            copyProtectMod.getBaseAnalyzer().analyzeFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
