@@ -156,9 +156,13 @@ commonText.selectImage|Select image
 commonText.nameAlreadyInUse|The selected name is already in use.
 commonText.developmentCost.spinner|This price must be paid when creating a game with this feature.
 commonText.notAvailable|not available
+commonText.enterName|ENTER NAME
 commonText.enterFeatureName|ENTER FEATURE NAME
 commonText.enterDescription|ENTER DESCRIPTION
 commonText.points.spinner.toolTip|The amount of [...] points that are added when a game is developed with this feature.
+commonText.fanBase|Fan base
+commonText.selectGenre|Select genre
+commonText.selectGenreFirst|Please select a genre first!
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -247,7 +251,16 @@ modManager.general.enterNameDescriptionFirst|Please enter a name and description
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
 mod.publisher.addMod.optionPaneMessage.developer|Developer
+mod.publisher.addMod.optionPaneMessage.developer.toolTip|When enabled: The company can release their own games
 mod.publisher.addMod.optionPaneMessage.publisher|Publisher
+mod.publisher.addMod.optionPaneMessage.publisher.toolTip|When enabled: The company can release games for you (=publish them)
+mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip|This is how much market share your publisher has
+mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Set how much money should be earned by one sell
+mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip|Click to select what genre the fan base of your publisher likes the most
+mod.publisher.addMod.optionPaneMessage.button.fanBase.select|Select what main genre your publisher should have:
+mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure|Please select a genre first.
+mod.publisher.addMod.optionPaneMessage.button.fanBase.select.error|Error while selecting genre:
+mod.publisher.icon|Publisher Icon
 mod.licence.addMod.optionPaneMessage.book|Book
 mod.licence.addMod.optionPaneMessage.movie|Movie
 mod.licence.addMod.optionPaneMessage.sport|Sport
@@ -328,7 +341,6 @@ mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Set the cost for the en
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Several genres have been selected.<br>A separate engine is created for each genre.<br><br>The following values are used for the engine:
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|engines have been added successfully!
 mod.npcEngine.addMod.noPlatformSelected|Please select a platform first!
-mod.npcEngine.addMod.noGenreSelected|Please select a genre first!
 mod.antiCheat.addMod.optionPaneMessage.firstPart|Add this anti cheat?
 mod.antiCheat.addMod.components.textFieldName.initialValue|ENTER ANTI CHEAT NAME
 mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Set the cost for the anti cheat.<br>In order to use the anti cheat in game you will have to pay this price to unlock it.

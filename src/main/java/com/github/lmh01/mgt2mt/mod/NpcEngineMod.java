@@ -244,7 +244,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                         }
                                     }
                                 }else{
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.npcEngine.addMod.noGenreSelected"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.selectGenreFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 }
                             }else{
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.npcEngine.addMod.noPlatformSelected"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);

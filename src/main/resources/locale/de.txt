@@ -156,9 +156,13 @@ commonText.selectImage|Bild auswählen
 commonText.nameAlreadyInUse|Der eigegebene Name wird schon benutzt.
 commonText.developmentCost.spinner|Der eingestellte Preis muss bezahlt werden, wenn ein Spiel mit diesem Feature erstellt wird.
 commonText.notAvailable|nicht verfügbar
+commonText.enterName|ENTER NAME
 commonText.enterFeatureName|GIB DEN NAMEN DES FEATURES EIN
 commonText.enterDescription|GIB DIE BESCHREIBUNG EIN
 commonText.points.spinner.toolTip|Die Anzahl der [...]-Punkte, die hinzugefügt werden, wenn ein Spiel mit dieser Funktion entwickelt wird.
+commonText.fanBase|Fan base
+commonText.selectGenre|Genre auswählen
+commonText.selectGenreFirst|Bitte wähle zu erst ein Genre aus!
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -247,7 +251,16 @@ modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und 
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
 mod.publisher.addMod.optionPaneMessage.developer|Entwickler
+mod.publisher.addMod.optionPaneMessage.developer.toolTip|Wenn ausgewählt: Der Firma kann ihre eigenen Spiele veröffentlichen
 mod.publisher.addMod.optionPaneMessage.publisher|Publisher
+mod.publisher.addMod.optionPaneMessage.publisher.toolTip|Wenn ausgewählt: Die Firma kann Spiele für dich veröffentlichen (=Sie publishen)
+mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip|Dies gibt an, wie hoch der Marktanteil des Publishers ist
+mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Dies gibt an, wie viel Geld pro verkaufer Einheit verdient werden soll
+mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip|Klicke hier, um einzustellen, bei welchem Genre die Fanbase von diesem Publisher/Entwickler liegt
+mod.publisher.addMod.optionPaneMessage.button.fanBase.select|Wähle das Fan-Base-Genre aus:
+mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure|Wähle bitte zuerst ein Genre aus.
+mod.publisher.addMod.optionPaneMessage.button.fanBase.select.error|Beim auswählen des Genres ist ein Fehler aufgetreten:
+mod.publisher.icon|Publisher Bild
 mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Dein Gameplay Feature ist bereit:
 mod.licence.addMod.optionPaneMessage.book|Buch
 mod.licence.addMod.optionPaneMessage.movie|Film
@@ -328,7 +341,6 @@ mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für die
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Es wurden mehrere Genres ausgewählt.<br>Für jedes Genre wird eine eigene Engine erstellt.<br><br>Die folgenden Werte werden für die Engine verwendet:
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|Engines wurden erfolgreich hinzugefügt!
 mod.npcEngine.addMod.noPlatformSelected|Bitte wähle zu erst eine Plattform aus!
-mod.npcEngine.addMod.noGenreSelected|Bitte wähle zu erst ein Genre aus!
 mod.antiCheat.addMod.optionPaneMessage.firstPart|Diesen Anti Cheat hinzufügen?
 mod.antiCheat.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN ANTI CHEAT EIN
 mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Anti Cheat fest.<br>Dieser Preis muss bezahlt werden, damit der Anti Cheat für ein Spiel verwendet werden kann.

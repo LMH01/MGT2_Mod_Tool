@@ -120,26 +120,27 @@ public class PublisherMod extends AbstractAdvancedMod {
         try {
             ModManager.publisherMod.getAnalyzer().analyzeFile();
             JPanel panelName = new JPanel();
-            JLabel labelName = new JLabel("Name:");
-            JTextField textFieldName = new JTextField("---------Enter Name---------");
+            JLabel labelName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
+            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterName"));
             panelName.add(labelName);
             panelName.add(textFieldName);
 
             JPanel panelUnlockMonth = new JPanel();
-            JLabel labelUnlockMonth = new JLabel("Unlock Month:");
+            JLabel labelUnlockMonth = new JLabel(I18n.INSTANCE.get("commonText.unlockMonth") + ":");
             JComboBox comboBoxUnlockMonth = new JComboBox(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
+            comboBoxUnlockMonth.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
             panelUnlockMonth.add(labelUnlockMonth);
             panelUnlockMonth.add(comboBoxUnlockMonth);
 
             JPanel panelUnlockYear = new JPanel();
-            JLabel labelUnlockYear = new JLabel("Unlock Year:");
+            JLabel labelUnlockYear = new JLabel(I18n.INSTANCE.get("commonText.unlockYear") + ":");
             JSpinner spinnerUnlockYear = new JSpinner();
             if(Settings.disableSafetyFeatures){
-                spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - MAX INTEGER VALUE]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
+                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 0, Integer.MAX_VALUE, 1));
                 ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
             }else{
-                spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
+                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
                 ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
             }
@@ -148,8 +149,8 @@ public class PublisherMod extends AbstractAdvancedMod {
 
             AtomicReference<String> publisherImageFilePath = new AtomicReference<>(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png");
             JPanel panelPublisherIcon = new JPanel();
-            JLabel labelPublisherIcon = new JLabel("Publisher Icon:");
-            JButton buttonBrowseIcon = new JButton("Browse");
+            JLabel labelPublisherIcon = new JLabel(I18n.INSTANCE.get("mod.publisher.icon") + ":");
+            JButton buttonBrowseIcon = new JButton(I18n.INSTANCE.get("commonText.browse"));
             buttonBrowseIcon.addActionListener(actionEvent -> {
                 String imageFilePath = Utils.getImagePath();
                 if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
@@ -161,18 +162,18 @@ public class PublisherMod extends AbstractAdvancedMod {
             panelPublisherIcon.add(labelPublisherIcon);
             panelPublisherIcon.add(buttonBrowseIcon);
 
-            JCheckBox checkBoxIsDeveloper = new JCheckBox("Developer");
+            JCheckBox checkBoxIsDeveloper = new JCheckBox(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.developer"));
             checkBoxIsDeveloper.setSelected(true);
-            checkBoxIsDeveloper.setToolTipText("When enabled: The company can release their own games");
+            checkBoxIsDeveloper.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.developer.toolTip"));
 
-            JCheckBox checkBoxIsPublisher = new JCheckBox("Publisher");
+            JCheckBox checkBoxIsPublisher = new JCheckBox(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher"));
             checkBoxIsPublisher.setSelected(true);
-            checkBoxIsPublisher.setToolTipText("When enabled: The company can release games for you (publish them)");
+            checkBoxIsPublisher.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher.toolTip"));
 
             JPanel panelMarketShare = new JPanel();
-            JLabel labelMarketShare = new JLabel("Market Share:");
+            JLabel labelMarketShare = new JLabel(I18n.INSTANCE.get("commonText.marketShare") + ":");
             JSpinner spinnerMarketShare = new JSpinner();
-            spinnerMarketShare.setToolTipText("<html>[Range: 1 - 100]<br>This is how much market share your publisher has");
+            spinnerMarketShare.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1 - 100; " + I18n.INSTANCE.get("commonText.default") + ": 50]" + "<br>" + I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip"));
             if(Settings.disableSafetyFeatures){
                 spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, Integer.MAX_VALUE, 1));
                 ((JSpinner.DefaultEditor)spinnerMarketShare.getEditor()).getTextField().setEditable(true);
@@ -184,9 +185,9 @@ public class PublisherMod extends AbstractAdvancedMod {
             panelMarketShare.add(spinnerMarketShare);
 
             JPanel panelShare = new JPanel();
-            JLabel labelShare = new JLabel("Share:");
+            JLabel labelShare = new JLabel(I18n.INSTANCE.get("commonText.profitShare") + ":");
             JSpinner spinnerShare = new JSpinner();
-            spinnerShare.setToolTipText("<html>[Range: 1 - 10]<br>Set how much money should be earned by one sell");
+            spinnerShare.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1 - 10; " + I18n.INSTANCE.get("commonText.default") + ": 5]" + "<br>" + I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip"));
             if(Settings.disableSafetyFeatures){
                 spinnerShare.setModel(new SpinnerNumberModel(5, 1, Integer.MAX_VALUE, 1));
                 ((JSpinner.DefaultEditor)spinnerShare.getEditor()).getTextField().setEditable(true);
@@ -199,13 +200,13 @@ public class PublisherMod extends AbstractAdvancedMod {
 
             AtomicInteger genreID = new AtomicInteger();
             JPanel panelGenre = new JPanel();
-            JLabel labelGenre = new JLabel("Fan base:");
-            JButton buttonSelectGenre = new JButton("        Select genre        ");
-            buttonSelectGenre.setToolTipText("Click to select what genre the fan base of your publisher likes the most");
+            JLabel labelGenre = new JLabel(I18n.INSTANCE.get("commonText.fanBase") + ":");
+            JButton buttonSelectGenre = new JButton("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ");
+            buttonSelectGenre.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip"));
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
                     ModManager.genreMod.getAnalyzer().analyzeFile();
-                    JLabel labelChooseGenre = new JLabel("Select what main genre your publisher should have:");
+                    JLabel labelChooseGenre = new JLabel(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select"));
                     String[] string;
                     string = ModManager.genreMod.getAnalyzer().getContentByAlphabet();
                     JList<String> listAvailableGenres = new JList<>(string);
@@ -217,17 +218,17 @@ public class PublisherMod extends AbstractAdvancedMod {
 
                     Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
 
-                    if(JOptionPane.showConfirmDialog(null, params, "Select genre", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.selectGenre"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                         if(!listAvailableGenres.isSelectionEmpty()){
                             String currentGenre = listAvailableGenres.getSelectedValue();
                             genreID.set(ModManager.genreMod.getAnalyzer().getContentIdByName(currentGenre));
                             buttonSelectGenre.setText(currentGenre);
                         }else{
-                            JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 } catch (IOException e) {
-                    JOptionPane.showMessageDialog(null, "Error while selecting genre: An Error has occurred:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select.error") + ":\n\n" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             });
@@ -237,7 +238,7 @@ public class PublisherMod extends AbstractAdvancedMod {
             Object[] params = {panelName, panelUnlockMonth, panelUnlockYear, panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, panelMarketShare, panelShare, panelGenre};
             boolean breakLoop = false;
             while(!breakLoop){
-                if(JOptionPane.showConfirmDialog(null, params, "Add Publisher", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     boolean publisherAlreadyExists = false;
                     for(String string : ModManager.publisherMod.getAnalyzer().getContentByAlphabet()){
                         if(textFieldName.getText().equals(string)){
@@ -245,13 +246,13 @@ public class PublisherMod extends AbstractAdvancedMod {
                         }
                     }
                     if(publisherAlreadyExists){
-                        JOptionPane.showMessageDialog(null, "Unable to add publisher: The publisher name does already exist!", I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }else{
-                        if(textFieldName.getText().equals("") || textFieldName.getText().equals("---------Enter Name---------")){
-                            JOptionPane.showMessageDialog(null, "Please enter a name first!", "", JOptionPane.INFORMATION_MESSAGE);
-                            textFieldName.setText("---------Enter Name---------");
-                        }else if(buttonSelectGenre.getText().equals("        Select genre        ")){
-                            JOptionPane.showMessageDialog(null, "Please select a genre first!", "", JOptionPane.INFORMATION_MESSAGE);
+                        if(textFieldName.getText().equals("") || textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterName"))){
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), "", JOptionPane.INFORMATION_MESSAGE);
+                            textFieldName.setText(I18n.INSTANCE.get("commonText.enterName"));
+                        }else if(buttonSelectGenre.getText().equals("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ")){
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.selectGenreFirst"), "", JOptionPane.INFORMATION_MESSAGE);
                         }else{
                             ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
                             int logoId;
@@ -294,7 +295,6 @@ public class PublisherMod extends AbstractAdvancedMod {
                 }
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error while adding publisher:\n\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
