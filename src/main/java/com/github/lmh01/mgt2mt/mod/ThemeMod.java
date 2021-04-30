@@ -185,7 +185,7 @@ public class ThemeMod extends AbstractSimpleMod {
                                     }
                                     themeTranslations.put("NAME EN", textFieldThemeName.getText());
                                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
-                                        Backup.createThemeFilesBackup(false, true);
+                                        Backup.createThemeFilesBackup(false, false);
                                         ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");

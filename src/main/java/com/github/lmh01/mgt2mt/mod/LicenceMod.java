@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.LicenceSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
@@ -143,6 +144,7 @@ public class LicenceMod extends AbstractSimpleMod {
                                 .append("Type: ").append(comboBoxType.getSelectedItem());
                         if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), "Add this licence?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             try {
+                                Backup.createBackup(getFile());
                                 ModManager.licenceMod.getEditor().addMod(newLicence.toString());
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.licence") + " - " + textFieldName.getText());
                                 JOptionPane.showMessageDialog(null, "Licence [" + textFieldName.getText() + "] has been added successfully!");

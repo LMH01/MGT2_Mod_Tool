@@ -364,6 +364,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                             }
                             boolean addFeature = Summaries.showSummary(ModManager.gameplayFeatureMod.getSharer().getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
                             if(addFeature) {
+                                Backup.createBackup(getFile());
                                 ModManager.gameplayFeatureMod.getEditor().addMod(newGameplayFeature);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + " - " + newGameplayFeature.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + ": [" + newGameplayFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);

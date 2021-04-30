@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer
 import com.github.lmh01.mgt2mt.data_stream.sharer.NpcEngineSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -200,6 +201,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.npcEngine.addMod.optionPaneMessage.multipleGenres") + "<br><br>" + getBaseSharer().getOptionPaneMessage(npcEngine) + "<br><br>" + I18n.INSTANCE.get("commonText.isThisCorrect"), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                             npcEngine.remove("NAME EN");
                                             npcEngine.remove("GENRE");
+                                            Backup.createBackup(getFile());
                                             ProgressBarHelper.initializeProgressBar(0, listAvailableGenres.getSelectedValuesList().size(), I18n.INSTANCE.get(""));
                                             for(String string : listAvailableGenres.getSelectedValuesList()){
                                                 getBaseAnalyzer().analyzeFile();
@@ -237,6 +239,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                         npcEngine.put("GENRE", Integer.toString(ModManager.genreMod.getAnalyzer().getContentIdByName(listAvailableGenres.getSelectedValue())));
                                         sendLogMessage("Only a single genre has been selected. Displaying single engine dialog");
                                         if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(npcEngine), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                            Backup.createBackup(getFile());
                                             getBaseEditor().addMod(npcEngine);
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase") + " - " + npcEngine.get("NAME EN"));
                                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.npcEngine.upperCase") + ": [" + npcEngine.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase"), JOptionPane.INFORMATION_MESSAGE);

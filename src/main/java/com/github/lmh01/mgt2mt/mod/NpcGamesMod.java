@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.NpcGamesSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
@@ -113,6 +114,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
                             }
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                 try {
+                                    Backup.createBackup(getFile());
                                     ModManager.npcGamesMod.getBaseEditor().addMod(newModLine.toString());
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getType() + " - " + newModName);
                                     JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));

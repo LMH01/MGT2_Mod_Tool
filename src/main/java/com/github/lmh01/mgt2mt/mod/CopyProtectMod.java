@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.CopyProtectSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -185,6 +186,7 @@ public class CopyProtectMod extends AbstractAdvancedMod {
                             copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
                             copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                Backup.createBackup(getFile());
                                 getBaseEditor().addMod(copyProtectMap);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.copyProtect.upperCase") + " - " + copyProtectMap.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.copyProtect.upperCase") + ": [" + copyProtectMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);

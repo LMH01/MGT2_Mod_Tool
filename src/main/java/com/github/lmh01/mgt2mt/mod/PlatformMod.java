@@ -9,10 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer
 import com.github.lmh01.mgt2mt.data_stream.sharer.PlatformSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Summaries;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -508,6 +505,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                 }
                                 platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(comboBoxFeatureType.getSelectedItem().toString())));
                                 if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                    Backup.createBackup(getFile());
                                     getEditor().addMod(platformMap, finalPictureMap);
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase") + " - " + platformMap.get("NAME EN"));
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.platform.upperCase") + ": [" + platformMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase"), JOptionPane.INFORMATION_MESSAGE);

@@ -344,6 +344,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             newEngineFeature.put("TECH", spinnerTech.getValue().toString());
                             boolean addFeature = Summaries.showSummary(ModManager.engineFeatureMod.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                             if (addFeature) {
+                                Backup.createBackup(getFile());
                                 ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.engineFeature.upperCase") + " - " + newEngineFeature.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);

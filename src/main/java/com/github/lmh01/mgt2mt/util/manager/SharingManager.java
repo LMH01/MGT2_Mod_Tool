@@ -3,10 +3,7 @@ package com.github.lmh01.mgt2mt.util.manager;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.data_stream.sharer.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Uninstaller;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -348,6 +345,7 @@ public class SharingManager {
                         }
                     }
                 }
+                Backup.createFullBackup();
             } catch (IOException e)  {
                 errorWhileScanning = true;
                 TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.sharingManager.importAll.error.general").replace("<html>", "").replace("<br>", " ") + " " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());

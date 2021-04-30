@@ -10,6 +10,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer
 import com.github.lmh01.mgt2mt.data_stream.sharer.GenreSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -294,6 +295,7 @@ public class GenreMod extends AbstractAdvancedMod {
                         List<HashSet<Integer>> gameplayFeatures = getRandomGameplayFeatureIds();
                         setGameplayFeatureCompatibility(map, gameplayFeatures.get(0), gameplayFeatures.get(1));
                         File iconFile = new File(iconPath.toString());
+                        Backup.createBackup(getFile());
                         if(GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected())){
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + genreName);
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.genre") + " [" + genreName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("commonText.genre") + " " + I18n.INSTANCE.get("commonText.added"), JOptionPane.INFORMATION_MESSAGE);

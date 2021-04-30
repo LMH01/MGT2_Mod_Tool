@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer
 import com.github.lmh01.mgt2mt.data_stream.sharer.PublisherSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -283,6 +284,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                                 hashMap.put("MARKET", spinnerMarketShare.getValue().toString());
                                 hashMap.put("SHARE", spinnerShare.getValue().toString());
                                 hashMap.put("GENRE", genreID.toString());
+                                Backup.createBackup(getFile());
                                 ModManager.publisherMod.getEditor().addMod(hashMap, publisherImageFilePath.toString());
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + hashMap.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, "Publisher " + hashMap.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
