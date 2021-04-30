@@ -265,6 +265,8 @@ mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Dein Gameplay Feature ist
 mod.licence.addMod.optionPaneMessage.book|Buch
 mod.licence.addMod.optionPaneMessage.movie|Film
 mod.licence.addMod.optionPaneMessage.sport|Sport
+mod.licence.addMod.confirm|Soll diese Lizenz hinzugefügt werden?
+mod.licence.addMod.error|Fehler beim hinzufügen der Lizenz:
 mod.engineFeature.addMod.title|Engine Feature hinzufügen?
 mod.engineFeature.addMod.components.type.toolTip|Wähle aus, welchen Typs das Engine Feature sein soll
 mod.gameplayFeature.addMod.title|Gameplay Feature hinzufügen?
@@ -680,7 +682,7 @@ textArea.uninstalling.uninstallingAllMods.genre.failed|Deinstallation des Genre 
 textArea.uninstalling.uninstallingAllMods.publisher.failed|Deinstallation des Publisher fehlgeschlagen:
 textArea.uninstalling.uninstallingAllMods.platform.failed|Deinstallation der Platform fehlgeschlagen:
 textArea.uninstalling.uninstallingAllMods.success|Spieldateien wurden zu ihrem original Zustand zurückgesetzt
-textArea.uninstalling.uninstallingAllMods.noModsFound|Es müssen keine Mods entfernt werde: Keine Mods gefunden
+textArea.uninstalling.uninstallingAllMods.noModsFound|Es müssen keine Mods entfernt werden: Keine Mods gefunden
 textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
 textArea.deletingBackups|Lösche Backups
 textArea.deletingSettings|Lösche Einstellungen

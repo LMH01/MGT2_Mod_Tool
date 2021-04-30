@@ -264,6 +264,8 @@ mod.publisher.icon|Publisher Icon
 mod.licence.addMod.optionPaneMessage.book|Book
 mod.licence.addMod.optionPaneMessage.movie|Movie
 mod.licence.addMod.optionPaneMessage.sport|Sport
+mod.licence.addMod.confirm|Add this licence
+mod.licence.addMod.error|Error while adding licence:
 mod.engineFeature.addMod.title|Add engine feature?
 mod.engineFeature.addMod.components.type.toolTip|Select what type your engine feature should be
 mod.gameplayFeature.addMod.title|Add gameplay feature?
