@@ -133,8 +133,9 @@ commonText.screenshots.added|Screenhots eingestellt
 commonText.imageFile.doesNotExist|<html>Die eingegebene Bilddatei existiert nicht.<br>Wähle bitte eine gültige Datei aus.
 commonText.imageFile.selectPngFile|Wähle bitte eine .png Datei aus.
 commonText.imageFile.selectOnlyPngFile|Wähle bitte nur .png Dateien aus.
-commonText.imageFile.selectPngFile.fileChooser|Wähle ein Genre Bild aus (png.):
+commonText.imageFile.selectPngFile.fileChooser|Wähle eine Bilddatei aus (png.):
 commonText.imageFile.selectPngFiles.fileChooser|Wähle .png Dateien aus:
+commonText.imageFile.selectionType|.png Dateien
 commonText.followingImageFilesHaveBeenAdded.firstPart|<html>Die folgenden Bilddateien wurden hinzugefügt:
 commonText.isThisCorrect|Ist das richtig und möchtest du weiter machen?
 commonText.browse|Durchsuchen
@@ -383,6 +384,8 @@ mod.genre.enterDescriptionFirst|Gib bitte zu erst eine Beschreibung für das Gen
 mod.genre.translation.donNotShowInfoAgain|Diese Information nicht noch einmal anzeigen
 mod.genre.translation.information|<html>Hinweis:<br>Die Übersetzung, die in das "Haupt"-Textfeld geschrieben wird, wird für die Englische Übersetzung benutzt.<br><br>Fortsetzen?
 mod.genre.sameSelection.text|<html>Fortsetzung nicht möglich: Es ist nicht zulässig, dasselbe Feature in beiden Listen auszuwählen.<br>Bitte deaktiviere das Feature in einer Liste.
+mod.companyIcon.added|Bild wurde hinzugefügt.
+mod.companyIcon.added.title|Bild hinzugefügt.
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:

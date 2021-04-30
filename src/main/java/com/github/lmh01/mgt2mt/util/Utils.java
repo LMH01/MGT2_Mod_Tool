@@ -203,24 +203,24 @@ public class Utils {
 
                 @Override
                 public String getDescription() {
-                    return ".png files";
+                    return I18n.INSTANCE.get("commonText.imageFile.selectionType");
                 }
             };
 
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
             fileChooser.setFileFilter(fileFilter);
-            fileChooser.setDialogTitle("Choose a genre image (.png):");
+            fileChooser.setDialogTitle(I18n.INSTANCE.get("commonText.imageFile.selectPngFile.fileChooser"));
 
             int return_value = fileChooser.showOpenDialog(null);
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
             if(return_value == JFileChooser.APPROVE_OPTION){
                 if(fileChooser.getSelectedFile().getName().contains(".png")){
                     if(showConfirmMessage){
-                        JOptionPane.showMessageDialog(new Frame(), "Image file set.");
+                        JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFileSet"));
                     }
                     return fileChooser.getSelectedFile().getPath();
                 }else{
-                    JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
                     return "error";
                 }
             }else{

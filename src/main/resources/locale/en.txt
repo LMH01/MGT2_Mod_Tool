@@ -132,9 +132,10 @@ commonText.imageFileSet|Image file set
 commonText.screenshots.added|Screenshots set
 commonText.imageFile.doesNotExist|<html>The entered image file does not exist.<br>Please select a valid file.
 commonText.imageFile.selectPngFile|Please select a .png file.
-commonText.imageFile.selectPngFiles.fileChooser|Please select .png files:
 commonText.imageFile.selectOnlyPngFile|Please select only .png files.
-commonText.imageFile.selectPngFile.fileChooser|Choose a genre image (.png):
+commonText.imageFile.selectPngFile.fileChooser|Choose a image file (.png):
+commonText.imageFile.selectPngFiles.fileChooser|Please select .png files:
+commonText.imageFile.selectionType|.png files
 commonText.followingImageFilesHaveBeenAdded.firstPart|<html>The following image files have been added:
 commonText.isThisCorrect|Is this correct and do you want to continue?
 commonText.browse|Browse
@@ -383,6 +384,8 @@ mod.genre.enterDescriptionFirst|Please enter a genre description first!
 mod.genre.translation.donNotShowInfoAgain|Don't show this information again
 mod.genre.translation.information|<html>Note:<br>The translation that you have entered in the "main"text field<br>will be used as the english translation.<br><br>Continue?
 mod.genre.sameSelection.text|<html>Unable to continue: It is not allowed to select the same feature in booth lists.<br>Please deselect the feature from one list.
+mod.companyIcon.added|Image has been added.
+mod.companyIcon.added.title|Image added.
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:

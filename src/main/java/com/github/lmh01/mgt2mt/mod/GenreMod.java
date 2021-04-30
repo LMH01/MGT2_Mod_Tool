@@ -344,7 +344,7 @@ public class GenreMod extends AbstractAdvancedMod {
 
                     @Override
                     public String getDescription() {
-                        return ".png files";
+                        return I18n.INSTANCE.get("commonText.imageFile.selectionType");
                     }
                 };
 
@@ -424,7 +424,7 @@ public class GenreMod extends AbstractAdvancedMod {
 
                     @Override
                     public String getDescription() {
-                        return ".png files";
+                        return I18n.INSTANCE.get("commonText.imageFile.selectionType");
                     }
                 };
 
