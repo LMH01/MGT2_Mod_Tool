@@ -615,22 +615,11 @@ public class SharingManager {
      * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
      */
     public static void exportAll(boolean exportAsRestorePoint){
-        StringBuilder exportList = new StringBuilder();
-        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
-            exportList.append(getExportListPart(advancedMod.getBaseAnalyzer().getCustomContentString(true), advancedMod.getType()));
-        }
-        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
-            if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                exportList.append(getExportListPart(ModManager.themeMod.getAnalyzerEn().getCustomContentString(true), simpleMod.getType()));
-            }else{
-                exportList.append(getExportListPart(simpleMod.getBaseAnalyzer().getCustomContentString(true), simpleMod.getType()));
-            }
-        }
         boolean exportFiles = false;
         if(exportAsRestorePoint){
             exportFiles = true;
         }else{
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage") + "\n\n" + exportList.toString(), I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage"), I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                 exportFiles = true;
             }
         }

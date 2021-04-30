@@ -7,7 +7,6 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 
 public class ThreadHandler {
