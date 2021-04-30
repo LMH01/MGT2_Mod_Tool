@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
@@ -11,7 +12,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Map;
 
-public class EngineFeatureSharer extends AbstractAdvancedSharer{
+public class EngineFeatureSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureSharer.class);
 
     @Override

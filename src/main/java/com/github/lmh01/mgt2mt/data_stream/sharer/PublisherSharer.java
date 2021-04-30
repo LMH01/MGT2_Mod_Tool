@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PublisherSharer extends AbstractAdvancedSharer{
+public class PublisherSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherSharer.class);
 
     @Override

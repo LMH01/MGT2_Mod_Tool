@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-public class NpcGamesSharer extends AbstractSimpleSharer{
+public class NpcGamesSharer extends AbstractSimpleSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcGamesSharer.class);
 
     @Override

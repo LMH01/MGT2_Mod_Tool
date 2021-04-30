@@ -1,11 +1,11 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.PlatformAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractAdvancedEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.PlatformEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.PlatformSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -19,8 +19,6 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

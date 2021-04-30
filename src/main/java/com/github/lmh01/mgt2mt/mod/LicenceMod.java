@@ -1,11 +1,11 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.LicenceAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.LicenceEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.LicenceSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;

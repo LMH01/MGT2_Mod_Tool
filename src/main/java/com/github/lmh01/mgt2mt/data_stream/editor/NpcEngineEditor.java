@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -13,7 +14,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public class NpcEngineEditor extends AbstractAdvancedEditor{
+public class NpcEngineEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineEditor.class);
 
     @Override

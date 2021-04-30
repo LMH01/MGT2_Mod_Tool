@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;

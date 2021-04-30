@@ -2,9 +2,9 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class LicenceAnalyzer extends AbstractSimpleAnalyzer{
+public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceAnalyzer.class);
     Map<Integer, String> fileContent;
     String[] defaultContent = {};

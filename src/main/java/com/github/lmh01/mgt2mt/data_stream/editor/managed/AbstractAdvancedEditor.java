@@ -1,7 +1,7 @@
-package com.github.lmh01.mgt2mt.data_stream.editor;
+package com.github.lmh01.mgt2mt.data_stream.editor.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import java.io.*;

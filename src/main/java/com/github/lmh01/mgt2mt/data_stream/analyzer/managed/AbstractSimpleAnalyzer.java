@@ -1,4 +1,4 @@
-package com.github.lmh01.mgt2mt.data_stream.analyzer;
+package com.github.lmh01.mgt2mt.data_stream.analyzer.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;

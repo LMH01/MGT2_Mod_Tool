@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.Map;
 
-public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer{
+public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcGamesAnalyzer.class);
     Map<Integer, String> fileContent;
     String[] defaultContent = {};

@@ -1,9 +1,9 @@
-package com.github.lmh01.mgt2mt.data_stream.sharer;
+package com.github.lmh01.mgt2mt.data_stream.sharer.managed;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.SimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.SimpleAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;

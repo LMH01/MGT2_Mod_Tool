@@ -2,8 +2,9 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ThemeSharer extends AbstractSimpleSharer{
+public class ThemeSharer extends AbstractSimpleSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureSharer.class);
 
     @Override

@@ -1,16 +1,15 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.NpcGamesAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractSimpleEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.NpcGamesEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractSimpleSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.NpcGamesSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

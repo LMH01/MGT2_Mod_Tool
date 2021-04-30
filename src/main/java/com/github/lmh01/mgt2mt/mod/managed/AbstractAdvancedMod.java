@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.AbstractAdvancedEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;

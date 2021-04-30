@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class PlatformAnalyzer extends AbstractAdvancedAnalyzer{
+public class PlatformAnalyzer extends AbstractAdvancedAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformAnalyzer.class);
     List<Map<String, String>> fileContent;
     String[] defaultContent = {};

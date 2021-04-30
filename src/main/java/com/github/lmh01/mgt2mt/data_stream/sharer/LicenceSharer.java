@@ -1,14 +1,14 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.interfaces.SimpleImporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LicenceSharer extends AbstractSimpleSharer{
+public class LicenceSharer extends AbstractSimpleSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureSharer.class);
 
     @Override
