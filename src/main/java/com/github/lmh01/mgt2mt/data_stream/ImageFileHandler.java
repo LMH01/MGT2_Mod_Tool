@@ -35,7 +35,7 @@ public class ImageFileHandler {
             }
         }else{
             //This copies the .png file to the Icon_Genres directory
-            copyImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png"));
+            copyGenreImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png"));
             //This creates the meta file in the Icon_Genres directory
             createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png.meta"));
             //This creates the meta file in the main screenshot direcotry
@@ -48,8 +48,8 @@ public class ImageFileHandler {
      * Moves the given file to the target location
      * @param imageFile This is the file that should be moved
      * @param outputFile This is the file that should be created
-     *///TODO rename function to copyGenreImages
-    private static void copyImages(File imageFile, File outputFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
+     */
+    private static void copyGenreImages(File imageFile, File outputFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
         if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
             LOGGER.info("The default image file is in use. No need to copy a new one.");
         }else{
@@ -81,7 +81,7 @@ public class ImageFileHandler {
                     LOGGER.info("Current image file: " + screenshotFiles.get(i));
                 }
                 createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png.meta"));
-                copyImages(screenshotFiles.get(i), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png"));
+                copyGenreImages(screenshotFiles.get(i), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + i + ".png"));
             }
         }else{
             File fileScreenshotForGenreID =new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\");
@@ -89,12 +89,12 @@ public class ImageFileHandler {
                 fileScreenshotForGenreID.mkdirs();
                 directoryCreated = true;
             }
-            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\2.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "0.png"));
-            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\4.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "1.png"));
-            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\9.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "2.png"));
-            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\11.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "3.png"));
-            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\13.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "4.png"));
-            copyImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\20.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "5.png"));
+            copyGenreImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\2.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "0.png"));
+            copyGenreImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\4.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "1.png"));
+            copyGenreImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\9.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "2.png"));
+            copyGenreImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\11.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "3.png"));
+            copyGenreImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\13.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "4.png"));
+            copyGenreImages(new File(Utils.getMGT2ScreenshotsPath() + "\\3\\20.png"), new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\" + "5.png"));
             createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\0.png.meta"));
             createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\1.png.meta"));
             createMetaFile(3, new File(Utils.getMGT2ScreenshotsPath() + "\\" + genreID + "\\2.png.meta"));

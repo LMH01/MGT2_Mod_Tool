@@ -96,7 +96,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             }
         }
         boolean addFeature = true;
-        if(showMessages){//TODO Ggf. hier noch eine Methode einbauen, mit der man das Bild sehen kann
+        if(showMessages){
             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(map)) != JOptionPane.YES_OPTION){
                 addFeature = false;
             }

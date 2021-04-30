@@ -91,7 +91,7 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
         }
         String importLine = importMap.get("LINE");
         boolean addFeature = true;
-        if(showMessages){//TODO Ggf. hier noch eine Methode einbauen, mit der man das Bild sehen kann
+        if(showMessages){
             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(importLine)) != JOptionPane.YES_OPTION){
                 addFeature = false;
             }
