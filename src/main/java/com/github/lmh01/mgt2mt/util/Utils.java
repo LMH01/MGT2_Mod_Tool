@@ -212,21 +212,20 @@ public class Utils {
             fileChooser.setDialogTitle("Choose a genre image (.png):");
 
             int return_value = fileChooser.showOpenDialog(null);
-            if (return_value == 0) {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+            if(return_value == JFileChooser.APPROVE_OPTION){
                 if(fileChooser.getSelectedFile().getName().contains(".png")){
                     if(showConfirmMessage){
                         JOptionPane.showMessageDialog(new Frame(), "Image file set.");
                     }
-                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                     return fileChooser.getSelectedFile().getPath();
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), "Please select a .png file.");
-                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
                     return "error";
                 }
+            }else{
+                return "canceled";
             }
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-            return "error";
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
             return "error";
