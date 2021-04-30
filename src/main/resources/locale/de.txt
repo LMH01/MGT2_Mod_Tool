@@ -28,6 +28,9 @@ commonText.npcGames.upperCase.plural|Npc Spiele
 commonText.platform|Platform
 commonText.platform.upperCase|Platform
 commonText.platform.upperCase.plural|Platformen
+commonText.npcEngine|Npc Engine
+commonText.npcEngine.upperCase|Npc Engine
+commonText.npcEngine.upperCase.plural|Npc Engines
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -57,8 +60,10 @@ commonText.researchPointCost|Forschungspunktkosten
 commonText.researchCost|Forschungskosten
 commonText.developmentCost|Entwicklungskosten
 commonText.devKitCost|Kosten für das Development Kit
+commonText.price|Kosten
 commonText.marketShare|Marktanteil
 commonText.share|Verkaufsanteil
+commonText.profitShare|Gewinnanteil
 commonText.techLevel|Technik Level
 commonText.units|Einheiten
 commonText.neededGameplayFeatures|Benötigte Gameplay Features
@@ -130,6 +135,7 @@ commonText.scrollExplanation|(Tipp: Halte STRG gedrückt und klicke mit der Maus
 commonText.default|Standard
 commonText.imageSelected|Bild ausgewählt
 commonText.selectImage|Bild auswählen
+commonText.nameAlreadyInUse|Der eigegebene Name wird schon benutzt.
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -167,6 +173,10 @@ analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler b
 analyzer.platform.getCustomContentString.customEngineFeatureFound|Modifizierte Platform gefunden:
 analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Platformen abgeschlossen
 analyzer.platform.getCustomContentString.progressBar|Scannen nach modifizierten Platformen
+analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc Engine:
+analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modifizierte Npc Engine gefunden:
+analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Engines abgeschlossen
+analyzer.npcEngine.getCustomContentString.progressBar|Scannen nach modifizierten Npc Engines
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -192,6 +202,9 @@ modManager.npcGames.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein N
 modManager.platform.windowMain.modButton.addMod|Platform hinzufügen
 modManager.platform.windowMain.modButton.removeMod|Platform entfernen
 modManager.platform.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Platform verfügbar
+modManager.npcEngine.windowMain.modButton.addMod|Npc Engine hinzufügen
+modManager.npcEngine.windowMain.modButton.removeMod|Npc Engine entfernen
+modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Npc Engine verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
@@ -254,6 +267,16 @@ mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlre
 mod.platform.addPlatform.title|Plattform hinzufügen
 mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Namen für den Hersteller ein!
 mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:
+mod.npcEngine.addMod.optionPaneMessage.firstPart|Diese Npc Engine hinzufügen?
+mod.npcEngine.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC ENGINE EIN
+mod.npcEngine.addMod.components.selectGenre|Wähle das Genre aus, welches das Spezialgenre für die Engine sein soll:<br>Werden mehrere Genres ausgewählt, so werden<br>mehrere Engines erstellt, je eine für jedes ausgewählte Genre.<br>Dabei wird der Name des Genres dann hinter den Namen der Engine gehängt.
+mod.npcEngine.addMod.components.selectPlatform|Wähle die Plattform aus, welche die Spezialplattform für die Engine sein soll:
+mod.npcEngine.addMod.components.spinner.share.toolTip|<br>Lege die Gewinnbeteiligung für die Engine fest.<br>Wenn ein Spiel mit dieser Engine erstellt wird, wird der Betrag (in %) an den Engine-Entwickler bezahlt.
+mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für die Engine fest.<br>Dieser Preis muss bezahlt werden, damit die Engine für ein Spiel verwendet werden kann.
+mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Es wurden mehrere Genres ausgewählt.<br>Für jedes Genre wird eine eigene Engine erstellt.<br><br>Die folgenden Werte werden für die Engine verwendet:
+mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|Engines wurden erfolgreich hinzugefügt!
+mod.npcEngine.addMod.noPlatformSelected|Bitte wähle zu erst eine Plattform aus!
+mod.npcEngine.addMod.noGenreSelected|Bitte wähle zu erst ein Genre aus!
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:

@@ -28,6 +28,9 @@ commonText.npcGames.upperCase.plural|Npc games
 commonText.platform|platform
 commonText.platform.upperCase|Platform
 commonText.platform.upperCase.plural|Platforms
+commonText.npcEngine|npc engine
+commonText.npcEngine.upperCase|Npc engine
+commonText.npcEngine.upperCase.plural|Npc engines
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -57,8 +60,10 @@ commonText.researchPointCost|Research point cost
 commonText.researchCost|Research cost
 commonText.developmentCost|Development cost
 commonText.devKitCost|Dev kit cost
+commonText.price|Price
 commonText.marketShare|Market share
 commonText.share|Share
+commonText.profitShare|Profit share
 commonText.techLevel|Tech level
 commonText.units|Units
 commonText.neededGameplayFeatures|Needed gameplay features
@@ -130,6 +135,7 @@ commonText.scrollExplanation|(Tip: Hold STRG and click with your mouse)
 commonText.default|Default
 commonText.imageSelected|Image selected
 commonText.selectImage|Select image
+commonText.nameAlreadyInUse|The selected name is already in use.
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -159,14 +165,18 @@ analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Error wil
 analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modded theme (GE):
 analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes (GE) complete
 analyzer.themeGe.getCustomContentString.progressBar|Scanning for modded themes (GE)
-analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc game:
+analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc games:
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modded npc game:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc games complete
 analyzer.npcGames.getCustomContentString.progressBar|Scanning for modded npc games
-analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning platform:
+analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning platforms:
 analyzer.platform.getCustomContentString.customEngineFeatureFound|Modded platform found:
 analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scanning for modded platforms complete
-analyzer.platform.getCustomContentString.progressBar|Scanning for modded platform
+analyzer.platform.getCustomContentString.progressBar|Scanning for modded platforms
+analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc engines:
+analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modded npc engine found:
+analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc engines complete
+analyzer.npcEngine.getCustomContentString.progressBar|Scanning for modded npc engines
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
@@ -192,6 +202,9 @@ modManager.npcGames.windowMain.modButton.removeMod.toolTip|Disabled -> No npc ga
 modManager.platform.windowMain.modButton.addMod|Add platform
 modManager.platform.windowMain.modButton.removeMod|Remove platform
 modManager.platform.windowMain.modButton.removeMod.toolTip|Disabled -> No platform available
+modManager.npcEngine.windowMain.modButton.addMod|Add npc engine
+modManager.npcEngine.windowMain.modButton.removeMod|Remove npc engine
+modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Disabled -> No npc engine available
 modManager.general.enterNameFirst|Please enter a name first!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
@@ -254,6 +267,16 @@ mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlre
 mod.platform.addPlatform.title|Add platform
 mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the manufacturer first!
 mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:
+mod.npcEngine.addMod.optionPaneMessage.firstPart|Add this npc engine?
+mod.npcEngine.addMod.components.textFieldName.initialValue|ENTER NPC ENGINE NAME
+mod.npcEngine.addMod.components.selectGenre|Select the genre which should be the special genre for the engine:<br>If several genres are selected, several engines will be created, one for each selected genre.<br>The name of the genre will then be written after the name of the engine.
+mod.npcEngine.addMod.components.selectPlatform|Select the platform which should be the special platform for the engine:
+mod.npcEngine.addMod.components.spinner.share.toolTip|<br>Set the profit share for the engine.<br>When a game is created with this engine the amount (in %) will be paid to the engine developer.
+mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Set the cost for the engine.<br>In order to use the engine in game you will have to pay this price to unlock it.
+mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Several genres have been selected.<br>A separate engine is created for each genre.<br><br>The following values are used for the engine:
+mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|engines have been added successfully!
+mod.npcEngine.addMod.noPlatformSelected|Please select a platform first!
+mod.npcEngine.addMod.noGenreSelected|Please select a genre first!
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:

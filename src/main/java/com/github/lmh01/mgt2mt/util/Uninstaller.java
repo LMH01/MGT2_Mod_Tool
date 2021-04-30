@@ -125,7 +125,8 @@ public class Uninstaller {
         String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
         String[] customLicences = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
         String[] customPlatforms = ModManager.platformMod.getBaseAnalyzer().getCustomContentString();
-        if(customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length + customPlatforms.length != 0){
+        String[] customNpcEngines = ModManager.npcEngineMod.getBaseAnalyzer().getCustomContentString();
+        if(customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length + customPlatforms.length + customNpcEngines.length != 0){
             ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (String customGenre : customGenres) {
                 try {

@@ -420,9 +420,13 @@ public class WindowMain {
                 for(JMenuItem menuItem : ModManager.npcGamesMod.getModMenuItems()){
                     menu7.add(menuItem);
                 }
-                JMenu menu8 = new JMenu(ModManager.platformMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.platformMod.getModMenuItems()){
+                JMenu menu8 = new JMenu(ModManager.npcEngineMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.npcEngineMod.getModMenuItems()){
                     menu8.add(menuItem);
+                }
+                JMenu menu9 = new JMenu(ModManager.platformMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.platformMod.getModMenuItems()){
+                    menu9.add(menuItem);
                 }
                 MOD_MENUS.add(menu);
                 MOD_MENUS.add(menu2);
@@ -432,6 +436,7 @@ public class WindowMain {
                 MOD_MENUS.add(menu6);
                 MOD_MENUS.add(menu7);
                 MOD_MENUS.add(menu8);
+                MOD_MENUS.add(menu9);
                 M_2_MODS.add(menu);
                 M_2_MODS.add(menu2);
                 M_2_MODS.add(menu3);
@@ -440,6 +445,7 @@ public class WindowMain {
                 M_2_MODS.add(menu6);
                 M_2_MODS.add(menu7);
                 M_2_MODS.add(menu8);
+                M_2_MODS.add(menu9);
                 M_31_EXPORT.add(ModManager.genreMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.themeMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.publisherMod.getExportMenuItem());
@@ -447,6 +453,7 @@ public class WindowMain {
                 M_31_EXPORT.add(ModManager.gameplayFeatureMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.licenceMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.npcGamesMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.npcEngineMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.platformMod.getExportMenuItem());
             }
             modMenusInitialized = true;

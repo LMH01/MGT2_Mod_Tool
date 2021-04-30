@@ -18,6 +18,7 @@ public class ModManager{
     public static ThemeMod themeMod = new ThemeMod();
     public static NpcGamesMod npcGamesMod = new NpcGamesMod();
     public static PlatformMod platformMod = new PlatformMod();
+    public static NpcEngineMod npcEngineMod = new NpcEngineMod();
 
     /**
      * Initializes all mods
@@ -32,6 +33,7 @@ public class ModManager{
         themeMod.initializeMod();
         npcGamesMod.initializeMod();
         platformMod.initializeMod();
+        npcEngineMod.initializeMod();
     }
 
     /**
@@ -48,6 +50,7 @@ public class ModManager{
             licenceMod.getAnalyzer().analyzeFile();
             npcGamesMod.getBaseAnalyzer().analyzeFile();
             platformMod.getBaseAnalyzer().analyzeFile();
+            npcEngineMod.getBaseAnalyzer().analyzeFile();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -33,7 +33,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
         for (Map<String, String> map : fileContent) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (entry.getKey().equals("ID")) {
-                    int currentId = Integer.parseInt(entry.getValue());
+                    int currentId = Integer.parseInt(entry.getValue());//TODO Catch phrase für NumberFormatException einbauen, die dann eine neue IO exception wirft und den vorgang abbricht
                     if (currentMaxId < currentId) {
                         currentMaxId = currentId;
                     }
