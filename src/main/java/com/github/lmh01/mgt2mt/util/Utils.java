@@ -536,7 +536,7 @@ public class Utils {
                 stringBuilder.append(", ");
             }
             if(currentLine == entriesPerLine+1){
-                stringBuilder.append(System.getProperty("line.separator"));
+                stringBuilder.append(System.getProperty("line.separator")).append("          ");
                 currentLine = 1;
             }
             stringBuilder.append(string);
