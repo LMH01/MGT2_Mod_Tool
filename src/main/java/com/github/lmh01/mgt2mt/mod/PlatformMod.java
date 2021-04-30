@@ -330,9 +330,13 @@ public class PlatformMod extends AbstractAdvancedMod {
                     AtomicInteger lastYear = new AtomicInteger(1975);
                     final boolean[] firstImage = {true};
                     buttonAddPicture.addActionListener(actionEvent2 -> {
-                        if(pictureMap.size() >= 2){
-                            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("frame.title.unableToContinue") + ":<br><br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.maxPicturesSelectedMessage"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
+                        boolean continueWithPictures = false;
+                        if(pictureMap.size() < 2 || Settings.disableSafetyFeatures){
+                            continueWithPictures = true;
                         }else{
+                            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("frame.title.unableToContinue") + ":<br><br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.maxPicturesSelectedMessage"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
+                        }
+                        if(continueWithPictures){
                             JButton buttonSelectImage = new JButton(I18n.INSTANCE.get("commonText.selectImage"));
                             AtomicReference<File> imageFile = new AtomicReference<>();
                             JPanel panelChangeDate = new JPanel();
