@@ -48,9 +48,16 @@ public class ThreadHandler {
             }
             UpdateChecker.checkForUpdates(false, false);
             deleteTempFolder();
-            WindowMain.checkActionAvailability();
-            if(Settings.mgt2FolderIsCorrect){
-                WindowMain.lockMenuItems(false);
+            try{
+                WindowMain.checkActionAvailability();
+                if(Settings.mgt2FolderIsCorrect){
+                    WindowMain.lockMenuItems(false);
+                }
+            }catch(NullPointerException e){
+                if(Settings.mgt2FolderIsCorrect){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.firstPart"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.secondPart"));
+                }
             }
         });
         thread.setName("PerformStartTasks");

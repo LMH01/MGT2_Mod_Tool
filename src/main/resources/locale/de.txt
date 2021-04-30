@@ -466,6 +466,9 @@ disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden au
 
 errorMessages.gameFilesNotAnalyzed|<html>Die Spieledateien konnten nicht analysiert werden.<br>Überprüfe bitte, ob der mgt2-Ordner richtig eingestellt ist.<br>Starte das Tool mit Administratorrechten.
 errorMessages.unableToOpenWebPage|Die Webseite kann nicht geöffnet werden:
+errorMessages.gameFileCorrupted|Fehler beim Analysieren der Spieldatei. Die Datei ist beschädigt.
+errorMessages.gameFileCorrupted.textArea.firstPart|Fataler Fehler: Fehler beim Analysieren der Spieldateien. Die Dateien sind beschädigt.
+errorMessages.gameFileCorrupted.textArea.secondPart|Versuche bitte die Spieldateien über Steam zu reparieren oder das Spiel neu zu installieren.
 
 frame.title.error|Fehler
 frame.title.warning|Warnung

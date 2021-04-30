@@ -466,6 +466,9 @@ disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get c
 
 errorMessages.gameFilesNotAnalyzed|<html>The game files could not be analyzed.<br>Please check if your mgt2 folder is set correctly.<br>Try launching the tool with administrator rights.
 errorMessages.unableToOpenWebPage|Unable to open the web page:
+errorMessages.gameFileCorrupted|Error while analysing game files. The file is currupted.
+errorMessages.gameFileCorrupted.textArea.firstPart|Fatal error: Error occurred while game files where analyzed. The files are damaged.
+errorMessages.gameFileCorrupted.textArea.secondPart|Please try to repair the game files through Steam or reinstall the game.
 
 frame.title.error|Error
 frame.title.warning|Warning

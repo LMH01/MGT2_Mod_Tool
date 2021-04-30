@@ -33,9 +33,13 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
         for (Map<String, String> map : fileContent) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (entry.getKey().equals("ID")) {
-                    int currentId = Integer.parseInt(entry.getValue());//TODO Catch phrase für NumberFormatException einbauen, die dann eine neue IO exception wirft und den vorgang abbricht
-                    if (currentMaxId < currentId) {
-                        currentMaxId = currentId;
+                    try{
+                        int currentId = Integer.parseInt(entry.getValue());
+                        if (currentMaxId < currentId) {
+                            currentMaxId = currentId;
+                        }
+                    }catch(NumberFormatException e){
+                        throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
                     }
                 }
             }
@@ -142,7 +146,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
      * Sets the custom content string that should be returned when {@link AbstractAdvancedAnalyzer#getFinishedCustomContentString()} is called.
      * @param customContent
      */
-    abstract void setFinishedCustomContentString(String[] customContent);
+    public abstract void setFinishedCustomContentString(String[] customContent);
     /**
      * @param id The id
      * @return Returns the specified content name by id.
