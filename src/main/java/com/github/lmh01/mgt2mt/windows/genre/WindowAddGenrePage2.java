@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -14,9 +15,9 @@ public class WindowAddGenrePage2 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage2.class);
     static final WindowAddGenrePage2 FRAME = new WindowAddGenrePage2();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JSpinner spinnerUnlockYear = new JSpinner();
     JComboBox<String> comboBoxGenreUnlockMonth = new JComboBox<>();
 
@@ -54,50 +55,50 @@ public class WindowAddGenrePage2 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 2] Unlock date");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.2"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
         if(Settings.disableSafetyFeatures){
-            spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your genre will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
+            spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
             spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
         }else{
-            spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your genre will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
+            spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
             spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
         }
 
-        JLabel labelGenreUnlockDate = new JLabel("Select the unlock date");
+        JLabel labelGenreUnlockDate = new JLabel(I18n.INSTANCE.get("commonText.unlockDate") + ":");
         labelGenreUnlockDate.setBounds(100, 5, 130, 23);
         contentPane.add(labelGenreUnlockDate);
 
-        JLabel labelGenreUnlockMonth = new JLabel("Unlock month: ");
+        JLabel labelGenreUnlockMonth = new JLabel(I18n.INSTANCE.get("commonText.unlockMonth") + ":");
         labelGenreUnlockMonth.setBounds(10, 35, 120, 23);
         contentPane.add(labelGenreUnlockMonth);
 
         comboBoxGenreUnlockMonth.setBounds(120, 35, 100, 23);
-        comboBoxGenreUnlockMonth.setToolTipText("This is the month when your genre will be unlocked.");
+        comboBoxGenreUnlockMonth.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
         comboBoxGenreUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
         comboBoxGenreUnlockMonth.setSelectedItem(GenreManager.mapNewGenre.get("UNLOCK MONTH"));
         contentPane.add(comboBoxGenreUnlockMonth);
 
-        JLabel labelGenreID = new JLabel("Unlock year: ");
+        JLabel labelGenreID = new JLabel(I18n.INSTANCE.get("commonText.unlockYear") + ":");
         labelGenreID.setBounds(10, 60, 120, 23);
         contentPane.add(labelGenreID);
 
         buttonNext.setBounds(220, 100, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 100, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 100, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
 
         spinnerUnlockYear.setBounds(120, 60, 100, 23);

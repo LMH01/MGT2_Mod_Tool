@@ -147,7 +147,7 @@ public class GenreManager {
             String messageBodyButtonExplanation = "\n" + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var2");
             returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
         }
-        if(returnValue == 0){
+        if(returnValue == JOptionPane.YES_OPTION){
             //click yes
             boolean continueAnyway = false;
             boolean imageFileAccessedSuccess = false;
@@ -171,6 +171,8 @@ public class GenreManager {
                     GenreManager.genreAdded(map, genreIcon, showMessages);
                     if(showSummaryFromImport){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN"));
+                    }else{
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -185,11 +187,7 @@ public class GenreManager {
                 WindowAddGenrePage11.createFrame();
             }
         }
-        if(returnValue == JOptionPane.YES_OPTION){
-            return true;
-        }else{
-            return false;
-        }
+        return returnValue == JOptionPane.YES_OPTION;
     }
 
     /**

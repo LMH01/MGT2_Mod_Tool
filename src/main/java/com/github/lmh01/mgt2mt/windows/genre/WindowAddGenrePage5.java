@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -14,9 +15,9 @@ public class WindowAddGenrePage5 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     static final WindowAddGenrePage5 FRAME = new WindowAddGenrePage5();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     final JList<String> LIST_AVAILABLE_GENRES = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_GENRES = new JScrollPane(LIST_AVAILABLE_GENRES);
 
@@ -38,7 +39,7 @@ public class WindowAddGenrePage5 extends JFrame{
                 GenreManager.openStepWindow(6);
                 FRAME.dispose();
             }else{
-                if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible genre?", "Don't add compatible genre?", JOptionPane.YES_NO_OPTION) == 0){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
                     LOGGER.info("Cleared array list with compatible genres.");
                     GenreManager.openStepWindow(6);
                     FRAME.dispose();
@@ -58,32 +59,32 @@ public class WindowAddGenrePage5 extends JFrame{
     }
     private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 335, 260);
+        setBounds(100, 100, 360, 260);
         setResizable(false);
-        setTitle("[Page 5] Genre combo");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.5"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelSelectGenre1 = new JLabel("Select what genres work good together with your");
-        labelSelectGenre1.setBounds(10, 0, 300, 23);
+        JLabel labelSelectGenre1 = new JLabel(I18n.INSTANCE.get("mod.genre.selectGenreComb"));
+        labelSelectGenre1.setBounds(10, 0, 360, 23);
         contentPane.add(labelSelectGenre1);
 
-        JLabel labelSelectGenre2 = new JLabel("genre. (Tip: Hold STRG and click with your mouse)");
+        JLabel labelSelectGenre2 = new JLabel(I18n.INSTANCE.get("commonText.scrollExplanation"));
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
-        buttonNext.setBounds(220, 200, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setBounds(240, 200, 100, 23);
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 200, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
-        buttonQuit.setBounds(120, 200, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setBounds(120, 200, 110, 23);
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 
@@ -116,7 +117,7 @@ public class WindowAddGenrePage5 extends JFrame{
         LIST_AVAILABLE_GENRES.setVisibleRowCount(-1);
         LIST_AVAILABLE_GENRES.setSelectedIndices(selectedIndices);
 
-        SCROLL_PANE_AVAILABLE_GENRES.setBounds(10,45, 315,140);
+        SCROLL_PANE_AVAILABLE_GENRES.setBounds(10,55, 315,140);
         contentPane.add(SCROLL_PANE_AVAILABLE_GENRES);
     }
 
@@ -125,12 +126,16 @@ public class WindowAddGenrePage5 extends JFrame{
      * @return Returns true when at least on genre has been selected from the list
      */
     private static boolean saveInputs(JList<String> listAvailableGenres){
-        LOGGER.info("Cleared array list with compatible genres.");
-        StringBuilder compatibleGenres = new StringBuilder();
-        for(String string : listAvailableGenres.getSelectedValuesList()){
-            compatibleGenres.append("<").append(string).append(">");
+        if(listAvailableGenres.getSelectedValuesList().size() > 0){
+            LOGGER.info("Cleared array list with compatible genres.");
+            StringBuilder compatibleGenres = new StringBuilder();
+            for(String string : listAvailableGenres.getSelectedValuesList()){
+                compatibleGenres.append("<").append(string).append(">");
+            }
+            GenreManager.mapNewGenre.put("GENRE COMB", Utils.convertGenreNamesToId(compatibleGenres.toString()));
+            return true;
+        }else{
+            return false;
         }
-        GenreManager.mapNewGenre.put("GENRE COMB", Utils.convertGenreNamesToId(compatibleGenres.toString()));
-        return listAvailableGenres.getSelectedValuesList().size() != 0;
     }
 }

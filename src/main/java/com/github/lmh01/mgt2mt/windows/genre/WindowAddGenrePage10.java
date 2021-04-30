@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
@@ -16,9 +17,9 @@ public class WindowAddGenrePage10 extends JFrame{
     JPanel contentPane = new JPanel();
     JButton buttonAddScreenshot = new JButton("Add screenshot(s)");
     JButton buttonResetAddedScreenshots = new JButton("Reset");
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -37,7 +38,7 @@ public class WindowAddGenrePage10 extends JFrame{
             ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot);
         });
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
-            if(JOptionPane.showConfirmDialog(null, "<html>Are you sure that you want to reset<br> the added screenshots?", "Reset?", JOptionPane.YES_NO_OPTION) == 0){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots.confirm"), I18n.INSTANCE.get("frame.title.reset"), JOptionPane.YES_NO_OPTION) == 0){
                 screenshotFiles.get().clear();
             }
         });
@@ -60,44 +61,44 @@ public class WindowAddGenrePage10 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 10] Screenshots");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.10"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelTitle = new JLabel("Add screenshot(s):");
+        JLabel labelTitle = new JLabel(I18n.INSTANCE.get("mod.genre.screenshots.title"));
         labelTitle.setBounds(98, 0, 335, 23);
         labelTitle.setForeground(Color.BLACK);
         labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(labelTitle);
 
         buttonAddScreenshot.setBounds(40, 30, 150, 23);
-        buttonAddScreenshot.setToolTipText("<html>Click here to add image files that should be<br>used as your genre screenshots in the development progress page.");
+        buttonAddScreenshot.setToolTipText(I18n.INSTANCE.get("mod.genre.screenshots.button.toolTip"));
         contentPane.add(buttonAddScreenshot);
 
-        JLabel labelYouCanSkipThisStep = new JLabel("Note: You can skip this step if you");
+        JLabel labelYouCanSkipThisStep = new JLabel(I18n.INSTANCE.get("mod.genre.screenshots.text.1"));
         labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
         contentPane.add(labelYouCanSkipThisStep);
 
-        JLabel labelAddYourOwnGenre = new JLabel("don't want to add you own screenshots image.");
+        JLabel labelAddYourOwnGenre = new JLabel(I18n.INSTANCE.get("mod.genre.screenshots.text.2"));
         labelAddYourOwnGenre.setBounds(15,75, 300, 23);
         contentPane.add(labelAddYourOwnGenre);
 
         buttonResetAddedScreenshots.setBounds(210, 30, 80, 23);
-        buttonResetAddedScreenshots.setToolTipText("Click to reset all added screenshots");
+        buttonResetAddedScreenshots.setToolTipText(I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots"));
         contentPane.add(buttonResetAddedScreenshots);
 
         buttonNext.setBounds(220, 100, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 100, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 100, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 }

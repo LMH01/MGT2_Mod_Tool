@@ -423,7 +423,6 @@ public class DataStreamHelper {
                 resultList.addAll(getFilesInFolder(file.getAbsolutePath()));
             }
         }
-        //System.out.println(fList);
         return resultList;
     }
 }

@@ -131,13 +131,13 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
 
             JPanel panelName = new JPanel();
-            JLabel labelName = new JLabel("Name:");
-            JTextField textFieldName = new JTextField("ENTER FEATURE NAME");
+            JLabel labelName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
+            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterFeatureName"));
             panelName.add(labelName);
             panelName.add(textFieldName);
 
-            JButton buttonAddNameTranslations = new JButton("Add name translations");
-            buttonAddNameTranslations.setToolTipText("<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation");
+            JButton buttonAddNameTranslations = new JButton(I18n.INSTANCE.get("commonText.addNameTranslations"));
+            buttonAddNameTranslations.setToolTipText(I18n.INSTANCE.get("commonText.addNameTranslations.toolTip"));
             buttonAddNameTranslations.addActionListener(actionEvent -> {
                 if(!nameTranslationsAdded.get()){
                     mapNameTranslations[0] = TranslationManager.getTranslationsMap();
@@ -145,7 +145,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                         nameTranslationsAdded.set(true);
                     }
                 }else{
-                    if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.name") + " " + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                         mapNameTranslations[0] = TranslationManager.getTranslationsMap();
                         if(mapNameTranslations[0].size() > 0){
                             nameTranslationsAdded.set(true);
@@ -155,13 +155,13 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             });
 
             JPanel panelDescription = new JPanel();
-            JLabel labelDescription = new JLabel("Description:");
-            JTextField textFieldDescription = new JTextField("ENTER FEATURE DESCRIPTION");
+            JLabel labelDescription = new JLabel(I18n.INSTANCE.get("commonText.description") + ":");
+            JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("commonText.enterDescription"));
             panelDescription.add(labelDescription);
             panelDescription.add(textFieldDescription);
 
-            JButton buttonAddDescriptionTranslations = new JButton("Add description translations");
-            buttonAddDescriptionTranslations.setToolTipText("<html>Click to add description translations<br>The value entered in the main text field will be used as the english translation");
+            JButton buttonAddDescriptionTranslations = new JButton(I18n.INSTANCE.get("commonText.addDescriptionTranslations"));
+            buttonAddDescriptionTranslations.setToolTipText(I18n.INSTANCE.get("commonText.addDescriptionTranslations.toolTip"));
             buttonAddDescriptionTranslations.addActionListener(actionEvent -> {
                 if(!descriptionTranslationsAdded.get()){
                     mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
@@ -169,7 +169,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                         descriptionTranslationsAdded.set(true);
                     }
                 }else{
-                    if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                         mapDescriptionTranslations[0] = TranslationManager.getTranslationsMap();
                         if(mapDescriptionTranslations[0].size() > 0){
                             descriptionTranslationsAdded.set(true);
@@ -179,32 +179,32 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             });
 
             JPanel panelType = new JPanel();
-            JLabel labelSelectType = new JLabel("Type:");
+            JLabel labelSelectType = new JLabel(I18n.INSTANCE.get("commonText.type") + ":");
             JComboBox comboBoxFeatureType = new JComboBox();
-            comboBoxFeatureType.setToolTipText("Select what type your engine feature should be");
+            comboBoxFeatureType.setToolTipText(I18n.INSTANCE.get("mod.engineFeature.addMod.components.type.toolTip"));
             comboBoxFeatureType.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Artificial Intelligence", "Physics"}));
             comboBoxFeatureType.setSelectedItem("Graphic");
             panelType.add(labelSelectType);
             panelType.add(comboBoxFeatureType);
 
             JPanel panelUnlockMonth = new JPanel();
-            JLabel labelUnlockMonth = new JLabel("Unlock Month:");
+            JLabel labelUnlockMonth = new JLabel(I18n.INSTANCE.get("commonText.unlockMonth") + ":");
             JComboBox comboBoxUnlockMonth = new JComboBox();
-            comboBoxUnlockMonth.setToolTipText("This is the month when your engine feature will be unlocked.");
+            comboBoxUnlockMonth.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
             comboBoxUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
             comboBoxUnlockMonth.setSelectedItem("JAN");
             panelUnlockMonth.add(labelUnlockMonth);
             panelUnlockMonth.add(comboBoxUnlockMonth);
 
             JPanel panelUnlockYear = new JPanel();
-            JLabel labelUnlockYear = new JLabel("Unlock Year:");
+            JLabel labelUnlockYear = new JLabel(I18n.INSTANCE.get("commonText.unlockYear") + ":");
             JSpinner spinnerUnlockYear = new JSpinner();
             if(Settings.disableSafetyFeatures){
-                spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2999]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
+                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
                 ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
             }else{
-                spinnerUnlockYear.setToolTipText("<html>[Range: 1976 - 2050]<br>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.");
+                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
                 spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
                 ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
             }
@@ -214,15 +214,15 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             JPanel panelResearchPoints = new JPanel();
             JPanel panelDevelopmentCost = new JPanel();
             JPanel panelPrice = new JPanel();
-            JLabel labelResearchPoints = new JLabel("Research points: ");
-            JLabel labelDevelopmentCost = new JLabel("Development cost: ");
-            JLabel labelPrice = new JLabel("Research cost: ");
+            JLabel labelResearchPoints = new JLabel(I18n.INSTANCE.get("commonText.researchPointCost") + ":");
+            JLabel labelDevelopmentCost = new JLabel(I18n.INSTANCE.get("commonText.developmentCost") + ":");
+            JLabel labelPrice = new JLabel(I18n.INSTANCE.get("commonText.researchCost") + ":");
             JSpinner spinnerResearchPoints = new JSpinner();
             JSpinner spinnerDevelopmentCost = new JSpinner();
             JSpinner spinnerPrice = new JSpinner();
-            spinnerResearchPoints.setToolTipText("<html>[Range: 0 - 10.000; Default: 500]<br>Number of required research points to research that engine feature.");
-            spinnerDevelopmentCost.setToolTipText("<html>[Range: 0 - 100.000; Default: 35000]<br>Set the development cost for a game with your engine feature.<br>This cost will be added when developing a game with this engine feature.");
-            spinnerPrice.setToolTipText("<html>[Range: 0 - 1.000.000; Default: 50000]<br>This is the research cost, it is being payed when researching this engine feature.");
+            spinnerResearchPoints.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 10.000; " + I18n.INSTANCE.get("commonText.default") + ": 5.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchPointCost.spinner.toolTip"));
+            spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 100.000; " + I18n.INSTANCE.get("commonText.default") + ": 35.000]" + "<br>" + I18n.INSTANCE.get("commonText.developmentCost.spinner.toolTip"));
+            spinnerPrice.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 50.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchCost.spinner.toolTip"));
             if(Settings.disableSafetyFeatures){
                 spinnerResearchPoints.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
                 spinnerDevelopmentCost.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
@@ -232,8 +232,8 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                 ((JSpinner.DefaultEditor)spinnerPrice.getEditor()).getTextField().setEditable(true);
             }else{
                 spinnerResearchPoints.setModel(new SpinnerNumberModel(500, 0, 10000, 100));
-                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(35000, 0, 100000, 1000));
-                spinnerPrice.setModel(new SpinnerNumberModel(50000, 0, 1000000, 1000));
+                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(35000, 0, 100000, 5000));
+                spinnerPrice.setModel(new SpinnerNumberModel(50000, 0, 1000000, 5000));
                 ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
                 ((JSpinner.DefaultEditor)spinnerPrice.getEditor()).getTextField().setEditable(false);
@@ -246,9 +246,9 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             panelPrice.add(spinnerPrice);
 
             JPanel panelTechLevel = new JPanel();
-            JLabel labelTechLevel = new JLabel("Tech Level:");
+            JLabel labelTechLevel = new JLabel(I18n.INSTANCE.get("commonText.techLevel") + ":");
             JSpinner spinnerTechLevel = new JSpinner();
-            spinnerTechLevel.setToolTipText("<html>[Range: 1 - 8; Default: 1]<br>The tech level of the engine feature.<br>A higher level means a more advanced feature.");
+            spinnerTechLevel.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1 - 8; " + I18n.INSTANCE.get("commonText.default") + ": 1]" + "<br>" + I18n.INSTANCE.get("commonText.techLevel.spinner.toolTip"));
             if(Settings.disableSafetyFeatures){
                 spinnerTechLevel.setModel(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
                 ((JSpinner.DefaultEditor)spinnerTechLevel.getEditor()).getTextField().setEditable(true);
@@ -263,18 +263,18 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             JPanel panelGraphic = new JPanel();
             JPanel panelSound = new JPanel();
             JPanel panelTech = new JPanel();
-            JLabel labelGameplay = new JLabel("Gameplay:");
-            JLabel labelGraphic = new JLabel("Graphic:");
-            JLabel labelSound = new JLabel("Sound:");
-            JLabel labelTech = new JLabel("Tech:");
+            JLabel labelGameplay = new JLabel(I18n.INSTANCE.get("commonText.gameplay") + ":");
+            JLabel labelGraphic = new JLabel(I18n.INSTANCE.get("commonText.graphic") + ":");
+            JLabel labelSound = new JLabel(I18n.INSTANCE.get("commonText.sound") + ":");
+            JLabel labelTech = new JLabel(I18n.INSTANCE.get("commonText.tech") + ":");
             JSpinner spinnerGameplay = new JSpinner();
             JSpinner spinnerGraphic = new JSpinner();
             JSpinner spinnerSound = new JSpinner();
             JSpinner spinnerTech = new JSpinner();
-            spinnerGameplay.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of gameplay points that are added when a game is developed with this feature.");
-            spinnerGraphic.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of graphic points that are added when a game is developed with this feature.");
-            spinnerSound.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of sound points that are added when a game is developed with this feature.");
-            spinnerTech.setToolTipText("<html>[Range: 0 - 4500; Default: 10]<br>The amount of tech points that are added when a game is developed with this feature.");
+            spinnerGameplay.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 4.500; " + I18n.INSTANCE.get("commonText.default") + ": 100]" + "<br>" + I18n.INSTANCE.get("commonText.points.spinner.toolTip"));
+            spinnerGraphic.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 4.500; " + I18n.INSTANCE.get("commonText.default") + ": 100]" + "<br>" + I18n.INSTANCE.get("commonText.points.spinner.toolTip"));
+            spinnerSound.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 4.500; " + I18n.INSTANCE.get("commonText.default") + ": 100]" + "<br>" + I18n.INSTANCE.get("commonText.points.spinner.toolTip"));
+            spinnerTech.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 4.500; " + I18n.INSTANCE.get("commonText.default") + ": 100]" + "<br>" + I18n.INSTANCE.get("commonText.points.spinner.toolTip"));
             if(Settings.disableSafetyFeatures){
                 spinnerGameplay.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
                 spinnerGraphic.setModel(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 5));
@@ -305,8 +305,8 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
 
             Object[] params = {panelName, buttonAddNameTranslations, panelDescription, buttonAddDescriptionTranslations, panelType, panelUnlockMonth, panelUnlockYear, panelResearchPoints, panelDevelopmentCost, panelPrice, panelTechLevel, panelGameplay, panelGraphic, panelSound, panelTech};
             while(true){
-                if(JOptionPane.showConfirmDialog(null, params, "Add Engine Feature", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals("ENTER FEATURE NAME") && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals("ENTER FEATURE DESCRIPTION")) {
+                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                    if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
                         boolean modAlreadyExists = false;
                         for(String string : getBaseAnalyzer().getContentByAlphabet()){
                             if(textFieldName.getText().equals(string)){
@@ -345,15 +345,15 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             boolean addFeature = Summaries.showSummary(ModManager.engineFeatureMod.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                             if (addFeature) {
                                 ModManager.engineFeatureMod.getEditor().addMod(newEngineFeature);
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.engineFeature") + " - " + newEngineFeature.get("NAME EN"));
-                                JOptionPane.showMessageDialog(null, "Engine feature: [" + newEngineFeature.get("NAME EN") + "] has been added successfully!", "Engine feature added", JOptionPane.INFORMATION_MESSAGE);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.engineFeature.upperCase") + " - " + newEngineFeature.get("NAME EN"));
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Unable to add engine feature: please enter a name/description first!", "Unable to continue", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
                     break;
@@ -361,7 +361,6 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             }
         }catch(IOException e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error while adding engine feature:\n\n" + e.getMessage(), "Error while adding gameplay feature", JOptionPane.ERROR_MESSAGE);
         }
     }
 

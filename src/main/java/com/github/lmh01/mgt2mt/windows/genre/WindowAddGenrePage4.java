@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -13,9 +14,9 @@ public class WindowAddGenrePage4 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage4.class);
     static final WindowAddGenrePage4 FRAME = new WindowAddGenrePage4();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     final JList<String> LIST_TARGET_GROUPS = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_GENRES = new JScrollPane(LIST_TARGET_GROUPS);
 
@@ -38,7 +39,7 @@ public class WindowAddGenrePage4 extends JFrame{
                 GenreManager.openStepWindow(5);
                 FRAME.dispose();
             }else{
-                JOptionPane.showMessageDialog(new Frame(), "Please select at least one target group!");
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.selectAtLeastOneTargetGroup"));
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
@@ -56,34 +57,34 @@ public class WindowAddGenrePage4 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 175);
         setResizable(false);
-        setTitle("[Page 4] Target Group");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.4"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelTargetGroup = new JLabel("Select the genre target group(s)");
+        JLabel labelTargetGroup = new JLabel(I18n.INSTANCE.get("commonText.targetGroup") + ":");
         labelTargetGroup.setBounds(70,5, 200, 23);
         contentPane.add(labelTargetGroup);
 
-        JLabel labelTipPart1 = new JLabel("Tip: Hold STRG and");
+        JLabel labelTipPart1 = new JLabel(I18n.INSTANCE.get("mod.genre.tipPart1"));
         labelTipPart1.setBounds(15, 40, 130, 23);
         contentPane.add(labelTipPart1);
 
-        JLabel labelTipPart2 = new JLabel("click with your mouse");
+        JLabel labelTipPart2 = new JLabel(I18n.INSTANCE.get("mod.genre.tipPart2"));
         labelTipPart2.setBounds(15, 60, 130, 23);
         contentPane.add(labelTipPart2);
 
         buttonNext.setBounds(220, 115, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 115, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 115, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
     private void setList(){

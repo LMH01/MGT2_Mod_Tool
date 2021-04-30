@@ -25,11 +25,11 @@ public class WindowAddGenrePage1 extends JFrame{
     JPanel contentPane = new JPanel();
     JLabel labelGenreID = new JLabel("Genre id: ");
     JButton buttonExplainGenreID = new JButton("id?");
-    JButton buttonNext = new JButton("Next");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JButton buttonAddNameTranslations = new JButton("TRANSL");
     JButton buttonAddDescriptionTranslations = new JButton("TRANSL");
-    JButton buttonClearTranslations = new JButton("Clear Translations");
+    JButton buttonClearTranslations = new JButton(I18n.INSTANCE.get("mod.genre.clearTranslations"));
     JTextField textFieldGenreName = new JTextField();
     JTextField textFieldGenreDescription = new JTextField();
     final JSpinner spinnerId = new JSpinner();
@@ -65,7 +65,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 addNameTranslations();
                 nameTranslationsAdded = true;
             }else{
-                if(JOptionPane.showConfirmDialog(null, "Name translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                     addNameTranslations();
                     nameTranslationsAdded = true;
                 }
@@ -77,17 +77,17 @@ public class WindowAddGenrePage1 extends JFrame{
                 addDescriptionTranslations();
                 descriptionTranslationsAdded = true;
             }else{
-                if(JOptionPane.showConfirmDialog(null, "Description translations have already been added.\nDo you want to clear the translations and add new ones?") == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
                     addDescriptionTranslations();
                     descriptionTranslationsAdded = true;
                 }
             }
         });
         buttonClearTranslations.addActionListener(actionEvent ->{
-            if(JOptionPane.showConfirmDialog(null, "Are you sure that you want\nto reset the translations?", "Reset Translations?", JOptionPane.YES_NO_OPTION) == 0){
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.clearTranslations.question"), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == 0){
                 GenreManager.mapNameTranslations.clear();
                 GenreManager.mapDescriptionTranslations.clear();
-                JOptionPane.showMessageDialog(null, "The translations have been cleared.");
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.clearTranslations.success"));
             }
         });
     }
@@ -95,7 +95,7 @@ public class WindowAddGenrePage1 extends JFrame{
     private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setTitle("[Page 1] Name and Description");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.1"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
@@ -130,24 +130,21 @@ public class WindowAddGenrePage1 extends JFrame{
         }
 
 
-        JLabel labelGenreName = new JLabel("Genre name: ");
+        JLabel labelGenreName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
         labelGenreName.setBounds(10, 10, 100, 23);
-        labelGenreName.setToolTipText("This name will be used for every translation.");
         contentPane.add(labelGenreName);
 
 
         textFieldGenreName.setBounds(120, 10, 100, 23);
-        textFieldGenreName.setToolTipText("<html>This is the global genre name.<br>This name is being displayed in every translation.");
         textFieldGenreName.setText(GenreManager.mapNewGenre.get("NAME EN"));
         contentPane.add(textFieldGenreName);
 
         buttonAddNameTranslations.setBounds(230, 10, 90, 23);
-        buttonAddNameTranslations.setToolTipText("Click to add name translations for your genre.");
+        buttonAddNameTranslations.setToolTipText(I18n.INSTANCE.get("commonText.addNameTranslations.toolTip"));
         contentPane.add(buttonAddNameTranslations);
 
-        JLabel labelGenreDescription = new JLabel("Genre description: ");
+        JLabel labelGenreDescription = new JLabel(I18n.INSTANCE.get("commonText.description") + ":");
         labelGenreDescription.setBounds(10, 35, 120, 23);
-        labelGenreDescription.setToolTipText("This description will be used for every translation.");
         contentPane.add(labelGenreDescription);
 
         labelGenreID.setBounds(10, 95, 120, 23);
@@ -155,21 +152,21 @@ public class WindowAddGenrePage1 extends JFrame{
 
         textFieldGenreDescription.setBounds(120, 35, 100, 23);
         textFieldGenreDescription.setText(GenreManager.mapNewGenre.get("DESC EN"));
-        textFieldGenreDescription.setToolTipText("Enter the genre description that should be shown in game. Hint: use <br> in your description to make a new line.");
+        textFieldGenreDescription.setToolTipText(I18n.INSTANCE.get("mod.genre.description.hint"));
         contentPane.add(textFieldGenreDescription);
 
         buttonAddDescriptionTranslations.setBounds(230,35,90, 23);
-        buttonAddDescriptionTranslations.setToolTipText("Click to add description translations for your genre.");
+        buttonAddDescriptionTranslations.setToolTipText(I18n.INSTANCE.get("commonText.addDescriptionTranslations.toolTip"));
         contentPane.add(buttonAddDescriptionTranslations);
 
         buttonClearTranslations.setBounds(120,65,200,23);
-        buttonClearTranslations.setToolTipText("Click to remove all Translations");
+        buttonClearTranslations.setToolTipText(I18n.INSTANCE.get("mod.genre.clearTranslations.button"));
         contentPane.add(buttonClearTranslations);
 
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
@@ -184,10 +181,10 @@ public class WindowAddGenrePage1 extends JFrame{
             return false;
         }
         if(textFieldGenreName.getText().isEmpty()){
-            JOptionPane.showMessageDialog(new Frame(), "Please enter a genre name first!");
+            JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.enterNameFirst"));
             return false;
         }else if(textFieldGenreDescription.getText().isEmpty()){
-            JOptionPane.showMessageDialog(new Frame(), "Please enter a genre description first!");
+            JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.enterDescriptionFirst"));
         }else{
             GenreManager.mapNewGenre.remove("NAME EN");
             GenreManager.mapNewGenre.remove("DESC EN");
@@ -209,11 +206,11 @@ public class WindowAddGenrePage1 extends JFrame{
     public static void addNameTranslations(){
         boolean continueWithTranslations = true;
         if(Settings.enableGenreNameTranslationInfo){
-            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
-            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
+            JCheckBox checkBoxDontShowAgain = new JCheckBox(I18n.INSTANCE.get("mod.genre.translation.donNotShowInfoAgain"));
+            JLabel labelMessage = new JLabel(I18n.INSTANCE.get("mod.genre.translation.information"));
             Object[] params = {labelMessage,checkBoxDontShowAgain};
             LOGGER.info("enableGenreNameTranslationInfo: " + Settings.enableGenreDescriptionTranslationInfo);
-            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("frame.title.information"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
                 continueWithTranslations = false;
             }
             Settings.enableGenreNameTranslationInfo = !checkBoxDontShowAgain.isSelected();
@@ -231,11 +228,11 @@ public class WindowAddGenrePage1 extends JFrame{
     public static void addDescriptionTranslations(){
         boolean continueWithTranslations = true;
         if(Settings.enableGenreDescriptionTranslationInfo){
-            JCheckBox checkBoxDontShowAgain = new JCheckBox("Don't show this information again");
-            JLabel labelMessage = new JLabel("<html>Note:<br>The translation that you have entered in the \"main\"text field<br>will be used as the english translation.<br><br>Continue?");
+            JCheckBox checkBoxDontShowAgain = new JCheckBox(I18n.INSTANCE.get("mod.genre.translation.donNotShowInfoAgain"));
+            JLabel labelMessage = new JLabel(I18n.INSTANCE.get("mod.genre.translation.information"));
             Object[] params = {labelMessage,checkBoxDontShowAgain};
             LOGGER.info("enableGenreDescriptionTranslationInfo: " + Settings.enableGenreDescriptionTranslationInfo);
-            if(JOptionPane.showConfirmDialog(null, params, "Information", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("frame.title.information"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
                 continueWithTranslations = false;
             }
             Settings.enableGenreDescriptionTranslationInfo = !checkBoxDontShowAgain.isSelected();

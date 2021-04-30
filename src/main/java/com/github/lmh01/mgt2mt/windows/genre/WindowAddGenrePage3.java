@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -13,9 +14,9 @@ public class WindowAddGenrePage3 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage3.class);
     static final WindowAddGenrePage3 FRAME = new WindowAddGenrePage3();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JSpinner spinnerResearchPoints = new JSpinner();
     JSpinner spinnerDevelopmentCost = new JSpinner();
     JSpinner spinnerGenrePrice = new JSpinner();
@@ -53,18 +54,18 @@ public class WindowAddGenrePage3 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 3] Research/Price");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.3"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        spinnerResearchPoints.setBounds(120, 10, 100, 23);
-        spinnerDevelopmentCost.setBounds(120, 35, 100, 23);
-        spinnerGenrePrice.setBounds(120, 60, 100, 23);
-        spinnerResearchPoints.setToolTipText("<html>[Range: 0 - 10.000; Default: " + GenreManager.mapNewGenre.get("RES POINTS") + "]<br>Number of required research points to research that genre.");
-        spinnerDevelopmentCost.setToolTipText("<html>[Range: 0 - 100.000; Default: " + GenreManager.mapNewGenre.get("DEV COSTS") + "]<br>Set the development cost for a game with your genre.<br>This cost will be added when developing a game with this genre.");
-        spinnerGenrePrice.setToolTipText("<html>[Range: 0 - 1.000.000; Default: " + GenreManager.mapNewGenre.get("PRICE") + "]<br>This is the research cost, it is being payed when researching this genre.");
+        spinnerResearchPoints.setBounds(180, 10, 100, 23);
+        spinnerDevelopmentCost.setBounds(180, 35, 100, 23);
+        spinnerGenrePrice.setBounds(180, 60, 100, 23);
+        spinnerResearchPoints.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 10.000; " + I18n.INSTANCE.get("commonText.default") + ": 1.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchPointCost.spinner.toolTip"));
+        spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 100.000; " + I18n.INSTANCE.get("commonText.default") + ": 3.000]" + "<br>" + I18n.INSTANCE.get("commonText.developmentCost.spinner.toolTip"));
+        spinnerGenrePrice.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 150.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchCost.spinner.toolTip"));
         if(Settings.disableSafetyFeatures){
             spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 0, Integer.MAX_VALUE, 1));
             spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 0, Integer.MAX_VALUE, 1));
@@ -84,28 +85,28 @@ public class WindowAddGenrePage3 extends JFrame{
         contentPane.add(spinnerDevelopmentCost);
         contentPane.add(spinnerGenrePrice);
 
-        JLabel labelResearchPoints = new JLabel("Research points: ");
-        labelResearchPoints.setBounds(10, 10, 100, 23);
+        JLabel labelResearchPoints = new JLabel(I18n.INSTANCE.get("commonText.researchPointCost") + ":");
+        labelResearchPoints.setBounds(10, 10, 150, 23);
         contentPane.add(labelResearchPoints);
 
-        JLabel labelGenreDevelopmentCost = new JLabel("Development cost: ");
-        labelGenreDevelopmentCost.setBounds(10, 35, 120, 23);
+        JLabel labelGenreDevelopmentCost = new JLabel(I18n.INSTANCE.get("commonText.developmentCost") + ":");
+        labelGenreDevelopmentCost.setBounds(10, 35, 150, 23);
         contentPane.add(labelGenreDevelopmentCost);
 
-        JLabel labelGenrePrice = new JLabel("Price: ");
-        labelGenrePrice.setBounds(10, 60, 120, 23);
+        JLabel labelGenrePrice = new JLabel(I18n.INSTANCE.get("commonText.researchCost") + ":");
+        labelGenrePrice.setBounds(10, 60, 150, 23);
         contentPane.add(labelGenrePrice);
 
         buttonNext.setBounds(220, 100, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 100, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 100, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
     private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){

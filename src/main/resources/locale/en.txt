@@ -1,5 +1,8 @@
 button.quit|Quit
 button.back|Back
+button.next|Next
+button.previous|Previous
+button.cancel|Cancel
 
 commonBodies.areYouSure|Are you sure?
 commonBodies.exception|Exception:
@@ -56,21 +59,28 @@ commonText.description|Description
 commonText.description.var1|Description
 commonText.manufacturer|Manufacturer
 commonText.unlockDate|Unlock date
-commonText.unlockYear.toolTip|<html>This is the year when your engine feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.
+commonText.unlockMonth|Unlock month
+commonText.unlockMonth.toolTip|This is the month when your feature will be unlocked
+commonText.unlockYear|Unlock year
+commonText.unlockYear.toolTip|<html>This is the year when your feature will be unlocked.<br>Note: The latest date you can currently start the game is 2015.
 commonText.range|Range
 commonText.date|Date
 commonText.releaseDate|Release date
 commonText.productionEnd|Production end
 commonText.type|Type
 commonText.researchPointCost|Research point cost
+commonText.researchPointCost.spinner.toolTip|Number of required research points to research that feature.
 commonText.researchCost|Research cost
+commonText.researchCost.spinner.toolTip|This is the research cost, it is being payed when researching this feature.
 commonText.developmentCost|Development cost
+commonText.developmentCost.spinner.toolTip|Set the development cost for this feature.<br>This cost will be added when developing a game with this feature.
 commonText.devKitCost|Dev kit cost
 commonText.price|Price
 commonText.marketShare|Market share
 commonText.share|Share
 commonText.profitShare|Profit share
 commonText.techLevel|Tech level
+commonText.techLevel.spinner.toolTip|The tech level of the feature.<br>A higher level means a more advanced feature.
 commonText.units|Units
 commonText.neededGameplayFeatures|Needed gameplay features
 commonText.complexity|Complexity
@@ -112,6 +122,7 @@ commonText.addNameTranslations|Add name translations
 commonText.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
 commonText.addNameTranslations.added|Name Translations Added
 commonText.addDescriptionTranslations|Add description translations
+commonText.addDescriptionTranslations.toolTip|<html>Click to add description translations<br>The value entered in the main text field will be used as the english translation
 commonText.addDescriptionTranslations.added|Description translations added
 commonText.addScreenshots|Add screenshots
 commonText.addGenreIcon|Add genre icon
@@ -143,6 +154,10 @@ commonText.imageSelected|Image selected
 commonText.selectImage|Select image
 commonText.nameAlreadyInUse|The selected name is already in use.
 commonText.developmentCost.spinner|This price must be paid when creating a game with this feature.
+commonText.notAvailable|not available
+commonText.enterFeatureName|ENTER FEATURE NAME
+commonText.enterDescription|ENTER DESCRIPTION
+commonText.points.spinner.toolTip|The amount of [...] points that are added when a game is developed with this feature.
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -227,6 +242,7 @@ modManager.copyProtect.windowMain.modButton.addMod|Add copy protection
 modManager.copyProtect.windowMain.modButton.removeMod|Remove copy protection
 modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Disabled -> No copy protection available
 modManager.general.enterNameFirst|Please enter a name first!
+modManager.general.enterNameDescriptionFirst|Please enter a name and description first!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Add this publisher?
 mod.publisher.addMod.optionPaneMessage.developer|Developer
@@ -235,9 +251,22 @@ mod.licence.addMod.optionPaneMessage.book|Book
 mod.licence.addMod.optionPaneMessage.movie|Movie
 mod.licence.addMod.optionPaneMessage.sport|Sport
 mod.engineFeature.addMod.title|Add engine feature?
+mod.engineFeature.addMod.components.type.toolTip|Select what type your engine feature should be
 mod.gameplayFeature.addMod.title|Add gameplay feature?
 mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Your gameplay feature is ready:
 mod.gameplayFeature.addMod.optionPaneMessage.none|None
+mod.gameplayFeature.addMod.components.type.toolTip|Select what type your gameplay feature should be
+mod.gameplayFeature.addMod.components.button.genres.title|Choose genre(s)
+mod.gameplayFeature.addMod.components.button.selectBadGenres|Select genres that fit badly
+mod.gameplayFeature.addMod.components.button.selectBadGenres.selected|Bad fitting genres selected!
+mod.gameplayFeature.addMod.components.button.selectBadGenres.unableToSave|<html>Unable to save bad genres:<br><br>Good genres list already contains (some) selected entries.
+mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip|Click to select what genres don't work good with your gameplay feature
+mod.gameplayFeature.addMod.components.button.selectGoodGenres|Select genres that fit good
+mod.gameplayFeature.addMod.components.button.selectGoodGenres.selected|Good fitting genres selected!
+mod.gameplayFeature.addMod.components.button.selectGoodGenres.unableToSave|<html>Unable to save good genres:<br><br>Bad genres list already contains (some) selected entries.
+mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip|Click to select what genres work good with your gameplay feature
+mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip|<html>Select to enable compatibility with arcade cabinets for this gameplay feature.<br>If disabled this gameplay feature does not work on arcade cabinets.
+mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip|<html>Select to enable compatibility with mobile devices for this gameplay feature.<br>If disabled this gameplay feature does not work on mobile devices.
 mod.theme.addTheme.unableToAddTheme|Unable to add theme:
 mod.theme.addTheme.unableToAddTheme.error1|Please select at least one genre.
 mod.theme.addTheme.unableToAddTheme.error2|Please enter a name for your theme.
@@ -304,6 +333,56 @@ mod.antiCheat.addMod.components.textFieldName.initialValue|ENTER ANTI CHEAT NAME
 mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Set the cost for the anti cheat.<br>In order to use the anti cheat in game you will have to pay this price to unlock it.
 mod.copyProtect.addMod.components.textFieldName.initialValue|ENTER COPY PROTECTION NAME
 mod.copyProtect.addMod.components.spinner.cost.toolTip|<br>Set the cost for the copy protection.<br>In order to use the copy protection in game you will have to pay this price to unlock it.
+mod.genre.clearTranslations|Clear Translations
+mod.genre.clearTranslations.question|<html>Are you sure that you want<br>to reset the translations?
+mod.genre.clearTranslations.button|Click to remove all Translations
+mod.genre.clearTranslations.success|Translations have been cleared.
+mod.genre.description.hint|Hint: use <br> in your description to make a new line.
+mod.genre.tipPart1|Tip: Hold STRG and
+mod.genre.tipPart2|click with your mouse
+mod.genre.page.title.1|[Page 1] Name and Description
+mod.genre.page.title.2|[Page 2] Unlock date
+mod.genre.page.title.3|[Page 3] Research/Price
+mod.genre.page.title.4|[Page 4] Target Group
+mod.genre.page.title.5|[Page 5] Genre combo
+mod.genre.page.title.6|[Page 6] Theme Combo
+mod.genre.page.title.7|[Page 7] Gameplay Features
+mod.genre.page.title.8|[Page 8] Design
+mod.genre.page.title.9|[Page 9] Work Priority
+mod.genre.page.title.10|[Page 10] Screenshots
+mod.genre.page.title.11|[Page 11] Image
+mod.genre.genreComb.noSelectionMessage|Are you sure that you don't want to add a compatible genre?
+mod.genre.genreComb.noSelectionMessage.title|Don't add compatible genre?
+mod.genre.themeComb.noSelectionMessage|Are you sure that you don't want to add a compatible theme?
+mod.genre.themeComb.noSelectionMessage.title|Don't add compatible theme?
+mod.genre.button.next.toolTip|Click to continue to the next step.
+mod.genre.button.previous.toolTip|Click to return to the previous page.
+mod.genre.button.quit.toolTip|Click to quit this step by step guide
+mod.genre.quit.confirmMessage|<html>Are you sure?<br>Your progress will be lost.
+mod.genre.quit.confirmMessage.title|Cancel add new genre
+mod.genre.selectAtLeastOneTargetGroup|Please select at least one target group!
+mod.genre.selectGenreComb|Select what genres work good together with your genre.
+mod.genre.topicComb|Select what topics work good together with your genre.
+mod.genre.gameplayFeatures|Select what gameplay features work good/bad together with your genre.
+mod.genre.screenshots.title|Add screenshot(s):
+mod.genre.screenshots.button.toolTip|<html>Click here to add image files that should be<br>used as your genre screenshots in the development progress page.
+mod.genre.screenshots.text.1|Note: You can skip this step if you
+mod.genre.screenshots.text.2|don't want to add you own screenshots image.
+mod.genre.screenshots.button.resetScreenshots|Click to reset all added screenshots
+mod.genre.screenshots.button.resetScreenshots.confirm|<html>Are you sure that you want to reset<br> the added screenshots?
+mod.genre.picture.selectImage|Select genre image:
+mod.genre.picture.imagePath|Path to image file
+mod.genre.picture.button.toolTip|Click here to select an image file that should be used as your genre image.
+mod.genre.picture.hint.1|Note: You can skip this step if you
+mod.genre.picture.hint.2|don't want to add you own genre image.
+mod.genre.picture.noPictureSelected|<html>You did not enter a custom image.<br>Do you want to reset the image file to default?
+mod.genre.picture.noPictureSelected.title|Reset image?
+mod.scrollExplanation|<html>(Tip: Hold STRG and click<br> with your mouse)
+mod.genre.enterNameFirst|Please enter a genre name first!
+mod.genre.enterDescriptionFirst|Please enter a genre description first!
+mod.genre.translation.donNotShowInfoAgain|Don't show this information again
+mod.genre.translation.information|<html>Note:<br>The translation that you have entered in the "main"text field<br>will be used as the english translation.<br><br>Continue?
+mod.genre.sameSelection.text|<html>Unable to continue: It is not allowed to select the same feature in booth lists.<br>Please deselect the feature from one list.
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:
@@ -505,6 +584,8 @@ frame.title.isThisCorrect|Is this correct?
 frame.title.addScreenshot|Add a screenshot
 frame.title.fileNotFound|File not found
 frame.title.unableToContinue|Unable to continue
+frame.title.reset|Reset?
+frame.title.information|Information
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be

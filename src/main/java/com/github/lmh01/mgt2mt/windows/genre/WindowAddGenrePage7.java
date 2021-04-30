@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -20,9 +21,9 @@ public class WindowAddGenrePage7 extends JFrame{
     public static Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
     public static Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     final JList<String> LIST_GAMEPLAY_FEATURES_BAD = new JList<>();
     final JList<String> LIST_GAMEPLAY_FEATURES_GOOD = new JList<>();
     final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_BAD = new JScrollPane(LIST_GAMEPLAY_FEATURES_BAD);
@@ -51,7 +52,7 @@ public class WindowAddGenrePage7 extends JFrame{
                     GenreManager.openStepWindow(8);
                     FRAME.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "Unable to continue: It is not allowed to select the same feature in booth lists.\nPlease deselect the feature from one list.", "Unable to continue", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -70,34 +71,34 @@ public class WindowAddGenrePage7 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 665, 260);
         setResizable(false);
-        setTitle("[Page 7] Gameplay Features");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.7"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelSelectGenre1 = new JLabel("Select what gameplay features work good/bad together with your genre.");
+        JLabel labelSelectGenre1 = new JLabel(I18n.INSTANCE.get("mod.genre.gameplayFeatures"));
         labelSelectGenre1.setBounds(118, 0, 600, 23);
         contentPane.add(labelSelectGenre1);
 
-        JLabel labelGoodGameplayFeatures = new JLabel("Good Gameplay Features");
+        JLabel labelGoodGameplayFeatures = new JLabel(I18n.INSTANCE.get("commonText.goodGameplayFeatures"));
         labelGoodGameplayFeatures.setBounds(95, 20, 300, 23);
         contentPane.add(labelGoodGameplayFeatures);
 
-        JLabel labelBadGameplayFeatures = new JLabel("Bad Gameplay Features");
+        JLabel labelBadGameplayFeatures = new JLabel(I18n.INSTANCE.get("commonText.badGameplayFeatures"));
         labelBadGameplayFeatures.setBounds(420, 20, 300, 23);
         contentPane.add(labelBadGameplayFeatures);
 
         buttonNext.setBounds(550, 200, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 200, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(285, 200, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 

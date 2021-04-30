@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -18,9 +19,9 @@ public class WindowAddGenrePage6 extends JFrame{
     static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
     public static Set<Integer> compatibleThemeIds = new HashSet<>();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     final JList<String> LIST_AVAILABLE_THEMES = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_THEMES = new JScrollPane(LIST_AVAILABLE_THEMES);
 
@@ -42,7 +43,7 @@ public class WindowAddGenrePage6 extends JFrame{
                 GenreManager.openStepWindow(7);
                 FRAME.dispose();
             }else{
-                if(JOptionPane.showConfirmDialog(null, "Are you sure that you don't want to add a compatible topic?", "Don't add compatible topic?", JOptionPane.YES_NO_OPTION) == 0){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
                     LOGGER.info("Cleared array list with compatible themes.");
                     GenreManager.mapNewGenre.remove("THEME COMB");
                     GenreManager.mapNewGenre.put("THEME COMB", "");
@@ -64,32 +65,32 @@ public class WindowAddGenrePage6 extends JFrame{
     }
     private void setGuiComponents(){
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 335, 260);
+        setBounds(100, 100, 360, 260);
         setResizable(false);
-        setTitle("[Page 6] THEME Combo");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.6"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelSelectGenre1 = new JLabel("Select what topics work good together with your");
-        labelSelectGenre1.setBounds(10, 0, 300, 23);
+        JLabel labelSelectGenre1 = new JLabel(I18n.INSTANCE.get("mod.genre.topicComb"));
+        labelSelectGenre1.setBounds(10, 0, 360, 23);
         contentPane.add(labelSelectGenre1);
 
-        JLabel labelSelectGenre2 = new JLabel("genre. (Tip: Hold STRG and click with your mouse)");
+        JLabel labelSelectGenre2 = new JLabel(I18n.INSTANCE.get("commonText.scrollExplanation"));
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
-        buttonNext.setBounds(220, 200, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setBounds(240, 200, 100, 23);
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 200, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
-        buttonQuit.setBounds(120, 200, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setBounds(120, 200, 110, 23);
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 
@@ -122,7 +123,7 @@ public class WindowAddGenrePage6 extends JFrame{
         LIST_AVAILABLE_THEMES.setVisibleRowCount(-1);
         LIST_AVAILABLE_THEMES.setSelectedIndices(selectedIndices);
 
-        SCROLL_PANE_AVAILABLE_THEMES.setBounds(10,45, 315,140);
+        SCROLL_PANE_AVAILABLE_THEMES.setBounds(10,55, 315,140);
         contentPane.add(SCROLL_PANE_AVAILABLE_THEMES);
     }
     private static boolean saveInputs(JList<String> listAvailableThemes){

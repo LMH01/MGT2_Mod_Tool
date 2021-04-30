@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -14,9 +15,9 @@ public class WindowAddGenrePage8 extends JFrame{
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage8.class);
     static final WindowAddGenrePage8 FRAME = new WindowAddGenrePage8();
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JSpinner spinnerDesign1 = new JSpinner();
     JSpinner spinnerDesign2 = new JSpinner();
     JSpinner spinnerDesign3 = new JSpinner();
@@ -65,74 +66,74 @@ public class WindowAddGenrePage8 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 410);
         setResizable(false);
-        setTitle("[Page 8] Design");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.8"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelDesignFocus = new JLabel("Design focus");
+        JLabel labelDesignFocus = new JLabel(I18n.INSTANCE.get("commonText.designFocus"));
         labelDesignFocus.setBounds(125, 10, 180, 23);
         contentPane.add(labelDesignFocus);
 
-        JLabel labelDesign1 = new JLabel("Game length: ");
+        JLabel labelDesign1 = new JLabel(I18n.INSTANCE.get("commonText.gameLength") + ":");
         labelDesign1.setBounds(10, 35, 180, 23);
         contentPane.add(labelDesign1);
 
-        JLabel labelDesign2 = new JLabel("Game depth: ");
+        JLabel labelDesign2 = new JLabel(I18n.INSTANCE.get("commonText.gameDepth") + ":");
         labelDesign2.setBounds(10, 60, 180, 23);
         contentPane.add(labelDesign2);
 
-        JLabel labelDesign3 = new JLabel("Beginner friendliness: ");
+        JLabel labelDesign3 = new JLabel(I18n.INSTANCE.get("commonText.beginnerFriendliness") + ":");
         labelDesign3.setBounds(10, 85, 180, 23);
         contentPane.add(labelDesign3);
 
-        JLabel labelDesign4 = new JLabel("Innovation: ");
+        JLabel labelDesign4 = new JLabel(I18n.INSTANCE.get("commonText.innovation") + ":");
         labelDesign4.setBounds(10, 110, 180, 23);
         contentPane.add(labelDesign4);
 
-        JLabel labelDesign5 = new JLabel("Story: ");
+        JLabel labelDesign5 = new JLabel(I18n.INSTANCE.get("commonText.story") + ":");
         labelDesign5.setBounds(10, 135, 180, 23);
         contentPane.add(labelDesign5);
 
-        JLabel labelDesign6 = new JLabel("Character design: ");
+        JLabel labelDesign6 = new JLabel(I18n.INSTANCE.get("commonText.characterDesign") + ":");
         labelDesign6.setBounds(10, 160, 180, 23);
         contentPane.add(labelDesign6);
 
-        JLabel labelDesign7 = new JLabel("Level design: ");
+        JLabel labelDesign7 = new JLabel(I18n.INSTANCE.get("commonText.levelDesign") + ":");
         labelDesign7.setBounds(10, 185, 180, 23);
         contentPane.add(labelDesign7);
 
-        JLabel labelDesign8 = new JLabel("Mission design: ");
+        JLabel labelDesign8 = new JLabel(I18n.INSTANCE.get("commonText.missionDesign") + ":");
         labelDesign8.setBounds(10, 210, 180, 23);
         contentPane.add(labelDesign8);
 
-        JLabel labelDesignDirection = new JLabel("Design Direction");
+        JLabel labelDesignDirection = new JLabel(I18n.INSTANCE.get("commonText.designDirection"));
         labelDesignDirection.setBounds(120, 235, 180, 23);
         contentPane.add(labelDesignDirection);
 
-        JLabel labelDesign9 = new JLabel("Core Gamers/Casual Gamer: ");
+        JLabel labelDesign9 = new JLabel(I18n.INSTANCE.get("commonText.coreGamersCasualGamers") + ":");
         labelDesign9.setBounds(10, 260, 180, 23);
         contentPane.add(labelDesign9);
 
-        JLabel labelDesign10 = new JLabel("Nonviolent/Explicit Content");
+        JLabel labelDesign10 = new JLabel(I18n.INSTANCE.get("commonText.nonviolentExtremeViolent") + ":");
         labelDesign10.setBounds(10, 285, 180, 23);
         contentPane.add(labelDesign10);
 
-        JLabel labelDesign11 = new JLabel("Easy/Hard");
+        JLabel labelDesign11 = new JLabel(I18n.INSTANCE.get("commonText.easyHard") + ":");
         labelDesign11.setBounds(10, 310, 180, 23);
         contentPane.add(labelDesign11);
 
         buttonNext.setBounds(220, 350, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 350, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 350, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 

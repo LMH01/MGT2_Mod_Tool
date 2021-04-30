@@ -102,7 +102,7 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Genre not available";
+        return getType() + " " + I18n.INSTANCE.get("commonText.notAvailable");
     }
 
 

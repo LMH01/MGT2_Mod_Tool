@@ -16,9 +16,9 @@ public class WindowAddGenrePage11 extends JFrame{
     static final WindowAddGenrePage11 FRAME = new WindowAddGenrePage11();
     JPanel contentPane = new JPanel();
     JButton buttonBrowse = new JButton("Browse");
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JTextField textFieldImagePath = new JTextField();
     File genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
 
@@ -46,12 +46,11 @@ public class WindowAddGenrePage11 extends JFrame{
         });
         buttonNext.addActionListener(actionEvent -> {
             if(textFieldImagePath.getText().isEmpty()){
-                if(JOptionPane.showConfirmDialog(null, "You did not enter a custom image.\nDo you want to reset the image file to default?", "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                     genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
                     FRAME.dispose();
                     GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                     WindowMain.checkActionAvailability();
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"));
                 }
             }else{
                 String imageFilePath = ModManager.genreMod.getGenreImageFilePath(true, false, textFieldImagePath);
@@ -60,7 +59,6 @@ public class WindowAddGenrePage11 extends JFrame{
                     FRAME.dispose();
                     GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage1.getMapGenreTranslations(), WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                     WindowMain.checkActionAvailability();
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + GenreManager.mapNewGenre.get("NAME EN"));
                 }else if(textFieldImagePath.getText().isEmpty()){
 
                 }
@@ -81,45 +79,45 @@ public class WindowAddGenrePage11 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
-        setTitle("[Page 11] Image");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.11"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelTitle = new JLabel("Select genre image:");
+        JLabel labelTitle = new JLabel(I18n.INSTANCE.get("mod.genre.picture.selectImage"));
         labelTitle.setBounds(100, 0, 335, 23);
         labelTitle.setForeground(Color.BLACK);
         labelTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(labelTitle);
 
         textFieldImagePath.setBounds(20, 30, 210, 23);
-        textFieldImagePath.setToolTipText("Path to image file");
+        textFieldImagePath.setToolTipText(I18n.INSTANCE.get("mod.genre.picture.imagePath"));
         textFieldImagePath.setText(genreIcon.getPath());
         contentPane.add(textFieldImagePath);
 
         buttonBrowse.setBounds(240, 30, 80, 23);
-        buttonBrowse.setToolTipText("Click here to select an image file that should be used as your genre image.");
+        buttonBrowse.setToolTipText(I18n.INSTANCE.get("mod.genre.picture.button.toolTip"));
         contentPane.add(buttonBrowse);
 
-        JLabel labelYouCanSkipThisStep = new JLabel("Note: You can skip this step if you");
+        JLabel labelYouCanSkipThisStep = new JLabel(I18n.INSTANCE.get("mod.genre.picture.hint.1"));
         labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
         contentPane.add(labelYouCanSkipThisStep);
 
-        JLabel labelAddYourOwnGenre = new JLabel("don't want to add you own genre image.");
+        JLabel labelAddYourOwnGenre = new JLabel(I18n.INSTANCE.get("mod.genre.picture.hint.2"));
         labelAddYourOwnGenre.setBounds(15,75, 300, 23);
         contentPane.add(labelAddYourOwnGenre);
 
         buttonNext.setBounds(220, 100, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 100, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 100, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 }

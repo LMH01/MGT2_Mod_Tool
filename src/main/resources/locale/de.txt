@@ -1,5 +1,8 @@
 button.quit|Beenden
 button.back|Zurück
+button.next|Weiter
+button.previous|Zurück
+button.cancel|Abbrechen
 
 commonBodies.areYouSure|Bist du sicher?
 commonBodies.exception|Grund:
@@ -56,6 +59,9 @@ commonText.description|Beschreibung
 commonText.description.var1|Beschreibungs
 commonText.manufacturer|Hersteller
 commonText.unlockDate|Freischaltdatum
+commonText.unlockMonth|Freischaltemonat
+commonText.unlockMonth.toolTip|Dies ist der Monat, in welchem der Mod freigeschaltet wird
+commonText.unlockYear|Freischaltejahr
 commonText.unlockYear.toolTip|Dies ist das Jahr, in welchem der Mod freigeschaltet wird.<br>Info: Aktuell ist das späteste Jahr, in welchem das Spiel gestartet werden kann 2015.
 commonText.range|Bereich
 commonText.date|Datum
@@ -63,14 +69,18 @@ commonText.releaseDate|Markteinführung
 commonText.productionEnd|Produktionsende
 commonText.type|Typ
 commonText.researchPointCost|Forschungspunktkosten
+commonText.researchPointCost.spinner.toolTip|Anzahl der erforderlichen Forschungspunkte, um dieses Feature zu erforschen.
 commonText.researchCost|Forschungskosten
+commonText.researchCost.spinner.toolTip|Dies sind die Forschungskosten, diese müssen generiert werden, um das Feature freizuschalten.
 commonText.developmentCost|Entwicklungskosten
+commonText.developmentCost.spinner.toolTip|Lege die Entwicklungskosten für dieses Feature fest.<br>Diese Kosten werden hinzugefügt, wenn ein Spiel mit dieser Funktion entwickelt wird.
 commonText.devKitCost|Kosten für das Development Kit
 commonText.price|Kosten
 commonText.marketShare|Marktanteil
 commonText.share|Verkaufsanteil
 commonText.profitShare|Gewinnanteil
 commonText.techLevel|Technik Level
+commonText.techLevel.spinner.toolTip|Das Technik-Level des Features.<br>Eine höhere Stufe bedeutet eine fortgeschrittenere Funktion.
 commonText.units|Einheiten
 commonText.neededGameplayFeatures|Benötigte Gameplay Features
 commonText.complexity|Komplexität
@@ -109,13 +119,14 @@ commonText.teen|Teenager
 commonText.adult|Erwachsene
 commonText.senior|Senioren
 commonText.addNameTranslations|Übersetzungen für Namen hinzufügen
-commonText.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
+commonText.addNameTranslations.toolTip|<html>Klicke, um Übersetzungen für den Namen hinzuzufügen<br>Der wert, der in das Textfeld geschrieben wird, wird für die englische Übersetzung benutzt
 commonText.addNameTranslations.added|Übersetzungen hinzugefügt
 commonText.addDescriptionTranslations|Übersetzungen für Beschreibungen hinzufügen
+commonText.addDescriptionTranslations.toolTip|<html>Klicke, um Übersetzungen für die Beschreibung hinzuzufügen<br>Der wert, der in das Textfeld geschrieben wird, wird für die englische Übersetzung benutzt
 commonText.addDescriptionTranslations.added|Übersetzungen hinzugefügt
 commonText.addScreenshots|Screenshots hinzufügen
 commonText.addGenreIcon|Genre Icon hinzufügen
-commonText.translationsAlreadyAdded|übersetzungen wurden bereits hinzugefügt.<br>Sollen die Übersetzungen gelöscht werden und möchtest du neue hinzufügen?
+commonText.translationsAlreadyAdded|Übersetzungen wurden bereits hinzugefügt.<br>Sollen die Übersetzungen gelöscht werden und möchtest du neue hinzufügen?
 commonText.successfullyAdded|wurde erfolgreich hinzugefügt!
 commonText.imageFileSet|Bilddatei eingestellt
 commonText.screenshots.added|Screenhots eingestellt
@@ -143,6 +154,10 @@ commonText.imageSelected|Bild ausgewählt
 commonText.selectImage|Bild auswählen
 commonText.nameAlreadyInUse|Der eigegebene Name wird schon benutzt.
 commonText.developmentCost.spinner|Der eingestellte Preis muss bezahlt werden, wenn ein Spiel mit diesem Feature erstellt wird.
+commonText.notAvailable|nicht verfügbar
+commonText.enterFeatureName|GIB DEN NAMEN DES FEATURES EIN
+commonText.enterDescription|GIB DIE BESCHREIBUNG EIN
+commonText.points.spinner.toolTip|Die Anzahl der [...]-Punkte, die hinzugefügt werden, wenn ein Spiel mit dieser Funktion entwickelt wird.
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -227,6 +242,7 @@ modManager.copyProtect.windowMain.modButton.addMod|Kopierschutz hinzufügen
 modManager.copyProtect.windowMain.modButton.removeMod|Kopierschutz entfernen
 modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Kopierschutz verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
+modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und eine Beschreibung ein!
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
 mod.publisher.addMod.optionPaneMessage.developer|Entwickler
@@ -236,9 +252,22 @@ mod.licence.addMod.optionPaneMessage.book|Buch
 mod.licence.addMod.optionPaneMessage.movie|Film
 mod.licence.addMod.optionPaneMessage.sport|Sport
 mod.engineFeature.addMod.title|Engine Feature hinzufügen?
+mod.engineFeature.addMod.components.type.toolTip|Wähle aus, welchen Typs das Engine Feature sein soll
 mod.gameplayFeature.addMod.title|Gameplay Feature hinzufügen?
 mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Dein gameplay feature ist bereit:
 mod.gameplayFeature.addMod.optionPaneMessage.none|Keine
+mod.gameplayFeature.addMod.components.type.toolTip|Wähle aus, welchen Typs das Gameplay Feature sein soll
+mod.gameplayFeature.addMod.components.button.genres.title|Wähle Genre(s) aus
+mod.gameplayFeature.addMod.components.button.selectBadGenres|Wähle Genres aus, die schlecht passen
+mod.gameplayFeature.addMod.components.button.selectBadGenres.selected|Schlecht passende Genres wurden eingestellt!
+mod.gameplayFeature.addMod.components.button.selectBadGenres.unableToSave|<html>Schlecht passende genres können nicht gespeichert werden<br><br>Die Liste der gut passenden Genres enthällt bereits einige Einträge.
+mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip|Klicke, um auszuwählen, welche Genres mit dem Gameplay Feature nicht gut funktionieren
+mod.gameplayFeature.addMod.components.button.selectGoodGenres|Wähle Genres aus, die gut passen
+mod.gameplayFeature.addMod.components.button.selectGoodGenres.selected|Gut passende Genres wurden eingestellt!
+mod.gameplayFeature.addMod.components.button.selectGoodGenres.unableToSave|<html>Gut passende genres können nicht gespeichert werden<br><br>Die Liste der schlecht passenden Genres enthällt bereits einige Einträge.
+mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip|Klicke, um auszuwählen, welche Genres mit dem Gameplay Feature gut funktionieren
+mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip|<html>Wähle diese Option, um die Kompatibilität mit Arcade-Automaten für diese Gameplay-Funktion zu aktivieren.<br>Wenn diese Gameplay-Funktion deaktiviert ist, funktioniert sie nicht für Arcade-Automaten.
+mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip|<html>Wähle diese Option, um die Kompatibilität mit Mobilgeräten für diese Gameplay-Funktion zu aktivieren.<br>Wenn diese Gameplay-Funktion deaktiviert ist, funktioniert sie auf Mobilgeräten nicht.
 mod.theme.addTheme.unableToAddTheme|Thema kann nicht hinzugefügt werden:
 mod.theme.addTheme.unableToAddTheme.error1|Bitte wähle mindestens ein genre aus.
 mod.theme.addTheme.unableToAddTheme.error2|Bitte gebe den Namen für das Thema ein.
@@ -304,6 +333,56 @@ mod.antiCheat.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR 
 mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Anti Cheat fest.<br>Dieser Preis muss bezahlt werden, damit der Anti Cheat für ein Spiel verwendet werden kann.
 mod.copyProtect.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN KOPIERSCHUTZ EIN
 mod.copyProtect.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Kopierschutz fest.<br>Dieser Preis muss bezahlt werden, damit der Kopierschutz für ein Spiel verwendet werden kann.
+mod.genre.clearTranslations|Übersetzungen zurücksetzen
+mod.genre.clearTranslations.question|<html>Bist du dir sicher, dass die Übersetzungen zurückgesetzt werden sollen?
+mod.genre.clearTranslations.button|Klicker, um alle Übersetzungen zurückzusetzen
+mod.genre.clearTranslations.success|Übersetzungen wurden zurückgesetzt.
+mod.genre.description.hint|Hinweise: Benutze <br> um einen Zeilenumbruch in der Beschreibung hinzuzufügen.
+mod.genre.tipPart1|Tipp: Halte STRG und
+mod.genre.tipPart2|klicke mit der Maus
+mod.genre.page.title.1|[Page 1] Name und Beschreibung
+mod.genre.page.title.2|[Page 2] Datum der Freischaltung
+mod.genre.page.title.3|[Page 3] Forschung und Kosten
+mod.genre.page.title.4|[Page 4] Zielgruppe
+mod.genre.page.title.5|[Page 5] Genre Kombination
+mod.genre.page.title.6|[Page 6] Themen Kombination
+mod.genre.page.title.7|[Page 7] Gameplay Features
+mod.genre.page.title.8|[Page 8] Design
+mod.genre.page.title.9|[Page 9] Arbeits-Priorität
+mod.genre.page.title.10|[Page 10] Screenshots
+mod.genre.page.title.11|[Page 11] Bild
+mod.genre.genreComb.noSelectionMessage|Bist du dir sicher, dass kein Kompatibles Genre hinzugefügt werden soll?
+mod.genre.genreComb.noSelectionMessage.title|Kein kompatibles Genre hinzufügen?
+mod.genre.themeComb.noSelectionMessage|Bist du dir sicher, dass kein Kompatibles Thema hinzugefügt werden soll?
+mod.genre.themeComb.noSelectionMessage.title|Kein kompatibles Thema hinzufügen?
+mod.genre.button.next.toolTip|Klicke hier, um mit dem nächsten Schritt fortzufahren.
+mod.genre.button.previous.toolTip|Klicke hier, um zur vorherigen Seite zurückzukehren.
+mod.genre.button.quit.toolTip|Klicke hier, um diese Schritt-für-Schritt-Anleitung zu beenden
+mod.genre.quit.confirmMessage|<html>Bist du sicher?<br>Dein Fortschritt geht verloren.
+mod.genre.quit.confirmMessage.title|Neues Genre hinzufügen abbrechen
+mod.genre.selectAtLeastOneTargetGroup|Bitte wähle mindestens eine Zielgruppe aus!
+mod.genre.selectGenreComb|Wähle aus, welche Genres gut zu dem neuen Genre passen.
+mod.genre.topicComb|Wähle aus, welche Themen gut zu dem neuen Genre passen.
+mod.genre.gameplayFeatures|Wähle aus, welche Gameplay-Funktionen zusammen mit Ihrem Genre gut / schlecht funktionieren.
+mod.genre.screenshots.title|Screenshot(s) hinzufügen:
+mod.genre.screenshots.button.toolTip|<html>Klicke hier, um Bilddateien hinzuzufügen, die als Genre-Screenshots auf der Entwicklungsfortschrittsseite verwendet werden sollen.
+mod.genre.screenshots.text.1|Hinweis: Du kannst diesen Schritt überspringen, wenn du
+mod.genre.screenshots.text.2|nicht deine eigenen Screenshots hinzufügen möchtest.
+mod.genre.screenshots.button.resetScreenshots|Klicke hier, um alle hinzufgefügten Screenshots zurückzusetzen
+mod.genre.screenshots.button.resetScreenshots.confirm|<html>Bist du sicher, dass du die Screenshots zurücksetzen möchtest?
+mod.genre.picture.selectImage|Wähle ein Genre-Bild aus:
+mod.genre.picture.imagePath|Pfad zur Bilddatei
+mod.genre.picture.button.toolTip|Klicke hier, um ein Bild auszuwählen, welches als Genre-Icon benutzt werden soll.
+mod.genre.picture.hint.1|Hinweis: Du kannst diesen Schritt überspringen, wenn
+mod.genre.picture.hint.2|du kein eigenes Bild hinzufügen möchtest.
+mod.genre.picture.noPictureSelected|<html>Du hast kein eigenes Bild eingegeben.<br>Soll das Standardbild verwendet werden?
+mod.genre.picture.noPictureSelected.title|Bild zurücksetzen?
+mod.scrollExplanation|<html>(Tipp: Halte STRG gedrückt<br>und klicke mit der Maus)
+mod.genre.enterNameFirst|Gib bitte zu erst einen Namen für das Genre ein!
+mod.genre.enterDescriptionFirst|Gib bitte zu erst eine Beschreibung für das Genre ein!
+mod.genre.translation.donNotShowInfoAgain|Diese Information nicht noch einmal anzeigen
+mod.genre.translation.information|<html>Hinweis:<br>Die Übersetzung, die in das "Haupt"-Textfeld geschrieben wird, wird für die Englische Übersetzung benutzt.<br><br>Fortsetzen?
+mod.genre.sameSelection.text|<html>Fortsetzung nicht möglich: Es ist nicht zulässig, dasselbe Feature in beiden Listen auszuwählen.<br>Bitte deaktiviere das Feature in einer Liste.
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
@@ -505,6 +584,8 @@ frame.title.isThisCorrect|Ist das richtig?
 frame.title.addScreenshot|Screenshot hinzufügen
 frame.title.fileNotFound|Datei wurde nicht gefunden
 frame.title.unableToContinue|Fortsetzen nicht möglich
+frame.title.reset|Zurücksetzen?
+frame.title.information|Information
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:

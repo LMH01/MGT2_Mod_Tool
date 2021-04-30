@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -14,9 +15,9 @@ public class WindowAddGenrePage9 extends JFrame{
     static final WindowAddGenrePage9 FRAME = new WindowAddGenrePage9();
     static int combinedValue;
     JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton("Next");
-    JButton buttonPrevious = new JButton("Previous");
-    JButton buttonQuit = new JButton("Cancel");
+    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JSpinner spinnerGameplay = new JSpinner();
     JSpinner spinnerGraphic = new JSpinner();
     JSpinner spinnerSound = new JSpinner();
@@ -61,38 +62,38 @@ public class WindowAddGenrePage9 extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 185);
         setResizable(false);
-        setTitle("[Page 9] Work Priority");
+        setTitle(I18n.INSTANCE.get("mod.genre.page.title.9"));
 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel labelGameplay = new JLabel("Gameplay: ");
+        JLabel labelGameplay = new JLabel(I18n.INSTANCE.get("commonText.gameplay") + ":");
         labelGameplay.setBounds(10, 10, 100, 23);
         contentPane.add(labelGameplay);
 
-        JLabel labelGraphic = new JLabel("Graphic: ");
+        JLabel labelGraphic = new JLabel(I18n.INSTANCE.get("commonText.graphic") + ":");
         labelGraphic.setBounds(10, 35, 120, 23);
         contentPane.add(labelGraphic);
 
-        JLabel labelSound = new JLabel("Sound: ");
+        JLabel labelSound = new JLabel(I18n.INSTANCE.get("commonText.sound") + ":");
         labelSound.setBounds(10, 60, 120, 23);
         contentPane.add(labelSound);
 
-        JLabel labelControl = new JLabel("Control: ");
+        JLabel labelControl = new JLabel(I18n.INSTANCE.get("commonText.control") + ":");
         labelControl.setBounds(10, 85, 120, 23);
         contentPane.add(labelControl);
 
         buttonNext.setBounds(220, 125, 100, 23);
-        buttonNext.setToolTipText("Click to continue to the next step.");
+        buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
         buttonPrevious.setBounds(10, 125, 100, 23);
-        buttonPrevious.setToolTipText("Click to return to the previous page.");
+        buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
         buttonQuit.setBounds(120, 125, 90, 23);
-        buttonQuit.setToolTipText("Click to quit this step by step guide and return to the add genre page.");
+        buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
 
