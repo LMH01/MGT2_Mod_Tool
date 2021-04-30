@@ -15,7 +15,7 @@ public class ReadDefaultContent {
     @Deprecated
     public static String[] getDefaultPublisher() throws IOException {
         ArrayList<String> arrayList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("default_content/default_publisher.txt"), StandardCharsets.UTF_8));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/default_publisher.txt")), StandardCharsets.UTF_8));
         String currentLine;
         while ((currentLine = reader.readLine()) != null) {
             arrayList.add(currentLine);

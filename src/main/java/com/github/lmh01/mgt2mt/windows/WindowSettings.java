@@ -74,9 +74,7 @@ public class WindowSettings extends JFrame {
 
         checkBoxSaveLogs.setBounds(20, 100, 250, 23);
         checkBoxSaveLogs.setToolTipText(I18n.INSTANCE.get("window.settings.checkBox.saveLogs.toolTip"));
-        checkBoxSaveLogs.addActionListener(actionEvent -> {
-            unsavedChanges = checkBoxSaveLogs.isSelected() != Settings.saveLogs;
-        });
+        checkBoxSaveLogs.addActionListener(actionEvent -> unsavedChanges = checkBoxSaveLogs.isSelected() != Settings.saveLogs);
         contentPane.add(checkBoxSaveLogs);
 
         JLabel labelLanguage = new JLabel(I18n.INSTANCE.get("window.settings.language.label"));
@@ -86,7 +84,7 @@ public class WindowSettings extends JFrame {
         comboBoxLanguage.setBounds(117, 130, 100, 23);
         comboBoxLanguage.setToolTipText(I18n.INSTANCE.get("window.settings.language.comboBox.toolTip"));
         comboBoxLanguage.addActionListener(actionEvent -> {
-            if(!Objects.equals(comboBoxLanguage.getSelectedItem().toString(), Settings.language)){
+            if(!Objects.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Settings.language)){
                 if(Objects.equals(comboBoxLanguage.getSelectedItem().toString(), "Deutsch")){
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.language.informationMessage") + System.getProperty("line.separator") + I18n.INSTANCE.get("window.settings.language.informationMessageTranslationIncomplete"));
                 }else{
@@ -105,13 +103,7 @@ public class WindowSettings extends JFrame {
 
         comboBoxUpdateChannel.setBounds(117, 155, 100, 23);
         comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.toolTip"));
-        comboBoxUpdateChannel.addActionListener(actionEvent -> {
-            if(!Objects.equals(comboBoxUpdateChannel.getSelectedItem().toString(), Settings.updateBranch)){
-                unsavedChanges = true;
-            }else{
-                unsavedChanges = false;
-            }
-        });
+        comboBoxUpdateChannel.addActionListener(actionEvent -> unsavedChanges = !Objects.equals(comboBoxUpdateChannel.getSelectedItem().toString(), Settings.updateBranch));
         contentPane.add(comboBoxUpdateChannel);
 
         JLabel lblMGT2Location = new JLabel(I18n.INSTANCE.get("window.settings.mgt2location.label"));
@@ -312,11 +304,7 @@ public class WindowSettings extends JFrame {
         }else{
             comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + I18n.INSTANCE.get("window.settings.mgt2location.toolTip.notSet"));
         }
-        if(Settings.enableCustomFolder){
-            customFolderSetAndValid = true;
-        }else{
-            customFolderSetAndValid = false;
-        }
+        customFolderSetAndValid = Settings.enableCustomFolder;
     }
 
     /**
@@ -325,7 +313,7 @@ public class WindowSettings extends JFrame {
      * @param checkBoxDisableSafety The disable safety features checkbox
      */
     private static void setCurrentSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
-        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, comboBoxLanguage.getSelectedItem().toString(), comboBoxUpdateBranch.getSelectedItem().toString(), checkBoxSaveLogs.isSelected());
+        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString(), checkBoxSaveLogs.isSelected());
     }
 
     /**
@@ -344,10 +332,10 @@ public class WindowSettings extends JFrame {
         if(!inputFolder.equals(outputFolder)){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2FilePath).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
         }
-        if(!Settings.language.equals(comboBoxLanguage.getSelectedItem().toString())){
+        if(!Settings.language.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString())){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.language")).append(" ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
-        if(!Settings.updateBranch.equals(comboBoxUpdateBranch.getSelectedItem().toString())){
+        if(!Settings.updateBranch.equals(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString())){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.updateChannel")).append(" ").append(Settings.updateBranch).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
         if(Settings.saveLogs != checkBoxSaveLogs.isSelected()){

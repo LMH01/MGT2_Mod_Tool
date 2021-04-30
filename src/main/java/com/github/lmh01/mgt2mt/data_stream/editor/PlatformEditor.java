@@ -66,8 +66,8 @@ public class PlatformEditor extends AbstractAdvancedEditor {
             }
         }
         Collections.sort(pictureChangeYears);
-        for(int i=0; i<pictureChangeYears.size(); i++){
-            bw.write(pictureChangeYears.get(i));
+        for (String pictureChangeYear : pictureChangeYears) {
+            bw.write(pictureChangeYear);
             bw.write(System.getProperty("line.separator"));
         }
         ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
@@ -90,7 +90,6 @@ public class PlatformEditor extends AbstractAdvancedEditor {
     /**
      * This call only edits the platform.txt file. If the image icons should be processed as well use {@link PlatformEditor#addMod(Map, Map)}.
      * @param map The values that stand in this map are used to print the file. This includes the translations.
-     * @throws IOException
      */
     @Override
     public void addMod(Map<String, String> map) throws IOException {

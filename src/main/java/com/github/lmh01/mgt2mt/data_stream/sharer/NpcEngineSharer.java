@@ -21,7 +21,7 @@ public class NpcEngineSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
 
     }
 

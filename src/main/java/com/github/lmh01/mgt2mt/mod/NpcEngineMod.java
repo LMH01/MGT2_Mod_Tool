@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
@@ -190,7 +191,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                 if(!listAvailableGenres.getSelectedValuesList().isEmpty()){
                                     //Filling base map (Without genre, id and names)
                                     Map<String, String> npcEngine = new HashMap<>();
-                                    npcEngine.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                                    npcEngine.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                                     npcEngine.put("PLATFORM", Integer.toString(ModManager.platformMod.getBaseAnalyzer().getContentIdByName(listAvailablePlatforms.getSelectedValue())));
                                     npcEngine.put("PRICE", spinnerCost.getValue().toString());
                                     npcEngine.put("SHARE", spinnerShare.getValue().toString());
@@ -294,9 +295,8 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     private ArrayList<String> npcEngineNamesWithoutGenre(){
         ArrayList<String> strings = new ArrayList<>();
         for(String string : getBaseAnalyzer().getContentByAlphabet()){
-            String inputString = string;
             for(String string2 : ModManager.genreMod.getAnalyzer().getContentByAlphabet()){
-                strings.add(inputString.replace(" [" + string2 + "]", ""));
+                strings.add(string.replace(" [" + string2 + "]", ""));
             }
         }
         return strings;

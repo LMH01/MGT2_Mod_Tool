@@ -49,7 +49,6 @@ public class LogFile {
 
     /**
      * Prints the stacktrace to file
-     * @param e
      */
     public static void printStacktrace(Exception e){
         e.printStackTrace(new PrintWriter(bw));
@@ -79,7 +78,6 @@ public class LogFile {
 
     /**
      * Writes the input string into the log file
-     * @param string
      */
     public static void write(String string){
         try {

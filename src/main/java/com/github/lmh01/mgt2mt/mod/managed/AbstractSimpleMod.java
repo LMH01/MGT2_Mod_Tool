@@ -83,9 +83,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseF
 
     @Override
     public void exportMenuItemAction() {
-        Thread thread = new Thread(() -> {
-            OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-        });
+        Thread thread = new Thread(() -> OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
         ThreadHandler.startThread(thread, "runnableExport" + getType());
     }
 

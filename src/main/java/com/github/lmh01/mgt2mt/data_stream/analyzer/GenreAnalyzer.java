@@ -86,16 +86,16 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer {
     public String getContentNameById(int id, boolean changeableLanguage) {
         try {
             List<Map<String, String>> list = getAnalyzedFile();
-            for(int i=0; i<list.size(); i++){
-                if(list.get(i).get("ID").equals(Integer.toString(id))){
-                    if(changeableLanguage){
-                        if(Settings.language.equals("English")){
-                            return list.get(i).get("NAME EN");
-                        }else if(Settings.language.equals("Deutsch")){
-                            return list.get(i).get("NAME GE");
+            for (Map<String, String> map : list) {
+                if (map.get("ID").equals(Integer.toString(id))) {
+                    if (changeableLanguage) {
+                        if (Settings.language.equals("English")) {
+                            return map.get("NAME EN");
+                        } else if (Settings.language.equals("Deutsch")) {
+                            return map.get("NAME GE");
                         }
-                    }else{
-                        return list.get(i).get("NAME EN");
+                    } else {
+                        return map.get("NAME EN");
                     }
                 }
             }

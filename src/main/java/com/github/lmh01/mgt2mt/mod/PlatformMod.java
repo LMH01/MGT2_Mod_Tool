@@ -379,7 +379,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                             spinnerChangeYear.setEnabled(true);
                                             textAreaAddedImages.append(System.getProperty("line.separator"));
                                         }
-                                        textAreaAddedImages.append(comboBoxChangeMonth.getSelectedItem().toString() + " " + spinnerChangeYear.getValue().toString() + " - " + imageFile.get().getPath());
+                                        textAreaAddedImages.append(Objects.requireNonNull(comboBoxChangeMonth.getSelectedItem()).toString() + " " + spinnerChangeYear.getValue().toString() + " - " + imageFile.get().getPath());
                                         pictureMap.put(Integer.parseInt(spinnerChangeYear.getValue().toString()), imageFile.get());
                                         lastYear.set(Integer.parseInt(spinnerChangeYear.getValue().toString()));
                                         break;
@@ -435,9 +435,9 @@ public class PlatformMod extends AbstractAdvancedMod {
                                     platformMap.put("NAME EN", textFieldName.getText());
                                     platformMap.put("MANUFACTURER EN", textFieldManufacturer.getText());
                                 }
-                                platformMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                                platformMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                                 if(checkBoxEnableEndDate.isSelected()){
-                                    platformMap.put("DATE END", comboBoxEndDateMonth.getSelectedItem().toString() + " " + spinnerEndYear.getValue().toString());
+                                    platformMap.put("DATE END", Objects.requireNonNull(comboBoxEndDateMonth.getSelectedItem()).toString() + " " + spinnerEndYear.getValue().toString());
                                 }
                                 platformMap.put("PRICE", spinnerDevKitCost.getValue().toString());
                                 platformMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
@@ -503,7 +503,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                 }else{
                                     platformMap.put("INTERNET", "0");
                                 }
-                                platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(comboBoxFeatureType.getSelectedItem().toString())));
+                                platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
                                 if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                     Backup.createBackup(getFile());
                                     getEditor().addMod(platformMap, finalPictureMap);

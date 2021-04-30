@@ -106,9 +106,7 @@ public class WindowMain {
         M_31_EXPORT.add(M_317_EXPORT_ALL);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportAll, "runnableExportAll"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
-        m35.addActionListener(actionEvent -> {
-            Utils.open(Utils.getMGT2ModToolExportFolder());
-        });
+        m35.addActionListener(actionEvent -> Utils.open(Utils.getMGT2ModToolExportFolder()));
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
         m36.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableDeleteExports, "runnableDeleteExports"));
         M_3_SHARE.add(M_31_EXPORT);
@@ -174,7 +172,7 @@ public class WindowMain {
         JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.quit"));
         buttonQuit.addActionListener(actionEvent -> {
             if(ThreadHandler.getThreadsRunning() > 0){
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.button.quit.taskPerformed"), I18n.INSTANCE.get("window.main.button.quit.taskPerformed.title"), JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION){
+                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.button.quit.taskPerformed"), I18n.INSTANCE.get("window.main.button.quit.taskPerformed.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                     disposeFrame();
                 }
             }else{

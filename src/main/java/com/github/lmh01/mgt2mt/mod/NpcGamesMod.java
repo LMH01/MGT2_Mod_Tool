@@ -97,8 +97,9 @@ public class NpcGamesMod extends AbstractSimpleMod {
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         boolean modAlreadyExists = false;
                         for(String string : ModManager.npcGamesMod.getBaseAnalyzer().getContentByAlphabet()){
-                            if(newModName.equals(string)){
+                            if (newModName.equals(string)) {
                                 modAlreadyExists = true;
+                                break;
                             }
                         }
                         if(!modAlreadyExists){

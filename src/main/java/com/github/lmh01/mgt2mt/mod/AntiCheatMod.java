@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
@@ -182,7 +183,7 @@ public class AntiCheatMod extends AbstractAdvancedMod {
                                 antiCheatMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                 antiCheatMap.put("NAME EN", textFieldName.getText());
                             }
-                            antiCheatMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                            antiCheatMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())).toString() + " " + spinnerUnlockYear.getValue().toString());
                             antiCheatMap.put("PRICE", spinnerCost.getValue().toString());
                             antiCheatMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(antiCheatMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){

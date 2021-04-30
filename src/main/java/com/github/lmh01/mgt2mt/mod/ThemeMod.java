@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2TextFolderPath;
 
 public class ThemeMod extends AbstractSimpleMod {
@@ -186,7 +188,7 @@ public class ThemeMod extends AbstractSimpleMod {
                                     themeTranslations.put("NAME EN", textFieldThemeName.getText());
                                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false, false);
-                                        ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(comboBoxViolenceLevel.getSelectedItem().toString()));
+                                        ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem()).toString()));
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                         breakLoop = true;
@@ -260,9 +262,7 @@ public class ThemeMod extends AbstractSimpleMod {
 
     @Override
     public void exportMenuItemAction() {
-        Thread thread = new Thread(() -> {
-            OperationHelper.process((string) -> ModManager.themeMod.getSharer().exportMod(string, false), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-        });
+        Thread thread = new Thread(() -> OperationHelper.process((string) -> ModManager.themeMod.getSharer().exportMod(string, false), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
         ThreadHandler.startThread(thread, "runnableExport" + getType());
     }
 

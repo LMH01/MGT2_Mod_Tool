@@ -81,7 +81,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
         if(map.get("NO_MOBILE") != null){
             mobileCompatibility = I18n.INSTANCE.get("commonText.no");
         }
-        String messageBody = I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.firstPart") + "\n\n" +
+        return I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.firstPart") + "\n\n" +
                 I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
@@ -98,7 +98,6 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.tech") + ": " + map.get("TECH") + "\n" +
                 I18n.INSTANCE.get("commonText.arcadeCompatibility") + ": " + arcadeCompatibility + "\n" +
                 I18n.INSTANCE.get("commonText.mobileCompatibility") + ": " + mobileCompatibility + "\n";
-        return messageBody;
     }
 
     @Override

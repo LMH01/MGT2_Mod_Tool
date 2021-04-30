@@ -34,7 +34,7 @@ public class DataStreamHelper {
      */
     public static String getNameFromFile(File file, String charsetType) throws IOException {
         Map<Integer, String> map = getContentFromFile(file, charsetType);
-        for(Map.Entry entry : map.entrySet()){
+        for(Map.Entry entry : Objects.requireNonNull(map).entrySet()){
             if(entry.getValue().toString().contains("NAME EN")){
                 return entry.getValue().toString().replace("[NAME EN]", "").replace("[NAME AR]", "");
             }
@@ -365,13 +365,13 @@ public class DataStreamHelper {
     public static void deleteDirectory(File directoryToBeDeleted, boolean initializeProgressBar){
         if(initializeProgressBar){
             try{
-                ProgressBarHelper.initializeProgressBar(0, directoryToBeDeleted.listFiles().length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+                ProgressBarHelper.initializeProgressBar(0, Objects.requireNonNull(directoryToBeDeleted.listFiles()).length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
             }catch (NullPointerException ignored){
                 ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
             }
         }else{
             try{
-                ProgressBarHelper.increaseMaxValue(directoryToBeDeleted.listFiles().length);
+                ProgressBarHelper.increaseMaxValue(Objects.requireNonNull(directoryToBeDeleted.listFiles()).length);
                 ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.delete"));
             }catch (NullPointerException ignored){
                 ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
@@ -390,7 +390,7 @@ public class DataStreamHelper {
         if (allContents != null) {
             for (File file : allContents) {
                 try{
-                    ProgressBarHelper.increaseMaxValue(file.listFiles().length);
+                    ProgressBarHelper.increaseMaxValue(Objects.requireNonNull(file.listFiles()).length);
                 }catch(NullPointerException ignored){
 
                 }

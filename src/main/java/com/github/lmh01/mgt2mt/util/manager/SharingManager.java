@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.data_stream.sharer.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
@@ -21,10 +20,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -89,7 +86,7 @@ public class SharingManager {
         ArrayList<String> arrayList = getImportFolderPath("import", true);
         ArrayList<File> files = new ArrayList<>();
         try{
-            for(String string : arrayList){
+            for(String string : Objects.requireNonNull(arrayList)){
                 files.add(new File(string));
             }
         }catch(NullPointerException ignored){
@@ -423,7 +420,7 @@ public class SharingManager {
                         for(Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()){
                             panels.add(entry.getValue());
                         }
-                        Object[] modPanels = panels.toArray(new Object[panels.size()]);
+                        Object[] modPanels = panels.toArray(new Object[0]);
                         if(importFromRestorePoint){
                             params = new Object[]{labelStart, modPanels, labelEnd, checkBoxDisableImportPopups};
                         }else{
@@ -641,11 +638,7 @@ public class SharingManager {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                     }else{
                         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                            if(exportAsRestorePoint){
-                                Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Mod_Restore_Point//Current_Restore_Point//"));
-                            }else{
-                                Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
-                            }
+                            Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
                         }
                     }
                 }else{
@@ -708,7 +701,7 @@ public class SharingManager {
         int currentProgressBarValue = 0;
         int currentExportFailed = 1;
         for(String string : strings){
-            if(!exporter.export(string)){
+            if(exporter.export(string)){
                 if(firstExportFailed){
                     stringBuilder.append(exportName).append(": ");
                 }else{
@@ -741,7 +734,7 @@ public class SharingManager {
     private static boolean isImportCompatible(File inputFile, String[] compatibleVersions){
         try {
             Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
-            for(Map.Entry entry : map.entrySet()){
+            for(Map.Entry entry : Objects.requireNonNull(map).entrySet()){
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Current Value: " + entry.getValue());
                 }
@@ -768,7 +761,7 @@ public class SharingManager {
     private static String getImportName(File inputFile){
         try {
             Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
-            for(Map.Entry entry : map.entrySet()){
+            for(Map.Entry entry : Objects.requireNonNull(map).entrySet()){
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Current Value: " + entry.getValue());
                 }
@@ -817,7 +810,7 @@ public class SharingManager {
                     }
                 }
             }else{
-                if(returnValue != "false"){
+                if(!returnValue.equals("false")){
                     names.add(returnValue);
                 }
                 feature.add(new File(string));

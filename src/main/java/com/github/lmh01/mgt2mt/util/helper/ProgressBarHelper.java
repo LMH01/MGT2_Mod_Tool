@@ -82,7 +82,6 @@ public class ProgressBarHelper {
 
     /**
      * Increases the maximum value of the progress bar by value
-     * @param value
      */
     public static void increaseMaxValue(int value) {
         WindowMain.PROGRESS_BAR.setMaximum(WindowMain.PROGRESS_BAR.getMaximum() + value);

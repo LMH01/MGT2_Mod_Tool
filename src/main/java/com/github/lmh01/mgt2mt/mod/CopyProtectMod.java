@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
@@ -182,7 +183,7 @@ public class CopyProtectMod extends AbstractAdvancedMod {
                                 copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                 copyProtectMap.put("NAME EN", textFieldName.getText());
                             }
-                            copyProtectMap.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                            copyProtectMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                             copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
                             copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){

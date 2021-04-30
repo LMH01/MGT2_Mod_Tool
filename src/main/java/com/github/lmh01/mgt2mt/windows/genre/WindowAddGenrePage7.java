@@ -209,8 +209,9 @@ public class WindowAddGenrePage7 extends JFrame{
         boolean mutualEntries = false;
         for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
             for(String string2 : listGameplayFeaturesGood.getSelectedValuesList()){
-                if(string.equals(string2)){
+                if (string.equals(string2)) {
                     mutualEntries = true;
+                    break;
                 }
             }
         }

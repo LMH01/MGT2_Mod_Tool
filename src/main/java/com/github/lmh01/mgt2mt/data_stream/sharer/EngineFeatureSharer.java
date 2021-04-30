@@ -27,7 +27,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public String getOptionPaneMessage(Map<String, String> map) {
-        String messageBody = I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
+        return I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
                 I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
@@ -41,7 +41,6 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "\n" +
                 I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "\n" +
                 I18n.INSTANCE.get("commonText.tech") + ": " + map.get("TECH") + "\n";
-        return messageBody;
     }
 
     @Override

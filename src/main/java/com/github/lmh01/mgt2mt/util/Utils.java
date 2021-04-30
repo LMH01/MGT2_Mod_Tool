@@ -321,7 +321,7 @@ public class Utils {
      * @param goodFeature True when the file should be searched for good features. False when it should be searched for bad features.
      * @return Returns a String containing gameplay feature names
      */
-    public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) throws IOException {
+    public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if(goodFeature){
             for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
@@ -431,7 +431,6 @@ public class Utils {
 
     /**
      * Opens the given folder
-     * @param path
      */
     public static void open(String path){
         try {

@@ -22,7 +22,7 @@ public class AntiCheatSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
 
     }
 
@@ -41,14 +41,12 @@ public class AntiCheatSharer extends AbstractAdvancedSharer {
 
     @Override
     public String getOptionPaneMessage(Map<String, String> map) {
-        StringBuilder message = new StringBuilder();
-        message.append("<html>");
-        message.append(I18n.INSTANCE.get("mod.antiCheat.addMod.optionPaneMessage.firstPart")).append("<br><br>");
-        message.append(I18n.INSTANCE.get("commonText.name")).append(": ").append(map.get("NAME EN")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.unlockDate")).append(": ").append(map.get("DATE")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.price")).append(": ").append(map.get("PRICE")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.developmentCost")).append(": ").append(map.get("DEV COSTS")).append("<br>");
-        return message.toString();
+        return "<html>" +
+                I18n.INSTANCE.get("mod.antiCheat.addMod.optionPaneMessage.firstPart") + "<br><br>" +
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "<br>" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "<br>" +
+                I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>";
     }
 
     @Override

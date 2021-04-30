@@ -34,9 +34,7 @@ public class WindowAddGenrePage10 extends JFrame{
     }
 
     public WindowAddGenrePage10() {
-        buttonAddScreenshot.addActionListener(actionEvent -> {
-            ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot);
-        });
+        buttonAddScreenshot.addActionListener(actionEvent -> ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot));
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots.confirm"), I18n.INSTANCE.get("frame.title.reset"), JOptionPane.YES_NO_OPTION) == 0){
                 screenshotFiles.get().clear();

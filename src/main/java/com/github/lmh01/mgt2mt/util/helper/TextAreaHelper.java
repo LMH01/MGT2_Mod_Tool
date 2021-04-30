@@ -2,12 +2,8 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
-import org.omg.PortableInterceptor.LOCATION_FORWARD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.event.AdjustmentListener;
-import java.util.concurrent.TimeUnit;
 
 public class TextAreaHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextAreaHelper.class);

@@ -60,7 +60,7 @@ public class OperationHelper {
                         ProgressBarHelper.increment();
                         for(int i=0; i<listAvailableOperations.getSelectedValuesList().size(); i++){
                             String currentExport = listAvailableOperations.getSelectedValuesList().get(i);
-                            if(!processor.export(currentExport)){
+                            if(processor.export(currentExport)){
                                 if(!multipleExports){
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.alreadyProcessed.firstPart") + " " + exportType + " " + I18n.INSTANCE.get("processor.alreadyProcessed.secondPart") + " " + operation, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 }

@@ -344,7 +344,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                                 newGameplayFeature.put("DESC EN", textFieldDescription.getText());
                             }
                             newGameplayFeature.put("ID", Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getFreeId()));
-                            newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(comboBoxFeatureType.getSelectedItem().toString())));
+                            newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
                             newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
                             newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                             newGameplayFeature.put("PRICE", spinnerPrice.getValue().toString());

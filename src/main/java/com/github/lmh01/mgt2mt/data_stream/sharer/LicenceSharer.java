@@ -65,7 +65,6 @@ public class LicenceSharer extends AbstractSimpleSharer {
         }else if(line.contains("SPORT")){
             type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport");
         }
-        String message = I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + getAnalyzer().getReplacedLine(line) + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + type;
-        return message;
+        return I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + getAnalyzer().getReplacedLine(line) + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + type;
     }
 }

@@ -61,18 +61,16 @@ public class UpdateChecker {
                 newestVersionKeyFeatures = stringBuilder.toString();
                 if(!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)){
                     if(!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)){
-                        if(!MadGamesTycoon2ModTool.VERSION.contains("dev")){
-                            updateAvailable = true;
-                            LOGGER.info("New version found: " + newestVersion);
-                            LOGGER.info("Key features:");
+                        updateAvailable = true;
+                        LOGGER.info("New version found: " + newestVersion);
+                        LOGGER.info("Key features:");
 
-                            if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0){
-                                try {
-                                    Utils.openGithubPage();
-                                } catch (Exception e) {
-                                    Utils.showErrorMessage(2, e);
-                                    e.printStackTrace();
-                                }
+                        if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0){
+                            try {
+                                Utils.openGithubPage();
+                            } catch (Exception e) {
+                                Utils.showErrorMessage(2, e);
+                                e.printStackTrace();
                             }
                         }
                     }

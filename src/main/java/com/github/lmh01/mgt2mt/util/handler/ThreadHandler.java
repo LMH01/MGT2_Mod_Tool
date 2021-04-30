@@ -12,7 +12,7 @@ import java.io.File;
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
-    private static String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
+    private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
     public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
     public static Runnable runnableUninstall = Uninstaller::uninstall;
     public static Runnable runnableImportAll = SharingManager::importAll;
@@ -80,8 +80,9 @@ public class ThreadHandler {
         WindowMain.lockMenuItems(true);
         boolean startControlThread = true;
         for(String string : controlThreadBlacklist){
-            if(string.equals(thread.getName())){
+            if (string.equals(thread.getName())) {
                 startControlThread = false;
+                break;
             }
         }
         if(startControlThread){

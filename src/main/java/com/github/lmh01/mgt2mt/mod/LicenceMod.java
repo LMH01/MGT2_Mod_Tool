@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
@@ -122,7 +123,7 @@ public class LicenceMod extends AbstractSimpleMod {
                 if(!textFieldName.getText().isEmpty()){
                     StringBuilder newLicence = new StringBuilder();
                     newLicence.append(textFieldName.getText()).append(" ");
-                    String selectedType = comboBoxType.getSelectedItem().toString();
+                    String selectedType = Objects.requireNonNull(comboBoxType.getSelectedItem()).toString();
                     if(selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"))){
                         newLicence.append("[MOVIE]");
                     }else if(selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"))){
@@ -139,7 +140,7 @@ public class LicenceMod extends AbstractSimpleMod {
                     }
                     if(!licenceAlreadyExists){
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append(I18n.INSTANCE.get("mod.licence.addMod.confirm") + ":").append(System.getProperty("line.separator"))
+                        stringBuilder.append(I18n.INSTANCE.get("mod.licence.addMod.confirm")).append(":").append(System.getProperty("line.separator"))
                                 .append(textFieldName.getText()).append(System.getProperty("line.separator"))
                                 .append("Type: ").append(comboBoxType.getSelectedItem());
                         if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){

@@ -878,9 +878,9 @@ window.settings.changesNotSaved.title|Unsaved changes
 window.settings.debugMode.checkBoxText|Enable debug logging
 window.settings.debugMode.checkBoxToolTip|Check this box to enable debug logging when opening this jar with the console.
 window.settings.language.label|Language:
-window.settings.language.comboBox.toolTip|<html>Select what language the ui should use<br>German translations are currently work in progress.<br>You might encounter things that have not been translated yet.<br> It can also happen that the labels of buttons etc. are not displayed correctly.
+window.settings.language.comboBox.toolTip|<html>Select what language the ui should use<br>Translations can be incorrect and / or incomplete.<br>It can also happen that the labels of buttons etc. are not displayed correctly.
 window.settings.language.informationMessage|To apply the language please save the settings and restart the program.
-window.settings.language.informationMessageTranslationIncomplete|<html>Note:<br>The german translations are work in progress, some things might not be translated yet.<br> It can also happen that the labels of buttons etc. are not displayed correctly.
+window.settings.language.informationMessageTranslationIncomplete|<html>Note:<br>Translations can be incorrect and / or incomplete.<br>It can also happen that the labels of buttons etc. are not displayed correctly.
 window.settings.mgt2location.label|MGT2 Folder:
 window.settings.mgt2location.toolTip|<html>[Automatic]: The folder will be selected automatically<br>[Manual]: Use a custom path.<br>Current path:
 window.settings.mgt2location.toolTip.notSet|Not set

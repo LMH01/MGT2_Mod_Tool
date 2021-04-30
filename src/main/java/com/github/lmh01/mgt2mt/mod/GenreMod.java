@@ -214,7 +214,7 @@ public class GenreMod extends AbstractAdvancedMod {
                 buttonSetIcon.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.button.addGenreIcon.toolTip"));
                 buttonSetIcon.addActionListener(actionEvent -> {
                     iconPath.set(getGenreImageFilePath(false, true, null));
-                    if(!iconPath.equals("error")){
+                    if(!iconPath.toString().equals("error")){
                         buttonSetIcon.setText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.addGenreIcon.iconSet"));
                     }else{
                         iconPath.set(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
@@ -224,9 +224,7 @@ public class GenreMod extends AbstractAdvancedMod {
 
                 JButton buttonSetScreenshots = new JButton(I18n.INSTANCE.get("commonText.addScreenshots"));
                 buttonSetScreenshots.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.button.addGenreScreenshots.toolTip"));
-                buttonSetScreenshots.addActionListener(actionEvent -> {
-                    setGenreScreenshots(screenshotFiles, buttonSetScreenshots);
-                });
+                buttonSetScreenshots.addActionListener(actionEvent -> setGenreScreenshots(screenshotFiles, buttonSetScreenshots));
 
                 JCheckBox checkBoxShowSummary = new JCheckBox(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.checkBox.showSummary"));
                 checkBoxShowSummary.setToolTipText(I18n.INSTANCE.get("dialog.genreHelper.addRandomizedGenre.checkBox.showSummary.toolTip"));
@@ -299,8 +297,8 @@ public class GenreMod extends AbstractAdvancedMod {
                         if(GenreManager.addGenre(map, map, compatibleThemeIds, gameplayFeatures.get(0), gameplayFeatures.get(1), screenshotFiles.get(),true, iconFile,  checkBoxShowSummary.isSelected())){
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + genreName);
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.genre") + " [" + genreName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("commonText.genre") + " " + I18n.INSTANCE.get("commonText.added"), JOptionPane.INFORMATION_MESSAGE);
+                            break;
                         }
-                        break;
                     }else{
                         break;
                     }
@@ -596,7 +594,7 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     /**
-     * @Returns Returns a list containing the bad gameplay features in the first HashSet and the good gameplay features in the second HashSet
+     * @returns Returns a list containing the bad gameplay features in the first HashSet and the good gameplay features in the second HashSet
      */
     private List<HashSet<Integer>> getRandomGameplayFeatureIds(){
         HashSet<Integer> hashSetBadGameplayFeatures = new HashSet<>();

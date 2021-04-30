@@ -180,7 +180,7 @@ public class GenreSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) {
 
     }
 

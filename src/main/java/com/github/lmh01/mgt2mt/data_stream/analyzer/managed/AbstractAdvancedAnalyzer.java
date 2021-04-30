@@ -144,7 +144,6 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
 
     /**
      * Sets the custom content string that should be returned when {@link AbstractAdvancedAnalyzer#getFinishedCustomContentString()} is called.
-     * @param customContent
      */
     public abstract void setFinishedCustomContentString(String[] customContent);
     /**

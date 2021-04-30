@@ -105,9 +105,9 @@ public class Uninstaller {
                             System.exit(0);
                         }
                     }
+                    break;
                 }
             }
-            break;
         }
     }
 

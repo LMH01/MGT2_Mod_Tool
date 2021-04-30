@@ -878,9 +878,9 @@ window.settings.changesNotSaved.title|Ungespeicherte änderungen
 window.settings.debugMode.checkBoxText|Debug-Protokollierung aktivieren
 window.settings.debugMode.checkBoxToolTip|<html>Aktiviere diese box, um die Debug-Protokollierung zu aktivieren,<br>wenn die .jar Datei über die Konsole geöffnet wird.
 window.settings.language.label|Sprache:
-window.settings.language.comboBox.toolTip|<html>Wähle aus, welche Sprache die Benutzeroberfläche verwenden soll.<br>Deutsche Übersetzungen sind derzeit in Arbeit.<br>Einige Dinge sind Möglicherweise noch nicht übersetzt<br>Außerdem kann es vorkommen, dass Beschriftungen von Knöpfen o.ä. nicht korrekt angezeigt werden.
+window.settings.language.comboBox.toolTip|<html>Wähle aus, welche Sprache die Benutzeroberfläche verwenden soll.<br>Übersetzungen könnten fehlerhaft und / oder unvollständig sein.<br>Es kann auch vorkommen, dass die Beschriftungen von Schaltflächen o.ä. nicht korrekt angezeigt werden.
 window.settings.language.informationMessage|Um die Sprache anzuwenden, speicher bitte die Einstellungen und starte das Programm neu.
-window.settings.language.informationMessageTranslationIncomplete|Hinweis: Die deutschen Übersetzungen sind in Arbeit, einige Dinge sind möglicherweise noch nicht übersetzt.
+window.settings.language.informationMessageTranslationIncomplete|<html>Hinweis:<br>Übersetzungen könnten fehlerhaft und / oder unvollständig sein.<br>Es kann auch vorkommen, dass die Beschriftungen von Schaltflächen o.ä. nicht korrekt angezeigt werden.
 window.settings.mgt2location.label|MGT2 Ordner:
 window.settings.mgt2location.toolTip|<html>[Automatic]: Der Ordner wird automatisch erkannt und ausgewählt<br>[Manual]: Benutze einen benutzerdefinierten Ort.<br>Aktueller Ort:
 window.settings.mgt2location.toolTip.notSet|Nicht eingestellt

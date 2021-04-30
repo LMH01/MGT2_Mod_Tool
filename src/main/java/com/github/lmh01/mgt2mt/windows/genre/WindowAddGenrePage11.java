@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
