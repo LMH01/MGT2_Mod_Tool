@@ -115,22 +115,22 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     /**
      * Put things in this function that should be executed when the txt file has been imported.
      */
-    abstract void doOtherImportThings(String importFolderPath, String name);
+    public abstract void doOtherImportThings(String importFolderPath, String name);
 
     /**
      * Put things in this function that should be executed when the txt file has been exported.
      */
-    abstract void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException;
+    public abstract void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException;
 
     /**
      * Writes the values that are stored in the map to the file
      */
-    abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
+    public abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
 
     /**
      * @return Returns the function with which the mod is imported
      */
-    abstract Importer getImporter();
+    public abstract Importer getImporter();
 
     /**
      * @return Returns the objects that should be displayed in the option pane

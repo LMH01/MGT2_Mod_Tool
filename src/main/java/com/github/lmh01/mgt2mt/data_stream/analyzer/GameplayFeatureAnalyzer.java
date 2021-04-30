@@ -78,7 +78,7 @@ public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer {
     }
 
     @Override
-    void setFinishedCustomContentString(String[] customContent) {
+    public void setFinishedCustomContentString(String[] customContent) {
         this.customContent = customContent;
     }
 }

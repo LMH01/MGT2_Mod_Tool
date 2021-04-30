@@ -45,7 +45,7 @@ public class PlatformAnalyzer extends AbstractAdvancedAnalyzer {
     }
 
     @Override
-    void setFinishedCustomContentString(String[] customContent) {
+    public void setFinishedCustomContentString(String[] customContent) {
         this.customContent = customContent;
     }
 

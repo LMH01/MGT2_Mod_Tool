@@ -51,7 +51,7 @@ public class LicenceSharer extends AbstractSimpleSharer {
         return ModManager.licenceMod.getCompatibleModToolVersions();    }
 
     @Override
-    SimpleImporter getSimpleImporter() {
+    public SimpleImporter getSimpleImporter() {
         return ModManager.licenceMod.getEditor()::addMod;
     }
 

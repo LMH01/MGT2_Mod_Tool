@@ -75,5 +75,5 @@ public abstract class AbstractAdvancedEditor implements AdvancedAnalyzer, BaseEd
     /**
      * Writes the values that are stored in the map to the file
      */
-    abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
+    public abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
 }

@@ -118,7 +118,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
     }
 
     @Override
-    SimpleImporter getSimpleImporter() {
+    public SimpleImporter getSimpleImporter() {
         return ModManager.themeMod.getEditor()::addMod;
     }
 

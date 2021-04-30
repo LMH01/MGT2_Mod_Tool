@@ -16,17 +16,17 @@ import java.util.Map;
 public class NpcEngineSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineSharer.class);
     @Override
-    void doOtherImportThings(String importFolderPath, String name) {
+    public void doOtherImportThings(String importFolderPath, String name) {
 
     }
 
     @Override
-    void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
 
     }
 
     @Override
-    void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);
         EditHelper.printLine("GENRE", map, bw);
@@ -36,7 +36,7 @@ public class NpcEngineSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    Importer getImporter() {
+    public Importer getImporter() {
         return ModManager.npcEngineMod.getBaseEditor()::addMod;
     }
 

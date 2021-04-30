@@ -89,12 +89,12 @@ public class PublisherSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    void doOtherImportThings(String importFolderPath, String name) {
+    public void doOtherImportThings(String importFolderPath, String name) {
 
     }
 
     @Override
-    void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
         File fileExportedPublisherIcon = new File(exportFolderDataPath + "//icon.png");
         if(!fileExportedPublisherIcon.exists()){
             new File(exportFolderDataPath).mkdirs();
@@ -104,7 +104,7 @@ public class PublisherSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
         bw.write("[DATE]" + map.get("DATE") + System.getProperty("line.separator"));
         bw.write("[DEVELOPER]" + map.get("DEVELOPER") + System.getProperty("line.separator"));
@@ -115,7 +115,7 @@ public class PublisherSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    Importer getImporter() {
+    public Importer getImporter() {
         return null;
     }
 

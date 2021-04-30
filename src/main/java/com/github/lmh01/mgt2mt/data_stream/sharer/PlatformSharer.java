@@ -25,7 +25,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformSharer.class);
 
     @Override
-    void doOtherImportThings(String importFolderPath, String name) {
+    public void doOtherImportThings(String importFolderPath, String name) {
         try{
             File importFolderPictureFolder = new File(importFolderPath + "//DATA//pictures//");
             if(importFolderPictureFolder.exists()){
@@ -42,7 +42,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
         File exportPictures = new File(exportFolderDataPath + "//pictures//");
         exportPictures.mkdirs();
         Map<Integer, File> picturesToExport = new HashMap<>();
@@ -58,7 +58,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
         for(String string : TranslationManager.TRANSLATION_KEYS){
             for(Map.Entry<String, String> entry : map.entrySet()){
@@ -107,7 +107,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    Importer getImporter() {
+    public Importer getImporter() {
         return ModManager.platformMod.getBaseEditor()::addMod;
     }
 

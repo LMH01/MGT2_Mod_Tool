@@ -15,7 +15,7 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcGamesSharer.class);
 
     @Override
-    SimpleImporter getSimpleImporter() {
+    public SimpleImporter getSimpleImporter() {
         return ModManager.npcGamesMod.getBaseEditor()::addMod;
     }
 

@@ -87,7 +87,7 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
      * Sets the custom content string that should be returned when {@link AbstractSimpleAnalyzer#getFinishedCustomContentString()} is called.
      * @param customContent
      */
-    abstract void setFinishedCustomContentString(String[] customContent);
+    public abstract void setFinishedCustomContentString(String[] customContent);
 
     /**
      * Replaces the input string and returns the replaced string

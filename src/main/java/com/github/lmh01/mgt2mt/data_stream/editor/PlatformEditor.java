@@ -26,7 +26,7 @@ public class PlatformEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformEditor.class);
 
     @Override
-    void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         EditHelper.printLine("ID",map, bw);
         TranslationManager.printLanguages(bw, map);
         for(String string : TranslationManager.TRANSLATION_KEYS){

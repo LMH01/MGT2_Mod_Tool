@@ -18,7 +18,7 @@ public class NpcEngineEditor extends AbstractAdvancedEditor {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineEditor.class);
 
     @Override
-    void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         EditHelper.printLine("ID",map, bw);
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);

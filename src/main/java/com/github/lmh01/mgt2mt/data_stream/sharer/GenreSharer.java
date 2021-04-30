@@ -25,12 +25,12 @@ public class GenreSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreSharer.class);
 
     @Override
-    void doOtherImportThings(String importFolderPath, String name) {
+    public void doOtherImportThings(String importFolderPath, String name) {
 
     }
 
     @Override
-    void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
 
     }
 
@@ -180,12 +180,12 @@ public class GenreSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
 
     }
 
     @Override
-    Importer getImporter() {
+    public Importer getImporter() {
         return ModManager.genreMod.getEditor()::addMod;
     }
 

@@ -67,7 +67,7 @@ public class ThemeFileGeAnalyzer extends AbstractSimpleAnalyzer {
     }
 
     @Override
-    void setFinishedCustomContentString(String[] customContent) {
+    public void setFinishedCustomContentString(String[] customContent) {
         this.customContent = customContent;
     }
 }
