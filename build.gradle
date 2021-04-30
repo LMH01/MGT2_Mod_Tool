@@ -14,7 +14,7 @@ dependencies {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-project.version = "1.12.0" //remember to change version in main class
+project.version = "2.0.0" //remember to change version in main class
 archivesBaseName = "MGT2_Mod_Tool"
 
 group = "com.github.lmh01"

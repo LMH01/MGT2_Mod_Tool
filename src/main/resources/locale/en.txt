@@ -531,7 +531,7 @@ dialog.sharingManager.exportAll.mainMessage|<html>Are you sure that all mods sho
 dialog.updateChecker.noUpdateAvailable|<html>You are using the newest version.<br>No update available.
 dialog.updateChecker.noUpdateAvailable.title|No update available
 dialog.updateChecker.keyFeatures|Key features:
-dialog.updateChecker.updateAvailable|<html>It is recommended to always use the newest version to keep this tool compatible with MGT2.<br><br>>Do you wan't to open the github repository to download the newest version?
+dialog.updateChecker.updateAvailable|<html>It is recommended to always use the newest version to keep this tool compatible with MGT2.<br><br>Do you want to open the github repository to download the newest version?
 dialog.updateChecker.updateAvailable.title|New version available
 dialog.updateChecker.updateAvailable.versionType.ver1|A new release is available:
 dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is available:
@@ -559,7 +559,7 @@ dialog.genreManager.addGenre.bodyButtonExplanation.var2|<html>Click yes to add t
 dialog.genreManager.addGenre.title|Add this genre?
 dialog.genreManager.addGenre.mainBody.genreIsReady|Your genre is ready:
 dialog.genreManager.addGenre.pic|Pic: see top left
-dialog.genreManager.addGenre.error.var1|<html>Error while processing image files.<br>Do you wan't to add you new genre anyway?
+dialog.genreManager.addGenre.error.var1|<html>Error while processing image files.<br>Do you want to add you new genre anyway?
 dialog.genreManager.addGenre.error.var2|The genre was not added:<br>Error while editing Genres.txt<br>Please try again with administrator rights.
 dialog.genreManager.addGenre.error.var3|Your genre was not added.
 dialog.genreManager.addGenre.genreAdded.title|Genre added successfully!
@@ -896,7 +896,7 @@ window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
 window.settings.safetyFeatures.checkBoxText|Disable safety features
 window.settings.safetyFeatures.checkBoxToolTip|<html>Check this box to disable the automatic genre id allocation.<br>If checked most spinners won't have a maximum value.<br>Do only enable when you use your own genre id system and you need the spinners to be unlocked.
-window.settings.safetyFeatures.warning|<html>Are you sure that you wan't to disable the safety features?<br>This could lead to problems.<br><br>USE THIS FEATURE AT YOUR OWN RISK!<br>I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!<br><br>Disable safety features?
+window.settings.safetyFeatures.warning|<html>Are you sure that you want to disable the safety features?<br>This could lead to problems.<br><br>USE THIS FEATURE AT YOUR OWN RISK!<br>I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!<br><br>Disable safety features?
 window.settings.safetyFeatures.warning.title|Disable safety features?
 window.settings.updateChannel.label|Update channel:
 window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
