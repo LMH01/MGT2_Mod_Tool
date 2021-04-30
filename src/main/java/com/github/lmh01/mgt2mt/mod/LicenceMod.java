@@ -151,7 +151,7 @@ public class LicenceMod extends AbstractSimpleMod {
                                 break;
                             } catch (IOException e) {
                                 e.printStackTrace();
-                                JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("mod.licence.addMod.error") + ":<br>" + I18n.INSTANCE.get("commonBodies.exception") + ": " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
                             }
                         }
                     }else{

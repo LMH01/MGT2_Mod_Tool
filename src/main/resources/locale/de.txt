@@ -266,7 +266,6 @@ mod.licence.addMod.optionPaneMessage.book|Buch
 mod.licence.addMod.optionPaneMessage.movie|Film
 mod.licence.addMod.optionPaneMessage.sport|Sport
 mod.licence.addMod.confirm|Soll diese Lizenz hinzugefügt werden?
-mod.licence.addMod.error|Fehler beim hinzufügen der Lizenz:
 mod.engineFeature.addMod.title|Engine Feature hinzufügen?
 mod.engineFeature.addMod.components.type.toolTip|Wähle aus, welchen Typs das Engine Feature sein soll
 mod.gameplayFeature.addMod.title|Gameplay Feature hinzufügen?

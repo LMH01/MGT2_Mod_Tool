@@ -264,6 +264,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
             }
         }catch(IOException e){
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
