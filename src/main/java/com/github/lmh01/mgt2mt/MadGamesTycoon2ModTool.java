@@ -13,8 +13,8 @@ import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
-    public static final String VERSION = "2.0.0-dev";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
-    public static final String CURRENT_RELEASE_VERSION = "2.0.0";//When this version number has been detected as the newest release version the update available message is held back
+    public static final String VERSION = "2.0.1";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
+    public static final String CURRENT_RELEASE_VERSION = "2.0.1";//When this version number has been detected as the newest release version the update available message is held back
     public static void main(String[] args){
         Settings.importSettings();
         if(Settings.language.equals("English")){
