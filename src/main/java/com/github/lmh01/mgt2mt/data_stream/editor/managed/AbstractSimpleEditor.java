@@ -26,8 +26,8 @@ public abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions,
      * Removes the input name from the text file
      * @param name The mod name that should be removed
      */
-    public boolean removeMod(String name) throws IOException {
-        return editFile(false, name);
+    public void removeMod(String name) throws IOException {
+        editFile(false, name);
     }
 
     /**
@@ -35,7 +35,7 @@ public abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions,
      * @param addMod If true the mod will be added. If false the mod fill be removed
      * @param mod If add mod is true: This string will be printed into the text file. If add mod is false: The string is the mod name which mod should be removed
      */
-    private boolean editFile(boolean addMod, String mod) throws IOException {
+    private void editFile(boolean addMod, String mod) throws IOException {
         getAnalyzer().analyzeFile();
         Charset charset = getCharset();
         File fileToEdit = getFileToEdit();
@@ -74,7 +74,6 @@ public abstract class AbstractSimpleEditor implements BaseEditor, BaseFunctions,
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
         }
         bw.close();
-        return true;
     }
 
     /**

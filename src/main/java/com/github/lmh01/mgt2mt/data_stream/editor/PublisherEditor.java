@@ -45,8 +45,8 @@ public class PublisherEditor extends AbstractAdvancedEditor {
     }
 
     @Override
-    public boolean removeMod(String name) throws IOException {
-        boolean returnValue = super.removeMod(name);
+    public void removeMod(String name) throws IOException {
+        super.removeMod(name);
         int iconId = getPublisherIconIdByName(name);
         if(iconId>146){
             File publisherIcon = new File(Utils.getMGT2CompanyLogosPath() + iconId + ".png");
@@ -56,7 +56,6 @@ public class PublisherEditor extends AbstractAdvancedEditor {
                 LOGGER.info("Image file for publisher " + name + " has been removed.");
             }
         }
-        return returnValue;
     }
 
     @Override

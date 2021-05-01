@@ -417,6 +417,14 @@ sharer.licence.exportFailed.alreadyExported|Das folgende Engine Feature wurde ni
 sharer.licence.exportSuccessful|Die folgende Lizenz wurde exportiert:
 sharer.npcGames.exportFailed.alreadyExported|Das folgende Npc Spiel wurde nicht exportiert, da es bereits exportiert wurde:
 sharer.npcGames.exportSuccessful|Das folgende Npc Spiel wurde exportiert:
+sharer.npcEngine.exportFailed.alreadyExported|Die folgende Npc Engine wurde nicht exportiert, da sie bereits exportiert wurde:
+sharer.npcEngine.exportSuccessful|Die folgende Npc Engine wurde exportiert:
+sharer.platform.exportFailed.alreadyExported|Die folgende Plattform wurde nicht exportiert, da sie bereits exportiert wurde:
+sharer.platform.exportSuccessful|Die folgende Plattform wurde exportiert:
+sharer.antiCheat.exportFailed.alreadyExported|Der folgende Anti Cheat wurde nicht exportiert, da er bereits exportiert wurde:
+sharer.antiCheat.exportSuccessful|Der folgende Anit Cheat wurde exportiert:
+sharer.copyProtect.exportFailed.alreadyExported|Der folgende Kopierschutz wurde nicht exportiert, da er bereits exportiert wurde:
+sharer.copyProtect.exportSuccessful|Der folgende Kopierschutz wurde exportiert:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
 sharer.importMod.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
 sharer.importMod.alreadyExists.short|bereits vorhanden ist

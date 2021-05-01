@@ -81,15 +81,14 @@ public class GenreEditor extends AbstractAdvancedEditor {
      * @param name The mod name that should be removed
      */
     @Override
-    public boolean removeMod(String name) throws IOException {
-        return removeGenre(name);
+    public void removeMod(String name) throws IOException {
+        removeGenre(name);
     }
 
-    private boolean removeGenre(String genreName) throws IOException {
+    private void removeGenre(String genreName) throws IOException {
         super.removeMod(genreName);
         ModManager.themeMod.getEditor().editGenreAllocation(getAnalyzer().getContentIdByName(genreName), false, null);
         ModManager.gameplayFeatureMod.getEditor().removeGenreId(getAnalyzer().getContentIdByName(genreName));
         ImageFileHandler.removeImageFiles(genreName);
-        return true;
     }
 }

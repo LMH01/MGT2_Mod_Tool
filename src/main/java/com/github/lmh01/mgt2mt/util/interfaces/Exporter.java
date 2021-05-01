@@ -4,5 +4,8 @@ import java.io.IOException;
 
 @FunctionalInterface
 public interface Exporter {
+    /**
+     * @return Returns true when the export was successful
+     */
     boolean export(String name) throws IOException;
 }

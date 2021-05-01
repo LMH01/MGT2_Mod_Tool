@@ -112,21 +112,21 @@ public class PlatformEditor extends AbstractAdvancedEditor {
      * @param name The mod name that should be removed
      */
     @Override
-    public boolean removeMod(String name) throws IOException {
-        return super.removeMod(name);
+    public void removeMod(String name) throws IOException {
+        super.removeMod(name);
     }
 
     /**
      * Removes the platform from the game including pictures.
      */
-    public boolean removePlatform(String name) throws IOException {
+    public void removePlatform(String name) throws IOException {
         ArrayList<File> filesToRemove = DataStreamHelper.getFilesInFolderWhiteList(Settings.mgt2FilePath + "//Mad Games Tycoon 2_Data//Extern//Icons_Platforms//", name.replaceAll("[0-9]", "").replaceAll("\\s+","") );
         LOGGER.info("fileToRemove size: " + filesToRemove.size());
         for(File file : filesToRemove){
             LOGGER.info("deleting file: " + file.getPath());
             file.delete();
         }
-        return super.removeMod(name);
+        super.removeMod(name);
     }
 
     /**

@@ -46,7 +46,7 @@ public abstract class AbstractAdvancedEditor implements AdvancedAnalyzer, BaseEd
      * Removes the input name from the text file
      * @param name The mod name that should be removed
      */
-    public boolean removeMod(String name) throws IOException {
+    public void removeMod(String name) throws IOException {
         getAnalyzer().analyzeFile();
         int modId = getAnalyzer().getContentIdByName(name);
         sendLogMessage("Removing " + getType() + ": " + name);
@@ -69,7 +69,6 @@ public abstract class AbstractAdvancedEditor implements AdvancedAnalyzer, BaseEd
         bw.write("[EOF]");
         bw.close();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + name);
-        return true;
     }
 
     /**

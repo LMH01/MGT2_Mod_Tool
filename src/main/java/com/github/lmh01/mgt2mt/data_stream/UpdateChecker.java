@@ -64,7 +64,6 @@ public class UpdateChecker {
                         updateAvailable = true;
                         LOGGER.info("New version found: " + newestVersion);
                         LOGGER.info("Key features:");
-
                         if(JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0){
                             try {
                                 Utils.openGithubPage();

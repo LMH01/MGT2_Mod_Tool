@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util.helper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
+import com.github.lmh01.mgt2mt.util.interfaces.Processor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class OperationHelper {
      * @param operationVerb The operation that should be written in some windows. Eg. Removing, Adding, Exporting
      * @param export If true a message is shown in the end where the export folder is shown when yes is clicked
      */
-    public static void process(Exporter processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, String operationVerb, boolean export){
+    public static void process(Processor processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, String operationVerb, boolean export){
         try {
             ProgressBarHelper.initializeProgressBar(0, 1, operationVerb + " " + exportType);
             boolean noOperationAvailable = true;
@@ -60,7 +61,10 @@ public class OperationHelper {
                         ProgressBarHelper.increment();
                         for(int i=0; i<listAvailableOperations.getSelectedValuesList().size(); i++){
                             String currentExport = listAvailableOperations.getSelectedValuesList().get(i);
-                            if(processor.export(currentExport)){
+                            try{
+                                processor.process(currentExport);
+                            }catch (IOException e){
+                                e.printStackTrace();
                                 if(!multipleExports){
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.alreadyProcessed.firstPart") + " " + exportType + " " + I18n.INSTANCE.get("processor.alreadyProcessed.secondPart") + " " + operation, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 }
@@ -78,7 +82,7 @@ public class OperationHelper {
                                         Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
                                     }
                                 }else{
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType);
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + " " + exportType);
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType, I18n.INSTANCE.get("frame.title.error"), JOptionPane.INFORMATION_MESSAGE);
                                 }
                             }else{

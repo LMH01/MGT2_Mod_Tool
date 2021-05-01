@@ -70,10 +70,9 @@ public class ThemeEditor extends AbstractSimpleEditor {
     }
 
     @Override
-    public boolean removeMod(String name) throws IOException {
-        boolean returnValue = editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(name), 0);
+    public void removeMod(String name) throws IOException {
+        editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(name), 0);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
-        return returnValue;
     }
 
     /**
