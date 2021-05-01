@@ -701,7 +701,7 @@ public class SharingManager {
         int currentProgressBarValue = 0;
         int currentExportFailed = 1;
         for(String string : strings){
-            if(exporter.export(string)){
+            if(!exporter.export(string)){
                 if(firstExportFailed){
                     stringBuilder.append(exportName).append(": ");
                 }else{
