@@ -276,7 +276,12 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             JButton buttonBadGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres"));
             buttonBadGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip"));
             buttonBadGenres.addActionListener(actionEvent -> {
-                badGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
+                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
+                ArrayList<Integer> badGenreIdsOut = new ArrayList<>();
+                for(Integer integer : goodGenrePositions){
+                    badGenreIdsOut.add(ModManager.genreMod.getAnalyzer().getContentIdByName(ModManager.genreMod.getAnalyzer().getContentByAlphabet()[integer]));
+                }
+                badGenreIds[0] = badGenreIdsOut;
                 if(badGenreIds[0].size() != 0){
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
                     if(Settings.disableSafetyFeatures || !mutualEntries){
@@ -293,7 +298,12 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             JButton buttonGoodGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres"));
             buttonGoodGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip"));
             buttonGoodGenres.addActionListener(actionEvent -> {
-                goodGenreIds[0] = Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
+                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
+                ArrayList<Integer> goodGenreIdsOut = new ArrayList<>();
+                for(Integer integer : goodGenrePositions){
+                    goodGenreIdsOut.add(ModManager.genreMod.getAnalyzer().getContentIdByName(ModManager.genreMod.getAnalyzer().getContentByAlphabet()[integer]));
+                }
+                goodGenreIds[0] = goodGenreIdsOut;
                 if(goodGenreIds[0].size() != 0){
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
                     if(Settings.disableSafetyFeatures || !mutualEntries){
