@@ -25,16 +25,18 @@ public class TranslationManager {
         Object[] params = {labelExplanation,textFieldDescriptionTranslation};
         boolean breakLoop = false;
         for(String translationName : TRANSLATION_NAMES){
-            if(translationName.equals("English")){
-                arrayListTranslations.add("English");
-            }else{
-                labelExplanation.setText("Enter the translation for " + translationName + ":");
-                if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
-                    arrayListTranslations.add(textFieldDescriptionTranslation.getText());
-                    textFieldDescriptionTranslation.setText("");
+            if(!breakLoop){
+                if(translationName.equals("English")){
+                    arrayListTranslations.add("English");
                 }else{
-                    JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
-                    breakLoop = true;
+                    labelExplanation.setText("Enter the translation for " + translationName + ":");
+                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                        arrayListTranslations.add(textFieldDescriptionTranslation.getText());
+                        textFieldDescriptionTranslation.setText("");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
+                        breakLoop = true;
+                    }
                 }
             }
         }
