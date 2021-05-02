@@ -275,17 +275,37 @@ public class Utils {
     public static ArrayList<String> getEntriesFromString(String string) throws NullPointerException{
         ArrayList<String> arrayList = new ArrayList<>();
         StringBuilder currentEntry = new StringBuilder();
+        boolean workingOnEntry = false;
         for(Character character : string.toCharArray()){
             if(character.toString().equals("<")){
-                //Nothing happens
+                workingOnEntry = true;
             }else if(character.toString().equals(">")){
                 arrayList.add(currentEntry.toString());
                 currentEntry = new StringBuilder();
+                workingOnEntry = false;
             }else{
-                currentEntry.append(character);
+                if(workingOnEntry){
+                    currentEntry.append(character);
+                }
             }
         }
         return arrayList;
+    }
+
+    /**
+     * Returns the part before the first <
+     * See {@link Utils#getEntriesFromString(String)} for more information
+     */
+    public static String getFirstPart(String string) throws NullPointerException{
+        StringBuilder output = new StringBuilder();
+        for(Character character : string.toCharArray()){
+            if(!character.toString().equals("<")){
+                output.append(character);
+            }else{
+                break;
+            }
+        }
+        return output.toString();
     }
 
     /**

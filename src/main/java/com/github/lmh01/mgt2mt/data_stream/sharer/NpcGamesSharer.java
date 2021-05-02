@@ -20,6 +20,57 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
     }
 
     @Override
+    public String getModifiedImportLine(String importLine) {
+        LOGGER.info("importLine: " + importLine);
+        ArrayList<String> genreNames = Utils.getEntriesFromString(importLine);
+        String name = Utils.getFirstPart(importLine);
+        StringBuilder output = new StringBuilder();
+        output.append(name);
+        ArrayList<Integer> alreadyAddedGenreIds = new ArrayList<>();
+        for(String string : genreNames){
+            int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(string);
+            if(genreId != -1){
+                if(!alreadyAddedGenreIds.contains(genreId)){
+                    output.append("<").append(genreId).append(">");
+                    alreadyAddedGenreIds.add(genreId);
+                }
+            }else{
+                int randomGenreId = ModManager.genreMod.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getActiveIds().size()));
+                if(!alreadyAddedGenreIds.contains(randomGenreId)){
+                    output.append("<").append(randomGenreId).append(">");
+                    alreadyAddedGenreIds.add(randomGenreId);
+                }
+            }
+
+        }
+        return output.toString();
+    }
+
+    @Override
+    public String getModifiedExportLine(String exportLine) {
+        ArrayList<String> genreIdsString = Utils.getEntriesFromString(exportLine);
+        ArrayList<Integer> genreIds = new ArrayList<>();
+        for(String string : genreIdsString){
+            LOGGER.info("String: " + string);
+            genreIds.add(Integer.parseInt(string));
+        }
+        String name = Utils.getFirstPart(exportLine);
+        StringBuilder output = new StringBuilder();
+        output.append(name);
+        for(Integer integer : genreIds){
+            try{
+                String genreName = ModManager.genreMod.getAnalyzer().getContentNameById(integer);
+                if(!genreName.equals("null")){
+                    output.append("<").append(genreName).append(">");
+                }
+            }catch(ArrayIndexOutOfBoundsException ignored) {
+
+            }
+        }
+        return output.toString();
+    }
+
+    @Override
     public String getOptionPaneMessage(String line) {
         StringBuilder message = new StringBuilder();
         StringBuilder name = new StringBuilder();

@@ -49,7 +49,7 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
             bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
             bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
-            bw.write("[LINE]" + string + System.getProperty("line.separator"));
+            bw.write("[LINE]" + getModifiedExportLine(string) + System.getProperty("line.separator"));
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
@@ -89,7 +89,7 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
                 return "false";
             }
         }
-        String importLine = importMap.get("LINE");
+        String importLine = getModifiedImportLine(importMap.get("LINE"));
         boolean addFeature = true;
         if(showMessages){
             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(importLine)) != JOptionPane.YES_OPTION){
@@ -104,6 +104,20 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + getAnalyzer().getReplacedLine(importMap.get("LINE")));
         }
         return "true";
+    }
+
+    /**
+     * This function can be used to change the import line
+     */
+    public String getModifiedImportLine(String importLine){
+        return importLine;
+    }
+
+    /**
+     * This function can be used to change the export line
+     */
+    public String getModifiedExportLine(String exportLine){
+        return exportLine;
     }
 
     /**
