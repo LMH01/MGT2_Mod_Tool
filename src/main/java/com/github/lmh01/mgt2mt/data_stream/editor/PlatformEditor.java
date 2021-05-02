@@ -5,13 +5,13 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnal
 import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -166,5 +166,42 @@ public class PlatformEditor extends AbstractAdvancedEditor {
     @Override
     public Charset getCharset() {
         return StandardCharsets.UTF_8;
+    }
+
+    /**
+     * Removes the specified gameplay feature from the platform file.
+     * If the genre is found another genre id is randomly assigned
+     * If the genre is not found nothing happens
+     * @param name
+     */
+    public void removeGameplayFeature(String name) throws IOException {
+        int genreId = ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(name);
+        getAnalyzer().analyzeFile();
+        sendLogMessage("Replacing gameplay feature id in platform file: " + name);
+        Charset charset = getCharset();
+        File fileToEdit = getFileToEdit();
+        if(fileToEdit.exists()){
+            fileToEdit.delete();
+        }
+        fileToEdit.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
+        if(charset.equals(StandardCharsets.UTF_8)){
+            bw.write("\ufeff");
+        }
+        Map<String, String> outputMap;
+        for(Map<String, String> fileContent : getAnalyzer().getFileContent()){
+            outputMap = fileContent;
+            for(Map.Entry<String, String> entry : fileContent.entrySet()){
+                if(entry.getKey().contains("NEED")){
+                    if(Integer.parseInt(entry.getValue()) == genreId){
+                        outputMap.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.gameplayFeatureMod.getAnalyzer().getActiveIds().size()))));
+                    }
+                }
+            }
+            printValues(outputMap, bw);
+            bw.write(System.getProperty("line.separator"));
+        }
+        bw.write("[EOF]");
+        bw.close();
     }
 }

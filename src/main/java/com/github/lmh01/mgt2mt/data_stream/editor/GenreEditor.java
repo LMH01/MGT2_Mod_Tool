@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.editor;
 
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
+import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -90,5 +91,8 @@ public class GenreEditor extends AbstractAdvancedEditor {
         ModManager.themeMod.getEditor().editGenreAllocation(getAnalyzer().getContentIdByName(genreName), false, null);
         ModManager.gameplayFeatureMod.getEditor().removeGenreId(getAnalyzer().getContentIdByName(genreName));
         ImageFileHandler.removeImageFiles(genreName);
+        ModManager.publisherMod.getEditor().removeGenre(genreName);
+        ModManager.npcEngineMod.getEditor().removeGenre(genreName);
+        NPCGameListChanger.editNPCGames(ModManager.genreMod.getAnalyzer().getContentIdByName(genreName), false, 0);
     }
 }

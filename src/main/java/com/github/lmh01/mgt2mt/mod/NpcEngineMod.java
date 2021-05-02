@@ -47,6 +47,8 @@ public class NpcEngineMod extends AbstractAdvancedMod {
         return npcEngineEditor;
     }
 
+    public NpcEngineEditor getEditor(){return npcEngineEditor;}
+
     @Override
     public AbstractAdvancedSharer getBaseSharer() {
         return npcEngineSharer;

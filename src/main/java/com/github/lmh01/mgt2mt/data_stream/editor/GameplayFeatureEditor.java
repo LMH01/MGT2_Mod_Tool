@@ -69,6 +69,12 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor {
         return ModManager.gameplayFeatureMod.getAnalyzer();
     }
 
+    @Override
+    public void removeMod(String name) throws IOException {
+        super.removeMod(name);
+        ModManager.platformMod.getEditor().removeGameplayFeature(name);
+    }
+
     /**
      * Edits the GameplayFeatures.txt file to add genre id to the input gameplay feature
      * @param gameplayFeaturesIdsToEdit The map containing the gameplay features where the operation should be executed
