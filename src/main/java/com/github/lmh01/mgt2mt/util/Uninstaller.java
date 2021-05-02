@@ -107,6 +107,8 @@ public class Uninstaller {
                     }
                     break;
                 }
+            }else{
+                break;
             }
         }
     }
