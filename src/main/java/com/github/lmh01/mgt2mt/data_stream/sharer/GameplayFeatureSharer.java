@@ -155,8 +155,16 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
         bw.write("[GRAPHIC]" + map.get("GRAPHIC") + System.getProperty("line.separator"));
         bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
         bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
-        bw.write("[BAD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
-        bw.write("[GOOD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
+        if(map.get("BAD") != null){
+            bw.write("[BAD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
+        }else{
+            bw.write("[BAD]" + "" + System.getProperty("line.separator"));
+        }
+        if(map.get("GOOD") != null){
+            bw.write("[GOOD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
+        }else{
+            bw.write("[GOOD]" + "" + System.getProperty("line.separator"));
+        }
         if(map.get("NO_ARCADE") != null){
             bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
         }

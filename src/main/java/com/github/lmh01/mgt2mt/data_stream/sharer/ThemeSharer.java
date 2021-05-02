@@ -49,7 +49,11 @@ public class ThemeSharer extends AbstractSimpleSharer {
             bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
             bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + System.getProperty("line.separator"));
             TranslationManager.printLanguages(bw, map);
-            bw.write("[GENRE COMB]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+            if(map.get("GENRE COMB") != null){
+                bw.write("[GENRE COMB]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+            }else{
+                bw.write("[GENRE COMB]" + "" + System.getProperty("line.separator"));
+            }
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
