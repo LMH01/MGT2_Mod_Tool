@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnal
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -29,10 +30,27 @@ public class NpcEngineSharer extends AbstractAdvancedSharer {
     public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("GENRE", map, bw);
-        EditHelper.printLine("PLATFORM", map, bw);
+        bw.write("[GENRE]" + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE"))));bw.write(System.getProperty("line.separator"));
+        bw.write("[PLATFORM]" + ModManager.platformMod.getBaseAnalyzer().getContentNameById(Integer.parseInt(map.get("PLATFORM"))));bw.write(System.getProperty("line.separator"));
         EditHelper.printLine("PRICE", map, bw);
         EditHelper.printLine("SHARE", map, bw);
+    }
+
+    @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) {
+        int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(map.get("GENRE"));
+        if(genreId == -1){
+            map.replace("GENRE", Integer.toString(Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getFileContent().size()-1)));
+        }else{
+            map.replace("GENRE", Integer.toString(genreId));
+        }
+        int platformId = ModManager.platformMod.getBaseAnalyzer().getContentIdByName(map.get("PLATFORM"));
+        if(platformId == -1){
+            map.replace("PLATFORM", Integer.toString(Utils.getRandomNumber(0, ModManager.platformMod.getBaseAnalyzer().getFileContent().size()-1)));
+        }else{
+            map.replace("PLATFORM", Integer.toString(platformId));
+        }
+        return super.getChangedImportMap(map);
     }
 
     @Override

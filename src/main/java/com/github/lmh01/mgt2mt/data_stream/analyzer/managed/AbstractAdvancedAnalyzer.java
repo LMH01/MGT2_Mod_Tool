@@ -4,10 +4,8 @@ import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -152,7 +150,11 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
      * @throws ArrayIndexOutOfBoundsException Is thrown when the requested content id does not exist in the map.
      */
     public String getContentNameById(int id) throws ArrayIndexOutOfBoundsException{
-        return getContentNamesInUse().get(id);
+        Map<Integer, String> idNameMap = new HashMap<>();
+        for(Map<String, String> map : getFileContent()){
+            idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
+        }
+        return idNameMap.get(id);
     }
 
     /**
