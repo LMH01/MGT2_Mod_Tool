@@ -743,6 +743,12 @@ settings.mgt2FolderSetAutomatically.windowTitle|Ordner automatisch gefunden
 settings.mgt2FolderNotFound|<html>Der Mad Games Tycoon Ordner wurde nicht gefunden.<br><br>Bitte geh in die Einstellungen und setze ihn manuell.
 settings.notFound|Nicht gefunden
 
+translationManager.enterTranslationFor|Gib die folgende Übersetzung ein:
+translationManager.addTranslation|Übersetzung hinzufügen
+translationManager.translationsAdded|Übersetzung hinzugefügt
+translationManager.canceled|Der Übersetzungsprozess wurde abgebrochen.
+translationManager.followingTranslationsAdded|Die folgenden Übersetzungen wurden hinzugefügt:
+
 window.main.tile|MGT2 Mod Tool
 window.main.file|Datei
 window.main.file.settings|Einstellungen

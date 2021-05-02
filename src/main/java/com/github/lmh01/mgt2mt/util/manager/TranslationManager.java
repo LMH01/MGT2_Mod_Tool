@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
+import com.github.lmh01.mgt2mt.util.I18n;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -29,12 +30,12 @@ public class TranslationManager {
                 if(translationName.equals("English")){
                     arrayListTranslations.add("English");
                 }else{
-                    labelExplanation.setText("Enter the translation for " + translationName + ":");
-                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    labelExplanation.setText(I18n.INSTANCE.get("translationManager.enterTranslationFor") + " " + translationName + ":");
+                    if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("translationManager.addTranslation"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                         arrayListTranslations.add(textFieldDescriptionTranslation.getText());
                         textFieldDescriptionTranslation.setText("");
                     }else{
-                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.canceled"));
                         breakLoop = true;
                     }
                 }
@@ -49,7 +50,7 @@ public class TranslationManager {
                 }
                 translationNumber++;
             }
-            JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.followingTranslationsAdded") + "\n" + translations + "\n", I18n.INSTANCE.get("translationManager.translationsAdded"), JOptionPane.INFORMATION_MESSAGE);
         }
         return arrayListTranslations;
     }
@@ -67,12 +68,12 @@ public class TranslationManager {
             if(!breakLoop){
                 String language = TRANSLATION_NAMES[i];
                 if(!TRANSLATION_NAMES[i].equals("English")){
-                    labelExplanation.setText("Enter the translation for " + language + ":");
-                    if(JOptionPane.showConfirmDialog(null, params, "Add translation", JOptionPane.YES_NO_OPTION) == 0){
+                    labelExplanation.setText(I18n.INSTANCE.get("translationManager.enterTranslationFor") + " " + language + ":");
+                    if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("translationManager.addTranslation"), JOptionPane.YES_NO_OPTION) == 0){
                         map.put(TRANSLATION_KEYS[i], textFieldTranslation.getText());
                         textFieldTranslation.setText("");
                     }else{
-                        JOptionPane.showMessageDialog(null, "The translation process has been canceled.");
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.canceled"));
                         breakLoop = true;
                     }
                 }else{
@@ -87,7 +88,7 @@ public class TranslationManager {
                     translations.append(System.getProperty("line.separator")).append(TRANSLATION_NAMES[i]).append(": ").append(map.get(TRANSLATION_KEYS[i]));
                 }
             }
-            JOptionPane.showMessageDialog(null, "The following translations have been added:\n" + translations + "\n", "Translations added", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.followingTranslationsAdded") + "\n" + translations + "\n", I18n.INSTANCE.get("translationManager.translationsAdded"), JOptionPane.INFORMATION_MESSAGE);
         }
         return map;
     }

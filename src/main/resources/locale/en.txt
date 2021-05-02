@@ -743,6 +743,12 @@ settings.mgt2FolderSetAutomatically.windowTitle|Folder detected automatically
 settings.mgt2FolderNotFound|<html>The Mad Games Tycoon folder could not be detected.<br><br>Please go into the settings, select "Manual" as file folder and choose the path to the "Mad Games Tycoon 2.exe" file."
 settings.notFound|Not found
 
+translationManager.enterTranslationFor|Enter the translation for
+translationManager.addTranslation|Add translation
+translationManager.translationsAdded|Translations added
+translationManager.canceled|The translation process has been canceled.
+translationManager.followingTranslationsAdded|The following translations have been added:
+
 window.main.tile|MGT2 Mod Tool
 window.main.file|File
 window.main.file.settings|Settings
