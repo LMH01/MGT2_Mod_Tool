@@ -121,15 +121,15 @@ public class PublisherSharer extends AbstractAdvancedSharer {
 
     @Override
     public String getOptionPaneMessage(Map<String, String> map) {
-        return I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.firstPart") + "\n" +
-                I18n.INSTANCE.get("commonText.name") + "\n: " + map.get("NAME EN") +
-                I18n.INSTANCE.get("commonText.date") + "\n: " + map.get("DATE") +
+        return I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.firstPart") + "\n\n" +
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
+                I18n.INSTANCE.get("commonText.date") + ": " + map.get("DATE") + "\n" +
                 I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "\n" +
-                I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.developer") + "\n: " + map.get("DEVELOPER") +
-                I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher") + "\n: " + map.get("PUBLISHER") +
-                I18n.INSTANCE.get("commonText.marketShare") + "\n: " + map.get("MARKET") +
-                I18n.INSTANCE.get("commonText.share") + "\n: " + map.get("SHARE") +
-                I18n.INSTANCE.get("commonText.genre.upperCase") + "\n: " + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE")));
+                I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.developer") + ": " + map.get("DEVELOPER") + "\n" +
+                I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher") + ": " + map.get("PUBLISHER") + "\n" +
+                I18n.INSTANCE.get("commonText.marketShare") + ": " + map.get("MARKET") + "\n" +
+                I18n.INSTANCE.get("commonText.share") + ": " + map.get("SHARE") + "\n" +
+                I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE")));
     }
 
     @Override
