@@ -92,7 +92,6 @@ public class GenreManager {
     /**
      * Ads a new genre to mad games tycoon 2. Shows a summary for the genre that should be added.
      * @param map The map that includes the values.
-     * @param genreTranslations The map that includes the genre name translations
      * @param compatibleThemeIds A set containing all compatible theme ids
      * @param genreScreenshots Array list containing all screenshot files
      * @param showSummaryFromImport True when called from genre import
@@ -100,7 +99,7 @@ public class GenreManager {
      * @param showMessages True when the messages should be shown. False if not.
      * @return Returns true when the user clicked yes on the confirm popup
      */
-    public static boolean addGenre(Map<String, String> map, Map<String, String> genreTranslations,Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
+    public static boolean addGenre(Map<String, String> map, Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         String messageBody = I18n.INSTANCE.get("dialog.genreManager.addGenre.mainBody.genreIsReady") + "\n\n" +

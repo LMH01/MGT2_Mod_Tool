@@ -73,9 +73,13 @@ public class GenreSharer extends AbstractAdvancedSharer {
             for(String translationKey : TranslationManager.TRANSLATION_KEYS){
                 if(ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("NAME " + translationKey) != null){
                     bw.print("[NAME " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("NAME " + translationKey)  + System.getProperty("line.separator"));
+                }else{
+                    bw.print("[NAME " + translationKey + "]" + name + System.getProperty("line.separator"));
                 }
                 if(ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DESC " + translationKey) != null) {
                     bw.print("[DESC " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DESC " + translationKey)  + System.getProperty("line.separator"));
+                }else{
+                    bw.print("[DESC " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DESC EN") + System.getProperty("line.separator"));
                 }
             }
             bw.print("[DATE]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DATE") + System.getProperty("line.separator"));
@@ -180,7 +184,7 @@ public class GenreSharer extends AbstractAdvancedSharer {
         }
         ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderBlackList(fileScreenshotsToImport.getPath(), ".meta");
         File genreIcon = new File(importFolderPath + "//DATA//icon.png");
-        GenreManager.addGenre(map, map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
+        GenreManager.addGenre(map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
         return "true";
     }
 
