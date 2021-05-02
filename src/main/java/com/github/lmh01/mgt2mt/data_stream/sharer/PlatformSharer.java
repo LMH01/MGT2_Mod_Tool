@@ -58,6 +58,16 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) {
+        for(Map.Entry<String, String> entry : map.entrySet()){
+            if(entry.getKey().contains("NEED-")){
+                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(entry.getValue())));
+            }
+        }
+        return map;
+    }
+
+    @Override
     public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
         for(String string : TranslationManager.TRANSLATION_KEYS){
@@ -97,7 +107,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
         }
         int numberOfRunsB = 1;
         for(Integer integer : gameplayFeatureIds){
-            bw.write("[NEED-" + numberOfRunsB + "]" + integer);
+            bw.write("[NEED-" + numberOfRunsB + "]" + ModManager.gameplayFeatureMod.getAnalyzer().getContentNameById(integer));
             bw.write(System.getProperty("line.separator"));
             numberOfRunsB++;
         }
