@@ -66,12 +66,17 @@ public class GenreSharer extends AbstractAdvancedSharer {
             DataStreamHelper.copyDirectory(fileGenreScreenshotsToExport.toPath().toString(), EXPORTED_GENRE_DATA_FOLDER_PATH + "//screenshots//");
             fileExportedGenre.createNewFile();
             PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGenre), StandardCharsets.UTF_8));
+            Map<String, String> map = getAnalyzer().getSingleContentMapByName(name);
             bw.write("\ufeff");//Makes the file UTF8-BOM
             bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
             bw.print("[GENRE START]" + System.getProperty("line.separator"));
             for(String translationKey : TranslationManager.TRANSLATION_KEYS){
-                bw.print("[NAME " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("NAME " + translationKey)  + System.getProperty("line.separator"));
-                bw.print("[DESC " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DESC " + translationKey)  + System.getProperty("line.separator"));
+                if(ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("NAME " + translationKey) != null){
+                    bw.print("[NAME " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("NAME " + translationKey)  + System.getProperty("line.separator"));
+                }
+                if(ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DESC " + translationKey) != null) {
+                    bw.print("[DESC " + translationKey + "]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DESC " + translationKey)  + System.getProperty("line.separator"));
+                }
             }
             bw.print("[DATE]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("DATE") + System.getProperty("line.separator"));
             bw.print("[RES POINTS]" + ModManager.genreMod.getAnalyzer().getFileContent().get(positionInGenreList).get("RES POINTS") + System.getProperty("line.separator"));
