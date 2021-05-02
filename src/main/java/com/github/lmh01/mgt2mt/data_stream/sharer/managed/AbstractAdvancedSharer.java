@@ -102,7 +102,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             }
         }
         if(addFeature){
-            getImporter().importer(map);
+            getImporter().importer(getChangedImportMap(map));
             doOtherImportThings(importFolderPath, map.get("NAME EN"));
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
@@ -110,6 +110,14 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("NAME EN"));
         }
         return "true";
+    }
+
+    /**
+     * @return Returns the map that contains the import values
+     * Can be overwritten to adjust specific values
+     */
+    public Map<String, String> getChangedImportMap(Map<String, String> map){
+        return map;
     }
 
     /**

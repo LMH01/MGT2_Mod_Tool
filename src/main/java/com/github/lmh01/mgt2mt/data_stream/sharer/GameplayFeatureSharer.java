@@ -101,6 +101,13 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) {
+        map.replace("BAD", Utils.convertGenreNamesToId(map.get("BAD")));
+        map.replace("GOOD", Utils.convertGenreNamesToId(map.get("GOOD")));
+        return super.getChangedImportMap(map);
+    }
+
+    @Override
     public void doOtherImportThings(String importFolderPath, String name) {
 
     }
