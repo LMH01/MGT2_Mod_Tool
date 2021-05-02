@@ -213,11 +213,11 @@ analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modded copy
 analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scanning for modded copy protections complete
 analyzer.copyProtect.getCustomContentString.progressBar|Scanning for modded copy protections
 
-modManager.gameplayFeature.windowMain.modButton.addMod|Add engine feature
-modManager.gameplayFeature.windowMain.modButton.removeMod|Remove engine feature
+modManager.gameplayFeature.windowMain.modButton.addMod|Add gameplay feature
+modManager.gameplayFeature.windowMain.modButton.removeMod|Remove gameplay feature
 modManager.gameplayFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No gameplay feature available
-modManager.engineFeature.windowMain.modButton.addMod|Add gameplay feature
-modManager.engineFeature.windowMain.modButton.removeMod|Remove gameplay feature
+modManager.engineFeature.windowMain.modButton.addMod|Add engine feature
+modManager.engineFeature.windowMain.modButton.removeMod|Remove engine feature
 modManager.engineFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No engine feature available
 modManager.genre.windowMain.modButton.addMod|Add genre
 modManager.genre.windowMain.modButton.removeMod|Remove genre
