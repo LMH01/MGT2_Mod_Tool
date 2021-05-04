@@ -29,7 +29,7 @@ public class ThemeFileGeAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public String getReplacedLine(String inputString) {
-        String replaceViolenceLevel = inputString.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "");
+        String replaceViolenceLevel = inputString.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "").replace("<M4>", "").replace("<M5>", "");
         return replaceViolenceLevel.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
     }
 

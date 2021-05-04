@@ -145,7 +145,7 @@ public class ThemeMod extends AbstractSimpleMod {
             JLabel labelViolenceLevel = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.violenceLevel"));
             JComboBox comboBoxViolenceLevel = new JComboBox();
             comboBoxViolenceLevel.setToolTipText(I18n.INSTANCE.get("mod.theme.addTheme.components.comboBox.violenceLevel"));
-            comboBoxViolenceLevel.setModel(new DefaultComboBoxModel<>(new String[]{"0", "1", "2", "3"}));
+            comboBoxViolenceLevel.setModel(new DefaultComboBoxModel<>(new String[]{"0", "6", "12", "16", "18", "Index"}));
             panelChooseViolenceLevel.add(labelViolenceLevel);
             panelChooseViolenceLevel.add(comboBoxViolenceLevel);
             JLabel labelExplainList = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.explainList"));
@@ -188,7 +188,19 @@ public class ThemeMod extends AbstractSimpleMod {
                                     themeTranslations.put("NAME EN", textFieldThemeName.getText());
                                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
                                         Backup.createThemeFilesBackup(false, false);
-                                        ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem()).toString()));
+                                        int ageNumber = 0;
+                                        if(comboBoxViolenceLevel.getSelectedItem().toString().equals("Index")){
+                                            ageNumber = 5;
+                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 18){
+                                            ageNumber = 4;
+                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 16){
+                                            ageNumber = 3;
+                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 12){
+                                            ageNumber = 2;
+                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 6){
+                                            ageNumber = 1;
+                                        }
+                                        ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, ageNumber);
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                         JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                         breakLoop = true;

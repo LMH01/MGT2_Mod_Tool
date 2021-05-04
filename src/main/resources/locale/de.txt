@@ -293,8 +293,8 @@ mod.theme.addTheme.addTheme.title|Dieses Thema hinzufügen?
 mod.theme.addTheme.main.title|Neues Thema hinzufügen
 mod.theme.addTheme.components.label.themeName|Gib den Namen für das Thema ein:
 mod.theme.addTheme.components.button.addTranslations.toolTip|Klicke hier, um Übersetzungen für das Thema hinzuzufügen
-mod.theme.addTheme.components.label.violenceLevel|Wähle das Level an Gewalt aus:
-mod.theme.addTheme.components.comboBox.violenceLevel|<html>Dies gibt an, wie stark die Altersbewertung beeinflusst werden soll, wenn ein Spiel mit diesem Thema erstellt wird.<br>0 - Das Thema hat keinen Einfluss auf die Altersbewertung.<br>1-3 - Je höher die Zahl, desto höher die Altersbewertung des Spiels, welches mit diesem Thema erstellt wird
+mod.theme.addTheme.components.label.violenceLevel|Wähle die Altersreigabe aus:
+mod.theme.addTheme.components.comboBox.violenceLevel|<html>Dies gibt an, welche Altersfreigabe ein Spiel mit diesem Thema mindestens bekommt
 mod.theme.addTheme.components.label.explainList|<html>Wähle aus, welche Genres gut zu dem Thema passen sollen.<br>(Tipp: Halte STRG gedrückt und klicke mit der Maus)
 mod.npcGames.addMod.selectGenres|Wähle die Genres aus, die mit dem neuen Npc Spiel kompatibel sein sollen:
 mod.npcGames.addMod.components.labelName|Gib den Namen für das Npc Spiel ein:

@@ -107,7 +107,7 @@ public class ThemeFileAnalyzer {
                 }
                 if(currentLineNumber == positionOfThemeInFiles){
                     if(string.equals("GE")){
-                        String replaceViolenceLevel = currentLine.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "");
+                        String replaceViolenceLevel = currentLine.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "").replace("<M4>", "").replace("<M5>", "");
                         String nameGe = replaceViolenceLevel.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
                         nameGe = nameGe.trim();
                         map.put("NAME " + string, nameGe);
@@ -117,6 +117,10 @@ public class ThemeFileAnalyzer {
                             map.put("VIOLENCE LEVEL", "2");
                         }else if(currentLine.contains("M3")){
                             map.put("VIOLENCE LEVEL", "3");
+                        }else if(currentLine.contains("M4")){
+                            map.put("VIOLENCE LEVEL", "4");
+                        }else if(currentLine.contains("M5")){
+                            map.put("VIOLENCE LEVEL", "5");
                         }else{
                             map.put("VIOLENCE LEVEL", "0");
                         }
