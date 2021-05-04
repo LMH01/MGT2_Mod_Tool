@@ -584,4 +584,41 @@ public class Utils {
             return I18n.INSTANCE.get("commonText.no");
         }
     }
+
+    /**
+     * Converts the input genre id to a number
+     * JAN = 1
+     * ...
+     * DEC = 12
+     * @param string The input string that should be converted - Converts the whole string and just searches for the month keyword
+     * @return Returns -1 if the month is not found
+     */
+    public static int getNumberForMonth(String string){
+        if(string.contains("JAN")){
+            return 1;
+        }else if(string.contains("FEB")){
+            return 2;
+        }else if(string.contains("MAR")){
+            return 3;
+        }else if(string.contains("APR")){
+            return 4;
+        }else if(string.contains("MAY")){
+            return 5;
+        }else if(string.contains("JUN")){
+            return 6;
+        }else if(string.contains("JUL")){
+            return 7;
+        }else if(string.contains("AUG")){
+            return 8;
+        }else if(string.contains("SEP")){
+            return 9;
+        }else if(string.contains("OCT")){
+            return 10;
+        }else if(string.contains("NOV")){
+            return 11;
+        }else if(string.contains("DEC")){
+            return 12;
+        }
+        return -1;
+    }
 }

@@ -22,11 +22,16 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -208,9 +213,21 @@ public class PublisherMod extends AbstractAdvancedMod {
                 try {
                     ModManager.genreMod.getAnalyzer().analyzeFile();
                     JLabel labelChooseGenre = new JLabel(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select"));
+                    ArrayList<String> availableGenres = new ArrayList<>();
                     String[] string;
                     string = ModManager.genreMod.getAnalyzer().getContentByAlphabet();
-                    JList<String> listAvailableGenres = new JList<>(string);
+                    for(String string1 : string){
+                        Map<String, String> genreMap = ModManager.genreMod.getAnalyzer().getSingleContentMapByName(string1);
+                        int genreDate = Integer.parseInt(genreMap.get("DATE").replaceAll("[^0-9]", ""));
+                        if(Integer.parseInt(spinnerUnlockYear.getValue().toString()) >= genreDate){
+                            if(Utils.getNumberForMonth(comboBoxUnlockMonth.getSelectedItem().toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))){
+                                availableGenres.add(string1);
+                            }
+                        }
+                    }
+                    String[] availableGenresString = new String[availableGenres.size()];
+                    availableGenres.toArray(availableGenresString);
+                    JList<String> listAvailableGenres = new JList<>(availableGenresString);
                     listAvailableGenres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
                     listAvailableGenres.setVisibleRowCount(-1);
@@ -235,6 +252,14 @@ public class PublisherMod extends AbstractAdvancedMod {
             });
             panelGenre.add(labelGenre);
             panelGenre.add(buttonSelectGenre);
+
+            comboBoxUnlockMonth.addActionListener(e -> {
+                buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ");
+            });
+
+            spinnerUnlockYear.addChangeListener(e -> {
+                buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ");
+            });
 
             Object[] params = {panelName, panelUnlockMonth, panelUnlockYear, panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, panelMarketShare, panelShare, panelGenre};
             boolean breakLoop = false;
