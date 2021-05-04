@@ -125,7 +125,7 @@ public class Uninstaller {
         String[] customGenres = ModManager.genreMod.getAnalyzer().getCustomContentString();
         String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
         String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
-        String[] customLicences = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
+        String[] customLicences = ModManager.licenceMod.getAnalyzer().getCustomContentString();
         String[] customPlatforms = ModManager.platformMod.getBaseAnalyzer().getCustomContentString();
         String[] customNpcEngines = ModManager.npcEngineMod.getBaseAnalyzer().getCustomContentString();
         String[] customCopyProtect = ModManager.copyProtectMod.getBaseAnalyzer().getCustomContentString();
