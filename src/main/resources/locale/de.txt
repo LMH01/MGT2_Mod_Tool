@@ -535,6 +535,7 @@ dialog.sharingManager.couldNotBeImported.2|ist nicht mit der aktuellen Mod-Tool 
 dialog.sharingManager.couldNotBeImported.3|wurde dieser Version exportiert:
 dialog.sharingManager.nameTaken|Name ist schon vergeben
 dialog.sharingManager.exportAll.mainMessage|<html>Bist du dir sicher, dass ale Mods exportiert werden sollen?<br>Mods, die bereits exportiert wurden, werden nicht noch einmal exportiert.
+dialog.sharingManager.selectImports|Wähle aus, was importiert werden soll:
 
 dialog.updateChecker.noUpdateAvailable|<html>Du benutzt die neueste Version. Kein Update verfügbar.
 dialog.updateChecker.noUpdateAvailable.title|Kein Update verfügbar
@@ -610,6 +611,7 @@ frame.title.fileNotFound|Datei wurde nicht gefunden
 frame.title.unableToContinue|Fortsetzen nicht möglich
 frame.title.reset|Zurücksetzen?
 frame.title.information|Information
+frame.title.import|Importieren
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:

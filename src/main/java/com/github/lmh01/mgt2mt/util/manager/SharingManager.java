@@ -566,7 +566,7 @@ public class SharingManager {
                 e.printStackTrace();
             }
         }
-        return Utils.getSelectedEntries("Select what should be imported:", "Import", Utils.convertArrayListToArray(listEntries), Utils.convertArrayListToArray(listEntries),false);
+        return Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(listEntries), Utils.convertArrayListToArray(listEntries),false);
     }
 
     /**
