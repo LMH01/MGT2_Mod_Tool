@@ -45,7 +45,12 @@ public class ActiveMods {
                 JLabel labelMod = new JLabel(simpleMod.getType() + ": ");
                 JButton buttonMods = new JButton(Integer.toString(customContent.length));
                 buttonMods.addActionListener(actionEvent -> {
-                    JList<String> listAvailableGenres = new JList<>(simpleMod.getBaseAnalyzer().getCustomContentString());
+                    JList<String> listAvailableGenres;
+                    if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
+                        listAvailableGenres = new JList<>(ModManager.themeMod.getAnalyzerEn().getCustomContentString());
+                    }else{
+                        listAvailableGenres = new JList<>(simpleMod.getBaseAnalyzer().getCustomContentString());
+                    }
                     listAvailableGenres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
                     listAvailableGenres.setVisibleRowCount(-1);
