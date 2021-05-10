@@ -557,14 +557,10 @@ public class SharingManager {
      * @param files The files that should be scanned for the name that is displayed in the guis
      * @return Returns a array list containing numbers of selected entries
      */
-    private static ArrayList<Integer> getSelectedEntries(ArrayList<File> files){
+    private static ArrayList<Integer> getSelectedEntries(ArrayList<File> files){//TODO hinzufügen, dass wenn abbrechen gedrückt wird, nicht gespeichert wird, was gerade angezeigt wird
         ArrayList<String> listEntries = new ArrayList<>();
         for(File file : files){
-            try {
-                listEntries.add(DataStreamHelper.getNameFromFile(file, "UTF_8BOM"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            listEntries.add(getImportName(file));
         }
         return Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(listEntries), Utils.convertArrayListToArray(listEntries),false);
     }
@@ -760,21 +756,22 @@ public class SharingManager {
      */
     private static String getImportName(File inputFile){
         try {
-            Map<Integer, String> map = DataStreamHelper.getContentFromFile(inputFile, "UTF_8BOM");
-            for(Map.Entry entry : Objects.requireNonNull(map).entrySet()){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("Current Value: " + entry.getValue());
+            Map<String, String> map = DataStreamHelper.parseDataFile(inputFile).get(0);
+            if(map.get("NAME EN") != null){
+                return map.get("NAME EN").replace("[NAME EN]", "");
+            }else if (map.get("NAME") != null){
+                return map.get("NAME").replace("[NAME]", "");
+            }else if (map.get("LINE") != null){
+                String output = map.get("LINE");
+                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                    output = simpleMod.getBaseAnalyzer().getReplacedLine(output);
                 }
-                if(entry.getValue().toString().contains("NAME EN")){
-                    return entry.getValue().toString().replace("[NAME EN]", "");
-                }
-                if(entry.getValue().toString().contains("NAME")){
-                    String returnString = entry.getValue().toString();
-                    for(String string : TranslationManager.TRANSLATION_KEYS) {
-                        returnString.replace("[NAME " + string + "]", "");
+                return output;
+            }else{
+                for(String string : TranslationManager.TRANSLATION_KEYS) {
+                    if(map.get("NAME " + string) != null){
+                        return map.get("NAME " + string).replace("[NAME " + string + "]", "");
                     }
-                    returnString.replace("[NAME]", "");
-                    return returnString;
                 }
             }
         } catch (IOException e){
@@ -812,8 +809,9 @@ public class SharingManager {
             }else{
                 if(!returnValue.equals("false")){
                     names.add(returnValue);
+                    feature.add(new File(string));
+                    someThingsNotCompatible.set(true);
                 }
-                feature.add(new File(string));
             }
         }else{
             someThingsNotCompatible.set(true);

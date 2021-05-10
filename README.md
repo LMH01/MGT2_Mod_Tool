@@ -4,7 +4,7 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
 
 **If you encounter an error please submit an issue, so it can be fixed**
 
-**If you have any suggestions for this project feel free to submit a feature or pull request**
+**If you have any suggestions for this project feel free to submit a feature or pull request. You can also message me on Discord. My tag is: LMH01#1614**
 
 **Because Mad Games Tycoon 2 is in early access, I can't promise that this version will be compatible with every update to come, but when an update makes this tool incompatible I will do my best to make it compatible again.**
 
@@ -20,7 +20,8 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
 - Launch the tool by double-clicking one of the `.bat` files, located in the unzipped folder:
     - Use `start.bat` to launch the tool
     - Use `start_as_admin.bat` to launch the tool with admin rights. This is required when your MGT2 folder is located in `C:\Program Files (x86)\Steam\steamapps\common`.
-## These are the current features:
+    - If java is correctly installed you can also use the `.jar` file to launch the tool. If the tool is launched this way, the log window is not opened.
+## Current features:
 ### Modify the game
 #### Genres
   - You can easily add a new genre to Mad Games Tycoon 2 with the help of a step by step guide
@@ -28,7 +29,6 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
   - You can remove a genre simply by pressing a button
   - It is supported to add a **custom image as genre icon**. This has to be a `.png` file.
   - It is also possible to add custom genre screenshots. These are displayed during the development progress of your game.
-  - It is also supporded to add custom translations for your genre
    
   **Note: You should be able to load an existing save game with a new genre, but once you have loaded this save, the genre is bound to that file. That means that it can't be removed later from that file.**
 #### Platforms
@@ -36,8 +36,6 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
   - You can currently add two pictures that change when a specific year has passed.
 #### Themes
   - You can add your own themes
-  - Existing themes can be removed
-  - It is possible to add custom translations for your themes
   - It is possible to select how strong a topic should influence the age rating
 #### Publishers and developers
   - You can add custom publishers, this is useful when you add your own genre because otherwise there would be no publisher for your genre.
