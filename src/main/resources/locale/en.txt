@@ -286,7 +286,6 @@ mod.theme.addTheme.unableToAddTheme|Unable to add theme:
 mod.theme.addTheme.unableToAddTheme.error1|Please select at least one genre.
 mod.theme.addTheme.unableToAddTheme.error2|Please enter a name for your theme.
 mod.theme.addTheme.unableToAddTheme.error3|The selected name is already in use.
-mod.theme.addTheme.unableToAddTheme.error4|The theme name can not contain numbers!
 mod.theme.addTheme.addTheme.question|Do you want to add this theme?
 mod.theme.addTheme.addTheme.title|Add this theme?
 mod.theme.addTheme.main.title|Add new theme

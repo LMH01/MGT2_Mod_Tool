@@ -164,49 +164,45 @@ public class ThemeMod extends AbstractSimpleMod {
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         if(!textFieldThemeName.getText().isEmpty()){
                             if(!ModManager.themeMod.getAnalyzerEn().getFileContent().containsValue(textFieldThemeName.getText()) && !ModManager.themeMod.getAnalyzerGe().getFileContent().containsValue(textFieldThemeName.getText())){
-                                if(!textFieldThemeName.getText().matches(".*\\d.*")){
-                                    arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
-                                    for(Map<String, String> map : ModManager.genreMod.getAnalyzer().getFileContent()){
-                                        for(String name : arrayListCompatibleGenreNames){
-                                            if(map.get("NAME EN").equals(name)){
-                                                arrayListCompatibleGenreIds.add(Integer.parseInt(map.get("ID")));
-                                            }
+                                arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
+                                for(Map<String, String> map : ModManager.genreMod.getAnalyzer().getFileContent()){
+                                    for(String name : arrayListCompatibleGenreNames){
+                                        if(map.get("NAME EN").equals(name)){
+                                            arrayListCompatibleGenreIds.add(Integer.parseInt(map.get("ID")));
                                         }
                                     }
-                                    Map<String, String> themeTranslations = new HashMap<>();
-                                    int currentTranslationKey = 0;
-                                    if(arrayListThemeTranslations[0].isEmpty()){
-                                        for(String translationKey : TranslationManager.TRANSLATION_KEYS){
-                                            themeTranslations.put("NAME " + translationKey, textFieldThemeName.getText());
-                                        }
-                                    }else{
-                                        for(String translation : arrayListThemeTranslations[0]){
-                                            themeTranslations.put("NAME " + TranslationManager.TRANSLATION_KEYS[currentTranslationKey], translation);
-                                            currentTranslationKey++;
-                                        }
-                                    }
-                                    themeTranslations.put("NAME EN", textFieldThemeName.getText());
-                                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
-                                        Backup.createThemeFilesBackup(false, false);
-                                        int ageNumber = 0;
-                                        if(comboBoxViolenceLevel.getSelectedItem().toString().equals("Index")){
-                                            ageNumber = 5;
-                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 18){
-                                            ageNumber = 4;
-                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 16){
-                                            ageNumber = 3;
-                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 12){
-                                            ageNumber = 2;
-                                        }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 6){
-                                            ageNumber = 1;
-                                        }
-                                        ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, ageNumber);
-                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
-                                        JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
-                                        breakLoop = true;
+                                }
+                                Map<String, String> themeTranslations = new HashMap<>();
+                                int currentTranslationKey = 0;
+                                if(arrayListThemeTranslations[0].isEmpty()){
+                                    for(String translationKey : TranslationManager.TRANSLATION_KEYS){
+                                        themeTranslations.put("NAME " + translationKey, textFieldThemeName.getText());
                                     }
                                 }else{
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n" + I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme.error4"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                                    for(String translation : arrayListThemeTranslations[0]){
+                                        themeTranslations.put("NAME " + TranslationManager.TRANSLATION_KEYS[currentTranslationKey], translation);
+                                        currentTranslationKey++;
+                                    }
+                                }
+                                themeTranslations.put("NAME EN", textFieldThemeName.getText());
+                                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
+                                    Backup.createThemeFilesBackup(false, false);
+                                    int ageNumber = 0;
+                                    if(comboBoxViolenceLevel.getSelectedItem().toString().equals("Index")){
+                                        ageNumber = 5;
+                                    }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 18){
+                                        ageNumber = 4;
+                                    }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 16){
+                                        ageNumber = 3;
+                                    }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 12){
+                                        ageNumber = 2;
+                                    }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 6){
+                                        ageNumber = 1;
+                                    }
+                                    ModManager.themeMod.getEditor().addMod(themeTranslations, arrayListCompatibleGenreIds, ageNumber);
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
+                                    JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
+                                    breakLoop = true;
                                 }
                             }else{
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme") + "\n" + I18n.INSTANCE.get("mod.theme.addTheme.unableToAddTheme.error3"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);

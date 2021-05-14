@@ -287,7 +287,6 @@ mod.theme.addTheme.unableToAddTheme|Thema kann nicht hinzugefügt werden:
 mod.theme.addTheme.unableToAddTheme.error1|Bitte wähle mindestens ein genre aus.
 mod.theme.addTheme.unableToAddTheme.error2|Bitte gebe den Namen für das Thema ein.
 mod.theme.addTheme.unableToAddTheme.error3|Der eingegebene Name wird schon benutzt.
-mod.theme.addTheme.unableToAddTheme.error4|Der Name des Themas darf keine Nummern enthalten!
 mod.theme.addTheme.addTheme.question|Möchtest du das folgende Thema hinzufügen?
 mod.theme.addTheme.addTheme.title|Dieses Thema hinzufügen?
 mod.theme.addTheme.main.title|Neues Thema hinzufügen
