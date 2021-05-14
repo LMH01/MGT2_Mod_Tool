@@ -763,9 +763,11 @@ public class SharingManager {
                 return map.get("NAME").replace("[NAME]", "");
             }else if (map.get("LINE") != null){
                 String output = map.get("LINE");
+                LOGGER.info("LINE vor output: " + output);
                 for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
                     output = simpleMod.getBaseAnalyzer().getReplacedLine(output);
                 }
+                LOGGER.info("Line nach output: " + output);
                 return output;
             }else{
                 for(String string : TranslationManager.TRANSLATION_KEYS) {

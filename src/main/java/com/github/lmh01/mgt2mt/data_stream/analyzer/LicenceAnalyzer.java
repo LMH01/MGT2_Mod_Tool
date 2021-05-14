@@ -101,22 +101,6 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
         return string;
     }
 
-    public String getTypeForLicence(String licenceName) {
-        for(int i=1; i<=fileContent.size(); i++){
-            String currentLicence = fileContent.get(i);
-            if(currentLicence.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim().equals(licenceName)){
-                if(currentLicence.contains("[MOVIE]")){
-                    return "[MOVIE]";
-                }else if(currentLicence.contains("[BOOK]")){
-                    return "[BOOK]";
-                }else if(currentLicence.contains("[SPORT]")){
-                    return "[SPORT]";
-                }
-            }
-        }
-        return "";
-    }
-
     @Override
     public String[] getFinishedCustomContentString() {
         return customContent;
