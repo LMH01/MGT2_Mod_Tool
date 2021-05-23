@@ -237,34 +237,38 @@ public class Utils {
      * @return Returns a list of genre ids.
      */
     public static String convertGenreNamesToId(String genreNamesRaw){
-        StringBuilder genreIds = new StringBuilder();
-        int charPosition = 0;
-        StringBuilder currentName = new StringBuilder();
-        for(int i = 0; i<genreNamesRaw.length(); i++){
-            if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
-                //Nothing happens
-            }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("genreName: " + currentName);
+        if(genreNamesRaw.length() > 0){
+            StringBuilder genreIds = new StringBuilder();
+            int charPosition = 0;
+            StringBuilder currentName = new StringBuilder();
+            for(int i = 0; i<genreNamesRaw.length(); i++){
+                if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
+                    //Nothing happens
+                }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("genreName: " + currentName);
+                    }
+                    int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(currentName.toString());
+                    if(genreId != -1){
+                        genreIds.append("<").append(genreId).append(">");
+                    }
+                    currentName = new StringBuilder();
+                }else{
+                    currentName.append(genreNamesRaw.charAt(charPosition));
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("currentNumber: " + currentName);
+                    }
                 }
-                int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(currentName.toString());
-                if(genreId != -1){
-                    genreIds.append("<").append(genreId).append(">");
-                }
-                currentName = new StringBuilder();
-            }else{
-                currentName.append(genreNamesRaw.charAt(charPosition));
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("currentNumber: " + currentName);
-                }
+                charPosition++;
             }
-            charPosition++;
+            String.valueOf(genreNamesRaw.charAt(1));
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Genre ids: " + genreIds);
+            }
+            return genreIds.toString();
+        }else{
+            return "";
         }
-        String.valueOf(genreNamesRaw.charAt(1));
-        if(Settings.enableDebugLogging){
-            LOGGER.info("Genre ids: " + genreIds);
-        }
-        return genreIds.toString();
     }
 
     /**
