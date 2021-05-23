@@ -44,16 +44,6 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-
-    }
-
-    @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
-
-    }
-
-    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }

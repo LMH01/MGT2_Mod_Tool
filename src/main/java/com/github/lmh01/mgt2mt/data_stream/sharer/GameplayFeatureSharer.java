@@ -108,11 +108,6 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-
-    }
-
-    @Override
     public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
 
     }

@@ -17,16 +17,6 @@ public class CopyProtectSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(CopyProtectSharer.class);
 
     @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-
-    }
-
-    @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
-
-    }
-
-    @Override
     public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);

@@ -89,11 +89,6 @@ public class PublisherSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-
-    }
-
-    @Override
     public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
         File fileExportedPublisherIcon = new File(exportFolderDataPath + "//icon.png");
         if(!fileExportedPublisherIcon.exists()){

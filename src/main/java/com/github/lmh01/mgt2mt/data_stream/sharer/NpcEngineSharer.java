@@ -16,15 +16,6 @@ import java.util.Map;
 
 public class NpcEngineSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineSharer.class);
-    @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-
-    }
-
-    @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
-
-    }
 
     @Override
     public void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {

@@ -123,12 +123,16 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     /**
      * Put things in this function that should be executed when the txt file has been imported.
      */
-    public abstract void doOtherImportThings(String importFolderPath, String name);
+    public void doOtherImportThings(String importFolderPath, String name){
+
+    }
 
     /**
      * Put things in this function that should be executed when the txt file has been exported.
      */
-    public abstract void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException;
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException{
+
+    }
 
     /**
      * Writes the values that are stored in the map to the file
