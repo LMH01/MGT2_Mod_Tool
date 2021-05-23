@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GameplayFeatureSharer extends AbstractAdvancedSharer {
@@ -29,9 +30,11 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public String getOptionPaneMessage(Map<String, String> map) {
-        if(!map.get("BAD").matches(".*\\d.*")){
-            ArrayList<String> badGenreNames = Utils.getEntriesFromString(map.get("BAD"));
-            ArrayList<String> goodGenreNames = Utils.getEntriesFromString(map.get("GOOD"));
+        Map<String, String> workingMap = new HashMap<>();
+        workingMap.putAll(map);
+        if(!workingMap.get("BAD").matches(".*\\d.*")){
+            ArrayList<String> badGenreNames = Utils.getEntriesFromString(workingMap.get("BAD"));
+            ArrayList<String> goodGenreNames = Utils.getEntriesFromString(workingMap.get("GOOD"));
             ArrayList<Integer> badGenreIds = new ArrayList<>();
             ArrayList<Integer> goodGenreIds = new ArrayList<>();
             for(String string : badGenreNames){
@@ -54,17 +57,17 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                     }
                 }
             }
-            map.remove("BAD");
-            map.remove("GOOD");
-            map.put("BAD", Utils.transformArrayListToString(badGenreIds));
-            map.put("GOOD", Utils.transformArrayListToString(goodGenreIds));
+            workingMap.remove("BAD");
+            workingMap.remove("GOOD");
+            workingMap.put("BAD", Utils.transformArrayListToString(badGenreIds));
+            workingMap.put("GOOD", Utils.transformArrayListToString(goodGenreIds));
         }
         StringBuilder badGenresFeatures = new StringBuilder();
         boolean firstBadFeature = true;
-        if(map.get("BAD").equals("")){
+        if(workingMap.get("BAD").equals("")){
             badGenresFeatures.append(I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.none"));
         }else{
-            for(String string : Utils.getEntriesFromString(map.get("BAD"))){
+            for(String string : Utils.getEntriesFromString(workingMap.get("BAD"))){
                 if(!firstBadFeature){
                     badGenresFeatures.append(", ");
                 }else{
@@ -75,10 +78,10 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
         }
         StringBuilder goodGenresFeatures = new StringBuilder();
         boolean firstGoodFeature = true;
-        if(map.get("GOOD").equals("")){
+        if(workingMap.get("GOOD").equals("")){
             goodGenresFeatures.append(I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.none"));
         }else{
-            for(String string : Utils.getEntriesFromString(map.get("GOOD"))){
+            for(String string : Utils.getEntriesFromString(workingMap.get("GOOD"))){
                 if(!firstGoodFeature){
                     goodGenresFeatures.append(", ");
                 }else{
@@ -89,36 +92,29 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
         }
         String arcadeCompatibility = I18n.INSTANCE.get("commonText.yes");
         String mobileCompatibility = I18n.INSTANCE.get("commonText.yes");
-        if(map.get("NO_ARCADE") != null){
+        if(workingMap.get("NO_ARCADE") != null){
             arcadeCompatibility = I18n.INSTANCE.get("commonText.no");
         }
-        if(map.get("NO_MOBILE") != null){
+        if(workingMap.get("NO_MOBILE") != null){
             mobileCompatibility = I18n.INSTANCE.get("commonText.no");
         }
         return I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.firstPart") + "\n\n" +
-                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
-                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
-                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
-                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
-                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
-                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
+                I18n.INSTANCE.get("commonText.name") + ": " + workingMap.get("NAME EN") + "\n" +
+                I18n.INSTANCE.get("commonText.description") + ": " + workingMap.get("DESC EN") + "\n" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + workingMap.get("DATE") + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + workingMap.get("RES POINTS") + "\n" +
+                I18n.INSTANCE.get("commonText.researchCost") + ": " + workingMap.get("PRICE") + "\n" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + workingMap.get("DEV COSTS") + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.badGenres") + "*\n\n" + badGenresFeatures.toString() + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.goodGenres") + "*\n\n" + goodGenresFeatures.toString() + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.points") + "*\n\n" +
-                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "\n" +
-                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "\n" +
-                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "\n" +
-                I18n.INSTANCE.get("commonText.tech") + ": " + map.get("TECH") + "\n" +
+                I18n.INSTANCE.get("commonText.gameplay") + ": " + workingMap.get("GAMEPLAY") + "\n" +
+                I18n.INSTANCE.get("commonText.graphic") + ": " + workingMap.get("GRAPHIC") + "\n" +
+                I18n.INSTANCE.get("commonText.sound") + ": " + workingMap.get("SOUND") + "\n" +
+                I18n.INSTANCE.get("commonText.tech") + ": " + workingMap.get("TECH") + "\n" +
                 I18n.INSTANCE.get("commonText.arcadeCompatibility") + ": " + arcadeCompatibility + "\n" +
                 I18n.INSTANCE.get("commonText.mobileCompatibility") + ": " + mobileCompatibility + "\n";
-    }
-
-    @Override
-    public Map<String, String> getChangedImportMap(Map<String, String> map) {
-        map.replace("BAD", Utils.convertGenreNamesToId(map.get("BAD")));
-        map.replace("GOOD", Utils.convertGenreNamesToId(map.get("GOOD")));
-        return super.getChangedImportMap(map);
     }
 
     @Override
