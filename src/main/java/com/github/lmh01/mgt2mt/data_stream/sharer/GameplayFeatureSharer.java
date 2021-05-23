@@ -35,10 +35,24 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
             ArrayList<Integer> badGenreIds = new ArrayList<>();
             ArrayList<Integer> goodGenreIds = new ArrayList<>();
             for(String string : badGenreNames){
-                badGenreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
+                try{
+                    badGenreIds.add(Integer.parseInt(string));
+                }catch(NumberFormatException e){
+                    int numberToAdd = ModManager.genreMod.getAnalyzer().getContentIdByName(string);
+                    if(numberToAdd != -1){
+                        badGenreIds.add(numberToAdd);
+                    }
+                }
             }
             for(String string : goodGenreNames){
-                goodGenreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
+                try{
+                    goodGenreIds.add(Integer.parseInt(string));
+                }catch(NumberFormatException e){
+                    int numberToAdd = ModManager.genreMod.getAnalyzer().getContentIdByName(string);
+                    if(numberToAdd != -1){
+                        goodGenreIds.add(numberToAdd);
+                    }
+                }
             }
             map.remove("BAD");
             map.remove("GOOD");
