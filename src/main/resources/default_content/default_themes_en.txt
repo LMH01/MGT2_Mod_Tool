@@ -1,14 +1,14 @@
 Pets
 Pirates
 Hospital
-Martial arts
+Martial Arts
 Stone Age
 Middle Ages
 Cyberpunk
 Conquest
 Thieves
 Industrialization
-Contract killer
+Contract Killer
 Superheroes
 Mafia
 Steampunk
@@ -18,7 +18,7 @@ Music
 Digging
 Colonization
 World Wars
-Everyday life
+Everyday Life
 Orcs
 Samurai
 Mercenary
@@ -34,7 +34,7 @@ Horror
 Viruses
 Hacking
 Economy
-Detectives
+Detective
 UFOs
 Werewolves
 Hunting
@@ -58,12 +58,12 @@ Space
 Cities
 Vampires
 Zombies
-Game development
+Game Development
 Police
 Motorsports
 Soccer
 Boxing
-End Time
+End Times
 Drawing
 Cars
 Ships
@@ -71,7 +71,7 @@ Elves
 Theme Parks
 Plumber
 Science
-Building blocks
+Building Blocks
 Demons
 Agents
 Assassins
@@ -84,14 +84,14 @@ Skeletons
 Art
 Gambling
 Erotica
-Treasures
+Treasure
 Plants
 Mathematics
 Agriculture
 Cowboys
 Time Travel
 Dinosaurs
-Parallel worlds
+Parallel Worlds
 Elements
 Cyberspace
 Food
@@ -109,7 +109,7 @@ Fruits
 Chemistry
 Physics
 Puzzles
-Fishes
+Fish
 Helicopters
 Dreams
 Mecha
@@ -122,7 +122,7 @@ Monkeys
 Horses
 Bicycle
 Castles
-Space stations
+Space Stations
 Casinos
 Islands
 Cats
@@ -139,12 +139,12 @@ Vacation
 Squirrels
 Reporters
 Ice Age
-Revolutions
+Revolution
 Hell
-Angel
+Angels
 Candy
 Bounty Hunter
-Treasure hunters
+Treasure Hunters
 Insects
 Predators
 Frogs
@@ -152,7 +152,7 @@ Submarines
 Karate
 Witches
 Crime
-Extreme sports
+Extreme Sports
 Paintball
 Planets
 Evolution
@@ -165,13 +165,13 @@ Historical
 Animals
 Companies
 Wrestling
-Octopuses
+Octopus
 Education
 Anime
 Crocodiles
 Cinema
 Television
-Quiz show
+Quiz Show
 Religion
 Tennis
 Basketball
@@ -189,13 +189,13 @@ Zoo
 Wild West
 Fishing
 Apocalypse
-Parlor games
+Parlor Games
 Swimming
 Civilizations
 Factories
 Saboteurs
-Renovate
-Noble houses
+Renovation
+Noble Houses
 Mining
 Healthcare
 Archaeology
@@ -203,13 +203,13 @@ Chickens
 Expeditions
 Pinball
 Androids
-Super villains
+Super Villains
 Riding
-Playing cards
+Playing Cards
 Skydiving
 Climbing
-Jet ski
+Jet Ski
 Skateboards
 Handball
-Table tennis
+Table Tennis
 Sailing

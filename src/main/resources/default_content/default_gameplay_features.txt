@@ -44,7 +44,7 @@ Dynamic Music
 Orchestral Soundtrack
 Keyboard Support
 Controller Support
-Laser Pistols Support
+Lightgun Support
 Mouse Support
 Adjustable Controls
 Wheel Support

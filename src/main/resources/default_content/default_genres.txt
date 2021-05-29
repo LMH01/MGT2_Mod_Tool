@@ -6,7 +6,7 @@ Strategy
 Action
 Platformer
 Simulation
-Sport Game
+Sports Game
 Economic Simulation
 Fighting Game
 Building Game

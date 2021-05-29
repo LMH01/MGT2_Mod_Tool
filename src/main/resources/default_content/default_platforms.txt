@@ -123,3 +123,5 @@ Arcade System 1500
 Arcade System 1800
 Arcade System 2000
 Arcade System 2500
+Amigo CTV
+PhaserActive
