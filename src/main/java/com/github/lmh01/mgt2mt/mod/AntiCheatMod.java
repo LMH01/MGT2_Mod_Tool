@@ -13,6 +13,7 @@ import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,88 +84,16 @@ public class AntiCheatMod extends AbstractAdvancedMod {
     @Override
     public void menuActionAddMod() {
         try{
+            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.antiCheat.addMod.components.textFieldName.initialValue"));
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
-            JPanel panelName = new JPanel();
-            JLabel labelName = new JLabel(getType() + " " + I18n.INSTANCE.get("commonText.name") + ":");
-            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.antiCheat.addMod.components.textFieldName.initialValue"));
-            panelName.add(labelName);
-            panelName.add(textFieldName);
+            JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
+            JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+            JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
+            JSpinner spinnerCost = WindowHelper.getCostSpinner();
+            JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
 
-            JButton buttonAddNameTranslations = new JButton(I18n.INSTANCE.get("commonText.addNameTranslations"));
-            buttonAddNameTranslations.setToolTipText(I18n.INSTANCE.get("commonText.addNameTranslations.toolTip"));
-            buttonAddNameTranslations.addActionListener(actionEvent -> {
-                if(!nameTranslationsAdded.get()){
-                    mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                    if(mapNameTranslations[0].size() > 0){
-                        nameTranslationsAdded.set(true);
-                        buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
-                    }else{
-                        buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations"));
-                    }
-                }else{
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
-                        mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                        if(mapNameTranslations[0].size() > 0){
-                            buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
-                            nameTranslationsAdded.set(true);
-                        }else{
-                            buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations"));
-                        }
-                    }
-                }
-            });
-
-            JPanel panelUnlockDate = new JPanel();
-            JLabel labelUnlockDate = new JLabel(I18n.INSTANCE.get("commonText.unlockDate") + ":");
-
-            JComboBox comboBoxUnlockMonth = new JComboBox();
-            comboBoxUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-            comboBoxUnlockMonth.setSelectedItem("JAN");
-
-            JSpinner spinnerUnlockYear = new JSpinner();
-            if(Settings.disableSafetyFeatures){
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
-                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
-                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
-            }
-            panelUnlockDate.add(labelUnlockDate);
-            panelUnlockDate.add(comboBoxUnlockMonth);
-            panelUnlockDate.add(spinnerUnlockYear);
-
-            JPanel panelCost = new JPanel();
-            JLabel labelCost = new JLabel(I18n.INSTANCE.get("commonText.price") + ":");
-            JSpinner spinnerCost = new JSpinner();
-            spinnerCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 30.000]" + I18n.INSTANCE.get("mod.antiCheat.addMod.components.spinner.cost.toolTip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerCost.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE,5000));
-                ((JSpinner.DefaultEditor)spinnerCost.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerCost.setModel(new SpinnerNumberModel(30000, 0, 1000000,5000));
-                ((JSpinner.DefaultEditor)spinnerCost.getEditor()).getTextField().setEditable(false);
-            }
-            panelCost.add(labelCost);
-            panelCost.add(spinnerCost);
-
-            JPanel panelDevelopmentCost = new JPanel();
-            JLabel labelDevelopmentCost = new JLabel(I18n.INSTANCE.get("commonText.developmentCost") + ":");
-            JSpinner spinnerDevelopmentCost = new JSpinner();
-            spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 35.000]" + "<br>" + I18n.INSTANCE.get("commonText.developmentCost.spinner"));
-            if(Settings.disableSafetyFeatures){
-                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(1, 0, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(35000, 0, 1000000, 5000));
-                ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
-            }
-            panelDevelopmentCost.add(labelDevelopmentCost);
-            panelDevelopmentCost.add(spinnerDevelopmentCost);
-
-            Object[] params = {panelName, buttonAddNameTranslations, panelUnlockDate, panelCost, panelDevelopmentCost};
+            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerCost, 8), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7)};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.antiCheat.addMod.components.textFieldName.initialValue"))){

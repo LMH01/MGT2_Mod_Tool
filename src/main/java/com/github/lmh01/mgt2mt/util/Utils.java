@@ -10,6 +10,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -623,6 +624,16 @@ public class Utils {
         }else if(string.contains("DEC")){
             return 12;
         }
-        return -1;
+        return -1;//TODO Add throw cause for wrong usage exception
+    }
+
+    /**
+     * Converts the input integer to string in the following way: 1000000 -> 1.000.000
+     * @return Returns the converted number as string
+     */
+    public static String convertIntToString(int inputInt){
+        DecimalFormat formatter = new DecimalFormat("###,###.###");
+        String number = formatter.format(inputInt);
+        return number;
     }
 }

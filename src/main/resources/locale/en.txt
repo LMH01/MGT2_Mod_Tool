@@ -72,6 +72,7 @@ commonText.researchPointCost|Research point cost
 commonText.researchPointCost.spinner.toolTip|Number of required research points to research that feature.
 commonText.researchCost|Research cost
 commonText.researchCost.spinner.toolTip|This is the research cost, it is being payed when researching this feature.
+commonText.cost.spinner.toolTip|This is the price that has to be paid in order to unlock this feature.
 commonText.developmentCost|Development cost
 commonText.developmentCost.spinner.toolTip|Set the development cost for this feature.<br>This cost will be added when developing a game with this feature.
 commonText.devKitCost|Dev kit cost
@@ -336,14 +337,13 @@ mod.npcEngine.addMod.components.textFieldName.initialValue|ENTER NPC ENGINE NAME
 mod.npcEngine.addMod.components.unlockYear.additionalToolTip|This determines the technology level and the amout of engine features the engine has.
 mod.npcEngine.addMod.components.selectGenre|Select the genre which should be the special genre for the engine:<br>If several genres are selected, several engines will be created, one for each selected genre.<br>The name of the genre will then be written after the name of the engine.
 mod.npcEngine.addMod.components.selectPlatform|Select the platform which should be the special platform for the engine:
-mod.npcEngine.addMod.components.spinner.share.toolTip|<br>Set the profit share for the engine.<br>When a game is created with this engine the amount (in %) will be paid to the engine developer.
+mod.npcEngine.addMod.components.spinner.share.toolTip|Set the profit share for the engine.<br>When a game is created with this engine the amount (in %) will be paid to the engine developer.
 mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Set the cost for the engine.<br>In order to use the engine in game you will have to pay this price to unlock it.
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Several genres have been selected.<br>A separate engine is created for each genre.<br><br>The following values are used for the engine:
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|engines have been added successfully!
 mod.npcEngine.addMod.noPlatformSelected|Please select a platform first!
 mod.antiCheat.addMod.optionPaneMessage.firstPart|Add this anti cheat?
 mod.antiCheat.addMod.components.textFieldName.initialValue|ENTER ANTI CHEAT NAME
-mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Set the cost for the anti cheat.<br>In order to use the anti cheat in game you will have to pay this price to unlock it.
 mod.copyProtect.addMod.components.textFieldName.initialValue|ENTER COPY PROTECTION NAME
 mod.copyProtect.addMod.components.spinner.cost.toolTip|<br>Set the cost for the copy protection.<br>In order to use the copy protection in game you will have to pay this price to unlock it.
 mod.genre.clearTranslations|Clear Translations

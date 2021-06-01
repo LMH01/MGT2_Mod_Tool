@@ -18,6 +18,7 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,33 +126,10 @@ public class PublisherMod extends AbstractAdvancedMod {
     public void menuActionAddMod() {
         try {
             ModManager.publisherMod.getAnalyzer().analyzeFile();
-            JPanel panelName = new JPanel();
-            JLabel labelName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
             JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterName"));
-            panelName.add(labelName);
-            panelName.add(textFieldName);
 
-            JPanel panelUnlockMonth = new JPanel();
-            JLabel labelUnlockMonth = new JLabel(I18n.INSTANCE.get("commonText.unlockMonth") + ":");
-            JComboBox comboBoxUnlockMonth = new JComboBox(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-            comboBoxUnlockMonth.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
-            panelUnlockMonth.add(labelUnlockMonth);
-            panelUnlockMonth.add(comboBoxUnlockMonth);
-
-            JPanel panelUnlockYear = new JPanel();
-            JLabel labelUnlockYear = new JLabel(I18n.INSTANCE.get("commonText.unlockYear") + ":");
-            JSpinner spinnerUnlockYear = new JSpinner();
-            if(Settings.disableSafetyFeatures){
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 0, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
-                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
-            }
-            panelUnlockYear.add(labelUnlockYear);
-            panelUnlockYear.add(spinnerUnlockYear);
+            JComboBox comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+            JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
 
             AtomicReference<String> publisherImageFilePath = new AtomicReference<>(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png");
             JPanel panelPublisherIcon = new JPanel();
@@ -176,33 +154,8 @@ public class PublisherMod extends AbstractAdvancedMod {
             checkBoxIsPublisher.setSelected(true);
             checkBoxIsPublisher.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher.toolTip"));
 
-            JPanel panelMarketShare = new JPanel();
-            JLabel labelMarketShare = new JLabel(I18n.INSTANCE.get("commonText.marketShare") + ":");
-            JSpinner spinnerMarketShare = new JSpinner();
-            spinnerMarketShare.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1 - 100; " + I18n.INSTANCE.get("commonText.default") + ": 50]" + "<br>" + I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerMarketShare.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerMarketShare.setModel(new SpinnerNumberModel(50, 1, 100, 1));
-                ((JSpinner.DefaultEditor)spinnerMarketShare.getEditor()).getTextField().setEditable(false);
-            }
-            panelMarketShare.add(labelMarketShare);
-            panelMarketShare.add(spinnerMarketShare);
-
-            JPanel panelShare = new JPanel();
-            JLabel labelShare = new JLabel(I18n.INSTANCE.get("commonText.profitShare") + ":");
-            JSpinner spinnerShare = new JSpinner();
-            spinnerShare.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1 - 10; " + I18n.INSTANCE.get("commonText.default") + ": 5]" + "<br>" + I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerShare.setModel(new SpinnerNumberModel(5, 1, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerShare.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerShare.setModel(new SpinnerNumberModel(5, 1, 10, 1));
-                ((JSpinner.DefaultEditor)spinnerShare.getEditor()).getTextField().setEditable(false);
-            }
-            panelShare.add(labelShare);
-            panelShare.add(spinnerShare);
+            JSpinner spinnerMarketShare = WindowHelper.getMarketShareSpinner();
+            JSpinner spinnerShare = WindowHelper.getProfitShareSpinner();
 
             AtomicInteger genreID = new AtomicInteger();
             JPanel panelGenre = new JPanel();
@@ -261,7 +214,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                 buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ");
             });
 
-            Object[] params = {panelName, panelUnlockMonth, panelUnlockYear, panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, panelMarketShare, panelShare, panelGenre};
+            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, 12), WindowHelper.getSpinnerPanel(spinnerShare, 9), panelGenre};
             boolean breakLoop = false;
             while(!breakLoop){
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){

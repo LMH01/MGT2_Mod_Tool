@@ -13,6 +13,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,12 +150,8 @@ public class ThemeMod extends AbstractSimpleMod {
             panelChooseViolenceLevel.add(labelViolenceLevel);
             panelChooseViolenceLevel.add(comboBoxViolenceLevel);
             JLabel labelExplainList = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.explainList"));
-            JList<String> listAvailableThemes = new JList<>(string);
-            listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-            listAvailableThemes.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+            JList<String> listAvailableThemes = WindowHelper.getList(string, true);
+            JScrollPane scrollPaneAvailableGenres = WindowHelper.getScrollPane(listAvailableThemes);
 
             Object[] params = {labelEnterThemeName, textFieldThemeName, buttonAddTranslations, panelChooseViolenceLevel, labelExplainList, scrollPaneAvailableGenres};
             ArrayList<String> arrayListCompatibleGenreNames = new ArrayList<>();

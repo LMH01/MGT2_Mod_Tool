@@ -71,7 +71,8 @@ commonText.type|Typ
 commonText.researchPointCost|Forschungspunktkosten
 commonText.researchPointCost.spinner.toolTip|Anzahl der erforderlichen Forschungspunkte, um dieses Feature zu erforschen.
 commonText.researchCost|Forschungskosten
-commonText.researchCost.spinner.toolTip|Dies sind die Forschungskosten, diese müssen generiert werden, um das Feature freizuschalten.
+commonText.researchCost.spinner.toolTip|Die Kosten zum erforschen dieses Features.
+commonText.cost.spinner.toolTip|Dieser Preis muss bezahlt werden, damit das Feature benutzt werden kann.
 commonText.developmentCost|Entwicklungskosten
 commonText.developmentCost.spinner.toolTip|Lege die Entwicklungskosten für dieses Feature fest.<br>Diese Kosten werden hinzugefügt, wenn ein Spiel mit dieser Funktion entwickelt wird.
 commonText.devKitCost|Kosten für das Development Kit
@@ -336,14 +337,13 @@ mod.npcEngine.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR 
 mod.npcEngine.addMod.components.unlockYear.additionalToolTip|Das Erscheinungsjahr gibt an, welches Technologie Level die Engine bekommt und welche features sie enthällt
 mod.npcEngine.addMod.components.selectGenre|Wähle das Genre aus, welches das Spezialgenre für die Engine sein soll:<br>Werden mehrere Genres ausgewählt, so werden<br>mehrere Engines erstellt, je eine für jedes ausgewählte Genre.<br>Dabei wird der Name des Genres dann hinter den Namen der Engine gehängt.
 mod.npcEngine.addMod.components.selectPlatform|Wähle die Plattform aus, welche die Spezialplattform für die Engine sein soll:
-mod.npcEngine.addMod.components.spinner.share.toolTip|<br>Lege die Gewinnbeteiligung für die Engine fest.<br>Wenn ein Spiel mit dieser Engine erstellt wird, wird der Betrag (in %) an den Engine-Entwickler bezahlt.
+mod.npcEngine.addMod.components.spinner.share.toolTip|Lege die Gewinnbeteiligung für die Engine fest.<br>Wenn ein Spiel mit dieser Engine erstellt wird, wird der Betrag (in %) an den Engine-Entwickler bezahlt.
 mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für die Engine fest.<br>Dieser Preis muss bezahlt werden, damit die Engine für ein Spiel verwendet werden kann.
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Es wurden mehrere Genres ausgewählt.<br>Für jedes Genre wird eine eigene Engine erstellt.<br><br>Die folgenden Werte werden für die Engine verwendet:
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|Engines wurden erfolgreich hinzugefügt!
 mod.npcEngine.addMod.noPlatformSelected|Bitte wähle zu erst eine Plattform aus!
 mod.antiCheat.addMod.optionPaneMessage.firstPart|Diesen Anti Cheat hinzufügen?
 mod.antiCheat.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN ANTI CHEAT EIN
-mod.antiCheat.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Anti Cheat fest.<br>Dieser Preis muss bezahlt werden, damit der Anti Cheat für ein Spiel verwendet werden kann.
 mod.copyProtect.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DEN KOPIERSCHUTZ EIN
 mod.copyProtect.addMod.components.spinner.cost.toolTip|<br>Lege den Preis für den Kopierschutz fest.<br>Dieser Preis muss bezahlt werden, damit der Kopierschutz für ein Spiel verwendet werden kann.
 mod.genre.clearTranslations|Übersetzungen zurücksetzen

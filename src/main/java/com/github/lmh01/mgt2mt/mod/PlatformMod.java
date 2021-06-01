@@ -13,6 +13,7 @@ import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,106 +96,24 @@ public class PlatformMod extends AbstractAdvancedMod {
             getBaseAnalyzer().analyzeFile();
             ModManager.genreMod.getAnalyzer().analyzeFile();
             ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
-            final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             final Map<String, String>[] mapManufacturerTranslations = new Map[]{new HashMap<>()};
-            AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
             AtomicBoolean manufacturerTranslationsAdded = new AtomicBoolean(false);
-
-            JPanel panelName = new JPanel();
-            JLabel labelName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
             JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"));
-            panelName.add(labelName);
-            panelName.add(textFieldName);
-
-            JButton buttonAddNameTranslations = new JButton(I18n.INSTANCE.get("commonText.addNameTranslations"));
-            buttonAddNameTranslations.setToolTipText(I18n.INSTANCE.get("commonText.addNameTranslations.toolTip"));
-            buttonAddNameTranslations.addActionListener(actionEvent -> {
-                if(!nameTranslationsAdded.get()){
-                    mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                    if(mapNameTranslations[0].size() > 0){
-                        nameTranslationsAdded.set(true);
-                        buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
-                    }else{
-                        buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations"));
-                    }
-                }else{
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
-                        mapNameTranslations[0] = TranslationManager.getTranslationsMap();
-                        if(mapNameTranslations[0].size() > 0){
-                            buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
-                            nameTranslationsAdded.set(true);
-                        }else{
-                            buttonAddNameTranslations.setText(I18n.INSTANCE.get("commonText.addNameTranslations"));
-                        }
-                    }
-                }
-            });
-
-            JPanel panelManufacturer = new JPanel();
-            JLabel labelManufacturer = new JLabel(I18n.INSTANCE.get("commonText.manufacturer") + ":");
+            final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
+            AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
+            JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
             JTextField textFieldManufacturer = new JTextField(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldManufacturer.initialValue"));
-            panelManufacturer.add(labelManufacturer);
-            panelManufacturer.add(textFieldManufacturer);
+            JButton buttonAddManufacturerTranslation = WindowHelper.getAddTranslationsButton(mapManufacturerTranslations, manufacturerTranslationsAdded, 2);
+            JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(2);
 
-            JButton buttonAddManufacturerTranslation = new JButton(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addManufacturerTranslations.label"));
-            buttonAddManufacturerTranslation.setToolTipText(I18n.INSTANCE.get("commonText.addNameTranslations.toolTip"));
-            buttonAddManufacturerTranslation.addActionListener(actionEvent -> {
-                if(!manufacturerTranslationsAdded.get()){
-                    mapManufacturerTranslations[0] = TranslationManager.getTranslationsMap();
-                    if(mapManufacturerTranslations[0].size() > 0){
-                        buttonAddManufacturerTranslation.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
-                        manufacturerTranslationsAdded.set(true);
-                    }else{
-                        buttonAddManufacturerTranslation.setText(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addManufacturerTranslations.label"));
-                    }
-                }else{
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION){
-                        mapManufacturerTranslations[0] = TranslationManager.getTranslationsMap();
-                        if(mapManufacturerTranslations[0].size() > 0){
-                            buttonAddManufacturerTranslation.setText(I18n.INSTANCE.get("commonText.addNameTranslations.added"));
-                            manufacturerTranslationsAdded.set(true);
-                        }else{
-                            buttonAddManufacturerTranslation.setText(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addManufacturerTranslations.label"));
-                        }
-                    }
-                }
-            });
-
-            JPanel panelType = new JPanel();
-            JLabel labelSelectType = new JLabel(I18n.INSTANCE.get("commonText.type") + ":");
-            JComboBox comboBoxFeatureType = new JComboBox();
-            comboBoxFeatureType.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.toolTip"));
-            comboBoxFeatureType.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard")}));
-            comboBoxFeatureType.setSelectedItem(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"));
-            panelType.add(labelSelectType);
-            panelType.add(comboBoxFeatureType);
-
-            JPanel panelUnlockDate = new JPanel();
-            JLabel labelUnlockDate = new JLabel(I18n.INSTANCE.get("commonText.unlockDate") + ":");
-
-            JComboBox comboBoxUnlockMonth = new JComboBox();
-            comboBoxUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-            comboBoxUnlockMonth.setSelectedItem("JAN");
+            JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
 
             JSpinner spinnerEndYear = new JSpinner();
-            JSpinner spinnerUnlockYear = new JSpinner();
+            JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
             spinnerUnlockYear.addChangeListener(e -> setEndYearSpinner(spinnerUnlockYear, spinnerEndYear));
-            if(Settings.disableSafetyFeatures){
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
-                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-                spinnerUnlockYear.setModel(new SpinnerNumberModel(1976, 1976, 2050, 1));
-                ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
-            }
-            panelUnlockDate.add(labelUnlockDate);
-            panelUnlockDate.add(comboBoxUnlockMonth);
-            panelUnlockDate.add(spinnerUnlockYear);
 
-            JComboBox comboBoxEndDateMonth = new JComboBox();
-            comboBoxEndDateMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-            comboBoxEndDateMonth.setSelectedItem("JAN");
+            JComboBox comboBoxEndDateMonth = WindowHelper.getUnlockMonthComboBox();
+            comboBoxEndDateMonth.setToolTipText(null);
             comboBoxEndDateMonth.setEnabled(false);
 
             JPanel panelEndDate = new JPanel();
@@ -217,77 +136,18 @@ public class PlatformMod extends AbstractAdvancedMod {
                 }
             });
 
-            JPanel panelTechLevel = new JPanel();
-            JLabel labelTechLevel = new JLabel(I18n.INSTANCE.get("commonText.techLevel") + ":");
-            JSpinner spinnerTechLevel = new JSpinner();
-            spinnerTechLevel.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1 - 8; " + I18n.INSTANCE.get("commonText.default") + ": 1]" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.techLevel.tooltip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerTechLevel.setModel(new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerTechLevel.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerTechLevel.setModel(new SpinnerNumberModel(1, 1, 8, 1));
-                ((JSpinner.DefaultEditor)spinnerTechLevel.getEditor()).getTextField().setEditable(false);
-            }
-            panelTechLevel.add(labelTechLevel);
-            panelTechLevel.add(spinnerTechLevel);
-
-            JPanel panelDevelopmentCost = new JPanel();
-            JPanel panelPrice = new JPanel();
-            JLabel labelDevelopmentCost = new JLabel(I18n.INSTANCE.get("commonText.developmentCost") + ": ");
-            JLabel labelDevKitCost = new JLabel(I18n.INSTANCE.get("commonText.devKitCost") + ": ");
-            JSpinner spinnerDevelopmentCost = new JSpinner();
-            JSpinner spinnerDevKitCost = new JSpinner();
-            spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 100.000; " + I18n.INSTANCE.get("commonText.default") + ": 35000]" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.devCost.toolTip"));
-            spinnerDevKitCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 50000]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.researchCost.toolTip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-                spinnerDevKitCost.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
-                ((JSpinner.DefaultEditor)spinnerDevKitCost.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerDevelopmentCost.setModel(new SpinnerNumberModel(35000, 0, 1000000, 1000));
-                spinnerDevKitCost.setModel(new SpinnerNumberModel(50000, 1000, 1000000, 1000));
-                ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
-                ((JSpinner.DefaultEditor)spinnerDevKitCost.getEditor()).getTextField().setEditable(false);
-            }
-            panelDevelopmentCost.add(labelDevelopmentCost);
-            panelDevelopmentCost.add(spinnerDevelopmentCost);
-            panelPrice.add(labelDevKitCost);
-            panelPrice.add(spinnerDevKitCost);
+            JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
+            JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
+            JSpinner spinnerDevKitCost = WindowHelper.getDevKitCostSpinner();
 
             JCheckBox checkBoxInternet = new JCheckBox(I18n.INSTANCE.get("commonText.internet"));
             checkBoxInternet.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.internet.toolTip"));
 
-            JPanel panelComplexity = new JPanel();
-            JLabel labelComplexity = new JLabel(I18n.INSTANCE.get("commonText.complexity") + ":");
-            JSpinner spinnerComplexity = new JSpinner();
-            spinnerComplexity.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.complexity.toolTip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerComplexity.setModel(new SpinnerNumberModel(0,0, Integer.MAX_VALUE, 1));
-                ((JSpinner.DefaultEditor)spinnerComplexity.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerComplexity.setModel(new SpinnerNumberModel(0,0, 2, 1));
-                ((JSpinner.DefaultEditor)spinnerComplexity.getEditor()).getTextField().setEditable(false);
-            }
-            panelComplexity.add(labelComplexity);
-            panelComplexity.add(spinnerComplexity);
-
-            JPanel panelUnits = new JPanel();
-            JLabel labelUnits = new JLabel(I18n.INSTANCE.get("commonText.units") + ":");
-            JSpinner spinnerUnits = new JSpinner();
-            spinnerUnits.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 1.000.000]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.units.toolTip"));
-            if(Settings.disableSafetyFeatures){
-                spinnerUnits.setModel(new SpinnerNumberModel(0,0, Integer.MAX_VALUE, 100000));
-                ((JSpinner.DefaultEditor)spinnerUnits.getEditor()).getTextField().setEditable(true);
-            }else{
-                spinnerUnits.setModel(new SpinnerNumberModel(1000000,100000, 1000000000, 100000));
-                ((JSpinner.DefaultEditor)spinnerUnits.getEditor()).getTextField().setEditable(false);
-            }
-            panelUnits.add(labelUnits);
-            panelUnits.add(spinnerUnits);
+            JSpinner spinnerComplexity = WindowHelper.getComplexitySpinner();
+            JSpinner spinnerUnits = WindowHelper.getUnitsSpinner();
 
             JLabel labelGameplayFeatureList = new JLabel("<html>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.selectGameplayFeatures") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
-            JList<String> listAvailableGameplayFeatures = new JList<>(ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet());
+            JList<String> listAvailableGameplayFeatures = WindowHelper.getList(ModManager.gameplayFeatureMod.getAnalyzer().getContentByAlphabet(), true);
             listAvailableGameplayFeatures.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -296,11 +156,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                     }
                 }
             });
-            listAvailableGameplayFeatures.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            listAvailableGameplayFeatures.setLayoutOrientation(JList.VERTICAL);
-            listAvailableGameplayFeatures.setVisibleRowCount(-1);
-            JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGameplayFeatures);
-            scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+            JScrollPane scrollPaneAvailableGenres = WindowHelper.getScrollPane(listAvailableGameplayFeatures);
 
             AtomicBoolean picturesAdded = new AtomicBoolean(false);
             Map<Integer, File> pictureMap = new HashMap<>();//This map contains all the pictures that should be added for the platform
@@ -405,7 +261,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                 }
             });
 
-            Object[] params = {panelName, buttonAddNameTranslations, panelManufacturer, buttonAddManufacturerTranslation, panelType, panelUnlockDate, checkBoxEnableEndDate, panelEndDate, panelTechLevel, panelComplexity, panelUnits, panelDevelopmentCost, panelPrice, checkBoxInternet, labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures};
+            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), WindowHelper.getSpinnerPanel(spinnerComplexity, 10), WindowHelper.getSpinnerPanel(spinnerUnits, 11), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerDevKitCost, 8), checkBoxInternet, labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures};
             while(true){
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))){

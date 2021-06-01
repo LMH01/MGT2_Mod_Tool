@@ -12,6 +12,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -82,12 +83,8 @@ public class NpcGamesMod extends AbstractSimpleMod {
         JTextField textFieldName = new JTextField();
 
         JLabel labelExplainList = new JLabel("<html>" + I18n.INSTANCE.get("mod.npcGames.addMod.selectGenres") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
-        JList<String> listAvailableThemes = new JList<>(ModManager.genreMod.getAnalyzer().getContentByAlphabet());
-        listAvailableThemes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
-        listAvailableThemes.setVisibleRowCount(-1);
-        JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableThemes);
-        scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+        JList<String> listAvailableThemes = WindowHelper.getList(ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
+        JScrollPane scrollPaneAvailableGenres = WindowHelper.getScrollPane(listAvailableThemes);
 
         Object[] params = {labelModName, textFieldName, labelExplainList, scrollPaneAvailableGenres};
         while(true){
