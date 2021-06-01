@@ -28,6 +28,7 @@ public class ThreadHandler {
     public static Runnable runnableRestoreInitialBackup = WindowMain::restoreInitialBackup;
     public static Runnable runnableRestoreLatestBackup = WindowMain::restoreLatestBackup;
     public static Runnable runnableRestoreSaveGameBackup = Backup::restoreSaveGameBackup;
+    public static Runnable runnablePerformGameUpdateTasks = GameUpdateHandler::showDialog;
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();

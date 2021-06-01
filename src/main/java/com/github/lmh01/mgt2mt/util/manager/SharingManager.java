@@ -606,6 +606,15 @@ public class SharingManager {
      * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
      */
     public static void exportAll(boolean exportAsRestorePoint){
+        exportAll(exportAsRestorePoint, true);
+    }
+
+    /**
+     * Exports all available things when the user accepts.
+     * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
+     * @param showMessageDialogs True if the message dialogs should be shown
+     */
+    public static void exportAll(boolean exportAsRestorePoint, boolean showMessageDialogs){
         boolean exportFiles = false;
         if(exportAsRestorePoint){
             exportFiles = true;
@@ -631,7 +640,9 @@ public class SharingManager {
                 if(failedExports.toString().isEmpty()){
                     if(exportAsRestorePoint){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
+                        if(showMessageDialogs){
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
+                        }
                     }else{
                         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                             Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));

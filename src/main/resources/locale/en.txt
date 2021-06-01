@@ -446,7 +446,7 @@ dialog.export.error|Error while exporting
 dialog.export.alreadyExported1|The following entries have not been exported because they were already exported
 dialog.export.alreadyExported2|Do you want to open the export folder?
 
-dialog.backup.deleteAllBackups.mainMessage|<html>Are you sure that you would like to delete all backups?<br>This could lead to problems.
+dialog.backup.deleteAllBackups.mainMessage|<html>Are you sure that you would like to delete all backups?<br>This could lead to problems.<br>When all backups have been deleted the program is exited<br>and on the next startup a new initial backup will be created.
 dialog.backup.deleteAllBackups.mainMessage.title|Delete backups?
 dialog.backup.deleteAllBackups.createNewInitialBackupQuestion|<html>All backups have been deleted.<br>Do you want to create a new initial backup?
 dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title|Backups deleted
@@ -590,6 +590,8 @@ dialog.genreHelper.addRandomizedGenre.addGenreIcon.iconSet|Genre Icon set
 dialog.genreHelper.getGenreScreenshots.message|<html>Click browse or enter enter the image path manually.<br>When the image path is set click okay.<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page.<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3
 dialog.genreHelper.getGenreScreenshots.imageFileAdded|Image file has been added.
 dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Image files have been added.
+
+dialog.gameUpdateHandler.mainMessage|<html>Would you like to update the initial backup?<br><br>It is recommended to use this feature every time MGT2 is updated.<br>This is required so that the game update won't get lost if the initial backup is restored later.<br>Warning: The mod restore point is set to the currently installed mods when continuing.
 
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
@@ -835,6 +837,8 @@ window.main.utilities.openGithubPage|Open Github page
 window.main.utilities.openMGT2Folder|Open MGT2 folder
 window.main.utilities.openSaveGameFolder|Open save game folder
 window.main.utilities.openSaveGameFolder.toolTip|Click to open the folder where the save games are stored
+window.main.utilities.updateInitialBackups|Update initial backups
+window.main.utilities.updateInitialBackups.toolTip|Click to update the initial backups to include the latest game updates.
 window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added
