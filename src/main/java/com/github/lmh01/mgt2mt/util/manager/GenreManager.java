@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,49 +103,51 @@ public class GenreManager {
     public static boolean addGenre(Map<String, String> map, Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages){
 
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
-        String messageBody = I18n.INSTANCE.get("dialog.genreManager.addGenre.mainBody.genreIsReady") + "\n\n" +
-                I18n.INSTANCE.get("commonText.id") + ":" + map.get("ID") + "\n" +
-                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
-                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
-                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
-                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
-                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
-                I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "\n" +
-                I18n.INSTANCE.get("commonText.targetGroup") + ": " + getTargetGroups(map) + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.compatibleGenres") + "*\n\n" + getCompatibleGenres(map) + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.compatibleThemes") + "*\n\n" + getMapEntryToDisplay(map, "THEME COMB", 15) + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.goodGameplayFeatures") + "*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE GOOD", 10) + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.badGameplayFeatures") + "*\n\n" + getMapEntryToDisplay(map, "GAMEPLAYFEATURE BAD", 10) + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.designFocus") + "*\n\n" +
-                I18n.INSTANCE.get("commonText.gameLength") + ": " + map.get("FOCUS0") + "\n" +
-                I18n.INSTANCE.get("commonText.gameDepth") + ": " + map.get("FOCUS1") + "\n" +
-                I18n.INSTANCE.get("commonText.beginnerFriendliness") + ": " + map.get("FOCUS2") + "\n" +
-                I18n.INSTANCE.get("commonText.innovation") + ": " + map.get("FOCUS3") + "\n" +
-                I18n.INSTANCE.get("commonText.story") + ": " + map.get("FOCUS4") + "\n" +
-                I18n.INSTANCE.get("commonText.characterDesign") + ": " + map.get("FOCUS5") + "\n" +
-                I18n.INSTANCE.get("commonText.levelDesign") + ": " + map.get("FOCUS6") + "\n" +
-                I18n.INSTANCE.get("commonText.missionDesign") + ": " + map.get("FOCUS7") + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.designDirection") + "*\n\n" +
-                I18n.INSTANCE.get("commonText.coreGamersCasualGamers") + ": " + map.get("ALIGN0") + "\n" +
-                I18n.INSTANCE.get("commonText.nonviolentExtremeViolent") + ": " + map.get("ALIGN1") + "\n" +
-                I18n.INSTANCE.get("commonText.easyHard") + ": " + map.get("ALIGN2") + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.workPriority") + "*\n\n" +
-                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "%\n" +
-                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "%\n" +
-                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "%\n" +
-                I18n.INSTANCE.get("commonText.control") + ": " + map.get("CONTROL") + "%\n";
+        JLabel labelFirstPart = new JLabel("<html>" + I18n.INSTANCE.get("dialog.genreManager.addGenre.mainBody.genreIsReady") + "<br><br>" +
+                I18n.INSTANCE.get("commonText.id") + ":" + map.get("ID") + "<br>" +
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "<br>" +
+                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "<br>" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "<br>" +
+                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
+                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "<br>" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
+                I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "<br>" +
+                I18n.INSTANCE.get("commonText.targetGroup") + ": " + getTargetGroups(map) + "<br>" + "");
+        JButton buttonCompatibleGenres = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.compatibleGenres"), convertMapEntryToList(map, "GENRE COMB", true), I18n.INSTANCE.get("commonText.compatibleGenres") + ":");
+        JButton buttonCompatibleThemes = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.compatibleThemes"), convertMapEntryToList(map, "THEME COMB"), I18n.INSTANCE.get("commonText.compatibleThemes") + ":");
+        JButton buttonBadGameplayFeatures = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.badGameplayFeatures"), convertMapEntryToList(map, "GAMEPLAYFEATURE BAD"), I18n.INSTANCE.get("commonText.badGameplayFeatures") + ":");
+        JButton buttonGoodGameplayFeatures = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.goodGameplayFeatures"), convertMapEntryToList(map, "GAMEPLAYFEATURE GOOD"), I18n.INSTANCE.get("commonText.goodGameplayFeatures") + ":");
+        JLabel labelSecondPart = new JLabel("<html>*" + I18n.INSTANCE.get("commonText.designFocus") + "*<br><br>" +
+                I18n.INSTANCE.get("commonText.gameLength") + ": " + map.get("FOCUS0") + "<br>" +
+                I18n.INSTANCE.get("commonText.gameDepth") + ": " + map.get("FOCUS1") + "<br>" +
+                I18n.INSTANCE.get("commonText.beginnerFriendliness") + ": " + map.get("FOCUS2") + "<br>" +
+                I18n.INSTANCE.get("commonText.innovation") + ": " + map.get("FOCUS3") + "<br>" +
+                I18n.INSTANCE.get("commonText.story") + ": " + map.get("FOCUS4") + "<br>" +
+                I18n.INSTANCE.get("commonText.characterDesign") + ": " + map.get("FOCUS5") + "<br>" +
+                I18n.INSTANCE.get("commonText.levelDesign") + ": " + map.get("FOCUS6") + "<br>" +
+                I18n.INSTANCE.get("commonText.missionDesign") + ": " + map.get("FOCUS7") + "<br>" +
+                "<br>*" + I18n.INSTANCE.get("commonText.designDirection") + "*<br><br>" +
+                I18n.INSTANCE.get("commonText.coreGamersCasualGamers") + ": " + map.get("ALIGN0") + "<br>" +
+                I18n.INSTANCE.get("commonText.nonviolentExtremeViolent") + ": " + map.get("ALIGN1") + "<br>" +
+                I18n.INSTANCE.get("commonText.easyHard") + ": " + map.get("ALIGN2") + "<br>" +
+                "<br>*" + I18n.INSTANCE.get("commonText.workPriority") + "*<br><br>" +
+                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "%<br>" +
+                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "%<br>" +
+                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "%<br>" +
+                I18n.INSTANCE.get("commonText.control") + ": " + map.get("CONTROL") + "%<br><br>");
         int returnValue;
         if(showSummaryFromImport){
             if(showMessages){
-                String messageBodyButtonExplanation = "\n" + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var1");
-                returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+                labelSecondPart.setText(labelSecondPart.getText() + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var1"));
+                Object[] params = {labelFirstPart, buttonCompatibleGenres, buttonCompatibleThemes, buttonBadGameplayFeatures, buttonGoodGameplayFeatures, labelSecondPart};
+                returnValue = JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
             }else{
                 returnValue = 0;
             }
         }else{
-            String messageBodyButtonExplanation = "\n" + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var2");
-            returnValue = JOptionPane.showConfirmDialog(null, messageBody + messageBodyButtonExplanation, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
+            labelSecondPart.setText(labelSecondPart.getText() + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var2"));
+            Object[] params = {labelFirstPart, buttonCompatibleGenres, buttonCompatibleThemes, buttonBadGameplayFeatures, buttonGoodGameplayFeatures, labelSecondPart};
+            returnValue = JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.genreManager.addGenre.title"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon);
         }
         if(returnValue == JOptionPane.YES_OPTION){
             //click yes
@@ -262,40 +265,43 @@ public class GenreManager {
     }
 
     /**
-     * @param map The map where the GENRE COMB values are stored.
-     * @return Returns a string containing all genres that are compatible with the new genre. This is called when the compatible genres are displayed in the summary.
+     * @param map The map where the map key is stored
+     * @param mapKey The key where the content is written
+     * @return Returns a string containing all entries that are listed as value under the map key.
      */
-    private static String getCompatibleGenres(Map<String, String> map){
-        String inputGenres = map.get("GENRE COMB");
-        StringBuilder currentGenre = new StringBuilder();
-        ArrayList<String> outputGenres = new ArrayList<>();
-        StringBuilder output = new StringBuilder();
+    private static String[] convertMapEntryToList(Map<String, String> map, String mapKey){
+        return convertMapEntryToList(map, mapKey, false);
+    }
 
-        for(int i=0; i<inputGenres.length(); i++){
-            if(String.valueOf(inputGenres.charAt(i)).equals("<")){
+    /**
+     * @param map The map where the map key is stored
+     * @param mapKey The key where the content is written
+     * @param convertAsGenres If true the genre names will be written to the list
+     * @return Returns a string containing all entries that are listed as value under the map key.
+     */
+    private static String[] convertMapEntryToList(Map<String, String> map, String mapKey, boolean convertAsGenres){
+        String input = map.get(mapKey);
+        StringBuilder currentString = new StringBuilder();
+        ArrayList<String> outputArray = new ArrayList<>();
+
+        for(int i=0; i<input.length(); i++){
+            if(String.valueOf(input.charAt(i)).equals("<")){
                 //Nothing happens
-            }else if (String.valueOf(inputGenres.charAt(i)).equals(">")){
-                outputGenres.add(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(currentGenre.toString()), true));
-                currentGenre = new StringBuilder();
-            }else{
-                currentGenre.append(inputGenres.charAt(i));
-            }
-        }
-
-        int n = 0;
-        for(int i=0; i<outputGenres.size(); i++){
-            if(i == outputGenres.size()-1){
-                output.append(outputGenres.get(i));
-            }else{
-                output.append(outputGenres.get(i)).append(", ");
-                if(n == 5){
-                    output.append(System.getProperty("line.separator"));
-                    n = 0;
+            }else if (String.valueOf(input.charAt(i)).equals(">")){
+                if(convertAsGenres){
+                    outputArray.add(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(currentString.toString())));
+                }else{
+                    outputArray.add(currentString.toString());
                 }
+                currentString = new StringBuilder();
+            }else{
+                currentString.append(input.charAt(i));
             }
-            n++;
         }
-        return output.toString();
+        Collections.sort(outputArray);
+        String[] output = new String[outputArray.size()];
+        outputArray.toArray(output);
+        return output;
     }
 
     /**

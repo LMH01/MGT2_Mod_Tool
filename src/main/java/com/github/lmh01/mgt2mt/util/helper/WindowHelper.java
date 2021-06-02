@@ -373,4 +373,21 @@ public class WindowHelper {
         list.setVisibleRowCount(-1);
         return list;
     }
+
+    /**
+     * @param listContent The content that should be displayed in the list
+     * @param listHeadline The string that should be written above the list when the button is clicked
+     * @return Returns a new button that displays a list when clicked.
+     */
+    public static JButton getListDisplayButton(String buttonLabel, String[] listContent, String listHeadline){
+        JButton button = new JButton(buttonLabel);
+        button.addActionListener(actionEvent -> {
+            JLabel label = new JLabel(listHeadline);
+            JList<String> list = getList(listContent, false);
+            JScrollPane scrollPane = getScrollPane(list);
+            Object[] params = {label, scrollPane};
+            JOptionPane.showMessageDialog(null, params);
+        });
+        return button;
+    }
 }
