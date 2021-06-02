@@ -479,6 +479,9 @@ dialog.backup.restoreBackup.initialBackup.notRestored|Das Initiale-Backup wurde 
 dialog.backup.restoreBackup.latestBackup.message|<html>Bist du sicher, dass du das neueste Backup wiederherstellen möchtest?<br>Die Sicherungen der Spielstände werden nicht wiederhergestellt.<br>Ein Backup der aktuellen Dateien wird erstellt.
 dialog.backup.restoreBackup.latestBackup.notRestored|Das letzte Backup wurde nicht wiederhergestellt.
 dialog.backup.restoreBackup.initialBackup.notRestored.mods|Beim entfernen der Mods ist ein Problem aufgetreten:
+dialog.backup.createNewInitialBackup.message|<html>Soll ein neues Initial-Backup erstellt werden?<br><br>Diese Aktion sollte immer dann ausgeführt werden, wenn das Spiel aktualisiert wurde.<br>Dies lieg daran, dass das Spiel-Update ggf. verloren gehen könnte, wenn das alte Backup wiederhergestellt wird.<br><br>Achtung: Beim fortfahren werden alle aktuell installierten Mods entfernt, um sicher zu gehen,<br>dass die neuen Backup-Dateien ohne Modifizierungen erstellt werden.
+dialog.backup.createNewInitialBackup.backupSuccessful|Das neue Initial-Backup wurde erfolgreich erstellt!
+dialog.backup.createNewInitialBackup.backupError|Der folgende Fehler ist beim erstellen des neuen Initial-Backups aufgetreten,<br>das Backup wurde nicht vollständig erstellt:
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|Ein .zip Archiv wurde gefunden:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Soll es extrahiert und nach Mods durchsucht werden?
@@ -653,6 +656,8 @@ progressBar.timeElapsed|Gesammt Zeit vergangen
 progressBar.replacePublisher.removingOriginalPublishers|Entferne originale Publisher
 progressBar.npcGamesList.title|Ändern der Liste der NPC-Spiele
 progressBar.copyDirectory.title|Kopiere Ordner
+progressBar.moveOldInitialBackupFiles|Verschiebe altes Initial-Backup
+progressBar.creatingInitialBackup|Initial-Backup wird erstellt
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -732,6 +737,7 @@ textArea.restorePoint.restoreSuccessful|Wiederherstellung abgeschlossen: Alle Mo
 textArea.restorePoint.canceled|Wiederherstellungsprozess wurde abgebrochen
 textArea.backup.createBackup.success|Backup wurde erstellt:
 textArea.backup.restoringBackup|Backup wird wiederhergestellt
+textArea.movingFile|Verschiebe Datei:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
@@ -806,6 +812,8 @@ window.main.share.openExportFolder|Export Ordner öffnen
 window.main.share.deleteAllExport|All Exports löschen
 window.main.backup|Backup
 window.main.backup.createBackup|Backup erstellen
+window.main.backup.createBackup.createNewInitialBackup|Neues Initial-Backup erstellen
+window.main.backup.createBackup.createNewInitialBackup.toolTip|<html>Klicke, um ein neues Initial-Backup zu erstellen.Dies ist nützlich, wenn das Spiel aktualisiert wurde, damit beim wiederherstellen des Backups, dieses Spiel-Update nicht verloren geht
 window.main.backup.createBackup.createFullBackup|Komplettes Backup erstellen
 window.main.backup.createBackup.createFullBackup.toolTip|Klicke hier, um ein Backup aus den Dateien zu erstellen, die mit diesem Tool geändert werden können.
 window.main.backup.createBackup.createSaveGameBackup|Backup Der Spielstände erstellen

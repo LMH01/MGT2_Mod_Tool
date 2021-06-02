@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
+import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -285,12 +286,21 @@ public class Backup {
      * @return Returns e.getMessage();
      */
     public static String createInitialBackup(){
+        return createInitialBackup(false);
+    }
+
+    /**
+     * Creates an initial backup when initial backup does not exist already.
+     * @param showTextAreaMessages True if text area messages should be printed
+     * @return Returns e.getMessage();
+     */
+    public static String createInitialBackup(boolean showTextAreaMessages){
         try{
             for(File file : getBackupFiles()){
-                Backup.createBackup(file, true, false);
+                Backup.createBackup(file, true, showTextAreaMessages);
             }
             backupSaveGames(true);
-            createThemeFilesBackup(true, false);
+            createThemeFilesBackup(true, showTextAreaMessages);
             return "";
         }catch(IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
@@ -331,6 +341,71 @@ public class Backup {
     public static void createThemeFilesBackup(boolean initialBackup, boolean showTextAreaMessages) throws IOException {
         for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
             Backup.createBackup(Utils.getThemeFile(i), initialBackup, showTextAreaMessages);
+        }
+    }
+
+    /**
+     * Moves the current initial backup files into a storage folder and creates a new initial backup. Displayes a message to the user beforehand
+     */
+    public static void createNewInitialBackup(){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.message"), I18n.INSTANCE.get("frame.title.information"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            boolean uninstallFailed = false;
+            StringBuilder uninstallFailedExplanation = new StringBuilder();
+            ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
+            try {
+                for(AbstractSimpleMod simpleMod : ModManager.simpleMods) {
+                    if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
+                        String[] content = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
+                        ProgressBarHelper.increaseMaxValue(content.length);
+                        for(String string : content){
+                            simpleMod.getBaseEditor().removeMod(string);
+                            ProgressBarHelper.increment();
+                        }
+                    }else{
+                        String[] content = simpleMod.getBaseAnalyzer().getCustomContentString();
+                        for (String string : content){
+                            simpleMod.getBaseEditor().removeMod(string);
+                            ProgressBarHelper.increment();
+                        }
+                    }
+                }
+                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                    String[] content = advancedMod.getBaseAnalyzer().getCustomContentString();
+                    for (String string : content){
+                        advancedMod.getBaseEditor().removeMod(string);
+                        ProgressBarHelper.increment();
+                    }
+                }
+            }catch (IOException e){
+                uninstallFailed = true;
+                uninstallFailedExplanation.append(e.getMessage());
+            }
+            if(uninstallFailed){
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation.toString(), I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
+            }else{
+                ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//", ".initialBackup");
+                File oldInitialBackupFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//InitialBackups//" + Utils.getCurrentDateTime() + "//");
+                oldInitialBackupFolder.mkdirs();
+                ProgressBarHelper.initializeProgressBar(0, files.size(), I18n.INSTANCE.get("progressBar.moveOldInitialBackupFiles"), true);
+                for(File file : files){
+                    File oldInitialBackup = new File(oldInitialBackupFolder.getPath() + "//" + file.getName());
+                    try{
+                        Files.move(Paths.get(file.getPath()), Paths.get(oldInitialBackup.getPath()));
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.movingFile") + file.getPath() + " -> " + oldInitialBackup.getPath());
+                    }catch(IOException ignored){
+
+                    }
+                    ProgressBarHelper.increment();
+                }
+                ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.creatingInitialBackup"));
+                String returnValue = Backup.createInitialBackup(true);
+                ProgressBarHelper.increment();
+                if(returnValue.equals("")){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 }
