@@ -34,7 +34,6 @@ public class Backup {
     public static void createBackup(File fileToBackup) throws IOException {
         createBackup(fileToBackup, false, false);
     }
-
     /**
      * Creates a backup of a given file. And sets it was initial backup
      * @param fileToBackup This is the file from which a backup should be created.
@@ -42,17 +41,6 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup, boolean initialBackup, boolean showTextAreaMessages) throws IOException {
-        createBackup(fileToBackup, initialBackup, showTextAreaMessages, false);
-    }
-
-    /**
-     * Creates a backup of a given file. And sets it was initial backup
-     * @param fileToBackup This is the file from which a backup should be created.
-     * @param initialBackup Set true when this is the initial backup.
-     * @param replaceInitialBackup If true the initial backup will be replaced by a new one
-     * @throws IOException Throws IOException when backup was not successful.
-     */
-    public static void createBackup(File fileToBackup, boolean initialBackup, boolean showTextAreaMessages, boolean replaceInitialBackup) throws IOException {
         String currentTimeAndDay = Utils.getCurrentDateTime();
         boolean initialBackupAlreadyExists = false;
         latestBackupFolderName = currentTimeAndDay;
@@ -65,12 +53,10 @@ public class Backup {
         if(initialBackup){
             fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".initialBackup");
             if(fileLatestBackupOfInputFile.exists()){
-                if(!replaceInitialBackup){
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
-                    }
-                    initialBackupAlreadyExists = true;
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
                 }
+                initialBackupAlreadyExists = true;
             }
         }else{
             fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
@@ -250,11 +236,8 @@ public class Backup {
                     if(returnValue.equals("")) {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupCreated"), I18n.INSTANCE.get("dialog.backup.initialBackupCreated.title"), JOptionPane.INFORMATION_MESSAGE);
                     }else {
-                        System.exit(0);
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated") + returnValue, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated.title"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
-                    System.exit(0);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -299,16 +282,12 @@ public class Backup {
      * @return Returns e.getMessage();
      */
     public static String createInitialBackup(){
-        return createInitialBackup(false);
-    }
-
-    public static String createInitialBackup(boolean replaceExistingInitialBackup){
         try{
             for(File file : getBackupFiles()){
-                Backup.createBackup(file, true, false, replaceExistingInitialBackup);
+                Backup.createBackup(file, true, false);
             }
-            backupSaveGames(true, replaceExistingInitialBackup);
-            createThemeFilesBackup(true, false, replaceExistingInitialBackup);
+            backupSaveGames(true);
+            createThemeFilesBackup(true, false);
             return "";
         }catch(IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
@@ -321,13 +300,6 @@ public class Backup {
      * Create a backup of each save game.
      */
     public static void backupSaveGames(boolean initialBackup) throws IOException {
-        backupSaveGames(initialBackup, false);
-    }
-
-    /**
-     * Create a backup of each save game.
-     */
-    public static void backupSaveGames(boolean initialBackup, boolean replaceInitialBackup) throws IOException {
         if(Backup.FILE_SAVE_GAME_FOLDER.exists()){
             File[] filesInFolder = Backup.FILE_SAVE_GAME_FOLDER.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
@@ -337,9 +309,9 @@ public class Backup {
                         LOGGER.info("Savefile to backup found: " + backupFile);
                     }
                     if(initialBackup){
-                        createBackup(backupFile, true, false, replaceInitialBackup);
+                        createBackup(backupFile, true, false);
                     }else{
-                        createBackup(backupFile, false, true, replaceInitialBackup);
+                        createBackup(backupFile, false, true);
                     }
                 }
                 if(Settings.enableDebugLogging){
@@ -354,17 +326,8 @@ public class Backup {
      * @param initialBackup True if this is the initial backup.
      */
     public static void createThemeFilesBackup(boolean initialBackup, boolean showTextAreaMessages) throws IOException {
-        createThemeFilesBackup(initialBackup, showTextAreaMessages, false);
-    }
-
-    /**
-     * Creates a backup of each Theme file.
-     * @param initialBackup True if this is the initial backup.
-     * @param replaceInitialBackup True if the initial backup should be replaced
-     */
-    public static void createThemeFilesBackup(boolean initialBackup, boolean showTextAreaMessages, boolean replaceInitialBackup) throws IOException {
         for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
-            Backup.createBackup(Utils.getThemeFile(i), initialBackup, showTextAreaMessages, replaceInitialBackup);
+            Backup.createBackup(Utils.getThemeFile(i), initialBackup, showTextAreaMessages);
         }
     }
 }

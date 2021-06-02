@@ -152,9 +152,6 @@ public class WindowMain {
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
         M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherMod.realPublishers());
-        JMenuItem m512PerformGameUpdateTasks = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.updateInitialBackups"));
-        m512PerformGameUpdateTasks.setToolTipText(I18n.INSTANCE.get("window.main.utilities.updateInitialBackups.toolTip"));
-        m512PerformGameUpdateTasks.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnablePerformGameUpdateTasks, "PerformGameUpdateTasks"));
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
@@ -165,7 +162,6 @@ public class WindowMain {
         MB.add(M_5_UTIL);
         M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
-        m51ExperimentalFeatures.add(m512PerformGameUpdateTasks);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
         M_5_UTIL.add(m54OpenSaveGameFolder);
