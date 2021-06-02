@@ -71,7 +71,7 @@ public class ThemeFileAnalyzer {
             if(Settings.enableDebugLogging){
                 LOGGER.info("Value: " + entry.getValue());
             }
-            if(entry.getValue().contains(themeNameEn)){
+            if(entry.getValue().equals(themeNameEn)){
                 return position;
             }else{
                 position++;
