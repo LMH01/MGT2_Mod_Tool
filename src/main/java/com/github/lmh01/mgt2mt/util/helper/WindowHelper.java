@@ -282,6 +282,11 @@ public class WindowHelper {
                 comboBox.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard")}));
                 comboBox.setSelectedItem(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"));
                 break;
+            case 3:
+                comboBox.setToolTipText(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.comboBox.toolTip"));
+                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("commonText.add.upperCase"), I18n.INSTANCE.get("commonText.remove.upperCase")}));
+                comboBox.setSelectedItem(I18n.INSTANCE.get("commonText.add.upperCase"));
+                break;
             default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-2; Was: " + type);
         }
         return comboBox;

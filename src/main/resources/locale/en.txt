@@ -144,6 +144,7 @@ commonText.multipleFilesSelected|Multiple files selected
 commonText.add|add
 commonText.add.upperCase|Add
 commonText.remove|remove
+commonText.remove.upperCase|Remove
 commonText.addMod|Add mod?
 commonText.unableToAdd|Unable to add:
 commonText.modAlreadyExists|The mod already exists!
@@ -594,6 +595,16 @@ dialog.genreHelper.getGenreScreenshots.message|<html>Click browse or enter enter
 dialog.genreHelper.getGenreScreenshots.imageFileAdded|Image file has been added.
 dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Image files have been added.
 
+dialog.contentEditor.editGenreThemeFit.message.title|Edit genre/theme fit
+dialog.contentEditor.editGenreThemeFit.message|<html>Here you can edit the genre/theme fit.<br>Select the themes and genres that are to be combined with each other.<br>The combinations can also be undone by selecting remove instead of add.
+dialog.contentEditor.editGenreThemeFit.themeLabel|Select the themes that should be edited:
+dialog.contentEditor.editGenreThemeFit.genreLabel|Select the genres that should be added/removed:
+dialog.contentEditor.editGenreThemeFit.comboBox.toolTip|<html>Choose what should be done:<br>Add: The selected genre/themes will be made compatible with each other<br>Remove: The selected genre/themes will no longer be compatible with each other
+dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Are you sure that the selected genres/themes<br>should be combined/removed from each other?
+dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Please select at least one genre/theme to continue!
+dialog.contentEditor.editGenreThemeFit.success|The genre/theme fit has been edited successfully!
+dialog.contentEditor.editGenreThemeFit.error|Something went wrong while editing the theme file:
+
 disclaimer.disclaimerText|<html>Important information:<br><br>Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>Your save game files can be found by clicking<br>"Open Save Game Location" located in the utilities menu.<br>Mods that have been applied may only take effect when you start a new game.<br>Removing mods later won't necessarily remove them from your save games.<br><br>Note:<br>Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>In case you don't know what an input field does hover over it with your mouse.<br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
 errorMessages.gameFilesNotAnalyzed|<html>The game files could not be analyzed.<br>Please check if your mgt2 folder is set correctly.<br>Try launching the tool with administrator rights.
@@ -614,6 +625,7 @@ frame.title.unableToContinue|Unable to continue
 frame.title.reset|Reset?
 frame.title.information|Information
 frame.title.import|Import
+frame.title.areYouSure|Are you sure?
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be
@@ -781,6 +793,8 @@ window.main.mods.genres.removeGenre|Remove genre
 window.main.mods.themes|Themes
 window.main.mods.themes.addTheme|Add theme
 window.main.mods.themes.removeTheme|Remove theme
+window.main.mods.themes.changeGenreThemeFit|Edit genre/theme fit
+window.main.mods.themes.changeGenreThemeFit.toolTip|Click here to edit the genre/theme fit
 window.main.mods.publisher|Publisher
 window.main.mods.publisher.addPublisher|Add publisher
 window.main.mods.publisher.removePublisher|Remove publisher

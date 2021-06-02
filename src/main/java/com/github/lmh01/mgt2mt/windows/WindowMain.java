@@ -28,6 +28,7 @@ public class WindowMain {
     private static final JMenuItem M_12_UPDATE_CHECK = new JMenuItem(I18n.INSTANCE.get("window.main.file.updateCheck"));
     private static final JMenuItem M_13_UNINSTALL = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
     private static final JMenu M_21_IMPORT = new JMenu(I18n.INSTANCE.get("window.main.mods.import"));
+    private static final JMenuItem M_233_CHANGE_GENRE_THEME_FIT = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit"));
     private static final JMenuItem M_211_IMPORT_FROM_FILE_SYSTEM = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem"));
     private static final JMenuItem M_212_IMPORT_FROM_URL = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromURL"));
     private static final JMenuItem M_22_NPC_GAMES_LIST = new JMenuItem(I18n.INSTANCE.get("window.main.mods.npcGamesList"));
@@ -103,6 +104,7 @@ public class WindowMain {
         M_2_MODS.add(M_22_NPC_GAMES_LIST);
         M_2_MODS.add(M_23_ADD_COMPANY_ICON);
         M_2_MODS.add(m210ShowActiveMods);
+        M_233_CHANGE_GENRE_THEME_FIT.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableEditGenreThemeFit, "EditGenreThemeFit"));
         M_31_EXPORT.add(M_317_EXPORT_ALL);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportAll, "runnableExportAll"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
@@ -274,10 +276,12 @@ public class WindowMain {
                     }
                     M_22_NPC_GAMES_LIST.setEnabled(false);
                     M_23_ADD_COMPANY_ICON.setEnabled(false);
+                    M_233_CHANGE_GENRE_THEME_FIT.setEnabled(false);
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(false);
                     M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_23_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                 }else{
                     M_21_IMPORT.setEnabled(true);
@@ -286,9 +290,11 @@ public class WindowMain {
                         menu.setToolTipText("");
                     }
                     M_23_ADD_COMPANY_ICON.setEnabled(true);
+                    M_233_CHANGE_GENRE_THEME_FIT.setEnabled(true);
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
                     M_21_IMPORT.setToolTipText("");
                     M_23_ADD_COMPANY_ICON.setToolTipText("");
+                    M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit.toolTip"));
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
             }catch (IndexOutOfBoundsException e){
@@ -402,6 +408,7 @@ public class WindowMain {
                 for(JMenuItem menuItem : ModManager.themeMod.getModMenuItems()){
                     menu2.add(menuItem);
                 }
+                menu2.add(M_233_CHANGE_GENRE_THEME_FIT);
                 JMenu menu3 = new JMenu(ModManager.publisherMod.getTypePlural());
                 for(JMenuItem menuItem : ModManager.publisherMod.getModMenuItems()){
                     menu3.add(menuItem);

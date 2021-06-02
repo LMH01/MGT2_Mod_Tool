@@ -144,6 +144,7 @@ commonText.multipleFilesSelected|Mehrere Dateien ausgewählt
 commonText.add|hinzufügen
 commonText.add.upperCase|Hinzufügen
 commonText.remove|entfernen
+commonText.remove.upperCase|Entfernen
 commonText.addMod|Mod hinzufügen?
 commonText.unableToAdd|Hinzufügen unmöglich:
 commonText.modAlreadyExists|Der Mod existiert bereits!
@@ -594,6 +595,16 @@ dialog.genreHelper.getGenreScreenshots.message|<html>Klicken auf Durchsuchen ode
 dialog.genreHelper.getGenreScreenshots.imageFileAdded|Bild wurde hinzugefügt.
 dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Bilder wurden hinzugefügt.
 
+dialog.contentEditor.editGenreThemeFit.message.title|Genre/Theme Kombination bearbeiten
+dialog.contentEditor.editGenreThemeFit.message|<html>Hier können die Genre/Themen Kombinationen bearbeitet werden.<br>Wähle dazu die Themen und Genres aus, die miteinander kombiniert werden sollen.<br>Die Kombinationen können auch rückgängig gemacht werden,<br>indem entfernen anstatt hinzufügen ausgewählt wird.
+dialog.contentEditor.editGenreThemeFit.themeLabel|Wähle die Themen aus, die bearbeitet werden sollen:
+dialog.contentEditor.editGenreThemeFit.genreLabel|Wähle die Genres aus, die hinzugefügt/entfernt werden sollen:
+dialog.contentEditor.editGenreThemeFit.comboBox.toolTip|<html>Wähle aus, was gemacht werden soll:<br>Hinzufügen: Die Genres/Themen werden miteinander kompatibel gemacht<br>Entfernen: Die Genre/Themen werden nicht länger miteinander kompatibel sein
+dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Bist du dir sicher, dass die ausgewählten Genres/Themen<br>miteinander kombiniert/von einander entfernt werden sollen?
+dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Bitte wähle mindestens ein Thema/Genre aus, um fortzufahren!
+dialog.contentEditor.editGenreThemeFit.success|Die Genre/Themen Kombination wurde erfolgreich bearbeitet!
+dialog.contentEditor.editGenreThemeFit.error|Beim bearbeiten der Themendatei ist ein Fehler aufgetreten:
+
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>Backups werden automatisch erstellt, aber bitte erstell deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>Die gespeicherten Spielstände sind zu finden, indem du auf<br>"Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>Angewendete Mods werden möglicherweise nur wirksam, wenn ein neues Spiel gestartet wird.<br>Wenn Mods später entfernt werden, werden sie nicht unbedingt aus den gespeicherten Spielen entfernt.<br><br>Hinweis:<br>Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Sicherheitsfunktionen in den Einstellungen deaktiviert werden.<br>Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br>Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
 
 errorMessages.gameFilesNotAnalyzed|<html>Die Spieledateien konnten nicht analysiert werden.<br>Überprüfe bitte, ob der mgt2-Ordner richtig eingestellt ist.<br>Starte das Tool mit Administratorrechten.
@@ -614,6 +625,7 @@ frame.title.unableToContinue|Fortsetzen nicht möglich
 frame.title.reset|Zurücksetzen?
 frame.title.information|Information
 frame.title.import|Importieren
+frame.title.areYouSure|Bist du dir sicher?
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
@@ -776,11 +788,13 @@ window.main.mods.import.getMoreMods.confirmDialog.title|Seite öffnen?
 window.main.mods.genres|Genres
 window.main.mods.genres.addGenre|Genre hinzufügen
 window.main.mods.genres.addRandomGenre|Zufälliges Genre hinzufügen
-window.main.mods.genres.addRandomGenre.toolTip|<html>Klicken hier, um ein zufälliges Genre hinzuzufügen.<br>Du musst nur einen Namen und eine Beschreibung eingeben.<br>Optional können auch ein Symbol oder Screenshots hinzugefügt werden.
+window.main.mods.genres.addRandomGenre.toolTip|<html>Klicke hier, um ein zufälliges Genre hinzuzufügen.<br>Du musst nur einen Namen und eine Beschreibung eingeben.<br>Optional können auch ein Symbol oder Screenshots hinzugefügt werden.
 window.main.mods.genres.removeGenre|Genre entfernen
 window.main.mods.themes|Themen
 window.main.mods.themes.addTheme|Thema hinzufügen
 window.main.mods.themes.removeTheme|Thema entfernen
+window.main.mods.themes.changeGenreThemeFit|Genre/Thema Kombination bearbeiten
+window.main.mods.themes.changeGenreThemeFit.toolTip|Klicke hier, um die Genre/Thema Kombinationen zu bearbeiten
 window.main.mods.publisher|Publisher
 window.main.mods.publisher.addPublisher|Publisher hinzufügen
 window.main.mods.publisher.removePublisher|Publisher entfernen

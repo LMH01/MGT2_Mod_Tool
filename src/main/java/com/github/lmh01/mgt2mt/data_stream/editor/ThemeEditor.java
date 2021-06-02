@@ -160,10 +160,22 @@ public class ThemeEditor extends AbstractSimpleEditor {
     /**
      * Edits the genre ids for the themes in Themes_GE.txt file
      * @param genreID The genre id that should be added/removed
-     * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the file.
+     * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the whole file. If the genre id should only be removed from the input theme ids use {@link ThemeEditor#editGenreAllocationAdvanced(int, boolean, Set, boolean)} instead.
      * @param compatibleThemeIds A set containing all compatible theme ids.
      */
     public void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
+        editGenreAllocationAdvanced(genreID, addGenreID, compatibleThemeIds, !addGenreID);
+    }
+
+    /**
+     * Edits the genre ids for the themes in Themes_GE.txt file.
+     * This function will only remove the genre id from the selected theme ids and not from every theme like in {@link ThemeEditor#editGenreAllocation(int, boolean, Set)}.
+     * @param genreID The genre id that should be added/removed
+     * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the file.
+     * @param themeIds A set containing all theme ids that should be modified.
+     * @param removeIdFromWholeFile If true the genre id will be removed from the whole file
+     */
+    public void editGenreAllocationAdvanced(int genreID, boolean addGenreID, Set<Integer> themeIds, boolean removeIdFromWholeFile) throws IOException {
         ThemeFileAnalyzer.analyzeThemeFiles();
         File fileTopicsGe = ModManager.themeMod.getFileGe();
         if(fileTopicsGe.exists()){
@@ -175,14 +187,18 @@ public class ThemeEditor extends AbstractSimpleEditor {
         boolean firstLine = true;
         for(Integer i : map.keySet()){
             if(addGenreID){
-                if(compatibleThemeIds.contains(i)){
+                if(themeIds.contains(i)){
                     if (Settings.enableDebugLogging) {
                         LOGGER.info(i + " - Y: " + map.get(i));
                     }
                     if(!firstLine){
                         bw.write(System.getProperty("line.separator"));
                     }
-                    bw.write(map.get(i) + "<" + genreID + ">");
+                    if(!map.get(i).contains("<" + genreID + ">")){
+                        bw.write(map.get(i) + "<" + genreID + ">");
+                    }else{
+                        bw.write(map.get(i));
+                    }
                 }else{
                     if (!firstLine) {
                         bw.write(System.getProperty("line.separator"));
@@ -193,10 +209,30 @@ public class ThemeEditor extends AbstractSimpleEditor {
                     bw.write(map.get(i));
                 }
             }else{
-                if (!firstLine) {
-                    bw.write(System.getProperty("line.separator"));
+                if(removeIdFromWholeFile){
+                    if (!firstLine) {
+                        bw.write(System.getProperty("line.separator"));
+                    }
+                    bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                }else{
+                    if(themeIds.contains(i)){
+                        if (Settings.enableDebugLogging) {
+                            LOGGER.info(i + " - Y: " + map.get(i));
+                        }
+                        if(!firstLine){
+                            bw.write(System.getProperty("line.separator"));
+                        }
+                        bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                    }else{
+                        if (!firstLine) {
+                            bw.write(System.getProperty("line.separator"));
+                        }
+                        if (Settings.enableDebugLogging) {
+                            LOGGER.info(i + " - N: " + map.get(i));
+                        }
+                        bw.write(map.get(i));
+                    }
                 }
-                bw.write(map.get(i).replace("<" + genreID + ">", ""));
             }
             firstLine = false;
         }
