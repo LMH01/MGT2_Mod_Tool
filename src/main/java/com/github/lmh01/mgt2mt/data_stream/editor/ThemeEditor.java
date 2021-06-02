@@ -71,6 +71,8 @@ public class ThemeEditor extends AbstractSimpleEditor {
 
     @Override
     public void removeMod(String name) throws IOException {
+        ModManager.themeMod.getAnalyzerEn().analyzeFile();
+        ModManager.themeMod.getAnalyzerGe().analyzeFile();
         editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(name), 0);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
     }
