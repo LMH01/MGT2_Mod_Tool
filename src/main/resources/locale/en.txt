@@ -446,7 +446,7 @@ dialog.export.error|Error while exporting
 dialog.export.alreadyExported1|The following entries have not been exported because they were already exported
 dialog.export.alreadyExported2|Do you want to open the export folder?
 
-dialog.backup.deleteAllBackups.mainMessage|<html>Are you sure that you would like to delete all backups?<br>This could lead to problems.
+dialog.backup.deleteAllBackups.mainMessage|<html>Are you sure that you would like to delete all backups?<br>This could lead to problems.<br>When all backups have been deleted the program is exited<br>and on the next startup a new initial backup will be created.
 dialog.backup.deleteAllBackups.mainMessage.title|Delete backups?
 dialog.backup.deleteAllBackups.createNewInitialBackupQuestion|<html>All backups have been deleted.<br>Do you want to create a new initial backup?
 dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title|Backups deleted

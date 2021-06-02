@@ -236,8 +236,11 @@ public class Backup {
                     if(returnValue.equals("")) {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupCreated"), I18n.INSTANCE.get("dialog.backup.initialBackupCreated.title"), JOptionPane.INFORMATION_MESSAGE);
                     }else {
+                        System.exit(0);
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated") + returnValue, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated.title"), JOptionPane.ERROR_MESSAGE);
                     }
+                }else{
+                    System.exit(0);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
