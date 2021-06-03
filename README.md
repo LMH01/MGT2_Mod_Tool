@@ -13,7 +13,7 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
 #### WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST
 
 #### TO COUNTERACT THIS YOU CAN CREATE A MOD RESTORE POINT IN THE BACKUP MENU
-## Download: [v2.0.7](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v2.0.7/MGT2_Mod_Tool_2.0.7.zip)
+## Download: [v2.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v2.1.0/MGT2_Mod_Tool_2.1.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -43,6 +43,9 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
   - In the **Utilities** menu under **Experimental Features** you can switch all preexisting publisher and developer names to the real life equivalents.
 #### Engine and gameplay features
   - You can add custom engine/gameplay features, however you should be careful what values you enter because it could happen that you break the balance of the game.
+#### Hardware and hardware features
+  - You can add custom hardware that can be used to create your own consoles
+  - Custom hardware features can also be added
 #### Licences
   - You can add custom licences for books, movies and sport events
 #### Npc games
