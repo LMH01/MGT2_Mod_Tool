@@ -135,6 +135,19 @@ public class WindowHelper {
     }
 
     /**
+     * @param spinner The spinner that should be used
+     * @param labelTranslationKey The translation key for the label that should be added
+     * @return Returns a new panel containing the label and the translation key
+     */
+    public static JPanel getSpinnerPanel(JSpinner spinner, String labelTranslationKey){
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(I18n.INSTANCE.get(labelTranslationKey));
+        panel.add(label);
+        panel.add(spinner);
+        return panel;
+    }
+
+    /**
      * @return Returns a new spinner set with the values for the cost spinner. The following is already initialized: Min/max value, step size and tooltip.
      */
     public static JSpinner getCostSpinner(){

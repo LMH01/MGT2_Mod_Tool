@@ -40,6 +40,9 @@ commonText.antiCheat.upperCase.plural|Anti cheats
 commonText.copyProtect|copy protection
 commonText.copyProtect.upperCase|Copy protection
 commonText.copyProtect.upperCase.plural|Copy protections
+commonText.hardwareFeature|hardware feature
+commonText.hardwareFeature.upperCase|Hardware feature
+commonText.hardwareFeature.upperCase.plural|Hardware features
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -75,6 +78,8 @@ commonText.researchCost.spinner.toolTip|This is the research cost, it is being p
 commonText.cost.spinner.toolTip|This is the price that has to be paid in order to unlock this feature.
 commonText.developmentCost|Development cost
 commonText.developmentCost.spinner.toolTip|Set the development cost for this feature.<br>This cost will be added when developing a game with this feature.
+commonText.quality|Quality
+commonText.quality.spinner|Set the quality for this feature
 commonText.devKitCost|Dev kit cost
 commonText.price|Price
 commonText.marketShare|Market share
@@ -165,6 +170,9 @@ commonText.points.spinner.toolTip|The amount of [...] points that are added when
 commonText.fanBase|Fan base
 commonText.selectGenre|Select genre
 commonText.selectGenreFirst|Please select a genre first!
+commonText.quality|Quality
+commonText.needInternet|Needs internet
+commonText.stationary|Only stationary
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -214,6 +222,10 @@ analyzer.copyProtect.getCustomContentString.errorWhileScanningDefaultFiles|Error
 analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modded copy protection found:
 analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scanning for modded copy protections complete
 analyzer.copyProtect.getCustomContentString.progressBar|Scanning for modded copy protections
+analyzer.hardwareFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning hardware features:
+analyzer.hardwareFeature.getCustomContentString.customEngineFeatureFound|Modded hardware feature found:
+analyzer.hardwareFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded hardware features complete
+analyzer.hardwareFeature.getCustomContentString.progressBar|Scanning for modded hardware features
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add gameplay feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove gameplay feature
@@ -248,6 +260,9 @@ modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Disabled -> No anti 
 modManager.copyProtect.windowMain.modButton.addMod|Add copy protection
 modManager.copyProtect.windowMain.modButton.removeMod|Remove copy protection
 modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Disabled -> No copy protection available
+modManager.hardwareFeature.windowMain.modButton.addMod|Add hardware feature
+modManager.hardwareFeature.windowMain.modButton.removeMod|Remove hardware feature
+modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No hardware feature available
 modManager.general.enterNameFirst|Please enter a name first!
 modManager.general.enterNameDescriptionFirst|Please enter a name and description first!
 
@@ -399,6 +414,11 @@ mod.genre.translation.information|<html>Note:<br>The translation that you have e
 mod.genre.sameSelection.text|<html>Unable to continue: It is not allowed to select the same feature in booth lists.<br>Please deselect the feature from one list.
 mod.companyIcon.added|Image has been added.
 mod.companyIcon.added.title|Image added.
+mod.hardwareFeature.addMod.optionPaneMessage.firstPart|Add this hardware feature?
+mod.hardwareFeature.addMod.components.textFieldName.initialValue|ENTER HARDWARE FEATURE NAME
+mod.hardwareFeature.addMod.components.checkBoxNeedsInternet.toolTip|Aktiviere diese Box, damit das Feature nur dann benutzt werden kann, wenn die Konsole Internet hat
+mod.hardwareFeature.addMod.components.checkBoxOnlyStationary.toolTip|Aktiviere diese Box, damit das Feature nur dann benutzt werden kann, wenn die Konsole nicht Portabel ist
+mod.hardwareFeature.addMod.components.textFieldDescription.initialValue|ENTER HARDWARE DESCRIPTION
 
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:

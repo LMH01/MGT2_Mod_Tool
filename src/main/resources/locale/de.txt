@@ -40,6 +40,9 @@ commonText.antiCheat.upperCase.plural|Anti Cheats
 commonText.copyProtect|Kopierschutz
 commonText.copyProtect.upperCase|Kopierschutz
 commonText.copyProtect.upperCase.plural|Kopierschutze
+commonText.hardwareFeature|Hardware Feature
+commonText.hardwareFeature.upperCase|Hardware Feature
+commonText.hardwareFeature.upperCase.plural|Hardware Features
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -75,6 +78,8 @@ commonText.researchCost.spinner.toolTip|Die Kosten zum erforschen dieses Feature
 commonText.cost.spinner.toolTip|Dieser Preis muss bezahlt werden, damit das Feature benutzt werden kann.
 commonText.developmentCost|Entwicklungskosten
 commonText.developmentCost.spinner.toolTip|Lege die Entwicklungskosten für dieses Feature fest.<br>Diese Kosten werden hinzugefügt, wenn ein Spiel mit dieser Funktion entwickelt wird.
+commonText.quality|Qualität
+commonText.quality.spinner|Lege die Qualität dieses Features fest.
 commonText.devKitCost|Kosten für das Development Kit
 commonText.price|Kosten
 commonText.marketShare|Marktanteil
@@ -165,6 +170,9 @@ commonText.points.spinner.toolTip|Die Anzahl der [...]-Punkte, die hinzugefügt 
 commonText.fanBase|Fan base
 commonText.selectGenre|Genre auswählen
 commonText.selectGenreFirst|Bitte wähle zu erst ein Genre aus!
+commonText.quality|Qualität
+commonText.needInternet|Benötigt Internet
+commonText.stationary|Nur Stationär
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -214,6 +222,10 @@ analyzer.copyProtect.getCustomContentString.errorWhileScanningDefaultFiles|Fehle
 analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modifizierten Kopierschutz gefunden:
 analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Kopierschutzen abgeschlossen
 analyzer.copyProtect.getCustomContentString.progressBar|Scannen nach modifizierten Kopierschutzen
+analyzer.hardwareFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Hardware Features:
+analyzer.hardwareFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Hardware Feature gefunden:
+analyzer.hardwareFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Hardware Features abgeschlossen
+analyzer.hardwareFeature.getCustomContentString.progressBar|Scannen nach modifizierten Hardware Features
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -248,6 +260,9 @@ modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein 
 modManager.copyProtect.windowMain.modButton.addMod|Kopierschutz hinzufügen
 modManager.copyProtect.windowMain.modButton.removeMod|Kopierschutz entfernen
 modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Kopierschutz verfügbar
+modManager.hardwareFeature.windowMain.modButton.addMod|Hardware Feature hinzufügen
+modManager.hardwareFeature.windowMain.modButton.removeMod|Hardware Feature entfernen
+modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Hardware Feature verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und eine Beschreibung ein!
 
@@ -399,6 +414,11 @@ mod.genre.translation.information|<html>Hinweis:<br>Die Übersetzung, die in das
 mod.genre.sameSelection.text|<html>Fortsetzung nicht möglich: Es ist nicht zulässig, dasselbe Feature in beiden Listen auszuwählen.<br>Bitte deaktiviere das Feature in einer Liste.
 mod.companyIcon.added|Bild wurde hinzugefügt.
 mod.companyIcon.added.title|Bild hinzugefügt.
+mod.hardwareFeature.addMod.optionPaneMessage.firstPart|Dieses Hardware Feature hinzufügen?
+mod.hardwareFeature.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DAS HARDWARE FEATURE EIN
+mod.hardwareFeature.addMod.components.checkBoxNeedsInternet.toolTip|Aktiviere diese Box, damit das Feature nur dann benutzt werden kann, wenn die Konsole Internet hat
+mod.hardwareFeature.addMod.components.checkBoxOnlyStationary.toolTip|Aktiviere diese Box, damit das Feature nur dann benutzt werden kann, wenn die Konsole nicht Portabel ist
+mod.hardwareFeature.addMod.components.textFieldDescription.initialValue|GIB EINE BESCHREIBUNG FÜR DIE HARDWARE EIN
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:

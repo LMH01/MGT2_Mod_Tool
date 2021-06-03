@@ -112,6 +112,10 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
         return "true";
     }
 
+    @Override
+    public String getType() {
+        return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
+    }
     /**
      * @return Returns the map that contains the import values
      * Can be overwritten to adjust specific values

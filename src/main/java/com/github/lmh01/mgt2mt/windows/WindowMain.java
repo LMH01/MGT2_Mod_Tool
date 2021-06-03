@@ -207,7 +207,6 @@ public class WindowMain {
         frame.setVisible(true);
     }
     public static void disposeFrame(){
-        Debug.test();
         frame.dispose();
         System.exit(0);
     }
@@ -445,6 +444,10 @@ public class WindowMain {
                 for(JMenuItem menuItem : ModManager.copyProtectMod.getModMenuItems()){
                     menu11.add(menuItem);
                 }
+                JMenu menu12 = new JMenu(ModManager.hardwareFeatureMod.getTypePlural());
+                for(JMenuItem menuItem : ModManager.hardwareFeatureMod.getModMenuItems()){
+                    menu12.add(menuItem);
+                }
                 MOD_MENUS.add(menu);
                 MOD_MENUS.add(menu2);
                 MOD_MENUS.add(menu3);
@@ -456,6 +459,7 @@ public class WindowMain {
                 MOD_MENUS.add(menu9);
                 MOD_MENUS.add(menu10);
                 MOD_MENUS.add(menu11);
+                MOD_MENUS.add(menu12);
                 M_2_MODS.add(menu);
                 M_2_MODS.add(menu2);
                 M_2_MODS.add(menu3);
@@ -467,6 +471,7 @@ public class WindowMain {
                 M_2_MODS.add(menu9);
                 M_2_MODS.add(menu10);
                 M_2_MODS.add(menu11);
+                M_2_MODS.add(menu12);
                 M_31_EXPORT.add(ModManager.genreMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.themeMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.publisherMod.getExportMenuItem());
@@ -478,6 +483,7 @@ public class WindowMain {
                 M_31_EXPORT.add(ModManager.platformMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.antiCheatMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.copyProtectMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.hardwareFeatureMod.getExportMenuItem());
             }
             modMenusInitialized = true;
         }

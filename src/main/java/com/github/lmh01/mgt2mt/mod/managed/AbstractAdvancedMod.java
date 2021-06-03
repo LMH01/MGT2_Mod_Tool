@@ -10,9 +10,12 @@ import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public abstract class AbstractAdvancedMod extends AbstractBaseMod implements AdvancedMod, BaseFunctions, BaseMod{
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
@@ -86,6 +89,21 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod implements Adv
     public void exportMenuItemAction() {
         Thread thread = new Thread(() -> OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
         ThreadHandler.startThread(thread, "runnableExport" + getType());
+    }
+
+    @Override
+    public File getFile() {
+        return new File(getMGT2DataPath() + "//" + getFileName());
+    }
+
+    @Override
+    public String getType() {
+        return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
+    }
+
+    @Override
+    public String getTypePlural() {
+        return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase.plural");
     }
 
     /**
