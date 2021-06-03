@@ -143,7 +143,8 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
                 }
             }
         }catch(IOException e){
-
+            TextAreaHelper.appendText(e.getMessage());
+            e.printStackTrace();
         }
     }
 

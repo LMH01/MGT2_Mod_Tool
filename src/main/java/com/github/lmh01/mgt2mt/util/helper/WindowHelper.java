@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -248,7 +249,7 @@ public class WindowHelper {
             default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-1; Was: " + type);
         }
         JButton button = new JButton(buttonLabel);
-        button.setToolTipText(I18n.INSTANCE.get(buttonToolTipAddTranslations));
+        button.setToolTipText(buttonToolTipAddTranslations);
         button.addActionListener(actionEvent -> {
             if(!translationsAdded.get()){
                 mapTranslationsAdded[0] = TranslationManager.getTranslationsMap();
@@ -300,7 +301,18 @@ public class WindowHelper {
                 comboBox.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("commonText.add.upperCase"), I18n.INSTANCE.get("commonText.remove.upperCase")}));
                 comboBox.setSelectedItem(I18n.INSTANCE.get("commonText.add.upperCase"));
                 break;
-            default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-2; Was: " + type);
+            case 4:
+                comboBox.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.type.toolTip"));
+                ArrayList<String> modelContent = new ArrayList<>();
+                for(int i=0; i<10; i++){
+                    modelContent.add(ModManager.hardwareMod.getHardwareTypeNameById(i));
+                }
+                String[] model = new String[modelContent.size()];
+                modelContent.toArray(model);
+                comboBox.setModel(new DefaultComboBoxModel<>(model));
+                comboBox.setSelectedItem(ModManager.hardwareMod.getHardwareTypeNameById(0));
+                break;
+            default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-4; Was: " + type);
         }
         return comboBox;
     }

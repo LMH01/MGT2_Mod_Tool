@@ -43,6 +43,9 @@ commonText.copyProtect.upperCase.plural|Kopierschutze
 commonText.hardwareFeature|Hardware Feature
 commonText.hardwareFeature.upperCase|Hardware Feature
 commonText.hardwareFeature.upperCase.plural|Hardware Features
+commonText.hardware|Hardware
+commonText.hardware.upperCase|Hardware
+commonText.hardware.upperCase.plural|Hardware
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -173,6 +176,18 @@ commonText.selectGenreFirst|Bitte wähle zu erst ein Genre aus!
 commonText.quality|Qualität
 commonText.needInternet|Benötigt Internet
 commonText.stationary|Nur Stationär
+commonText.cpu|Hauptprozessor (CPU)
+commonText.gpu|Grafikchip (GPU)
+commonText.ram|Arbeitsspeicher (RAM)
+commonText.storage|Interner / Externer Speicher
+commonText.audio|Soundchip
+commonText.cooling|Kühlsystem
+commonText.gameStorageDevice|Datenträger
+commonText.controller|Eingabegerät
+commonText.case|Gehäuse
+commonText.screen|Bildschirm
+commonText.stationaryConsole|Stationäre Konsole
+commonText.portableConsole|Portable Konsole
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -226,6 +241,10 @@ analyzer.hardwareFeature.getCustomContentString.errorWhileScanningDefaultFiles|F
 analyzer.hardwareFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Hardware Feature gefunden:
 analyzer.hardwareFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Hardware Features abgeschlossen
 analyzer.hardwareFeature.getCustomContentString.progressBar|Scannen nach modifizierten Hardware Features
+analyzer.hardware.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Hardware:
+analyzer.hardware.getCustomContentString.customEngineFeatureFound|Modifizierte Hardware gefunden:
+analyzer.hardware.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierter Hardware abgeschlossen
+analyzer.hardware.getCustomContentString.progressBar|Scannen nach modifizierter Hardware
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -263,6 +282,9 @@ modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kei
 modManager.hardwareFeature.windowMain.modButton.addMod|Hardware Feature hinzufügen
 modManager.hardwareFeature.windowMain.modButton.removeMod|Hardware Feature entfernen
 modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Hardware Feature verfügbar
+modManager.hardware.windowMain.modButton.addMod|Hardware hinzufügen
+modManager.hardware.windowMain.modButton.removeMod|Hardware entfernen
+modManager.hardware.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Hardware verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und eine Beschreibung ein!
 
@@ -419,6 +441,15 @@ mod.hardwareFeature.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN
 mod.hardwareFeature.addMod.components.checkBoxNeedsInternet.toolTip|Aktiviere diese Box, damit das Feature nur dann benutzt werden kann, wenn die Konsole Internet hat
 mod.hardwareFeature.addMod.components.checkBoxOnlyStationary.toolTip|Aktiviere diese Box, damit das Feature nur dann benutzt werden kann, wenn die Konsole nicht Portabel ist
 mod.hardwareFeature.addMod.components.textFieldDescription.initialValue|GIB EINE BESCHREIBUNG FÜR DIE HARDWARE EIN
+mod.hardware.addMod.optionPaneMessage.firstPart|Diese Hardware hinzufügen?
+mod.hardware.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE HARDWARE EIN
+mod.hardware.addMod.components.textFieldDescription.initialValue|GIB EINEN BESCHREIBUNG FÜR DIE HARDWARE EIN
+mod.hardware.addMod.components.comboBox.type.toolTip|Wähle aus, von welchem Typ die Hardware sein soll
+mod.hardware.addMod.components.checkBox.exclusiveConsole|Exlusivität für eine Konsolenart aktivieren
+mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Aktiviere dieses Kästchen, damit die Hardware nur für eine bestimmte Konsolenart benutzt werden können soll<br>Die erlaubte Konsolenart kann unten ausgewählt werden
+mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationäre Konsole
+mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable Konsole
+mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|<html>Wähle hier aus, für welche Konsolenart diese Hardware exclusiv sein soll
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:

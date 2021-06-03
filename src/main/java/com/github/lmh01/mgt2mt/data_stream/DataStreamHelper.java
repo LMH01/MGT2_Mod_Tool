@@ -85,28 +85,32 @@ public class DataStreamHelper {
                 }
                 firstLine = false;
             }
-            if(currentLine.isEmpty()){
-                fileParts.add(mapCurrent);
-                mapCurrent = new HashMap<>();
-                firstList = false;
+            if(currentLine.equals("////////////////////////////////////////////////////////////////////")){
+                reader.readLine();//This if/else is included so that the analyzing of the hardware.txt file works properly
             }else{
-                boolean keyComplete = false;
-                StringBuilder mapKey = new StringBuilder();
-                StringBuilder mapValue = new StringBuilder();
-                for(int i=1; i<currentLine.length(); i++){
-                    if(!keyComplete){
-                        if(String.valueOf(currentLine.charAt(i)).equals("]")){
-                            keyComplete = true;
-                            continue;
+                if(currentLine.isEmpty()){
+                    fileParts.add(mapCurrent);
+                    mapCurrent = new HashMap<>();
+                    firstList = false;
+                }else{
+                    boolean keyComplete = false;
+                    StringBuilder mapKey = new StringBuilder();
+                    StringBuilder mapValue = new StringBuilder();
+                    for(int i=1; i<currentLine.length(); i++){
+                        if(!keyComplete){
+                            if(String.valueOf(currentLine.charAt(i)).equals("]")){
+                                keyComplete = true;
+                                continue;
+                            }
+                        }
+                        if(keyComplete){
+                            mapValue.append(currentLine.charAt(i));
+                        }else{
+                            mapKey.append(currentLine.charAt(i));
                         }
                     }
-                    if(keyComplete){
-                        mapValue.append(currentLine.charAt(i));
-                    }else{
-                        mapKey.append(currentLine.charAt(i));
-                    }
+                    mapCurrent.put(mapKey.toString(), mapValue.toString().trim());
                 }
-                mapCurrent.put(mapKey.toString(), mapValue.toString().trim());
             }
         }
         if(firstList){

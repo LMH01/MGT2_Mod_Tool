@@ -21,6 +21,7 @@ public class ModManager{
     public static NpcEngineMod npcEngineMod = new NpcEngineMod();
     public static AntiCheatMod antiCheatMod = new AntiCheatMod();
     public static CopyProtectMod copyProtectMod = new CopyProtectMod();
+    public static HardwareMod hardwareMod = new HardwareMod();
     public static HardwareFeatureMod hardwareFeatureMod = new HardwareFeatureMod();
 
     /**
@@ -39,6 +40,7 @@ public class ModManager{
         npcEngineMod.initializeMod();
         antiCheatMod.initializeMod();
         copyProtectMod.initializeMod();
+        hardwareMod.initializeMod();
         hardwareFeatureMod.initializeMod();
     }
 
@@ -59,6 +61,7 @@ public class ModManager{
             npcEngineMod.getBaseAnalyzer().analyzeFile();
             antiCheatMod.getBaseAnalyzer().analyzeFile();
             copyProtectMod.getBaseAnalyzer().analyzeFile();
+            hardwareMod.getBaseAnalyzer().analyzeFile();
             hardwareFeatureMod.getBaseAnalyzer().analyzeFile();
         } catch (IOException e) {
             e.printStackTrace();
