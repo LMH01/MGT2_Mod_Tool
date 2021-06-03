@@ -106,7 +106,7 @@ public class DataStreamHelper {
                         mapKey.append(currentLine.charAt(i));
                     }
                 }
-                mapCurrent.put(mapKey.toString(), mapValue.toString());
+                mapCurrent.put(mapKey.toString(), mapValue.toString().trim());
             }
         }
         if(firstList){
