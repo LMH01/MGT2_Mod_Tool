@@ -5,12 +5,13 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
+import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.swing.*;
 
 /**
  * The advanced analyzer is used to analyze files that use this system:
@@ -18,15 +19,30 @@ import org.slf4j.LoggerFactory;
  * When a blank line is found a new entry is created see {@link DataStreamHelper#parseDataFile(File)}
  */
 public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunctions {
-    //
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedAnalyzer.class);
+    List<Map<String, String>> fileContent;
+    String[] defaultContent = {};
+    String[] customContent = {};
+    int maxId = 0;
+
+    @Override
+    public String[] getDefaultContent() {
+        if(defaultContent.length == 0){
+            try {
+                defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName());
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return defaultContent;
+    }
 
     /**
      * Analyzes the file and puts its values in the map.
      */
-    public List<Map<String, String>> getAnalyzedFile() throws IOException {
-        List<Map<String, String>> fileContent = DataStreamHelper.parseDataFile(getFileToAnalyze());
+    public void analyzeFile() throws IOException {
+        fileContent = DataStreamHelper.parseDataFile(getFileToAnalyze());
         int currentMaxId = 0;
         for (Map<String, String> map : fileContent) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -43,29 +59,29 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
             }
         }
         setMaxId(currentMaxId);
-        LOGGER.info("Max" + getType() + "Id: " + currentMaxId);
-        return fileContent;
+        sendLogMessage("Max" + getType() + "Id: " + currentMaxId);
     }
-
-    /**
-     * The file that should be analyzed
-     */
-    public abstract File getFileToAnalyze();
 
     /**
      * returns that analyzed file
      */
-    public abstract List<Map<String, String>> getFileContent();
+    public List<Map<String, String>> getFileContent(){
+        return fileContent;
+    }
 
     /**
      * Returns the currently highest id
      */
-    public abstract int getMaxId();
+    public int getMaxId() {
+        return maxId;
+    }
 
     /**
      * Sets the maximum id
      */
-    public abstract void setMaxId(int id);
+    public void setMaxId(int id) {
+        maxId = id;
+    }
 
     /**
      * @return Returns the next free id.
@@ -138,12 +154,17 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     /**
      * @return Returns the custom content string that has been computed previously
      */
-    public abstract String[] getFinishedCustomContentString();
+    public String[] getFinishedCustomContentString() {
+        return customContent;
+    }
 
     /**
      * Sets the custom content string that should be returned when {@link AbstractAdvancedAnalyzer#getFinishedCustomContentString()} is called.
      */
-    public abstract void setFinishedCustomContentString(String[] customContent);
+    public void setFinishedCustomContentString(String[] customContent) {
+        this.customContent = customContent;
+    }
+
     /**
      * @param id The id
      * @return Returns the specified content name by id.
@@ -185,9 +206,9 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
             }
         }
         if(id == -1){
-            LOGGER.info(getType() + " [" + name + "] does not exist");
+            sendLogMessage(getType() + " [" + name + "] does not exist");
         }else{
-            LOGGER.info(getType() + " [" + name + "] has been found. Id: " + id);
+            sendLogMessage(getType() + " [" + name + "] has been found. Id: " + id);
         }
         return id;
     }
@@ -236,4 +257,15 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
         }
         return activeIds;
     }
+
+    /**
+     * The file that should be analyzed
+     */
+    public abstract File getFileToAnalyze();
+
+
+    /**
+     * @return Returns a string that contains the filename of the default content file
+     */
+    public abstract String getDefaultContentFileName();
 }

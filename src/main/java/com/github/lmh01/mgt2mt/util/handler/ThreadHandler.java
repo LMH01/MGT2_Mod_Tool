@@ -60,6 +60,7 @@ public class ThreadHandler {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.secondPart"));
                 }
             }
+
         });
         thread.setName("PerformStartTasks");
         return thread;
