@@ -291,12 +291,12 @@ public class SharingManager {
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
                                         }
                                         for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
-                                            if(string.contains(advancedMod.getFileName())){
+                                            if(string.contains(advancedMod.getBaseSharer().getImportExportFileName())){
                                                 addIfCompatible(string, importModFiles.get(advancedMod), importModNames.get(advancedMod), advancedMod.getBaseSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                             }
                                         }
                                         for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
-                                            if(string.contains(simpleMod.getFileName())){
+                                            if(string.contains(simpleMod.getBaseSharer().getImportExportFileName())){
                                                 addIfCompatible(string, importModFiles.get(simpleMod), importModNames.get(simpleMod), simpleMod.getBaseSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                             }
                                         }

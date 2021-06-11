@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -172,42 +173,22 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public AbstractAdvancedMod getAdvancedMod() {
+        return ModManager.platformMod;
+    }
+
+    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
 
     @Override
-    public String getType() {
-        return ModManager.platformMod.getType();
-    }
-
-    @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.platformMod.getBaseAnalyzer();
-    }
-
-    @Override
-    public String getExportFolder() {
-        return "//Platforms//";
-    }
-
-    @Override
-    public String getFileName() {
-        return ModManager.platformMod.getFileName();
-    }
-
-    @Override
-    public String getMainTranslationKey() {
-        return ModManager.publisherMod.getMainTranslationKey();
+    public String getImportExportFileName() {
+        return "platform.txt";
     }
 
     @Override
     public String getTypeCaps() {
         return "PLATFORM";
-    }
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return ModManager.platformMod.getCompatibleModToolVersions();
     }
 }

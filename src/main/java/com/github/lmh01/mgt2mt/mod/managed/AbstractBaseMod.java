@@ -25,13 +25,13 @@ public abstract class AbstractBaseMod implements BaseFunctions, BaseMod{
     /**
      * @return Returns a new JMenuItem that is used to be added to the export menu.
      */
-    public JMenuItem getInitialExportMenuItem(){
+    public final JMenuItem getInitialExportMenuItem(){
         JMenuItem menuItem = new JMenuItem(getTypePlural());
         menuItem.addActionListener(e -> exportMenuItemAction());
         return menuItem;
     }
 
-    public void doAddModMenuItemAction(){
+    public final void doAddModMenuItemAction(){
         Thread thread = new Thread(this::menuActionAddMod);
         ThreadHandler.startThread(thread, "runnableAddNew" + getType());
     }

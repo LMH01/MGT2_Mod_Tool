@@ -89,11 +89,6 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.gameplayFeature.upperCase");
-    }
-
-    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
@@ -254,22 +249,12 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     @Override
     public String getFileName() {
-        return "gameplayFeature.txt";
-    }
-
-    @Override
-    public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.gameplayFeature.upperCase.plural");
+        return "GameplayFeatures.txt";
     }
 
     @Override
     public JMenuItem getExportMenuItem() {
         return exportMenuItem;
-    }
-
-    @Override
-    public File getFile() {
-        return new File(getMGT2DataPath() + "//GameplayFeatures.txt");
     }
 
     /**

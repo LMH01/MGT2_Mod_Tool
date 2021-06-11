@@ -21,13 +21,13 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod implements Adv
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
 
     @Override
-    public void initializeMod() {
+    public final void initializeMod() {
         LOGGER.info("Initializing advanced mod: " + getType());
         ModManager.advancedMods.add(getAdvancedMod());
     }
 
     @Override
-    public void setMainMenuButtonAvailability() {
+    public final void setMainMenuButtonAvailability() {
         String[] customContentString = getBaseAnalyzer().getCustomContentString(true);
         for(JMenuItem menuItem : getModMenuItems()){
             if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
@@ -50,7 +50,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod implements Adv
     }
 
     @Override
-    public void addMod(Map<String, String> map) throws IOException {
+    public final void addMod(Map<String, String> map) throws IOException {
         getBaseEditor().addMod(map);
     }
 
@@ -60,22 +60,22 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod implements Adv
     }
 
     @Override
-    public void exportMod(String name, boolean exportAsRestorePoint) {
+    public final void exportMod(String name, boolean exportAsRestorePoint) {
         getBaseSharer().exportMod(name, exportAsRestorePoint);
     }
 
     @Override
-    public void importMod(String importFolderPath, boolean showMessages) throws IOException {
+    public final void importMod(String importFolderPath, boolean showMessages) throws IOException {
         getBaseSharer().importMod(importFolderPath, showMessages);
     }
 
     @Override
-    public void analyze() throws IOException {
+    public final void analyze() throws IOException {
         getBaseAnalyzer().analyzeFile();
     }
 
     @Override
-    public List<Map<String, String>> getFileContent() {
+    public final List<Map<String, String>> getFileContent() {
         return getBaseAnalyzer().getFileContent();
     }
 
@@ -86,23 +86,23 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod implements Adv
     }
 
     @Override
-    public void exportMenuItemAction() {
+    public final void exportMenuItemAction() {
         Thread thread = new Thread(() -> OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
         ThreadHandler.startThread(thread, "runnableExport" + getType());
     }
 
     @Override
-    public File getFile() {
+    public final File getFile() {
         return new File(getMGT2DataPath() + "//" + getFileName());
     }
 
     @Override
-    public String getType() {
+    public final String getType() {
         return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
     }
 
     @Override
-    public String getTypePlural() {
+    public final String getTypePlural() {
         return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase.plural");
     }
 

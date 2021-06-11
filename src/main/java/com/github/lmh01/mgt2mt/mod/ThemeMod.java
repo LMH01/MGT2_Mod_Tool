@@ -259,18 +259,6 @@ public class ThemeMod extends AbstractSimpleMod {
         return getFileGe();
     }
 
-    @Override
-    public void removeModMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getAnalyzerEn().getCustomContentString(), getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
-        ThreadHandler.startThread(thread, "runnableRemove" + getType());
-    }
-
-    @Override
-    public void exportMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process((string) -> ModManager.themeMod.getSharer().exportMod(string, false), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), I18n.INSTANCE.get("commonText.theme"), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
-        ThreadHandler.startThread(thread, "runnableExport" + getType());
-    }
-
     public File getFileGe() {
         return new File(getMGT2TextFolderPath() + "\\GE\\Themes_GE.txt");
     }

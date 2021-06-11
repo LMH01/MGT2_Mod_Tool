@@ -3,7 +3,9 @@ package com.github.lmh01.mgt2mt.data_stream.sharer.managed;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -40,7 +42,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
             }
             final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
-            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getFileName());
+            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
             if(fileExportedMod.exists()){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportFailed.alreadyExported") + " " + name);
                 return false;
@@ -73,7 +75,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     public String importMod(String importFolderPath, boolean showMessages) throws IOException {
         getAnalyzer().analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = new File(importFolderPath + "\\" + getFileName());
+        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
         Map<String, String> map = DataStreamHelper.parseDataFile(fileToImport).get(0);
         map.put("ID", Integer.toString(getAnalyzer().getFreeId()));
         boolean CanBeImported = false;
@@ -113,9 +115,31 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
+    public final String getType() {
+        //return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
+        return I18n.INSTANCE.get("commonText." + getMainTranslationKey());
     }
+
+    @Override
+    public final AbstractAdvancedAnalyzer getAnalyzer() {
+        return getAdvancedMod().getBaseAnalyzer();
+    }
+
+    @Override
+    public final String getExportFolder() {
+        return "//" + getAdvancedMod().getType() + "//";
+    };
+
+    @Override
+    public final String getMainTranslationKey() {
+        return getAdvancedMod().getMainTranslationKey();
+    }
+
+    @Override
+    public final String[] getCompatibleModToolVersions() {
+        return getAdvancedMod().getCompatibleModToolVersions();
+    }
+
     /**
      * @return Returns the map that contains the import values
      * Can be overwritten to adjust specific values
@@ -152,4 +176,9 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
      * @return Returns the objects that should be displayed in the option pane
      */
     public abstract String getOptionPaneMessage(Map<String, String> map);
+
+    /**
+     * @return Returns the advanced mod that is used to access its functions
+     */
+    public abstract AbstractAdvancedMod getAdvancedMod();
 }

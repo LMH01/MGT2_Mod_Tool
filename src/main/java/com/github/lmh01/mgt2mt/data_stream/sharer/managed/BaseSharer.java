@@ -13,7 +13,7 @@ public interface BaseSharer {
      * Returns the export/import file name under which the mod can be found
      * Eg. gameplayFeature.txt, engineFeature.txt
      */
-    String getFileName();
+    String getImportExportFileName();
 
     /**
      * The translation key that is specific to the analyzer

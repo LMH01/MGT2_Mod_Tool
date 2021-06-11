@@ -32,7 +32,7 @@ public class LicenceSharer extends AbstractSimpleSharer {
     }
 
     @Override
-    public String getFileName() {
+    public String getImportExportFileName() {
         return ModManager.licenceMod.getFileName();
     }
 

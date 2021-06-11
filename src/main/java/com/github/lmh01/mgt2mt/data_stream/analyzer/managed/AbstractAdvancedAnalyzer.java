@@ -26,7 +26,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     int maxId = 0;
 
     @Override
-    public String[] getDefaultContent() {
+    public final String[] getDefaultContent() {
         if(defaultContent.length == 0){
             try {
                 defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName());
@@ -41,7 +41,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     /**
      * Analyzes the file and puts its values in the map.
      */
-    public void analyzeFile() throws IOException {
+    public final void analyzeFile() throws IOException {
         fileContent = DataStreamHelper.parseDataFile(getFileToAnalyze());
         int currentMaxId = 0;
         for (Map<String, String> map : fileContent) {
@@ -65,35 +65,35 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     /**
      * returns that analyzed file
      */
-    public List<Map<String, String>> getFileContent(){
+    public final List<Map<String, String>> getFileContent(){
         return fileContent;
     }
 
     /**
      * Returns the currently highest id
      */
-    public int getMaxId() {
+    public final int getMaxId() {
         return maxId;
     }
 
     /**
      * Sets the maximum id
      */
-    public void setMaxId(int id) {
+    public final void setMaxId(int id) {
         maxId = id;
     }
 
     /**
      * @return Returns the next free id.
      */
-    public int getFreeId(){
+    public final int getFreeId(){
         return getMaxId()+1;
     }
 
     /**
      * @return Returns a string containing all active things sorted by alphabet.
      */
-    public String[] getContentByAlphabet(){
+    public final String[] getContentByAlphabet(){
         ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
         for(Map<String, String> map : getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
@@ -108,7 +108,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
         return string;
     }
 
-    public String[] getCustomContentString(){
+    public final String[] getCustomContentString(){
         return getCustomContentString(true);
     }
 
@@ -116,7 +116,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
      * @param disableTextAreaMessage True when the messages should not be written to the text area.
      * @return Returns a array that contains all custom contents
      */
-    public String[] getCustomContentString(boolean disableTextAreaMessage){
+    public final String[] getCustomContentString(boolean disableTextAreaMessage){
         String[] contentByAlphabet = getContentByAlphabet();
         ArrayList<String> arrayListCustomContent = new ArrayList<>();
         ProgressBarHelper.initializeProgressBar(getDefaultContent().length, getFileContent().size(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
@@ -154,14 +154,14 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     /**
      * @return Returns the custom content string that has been computed previously
      */
-    public String[] getFinishedCustomContentString() {
+    public final String[] getFinishedCustomContentString() {
         return customContent;
     }
 
     /**
      * Sets the custom content string that should be returned when {@link AbstractAdvancedAnalyzer#getFinishedCustomContentString()} is called.
      */
-    public void setFinishedCustomContentString(String[] customContent) {
+    public final void setFinishedCustomContentString(String[] customContent) {
         this.customContent = customContent;
     }
 
@@ -170,7 +170,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
      * @return Returns the specified content name by id.
      * @throws ArrayIndexOutOfBoundsException Is thrown when the requested content id does not exist in the map.
      */
-    public String getContentNameById(int id) throws ArrayIndexOutOfBoundsException{
+    public final String getContentNameById(int id) throws ArrayIndexOutOfBoundsException{
         Map<Integer, String> idNameMap = new HashMap<>();
         for(Map<String, String> map : getFileContent()){
             idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
@@ -181,7 +181,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     /**
      * @return Returns an ArrayList containing all names that are in use.
      */
-    public ArrayList<String> getContentNamesInUse(){
+    public final ArrayList<String> getContentNamesInUse(){
         ArrayList<String> arrayList = new ArrayList<>();
         for(Map<String, String> map : getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
@@ -198,7 +198,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
      * @param name The name
      * @return Returns the id for the specified name.
      */
-    public int getContentIdByName(String name){
+    public final int getContentIdByName(String name){
         int id = -1;
         for(Map<String, String> map : getFileContent()){
             if(map.get("NAME EN").equals(name)){

@@ -36,7 +36,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
             }
             final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
-            File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//" + getFileName());
+            File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
             if(fileExportedTheme.exists()){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.themeExportFailed.alreadyExported") + " " + name);
                 return false;
@@ -70,7 +70,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
     public String importMod(String importFolderPath, boolean showMessages) throws IOException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.theme"));
         ThemeFileAnalyzer.analyzeThemeFiles();
-        File fileThemeToImport = new File(importFolderPath + "\\" + getFileName());
+        File fileThemeToImport = new File(importFolderPath + "\\" + getImportExportFileName());
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
         int violenceRating = 0;
@@ -159,7 +159,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
     }
 
     @Override
-    public String getFileName() {
+    public String getImportExportFileName() {
         return ModManager.themeMod.getFileName();
     }
 

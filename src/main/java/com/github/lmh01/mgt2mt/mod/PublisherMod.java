@@ -103,16 +103,6 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.publisher.upperCase");
-    }
-
-    @Override
-    public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.publisher.upperCase.plural");
-    }
-
-    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
@@ -288,11 +278,6 @@ public class PublisherMod extends AbstractAdvancedMod {
     @Override
     public String getFileName() {
         return "publisher.txt";
-    }
-
-    @Override
-    public File getFile() {
-        return new File(getMGT2DataPath() + "//Publisher.txt");
     }
 
 

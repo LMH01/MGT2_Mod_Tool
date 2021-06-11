@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -204,42 +205,22 @@ public class GenreSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public AbstractAdvancedMod getAdvancedMod() {
+        return ModManager.genreMod;
+    }
+
+    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.genre");
-    }
-
-    @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.genreMod.getAnalyzer();
-    }
-
-    @Override
-    public String getExportFolder() {
-        return "//Genre//";
-    }
-
-    @Override
-    public String getFileName() {
-        return ModManager.genreMod.getFileName();
-    }
-
-    @Override
-    public String getMainTranslationKey() {
-        return "genre";
+    public String getImportExportFileName() {
+        return "genre.txt";
     }
 
     @Override
     public String getTypeCaps() {
         return "GENRE";
-    }
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return ModManager.genreMod.getCompatibleModToolVersions();
     }
 }

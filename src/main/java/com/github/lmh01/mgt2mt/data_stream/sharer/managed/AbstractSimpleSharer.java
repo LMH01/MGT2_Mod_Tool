@@ -3,7 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream.sharer.managed;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.SimpleAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * The simple sharer is used to export/import mods that use only text and one line per file
  */
-public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer, SimpleAnalyzer {
+public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer {
 
     /**
      * Exports the mod
@@ -38,7 +38,7 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
             }
             final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + name.replaceAll("[^a-zA-Z0-9]", "");
             File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
-            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getFileName());
+            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
             if(fileExportedMod.exists()){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportFailed.alreadyExported") + " " + name);
                 return false;
@@ -70,7 +70,7 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
     public String importMod(String importFolderPath, boolean showMessages) throws IOException {
         getAnalyzer().analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = new File(importFolderPath + "\\" + getFileName());
+        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
         Map<String, String> importMap = DataStreamHelper.parseDataFile(fileToImport).get(0);
         boolean CanBeImported = false;
         for(String string : getCompatibleModToolVersions()){
@@ -129,4 +129,9 @@ public abstract class AbstractSimpleSharer implements BaseFunctions, BaseSharer,
      * @return Returns the objects that should be displayed in the option pane
      */
     public abstract String getOptionPaneMessage(String line);
+
+    /**
+     * @return Returns an simple analyzer
+     */
+    public abstract AbstractSimpleAnalyzer getAnalyzer();
 }

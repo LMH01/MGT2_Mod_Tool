@@ -66,18 +66,8 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getFile() {
-        return new File(getMGT2DataPath() + "//NpcEngines.txt");
-    }
-
-    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
-    }
-
-    @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.npcEngine.upperCase");
     }
 
     @Override
@@ -198,18 +188,13 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.npcEngine.upperCase.plural");
-    }
-
-    @Override
     public JMenuItem getExportMenuItem() {
         return exportMenuItem;
     }
 
     @Override
     public String getFileName() {
-        return "npcEngine.txt";
+        return "NpcEngines.txt";
     }
 
     /**

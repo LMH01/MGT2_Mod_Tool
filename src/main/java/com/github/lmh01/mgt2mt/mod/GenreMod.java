@@ -96,16 +96,6 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.genre.upperCase");
-    }
-
-    @Override
-    public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.genre.upperCase.plural");
-    }
-
-    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
@@ -149,12 +139,7 @@ public class GenreMod extends AbstractAdvancedMod {
 
     @Override
     public String getFileName() {
-        return "genre.txt";
-    }
-
-    @Override
-    public File getFile() {
-        return new File(getMGT2DataPath() + "//Genres.txt");
+        return "Genres.txt";
     }
 
     public void addRandomizedGenre(){

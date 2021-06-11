@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.interfaces.Importer;
@@ -14,11 +14,6 @@ import java.util.Map;
 
 public class EngineFeatureSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureSharer.class);
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return ModManager.engineFeatureMod.getCompatibleModToolVersions();
-    }
 
     @Override
     public Importer getImporter() {
@@ -44,28 +39,13 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public AbstractAdvancedMod getAdvancedMod() {
+        return ModManager.engineFeatureMod;
+    }
+
+    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
-    }
-
-    @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.engineFeature");
-    }
-
-    @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.engineFeatureMod.getAnalyzer();
-    }
-
-    @Override
-    public String getExportFolder() {
-        return "//Engine features//";
-    }
-
-    @Override
-    public String getFileName() {
-        return ModManager.engineFeatureMod.getFileName();
     }
 
     @Override
@@ -85,8 +65,8 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public String getMainTranslationKey() {
-        return "engineFeature";
+    public String getImportExportFileName() {
+        return "engineFeature.txt";
     }
 
     @Override

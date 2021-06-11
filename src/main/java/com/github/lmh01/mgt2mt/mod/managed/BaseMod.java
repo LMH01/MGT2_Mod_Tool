@@ -64,8 +64,8 @@ public interface BaseMod {
     JMenuItem getExportMenuItem();
 
     /**
-     * Returns the export/import file name under which the mod can be found
-     * Eg. gameplayFeature.txt, engineFeature.txt
+     * Returns the name for the file where the data is stored in the MGT2/Extern/DATA folder
+     * Eg. Genres.txt, GameplayFeatures.txt
      */
     String getFileName();
 }

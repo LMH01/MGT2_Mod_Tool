@@ -62,18 +62,8 @@ public class CopyProtectMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getFile() {
-        return new File(getMGT2DataPath() + "//CopyProtect.txt");
-    }
-
-    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
-    }
-
-    @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.copyProtect.upperCase");
     }
 
     @Override
@@ -141,11 +131,6 @@ public class CopyProtectMod extends AbstractAdvancedMod {
     @Override
     public String getMainTranslationKey() {
         return "copyProtect";
-    }
-
-    @Override
-    public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.copyProtect.upperCase.plural");
     }
 
     @Override

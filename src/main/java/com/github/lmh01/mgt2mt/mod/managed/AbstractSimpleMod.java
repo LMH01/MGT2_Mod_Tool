@@ -17,7 +17,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseF
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSimpleMod.class);
 
     @Override
-    public void initializeMod() {
+    public final void initializeMod() {
         LOGGER.info("Initializing simple mod: " + getType());
         ModManager.simpleMods.add(getSimpleMod());
     }
@@ -46,43 +46,43 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseF
     }
 
     @Override
-    public void addMod(String lineToWrite) throws IOException {
+    public final void addMod(String lineToWrite) throws IOException {
         getBaseEditor().addMod(lineToWrite);
     }
 
     @Override
-    public void removeMod(String name) throws IOException {
+    public final void removeMod(String name) throws IOException {
         getBaseEditor().removeMod(name);
     }
 
     @Override
-    public void exportMod(String name, boolean exportAsRestorePoint) {
+    public final void exportMod(String name, boolean exportAsRestorePoint) {
         getBaseSharer().exportMod(name, exportAsRestorePoint);
     }
 
     @Override
-    public void importMod(String importFolderPath, boolean showMessages) throws IOException {
+    public final void importMod(String importFolderPath, boolean showMessages) throws IOException {
         getBaseSharer().importMod(importFolderPath, showMessages);
     }
 
     @Override
-    public void analyze() throws IOException {
+    public final void analyze() throws IOException {
         getBaseAnalyzer().analyzeFile();
     }
 
     @Override
-    public Map<Integer, String> getFileContent() {
+    public final Map<Integer, String> getFileContent() {
         return getBaseAnalyzer().getFileContent();
     }
 
     @Override
-    public void removeModMenuItemAction() {
+    public final void removeModMenuItemAction() {
         Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
         ThreadHandler.startThread(thread, "runnableRemove" + getType());
     }
 
     @Override
-    public void exportMenuItemAction() {
+    public final void exportMenuItemAction() {
         Thread thread = new Thread(() -> OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
         ThreadHandler.startThread(thread, "runnableExport" + getType());
     }

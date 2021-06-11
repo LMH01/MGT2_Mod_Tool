@@ -23,6 +23,11 @@ public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
     }
 
     @Override
+    public AbstractSimpleAnalyzer getAnalyzer() {
+        return ModManager.npcGamesMod.getBaseAnalyzer();
+    }
+
+    @Override
     public String[] getFinishedCustomContentString() {
         return customContent;
     }

@@ -102,6 +102,11 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
     }
 
     @Override
+    public AbstractSimpleAnalyzer getAnalyzer() {
+        return ModManager.licenceMod.getAnalyzer();
+    }
+
+    @Override
     public String[] getFinishedCustomContentString() {
         return customContent;
     }

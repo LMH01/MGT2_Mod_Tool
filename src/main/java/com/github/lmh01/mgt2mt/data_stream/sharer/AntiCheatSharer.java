@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -40,42 +40,22 @@ public class AntiCheatSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public AbstractAdvancedMod getAdvancedMod() {
+        return ModManager.antiCheatMod;
+    }
+
+    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
 
     @Override
-    public String getType() {
-        return ModManager.antiCheatMod.getType();
-    }
-
-    @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.antiCheatMod.getBaseAnalyzer();
-    }
-
-    @Override
-    public String getExportFolder() {
-        return "//Anti_Cheat//";
-    }
-
-    @Override
-    public String getFileName() {
-        return ModManager.antiCheatMod.getFileName();
-    }
-
-    @Override
-    public String getMainTranslationKey() {
-        return ModManager.antiCheatMod.getMainTranslationKey();
+    public String getImportExportFileName() {
+        return "antiCheat.txt";
     }
 
     @Override
     public String getTypeCaps() {
         return "ANTI_CHEAT";
-    }
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return ModManager.antiCheatMod.getCompatibleModToolVersions();
     }
 }

@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -66,37 +66,22 @@ public class HardwareFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
+    public AbstractAdvancedMod getAdvancedMod() {
+        return ModManager.hardwareFeatureMod;
+    }
+
+    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
 
     @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.hardwareFeatureMod.getBaseAnalyzer();
-    }
-
-    @Override
-    public String getExportFolder() {
-        return "//Hardware_Features//";
-    }
-
-    @Override
-    public String getFileName() {
-        return ModManager.hardwareFeatureMod.getFileName();
-    }
-
-    @Override
-    public String getMainTranslationKey() {
-        return "hardwareFeature";
+    public String getImportExportFileName() {
+        return "HardwareFeatures.txt";
     }
 
     @Override
     public String getTypeCaps() {
         return "HARDWARE_FEATURE";
-    }
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return ModManager.hardwareFeatureMod.getCompatibleModToolVersions();
     }
 }

@@ -140,7 +140,7 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
     }
 
     @Override
-    public String getFileName() {
+    public String getImportExportFileName() {
         return ModManager.npcGamesMod.getFileName();
     }
 

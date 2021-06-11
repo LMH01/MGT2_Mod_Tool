@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -17,11 +17,6 @@ import java.util.Map;
 
 public class GameplayFeatureSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureSharer.class);
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return ModManager.gameplayFeatureMod.getCompatibleModToolVersions();
-    }
 
     @Override
     public Importer getImporter() {
@@ -118,33 +113,13 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
-
+    public AbstractAdvancedMod getAdvancedMod() {
+        return ModManager.gameplayFeatureMod;
     }
 
     @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
-    }
-
-    @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.gameplayFeature");
-    }
-
-    @Override
-    public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.gameplayFeatureMod.getAnalyzer();
-    }
-
-    @Override
-    public String getExportFolder() {
-        return "//Gameplay features//";
-    }
-
-    @Override
-    public String getFileName() {
-        return ModManager.gameplayFeatureMod.getFileName();
     }
 
     @Override
@@ -179,8 +154,8 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public String getMainTranslationKey() {
-        return "gameplayFeature";
+    public String getImportExportFileName() {
+        return "gameplayFeature.txt";
     }
 
     @Override

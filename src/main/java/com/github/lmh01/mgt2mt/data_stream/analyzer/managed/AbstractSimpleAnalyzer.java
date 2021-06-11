@@ -15,7 +15,7 @@ import java.util.Map;
  * ValueX [Some data]
  * When a blank line is found a new entry is created see {@link DataStreamHelper#parseDataFile(File)}
  */
-public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFunctions {
+public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFunctions, SimpleAnalyzer {
     /**
      * returns that analyzed file
      */
@@ -24,7 +24,7 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
     /**
      * @return Returns a string containing all active things sorted by alphabet.
      */
-    public String[] getContentByAlphabet(){
+    public final String[] getContentByAlphabet(){
         ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
         for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
             arrayListAvailableThingsSorted.add(getReplacedLine(entry.getValue()));
@@ -35,7 +35,7 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
         return string;
     }
 
-    public String[] getCustomContentString(){
+    public final String[] getCustomContentString(){
         return getCustomContentString(true);
     }
 
@@ -79,25 +79,10 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
     }
 
     /**
-     * @return Returns the custom content string that has been computed previously
-     */
-    public abstract String[] getFinishedCustomContentString();
-
-    /**
-     * Sets the custom content string that should be returned when {@link AbstractSimpleAnalyzer#getFinishedCustomContentString()} is called.
-     */
-    public abstract void setFinishedCustomContentString(String[] customContent);
-
-    /**
-     * Replaces the input string and returns the replaced string
-     */
-    public abstract String getReplacedLine(String inputString);
-
-    /**
      * @param name The content name for which the position should be returned
      * @return Returns the position in the fileContent list where the input id is stored in.
      */
-    public int getPositionInFileContentListByName(String name){
+    public final int getPositionInFileContentListByName(String name){
         for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
             if(getReplacedLine(entry.getValue()).equals(name)){
                 return entry.getKey();
@@ -109,7 +94,7 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
     /**
      * @return Returns the line content where the name stands
      */
-    public String getLine(String name){
+    public final String getLine(String name){
         return getFileContent().get(getPositionInFileContentListByName(name));
     }
 }

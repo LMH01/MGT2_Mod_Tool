@@ -91,23 +91,13 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypePlural() {
-        return I18n.INSTANCE.get("commonText.engineFeature.upperCase.plural");
-    }
-
-    @Override
     public JMenuItem getExportMenuItem() {
         return exportMenuItem;
     }
 
     @Override
     public String getFileName() {
-        return "engineFeature.txt";
-    }
-
-    @Override
-    public String getType() {
-        return I18n.INSTANCE.get("commonText.engineFeature.upperCase");
+        return "EngineFeatures.txt";
     }
 
     @Override
@@ -207,11 +197,6 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    @Override
-    public File getFile() {
-        return new File(getMGT2DataPath() + "//EngineFeatures.txt");
     }
 
     /**
