@@ -50,7 +50,7 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
   - You can add custom licences for books, movies and sport events
 #### Npc games
   - You can add new npc games, this means that a game with this title might be created by npc game studios.
-#### NPC engines
+#### Npc engines
   - You can add new npc engines
   - The release year decides how high the technology level is and what engine features will be included in the engine
 #### Anti cheat
