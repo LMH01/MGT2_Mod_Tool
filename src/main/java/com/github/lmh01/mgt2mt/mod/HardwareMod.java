@@ -64,7 +64,7 @@ public class HardwareMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.1.0"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.1.0", "2.1.1"};
     }
 
     @Override
