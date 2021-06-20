@@ -125,3 +125,4 @@ Arcade System 2000
 Arcade System 2500
 Amigo CTV
 PhaserActive
+Katari VCC
