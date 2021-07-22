@@ -126,3 +126,5 @@ Arcade System 2500
 Amigo CTV
 PhaserActive
 Katari VCC
+Beam Deck
+Intelvisual Amikos
