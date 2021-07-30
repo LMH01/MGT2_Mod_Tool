@@ -159,7 +159,7 @@ commonText.modAlreadyExists|The mod already exists!
 commonText.chooseGenreFirst|Please select at least one genre first!
 commonText.yes|yes
 commonText.no|no
-commonText.scrollExplanation|(Tip: Hold STRG and click with your mouse)
+commonText.scrollExplanation|(Tip: Hold CTRL and click with your mouse)
 commonText.default|Default
 commonText.imageSelected|Image selected
 commonText.selectImage|Select image
@@ -332,7 +332,7 @@ mod.theme.addTheme.components.label.themeName|Enter the theme name:
 mod.theme.addTheme.components.button.addTranslations.toolTip|Click to add translations for your theme
 mod.theme.addTheme.components.label.violenceLevel|Choose the age rating:
 mod.theme.addTheme.components.comboBox.violenceLevel|<html>This indicates the minimum age rating a game with this theme gets
-mod.theme.addTheme.components.label.explainList|<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold STRG and click with your mouse)
+mod.theme.addTheme.components.label.explainList|<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold CTRL and click with your mouse)
 mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
 mod.npcGames.addMod.components.labelName|Enter the name for the npc game:
 mod.npcGames.addMod.optionPaneMessage.firstPart|Add this npc game?
@@ -389,7 +389,7 @@ mod.genre.clearTranslations.question|<html>Are you sure that you want<br>to rese
 mod.genre.clearTranslations.button|Click to remove all Translations
 mod.genre.clearTranslations.success|Translations have been cleared.
 mod.genre.description.hint|Hint: use <br> in your description to make a new line.
-mod.genre.tipPart1|Tip: Hold STRG and
+mod.genre.tipPart1|Tip: Hold CTRL and
 mod.genre.tipPart2|click with your mouse
 mod.genre.page.title.1|[Page 1] Name and Description
 mod.genre.page.title.2|[Page 2] Unlock date
@@ -428,7 +428,7 @@ mod.genre.picture.hint.1|Note: You can skip this step if you
 mod.genre.picture.hint.2|don't want to add you own genre image.
 mod.genre.picture.noPictureSelected|<html>You did not enter a custom image.<br>Do you want to reset the image file to default?
 mod.genre.picture.noPictureSelected.title|Reset image?
-mod.scrollExplanation|<html>(Tip: Hold STRG and click<br> with your mouse)
+mod.scrollExplanation|<html>(Tip: Hold CTRL and click<br> with your mouse)
 mod.genre.enterNameFirst|Please enter a genre name first!
 mod.genre.enterDescriptionFirst|Please enter a genre description first!
 mod.genre.translation.donNotShowInfoAgain|Don't show this information again
