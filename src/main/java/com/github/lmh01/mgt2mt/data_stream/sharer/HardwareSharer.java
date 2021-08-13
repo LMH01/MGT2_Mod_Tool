@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -41,10 +40,7 @@ public class HardwareSharer extends AbstractAdvancedSharer {
     @Override
     public String getOptionPaneMessage(Map<String, String> map){
         boolean allowStationaryConsole = true;
-        boolean allowPortableConsole = true;
-        if(map.containsKey("ONLY_STATIONARY")){
-            allowPortableConsole = false;
-        }
+        boolean allowPortableConsole = !map.containsKey("ONLY_STATIONARY");
         if(map.containsKey("ONLY_HANDHELD")){
             allowStationaryConsole = false;
         }
@@ -70,7 +66,7 @@ public class HardwareSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
                 I18n.INSTANCE.get("commonText.type") + ": " + ModManager.hardwareMod.getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
-                lastPart.toString();
+                lastPart;
     }
 
     @Override

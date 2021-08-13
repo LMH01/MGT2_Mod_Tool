@@ -16,15 +16,12 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class GameplayFeatureMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureMod.class);
@@ -206,7 +203,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                             }
                             newGameplayFeature.put("ID", Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getFreeId()));
                             newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                            newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                             newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                             newGameplayFeature.put("PRICE", spinnerResearchCost.getValue().toString());
                             newGameplayFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

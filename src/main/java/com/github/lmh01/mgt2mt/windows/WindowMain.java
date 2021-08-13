@@ -504,7 +504,7 @@ public class WindowMain {
                 StringBuilder stringBuilder = new StringBuilder();
                 Uninstaller.uninstallAllMods(stringBuilder);
                 if(!stringBuilder.toString().isEmpty()){
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder.toString(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
                 }
                 Backup.restoreBackup(true, true);
             } catch (IOException e) {

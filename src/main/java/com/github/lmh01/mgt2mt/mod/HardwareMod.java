@@ -96,11 +96,7 @@ public class HardwareMod extends AbstractAdvancedMod {
             checkBoxEnableExclusivity.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip"));
             checkBoxEnableExclusivity.addChangeListener(changeListener -> {
                 if(checkBoxEnableExclusivity.isSelected() != lastValue.get()){
-                    if(checkBoxEnableExclusivity.isSelected()){
-                        comboBoxExclusivity.setEnabled(true);
-                    }else{
-                        comboBoxExclusivity.setEnabled(false);
-                    }
+                    comboBoxExclusivity.setEnabled(checkBoxEnableExclusivity.isSelected());
                     lastValue.set(checkBoxEnableExclusivity.isSelected());
                 }
             });
@@ -130,7 +126,7 @@ public class HardwareMod extends AbstractAdvancedMod {
                                 hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslation[0], "DESC"));
                                 hardwareFeatureMap.put("DESC EN", textFieldDescription.getText());
                             }
-                            hardwareFeatureMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            hardwareFeatureMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())) + " " + spinnerUnlockYear.getValue().toString());
                             hardwareFeatureMap.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                             hardwareFeatureMap.put("PRICE", spinnerCost.getValue().toString());
                             hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

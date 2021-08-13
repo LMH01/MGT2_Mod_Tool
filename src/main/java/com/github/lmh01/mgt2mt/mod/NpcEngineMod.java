@@ -11,7 +11,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -19,16 +18,12 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class NpcEngineMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineMod.class);
@@ -104,7 +99,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                 if(!listAvailableGenres.getSelectedValuesList().isEmpty()){
                                     //Filling base map (Without genre, id and names)
                                     Map<String, String> npcEngine = new HashMap<>();
-                                    npcEngine.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                                    npcEngine.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                                     npcEngine.put("PLATFORM", Integer.toString(ModManager.platformMod.getBaseAnalyzer().getContentIdByName(listAvailablePlatforms.getSelectedValue())));
                                     npcEngine.put("PRICE", spinnerCost.getValue().toString());
                                     npcEngine.put("SHARE", spinnerShare.getValue().toString());

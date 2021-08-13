@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
-import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -381,7 +380,7 @@ public class Backup {
                 uninstallFailedExplanation.append(e.getMessage());
             }
             if(uninstallFailed){
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation.toString(), I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
             }else{
                 ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//", ".initialBackup");
                 File oldInitialBackupFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//InitialBackups//" + Utils.getCurrentDateTime() + "//");

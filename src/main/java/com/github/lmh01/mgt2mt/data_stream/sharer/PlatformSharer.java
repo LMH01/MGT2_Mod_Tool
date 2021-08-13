@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -159,7 +158,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
             neededGameplayFeatures.append(ModManager.gameplayFeatureMod.getBaseAnalyzer().getContentNameById(integer));
             currentGameplayFeature++;
         }
-        message.append(I18n.INSTANCE.get("commonText.neededGameplayFeatures")).append(": ").append(neededGameplayFeatures.toString()).append("<br>");
+        message.append(I18n.INSTANCE.get("commonText.neededGameplayFeatures")).append(": ").append(neededGameplayFeatures).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.complexity")).append(": ").append(map.get("COMPLEX")).append("<br>");
         String internetMessageToPrint;
         if(map.get("INTERNET").equals("0")){

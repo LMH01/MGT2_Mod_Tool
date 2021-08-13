@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.data_stream.editor.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.SimpleAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 

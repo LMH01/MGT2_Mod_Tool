@@ -128,7 +128,7 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     @Override
     public final String getExportFolder() {
         return "//" + getAdvancedMod().getType() + "//";
-    };
+    }
 
     @Override
     public final String getMainTranslationKey() {

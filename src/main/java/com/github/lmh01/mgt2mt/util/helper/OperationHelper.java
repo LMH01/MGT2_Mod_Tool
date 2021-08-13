@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.interfaces.Exporter;
 import com.github.lmh01.mgt2mt.util.interfaces.Processor;
 
 import javax.swing.*;
@@ -51,10 +50,7 @@ public class OperationHelper {
                 if(JOptionPane.showConfirmDialog(null, params, operationNoun + " " + exportType, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!listAvailableOperations.isSelectionEmpty()){
                         boolean operationFailed = false;
-                        boolean multipleExports = false;
-                        if(listAvailableOperations.getSelectedValuesList().size() > 0){
-                            multipleExports = true;
-                        }
+                        boolean multipleExports = listAvailableOperations.getSelectedValuesList().size() > 0;
                         int numberOfOperations = listAvailableOperations.getSelectedValuesList().size();
                         StringBuilder failedOperations = new StringBuilder();
                         ProgressBarHelper.increaseMaxValue(numberOfOperations);

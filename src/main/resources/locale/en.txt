@@ -745,8 +745,8 @@ textArea.engineFeatureExportSuccessful|The following engine feature has been exp
 textArea.gameplayFeatureExportFailed.alreadyExported|The following gameplay feature was not exported because it has already been exported:
 textArea.gameplayFeatureExportFailed.generalError.fistPart|While exporting gameplay feature
 textArea.gameplayFeatureExportSuccessful|The following gameplay feature has been exported:
-textArea.genreFeatureExportFailed.alreadyExported|The following genre was not exported because it has already been exported:
-textArea.genreFeatureExportSuccessful|The following genre has been exported:
+textArea.genreExportFailed.alreadyExported|The following genre was not exported because it has already been exported:
+textArea.genreExportSuccessful|The following genre has been exported:
 textArea.publisherExportFailed.alreadyExported|The following publisher was not exported because it has already been exported:
 textArea.publisherExportSuccessful|The following publisher has been exported:
 textArea.licenceExportFailed.alreadyExported|The following licence was not exported because it has already been exported:

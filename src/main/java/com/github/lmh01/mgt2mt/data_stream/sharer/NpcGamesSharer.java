@@ -83,7 +83,7 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
             if(!nameComplete){
                 if(character.toString().equals("<")){
                     nameComplete = true;
-                    message.append(I18n.INSTANCE.get("commonText.name")).append(": ").append(name.toString()).append("<br>");
+                    message.append(I18n.INSTANCE.get("commonText.name")).append(": ").append(name).append("<br>");
                 }
             }
             if(!nameComplete){
@@ -115,7 +115,7 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
             genreNamesToDisplay.append(ModManager.genreMod.getBaseAnalyzer().getContentNameById(integer));
             currentInt++;
         }
-        message.append(ModManager.genreMod.getTypePlural()).append(": ").append(genreNamesToDisplay.toString());
+        message.append(ModManager.genreMod.getTypePlural()).append(": ").append(genreNamesToDisplay);
         return message.toString();
     }
 

@@ -31,8 +31,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
-
 public class GenreMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreMod.class);
     GenreAnalyzer genreAnalyzer = new GenreAnalyzer();
@@ -579,7 +577,7 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     /**
-     * @returns Returns a list containing the bad gameplay features in the first HashSet and the good gameplay features in the second HashSet
+     * @return Returns a list containing the bad gameplay features in the first HashSet and the good gameplay features in the second HashSet
      */
     private List<HashSet<Integer>> getRandomGameplayFeatureIds(){
         HashSet<Integer> hashSetBadGameplayFeatures = new HashSet<>();

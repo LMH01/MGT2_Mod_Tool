@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;

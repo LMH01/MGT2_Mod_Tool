@@ -25,7 +25,6 @@ public class Settings {
     public static boolean enableDisclaimerMessage = true;
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
-    public static String automaticMGT2FilePath = ""; //This string is set when setMGT2Folder is called
     public static String language = "English";
     public static String updateBranch = "Release";
     public static boolean useAutomaticModMenus = false;//Manual value: Set true to enable the automatic setting of mod menus. If false the mod menus will have to be added manually.
@@ -95,7 +94,6 @@ public class Settings {
         String mgt2Folder = getMGT2FilePath();
         if(!mgt2Folder.isEmpty()){
             steamLibraryFolder = mgt2Folder.replace("\\steamapps\\common\\Mad Games Tycoon 2\\", "");
-            automaticMGT2FilePath = mgt2Folder;
             mgt2FilePath = mgt2Folder;
             mgt2FolderIsCorrect = true;
             enableCustomFolder = false;

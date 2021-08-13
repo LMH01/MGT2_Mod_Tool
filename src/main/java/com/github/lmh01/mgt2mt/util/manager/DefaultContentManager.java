@@ -90,7 +90,7 @@ public class DefaultContentManager {
             } else {
                 return DefaultContentStatus.FILE_MISSING;
             }
-        } catch (RuntimeException | ExceptionInInitializerError e){
+        } catch (RuntimeException | ExceptionInInitializerError e) {
             e.printStackTrace();
             return DefaultContentStatus.FILE_MISSING;
         }
@@ -135,7 +135,7 @@ public class DefaultContentManager {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
             URL url = loader.getResource("default_content");
             String path = url.getPath();
-            for (File file : Objects.requireNonNull(new File(path).listFiles())){
+            for (File file : Objects.requireNonNull(new File(path).listFiles())) {
                 map.put(file.getName().replace(".txt", ""), getDefaultFromSystemResource(file.getName()));
             }
             tomlWriter.write(map, DEFAULT_CONTENT_FILE);
@@ -173,9 +173,9 @@ public class DefaultContentManager {
         try {
             File tomlDownload = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content_update.toml");
             DataStreamHelper.downloadFile(NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL, tomlDownload);
-            LOGGER.info("Has the file been deleted: " + DEFAULT_CONTENT_FILE.delete());
+            DEFAULT_CONTENT_FILE.delete();
             Files.copy(Paths.get(tomlDownload.getPath()), Paths.get(DEFAULT_CONTENT_FILE.getPath()));
-            LOGGER.info("Has the file been deleted: " + tomlDownload.delete());
+            tomlDownload.delete();
             LogFile.write("The default_content.toml file has been updated successfully!");
         } catch (IOException e) {
             e.printStackTrace();

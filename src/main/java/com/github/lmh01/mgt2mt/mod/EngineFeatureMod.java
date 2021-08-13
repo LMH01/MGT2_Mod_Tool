@@ -18,15 +18,12 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class EngineFeatureMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureMod.class);
@@ -165,7 +162,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             }
                             newEngineFeature.put("ID", Integer.toString(ModManager.engineFeatureMod.getAnalyzer().getFreeId()));
                             newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                            newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                             newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                             newEngineFeature.put("PRICE", spinnerResearchCost.getValue().toString());
                             newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

@@ -11,22 +11,18 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class AntiCheatMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureMod.class);
@@ -102,7 +98,7 @@ public class AntiCheatMod extends AbstractAdvancedMod {
                                 antiCheatMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                 antiCheatMap.put("NAME EN", textFieldName.getText());
                             }
-                            antiCheatMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            antiCheatMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())) + " " + spinnerUnlockYear.getValue().toString());
                             antiCheatMap.put("PRICE", spinnerCost.getValue().toString());
                             antiCheatMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(antiCheatMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){

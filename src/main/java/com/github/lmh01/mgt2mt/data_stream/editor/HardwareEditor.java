@@ -48,7 +48,6 @@ public class HardwareEditor extends AbstractAdvancedEditor {
             bw.write(System.getProperty("line.separator"));
         }
         if(currentType != Integer.parseInt(map.get("TYP"))){
-            currentType = Integer.parseInt(map.get("TYP"));
             bw.write("////////////////////////////////////////////////////////////////////");
             bw.write(System.getProperty("line.separator"));
             bw.write(System.getProperty("line.separator"));

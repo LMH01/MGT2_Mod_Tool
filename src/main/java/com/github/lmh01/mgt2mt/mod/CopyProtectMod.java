@@ -11,22 +11,18 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class CopyProtectMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(CopyProtectMod.class);
@@ -78,7 +74,7 @@ public class CopyProtectMod extends AbstractAdvancedMod {
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
             AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
             JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
-            JComboBox comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+            JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
             JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
             JSpinner spinnerCost = WindowHelper.getCostSpinner();
             JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
@@ -102,7 +98,7 @@ public class CopyProtectMod extends AbstractAdvancedMod {
                                 copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                 copyProtectMap.put("NAME EN", textFieldName.getText());
                             }
-                            copyProtectMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                            copyProtectMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                             copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
                             copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                             if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){

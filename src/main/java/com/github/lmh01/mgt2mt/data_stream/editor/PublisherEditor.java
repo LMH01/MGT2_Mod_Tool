@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -17,8 +16,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -116,8 +113,8 @@ public class PublisherEditor extends AbstractAdvancedEditor {
     /**
      * Removes the specified genre from the publisher file.
      * If the genre is found another genre id is randomly assigned
-     * If the genre is not found nothing happens
-     * @param name
+     * If the genre is not found, nothing happens
+     * @param name The genre that should be removed
      */
     public void removeGenre(String name) throws IOException {
         int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(name);

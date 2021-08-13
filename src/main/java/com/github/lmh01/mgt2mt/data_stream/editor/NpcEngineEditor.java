@@ -56,8 +56,8 @@ public class NpcEngineEditor extends AbstractAdvancedEditor {
     /**
      * Removes the specified genre from the npc engine file.
      * If the genre is found another genre id is randomly assigned
-     * If the genre is not found nothing happens
-     * @param name
+     * If the genre is not found, nothing happens
+     * @param name The name of the genre that should be removed
      */
     public void removeGenre(String name) throws IOException {
         int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(name);

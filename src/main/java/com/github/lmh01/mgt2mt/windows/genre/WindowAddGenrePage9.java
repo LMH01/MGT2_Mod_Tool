@@ -151,10 +151,7 @@ public class WindowAddGenrePage9 extends JFrame{
         }
     }
     private static boolean testIfDividableBy5(JSpinner spinnerGameplay, JSpinner spinnerGraphic, JSpinner spinnerSound, JSpinner spinnerControl){
-        boolean dividableBy5 = true;
-        if(Integer.parseInt(spinnerGameplay.getValue().toString()) % 5 != 0){
-            dividableBy5 = false;
-        }
+        boolean dividableBy5 = Integer.parseInt(spinnerGameplay.getValue().toString()) % 5 == 0;
         if(Integer.parseInt(spinnerGraphic.getValue().toString()) % 5 != 0){
             dividableBy5 = false;
         }

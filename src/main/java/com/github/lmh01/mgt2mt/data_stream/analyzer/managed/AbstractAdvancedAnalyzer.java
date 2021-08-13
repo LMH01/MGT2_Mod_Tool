@@ -9,8 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 
 /**
@@ -176,21 +175,6 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
             idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
         }
         return idNameMap.get(id);
-    }
-
-    /**
-     * @return Returns an ArrayList containing all names that are in use.
-     */
-    public final ArrayList<String> getContentNamesInUse(){
-        ArrayList<String> arrayList = new ArrayList<>();
-        for(Map<String, String> map : getFileContent()){
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().equals("NAME EN")){
-                    arrayList.add(entry.getValue());
-                }
-            }
-        }
-        return arrayList;
     }
 
     /**

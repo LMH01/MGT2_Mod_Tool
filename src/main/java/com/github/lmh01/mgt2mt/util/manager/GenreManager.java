@@ -228,45 +228,6 @@ public class GenreManager {
     /**
      * @param map The map where the map key is stored
      * @param mapKey The key where the content is written
-     * @param objectsPerLine Set how many objects should be dispalyed per line
-     * @return Returns a string containing all entries under the map key ready to display
-     */
-    private static String getMapEntryToDisplay(Map<String, String> map, String mapKey, int objectsPerLine){
-        String input = map.get(mapKey);
-        StringBuilder currentString = new StringBuilder();
-        ArrayList<String> outputArray = new ArrayList<>();
-        StringBuilder output = new StringBuilder();
-
-        for(int i=0; i<input.length(); i++){
-            if(String.valueOf(input.charAt(i)).equals("<")){
-                //Nothing happens
-            }else if (String.valueOf(input.charAt(i)).equals(">")){
-                outputArray.add(currentString.toString());
-                currentString = new StringBuilder();
-            }else{
-                currentString.append(input.charAt(i));
-            }
-        }
-
-        int n = 0;
-        for(int i=0; i<outputArray.size(); i++){
-            if(i == outputArray.size()-1){
-                output.append(outputArray.get(i));
-            }else{
-                output.append(outputArray.get(i)).append(", ");
-                if(n == objectsPerLine){
-                    output.append(System.getProperty("line.separator"));
-                    n = 0;
-                }
-            }
-            n++;
-        }
-        return output.toString();
-    }
-
-    /**
-     * @param map The map where the map key is stored
-     * @param mapKey The key where the content is written
      * @return Returns a string containing all entries that are listed as value under the map key.
      */
     private static String[] convertMapEntryToList(Map<String, String> map, String mapKey){

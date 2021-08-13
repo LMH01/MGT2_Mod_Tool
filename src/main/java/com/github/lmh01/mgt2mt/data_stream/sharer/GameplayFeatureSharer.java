@@ -25,8 +25,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public String getOptionPaneMessage(Map<String, String> map) {
-        Map<String, String> workingMap = new HashMap<>();
-        workingMap.putAll(map);
+        Map<String, String> workingMap = new HashMap<>(map);
         if(!workingMap.get("BAD").matches(".*\\d.*")){
             ArrayList<String> badGenreNames = Utils.getEntriesFromString(workingMap.get("BAD"));
             ArrayList<String> goodGenreNames = Utils.getEntriesFromString(workingMap.get("GOOD"));
@@ -101,8 +100,8 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + workingMap.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + workingMap.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + workingMap.get("DEV COSTS") + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.badGenres") + "*\n\n" + badGenresFeatures.toString() + "\n" +
-                "\n*" + I18n.INSTANCE.get("commonText.goodGenres") + "*\n\n" + goodGenresFeatures.toString() + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.badGenres") + "*\n\n" + badGenresFeatures + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.goodGenres") + "*\n\n" + goodGenresFeatures + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.points") + "*\n\n" +
                 I18n.INSTANCE.get("commonText.gameplay") + ": " + workingMap.get("GAMEPLAY") + "\n" +
                 I18n.INSTANCE.get("commonText.graphic") + ": " + workingMap.get("GRAPHIC") + "\n" +

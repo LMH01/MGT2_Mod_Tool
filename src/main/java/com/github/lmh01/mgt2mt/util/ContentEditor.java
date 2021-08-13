@@ -30,10 +30,7 @@ public class ContentEditor {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.selectThemeGenre"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }else{
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.confirmMessage"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                        boolean addGenre = true;
-                        if(Objects.requireNonNull(comboBoxOperation.getSelectedItem()).toString().equals(I18n.INSTANCE.get("commonText.remove.upperCase"))){
-                            addGenre = false;
-                        }
+                        boolean addGenre = !Objects.requireNonNull(comboBoxOperation.getSelectedItem()).toString().equals(I18n.INSTANCE.get("commonText.remove.upperCase"));
                         HashSet<Integer> themeIds = new HashSet<>();
                         for(String string : themeList.getSelectedValuesList()){
                             themeIds.add(ThemeFileAnalyzer.getPositionOfThemeInFile(string));
@@ -45,12 +42,13 @@ public class ContentEditor {
                                 ThemeEditor themeEditor = new ThemeEditor();
                                 themeEditor.editGenreAllocationAdvanced(ModManager.genreMod.getAnalyzer().getContentIdByName(string), addGenre, themeIds, false);
                             } catch (IOException e) {
+                                errorOccurred = true;
                                 e.printStackTrace();
                                 errors.append(e.getMessage()).append("\n");
                             }
                         }
                         if(errorOccurred){
-                            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.error") + "<br><br>" + errors.toString(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.error") + "<br><br>" + errors, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.success"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                         }

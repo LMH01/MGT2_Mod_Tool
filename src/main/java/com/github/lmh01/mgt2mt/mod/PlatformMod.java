@@ -31,8 +31,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
-
 public class PlatformMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreMod.class);
     PlatformAnalyzer platformAnalyzer = new PlatformAnalyzer();
@@ -225,7 +223,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                             spinnerChangeYear.setEnabled(true);
                                             textAreaAddedImages.append(System.getProperty("line.separator"));
                                         }
-                                        textAreaAddedImages.append(Objects.requireNonNull(comboBoxChangeMonth.getSelectedItem()).toString() + " " + spinnerChangeYear.getValue().toString() + " - " + imageFile.get().getPath());
+                                        textAreaAddedImages.append(Objects.requireNonNull(comboBoxChangeMonth.getSelectedItem()) + " " + spinnerChangeYear.getValue().toString() + " - " + imageFile.get().getPath());
                                         pictureMap.put(Integer.parseInt(spinnerChangeYear.getValue().toString()), imageFile.get());
                                         lastYear.set(Integer.parseInt(spinnerChangeYear.getValue().toString()));
                                         break;
@@ -281,9 +279,9 @@ public class PlatformMod extends AbstractAdvancedMod {
                                     platformMap.put("NAME EN", textFieldName.getText());
                                     platformMap.put("MANUFACTURER EN", textFieldManufacturer.getText());
                                 }
-                                platformMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString());
+                                platformMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                                 if(checkBoxEnableEndDate.isSelected()){
-                                    platformMap.put("DATE END", Objects.requireNonNull(comboBoxEndDateMonth.getSelectedItem()).toString() + " " + spinnerEndYear.getValue().toString());
+                                    platformMap.put("DATE END", Objects.requireNonNull(comboBoxEndDateMonth.getSelectedItem()) + " " + spinnerEndYear.getValue().toString());
                                 }
                                 platformMap.put("PRICE", spinnerDevKitCost.getValue().toString());
                                 platformMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

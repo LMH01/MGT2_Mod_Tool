@@ -62,7 +62,7 @@ public class HardwareFeatureSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
                 I18n.INSTANCE.get("commonText.quality") + ": " + map.get("QUALITY") + "<br>" +
-                lastPart.toString();
+                lastPart;
     }
 
     @Override

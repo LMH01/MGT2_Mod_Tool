@@ -10,15 +10,12 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
-import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -185,7 +182,7 @@ public class ThemeMod extends AbstractSimpleMod {
                                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + textFieldThemeName.getText(), I18n.INSTANCE.get("mod.theme.addTheme.addTheme.title"), JOptionPane.YES_NO_OPTION) == 0){
                                     Backup.createThemeFilesBackup(false, false);
                                     int ageNumber = 0;
-                                    if(comboBoxViolenceLevel.getSelectedItem().toString().equals("Index")){
+                                    if(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem()).toString().equals("Index")){
                                         ageNumber = 5;
                                     }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 18){
                                         ageNumber = 4;

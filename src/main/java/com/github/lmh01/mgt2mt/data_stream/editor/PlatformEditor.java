@@ -170,9 +170,9 @@ public class PlatformEditor extends AbstractAdvancedEditor {
 
     /**
      * Removes the specified gameplay feature from the platform file.
-     * If the genre is found another genre id is randomly assigned
-     * If the genre is not found nothing happens
-     * @param name
+     * If the gameplay feature is found another genre id is randomly assigned
+     * If the gameplay feature is not found, nothing happens
+     * @param name The name of the gameplay feature that should be removed
      */
     public void removeGameplayFeature(String name) throws IOException {
         int genreId = ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(name);

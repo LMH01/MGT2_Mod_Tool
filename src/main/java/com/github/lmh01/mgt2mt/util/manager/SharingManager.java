@@ -195,7 +195,7 @@ public class SharingManager {
                     for(String string : compatibleModToolVersions){
                         supportedModToolVersions.append("[").append(string).append("]");
                     }
-                    JOptionPane.showMessageDialog(null, returnValue + "\n" + I18n.INSTANCE.get("dialog.sharingManager.analyzeReturnValue.supportedVersions") + " " + supportedModToolVersions.toString(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, returnValue + "\n" + I18n.INSTANCE.get("dialog.sharingManager.analyzeReturnValue.supportedVersions") + " " + supportedModToolVersions, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }catch(NullPointerException e){
@@ -432,8 +432,8 @@ public class SharingManager {
                                 StringBuilder failedUninstalls = new StringBuilder();
                                 boolean modRemovalFailed = Uninstaller.uninstallAllMods(failedUninstalls);
                                 if(modRemovalFailed){
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.notAllModsRemoved") + " " + failedUninstalls.toString());
-                                    LOGGER.info("Something went wrong while uninstalling mods, however this should not necessarily impact the uninstall process: " + failedUninstalls.toString());
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.notAllModsRemoved") + " " + failedUninstalls);
+                                    LOGGER.info("Something went wrong while uninstalling mods, however this should not necessarily impact the uninstall process: " + failedUninstalls);
                                 }else{
                                     LOGGER.info("All mods have been removed");
                                 }
@@ -638,7 +638,7 @@ public class SharingManager {
                         }
                     }
                 }else{
-                    if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.export.alreadyExported1") + ":\n\n" + failedExports.toString() + "\n" + I18n.INSTANCE.get("dialog.export.alreadyExported2") + "\n\n", I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                    if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.export.alreadyExported1") + ":\n\n" + failedExports + "\n" + I18n.INSTANCE.get("dialog.export.alreadyExported2") + "\n\n", I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                         if(exportAsRestorePoint){
                             Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Mod_Restore_Point//Current_Restore_Point//"));
                         }else{
@@ -651,35 +651,6 @@ public class SharingManager {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * @param strings The array containing the entries
-     * @param exportName The name that should be written when a export item is found. Eg. Genre, Theme
-     * @return Returns a string containing the entries from the array
-     */
-    private static String getExportListPart(String[] strings, String exportName){
-        StringBuilder stringBuilder = new StringBuilder();
-        if(strings.length > 0){
-            stringBuilder.append(exportName).append(": ");
-        }
-        boolean firstCustomGenre = true;
-        int currentLineNumber = 1;
-        for(String string : strings){
-            if(firstCustomGenre){
-                firstCustomGenre = false;
-            }else{
-                stringBuilder.append(", ");
-            }
-            if(currentLineNumber == 10){
-                stringBuilder.append(System.getProperty("line.separator"));
-                currentLineNumber = 0;
-            }
-            stringBuilder.append(string);
-            currentLineNumber++;
-        }
-        stringBuilder.append(System.getProperty("line.separator"));
-        return stringBuilder.toString();
     }
 
     /**
@@ -697,7 +668,7 @@ public class SharingManager {
         int currentProgressBarValue = 0;
         int currentExportFailed = 1;
         for(String string : strings){
-            if(!exporter.export(string)){
+            if(exporter.export(string)){
                 if(firstExportFailed){
                     stringBuilder.append(exportName).append(": ");
                 }else{

@@ -23,11 +23,7 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,8 +33,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
 public class PublisherMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherMod.class);
@@ -163,7 +157,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                         Map<String, String> genreMap = ModManager.genreMod.getAnalyzer().getSingleContentMapByName(string1);
                         int genreDate = Integer.parseInt(genreMap.get("DATE").replaceAll("[^0-9]", ""));
                         if(Integer.parseInt(spinnerUnlockYear.getValue().toString()) >= genreDate){
-                            if(Utils.getNumberForMonth(comboBoxUnlockMonth.getSelectedItem().toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))){
+                            if(Utils.getNumberForMonth(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))){
                                 availableGenres.add(string1);
                             }
                         }
@@ -196,13 +190,9 @@ public class PublisherMod extends AbstractAdvancedMod {
             panelGenre.add(labelGenre);
             panelGenre.add(buttonSelectGenre);
 
-            comboBoxUnlockMonth.addActionListener(e -> {
-                buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ");
-            });
+            comboBoxUnlockMonth.addActionListener(e -> buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        "));
 
-            spinnerUnlockYear.addChangeListener(e -> {
-                buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ");
-            });
+            spinnerUnlockYear.addChangeListener(e -> buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        "));
 
             Object[] params = {WindowHelper.getNamePanel(this, textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, 12), WindowHelper.getSpinnerPanel(spinnerShare, 9), panelGenre};
             boolean breakLoop = false;
@@ -232,7 +222,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                             }
                             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.firstPart") + "\n\n" +
                                     I18n.INSTANCE.get("commonText.name") + ": " + textFieldName.getText() + "\n" +
-                                    I18n.INSTANCE.get("commonText.date") + ": " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString() + " " + spinnerUnlockYear.getValue().toString() + "\n" +
+                                    I18n.INSTANCE.get("commonText.date") + ": " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString() + "\n" +
                                     I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "\n" +
                                     I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.developer") + ": " + Utils.getTranslatedValueFromBoolean(checkBoxIsDeveloper.isSelected()) + "\n" +
                                     I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher") + ": " + Utils.getTranslatedValueFromBoolean(checkBoxIsPublisher.isSelected()) + "\n" +

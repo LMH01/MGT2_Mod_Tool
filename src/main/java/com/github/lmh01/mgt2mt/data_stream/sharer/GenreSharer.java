@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
@@ -24,16 +23,6 @@ import java.util.*;
 
 public class GenreSharer extends AbstractAdvancedSharer {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreSharer.class);
-
-    @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-
-    }
-
-    @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) {
-
-    }
 
     @Override
     public boolean exportMod(String name, boolean exportAsRestorePoint) {
@@ -67,7 +56,6 @@ public class GenreSharer extends AbstractAdvancedSharer {
             DataStreamHelper.copyDirectory(fileGenreScreenshotsToExport.toPath().toString(), EXPORTED_GENRE_DATA_FOLDER_PATH + "//screenshots//");
             fileExportedGenre.createNewFile();
             PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGenre), StandardCharsets.UTF_8));
-            Map<String, String> map = getAnalyzer().getSingleContentMapByName(name);
             bw.write("\ufeff");//Makes the file UTF8-BOM
             bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
             bw.print("[GENRE START]" + System.getProperty("line.separator"));

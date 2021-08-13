@@ -432,7 +432,7 @@ public class Utils {
      * @param arrayList The array list containing the values
      * @return Returns the values in the respective formatting
      */
-    public static String transformArrayListToString(ArrayList arrayList){
+    public static String transformArrayListToString(ArrayList<?> arrayList){
         StringBuilder returnString = new StringBuilder();
         for(Object object : arrayList){
             returnString.append("<").append(object.toString()).append(">");
@@ -443,7 +443,7 @@ public class Utils {
     /**
      * Checks the array lists if they have mutual entries. Returns true if the do. Returns false if the don't
      */
-    public static boolean checkForMutualEntries(ArrayList arrayList1, ArrayList arrayList2){
+    public static boolean checkForMutualEntries(ArrayList<?> arrayList1, ArrayList<?> arrayList2){
         for(Object object1 : arrayList1){
             for(Object object2 : arrayList2){
                 if(object1 == object2){
@@ -547,27 +547,29 @@ public class Utils {
         }
     }
 
-    /**
-     * Appends the contents of the input array to the string builder
-     * @param entriesPerLine Defines how many objects should be written in one line.
-     */
-    public static void appendStringArrayToStringBuilder(StringBuilder stringBuilder, String[] inputArray, int entriesPerLine){
-        int currentLine = 1;
-        boolean firstEntry = true;
-        for(String string : inputArray){
-            if(!firstEntry){
-                stringBuilder.append(", ");
-            }
-            if(currentLine == entriesPerLine+1){
-                stringBuilder.append(System.getProperty("line.separator")).append("          ");
-                currentLine = 1;
-            }
-            stringBuilder.append(string);
-            currentLine++;
-            firstEntry = false;
-        }
-        stringBuilder.append(System.getProperty("line.separator"));
-    }
+// --Commented out by Inspection START (13.08.2021 22:57):
+//    /**
+//     * Appends the contents of the input array to the string builder
+//     * @param entriesPerLine Defines how many objects should be written in one line.
+//     */
+//    public static void appendStringArrayToStringBuilder(StringBuilder stringBuilder, String[] inputArray, int entriesPerLine){
+//        int currentLine = 1;
+//        boolean firstEntry = true;
+//        for(String string : inputArray){
+//            if(!firstEntry){
+//                stringBuilder.append(", ");
+//            }
+//            if(currentLine == entriesPerLine+1){
+//                stringBuilder.append(System.getProperty("line.separator")).append("          ");
+//                currentLine = 1;
+//            }
+//            stringBuilder.append(string);
+//            currentLine++;
+//            firstEntry = false;
+//        }
+//        stringBuilder.append(System.getProperty("line.separator"));
+//    }
+// --Commented out by Inspection STOP (13.08.2021 22:57)
 
     /**
      * Converts the input seconds to minutes and seconds
@@ -633,7 +635,6 @@ public class Utils {
      */
     public static String convertIntToString(int inputInt){
         DecimalFormat formatter = new DecimalFormat("###,###.###");
-        String number = formatter.format(inputInt);
-        return number;
+        return formatter.format(inputInt);
     }
 }

@@ -28,27 +28,6 @@ public class DataStreamHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataStreamHelper.class);
 
     /**
-     * Searches the input file for the "NAME EN" key and returns its value. If not found returns -1.
-     * @param file The file that should be searched for the key
-     * @param charsetType Defines what charset the source file uses. Possible UTF_8BOM UTF_16LE
-     */
-    public static String getNameFromFile(File file, String charsetType) throws IOException {
-        Map<Integer, String> map = getContentFromFile(file, charsetType);
-        for(Map.Entry entry : Objects.requireNonNull(map).entrySet()){
-            if(entry.getValue().toString().contains("NAME EN")){
-                return entry.getValue().toString().replace("[NAME EN]", "").replace("[NAME AR]", "");
-            }
-            if(entry.getValue().toString().contains("NAME")){
-                return entry.getValue().toString().replace("[NAME AR]", "").replace("[NAME]", "");
-            }
-            if(entry.getValue().toString().contains("LINE")){
-                return ModManager.licenceMod.getAnalyzer().getReplacedLine(entry.getValue().toString().replace("[LINE]", ""));
-            }
-        }
-        return "-1";
-    }
-
-    /**
      * Downloads the specified file to the destination
      * @throws IOException when download failed
      */
@@ -60,7 +39,7 @@ public class DataStreamHelper {
 
         BufferedInputStream in = new BufferedInputStream(new URL(URL).openStream());
         FileOutputStream fileOutputStream = new FileOutputStream(destination);
-        byte dataBuffer[] = new byte[1024];
+        byte[] dataBuffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
             fileOutputStream.write(dataBuffer, 0, bytesRead);
