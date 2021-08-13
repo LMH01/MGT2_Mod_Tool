@@ -6,26 +6,26 @@ Katari 7800
 Commohdor C63
 Commohdor C127
 Siga Reamcast
-Pretendo Game Portable
-Pretendo Playcube
+Mintendu Game Portable
+Mintendu Playcube
 Siga Play Gear
 Siga Master Deck
 Siga Mega Deck
-Pretendo 63
-Pretendo Entertainment Set
-Pretendo D-S
+Mintendu 63
+Mintendu Entertainment Set
+Mintendu D-S
 Personal Computer
-Suny Gamestation
-Suny Gamestation 2
-Suny Gamestation 3
-Suny Gamestation 4
-Suny Gamestation 5
-Suny GSP
+Pony Gamestation
+Pony Gamestation 2
+Pony Gamestation 3
+Pony Gamestation 4
+Pony Gamestation 5
+Pony GSP
 Siga Uranus
-Super Pretendo Entertainment Set
-Pretendo Fii
-Pretendo FiiU
-Pretendo Zwitch Pro
+Super Mintendu Entertainment Set
+Mintendu Fii
+Mintendu FiiU
+Mintendu Zwitch Pro
 Minisoft YBox
 Minisoft YBox 370
 Minisoft YBox SX
@@ -43,7 +43,7 @@ Pippal
 Core Engine
 Katari Lunx
 Oya
-Suny GSViva
+Pony GSViva
 Geo Reo
 McIntosh
 Byte I
@@ -53,7 +53,7 @@ Katari STT
 Amstar CCP
 Acoon Archimed
 Game Portable Advance
-Pretendo 3SD
+Mintendu 3SD
 Nvideo Pro
 Core Engine GT
 Core Engine Duo
@@ -63,11 +63,11 @@ Asia Box
 Wonderbird
 M-Cage
 Beam Machine
-Pretendo Game Portable Color
+Mintendu Game Portable Color
 Siga MegaCast
 Commohdor Game System
 Commohdor Game System II
-Pretendo MX
+Mintendu MX
 Play-X
 Fusion F1000
 Minivision
@@ -79,7 +79,7 @@ PVX-1000
 Game Mate
 Magma Olympus II
 Byte II
-Pretendo Zwitch
+Mintendu Zwitch
 Amstar GX3000
 CassetteView
 Super CassetteView
@@ -90,9 +90,9 @@ Mega-A-Can
 W-Tech Vision
 W-Tech Laser 2000
 Cyboo
-Pretendo Virtual Portable
+Mintendu Virtual Portable
 Siga Noman
-Suny Gamestation 6
+Pony Gamestation 6
 Minisoft YBox SX-II
 Commohdor PETE
 ZY80
@@ -128,3 +128,5 @@ PhaserActive
 Katari VCC
 Beam Deck
 Intelvisual Amikos
+Mintendu System
+Super Mintendu System
