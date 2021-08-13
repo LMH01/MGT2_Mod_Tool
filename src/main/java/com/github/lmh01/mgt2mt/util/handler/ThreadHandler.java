@@ -45,6 +45,7 @@ public class ThreadHandler {
 
     public static Thread threadPerformStartTasks(){
         Thread thread = new Thread(() -> {
+            ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.initializingTool"), false, true, false);
             if(Settings.mgt2FolderIsCorrect){
                 WindowMain.lockMenuItems(true);
             }
@@ -62,7 +63,7 @@ public class ThreadHandler {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.secondPart"));
                 }
             }
-
+            ProgressBarHelper.resetProgressBar();
         });
         thread.setName("PerformStartTasks");
         return thread;

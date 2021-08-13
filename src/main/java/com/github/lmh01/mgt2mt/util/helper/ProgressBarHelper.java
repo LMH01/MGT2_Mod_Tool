@@ -14,6 +14,7 @@ public class ProgressBarHelper {
     private static boolean progressBarRunning = false;
     private static int secondsElapsed = 0;
     private static boolean timeEnabled = false;
+    private static boolean progressStringEnabled = true;
 
     /**
      * Initializes the progress bar in the main window to use the input values.
@@ -40,12 +41,38 @@ public class ProgressBarHelper {
         initializeProgressBar(minValue, maxValue, text, setTextArea, true);
     }
 
+    /**
+     * Initializes the progress bar in the main window to use the input values.
+     * Sets the current value to the min value.
+     * When this function is called the input text is written to the text area
+     * @param minValue The minimum value the progress bar should have
+     * @param maxValue The maximum value the progress bar should have
+     * @param text The text that should be displayed
+     * @param setTextArea If true the text will also be written to the text area
+     * @param disableMeasuredTime If false the time will be measured
+     */
     public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea, boolean disableMeasuredTime){
+        initializeProgressBar(minValue, maxValue, text, setTextArea, disableMeasuredTime, true);
+    }
+
+    /**
+     * Initializes the progress bar in the main window to use the input values.
+     * Sets the current value to the min value.
+     * When this function is called the input text is written to the text area
+     * @param minValue The minimum value the progress bar should have
+     * @param maxValue The maximum value the progress bar should have
+     * @param text The text that should be displayed
+     * @param setTextArea If true the text will also be written to the text area
+     * @param disableMeasuredTime If false the time will be measured
+     * @param showProgressInText If true the progress will be displayed in text
+     */
+    public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea, boolean disableMeasuredTime, boolean showProgressInText){
         secondsElapsed = 0;
         if(!disableMeasuredTime){
             timeEnabled = true;
             startProgressBarTimeThread();
         }
+        progressStringEnabled = showProgressInText;
         WindowMain.PROGRESS_BAR.setMinimum(minValue);
         WindowMain.PROGRESS_BAR.setMaximum(maxValue);
         WindowMain.PROGRESS_BAR.setValue(minValue);
@@ -55,6 +82,7 @@ public class ProgressBarHelper {
             TextAreaHelper.appendText(text);
         }
     }
+
     /**
      * Sets the text that should be displayed in the progress bar
      * @param text The text that should be displayed
@@ -110,7 +138,13 @@ public class ProgressBarHelper {
      * Changes the progress value and time behind the progress bar text
      */
     private static void changeProgress(){
-        WindowMain.PROGRESS_BAR.setString(currentProgressBarString + " " + getProgressString() + getProgressBarTime());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(currentProgressBarString).append(" ");
+        if(progressStringEnabled) {
+            stringBuilder.append(getProgressString());
+        }
+        stringBuilder.append(getProgressBarTime());
+        WindowMain.PROGRESS_BAR.setString(stringBuilder.toString());
     }
 
     private static String getProgressBarTime(){

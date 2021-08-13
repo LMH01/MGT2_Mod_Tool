@@ -2,8 +2,10 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,6 +168,7 @@ public class DefaultContentManager {
      * The existing file will be replaced.
      */
     private static void updateToml() {
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.initializingTool") + ": " + I18n.INSTANCE.get("progressBar.downloadingDefaultContentUpdate"));
         LOGGER.info("Updating default content toml file...");
         try {
             File tomlDownload = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content_update.toml");

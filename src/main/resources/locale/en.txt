@@ -721,6 +721,8 @@ progressBar.npcGamesList.title|Modifying npc games list
 progressBar.copyDirectory.title|Copying directory
 progressBar.moveOldInitialBackupFiles|Moving old initial backup
 progressBar.creatingInitialBackup|Creating initial backup
+progressBar.initializingTool|Initializing tool
+progressBar.downloadingDefaultContentUpdate|Downloading default content update
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
