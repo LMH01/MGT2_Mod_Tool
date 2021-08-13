@@ -2,9 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
 import com.moandjiezana.toml.Toml;
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -13,24 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ReadDefaultContent {
-
-    //TODO Remove this function
-    /**
-     * @deprecated use {@link ReadDefaultContent#getDefault(String)} instead
-     */
-    @Deprecated
-    public static String[] getDefaultPublisher() throws IOException {
-        ArrayList<String> arrayList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/default_publisher.txt")), StandardCharsets.UTF_8));
-        String currentLine;
-        while ((currentLine = reader.readLine()) != null) {
-            arrayList.add(currentLine);
-        }
-        reader.close();
-        String[] strings = new String[arrayList.size()];
-        arrayList.toArray(strings);
-        return strings;
-    }
 
     /**
      * Searches "appdata/roaming/LMH01/MGT2_Mod_Tool/default_content.toml" for the default content name. If found returns the content of that array.
