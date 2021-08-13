@@ -83,8 +83,8 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
     - Should you need help to figure out what an input or button means simply hover over it with your mouse.   
 - **Settings**
     - If you wish to not use the automatically detected MGT2 folder you can select a folder manually.
-    - Most spinners are locked and some features do only work on specific conditions to prevent problems. Disable the safety feaatures to circumvent this behaviour. **Do only do so if you know what you are doing! I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!**
-    - It is possible to change the **language** of the tool. The german translations are currently wip.
+    - Most spinners are locked and some features do only work on specific conditions to prevent problems. Disable the safety features to circumvent this behaviour. **Do only do so if you know what you are doing! I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!**
+    - It is possible to change the **language** of the tool. The supported languages are currently german and english.
 - **The Mad Games Tycoon 2 folder is set automatically**
     - When launching the application all Steam libraries will be searched if they contain Mad Games Tycoon 2. If they don't a prompt is displayed where the path can be entered.
 - **Other**
@@ -143,10 +143,10 @@ This is a little program that can modify some files of Mad Games Tycoon 2.
 ![img](https://i.imgur.com/eghBt4S.png "Add genre summary")
 
 ####This is what the main window looks like
-![img](https://i.imgur.com/ZnQQ8G1.png "The main window")
+![img](https://i.imgur.com/kPNotLm.png "The main window")
 
 ####This is what the import window could look like
 ![img](https://i.imgur.com/RvDoupc.png "The import window")
 
 ####This is what the mods menu looks like
-![img](https://i.imgur.com/pdIwEHw.png "The mods window")
+![img](https://i.imgur.com/fSs3Fn5.png "The mods window")
