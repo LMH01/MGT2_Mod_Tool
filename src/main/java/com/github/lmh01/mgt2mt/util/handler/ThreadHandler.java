@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util.handler;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.*;
+import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -48,6 +49,7 @@ public class ThreadHandler {
                 WindowMain.lockMenuItems(true);
             }
             UpdateChecker.checkForUpdates(false, false);
+            DefaultContentManager.performStartTasks();
             deleteTempFolder();
             try{
                 WindowMain.checkActionAvailability();
