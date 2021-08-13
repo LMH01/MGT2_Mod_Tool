@@ -2,13 +2,15 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class DefaultContentManager {
@@ -52,18 +54,21 @@ public class DefaultContentManager {
      */
     private static DefaultContentStatus analyzeCurrentContentVersion() {
         try {
-            Toml toml = new Toml().read(DEFAULT_CONTENT_FILE);
-            String currentVersion = toml.getString("version");
-            LOGGER.info("default content version: " + currentVersion);
-            try {
-                URL url = new URL(NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL);
-                Scanner scanner = new Scanner(url.openStream());
-                final String NEWEST_VERSION = scanner.nextLine();
-                LOGGER.info("Newest default content version: " + NEWEST_VERSION);
-                return isVersionNewer(currentVersion, NEWEST_VERSION);
-            } catch (IOException e) {
-                LOGGER.error("Unable to check for default content update.");
-                return DefaultContentStatus.FILE_UP_TO_DATE;
+            if(DEFAULT_CONTENT_FILE.exists()){
+                String currentVersion = ReadDefaultContent.toml.getString("version");
+                LOGGER.info("default content version: " + currentVersion);
+                try {
+                    URL url = new URL(NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL);
+                    Scanner scanner = new Scanner(url.openStream());
+                    final String NEWEST_VERSION = scanner.nextLine();
+                    LOGGER.info("Newest default content version: " + NEWEST_VERSION);
+                    return isVersionNewer(currentVersion, NEWEST_VERSION);
+                } catch (IOException e) {
+                    LOGGER.error("Unable to check for default content update.");
+                    return DefaultContentStatus.FILE_UP_TO_DATE;
+                }
+            } else {
+                return DefaultContentStatus.FILE_MISSING;
             }
         } catch (RuntimeException e){
             return DefaultContentStatus.FILE_MISSING;
@@ -97,7 +102,7 @@ public class DefaultContentManager {
             URL url = loader.getResource("default_content");
             String path = url.getPath();
             for (File file : Objects.requireNonNull(new File(path).listFiles())){
-                map.put(file.getName().replace(".txt", ""), ReadDefaultContent.getDefaultFromSystemResource(file.getName()));
+                map.put(file.getName().replace(".txt", ""), getDefaultFromSystemResource(file.getName()));
             }
             tomlWriter.write(map, DEFAULT_CONTENT_FILE);
             LOGGER.info("A new default content toml file has been created successfully!");
@@ -105,5 +110,24 @@ public class DefaultContentManager {
             LOGGER.info("A problem occurred while writing a new default content toml file: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+
+    /**
+     * @return Returns a string containing the contents of the file. The file will be searched in "src/main/resources/default_content".
+     * Use {@link ReadDefaultContent#getDefault(String)} instead, if you would like to get the custom content that is saved in appdata.
+     */
+    private static String[] getDefaultFromSystemResource(String fileName) throws IOException {
+        ArrayList<String> arrayList = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/" + fileName)), StandardCharsets.UTF_8));
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            arrayList.add(currentLine);
+        }
+        reader.close();
+        String[] strings = new String[arrayList.size()];
+        arrayList.toArray(strings);
+        return strings;
     }
 }
