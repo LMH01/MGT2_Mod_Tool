@@ -598,9 +598,8 @@ public class Utils {
      * ...
      * DEC = 12
      * @param string The input string that should be converted - Converts the whole string and just searches for the month keyword
-     * @return Returns -1 if the month is not found
      */
-    public static int getNumberForMonth(String string){
+    public static int getNumberForMonth(String string) throws IllegalArgumentException {
         if(string.contains("JAN")){
             return 1;
         }else if(string.contains("FEB")){
@@ -626,7 +625,7 @@ public class Utils {
         }else if(string.contains("DEC")){
             return 12;
         }
-        return -1;//TODO Add throw cause for wrong usage exception
+        throw new IllegalArgumentException("The input string is invalid: " + string);
     }
 
     /**
