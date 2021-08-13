@@ -1,10 +1,6 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
@@ -40,6 +36,9 @@ public class DefaultContentManager {
 
             case FILE_MISSING: {
                 LOGGER.info("The default content file has not yet been generated or is corrupted. A new file will be generated.");
+                if(DEFAULT_CONTENT_FILE.exists()){
+                    DEFAULT_CONTENT_FILE.delete();
+                }
                 writeNewDefaultContentFile();
             }
         }
@@ -60,6 +59,7 @@ public class DefaultContentManager {
                 URL url = new URL(NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL);
                 Scanner scanner = new Scanner(url.openStream());
                 final String NEWEST_VERSION = scanner.nextLine();
+                LOGGER.info("Newest default content version: " + NEWEST_VERSION);
                 return isVersionNewer(currentVersion, NEWEST_VERSION);
             } catch (IOException e) {
                 LOGGER.error("Unable to check for default content update.");

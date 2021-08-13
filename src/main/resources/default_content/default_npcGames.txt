@@ -1068,4 +1068,108 @@ Zonik Chaos <2><3><15>
 Zoro the Alien <2><3><15>
 Zortium <1>
 Zuk MacCrack <2><3><15>
-Zweihander <5><12><14><16>
+Zweihanders <5><12><14><16>
+Oltima Quest <3>
+Wing Captain <7>
+Might & Spells <3>
+Master of Dungeons <3>
+Heroes of Might & Spells <4>
+The Simulated People <4>
+Massive Effect <3>
+Planet Tormen <3>
+Dark Zools <3>
+Deadly Comanche <7>
+Umbrella Zombies <2>
+Dark Metro <14>
+Deadly Fallout <3>
+Deuz Exit <14>
+Cell Theory <14>
+Rome: The War <4>
+Beta Centauri <4>
+System Zok <14>
+Galaxis Civlizations <4>
+Jim Fandango <2>
+The Ancient Scrolls <3>
+Uldurs Gate <3>
+Little Settlers <4>
+King of Persia <6>
+Ear Of The Beholder <3>
+Dark Wasteland <3>
+Plants Vs. Vampires <0>
+The Kaos Engine <5>
+Stunt Cars <17>
+Iron Speedballs <8>
+Intergalactic Quest <2>
+Silent U-Boat <7>
+Railroad Manager <9><11>
+Oil Manager <9><11>
+Shop Manager <9><11>
+Nighthawk Pilot <7>
+Eurofighter Action <7>
+Legend of Fearhill <3>
+Phaser Squads <5>
+Kings of the Sky <7>
+International Judo <10>
+Fight Spirit <10>
+Dynaphaser <0>
+Web of Dreams <2>
+Amberdoom <3>
+Alterium Beast <6>
+3D Virtual Pool <8>
+Jim Dangerous <6>
+Alien Seed <5>
+Beneath a Iron Sky <2>
+Possible Mission <6>
+Project Stealth Warrior <7>
+Gunship Pilot <7>
+Intergalactic Taxi <0>
+Armalites <5>
+HERO Operation <5>
+Street Boxing <10>
+World Boxing <10>
+Rigar <5>
+Castlemania <6>
+Ninja Chaos <6>
+Double Snakes <10>
+Little Icarus <6>
+Faxana <6>
+Kristalis <3>
+Cyborg Warrior <5>
+Ghost Castle <6>
+Miracle Knights <3>
+Robofish <6>
+Silver Axe <10>
+Mission Wolf <5>
+Silver Axe Warrior <3>
+Laser Hyperaction <6>
+Super Dive <0>
+Codename Raiders <5>
+The Darkness Ring <3>
+Exolonia <5>
+Super Match Point <8>
+Mega Trashman <0>
+Xeno Sports <8>
+Cayleth Adventure <2>
+Terra Cestan <5>
+Jetpac Action <5>
+Extreme Decathlon <8>
+Renegade Warrior <10>
+Mission: Rebelstar <4>
+Mission: Xecutor <5>
+Ikari Knight <3>
+Freescape Driller <7>
+Cyberdroids <5>
+Deflektor Puzzle <1>
+Ant War <5>
+Chaos Lords <3>
+Mission Vulcan <4>
+School Days <0>
+Berzerk Quest <3>
+River Action <5>
+Starbase Atlantis <11>
+Demon Wars <5>
+Galaxy Ace <12>
+Zybermorphing <5>
+Hyper Drive Rally <17>
+Mech: Steel Warriors <7>
+Alpha Xenomorph <14>
