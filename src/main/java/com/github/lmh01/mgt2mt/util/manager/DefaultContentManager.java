@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DefaultContentManager {
@@ -35,7 +38,7 @@ public class DefaultContentManager {
             case FILE_OUTDATED: {
 
             }
-
+            break;
             case FILE_MISSING: {
                 LOGGER.info("The default content file has not yet been generated or is corrupted. A new file will be generated.");
                 if(DEFAULT_CONTENT_FILE.exists()){
@@ -43,6 +46,7 @@ public class DefaultContentManager {
                 }
                 writeNewDefaultContentFile();
             }
+            break;
         }
     }
 
@@ -70,7 +74,8 @@ public class DefaultContentManager {
             } else {
                 return DefaultContentStatus.FILE_MISSING;
             }
-        } catch (RuntimeException e){
+        } catch (RuntimeException | ExceptionInInitializerError e){
+            e.printStackTrace();
             return DefaultContentStatus.FILE_MISSING;
         }
     }
@@ -83,10 +88,28 @@ public class DefaultContentManager {
      * Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
      * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
      */
-    private static DefaultContentStatus isVersionNewer(String currentVersion, String newestVersion){
-        //TODO Complete this function
-        LOGGER.info("The current default content file is up-to-date.");
-        return DefaultContentStatus.FILE_UP_TO_DATE;
+    private static DefaultContentStatus isVersionNewer(String currentVersion, String newestVersion) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        LocalDate currentVersionDate = LocalDate.parse(currentVersion.replace("BUILD ", "").replaceAll("[a-zA-Z]", ""), formatter);
+        LocalDate newestVersionDate = LocalDate.parse(newestVersion.replace("BUILD ", "").replaceAll("[a-zA-Z]", ""), formatter);
+        if (newestVersionDate.isAfter(currentVersionDate)) {
+            LOGGER.info("The current default content file is outdated.");
+            return DefaultContentStatus.FILE_OUTDATED;
+        } else if (newestVersionDate.equals(currentVersionDate)) {
+            Character a = currentVersion.charAt(currentVersion.length() - 1);
+            Character b = newestVersion.charAt(newestVersion.length() - 1);
+            LOGGER.info(a.compareTo(b) + "");
+            if (a.compareTo(b) == 0 || a.compareTo(b) > 0) {
+                LOGGER.info("The current default content file is up-to-date.");
+                return DefaultContentStatus.FILE_UP_TO_DATE;
+            } else {
+                LOGGER.info("The current default content file is outdated.");
+                return DefaultContentStatus.FILE_OUTDATED;
+            }
+        } else {
+            LOGGER.info("The current default content file is up-to-date.");
+            return DefaultContentStatus.FILE_UP_TO_DATE;
+        }
     }
 
     /**
