@@ -48,6 +48,31 @@ public class DataStreamHelper {
         return "-1";
     }
 
+    /**
+     * Downloads the specified file to the destination
+     * @throws IOException when download failed
+     */
+    public static void downloadFile(String URL, File destination) throws IOException {
+        if(destination.exists()){
+            destination.delete();
+        }
+        destination.getParentFile().mkdirs();
+
+        BufferedInputStream in = new BufferedInputStream(new URL(URL).openStream());
+        FileOutputStream fileOutputStream = new FileOutputStream(destination);
+        byte dataBuffer[] = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+            fileOutputStream.write(dataBuffer, 0, bytesRead);
+        }
+        fileOutputStream.close();
+        LOGGER.info("The file from " + URL + " has been successfully downloaded to " + destination);
+    }
+
+    /**
+     * Downloads the specified zip file to the destination.
+     * Prints message to text area.
+     */
     public static void downloadZip(String URL, String destination) throws IOException {
         File destinationFile = new File(destination);
         if(destinationFile.exists()){

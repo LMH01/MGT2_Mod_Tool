@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
@@ -11,8 +13,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -25,8 +28,8 @@ public class DefaultContentManager {
      */
     private static final String DEFAULT_CONTENT_VERSION = "BUILD 2021.08.13A";
     private static final String NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL = "https://www.dropbox.com/s/hd7f7c2b9ybr5gt/newest_default_content_version.txt?dl=1";
+    private static final String NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL = "https://www.dropbox.com/s/7l89pg9x4venqje/newest_default_content.toml?dl=1";
     public static final File DEFAULT_CONTENT_FILE = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content.toml");
-
     /**
      * Analyzes the current default content file "%appdata%\LMH01\MGT2_Mod_Manager\default_content.toml" to
      * determine if they are up-to-date.
@@ -35,16 +38,27 @@ public class DefaultContentManager {
      */
     public static void performStartTasks() {
         switch (analyzeCurrentContentVersion()) {
+            case FILE_UP_TO_DATE: {
+                LogFile.write("The current default content file is up-to-date.");
+            }
+            break;
             case FILE_OUTDATED: {
-
+                LogFile.write("The current default content file is outdated.");
+                updateToml();
             }
             break;
             case FILE_MISSING: {
-                LOGGER.info("The default content file has not yet been generated or is corrupted. A new file will be generated.");
+                LogFile.write("The default content file has not yet been generated or is corrupted. A new file will be generated.");
                 if(DEFAULT_CONTENT_FILE.exists()){
                     DEFAULT_CONTENT_FILE.delete();
                 }
                 writeNewDefaultContentFile();
+                performStartTasks();
+            }
+            break;
+            case UPDATE_CHECK_FAILED: {
+                LogFile.write("Unable to check for default content update.");
+                LOGGER.error("Unable to check for default content update.");
             }
             break;
         }
@@ -55,6 +69,7 @@ public class DefaultContentManager {
      * @return Returns {@link DefaultContentStatus#FILE_MISSING} if the default content file has not been created yet.
      * Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
      * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
+     * Returns {@link DefaultContentStatus#UPDATE_CHECK_FAILED} if the default content file exists but the update check has failed.
      */
     private static DefaultContentStatus analyzeCurrentContentVersion() {
         try {
@@ -68,8 +83,7 @@ public class DefaultContentManager {
                     LOGGER.info("Newest default content version: " + NEWEST_VERSION);
                     return isVersionNewer(currentVersion, NEWEST_VERSION);
                 } catch (IOException e) {
-                    LOGGER.error("Unable to check for default content update.");
-                    return DefaultContentStatus.FILE_UP_TO_DATE;
+                    return DefaultContentStatus.UPDATE_CHECK_FAILED;
                 }
             } else {
                 return DefaultContentStatus.FILE_MISSING;
@@ -93,21 +107,16 @@ public class DefaultContentManager {
         LocalDate currentVersionDate = LocalDate.parse(currentVersion.replace("BUILD ", "").replaceAll("[a-zA-Z]", ""), formatter);
         LocalDate newestVersionDate = LocalDate.parse(newestVersion.replace("BUILD ", "").replaceAll("[a-zA-Z]", ""), formatter);
         if (newestVersionDate.isAfter(currentVersionDate)) {
-            LOGGER.info("The current default content file is outdated.");
             return DefaultContentStatus.FILE_OUTDATED;
         } else if (newestVersionDate.equals(currentVersionDate)) {
             Character a = currentVersion.charAt(currentVersion.length() - 1);
             Character b = newestVersion.charAt(newestVersion.length() - 1);
-            LOGGER.info(a.compareTo(b) + "");
             if (a.compareTo(b) == 0 || a.compareTo(b) > 0) {
-                LOGGER.info("The current default content file is up-to-date.");
                 return DefaultContentStatus.FILE_UP_TO_DATE;
             } else {
-                LOGGER.info("The current default content file is outdated.");
                 return DefaultContentStatus.FILE_OUTDATED;
             }
         } else {
-            LOGGER.info("The current default content file is up-to-date.");
             return DefaultContentStatus.FILE_UP_TO_DATE;
         }
     }
@@ -135,8 +144,6 @@ public class DefaultContentManager {
         }
     }
 
-
-
     /**
      * @return Returns a string containing the contents of the file. The file will be searched in "src/main/resources/default_content".
      * Use {@link ReadDefaultContent#getDefault(String)} instead, if you would like to get the custom content that is saved in appdata.
@@ -152,5 +159,23 @@ public class DefaultContentManager {
         String[] strings = new String[arrayList.size()];
         arrayList.toArray(strings);
         return strings;
+    }
+
+    /**
+     * Downloads the newest toml file to this location "%appdata%\LMH01\MGT2_Mod_Manager\default_content.toml".
+     * The existing file will be replaced.
+     */
+    private static void updateToml() {
+        LOGGER.info("Updating default content toml file...");
+        try {
+            File tomlDownload = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content_update.toml");
+            DataStreamHelper.downloadFile(NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL, tomlDownload);
+            LOGGER.info("Has the file been deleted: " + DEFAULT_CONTENT_FILE.delete());
+            Files.copy(Paths.get(tomlDownload.getPath()), Paths.get(DEFAULT_CONTENT_FILE.getPath()));
+            LOGGER.info("Has the file been deleted: " + tomlDownload.delete());
+            LogFile.write("The default_content.toml file has been updated successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
