@@ -23,6 +23,11 @@ public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
     }
 
     @Override
+    public String getDefaultContentFileName() {
+        return "default_npcGames.txt";
+    }
+
+    @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
         return ModManager.npcGamesMod.getBaseAnalyzer();
     }
@@ -66,7 +71,7 @@ public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
     public String[] getDefaultContent() {
         if(defaultContent.length == 0){
             try {
-                defaultContent = ReadDefaultContent.getDefault("default_npcGames.txt", this::getReplacedLine);
+                defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName(), this::getReplacedLine);
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);

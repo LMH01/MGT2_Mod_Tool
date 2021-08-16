@@ -58,6 +58,7 @@ public class ThreadHandler {
                     WindowMain.lockMenuItems(false);
                 }
             }catch(NullPointerException e){
+                e.printStackTrace();
                 if(Settings.mgt2FolderIsCorrect){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.firstPart"));
                     TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.secondPart"));

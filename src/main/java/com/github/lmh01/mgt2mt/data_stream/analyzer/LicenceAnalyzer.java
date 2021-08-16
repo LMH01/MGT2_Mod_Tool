@@ -54,7 +54,7 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
     public String[] getDefaultContent() {
         if(defaultContent.length == 0){
             try {
-                defaultContent = ReadDefaultContent.getDefault("default_licences.txt", this::getReplacedLine);
+                defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName(), this::getReplacedLine);
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
@@ -102,6 +102,11 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
     }
 
     @Override
+    public String getDefaultContentFileName() {
+        return "default_licences.txt";
+    }
+
+    @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
         return ModManager.licenceMod.getAnalyzer();
     }
@@ -115,4 +120,5 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
     public void setFinishedCustomContentString(String[] customContent) {
         this.customContent = customContent;
     }
+
 }

@@ -97,4 +97,9 @@ public abstract class AbstractSimpleAnalyzer implements BaseAnalyzer, BaseFuncti
     public final String getLine(String name){
         return getFileContent().get(getPositionInFileContentListByName(name));
     }
+
+    /**
+     * @return Returns a string that contains the filename of the default content file
+     */
+    public abstract String getDefaultContentFileName();
 }

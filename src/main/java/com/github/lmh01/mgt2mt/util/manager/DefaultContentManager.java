@@ -2,10 +2,12 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +78,8 @@ public class DefaultContentManager {
     private static DefaultContentStatus analyzeCurrentContentVersion() {
         try {
             if(DEFAULT_CONTENT_FILE.exists()){
-                String currentVersion = ReadDefaultContent.toml.getString("version");
+                Toml toml = new Toml().read(DefaultContentManager.DEFAULT_CONTENT_FILE);
+                String currentVersion = toml.getString("version");
                 LOGGER.info("default content version: " + currentVersion);
                 try {
                     URL url = new URL(NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL);
@@ -132,11 +135,8 @@ public class DefaultContentManager {
         Map<String, Object> map = new HashMap<>();
         try {
             map.put("version", DEFAULT_CONTENT_VERSION);
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            URL url = loader.getResource("default_content");
-            String path = url.getPath();
-            for (File file : Objects.requireNonNull(new File(path).listFiles())) {
-                map.put(file.getName().replace(".txt", ""), getDefaultFromSystemResource(file.getName()));
+            for (String string : getDefaultContentNames()) {
+                map.put(string.replace(".txt", ""), getDefaultFromSystemResource(string));
             }
             tomlWriter.write(map, DEFAULT_CONTENT_FILE);
             LOGGER.info("A new default content toml file has been created successfully!");
@@ -180,5 +180,20 @@ public class DefaultContentManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @return Returns an array list containing the filename of the default content files that should be read
+     */
+    private static ArrayList<String> getDefaultContentNames(){
+        ArrayList<String> strings = new ArrayList<>();
+        for (AbstractSimpleMod simpleMod : ModManager.simpleMods) {
+            strings.add(simpleMod.getBaseAnalyzer().getDefaultContentFileName());
+        }
+        strings.add(ModManager.themeMod.getAnalyzerEn().getDefaultContentFileName());
+        for (AbstractAdvancedMod advancedMod : ModManager.advancedMods) {
+            strings.add(advancedMod.getBaseAnalyzer().getDefaultContentFileName());
+        }
+        return strings;
     }
 }

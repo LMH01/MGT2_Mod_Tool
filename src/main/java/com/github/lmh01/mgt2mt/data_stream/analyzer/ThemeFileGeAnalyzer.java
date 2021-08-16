@@ -24,6 +24,11 @@ public class ThemeFileGeAnalyzer extends AbstractSimpleAnalyzer {
     }
 
     @Override
+    public String getDefaultContentFileName() {
+        return "default_themes_ge.txt";
+    }
+
+    @Override
     public void sendLogMessage(String string) {
         LOGGER.info(string);
     }
@@ -53,7 +58,7 @@ public class ThemeFileGeAnalyzer extends AbstractSimpleAnalyzer {
     public String[] getDefaultContent() {
         if(defaultContent.length == 0){
             try {
-                defaultContent = ReadDefaultContent.getDefault("default_themes_ge.txt");
+                defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName());
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
