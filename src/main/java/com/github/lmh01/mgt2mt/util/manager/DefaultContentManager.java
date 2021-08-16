@@ -62,7 +62,6 @@ public class DefaultContentManager {
             break;
             case UPDATE_CHECK_FAILED: {
                 LogFile.write("Unable to check for default content update.");
-                LOGGER.error("Unable to check for default content update.");
             }
             break;
         }
@@ -190,7 +189,7 @@ public class DefaultContentManager {
         for (AbstractSimpleMod simpleMod : ModManager.simpleMods) {
             strings.add(simpleMod.getBaseAnalyzer().getDefaultContentFileName());
         }
-        strings.add(ModManager.themeMod.getAnalyzerEn().getDefaultContentFileName());
+        strings.add(ModManager.themeMod.getAnalyzerEn().getDefaultContentFileName());//This line is needed because the english default content file would not be read
         for (AbstractAdvancedMod advancedMod : ModManager.advancedMods) {
             strings.add(advancedMod.getBaseAnalyzer().getDefaultContentFileName());
         }
