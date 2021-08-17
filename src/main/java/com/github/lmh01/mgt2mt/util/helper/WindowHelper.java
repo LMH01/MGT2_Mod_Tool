@@ -288,7 +288,7 @@ public class WindowHelper {
                 break;
             case 1:
                 comboBox.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Physics", "Gameplay", "Controls", "Multiplayer"}));
+                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Physics", "Gameplay", "Control", "Multiplayer"}));
                 comboBox.setSelectedItem("Graphic");
                 break;
             case 2:

@@ -268,7 +268,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             case "Control": return 5;
             case "Multiplayer": return 6;
         }
-        return 10;
+        throw new IllegalArgumentException("Input feature type is invalid! Was " + featureType);
     }
 
     /**
