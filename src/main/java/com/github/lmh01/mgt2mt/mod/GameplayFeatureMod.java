@@ -259,7 +259,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
      * @param featureType The feature type string
      * @return Returns the type number
      */
-    public int getGameplayFeatureTypeByName(String featureType){
+    public int getGameplayFeatureTypeByName(String featureType) {
         switch (featureType){
             case "Graphic": return 0;
             case "Sound": return 1;
@@ -267,8 +267,8 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             case "Gameplay": return 4;
             case "Control": return 5;
             case "Multiplayer": return 6;
+            default : return 0;
         }
-        throw new IllegalArgumentException("Input feature type is invalid! Was " + featureType);
     }
 
     /**
@@ -284,7 +284,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             case 4 : return "Gameplay";
             case 5 : return "Control";
             case 6 : return "Multiplayer";
+            default : return "Graphic";
         }
-        return "";
     }
 }
