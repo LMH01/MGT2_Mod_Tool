@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ public class ActiveMods {
     public static void showActiveMods() {
         boolean noModsActive = true;
         ArrayList<Object> objects = new ArrayList<>();
-        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+        for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
             String[] customContent = advancedMod.getBaseAnalyzer().getCustomContentString();
             if(customContent.length > 0){
                 JPanel mod = new JPanel();
@@ -33,7 +33,7 @@ public class ActiveMods {
                 noModsActive = false;
             }
         }
-        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+        for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
             String[] customContent;
             if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
                 customContent = ModManager.themeMod.getAnalyzerEn().getCustomContentString(true);

@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor
 import com.github.lmh01.mgt2mt.data_stream.editor.GameplayFeatureEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.GameplayFeatureSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GameplayFeatureMod extends AbstractAdvancedMod {
+public class GameplayFeatureMod extends AbstractAdvancedModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureMod.class);
     GameplayFeatureAnalyzer gameplayFeatureAnalyzer = new GameplayFeatureAnalyzer();
     GameplayFeatureEditor gameplayFeatureEditor = new GameplayFeatureEditor();
@@ -71,7 +71,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.gameplayFeatureMod;
     }
 

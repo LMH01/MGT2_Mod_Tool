@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.LicenceEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.LicenceSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -23,7 +23,7 @@ import java.util.Objects;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
-public class LicenceMod extends AbstractSimpleMod {
+public class LicenceMod extends AbstractSimpleModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceMod.class);
     LicenceAnalyzer licenceAnalyzer = new LicenceAnalyzer();
     LicenceEditor licenceEditor = new LicenceEditor();
@@ -71,7 +71,7 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    public AbstractSimpleMod getSimpleMod() {
+    public AbstractSimpleModOld getSimpleMod() {
         return ModManager.licenceMod;
     }
 

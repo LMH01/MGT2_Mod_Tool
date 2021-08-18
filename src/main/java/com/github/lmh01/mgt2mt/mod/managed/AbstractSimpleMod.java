@@ -1,115 +1,99 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractSimpleAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractSimpleEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
-import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.*;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
-public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseFunctions, BaseMod, SimpleMod{
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSimpleMod.class);
+//TODO Klasse aufräumen -> Funktionen schön sortieren
+
+/**
+ * This class is used to create new mods.
+ * Use this class if the mod uses files where each mod is written in one line.
+ */
+public abstract class AbstractSimpleMod extends AbstractBaseMod {
+
+    Map<Integer, String> fileContent;
 
     @Override
-    public final void initializeMod() {
-        LOGGER.info("Initializing simple mod: " + getType());
-        ModManager.simpleMods.add(getSimpleMod());
+    public final void analyzeFile() throws IOException {
+        fileContent = DataStreamHelper.getContentFromFile(getGameFile(), "UTF_8BOM");
     }
 
     @Override
-    public void setMainMenuButtonAvailability() {
-        String[] customContentString = getBaseAnalyzer().getCustomContentString(true);
-        for(JMenuItem menuItem : getModMenuItems()){
-            if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
-                if(customContentString.length > 0){
-                    menuItem.setEnabled(true);
-                    menuItem.setToolTipText("");
-                }else{
-                    menuItem.setEnabled(false);
-                    menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
-                }
+    public <T> void addMod(T t) throws ModProcessingException {
+        if (t instanceof String) {
+            String string = (String) t;
+        } else {
+            throw new ModProcessingException("T is invalid: Should be String", true);
+        }
+    }
+
+    @Override
+    public void removeMod(String name) throws ModProcessingException {
+
+    }
+
+
+    /**
+     * returns that analyzed file
+     */
+    public final Map<Integer, String> getFileContent() {
+        return fileContent;
+    }
+
+    /**
+     * @return A string containing all active things sorted by alphabet.
+     */
+    @Override
+    public final String[] getContentByAlphabet(){
+        ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
+        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
+            arrayListAvailableThingsSorted.add(getReplacedLine(entry.getValue()));
+        }
+        Collections.sort(arrayListAvailableThingsSorted);
+        String[] string = new String[arrayListAvailableThingsSorted.size()];
+        arrayListAvailableThingsSorted.toArray(string);
+        return string;
+    }
+
+    /**
+     * Replaces the input string and returns the replaced string
+     */
+    public abstract String getReplacedLine(String inputString);
+
+    /**
+     * @param name The content name for which the position should be returned
+     * @return The position in the fileContent list where the input id is stored in.
+     */
+    public final int getPositionInFileContentListByName(String name) throws ModProcessingException{
+        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
+            if(getReplacedLine(entry.getValue()).equals(name)){
+                return entry.getKey();
             }
         }
-        if(customContentString.length > 0){
-            getExportMenuItem().setEnabled(true);
-            getExportMenuItem().setToolTipText("");
-        }else{
-            getExportMenuItem().setEnabled(false);
-            getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+        throw new ModProcessingException("Position of '" + name + "' in the file content list could not be returned: The name was not found in the file content list!");
+    }
+
+    /**
+     * @return The line content where the name stands
+     */
+    public final String getLine(String name) throws ModProcessingException {
+        try {
+            return getFileContent().get(getPositionInFileContentListByName(name));
+        } catch (ModProcessingException e) {
+            throw new ModProcessingException("Line content could not be returned. The name " + name + "' was not found in the file content list!");
         }
     }
 
     @Override
-    public final void addMod(String lineToWrite) throws IOException {
-        getBaseEditor().addMod(lineToWrite);
+    public int getFileContentSize() {
+        return fileContent.size();
     }
 
     @Override
-    public final void removeMod(String name) throws IOException {
-        getBaseEditor().removeMod(name);
+    public int getContentIdByName(String name) throws ModProcessingException {
+        return getPositionInFileContentListByName(name);
     }
-
-    @Override
-    public final void exportMod(String name, boolean exportAsRestorePoint) {
-        getBaseSharer().exportMod(name, exportAsRestorePoint);
-    }
-
-    @Override
-    public final void importMod(String importFolderPath, boolean showMessages) throws IOException {
-        getBaseSharer().importMod(importFolderPath, showMessages);
-    }
-
-    @Override
-    public final void analyze() throws IOException {
-        getBaseAnalyzer().analyzeFile();
-    }
-
-    @Override
-    public final Map<Integer, String> getFileContent() {
-        return getBaseAnalyzer().getFileContent();
-    }
-
-    @Override
-    public final void removeModMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
-        ThreadHandler.startThread(thread, "runnableRemove" + getType());
-    }
-
-    @Override
-    public final void exportMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
-        ThreadHandler.startThread(thread, "runnableExport" + getType());
-    }
-
-    /**
-     * @return Returns the analyzer that is extended from {@link AbstractSimpleAnalyzer} for the specified mod.
-     * Info: when using this method, only the functions from {@link AbstractSimpleAnalyzer} can be used.
-     * If you would like to use all functions for the analyzer use {@code MOD.getAnalyzer} instead.
-     */
-    public abstract AbstractSimpleAnalyzer getBaseAnalyzer();
-
-    /**
-     * @return Returns the editor that is extended from {@link AbstractSimpleEditor} for the specified mod.
-     * Info: when using this method, only the functions from {@link AbstractSimpleEditor} can be used.
-     * If you would like to use all functions for the editor use {@code MOD.getEditor} instead.
-     */
-    public abstract AbstractSimpleEditor getBaseEditor();
-
-    /**
-     * @return Returns the sharer that is extended from {@link AbstractSimpleSharer} for the specified mod.
-     * Info: when using this method, only the functions from {@link AbstractSimpleSharer} can be used.
-     * If you would like to use all functions for the sharer use {@code MOD.getSharer} instead.
-     */
-    public abstract AbstractSimpleSharer getBaseSharer();
-
-    /**
-     * @return Returns the simple mod that is extended from this abstract simple mod
-     */
-    public abstract AbstractSimpleMod getSimpleMod();
 }

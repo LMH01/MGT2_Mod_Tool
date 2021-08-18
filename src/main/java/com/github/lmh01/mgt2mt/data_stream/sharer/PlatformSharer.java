@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream.sharer;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -172,7 +172,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.platformMod;
     }
 

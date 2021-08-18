@@ -228,7 +228,7 @@ public abstract class AbstractAdvancedAnalyzer implements BaseAnalyzer, BaseFunc
     }
 
     /**
-     * @return Returns a array list containing all active ids
+     * @return Returns an array list containing all active ids
      */
     public ArrayList<Integer> getActiveIds(){
         ArrayList<Integer> activeIds = new ArrayList<>();

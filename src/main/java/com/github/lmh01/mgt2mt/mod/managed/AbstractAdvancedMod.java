@@ -1,134 +1,139 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
-import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
-import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
+//TODO Klasse aufräumen -> Funktionen schön sortieren
 
-public abstract class AbstractAdvancedMod extends AbstractBaseMod implements AdvancedMod, BaseFunctions, BaseMod{
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
+/**
+ * This class is used to create new mods.
+ * Use this class if the mod uses files with the system "[Key]Value".
+ */
+public abstract class AbstractAdvancedMod extends AbstractBaseMod {
 
+    List<Map<String, String>> fileContent;
+
+    @SuppressWarnings("unchecked")
     @Override
-    public final void initializeMod() {
-        LOGGER.info("Initializing advanced mod: " + getType());
-        ModManager.advancedMods.add(getAdvancedMod());
+    public <T> void addMod(T t) throws ModProcessingException {
+        try {
+            //This map contains the contents of the mod that should be added
+            Map<String, String> list = (Map<String, String>) t;
+        } catch (ClassCastException e) {
+            throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
+        }
     }
 
     @Override
-    public final void setMainMenuButtonAvailability() {
-        String[] customContentString = getBaseAnalyzer().getCustomContentString(true);
-        for(JMenuItem menuItem : getModMenuItems()){
-            if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
-                if(customContentString.length > 0){
-                    menuItem.setEnabled(true);
-                    menuItem.setToolTipText("");
-                }else{
-                    menuItem.setEnabled(false);
-                    menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+    public void removeMod(String name) throws ModProcessingException {
+
+    }
+
+    @Override
+    public final void analyzeFile() throws IOException {
+        fileContent = DataStreamHelper.parseDataFile(getGameFile());
+        int currentMaxId = 0;
+        for (Map<String, String> map : fileContent) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getKey().equals("ID")) {
+                    try{
+                        int currentId = Integer.parseInt(entry.getValue());
+                        if (currentMaxId < currentId) {
+                            currentMaxId = currentId;
+                        }
+                    }catch(NumberFormatException e){
+                        throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
+                    }
                 }
             }
         }
-        if(customContentString.length > 0){
-            getExportMenuItem().setEnabled(true);
-            getExportMenuItem().setToolTipText("");
-        }else{
-            getExportMenuItem().setEnabled(false);
-            getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+        setMaxId(currentMaxId);
+    }
+
+    /**
+     * @return The analyzed file content: {@literal List<Map<String, String>>}
+     */
+    public final List<Map<String, String>> getFileContent(){
+        return fileContent;
+    }
+
+    @Override
+    public String[] getContentByAlphabet() {
+        ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
+        for(Map<String, String> map : getFileContent()){
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().equals("NAME EN")){
+                    arrayListAvailableThingsSorted.add(entry.getValue());
+                }
+            }
         }
+        Collections.sort(arrayListAvailableThingsSorted);
+        String[] string = new String[arrayListAvailableThingsSorted.size()];
+        arrayListAvailableThingsSorted.toArray(string);
+        return string;
     }
 
     @Override
-    public final void addMod(Map<String, String> map) throws IOException {
-        getBaseEditor().addMod(map);
+    public int getFileContentSize() {
+        return getFileContent().size();
     }
 
     @Override
-    public void removeMod(String name) throws IOException {
-        getBaseEditor().removeMod(name);
-    }
-
-    @Override
-    public final void exportMod(String name, boolean exportAsRestorePoint) {
-        getBaseSharer().exportMod(name, exportAsRestorePoint);
-    }
-
-    @Override
-    public final void importMod(String importFolderPath, boolean showMessages) throws IOException {
-        getBaseSharer().importMod(importFolderPath, showMessages);
-    }
-
-    @Override
-    public final void analyze() throws IOException {
-        getBaseAnalyzer().analyzeFile();
-    }
-
-    @Override
-    public final List<Map<String, String>> getFileContent() {
-        return getBaseAnalyzer().getFileContent();
-    }
-
-    @Override
-    public void removeModMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
-        ThreadHandler.startThread(thread, "runnableRemove" + getType());
-    }
-
-    @Override
-    public final void exportMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process((string) -> getBaseSharer().exportMod(string, false), getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true));
-        ThreadHandler.startThread(thread, "runnableExport" + getType());
-    }
-
-    @Override
-    public final File getFile() {
-        return new File(getMGT2DataPath() + "//" + getFileName());
-    }
-
-    @Override
-    public final String getType() {
-        return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
-    }
-
-    @Override
-    public final String getTypePlural() {
-        return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase.plural");
+    public final int getContentIdByName(String name) throws ModProcessingException{
+        for(Map<String, String> map : getFileContent()){
+            if(map.get("NAME EN").equals(name)){
+                return Integer.parseInt(map.get("ID"));
+            }
+        }
+        throw new ModProcessingException("The mod id for mod '" + name + "' was not found");
     }
 
     /**
-     * @return Returns the analyzer that is extended from {@link AbstractAdvancedAnalyzer} for the specified mod.
-     * Info: when using this method, only the functions from {@link AbstractAdvancedAnalyzer} can be used.
-     * If you would like to use all functions for the analyzer use {@code MOD.getAnalyzer} instead.
+     * @param contentNameEn The content for which the map should be returned.
+     * @return A map containing all values for the specified content.
      */
-    public abstract AbstractAdvancedAnalyzer getBaseAnalyzer();
+    public Map<String, String> getSingleContentMapByName(String contentNameEn) throws ModProcessingException {
+        List<Map<String, String>> list = getFileContent();
+        String idToSearch = Integer.toString(getContentIdByName(contentNameEn));
+        Map<String, String> mapSingleContent = null;
+        for(Map<String, String> map : list){
+            if(map.get("ID").equals(idToSearch)){
+                mapSingleContent = map;
+            }
+        }
+        return mapSingleContent;
+    }
 
     /**
-     * @return Returns the editor that is extended from {@link AbstractAdvancedEditor} for the specified mod.
-     * Info: when using this method, only the functions from {@link AbstractAdvancedEditor} can be used.
-     * If you would like to use all functions for the editor use {@code MOD.getEditor} instead.
+     * @param genreId The content id for which the position should be returned
+     * @return The position in the fileContent list where the input id is stored in.
      */
-    public abstract AbstractAdvancedEditor getBaseEditor();
+    public int getPositionInFileContentListById(int genreId) throws ModProcessingException {
+        for(int i=0; i<getFileContent().size(); i++){
+            if(getFileContent().get(i).get("ID").equals(Integer.toString(genreId))){
+                return i;
+            }
+        }
+        throw new ModProcessingException("The genre id '" + genreId + "' was not found in the file content list!");
+    }
 
     /**
-     * @return Returns the sharer that is extended from {@link AbstractAdvancedSharer} for the specified mod.
-     * Info: when using this method, only the functions from {@link AbstractAdvancedSharer} can be used.
-     * If you would like to use all functions for the sharer use {@code MOD.getSharer} instead.
+     * @return An array list containing all active ids for this mod
      */
-    public abstract AbstractAdvancedSharer getBaseSharer();
+    public ArrayList<Integer> getActiveIds() {
+        ArrayList<Integer> activeIds = new ArrayList<>();
+        for(Map<String, String> map : getFileContent()){
+            try{
+                activeIds.add(Integer.parseInt(map.get("ID")));
+            } catch (NumberFormatException ignored){
 
-    /**
-     * @return Returns the advanced mod that is extended from this abstract advanced mod
-     */
-    public abstract AbstractAdvancedMod getAdvancedMod();
+            }
+        }
+        return activeIds;
+    }
 }

@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor
 import com.github.lmh01.mgt2mt.data_stream.editor.NpcEngineEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.NpcEngineSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class NpcEngineMod extends AbstractAdvancedMod {
+public class NpcEngineMod extends AbstractAdvancedModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineMod.class);
     NpcEngineAnalyzer npcEngineAnalyzer = new NpcEngineAnalyzer();
     NpcEngineEditor npcEngineEditor = new NpcEngineEditor();
@@ -51,7 +51,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.npcEngineMod;
     }
 

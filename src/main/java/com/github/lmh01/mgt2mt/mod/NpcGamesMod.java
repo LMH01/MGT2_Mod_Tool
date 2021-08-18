@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractSimpleEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.NpcGamesEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractSimpleSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.NpcGamesSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -23,7 +23,7 @@ import java.util.Collections;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2DataPath;
 
-public class NpcGamesMod extends AbstractSimpleMod {
+public class NpcGamesMod extends AbstractSimpleModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceMod.class);
     NpcGamesAnalyzer npcGamesAnalyzer = new NpcGamesAnalyzer();
     NpcGamesEditor npcGamesEditor = new NpcGamesEditor();
@@ -47,7 +47,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    public AbstractSimpleMod getSimpleMod() {
+    public AbstractSimpleModOld getSimpleMod() {
         return ModManager.npcGamesMod;
     }
 

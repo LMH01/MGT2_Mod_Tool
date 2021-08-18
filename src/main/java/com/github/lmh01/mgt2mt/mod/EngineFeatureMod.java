@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor
 import com.github.lmh01.mgt2mt.data_stream.editor.EngineFeatureEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.EngineFeatureSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class EngineFeatureMod extends AbstractAdvancedMod {
+public class EngineFeatureMod extends AbstractAdvancedModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureMod.class);
     EngineFeatureAnalyzer engineFeatureAnalyzer = new EngineFeatureAnalyzer();
     EngineFeatureEditor engineFeatureEditor = new EngineFeatureEditor();
@@ -73,7 +73,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.engineFeatureMod;
     }
 

@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 public class ModManager{
     private static final Logger LOGGER = LoggerFactory.getLogger(ModManager.class);
-    public static ArrayList<AbstractSimpleMod> simpleMods = new ArrayList<>();
-    public static ArrayList<AbstractAdvancedMod> advancedMods = new ArrayList<>();
+    public static ArrayList<AbstractSimpleModOld> simpleMods = new ArrayList<>();
+    public static ArrayList<AbstractAdvancedModOld> advancedMods = new ArrayList<>();
+    public static ArrayList<AbstractBaseMod> mods = new ArrayList<>();
     public static EngineFeatureMod engineFeatureMod = new EngineFeatureMod();
     public static GameplayFeatureMod gameplayFeatureMod = new GameplayFeatureMod();
     public static GenreMod genreMod = new GenreMod();

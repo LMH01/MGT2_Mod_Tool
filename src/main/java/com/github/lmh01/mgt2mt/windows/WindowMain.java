@@ -207,6 +207,7 @@ public class WindowMain {
         frame.setVisible(true);
     }
     public static void disposeFrame(){
+        Debug.test();
         frame.dispose();
         System.exit(0);
     }
@@ -225,7 +226,7 @@ public class WindowMain {
                         noModRestorePointSet = false;
                     }
                 }
-                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                     simpleMod.setMainMenuButtonAvailability();
                     if(!simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
                         if(simpleMod.getBaseAnalyzer().getCustomContentString(true).length > 0){
@@ -237,7 +238,7 @@ public class WindowMain {
                         }
                     }
                 }
-                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                     advancedMod.setMainMenuButtonAvailability();
                     if(advancedMod.getBaseAnalyzer().getCustomContentString(true).length > 0){
                         noModsAvailable = false;
@@ -378,7 +379,7 @@ public class WindowMain {
     public static void initializeModMenus(){
         if(!modMenusInitialized){
             if(Settings.useAutomaticModMenus){
-                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){//Use this when the menus should be allocated automatically
+                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){//Use this when the menus should be allocated automatically
                     JMenu menu = new JMenu(simpleMod.getTypePlural());
                     for(JMenuItem menuItem : simpleMod.getModMenuItems()){
                         menu.add(menuItem);
@@ -386,7 +387,7 @@ public class WindowMain {
                     MOD_MENUS.add(menu);
                     M_31_EXPORT.add(simpleMod.getExportMenuItem());
                 }
-                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                     JMenu menu = new JMenu(advancedMod.getTypePlural());
                     for(JMenuItem menuItem : advancedMod.getModMenuItems()){
                         menu.add(menuItem);
@@ -399,7 +400,7 @@ public class WindowMain {
                 }
             }else{
                 //Manual menu allocation:
-                JMenu menu = new JMenu(ModManager.genreMod.getTypePlural());
+                /*JMenu menu = new JMenu(ModManager.genreMod.getTypePlural());
                 for(JMenuItem menuItem : ModManager.genreMod.getModMenuItems()){
                     menu.add(menuItem);
                 }
@@ -490,7 +491,20 @@ public class WindowMain {
                 M_31_EXPORT.add(ModManager.antiCheatMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.copyProtectMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.hardwareMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.hardwareFeatureMod.getExportMenuItem());
+                M_31_EXPORT.add(ModManager.hardwareFeatureMod.getExportMenuItem());*/
+                Debug.initializeMods();
+                for (AbstractBaseMod mod : Debug.mods) {
+                    LOGGER.info("Adding menus for mod: " + mod.getType());
+                    JMenu menu = new JMenu(mod.getTypePlural());
+                    for(JMenuItem menuItem : mod.getModMenuItems()){
+                        menu.add(menuItem);
+                    }
+                    MOD_MENUS.add(menu);
+                    M_31_EXPORT.add(mod.getExportMenuItem());
+                }
+                for(JMenu menu : MOD_MENUS){
+                    M_2_MODS.add(menu);
+                }
             }
             modMenusInitialized = true;
         }

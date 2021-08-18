@@ -228,13 +228,13 @@ public class SharingManager {
             directories = new ArrayList<>();
             directories.add(new File(folderPath));
         }
-        Map<AbstractBaseMod, ArrayList<File>> importModFiles = new HashMap<>();
-        Map<AbstractBaseMod, ArrayList<String>> importModNames = new HashMap<>();
-        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+        Map<AbstractBaseModOld, ArrayList<File>> importModFiles = new HashMap<>();
+        Map<AbstractBaseModOld, ArrayList<String>> importModNames = new HashMap<>();
+        for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
             importModFiles.put(advancedMod, new ArrayList<>());
             importModNames.put(advancedMod, new ArrayList<>());
         }
-        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+        for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
             importModFiles.put(simpleMod, new ArrayList<>());
             importModNames.put(simpleMod, new ArrayList<>());
         }
@@ -290,12 +290,12 @@ public class SharingManager {
                                         }else{
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.currentPath") + " " + string);
                                         }
-                                        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                                        for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                                             if(string.contains(advancedMod.getBaseSharer().getImportExportFileName())){
                                                 addIfCompatible(string, importModFiles.get(advancedMod), importModNames.get(advancedMod), advancedMod.getBaseSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                             }
                                         }
-                                        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                                        for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                                             if(string.contains(simpleMod.getBaseSharer().getImportExportFileName())){
                                                 addIfCompatible(string, importModFiles.get(simpleMod), importModNames.get(simpleMod), simpleMod.getBaseSharer().getCompatibleModToolVersions(), someThingsNotCompatible, showDuplicateMessage, addDuplicate);
                                             }
@@ -355,32 +355,32 @@ public class SharingManager {
                 if(!errorWhileScanning){
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.firstPart") + " " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.secondPart") + " " + Utils.convertSecondsToTime(ProgressBarHelper.getProgressBarTimer()) + "; " + I18n.INSTANCE.get("textArea.importAll.scanningDirectories.complete.thirdPart"));
                     ProgressBarHelper.resetProgressBar();
-                    Map<AbstractBaseMod, JPanel> importModPanels = new HashMap<>();
-                    Map<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> selectedMods = new HashMap<>();
-                    Map<AbstractBaseMod, AtomicBoolean> disableMods = new HashMap<>();
-                    for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                    Map<AbstractBaseModOld, JPanel> importModPanels = new HashMap<>();
+                    Map<AbstractBaseModOld, AtomicReference<ArrayList<Integer>>> selectedMods = new HashMap<>();
+                    Map<AbstractBaseModOld, AtomicBoolean> disableMods = new HashMap<>();
+                    for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                         TextAreaHelper.appendText(advancedMod.getType() + ": " + importModFiles.get(advancedMod).size());
                         importModPanels.put(advancedMod, new JPanel());
                         selectedMods.put(advancedMod, new AtomicReference<>(new ArrayList<>()));
                         disableMods.put(advancedMod, new AtomicBoolean(true));
                     }
-                    for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                    for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                         TextAreaHelper.appendText(simpleMod.getType() + ": " + importModFiles.get(simpleMod).size());
                         importModPanels.put(simpleMod, new JPanel());
                         selectedMods.put(simpleMod, new AtomicReference<>(new ArrayList<>()));
                         disableMods.put(simpleMod, new AtomicBoolean(true));
                     }
                     int importModFilesListsFilled = 0;
-                    for(Map.Entry<AbstractBaseMod, ArrayList<File>> entry : importModFiles.entrySet()){
+                    for(Map.Entry<AbstractBaseModOld, ArrayList<File>> entry : importModFiles.entrySet()){
                         if(!entry.getValue().isEmpty()){
                             importModFilesListsFilled++;
                         }
                     }
                     if(importModFilesListsFilled != 0) {
-                        for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                        for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                             setFeatureAvailableGuiComponents(advancedMod.getType(),importModFiles.get(advancedMod), importModPanels.get(advancedMod), selectedMods.get(advancedMod), disableMods.get(advancedMod));
                         }
-                        for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                        for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                             setFeatureAvailableGuiComponents(simpleMod.getType(),importModFiles.get(simpleMod), importModPanels.get(simpleMod), selectedMods.get(simpleMod), disableMods.get(simpleMod));
                         }
                         String labelStartText;
@@ -417,7 +417,7 @@ public class SharingManager {
                         Object[] params;
                         checkBoxDisableImportPopups.setSelected(true);
                         ArrayList<JPanel> panels = new ArrayList<>();
-                        for(Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()){
+                        for(Map.Entry<AbstractBaseModOld, JPanel> entry : importModPanels.entrySet()){
                             panels.add(entry.getValue());
                         }
                         Object[] modPanels = panels.toArray(new Object[0]);
@@ -442,7 +442,7 @@ public class SharingManager {
                             AtomicBoolean showAlreadyExistPopups = new AtomicBoolean(checkBoxDisableAlreadyExistPopups.isSelected());
                             boolean errorOccurred = false;
                             ProgressBarHelper.initializeProgressBar(0, getNumberOfModsToImport(selectedMods, importModFiles), I18n.INSTANCE.get("progressBar.importingMods"));
-                            for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                            for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                                 if(!importAllFiles(importModFiles.get(advancedMod), selectedMods.get(advancedMod).get(), disableMods.get(advancedMod).get(), I18n.INSTANCE.get("commonText." + advancedMod.getMainTranslationKey()), (string) -> advancedMod.getBaseSharer().importMod(string, !showMessageDialogs), advancedMod.getBaseSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                     if(importModFiles.get(advancedMod).size() > 0){
                                         LOGGER.info("Error occurred wile importing " + advancedMod.getType());
@@ -450,7 +450,7 @@ public class SharingManager {
                                     }
                                 }
                             }
-                            for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                            for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                                 if(!importAllFiles(importModFiles.get(simpleMod), selectedMods.get(simpleMod).get(), disableMods.get(simpleMod).get(), I18n.INSTANCE.get("commonText." + simpleMod.getMainTranslationKey()), (string) -> simpleMod.getBaseSharer().importMod(string, !showMessageDialogs), simpleMod.getBaseSharer().getCompatibleModToolVersions(), showAlreadyExistPopups)){
                                     LOGGER.info("Error occurred wile importing " + simpleMod.getType());
                                     if(importModFiles.get(simpleMod).size() > 0){
@@ -617,11 +617,11 @@ public class SharingManager {
         if(exportFiles){
             StringBuilder failedExports = new StringBuilder();
             try{
-                for(AbstractAdvancedMod advancedMod : ModManager.advancedMods){
+                for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
                     failedExports.append(getExportFailed((string) -> advancedMod.getBaseSharer().exportMod(string, exportAsRestorePoint), advancedMod.getBaseAnalyzer().getFinishedCustomContentString(), advancedMod.getType()));
                 }
 
-                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                     if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
                         failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), ModManager.themeMod.getAnalyzerEn().getFinishedCustomContentString(), simpleMod.getType()));
                     }else{
@@ -735,7 +735,7 @@ public class SharingManager {
             }else if (map.get("LINE") != null){
                 String output = map.get("LINE");
                 LOGGER.info("LINE vor output: " + output);
-                for(AbstractSimpleMod simpleMod : ModManager.simpleMods){
+                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                     output = simpleMod.getBaseAnalyzer().getReplacedLine(output);
                 }
                 LOGGER.info("Line nach output: " + output);
@@ -791,9 +791,9 @@ public class SharingManager {
         }
     }
 
-    private static int getNumberOfModsToImport(Map<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> selectedMods, Map<AbstractBaseMod, ArrayList<File>> importModFiles){
+    private static int getNumberOfModsToImport(Map<AbstractBaseModOld, AtomicReference<ArrayList<Integer>>> selectedMods, Map<AbstractBaseModOld, ArrayList<File>> importModFiles){
         int maxValue = 0;
-        for(Map.Entry<AbstractBaseMod, AtomicReference<ArrayList<Integer>>> entry : selectedMods.entrySet()){
+        for(Map.Entry<AbstractBaseModOld, AtomicReference<ArrayList<Integer>>> entry : selectedMods.entrySet()){
             if(entry.getValue().get().size() > 0){
                 maxValue = maxValue + entry.getValue().get().size();
             }else{

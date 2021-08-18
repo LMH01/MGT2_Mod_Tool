@@ -7,6 +7,13 @@ button.cancel|Cancel
 commonBodies.areYouSure|Are you sure?
 commonBodies.exception|Exception:
 
+commonText.testSimpleMod|test simple mod
+commonText.testSimpleMod.upperCase|Test simple mod
+commonText.testSimpleMod.upperCase.plural|Test simple mods
+commonText.testAdvancedMod|test advanced mod
+commonText.testAdvancedMod.upperCase|Test advanced mod
+commonText.testAdvancedMod.upperCase.plural|Test advanced mods
+
 commonText.genre|genre
 commonText.genre.upperCase|Genre
 commonText.genre.upperCase.plural|Genres

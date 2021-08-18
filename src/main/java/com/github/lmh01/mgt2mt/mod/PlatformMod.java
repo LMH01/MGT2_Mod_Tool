@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor
 import com.github.lmh01.mgt2mt.data_stream.editor.PlatformEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.PlatformSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PlatformMod extends AbstractAdvancedMod {
+public class PlatformMod extends AbstractAdvancedModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreMod.class);
     PlatformAnalyzer platformAnalyzer = new PlatformAnalyzer();
     PlatformEditor platformEditor = new PlatformEditor();
@@ -59,7 +59,7 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.platformMod;
     }
 
@@ -396,7 +396,7 @@ public class PlatformMod extends AbstractAdvancedMod {
 
     @Override
     public void removeModMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process(getEditor()::removePlatform, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
+        Thread thread = new Thread(() -> OperationHelper.processOld(getEditor()::removePlatform, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
         ThreadHandler.startThread(thread, "runnableRemove" + getType());
     }
 

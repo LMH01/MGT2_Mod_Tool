@@ -186,11 +186,11 @@ public class DefaultContentManager {
      */
     private static ArrayList<String> getDefaultContentNames(){
         ArrayList<String> strings = new ArrayList<>();
-        for (AbstractSimpleMod simpleMod : ModManager.simpleMods) {
+        for (AbstractSimpleModOld simpleMod : ModManager.simpleMods) {
             strings.add(simpleMod.getBaseAnalyzer().getDefaultContentFileName());
         }
         strings.add(ModManager.themeMod.getAnalyzerEn().getDefaultContentFileName());//This line is needed because the english default content file would not be read
-        for (AbstractAdvancedMod advancedMod : ModManager.advancedMods) {
+        for (AbstractAdvancedModOld advancedMod : ModManager.advancedMods) {
             strings.add(advancedMod.getBaseAnalyzer().getDefaultContentFileName());
         }
         return strings;

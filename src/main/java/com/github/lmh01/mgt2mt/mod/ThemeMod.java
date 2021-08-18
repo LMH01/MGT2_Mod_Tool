@@ -6,7 +6,7 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileEnAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileGeAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.editor.ThemeEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.ThemeSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -25,7 +25,7 @@ import java.util.Objects;
 
 import static com.github.lmh01.mgt2mt.util.Utils.getMGT2TextFolderPath;
 
-public class ThemeMod extends AbstractSimpleMod {
+public class ThemeMod extends AbstractSimpleModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThemeMod.class);
     ThemeFileGeAnalyzer themeFileGeAnalyzer = new ThemeFileGeAnalyzer();
     ThemeFileEnAnalyzer themeFileEnAnalyzer = new ThemeFileEnAnalyzer();
@@ -84,7 +84,7 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    public AbstractSimpleMod getSimpleMod() {
+    public AbstractSimpleModOld getSimpleMod() {
         return ModManager.themeMod;
     }
 

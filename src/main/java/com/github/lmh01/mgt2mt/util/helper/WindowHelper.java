@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -22,7 +22,7 @@ public class WindowHelper {
      * @param textField The name text area
      * @return Returns a new panel containing the components of the name
      */
-    public static JPanel getNamePanel(AbstractBaseMod baseMod, JTextField textField){
+    public static JPanel getNamePanel(AbstractBaseModOld baseMod, JTextField textField){
         JPanel panel = new JPanel();
         JLabel label = new JLabel(baseMod.getType() + " " + I18n.INSTANCE.get("commonText.name") + ":");
         panel.add(label);

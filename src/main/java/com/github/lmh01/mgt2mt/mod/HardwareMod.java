@@ -7,7 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.HardwareEditor;
 import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.HardwareSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class HardwareMod extends AbstractAdvancedMod {
+public class HardwareMod extends AbstractAdvancedModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(HardwareMod.class);
     HardwareAnalyzer hardwareAnalyzer = new HardwareAnalyzer();
     HardwareEditor hardwareEditor = new HardwareEditor();
@@ -48,7 +48,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.hardwareMod;
     }
 

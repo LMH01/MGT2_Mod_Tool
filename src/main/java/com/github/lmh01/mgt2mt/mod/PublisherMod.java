@@ -9,7 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor
 import com.github.lmh01.mgt2mt.data_stream.editor.PublisherEditor;
 import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
 import com.github.lmh01.mgt2mt.data_stream.sharer.PublisherSharer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PublisherMod extends AbstractAdvancedMod {
+public class PublisherMod extends AbstractAdvancedModOld {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherMod.class);
     PublisherAnalyzer publisherAnalyzer = new PublisherAnalyzer();
     PublisherEditor publisherEditor = new PublisherEditor();
@@ -82,7 +82,7 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractAdvancedMod getAdvancedMod() {
+    public AbstractAdvancedModOld getAdvancedMod() {
         return ModManager.publisherMod;
     }
 

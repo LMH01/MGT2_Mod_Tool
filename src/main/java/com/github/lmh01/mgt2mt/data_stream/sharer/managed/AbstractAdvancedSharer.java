@@ -5,7 +5,7 @@ import com.github.lmh01.mgt2mt.data_stream.BaseFunctions;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AdvancedAnalyzer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -180,5 +180,5 @@ public abstract class AbstractAdvancedSharer implements AdvancedAnalyzer, BaseFu
     /**
      * @return Returns the advanced mod that is used to access its functions
      */
-    public abstract AbstractAdvancedMod getAdvancedMod();
+    public abstract AbstractAdvancedModOld getAdvancedMod();
 }
