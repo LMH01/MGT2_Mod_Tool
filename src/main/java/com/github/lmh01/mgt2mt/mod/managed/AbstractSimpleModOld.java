@@ -77,7 +77,7 @@ public abstract class AbstractSimpleModOld extends AbstractBaseModOld implements
 
     @Override
     public final void removeModMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.processOld(getBaseEditor()::removeMod, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
+        Thread thread = new Thread(() -> OperationHelper.processOld(getBaseEditor()::removeMod, ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
         ThreadHandler.startThread(thread, "runnableRemove" + getType());
     }
 
