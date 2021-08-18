@@ -77,7 +77,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod implements BaseF
 
     @Override
     public final void removeModMenuItemAction() {
-        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
+        Thread thread = new Thread(() -> OperationHelper.process(getBaseEditor()::removeMod, ModManager.themeMod.getAnalyzerEn().getCustomContentString(), ModManager.themeMod.getAnalyzerEn().getCustomContentString(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
         ThreadHandler.startThread(thread, "runnableRemove" + getType());
     }
 
