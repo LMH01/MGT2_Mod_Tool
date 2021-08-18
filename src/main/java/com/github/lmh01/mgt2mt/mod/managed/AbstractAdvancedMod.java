@@ -1,8 +1,14 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
-import java.io.IOException;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+
+import javax.swing.*;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,15 +29,62 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     public <T> void addMod(T t) throws ModProcessingException {
         try {
             //This map contains the contents of the mod that should be added
-            Map<String, String> list = (Map<String, String>) t;
+            Map<String, String> map = (Map<String, String>) t;
+            analyzeFile();
+            sendLogMessage("Adding new " + getType() + ": " + map.get("NAME EN"));
+            Charset charset = getCharset();
+            File fileToEdit = getGameFile();
+            if(fileToEdit.exists()){
+                fileToEdit.delete();
+            }
+            fileToEdit.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
+            if(charset.equals(StandardCharsets.UTF_8)){
+                bw.write("\ufeff");
+            }
+            for(Map<String, String> fileContent : getFileContent()){
+                printValues(fileContent, bw);
+                bw.write(System.getProperty("line.separator"));
+            }
+            printValues(map, bw);
+            bw.write(System.getProperty("line.separator"));
+            bw.write("[EOF]");
+            bw.close();
         } catch (ClassCastException e) {
             throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
+        } catch (IOException e) {
+            throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
         }
     }
 
     @Override
     public void removeMod(String name) throws ModProcessingException {
-
+        try {
+            analyzeFile();
+            int modId = getContentIdByName(name);
+            sendLogMessage("Removing " + getType() + ": " + name);
+            Charset charset = getCharset();
+            File fileToEdit = getGameFile();
+            if(fileToEdit.exists()){
+                fileToEdit.delete();
+            }
+            fileToEdit.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
+            if(charset.equals(StandardCharsets.UTF_8)){
+                bw.write("\ufeff");
+            }
+            for(Map<String, String> fileContent : getFileContent()){
+                if (Integer.parseInt(fileContent.get("ID")) != modId) {
+                    printValues(fileContent, bw);
+                    bw.write(System.getProperty("line.separator"));
+                }
+            }
+            bw.write("[EOF]");
+            bw.close();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + name);
+        } catch (IOException e) {
+            throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
+        }
     }
 
     @Override
@@ -136,4 +189,23 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
         }
         return activeIds;
     }
+
+    @Override
+    public String[] getDefaultContent() {
+        if(defaultContent.length == 0){
+            try {
+                defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName());
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return defaultContent;
+    }
+
+    /**
+     * This function is called by {@link AbstractAdvancedMod#addMod(Object)}. The values that are stored in the map will be written to the file by the buffered writer.
+     * @throws IOException Is thrown if something went wrong when the file is being written
+     */
+    protected abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
 }

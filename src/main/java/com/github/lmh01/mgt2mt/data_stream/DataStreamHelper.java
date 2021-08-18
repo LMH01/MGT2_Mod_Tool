@@ -152,7 +152,7 @@ public class DataStreamHelper {
      * @param charsetType Defines what charset the source file uses. Possible UTF_8BOM UTF_16LE
      * @return Returns a map. The key is the line number and the value is the content for that line number.
      */
-    public static Map<Integer, String> getContentFromFile(File file, String charsetType) throws IOException{
+    public static Map<Integer, String> getContentFromFile(File file, String charsetType) throws IOException{//TODO Umschreiben, dass charset nicht mehr als String rein gegeben wird
         BufferedReader br;
         if(charsetType.equals("UTF_8BOM")){
             br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));

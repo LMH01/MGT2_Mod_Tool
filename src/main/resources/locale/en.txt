@@ -810,6 +810,9 @@ textArea.restorePoint.canceled|The restoring process has been canceled
 textArea.backup.createBackup.success|Backup has been created:
 textArea.backup.restoringBackup|Restoring backup
 textArea.movingFile|Moving file:
+textArea.modProcessingException.firstPart|Error in thread:
+textArea.modProcessingException.secondPart|The process has been terminated!
+textArea.modProcessingException.thirdPart|Stacktrace:
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?

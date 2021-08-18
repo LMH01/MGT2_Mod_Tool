@@ -1,7 +1,5 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
@@ -12,10 +10,16 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 //TODO Alle funktionen hier drin nach Nutzen sortieren (wenn alles fertig)
+// Auch noch einmal drüber schauen, welche funktionen private oder protected sein sollten
+// Auch in AbstractAdvancedMod und AbstractSimpleMod nachschauen!
 
 /**
  * This class is used to create new mods.
@@ -63,7 +67,7 @@ public abstract class AbstractBaseMod {
      */
     private void doAddModMenuItemAction() {
         startModThread(() -> {
-
+            openAddModGui();
         }, "runnableAdd" + getType().replaceAll("\\s+",""));
     }
 
@@ -171,7 +175,13 @@ public abstract class AbstractBaseMod {
             try {
                 action.run();
             } catch (ModProcessingException e) {
-                //TODO Schreiben, was passieren soll, wenn die exception abgefangen wird
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.firstPart") + " " + threadName);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.secondPart"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                TextAreaHelper.appendText(sw.toString());
                 LOGGER.info("Error in thread: " + threadName + "; Reason: " + e.getMessage());
             }
         });
@@ -209,7 +219,7 @@ public abstract class AbstractBaseMod {
     /**
      * Adds a new mod to the file
      * @param t This map/string contains the values that should be printed to the file
-     * @param <T> Should be either {@literal List<Map<String, String>>} or {@literal String}
+     * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
      * @throws ModProcessingException when {@literal <T>} is not valid
      */
     public abstract <T> void addMod(T t) throws ModProcessingException;
@@ -280,28 +290,46 @@ public abstract class AbstractBaseMod {
     }
 
     /**
-     * @return Returns the next free id.
+     * @return The next free id.
      */
     public final int getFreeId(){
         return getMaxId()+1;
     }
 
-    public final String[] getDefaultContent() {
-        if(defaultContent.length == 0){
-            try {
-                defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName());
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        return defaultContent;
-    }
+    /**
+     * @return The default content for the mod
+     */
+    public abstract String[] getDefaultContent();
 
     /**
      * @return The file name of the file that contains the default content.
      */
-    public abstract String getDefaultContentFileName();
+    protected abstract String getDefaultContentFileName();
 
+    /**
+     * Opens a gui where the user can add the new mod.
+     * This function will then add the mod and call {@link AbstractBaseMod#addMod(Object)}.
+     * @throws ModProcessingException If something went wrong
+     */
+    protected abstract void openAddModGui() throws ModProcessingException;//TODO Diese Funktion wird später umgeschrieben, sodass eingaben auch in die Felder geladen werden können
 
+    /**
+     * This is called inside of {@link AbstractBaseMod#openAddModGui()}
+     * @param t This map/string contains the values that are used to create the option pane message
+     * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
+     * @throws ModProcessingException when {@literal <T>} is not valid
+     * @return The objects that should be displayed in the option pane
+     */
+    protected abstract <T> String getOptionPaneMessage(T t) throws ModProcessingException;
+
+    /**
+     * Writes a log message to the console using the (logger) of the abstract mod class
+     * @param log The message that should be written
+     */
+    protected abstract void sendLogMessage(String log);
+
+    /**
+     * @return The charset in which the {@link AbstractBaseMod#getGameFile()} is written.
+     */
+    protected abstract Charset getCharset();
 }
