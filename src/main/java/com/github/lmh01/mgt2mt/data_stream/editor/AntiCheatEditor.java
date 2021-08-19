@@ -33,17 +33,17 @@ public class AntiCheatEditor extends AbstractAdvancedEditor {
 
     @Override
     public String getType() {
-        return ModManager.antiCheatMod.getType();
+        return ModManager.antiCheatModOld.getType();
     }
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.antiCheatMod.getBaseAnalyzer();
+        return ModManager.antiCheatModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.antiCheatMod.getFile();
+        return ModManager.antiCheatModOld.getFile();
     }
 
     @Override

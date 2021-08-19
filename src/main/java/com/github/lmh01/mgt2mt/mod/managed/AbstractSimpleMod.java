@@ -1,13 +1,20 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -32,7 +39,12 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     @Override
     public <T> void addMod(T t) throws ModProcessingException {
         if (t instanceof String) {
-            String string = (String) t;
+            try {
+                String string = (String) t;
+                editFile(true, string);
+            } catch (IOException e) {
+                throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
+            }
         } else {
             throw new ModProcessingException("T is invalid: Should be String", true);
         }
@@ -40,9 +52,145 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
 
     @Override
     public void removeMod(String name) throws ModProcessingException {
-
+        try {
+            editFile(false, name);
+        } catch (IOException e) {
+            throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
+        }
     }
 
+    /**
+     * Exports the mod
+     * @param name The name for the mod that should be exported
+     * @param exportAsRestorePoint True when the mod should be exported as restore point. False otherwise
+     * @return Returns true when the mod has been exported successfully. Returns false when the mod has already been exported.
+     */
+    @Override
+    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
+        try {
+            analyzeFile();
+            String string = getLine(name);
+            String exportFolder;
+            if(exportAsRestorePoint){
+                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+            }else{
+                exportFolder = Utils.getMGT2ModToolExportFolder();
+            }
+            final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + name.replaceAll("[^a-zA-Z0-9]", "");
+            File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
+            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
+            if(fileExportedMod.exists()){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportFailed.alreadyExported") + " " + name);
+                return false;
+            }else{
+                fileExportFolderPath.mkdirs();
+            }
+            fileExportedMod.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+            bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
+            bw.write("[LINE]" + getModifiedExportLine(string) + System.getProperty("line.separator"));
+            bw.write("[" + getTypeCaps() + " END]");
+            bw.close();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] - " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage());
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+    /**
+     * Imports the mod.
+     * @param importFolderPath The path for the folder where the import files are stored
+     * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
+     */
+    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException, IOException {
+        analyzeFile();
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
+        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        Map<String, String> importMap = DataStreamHelper.parseDataFile(fileToImport).get(0);
+        boolean CanBeImported = false;
+        for(String string : getCompatibleModToolVersions()){
+            if(string.equals(importMap.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
+                CanBeImported = true;
+            }
+        }
+        if(!CanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + getReplacedLine(importMap.get("LINE")));
+            return getType() + " [" + getReplacedLine(importMap.get("LINE")) + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + importMap.get("MGT2MT VERSION");
+        }
+        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
+            if(entry.getValue().equals(importMap.get("LINE"))){
+                sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + getReplacedLine(importMap.get("LINE")));
+                return "false";
+            }
+        }
+        String importLine = getModifiedImportLine(importMap.get("LINE"));
+        boolean addFeature = true;
+        if(showMessages){
+            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(importLine)) != JOptionPane.YES_OPTION){
+                addFeature = false;
+            }
+        }
+        if(addFeature){
+            addMod(importLine);
+            if(showMessages){
+                JOptionPane.showMessageDialog(null, getType() + " [" + getReplacedLine(importMap.get("LINE")) + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
+            }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + getReplacedLine(importMap.get("LINE")));
+        }
+        return "true";
+    }
+
+    /**
+     * Edits the mod file
+     * @param addMod If true the mod will be added. If false the mod fill be removed
+     * @param mod If add mod is true: This string will be printed into the text file. If add mod is false: The string is the mod name which mod should be removed
+     */
+    private void editFile(boolean addMod, String mod) throws IOException {
+        analyzeFile();
+        Charset charset = getCharset();
+        File fileToEdit = getGameFile();
+        if(fileToEdit.exists()){
+            fileToEdit.delete();
+        }
+        fileToEdit.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
+        if(charset.equals(StandardCharsets.UTF_8)){
+            bw.write("\ufeff");
+        }
+        boolean firstLine = true;
+        for(int i=1; i<=getFileContent().size(); i++){
+            if(addMod){
+                if(!firstLine){
+                    bw.write(System.getProperty("line.separator"));
+                }else{
+                    firstLine = false;
+                }
+                bw.write(getFileContent().get(i));
+            }else{
+                if(!getReplacedLine(getFileContent().get(i)).equals(mod)){
+                    if(!firstLine){
+                        bw.write(System.getProperty("line.separator"));
+                    }else{
+                        firstLine = false;
+                    }
+                    bw.write(getFileContent().get(i));
+                }
+            }
+        }
+        if(addMod){
+            bw.write(System.getProperty("line.separator"));
+            bw.write(mod);
+        }else{
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
+        }
+        bw.close();
+    }
 
     /**
      * returns that analyzed file
@@ -70,6 +218,20 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
      * Replaces the input string and returns the replaced string
      */
     public abstract String getReplacedLine(String inputString);
+
+    /**
+     * This function can be used to change the import line
+     */
+    public String getModifiedImportLine(String importLine){
+        return importLine;
+    }
+
+    /**
+     * This function can be used to change the export line
+     */
+    public String getModifiedExportLine(String exportLine){
+        return exportLine;
+    }
 
     /**
      * @param name The content name for which the position should be returned

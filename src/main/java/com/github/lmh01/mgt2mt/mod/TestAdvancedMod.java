@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.mod;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
@@ -9,6 +10,7 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,6 +131,26 @@ public class TestAdvancedMod extends AbstractAdvancedMod {
     @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
+    }
+
+    @Override
+    protected String getTypeCaps() {
+        return "TEST_ADVANCED_MOD";
+    }
+
+    @Override
+    public String getImportExportFileName() {
+        return "testAdvancedMod.txt";
+    }
+
+    @Override
+    public String[] getCompatibleModToolVersions() {
+        return new String[]{"v2.2.3-dev", MadGamesTycoon2ModTool.VERSION};
+    }
+
+    @Override
+    protected String getExportFolder() {
+        return "TEST ADVANCED MOD";
     }
 
     @Override

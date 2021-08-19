@@ -26,7 +26,7 @@ public class CopyProtectSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.copyProtectMod.getBaseEditor()::addMod;
+        return ModManager.copyProtectModOld.getBaseEditor()::addMod;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CopyProtectSharer extends AbstractAdvancedSharer {
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.copyProtectMod;
+        return ModManager.copyProtectModOld;
     }
 
     @Override

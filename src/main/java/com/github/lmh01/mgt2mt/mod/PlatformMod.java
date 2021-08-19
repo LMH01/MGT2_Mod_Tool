@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PlatformMod extends AbstractAdvancedModOld {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenreMod.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenreModOld.class);
     PlatformAnalyzer platformAnalyzer = new PlatformAnalyzer();
     PlatformEditor platformEditor = new PlatformEditor();
     PlatformSharer platformSharer = new PlatformSharer();

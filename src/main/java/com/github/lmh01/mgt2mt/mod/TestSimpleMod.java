@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.mod;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -166,6 +167,26 @@ public class TestSimpleMod extends AbstractSimpleMod {
     @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_16LE;
+    }
+
+    @Override
+    protected String getTypeCaps() {
+        return "TEST_SIMPLE_MOD";
+    }
+
+    @Override
+    public String getImportExportFileName() {
+        return "testSimpleMod.txt";
+    }
+
+    @Override
+    public String[] getCompatibleModToolVersions() {
+        return new String[]{"v2.2.3-dev", MadGamesTycoon2ModTool.VERSION};
+    }
+
+    @Override
+    protected String getExportFolder() {
+        return "TEST SIMPLE MOD";
     }
 
     @Override

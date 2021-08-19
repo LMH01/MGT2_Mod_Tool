@@ -26,7 +26,7 @@ public class AntiCheatSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.antiCheatMod.getBaseEditor()::addMod;
+        return ModManager.antiCheatModOld.getBaseEditor()::addMod;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class AntiCheatSharer extends AbstractAdvancedSharer {
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.antiCheatMod;
+        return ModManager.antiCheatModOld;
     }
 
     @Override

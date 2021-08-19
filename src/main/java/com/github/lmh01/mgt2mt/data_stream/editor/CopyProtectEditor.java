@@ -33,17 +33,17 @@ public class CopyProtectEditor extends AbstractAdvancedEditor {
 
     @Override
     public String getType() {
-        return ModManager.copyProtectMod.getType();
+        return ModManager.copyProtectModOld.getType();
     }
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.copyProtectMod.getBaseAnalyzer();
+        return ModManager.copyProtectModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.copyProtectMod.getFile();
+        return ModManager.copyProtectModOld.getFile();
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -113,6 +116,114 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      */
     public final List<Map<String, String>> getFileContent(){
         return fileContent;
+    }
+
+    @Override
+    public boolean exportMod(String name, boolean exportAsRestorePoint) {
+        try{
+            analyzeFile();
+            Map<String, String> map = getSingleContentMapByName(name);
+            String exportFolder;
+            if(exportAsRestorePoint){
+                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+            }else{
+                exportFolder = Utils.getMGT2ModToolExportFolder();
+            }
+            final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
+            File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
+            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
+            if(fileExportedMod.exists()){
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportFailed.alreadyExported") + " " + name);
+                return false;
+            }else{
+                fileExportFolderPath.mkdirs();
+            }
+            fileExportedMod.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
+            bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
+            printValues(map, bw);
+            bw.write("[" + getTypeCaps() + " END]");
+            bw.close();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
+            doOtherExportThings(name, EXPORTED_MOD_MAIN_FOLDER_PATH + "//DATA//", map);
+            return true;
+        }catch(IOException | ModProcessingException e){
+            e.printStackTrace();
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] - " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage());
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+
+    /**
+     * Imports the mod.
+     * @param importFolderPath The path for the folder where the import files are stored
+     * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
+     */
+    @Override
+    public String importMod(String importFolderPath, boolean showMessages) throws IOException, ModProcessingException {
+        analyzeFile();
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
+        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        Map<String, String> map = DataStreamHelper.parseDataFile(fileToImport).get(0);
+        map.put("ID", Integer.toString(getFreeId()));
+        boolean CanBeImported = false;
+        for(String string : getCompatibleModToolVersions()){
+            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
+                CanBeImported = true;
+            }
+        }
+        if(!CanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + map.get("NAME EN"));
+            return getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + map.get("MGT2MT VERSION");
+        }
+        for(Map<String, String> existingContent : getFileContent()){
+            for(Map.Entry<String, String> entry : existingContent.entrySet()){
+                if(entry.getValue().equals(map.get("NAME EN"))){
+                    sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + map.get("NAME EN"));
+                    return "false";
+                }
+            }
+        }
+        boolean addFeature = true;
+        if(showMessages){
+            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(getChangedImportMap(map))) != JOptionPane.YES_OPTION){
+                addFeature = false;
+            }
+        }
+        if(addFeature){
+            addMod(getChangedImportMap(map));
+            doOtherImportThings(importFolderPath, map.get("NAME EN"));
+            if(showMessages){
+                JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
+            }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("NAME EN"));
+        }
+        return "true";
+    }
+
+    /**
+     * Put things in this function that should be executed when the txt file has been exported.
+     */
+    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException, ModProcessingException{
+
+    }
+
+    /**
+     * Put things in this function that should be executed when the txt file has been imported.
+     */
+    public void doOtherImportThings(String importFolderPath, String name) throws ModProcessingException {
+
+    }
+
+    /**
+     * @return Returns the map that contains the import values
+     * Can be overwritten to adjust specific values
+     */
+    public Map<String, String> getChangedImportMap(Map<String, String> map){
+        return map;
     }
 
     @Override

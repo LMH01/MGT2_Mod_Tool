@@ -11,7 +11,7 @@ public class AntiCheatAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.antiCheatMod.getFile();
+        return ModManager.antiCheatModOld.getFile();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class AntiCheatAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.antiCheatMod.getType();
+        return ModManager.antiCheatModOld.getType();
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.antiCheatMod.getMainTranslationKey();
+        return ModManager.antiCheatModOld.getMainTranslationKey();
     }
 }

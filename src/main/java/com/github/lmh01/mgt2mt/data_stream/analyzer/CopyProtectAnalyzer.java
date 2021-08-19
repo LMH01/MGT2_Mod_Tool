@@ -11,7 +11,7 @@ public class CopyProtectAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.copyProtectMod.getFile();
+        return ModManager.copyProtectModOld.getFile();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class CopyProtectAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.copyProtectMod.getType();
+        return ModManager.copyProtectModOld.getType();
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.copyProtectMod.getMainTranslationKey();
+        return ModManager.copyProtectModOld.getMainTranslationKey();
     }
 }

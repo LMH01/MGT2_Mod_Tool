@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.util.Debug;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -8,11 +11,9 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -66,9 +67,7 @@ public abstract class AbstractBaseMod {
      * This function is called when the button add mod is clicked
      */
     private void doAddModMenuItemAction() {
-        startModThread(() -> {
-            openAddModGui();
-        }, "runnableAdd" + getType().replaceAll("\\s+",""));
+        startModThread(this::openAddModGui, "runnableAdd" + getType().replaceAll("\\s+",""));
     }
 
     /**
@@ -85,7 +84,7 @@ public abstract class AbstractBaseMod {
      */
     private void exportMenuItemAction() {
         startModThread(() -> {
-
+            OperationHelper.process((string) -> exportMod(string, false), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
         }, "runnableExport" + getType().replaceAll("\\s+",""));
     }
 
@@ -332,4 +331,41 @@ public abstract class AbstractBaseMod {
      * @return The charset in which the {@link AbstractBaseMod#getGameFile()} is written.
      */
     protected abstract Charset getCharset();
+
+    /**
+     * Exports the mod
+     * @param name The name for the mod that should be exported
+     * @param exportAsRestorePoint True when the mod should be exported as restore point. False otherwise
+     * @return Returns true when the mod has been exported successfully. Returns false when the mod has already been exported.
+     */
+    public abstract boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException;
+
+    /**
+     * Imports the mod.
+     * @param importFolderPath The path for the folder where the import files are stored
+     * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
+     */
+    public abstract String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException, IOException;
+
+    /**
+     * @return The type name in caps
+     * Eg. GAMEPLAY FEATURE, ENGINE FEATURE, GENRE
+     */
+    protected abstract String getTypeCaps();
+
+    /**
+     * @return The export/import file name under which the mod can be found
+     * Eg. gameplayFeature.txt, engineFeature.txt
+     */
+    public abstract String getImportExportFileName();
+
+    /**
+     * @return Returns a string that contains the compatible mod tool versions
+     */
+    public abstract String[] getCompatibleModToolVersions();
+
+    /**
+     * @return The name of the mod export folder
+     */
+    protected abstract String getExportFolder();
 }
