@@ -11,7 +11,7 @@ public class HardwareFeatureAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.hardwareFeatureMod.getFile();
+        return ModManager.hardwareFeatureModOld.getFile();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class HardwareFeatureAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.hardwareFeatureMod.getType();
+        return ModManager.hardwareFeatureModOld.getType();
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.hardwareFeatureMod.getMainTranslationKey();
+        return ModManager.hardwareFeatureModOld.getMainTranslationKey();
     }
 }

@@ -12,10 +12,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //TODO Klasse aufräumen -> Funktionen schön sortieren
 
@@ -56,7 +53,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
         } catch (ClassCastException e) {
             throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
         }
     }
 
@@ -86,29 +83,33 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + name);
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
         }
     }
 
     @Override
-    public final void analyzeFile() throws IOException {
-        fileContent = DataStreamHelper.parseDataFile(getGameFile());
-        int currentMaxId = 0;
-        for (Map<String, String> map : fileContent) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                if (entry.getKey().equals("ID")) {
-                    try{
-                        int currentId = Integer.parseInt(entry.getValue());
-                        if (currentMaxId < currentId) {
-                            currentMaxId = currentId;
+    public final void analyzeFile() throws ModProcessingException {
+        try {
+            fileContent = DataStreamHelper.parseDataFile(getGameFile());
+            int currentMaxId = 0;
+            for (Map<String, String> map : fileContent) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    if (entry.getKey().equals("ID")) {
+                        try{
+                            int currentId = Integer.parseInt(entry.getValue());
+                            if (currentMaxId < currentId) {
+                                currentMaxId = currentId;
+                            }
+                        }catch(NumberFormatException e){
+                            throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
                         }
-                    }catch(NumberFormatException e){
-                        throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
                     }
                 }
             }
+            setMaxId(currentMaxId);
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to analyze game file for mod " + getType() + ": " + e.getMessage());
         }
-        setMaxId(currentMaxId);
     }
 
     /**
@@ -227,19 +228,23 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     @Override
-    public String[] getContentByAlphabet() {
-        ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
-        for(Map<String, String> map : getFileContent()){
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().equals("NAME EN")){
-                    arrayListAvailableThingsSorted.add(entry.getValue());
+    public String[] getContentByAlphabet() throws ModProcessingException {
+        try {
+            ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
+            for(Map<String, String> map : getFileContent()){
+                for(Map.Entry<String, String> entry : map.entrySet()){
+                    if(entry.getKey().equals("NAME EN")){
+                        arrayListAvailableThingsSorted.add(entry.getValue());
+                    }
                 }
             }
+            Collections.sort(arrayListAvailableThingsSorted);
+            String[] string = new String[arrayListAvailableThingsSorted.size()];
+            arrayListAvailableThingsSorted.toArray(string);
+            return string;
+        } catch (NullPointerException e) {
+            throw new ModProcessingException("Could not return the file content: This is caused because " + getType() + " mod was not analyzed.", true);
         }
-        Collections.sort(arrayListAvailableThingsSorted);
-        String[] string = new String[arrayListAvailableThingsSorted.size()];
-        arrayListAvailableThingsSorted.toArray(string);
-        return string;
     }
 
     @Override
@@ -254,7 +259,24 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
                 return Integer.parseInt(map.get("ID"));
             }
         }
-        throw new ModProcessingException("The mod id for mod '" + name + "' was not found");
+        throw new ModProcessingException("The id for sub-mod '" + name + "' of mod " + getType() + " was not found.");
+    }
+
+    /**
+     * @param id The id
+     * @return Returns the specified content name by id.
+     * @throws ModProcessingException Is thrown when the requested content id does not exist in the map.
+     */
+    public final String getContentNameById(int id) throws ModProcessingException{
+        try {
+            Map<Integer, String> idNameMap = new HashMap<>();
+            for(Map<String, String> map : getFileContent()){
+                idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
+            }
+            return idNameMap.get(id);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + "could not be returned. The id is invalid.", true);
+        }
     }
 
     /**
@@ -319,4 +341,17 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      * @throws IOException Is thrown if something went wrong when the file is being written
      */
     protected abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
+
+    /**
+     * Transforms the generic to an {@literal Map<String, String>}.
+     * @throws ModProcessingException If transformation fails
+     */
+    @SuppressWarnings("unchecked")
+    public <T> Map<String, String> transformGenericToMap(T t) throws ModProcessingException{
+        try {
+            return (Map<String, String>) t;
+        } catch (ClassCastException e) {
+            throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
+        }
+    }
 }

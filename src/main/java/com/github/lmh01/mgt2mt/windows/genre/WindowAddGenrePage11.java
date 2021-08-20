@@ -35,7 +35,7 @@ public class WindowAddGenrePage11 extends JFrame{
 
     public WindowAddGenrePage11() {
         buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = ModManager.genreMod.getGenreImageFilePath(false, true, textFieldImagePath);
+            String imageFilePath = ModManager.genreModOld.getGenreImageFilePath(false, true, textFieldImagePath);
             if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
@@ -53,7 +53,7 @@ public class WindowAddGenrePage11 extends JFrame{
                     WindowMain.checkActionAvailability();
                 }
             }else{
-                String imageFilePath = ModManager.genreMod.getGenreImageFilePath(true, false, textFieldImagePath);
+                String imageFilePath = ModManager.genreModOld.getGenreImageFilePath(true, false, textFieldImagePath);
                 if(!imageFilePath.equals("error")){
                     genreIcon = new File(imageFilePath);
                     FRAME.dispose();

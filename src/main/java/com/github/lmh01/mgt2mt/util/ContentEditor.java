@@ -17,10 +17,10 @@ public class ContentEditor {
     public static void editGenreThemeFit(){
         JLabel labelExplanation = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.message"));
         JLabel labelThemes = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.themeLabel"));
-        JList<String> themeList = WindowHelper.getList(ModManager.themeMod.getAnalyzerEn().getContentByAlphabet(), true);
+        JList<String> themeList = WindowHelper.getList(ModManager.themeModOld.getAnalyzerEn().getContentByAlphabet(), true);
         JScrollPane scrollPaneThemes = WindowHelper.getScrollPane(themeList);
         JLabel labelGenres = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.genreLabel"));
-        JList<String> genreList = WindowHelper.getList(ModManager.genreMod.getAnalyzer().getContentByAlphabet(), true);
+        JList<String> genreList = WindowHelper.getList(ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), true);
         JScrollPane scrollPaneGenres = WindowHelper.getScrollPane(genreList);
         JComboBox<String> comboBoxOperation = WindowHelper.getTypeComboBox(3);
         Object[] params = {labelExplanation, labelThemes, scrollPaneThemes, labelGenres, scrollPaneGenres, comboBoxOperation};
@@ -40,7 +40,7 @@ public class ContentEditor {
                         for(String string : genreList.getSelectedValuesList()){
                             try {
                                 ThemeEditor themeEditor = new ThemeEditor();
-                                themeEditor.editGenreAllocationAdvanced(ModManager.genreMod.getAnalyzer().getContentIdByName(string), addGenre, themeIds, false);
+                                themeEditor.editGenreAllocationAdvanced(ModManager.genreModOld.getAnalyzer().getContentIdByName(string), addGenre, themeIds, false);
                             } catch (IOException e) {
                                 errorOccurred = true;
                                 e.printStackTrace();

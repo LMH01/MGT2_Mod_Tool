@@ -34,7 +34,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
                 for(File file : pictures){
                     importPictureMap.put(Integer.parseInt(file.getName().replaceAll("[^0-9]","")), file);
                 }
-                ModManager.platformMod.getEditor().addImageFiles(name, importPictureMap);
+                ModManager.platformModOld.getEditor().addImageFiles(name, importPictureMap);
             }
         }catch(IOException e){
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
     public Map<String, String> getChangedImportMap(Map<String, String> map) {
         for(Map.Entry<String, String> entry : map.entrySet()){
             if(entry.getKey().contains("NEED-")){
-                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(entry.getValue())));
+                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(entry.getValue())));
             }
         }
         return map;
@@ -107,7 +107,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
         }
         int numberOfRunsB = 1;
         for(Integer integer : gameplayFeatureIds){
-            bw.write("[NEED-" + numberOfRunsB + "]" + ModManager.gameplayFeatureMod.getAnalyzer().getContentNameById(integer));
+            bw.write("[NEED-" + numberOfRunsB + "]" + ModManager.gameplayFeatureModOld.getAnalyzer().getContentNameById(integer));
             bw.write(System.getProperty("line.separator"));
             numberOfRunsB++;
         }
@@ -118,7 +118,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.platformMod.getBaseEditor()::addMod;
+        return ModManager.platformModOld.getBaseEditor()::addMod;
     }
 
     @Override
@@ -155,7 +155,7 @@ public class PlatformSharer extends AbstractAdvancedSharer {
                 neededGameplayFeatures.append("<br>");
                 currentGameplayFeature = 0;
             }
-            neededGameplayFeatures.append(ModManager.gameplayFeatureMod.getBaseAnalyzer().getContentNameById(integer));
+            neededGameplayFeatures.append(ModManager.gameplayFeatureModOld.getBaseAnalyzer().getContentNameById(integer));
             currentGameplayFeature++;
         }
         message.append(I18n.INSTANCE.get("commonText.neededGameplayFeatures")).append(": ").append(neededGameplayFeatures).append("<br>");
@@ -167,13 +167,13 @@ public class PlatformSharer extends AbstractAdvancedSharer {
             internetMessageToPrint = Utils.getTranslatedValueFromBoolean(true);
         }
         message.append(I18n.INSTANCE.get("commonText.internet")).append(": ").append(internetMessageToPrint).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.type")).append(": ").append(ModManager.platformMod.getPlatformTypeStringById(Integer.parseInt(map.get("TYP")))).append("<br>");
+        message.append(I18n.INSTANCE.get("commonText.type")).append(": ").append(ModManager.platformModOld.getPlatformTypeStringById(Integer.parseInt(map.get("TYP")))).append("<br>");
         return message.toString();
     }
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.platformMod;
+        return ModManager.platformModOld;
     }
 
     @Override

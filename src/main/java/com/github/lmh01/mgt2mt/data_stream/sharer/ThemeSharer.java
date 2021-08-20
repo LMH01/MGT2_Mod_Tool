@@ -50,7 +50,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
             bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + System.getProperty("line.separator"));
             TranslationManager.printLanguages(bw, map);
             if(map.get("GENRE COMB") != null){
-                bw.write("[GENRE COMB]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+                bw.write("[GENRE COMB]" + ModManager.genreModOld.getAnalyzer().getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
             }else{
                 bw.write("[GENRE COMB]" + "" + System.getProperty("line.separator"));
             }
@@ -79,7 +79,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
             if(entry.getKey().equals("GENRE COMB")){
                 ArrayList<String> compatibleGenreNames = Utils.getEntriesFromString(entry.getValue());
                 for(String string : compatibleGenreNames){
-                    compatibleGenreIds.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
+                    compatibleGenreIds.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(string));
                 }
             }else if(entry.getKey().equals("VIOLENCE LEVEL")){
                 violenceRating = Integer.parseInt(entry.getValue());
@@ -98,7 +98,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
             return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
-        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
             if(entry.getValue().equals(map.get("NAME EN"))){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
                 LOGGER.info("Theme already exists - The theme name is already taken");
@@ -108,11 +108,11 @@ public class ThemeSharer extends AbstractSimpleSharer {
         try {
             if(showMessages){
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    ModManager.themeMod.getEditor().addMod(map, compatibleGenreIds, violenceRating);
+                    ModManager.themeModOld.getEditor().addMod(map, compatibleGenreIds, violenceRating);
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
-                ModManager.themeMod.getEditor().addMod(map, compatibleGenreIds, violenceRating);
+                ModManager.themeModOld.getEditor().addMod(map, compatibleGenreIds, violenceRating);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);
@@ -123,7 +123,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
 
     @Override
     public SimpleImporter getSimpleImporter() {
-        return ModManager.themeMod.getEditor()::addMod;
+        return ModManager.themeModOld.getEditor()::addMod;
     }
 
     /**
@@ -150,7 +150,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
      */
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.themeMod.getAnalyzerGe();
+        return ModManager.themeModOld.getAnalyzerGe();
     }
 
     @Override
@@ -160,7 +160,7 @@ public class ThemeSharer extends AbstractSimpleSharer {
 
     @Override
     public String getImportExportFileName() {
-        return ModManager.themeMod.getFileName();
+        return ModManager.themeModOld.getFileName();
     }
 
     @Override
@@ -175,6 +175,6 @@ public class ThemeSharer extends AbstractSimpleSharer {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return ModManager.themeMod.getCompatibleModToolVersions();
+        return ModManager.themeModOld.getCompatibleModToolVersions();
     }
 }

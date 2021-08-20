@@ -1,103 +1,76 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.PlatformAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.PlatformEditor;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.PlatformSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
+import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PlatformMod extends AbstractAdvancedMod {
+public class PlatformModOld extends AbstractAdvancedModOld {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenreModOld.class);
+    PlatformAnalyzer platformAnalyzer = new PlatformAnalyzer();
+    PlatformEditor platformEditor = new PlatformEditor();
+    PlatformSharer platformSharer = new PlatformSharer();
+    public ArrayList<JMenuItem> genreModMenuItems = getInitialModMenuItems();
+    public JMenuItem exportMenuItem = getInitialExportMenuItem();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlatformMod.class);
+    public PlatformEditor getEditor() {
+        return platformEditor;
+    }
 
     @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID",map, bw);
-        TranslationManager.printLanguages(bw, map);
-        for(String string : TranslationManager.TRANSLATION_KEYS){
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().equals("MANUFACTURER " + string)){
-                    bw.write("[MANUFACTURER " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
-                }
-            }
-        }
-        EditHelper.printLine("DATE",map, bw);
-        if(map.containsKey("DATE END")){
-            EditHelper.printLine("DATE END",map, bw);
-        }
-        EditHelper.printLine("PRICE",map, bw);
-        EditHelper.printLine("DEV COSTS",map, bw);
-        EditHelper.printLine("TECHLEVEL",map, bw);
-        EditHelper.printLine("UNITS",map, bw);
-        Map<Integer, String> pictures = new HashMap<>();
-        ArrayList<String> pictureChangeYears = new ArrayList<>();
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")){
-                pictures.put(Integer.parseInt(entry.getKey().replaceAll("[^0-9]", "")), entry.getValue());
-            }
-            if(entry.getKey().contains("YEAR")){
-                pictureChangeYears.add("[" + entry.getKey() + "]" + entry.getValue());
-            }
-        }
-        if(map.containsKey("PIC-1")){
-            for(Map.Entry<Integer, String> entry : pictures.entrySet()){
-                bw.write("[PIC-" + entry.getKey() + "]" + entry.getValue());
-                bw.write(System.getProperty("line.separator"));
-            }
-        }else{
-            for(int i=1; i<=pictureChangeYears.size()+1; i++){
-                bw.write("[PIC-" + i + "]" + map.get("NAME EN").replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + i + ".png");
-                bw.write(System.getProperty("line.separator"));
-            }
-        }
-        Collections.sort(pictureChangeYears);
-        for (String pictureChangeYear : pictureChangeYears) {
-            bw.write(pictureChangeYear);
-            bw.write(System.getProperty("line.separator"));
-        }
-        ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("NEED")){
-                gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
-            }
-        }
-        int numberOfRunsB = 1;
-        for(Integer integer : gameplayFeatureIds){
-            bw.write("[NEED-" + numberOfRunsB + "]" + integer);
-            bw.write(System.getProperty("line.separator"));
-            numberOfRunsB++;
-        }
-        EditHelper.printLine("COMPLEX",map, bw);
-        EditHelper.printLine("INTERNET",map, bw);
-        EditHelper.printLine("TYP",map, bw);
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
+        return platformAnalyzer;
+    }
+
+    @Override
+    public AbstractAdvancedEditor getBaseEditor() {
+        return platformEditor;
+    }
+
+    @Override
+    public AbstractAdvancedSharer getBaseSharer() {
+        return platformSharer;
+    }
+
+    @Override
+    public AbstractAdvancedModOld getAdvancedMod() {
+        return ModManager.platformModOld;
+    }
+
+    @Override
+    public ArrayList<JMenuItem> getModMenuItems() {
+        return genreModMenuItems;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
     }
 
     @Override
@@ -106,29 +79,9 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getMainTranslationKey() {
-        return "platform";
-    }
-
-    @Override
-    public AbstractBaseMod getMod() {
-        return ModManager.platformMod;
-    }
-
-    @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Platforms.txt");
-    }
-
-    @Override
-    protected String getDefaultContentFileName() {
-        return "default_platforms.txt";
-    }
-
-    @Override
-    protected void openAddModGui() throws ModProcessingException {
+    public void menuActionAddMod() {
         try{
-            analyzeFile();
+            getBaseAnalyzer().analyzeFile();
             ModManager.genreModOld.getAnalyzer().analyzeFile();
             ModManager.gameplayFeatureModOld.getAnalyzer().analyzeFile();
             final Map<String, String>[] mapManufacturerTranslations = new Map[]{new HashMap<>()};
@@ -302,7 +255,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                     if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))){
                         if(!textFieldManufacturer.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldManufacturer.initialValue"))){
                             boolean modAlreadyExists = false;
-                            for(String string : getContentByAlphabet()){
+                            for(String string : getBaseAnalyzer().getContentByAlphabet()){
                                 if(textFieldName.getText().equals(string)){
                                     modAlreadyExists = true;
                                 }
@@ -310,7 +263,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                             if(!modAlreadyExists) {
                                 Map<String, String> platformMap = new HashMap<>();
                                 Map<Integer, File> finalPictureMap = new HashMap<>();
-                                platformMap.put("ID", Integer.toString(getFreeId()));
+                                platformMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
                                 if(!nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
                                     platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                                     platformMap.putAll(TranslationManager.getDefaultManufacturerTranslations(textFieldManufacturer.getText()));
@@ -395,10 +348,9 @@ public class PlatformMod extends AbstractAdvancedMod {
                                     platformMap.put("INTERNET", "0");
                                 }
                                 platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                                if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                    Backup.createBackup(getGameFile());
-                                    addMod(platformMap);
-                                    addImageFiles(platformMap.get("NAME EN"), finalPictureMap);
+                                if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                    Backup.createBackup(getFile());
+                                    getEditor().addMod(platformMap, finalPictureMap);
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase") + " - " + platformMap.get("NAME EN"));
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.platform.upperCase") + ": [" + platformMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase"), JOptionPane.INFORMATION_MESSAGE);
                                     break;
@@ -423,123 +375,35 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
-        Map<String, String> map = transformGenericToMap(t);
-        StringBuilder message = new StringBuilder();
-        message.append("<html>");
-        message.append(I18n.INSTANCE.get("mod.platform.addPlatform.optionPaneMessage.firstPart")).append("<br><br>");
-        message.append(I18n.INSTANCE.get("commonText.name")).append(": ").append(map.get("NAME EN")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.manufacturer")).append(": ").append(map.get("MANUFACTURER EN")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.releaseDate")).append(": ").append(map.get("DATE")).append("<br>");
-        if(map.containsKey("DATE END")){
-            message.append(I18n.INSTANCE.get("commonText.productionEnd")).append(": ").append(map.get("DATE END")).append("<br>");
-        }
-        message.append(I18n.INSTANCE.get("commonText.devKitCost")).append(": ").append(map.get("PRICE")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.developmentCost")).append(": ").append(map.get("DEV COSTS")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.techLevel")).append(": ").append(map.get("TECHLEVEL")).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.units")).append(": ").append(map.get("UNITS")).append("<br>");
-        ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("NEED")){
-                gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
-            }
-        }
-        StringBuilder neededGameplayFeatures = new StringBuilder();
-        int currentGameplayFeature = 0;
-        boolean firstGameplayFeature = true;
-        for(Integer integer : gameplayFeatureIds){
-            if(firstGameplayFeature){
-                firstGameplayFeature = false;
-            }else{
-                neededGameplayFeatures.append(", ");
-            }
-            if(currentGameplayFeature == 8){
-                neededGameplayFeatures.append("<br>");
-                currentGameplayFeature = 0;
-            }
-            neededGameplayFeatures.append(ModManager.gameplayFeatureModOld.getBaseAnalyzer().getContentNameById(integer));
-            currentGameplayFeature++;
-        }
-        message.append(I18n.INSTANCE.get("commonText.neededGameplayFeatures")).append(": ").append(neededGameplayFeatures).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.complexity")).append(": ").append(map.get("COMPLEX")).append("<br>");
-        String internetMessageToPrint;
-        if(map.get("INTERNET").equals("0")){
-            internetMessageToPrint = Utils.getTranslatedValueFromBoolean(false);
-        }else{
-            internetMessageToPrint = Utils.getTranslatedValueFromBoolean(true);
-        }
-        message.append(I18n.INSTANCE.get("commonText.internet")).append(": ").append(internetMessageToPrint).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.type")).append(": ").append(getPlatformTypeStringById(Integer.parseInt(map.get("TYP")))).append("<br>");
-        return message.toString();
+    public String getMainTranslationKey() {
+        return "platform";
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
+    public JMenuItem getExportMenuItem() {
+        return exportMenuItem;
     }
 
     @Override
-    protected Charset getCharset() {
-        return StandardCharsets.UTF_8;
+    public String getFileName() {
+        return "Platforms.txt";
     }
 
     @Override
-    protected String getTypeCaps() {
-        return "PLATFORM";
+    public void removeMod(String name) throws IOException {
+        getEditor().removePlatform(name);
     }
 
     @Override
-    public String getImportExportFileName() {
-        return "platform.txt";
-    }
-
-    @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
-        try{
-            File importFolderPictureFolder = new File(importFolderPath + "//DATA//pictures//");
-            if(importFolderPictureFolder.exists()){
-                ArrayList<File> pictures = DataStreamHelper.getFilesInFolderWhiteList(importFolderPictureFolder.getPath(), ".png");
-                Map<Integer, File> importPictureMap = new HashMap<>();
-                for(File file : pictures){
-                    importPictureMap.put(Integer.parseInt(file.getName().replaceAll("[^0-9]","")), file);
-                }
-                ModManager.platformModOld.getEditor().addImageFiles(name, importPictureMap);
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
-        File exportPictures = new File(exportFolderDataPath + "//pictures//");
-        exportPictures.mkdirs();
-        Map<Integer, File> picturesToExport = new HashMap<>();
-        for(Map.Entry<String, String> entry : singleContentMap.entrySet()){
-            if(entry.getKey().contains("PIC")){
-                picturesToExport.put(Integer.parseInt(entry.getKey().replaceAll("[^0-9]","")), new File(Settings.mgt2FilePath + "//Mad Games Tycoon 2_Data//Extern//Icons_Platforms//" + entry.getValue()));
-            }
-        }
-        for(Map.Entry<Integer, File> entry : picturesToExport.entrySet()){
-            File outputFile = new File(exportPictures.getPath() + "//" + entry.getKey() + ".png");
-            Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(outputFile.getPath()));
-        }
-    }
-
-    @Override
-    public Map<String, String> getChangedImportMap(Map<String, String> map) {
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("NEED-")){
-                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(entry.getValue())));
-            }
-        }
-        return map;
+    public void removeModMenuItemAction() {
+        Thread thread = new Thread(() -> OperationHelper.processOld(getEditor()::removePlatform, getBaseAnalyzer().getCustomContentString(), getBaseAnalyzer().getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false));
+        ThreadHandler.startThread(thread, "runnableRemove" + getType());
     }
 
     /**
      * @return Returns the platform type for the input id. Returns -1 if the string is not correct
      */
-    public int getPlatformTypeIdByString(String type){//TODO Rewrite to use enum
+    public int getPlatformTypeIdByString(String type){
         if(type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
             return 0;
         }
@@ -561,7 +425,7 @@ public class PlatformMod extends AbstractAdvancedMod {
     /**
      * @return Returns the type string for the input id.
      */
-    public String getPlatformTypeStringById(int id){//TODO Rewrite to use enum and to throw ModProcessingException
+    public String getPlatformTypeStringById(int id){
         switch(id){
             case 0: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer");
             case 1: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console");
@@ -581,20 +445,6 @@ public class PlatformMod extends AbstractAdvancedMod {
             spinnerEndYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": " + Integer.parseInt(spinnerUnlockYear.getValue().toString())+1 + " - 2050]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.endYear.toolTip"));
             spinnerEndYear.setModel(new SpinnerNumberModel(Integer.parseInt(spinnerUnlockYear.getValue().toString())+1, Integer.parseInt(spinnerUnlockYear.getValue().toString())+1, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerEndYear.getEditor()).getTextField().setEditable(false);
-        }
-    }
-
-    /**
-     * Adds the image files for the new platform
-     * @param platformName The name of the new platform
-     * @param imageFiles The map contains the image files in the following formatting:
-     *            Integer - The position of the image file
-     *            File - The source file that should be added
-     */
-    public void addImageFiles(String platformName, Map<Integer, File> imageFiles) throws IOException {
-        for(Map.Entry<Integer, File> entry : imageFiles.entrySet()){
-            File destinationFile = new File(Settings.mgt2FilePath + "//Mad Games Tycoon 2_Data//Extern//Icons_Platforms//" + platformName.replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + entry.getKey() + ".png");
-            Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(destinationFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 }

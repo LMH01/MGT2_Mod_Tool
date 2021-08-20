@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -126,8 +127,8 @@ public class ImageFileHandler {
      * @param genreName The genre id
      * @param genreId The genre id
      */
-    public static void removeImageFiles(String genreName) throws IOException {
-        int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(genreName);
+    public static void removeImageFiles(String genreName) throws ModProcessingException {
+        int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(genreName);
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
         File screenshotFolder = new File(getScreenshotsDirectory() + "\\" + genreId + "\\");
@@ -151,10 +152,14 @@ public class ImageFileHandler {
         }
         if(screenshotFolder.exists()){
             screenshotFolder.delete();
-            Files.walk(Paths.get(screenshotFolder.getPath()))
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+            try {
+                Files.walk(Paths.get(screenshotFolder.getPath()))
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+            } catch (IOException e) {
+                throw new ModProcessingException("Something went wrong while deleting the screenshot files for genre " + genreName + ": " + e.getMessage());
+            }
             LOGGER.info("removed file: " + screenshotFolder.getPath());
         }
         if(screenshotMetaFile.exists()){

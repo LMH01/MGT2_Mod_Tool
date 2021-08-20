@@ -1,50 +1,80 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.EngineFeatureAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.EngineFeatureEditor;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.EngineFeatureSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Summaries;
-import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class EngineFeatureMod extends AbstractAdvancedMod {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureMod.class);
+public class EngineFeatureModOld extends AbstractAdvancedModOld {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EngineFeatureModOld.class);
+    EngineFeatureAnalyzer engineFeatureAnalyzer = new EngineFeatureAnalyzer();
+    EngineFeatureEditor engineFeatureEditor = new EngineFeatureEditor();
+    EngineFeatureSharer engineFeatureSharer = new EngineFeatureSharer();
+    public ArrayList<JMenuItem> engineFeatureModMenuItems = getInitialModMenuItems();
+    public JMenuItem exportMenuItem = getInitialExportMenuItem();
+
+    /**
+     * @return Returns the analyzer for the mod.
+     * Using this function you can use all specific functions for this analyzer.
+     */
+    public EngineFeatureAnalyzer getAnalyzer(){
+        return engineFeatureAnalyzer;
+    }
+
+    /**
+     * @return Returns the editor for the mod.
+     * Using this function you can use all specific functions for this editor.
+     */
+    public EngineFeatureEditor getEditor(){
+        return engineFeatureEditor;
+    }
+
+    /**
+     * @return Returns the sharer for the mod.
+     * Using this function you can use all specific functions for this sharer.
+     */
+    public EngineFeatureSharer getSharer(){
+        return engineFeatureSharer;
+    }
 
     @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        EditHelper.printLine("TYP", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("RES POINTS", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-        EditHelper.printLine("TECHLEVEL", map, bw);
-        EditHelper.printLine("PIC", map, bw);
-        EditHelper.printLine("GAMEPLAY", map, bw);
-        EditHelper.printLine("GRAPHIC", map, bw);
-        EditHelper.printLine("SOUND", map, bw);
-        EditHelper.printLine("TECH", map, bw);
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
+        return engineFeatureAnalyzer;
+    }
+
+    @Override
+    public AbstractAdvancedEditor getBaseEditor() {
+        return engineFeatureEditor;
+    }
+
+    @Override
+    public AbstractAdvancedSharer getBaseSharer() {
+            return engineFeatureSharer;
+    }
+
+    @Override
+    public AbstractAdvancedModOld getAdvancedMod() {
+        return ModManager.engineFeatureModOld;
     }
 
     @Override
@@ -58,22 +88,27 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public AbstractBaseMod getMod() {
-        return ModManager.engineFeatureMod;
+    public JMenuItem getExportMenuItem() {
+        return exportMenuItem;
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "EngineFeatures.txt");
+    public String getFileName() {
+        return "EngineFeatures.txt";
     }
 
     @Override
-    protected String getDefaultContentFileName() {
-        return "default_engine_features.txt";
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
     }
 
     @Override
-    protected void openAddModGui() throws ModProcessingException {
+    public ArrayList<JMenuItem> getModMenuItems() {
+        return engineFeatureModMenuItems;
+    }
+
+    @Override
+    public void menuActionAddMod() {
         try{
             Backup.createBackup(ModManager.engineFeatureModOld.getFile());
             ModManager.engineFeatureModOld.getAnalyzer().analyzeFile();
@@ -103,7 +138,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
                         boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
+                        for(String string : getBaseAnalyzer().getContentByAlphabet()){
                             if(textFieldName.getText().equals(string)){
                                 modAlreadyExists = true;
                             }
@@ -139,7 +174,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             newEngineFeature.put("TECH", spinnerTech.getValue().toString());
                             boolean addFeature = Summaries.showSummary(ModManager.engineFeatureModOld.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                             if (addFeature) {
-                                Backup.createBackup(getGameFile());
+                                Backup.createBackup(getFile());
                                 ModManager.engineFeatureModOld.getEditor().addMod(newEngineFeature);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.engineFeature.upperCase") + " - " + newEngineFeature.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
@@ -159,54 +194,6 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    @Override
-    protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
-        Map<String, String> map = transformGenericToMap(t);
-        StringBuilder lastPart = new StringBuilder();
-        lastPart.append(I18n.INSTANCE.get("commonText.needInternet")).append(": ");
-        if(map.containsKey("NEEDINTERNET")){
-            lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
-            lastPart.append(I18n.INSTANCE.get("commonText.no"));
-        }
-        lastPart.append("<br>").append(I18n.INSTANCE.get("commonText.stationary")).append(": ");
-        if(map.containsKey("ONLY_STATIONARY")){
-            lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
-            lastPart.append(I18n.INSTANCE.get("commonText.no"));
-        }
-        return "<html>" +
-                I18n.INSTANCE.get("mod.hardwareFeature.addMod.optionPaneMessage.firstPart") + "<br><br>" +
-                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "<br>" +
-                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "<br>" +
-                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "<br>" +
-                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
-                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.quality") + ": " + map.get("QUALITY") + "<br>" +
-                lastPart;
-    }
-
-    @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
-    }
-
-    @Override
-    protected Charset getCharset() {
-        return StandardCharsets.UTF_8;
-    }
-
-    @Override
-    protected String getTypeCaps() {
-        return "HARDWARE_FEATURE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "HardwareFeatures.txt";
     }
 
     /**

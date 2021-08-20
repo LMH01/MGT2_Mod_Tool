@@ -34,17 +34,17 @@ public class NpcGamesEditor extends AbstractSimpleEditor {
 
     @Override
     public String getType() {
-        return ModManager.npcGamesMod.getType();
+        return ModManager.npcGamesModOld.getType();
     }
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.npcGamesMod.getBaseAnalyzer();
+        return ModManager.npcGamesModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.npcGamesMod.getFile();
+        return ModManager.npcGamesModOld.getFile();
     }
 
     @Override

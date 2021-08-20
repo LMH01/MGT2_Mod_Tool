@@ -71,8 +71,8 @@ public class ThemeEditor extends AbstractSimpleEditor {
 
     @Override
     public void removeMod(String name) throws IOException {
-        ModManager.themeMod.getAnalyzerEn().analyzeFile();
-        ModManager.themeMod.getAnalyzerGe().analyzeFile();
+        ModManager.themeModOld.getAnalyzerEn().analyzeFile();
+        ModManager.themeModOld.getAnalyzerGe().analyzeFile();
         editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(name), 0);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
     }
@@ -177,13 +177,13 @@ public class ThemeEditor extends AbstractSimpleEditor {
      */
     public void editGenreAllocationAdvanced(int genreID, boolean addGenreID, Set<Integer> themeIds, boolean removeIdFromWholeFile) throws IOException {
         ThemeFileAnalyzer.analyzeThemeFiles();
-        File fileTopicsGe = ModManager.themeMod.getFileGe();
+        File fileTopicsGe = ModManager.themeModOld.getFileGe();
         if(fileTopicsGe.exists()){
             fileTopicsGe.delete();
         }
         fileTopicsGe.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGe), StandardCharsets.UTF_16LE));
-        Map<Integer, String> map = ModManager.themeMod.getAnalyzerGe().getFileContent();
+        Map<Integer, String> map = ModManager.themeModOld.getAnalyzerGe().getFileContent();
         boolean firstLine = true;
         for(Integer i : map.keySet()){
             if(addGenreID){

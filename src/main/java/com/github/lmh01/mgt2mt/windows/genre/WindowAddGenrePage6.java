@@ -100,7 +100,7 @@ public class WindowAddGenrePage6 extends JFrame{
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.themeMod.getAnalyzerEn().getContentByAlphabet()){
+        for(String string : ModManager.themeModOld.getAnalyzerEn().getContentByAlphabet()){
             listModel.addElement(string);
             if(GenreManager.mapNewGenre.containsKey("THEME COMB")){
                 if(GenreManager.mapNewGenre.get("THEME COMB").contains(string)) {
@@ -129,7 +129,7 @@ public class WindowAddGenrePage6 extends JFrame{
     private static boolean saveInputs(JList<String> listAvailableThemes){
         LOGGER.info("Cleared array list with compatible genres.");
         StringBuilder compatibleThemes = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
             for(String string : listAvailableThemes.getSelectedValuesList()){
                 if(entry.getValue().equals(string)){
                     compatibleThemeIds.add(entry.getKey());

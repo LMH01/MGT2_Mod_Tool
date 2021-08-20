@@ -249,7 +249,7 @@ public class Utils {
                     if(Settings.enableDebugLogging){
                         LOGGER.info("genreName: " + currentName);
                     }
-                    int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(currentName.toString());
+                    int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(currentName.toString());
                     if(genreId != -1){
                         genreIds.append("<").append(genreId).append(">");
                     }
@@ -318,7 +318,7 @@ public class Utils {
      * @return Returns a String containing theme ids
      */
     public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getFileGe()), StandardCharsets.UTF_16LE));
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeModOld.getFileGe()), StandardCharsets.UTF_16LE));
         boolean firstLine = true;
         int lineNumber = 1;
         StringBuilder compatibleThemes = new StringBuilder();
@@ -349,7 +349,7 @@ public class Utils {
     public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if(goodFeature){
-            for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
+            for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()){
                 if(map.get("GOOD") != null){
                     if(map.get("GOOD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -357,7 +357,7 @@ public class Utils {
                 }
             }
         }else{
-            for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()){
+            for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()){
                 if(map.get("BAD") != null){
                     if(map.get("BAD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -413,7 +413,7 @@ public class Utils {
             if(!listAvailableEntries.isSelectionEmpty()){
                 for(String string : listAvailableEntries.getSelectedValuesList()){
                     if(returnGenreIds){
-                        returnValues.add(ModManager.genreMod.getAnalyzer().getContentIdByName(string));
+                        returnValues.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(string));
                     }else{
                         returnValues.add(getPositionInList(string, existingListContent));
                     }

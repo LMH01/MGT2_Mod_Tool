@@ -195,6 +195,7 @@ commonText.case|Case
 commonText.screen|Screen
 commonText.stationaryConsole|Stationary console
 commonText.portableConsole|Portable console
+commonText.reason|Reason:
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:

@@ -1,57 +1,74 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AntiCheatAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.AntiCheatEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
+import com.github.lmh01.mgt2mt.data_stream.sharer.AntiCheatSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
-import com.github.lmh01.mgt2mt.util.interfaces.Importer;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class TestAdvancedMod extends AbstractAdvancedMod {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
+public class AntiCheatModOld extends AbstractAdvancedModOld {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AntiCheatModOld.class);
+    AntiCheatAnalyzer antiCheatAnalyzer = new AntiCheatAnalyzer();
+    AntiCheatEditor antiCheatEditor = new AntiCheatEditor();
+    AntiCheatSharer antiCheatSharer = new AntiCheatSharer();
+    public ArrayList<JMenuItem> antiCheatModMenuItems = getInitialModMenuItems();
+    public JMenuItem exportMenuItem = getInitialExportMenuItem();
 
     @Override
-    public String getMainTranslationKey() {
-        return "testAdvancedMod";
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
+        return antiCheatAnalyzer;
     }
 
     @Override
-    public AbstractBaseMod getMod() {
-        return this;
+    public AbstractAdvancedEditor getBaseEditor() {
+        return antiCheatEditor;
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "antiCheat.txt");
+    public AbstractAdvancedSharer getBaseSharer() {
+        return antiCheatSharer;
     }
 
     @Override
-    public String getDefaultContentFileName() {
-        return "default_anti_cheat.txt";
+    public AbstractAdvancedModOld getAdvancedMod() {
+        return ModManager.antiCheatModOld;
     }
 
     @Override
-    public void openAddModGui() throws ModProcessingException {
+    public ArrayList<JMenuItem> getModMenuItems() {
+        return antiCheatModMenuItems;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
+    }
+
+    @Override
+    public String[] getCompatibleModToolVersions() {
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.0.0", "2.0.1", "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+    }
+
+    @Override
+    public void menuActionAddMod() {
         try{
             JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.antiCheat.addMod.components.textFieldName.initialValue"));
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
@@ -67,14 +84,14 @@ public class TestAdvancedMod extends AbstractAdvancedMod {
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.antiCheat.addMod.components.textFieldName.initialValue"))){
                         boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
+                        for(String string : getBaseAnalyzer().getContentByAlphabet()){
                             if(textFieldName.getText().equals(string)){
                                 modAlreadyExists = true;
                             }
                         }
                         if(!modAlreadyExists){
                             Map<String, String> antiCheatMap = new HashMap<>();
-                            antiCheatMap.put("ID", Integer.toString(getFreeId()));
+                            antiCheatMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
                             if(!nameTranslationsAdded.get()){
                                 antiCheatMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                             }else{
@@ -84,9 +101,9 @@ public class TestAdvancedMod extends AbstractAdvancedMod {
                             antiCheatMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())) + " " + spinnerUnlockYear.getValue().toString());
                             antiCheatMap.put("PRICE", spinnerCost.getValue().toString());
                             antiCheatMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(antiCheatMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                Backup.createBackup(getGameFile());
-                                addMod(antiCheatMap);
+                            if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(antiCheatMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                Backup.createBackup(getFile());
+                                getBaseEditor().addMod(antiCheatMap);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.antiCheat.upperCase") + " - " + antiCheatMap.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.antiCheat.upperCase") + ": [" + antiCheatMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                                 break;
@@ -107,58 +124,18 @@ public class TestAdvancedMod extends AbstractAdvancedMod {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    protected <T> String getOptionPaneMessage(T t) throws ModProcessingException{
-        try {
-            Map<String, String> map = (Map<String, String>) t;
-            return "<html>" +
-                    I18n.INSTANCE.get("mod.antiCheat.addMod.optionPaneMessage.firstPart") + "<br><br>" +
-                    I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "<br>" +
-                    I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "<br>" +
-                    I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
-                    I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>";
-        } catch (ClassCastException e) {
-            throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
-        }
+    public String getMainTranslationKey() {
+        return "antiCheat";
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
+    public JMenuItem getExportMenuItem() {
+        return exportMenuItem;
     }
 
     @Override
-    protected Charset getCharset() {
-        return StandardCharsets.UTF_8;
-    }
-
-    @Override
-    protected String getTypeCaps() {
-        return "TEST_ADVANCED_MOD";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "testAdvancedMod.txt";
-    }
-
-    @Override
-    public String[] getCompatibleModToolVersions() {
-        return new String[]{"v2.2.3-dev", MadGamesTycoon2ModTool.VERSION};
-    }
-
-    @Override
-    protected String getExportFolder() {
-        return "TEST ADVANCED MOD";
-    }
-
-    @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID",map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
+    public String getFileName() {
+        return "antiCheat.txt";
     }
 }

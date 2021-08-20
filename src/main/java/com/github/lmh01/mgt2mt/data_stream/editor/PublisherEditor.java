@@ -69,7 +69,7 @@ public class PublisherEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return ModManager.publisherMod.getFile();
+        return ModManager.publisherModOld.getFile();
     }
 
     @Override
@@ -92,12 +92,12 @@ public class PublisherEditor extends AbstractAdvancedEditor {
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.publisherMod.getAnalyzer();
+        return ModManager.publisherModOld.getAnalyzer();
     }
 
     private int getPublisherIconIdByName(String publisherNameEN){
         int returnValue = 0;
-        List<Map<String, String>> list = ModManager.publisherMod.getAnalyzer().getFileContent();
+        List<Map<String, String>> list = ModManager.publisherModOld.getAnalyzer().getFileContent();
         try{
             for (Map<String, String> map : list) {
                 if (map.get("NAME EN").equals(publisherNameEN)) {
@@ -117,7 +117,7 @@ public class PublisherEditor extends AbstractAdvancedEditor {
      * @param name The genre that should be removed
      */
     public void removeGenre(String name) throws IOException {
-        int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(name);
+        int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(name);
         getAnalyzer().analyzeFile();
         sendLogMessage("Replacing genre id in publisher file: " + name);
         Charset charset = getCharset();
@@ -133,7 +133,7 @@ public class PublisherEditor extends AbstractAdvancedEditor {
         for(Map<String, String> fileContent : getAnalyzer().getFileContent()){
             if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
                 fileContent.remove("GENRE");
-                fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getActiveIds().size()))));
+                fileContent.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getActiveIds().size()))));
             }
             printValues(fileContent, bw);
             bw.write(System.getProperty("line.separator"));

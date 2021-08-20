@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class NPCGameListChanger {
+public class NPCGameListChanger {//TODO Delete Class
     private static final Logger LOGGER = LoggerFactory.getLogger(NPCGameListChanger.class);
 
     /**

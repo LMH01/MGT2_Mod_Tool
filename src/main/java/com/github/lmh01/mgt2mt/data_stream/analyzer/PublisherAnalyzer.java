@@ -12,7 +12,7 @@ public class PublisherAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.publisherMod.getFile();
+        return ModManager.publisherModOld.getFile();
     }
 
     @Override

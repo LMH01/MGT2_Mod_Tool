@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class GenreManager {
+public class GenreManager {//TODO Delete this file
 
     //New Variables
     public static Map<String, String> mapNameTranslations = new HashMap<>();
@@ -27,11 +27,11 @@ public class GenreManager {
     /**
      * Adds a new genre to mad games tycoon 2
      */
-    public static void startStepByStepGuide() throws IOException {
-        ModManager.genreMod.getAnalyzer().analyzeFile();
+    public static void startStepByStepGuide() throws IOException {//TODO change to throw ModProcessingException
+        ModManager.genreModOld.getAnalyzer().analyzeFile();
         resetVariables();
         try {
-            Backup.createBackup(ModManager.genreMod.getFile());
+            Backup.createBackup(ModManager.genreModOld.getFile());
             LOGGER.info("Adding new genre");
             openStepWindow(1);
         } catch (IOException e) {
@@ -63,7 +63,7 @@ public class GenreManager {
      */
     public static void resetVariables(){
         mapNewGenre.clear();
-        mapNewGenre.put("ID", Integer.toString(ModManager.genreMod.getAnalyzer().getFreeId()));
+        mapNewGenre.put("ID", Integer.toString(ModManager.genreModOld.getAnalyzer().getFreeId()));
         mapNewGenre.put("UNLOCK YEAR", "1976");
         mapNewGenre.put("UNLOCK MONTH", "JAN");
         mapNewGenre.put("RES POINTS", "1000");
@@ -165,11 +165,11 @@ public class GenreManager {
             }
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
-                    ModManager.genreMod.getEditor().addMod(map);
-                    ModManager.themeMod.getEditor().editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
-                    ModManager.gameplayFeatureMod.getEditor().addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
-                    ModManager.gameplayFeatureMod.getAnalyzer().analyzeFile();
-                    ModManager.gameplayFeatureMod.getEditor().addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
+                    ModManager.genreModOld.getEditor().addMod(map);
+                    ModManager.themeModOld.getEditor().editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
+                    ModManager.gameplayFeatureModOld.getEditor().addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
+                    ModManager.gameplayFeatureModOld.getAnalyzer().analyzeFile();
+                    ModManager.gameplayFeatureModOld.getEditor().addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
                     GenreManager.genreAdded(map, genreIcon, showMessages);
                     if(showSummaryFromImport){
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN"));
@@ -250,7 +250,7 @@ public class GenreManager {
                 //Nothing happens
             }else if (String.valueOf(input.charAt(i)).equals(">")){
                 if(convertAsGenres){
-                    outputArray.add(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(currentString.toString())));
+                    outputArray.add(ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(currentString.toString())));
                 }else{
                     outputArray.add(currentString.toString());
                 }
@@ -279,7 +279,7 @@ public class GenreManager {
      */
     public static void genreAdded(Map<String, String> map, File genreIcon, boolean showMessages) throws IOException {
         String name = map.get("NAME EN");
-        int id = ModManager.genreMod.getAnalyzer().getFreeId();
+        int id = ModManager.genreModOld.getAnalyzer().getFreeId();
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         if(showMessages){
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.1") + " [" + name + "] " + I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.2"), I18n.INSTANCE.get("dialog.genreManager.addGenre.genreAdded.title"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == 0){

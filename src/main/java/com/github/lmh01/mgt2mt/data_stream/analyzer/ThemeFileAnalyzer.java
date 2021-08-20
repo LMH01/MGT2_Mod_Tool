@@ -19,8 +19,8 @@ public class ThemeFileAnalyzer {
 
     public static void analyzeThemeFiles(){
         try{
-            ModManager.themeMod.getAnalyzerEn().analyzeFile();
-            ModManager.themeMod.getAnalyzerGe().analyzeFile();
+            ModManager.themeModOld.getAnalyzerEn().analyzeFile();
+            ModManager.themeModOld.getAnalyzerGe().analyzeFile();
             writeHelpFile();
         }catch (IOException e){
             e.printStackTrace();
@@ -31,7 +31,7 @@ public class ThemeFileAnalyzer {
      * Writes a help file with themes by id.
      */
     private static void writeHelpFile() throws IOException {
-        ModManager.themeMod.getAnalyzerEn().analyzeFile();
+        ModManager.themeModOld.getAnalyzerEn().analyzeFile();
         LOGGER.info("Writing theme id help file.");
         if(FILE_THEMES_BY_ID_HELP.exists()){
             FILE_THEMES_BY_ID_HELP.delete();
@@ -39,7 +39,7 @@ public class ThemeFileAnalyzer {
         FILE_THEMES_BY_ID_HELP.createNewFile();
         PrintWriter pw = new PrintWriter(FILE_THEMES_BY_ID_HELP);
         boolean firstLine = true;
-        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
             if(firstLine){
                 pw.print(entry.getKey() + " - " + entry.getValue());
                 firstLine = false;
@@ -65,9 +65,9 @@ public class ThemeFileAnalyzer {
     public static int getPositionOfThemeInFile(String themeNameEn){
         int position = 1;
         if(Settings.enableDebugLogging){
-            LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + ModManager.themeMod.getAnalyzerEn().getFileContent().size());
+            LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + ModManager.themeModOld.getAnalyzerEn().getFileContent().size());
         }
-        for(Map.Entry<Integer, String> entry: ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry: ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
             if(Settings.enableDebugLogging){
                 LOGGER.info("Value: " + entry.getValue());
             }
@@ -147,7 +147,7 @@ public class ThemeFileAnalyzer {
      */
     public static ArrayList<Integer> getThemeIdsInUse(){
         ArrayList<Integer> arrayList = new ArrayList<>();
-        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
             arrayList.add(entry.getKey());
         }
         return arrayList;

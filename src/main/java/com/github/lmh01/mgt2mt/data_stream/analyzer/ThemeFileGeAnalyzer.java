@@ -69,7 +69,7 @@ public class ThemeFileGeAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.themeMod.getAnalyzerGe();
+        return ModManager.themeModOld.getAnalyzerGe();
     }
 
     @Override

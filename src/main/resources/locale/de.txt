@@ -188,6 +188,7 @@ commonText.case|Gehäuse
 commonText.screen|Bildschirm
 commonText.stationaryConsole|Stationäre Konsole
 commonText.portableConsole|Portable Konsole
+commonText.reason|Grund:
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:

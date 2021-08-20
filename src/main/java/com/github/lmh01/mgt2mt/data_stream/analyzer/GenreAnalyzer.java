@@ -18,7 +18,7 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.genreMod.getFile();
+        return ModManager.genreModOld.getFile();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class GenreAnalyzer extends AbstractAdvancedAnalyzer {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + genreNumber);
                 }
-                genreNames.append("<").append(ModManager.genreMod.getAnalyzer().getContentNameById(genreNumber)).append(">");
+                genreNames.append("<").append(ModManager.genreModOld.getAnalyzer().getContentNameById(genreNumber)).append(">");
                 currentNumber = new StringBuilder();
             }else{
                 currentNumber.append(genreNumbersRaw.charAt(charPosition));

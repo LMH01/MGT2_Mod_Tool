@@ -121,17 +121,17 @@ public class HardwareEditor extends AbstractAdvancedEditor {
 
     @Override
     public String getType() {
-        return ModManager.hardwareMod.getType();
+        return ModManager.hardwareModOld.getType();
     }
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.hardwareMod.getBaseAnalyzer();
+        return ModManager.hardwareModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.hardwareMod.getFile();
+        return ModManager.hardwareModOld.getFile();
     }
 
     @Override

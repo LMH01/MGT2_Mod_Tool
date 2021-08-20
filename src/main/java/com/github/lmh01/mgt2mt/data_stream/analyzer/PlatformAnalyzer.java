@@ -11,7 +11,7 @@ public class PlatformAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.platformMod.getFile();
+        return ModManager.platformModOld.getFile();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class PlatformAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.platformMod.getType();
+        return ModManager.platformModOld.getType();
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.platformMod.getMainTranslationKey();
+        return ModManager.platformModOld.getMainTranslationKey();
     }
 }

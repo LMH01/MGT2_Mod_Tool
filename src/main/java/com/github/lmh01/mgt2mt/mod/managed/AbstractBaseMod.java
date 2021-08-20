@@ -1,9 +1,7 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.Debug;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -13,10 +11,8 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
 //TODO Alle funktionen hier drin nach Nutzen sortieren (wenn alles fertig)
 // Auch noch einmal drüber schauen, welche funktionen private oder protected sein sollten
@@ -39,6 +35,12 @@ public abstract class AbstractBaseMod {
         modMenuItems = getInitialModMenuItems();
         exportMenuItem = getInitialExportMenuItem();
     }
+
+
+    /**
+     * @return Returns a string that contains the compatible mod tool versions
+     */
+    public abstract String[] getCompatibleModToolVersions();
 
     /**
      * @return Returns an array list containing new JMenuItems
@@ -91,7 +93,7 @@ public abstract class AbstractBaseMod {
     /**
      * @return Returns an array that contains all custom contents
      */
-    public final String[] getCustomContentString(){
+    public final String[] getCustomContentString() throws ModProcessingException{
         return getCustomContentString(true);
     }
 
@@ -99,7 +101,7 @@ public abstract class AbstractBaseMod {
      * @param disableTextAreaMessage True when the messages should not be written to the text area.
      * @return Returns an array that contains all custom contents
      */
-    public final String[] getCustomContentString(boolean disableTextAreaMessage){
+    public final String[] getCustomContentString(boolean disableTextAreaMessage) throws ModProcessingException {
         String[] contentByAlphabet = getContentByAlphabet();
         ArrayList<String> arrayListCustomContent = new ArrayList<>();
         ProgressBarHelper.initializeProgressBar(getDefaultContent().length, getFileContentSize(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
@@ -125,7 +127,7 @@ public abstract class AbstractBaseMod {
         ProgressBarHelper.resetProgressBar();
         try{
             Collections.sort(arrayListCustomContent);
-        }catch(NullPointerException ignored){
+        }catch(NullPointerException ignored){//TODO schauen, ob hier vielleicht auch noch ein throw für ModProcessingException hinzugefügt werden sollte
 
         }
         String[] string = new String[arrayListCustomContent.size()];
@@ -151,7 +153,7 @@ public abstract class AbstractBaseMod {
     /**
      * @return A string containing all active things sorted by alphabet.
      */
-    public abstract String[] getContentByAlphabet();
+    public abstract String[] getContentByAlphabet() throws ModProcessingException;
 
     /**
      * @return The size of the default content file
@@ -167,7 +169,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * Starts a thread that can catch a {@link ModProcessingException}.
-     * If that exception is caught an error message is printed into the text area and the thread will terminate.
+     * If that exception is caught an error message displayed and printed into the text area. The thread will terminate.
      */
     private void startModThread(ModAction action, String threadName) {
         Thread thread = new Thread(() -> {
@@ -181,6 +183,7 @@ public abstract class AbstractBaseMod {
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
                 TextAreaHelper.appendText(sw.toString());
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.modProcessingException.firstPart")  + " " + threadName + "\n" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage().replace(" - ", "\n - "), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 LOGGER.info("Error in thread: " + threadName + "; Reason: " + e.getMessage());
             }
         });
@@ -266,8 +269,9 @@ public abstract class AbstractBaseMod {
 
     /**
      * Analyzes the mod file.
+     * Overwriting this function is not recommended without calling super.analyzeFile().
      */
-    public abstract void analyzeFile() throws IOException;
+    protected abstract void analyzeFile() throws ModProcessingException;
 
     /**
      * The file that should be analyzed and edited.
@@ -345,7 +349,7 @@ public abstract class AbstractBaseMod {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
-    public abstract String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException, IOException;
+    public abstract String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException, IOException;//TODO Remove IOException and let only the ModProcessingException get thrown
 
     /**
      * @return The type name in caps
@@ -360,12 +364,9 @@ public abstract class AbstractBaseMod {
     public abstract String getImportExportFileName();
 
     /**
-     * @return Returns a string that contains the compatible mod tool versions
-     */
-    public abstract String[] getCompatibleModToolVersions();
-
-    /**
      * @return The name of the mod export folder
      */
-    protected abstract String getExportFolder();
+    public String getExportFolder() {
+        return "//" + getType() + "//";
+    }
 }

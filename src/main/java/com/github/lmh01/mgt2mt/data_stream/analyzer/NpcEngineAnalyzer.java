@@ -11,7 +11,7 @@ public class NpcEngineAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.npcEngineMod.getFile();
+        return ModManager.npcEngineModOld.getFile();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class NpcEngineAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.npcEngineMod.getType();
+        return ModManager.npcEngineModOld.getType();
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.npcEngineMod.getMainTranslationKey();
+        return ModManager.npcEngineModOld.getMainTranslationKey();
     }
 }

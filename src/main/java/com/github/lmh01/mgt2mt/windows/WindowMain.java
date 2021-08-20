@@ -157,7 +157,7 @@ public class WindowMain {
         setSafetyFeatureComponents();
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
-        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherMod.realPublishers());
+        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherModOld.realPublishers());
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
@@ -233,7 +233,7 @@ public class WindowMain {
                             noModsAvailable = false;
                         }
                     }else{
-                        if(ModManager.themeMod.getAnalyzerEn().getCustomContentString(true).length > 0){
+                        if(ModManager.themeModOld.getAnalyzerEn().getCustomContentString(true).length > 0){
                             noModsAvailable = false;
                         }
                     }
@@ -244,7 +244,7 @@ public class WindowMain {
                         noModsAvailable = false;
                     }
                 }
-                if(ModManager.genreMod.getAnalyzer().getCustomContentString(true).length > 0){
+                if(ModManager.genreModOld.getAnalyzer().getCustomContentString(true).length > 0){
                     M_22_NPC_GAMES_LIST.setEnabled(true);
                     M_22_NPC_GAMES_LIST.setToolTipText("");
                 }else{

@@ -32,7 +32,7 @@ public class GenreEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return ModManager.genreMod.getFile();
+        return ModManager.genreModOld.getFile();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GenreEditor extends AbstractAdvancedEditor {
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.genreMod.getAnalyzer();
+        return ModManager.genreModOld.getAnalyzer();
     }
 
     /**
@@ -88,11 +88,11 @@ public class GenreEditor extends AbstractAdvancedEditor {
 
     private void removeGenre(String genreName) throws IOException {
         super.removeMod(genreName);
-        ModManager.themeMod.getEditor().editGenreAllocation(getAnalyzer().getContentIdByName(genreName), false, null);
-        ModManager.gameplayFeatureMod.getEditor().removeGenreId(getAnalyzer().getContentIdByName(genreName));
-        ImageFileHandler.removeImageFiles(genreName);
-        ModManager.publisherMod.getEditor().removeGenre(genreName);
-        ModManager.npcEngineMod.getEditor().removeGenre(genreName);
-        NPCGameListChanger.editNPCGames(ModManager.genreMod.getAnalyzer().getContentIdByName(genreName), false, 0);
+        ModManager.themeModOld.getEditor().editGenreAllocation(getAnalyzer().getContentIdByName(genreName), false, null);
+        ModManager.gameplayFeatureModOld.getEditor().removeGenreId(getAnalyzer().getContentIdByName(genreName));
+        //ImageFileHandler.removeImageFiles(genreName);
+        ModManager.publisherModOld.getEditor().removeGenre(genreName);
+        ModManager.npcEngineModOld.getEditor().removeGenre(genreName);
+        NPCGameListChanger.editNPCGames(ModManager.genreModOld.getAnalyzer().getContentIdByName(genreName), false, 0);
     }
 }

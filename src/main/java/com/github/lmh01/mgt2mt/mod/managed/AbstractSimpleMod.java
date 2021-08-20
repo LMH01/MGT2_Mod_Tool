@@ -32,19 +32,19 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     Map<Integer, String> fileContent;
 
     @Override
-    public final void analyzeFile() throws IOException {
-        fileContent = DataStreamHelper.getContentFromFile(getGameFile(), getModFileCharset());
+    public void analyzeFile() throws ModProcessingException {
+        try {
+            fileContent = DataStreamHelper.getContentFromFile(getGameFile(), getModFileCharset());
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to analyze mod-files for mod " + getType() + ": " + e.getMessage());
+        }
     }
 
     @Override
     public <T> void addMod(T t) throws ModProcessingException {
         if (t instanceof String) {
-            try {
-                String string = (String) t;
-                editFile(true, string);
-            } catch (IOException e) {
-                throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
-            }
+            String string = (String) t;
+            editFile(true, string);
         } else {
             throw new ModProcessingException("T is invalid: Should be String", true);
         }
@@ -52,11 +52,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
 
     @Override
     public void removeMod(String name) throws ModProcessingException {
-        try {
-            editFile(false, name);
-        } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while performing an IO operation: " + e.getMessage());
-        }
+        editFile(false, name);
     }
 
     /**
@@ -151,45 +147,49 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
      * @param addMod If true the mod will be added. If false the mod fill be removed
      * @param mod If add mod is true: This string will be printed into the text file. If add mod is false: The string is the mod name which mod should be removed
      */
-    private void editFile(boolean addMod, String mod) throws IOException {
-        analyzeFile();
-        Charset charset = getCharset();
-        File fileToEdit = getGameFile();
-        if(fileToEdit.exists()){
-            fileToEdit.delete();
-        }
-        fileToEdit.createNewFile();
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-        if(charset.equals(StandardCharsets.UTF_8)){
-            bw.write("\ufeff");
-        }
-        boolean firstLine = true;
-        for(int i=1; i<=getFileContent().size(); i++){
-            if(addMod){
-                if(!firstLine){
-                    bw.write(System.getProperty("line.separator"));
-                }else{
-                    firstLine = false;
-                }
-                bw.write(getFileContent().get(i));
-            }else{
-                if(!getReplacedLine(getFileContent().get(i)).equals(mod)){
+    private void editFile(boolean addMod, String mod) throws ModProcessingException {
+        try {
+            analyzeFile();
+            Charset charset = getCharset();
+            File fileToEdit = getGameFile();
+            if(fileToEdit.exists()){
+                fileToEdit.delete();
+            }
+            fileToEdit.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
+            if(charset.equals(StandardCharsets.UTF_8)){
+                bw.write("\ufeff");
+            }
+            boolean firstLine = true;
+            for(int i=1; i<=getFileContent().size(); i++){
+                if(addMod){
                     if(!firstLine){
                         bw.write(System.getProperty("line.separator"));
                     }else{
                         firstLine = false;
                     }
                     bw.write(getFileContent().get(i));
+                }else{
+                    if(!getReplacedLine(getFileContent().get(i)).equals(mod)){
+                        if(!firstLine){
+                            bw.write(System.getProperty("line.separator"));
+                        }else{
+                            firstLine = false;
+                        }
+                        bw.write(getFileContent().get(i));
+                    }
                 }
             }
+            if(addMod){
+                bw.write(System.getProperty("line.separator"));
+                bw.write(mod);
+            }else{
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
+            }
+            bw.close();
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to edit mod file for mod " + getType() + ": " + e.getMessage());
         }
-        if(addMod){
-            bw.write(System.getProperty("line.separator"));
-            bw.write(mod);
-        }else{
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
-        }
-        bw.close();
     }
 
     /**
@@ -283,5 +283,18 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     /**
      * @return The charset in which the mod file is written
      */
-    public abstract String getModFileCharset();
+    public abstract String getModFileCharset();//TODO Remove and replace with AbstractBaseMod.getCharset(); -> Enum
+
+    /**
+     * Transforms the generic to an {@literal String}.
+     * @throws ModProcessingException If transformation fails
+     */
+    @SuppressWarnings("unchecked")
+    public <T> String transformGenericToString(T t) throws ModProcessingException{
+        if (t instanceof String) {
+            return (String)t;
+        } else {
+            throw new ModProcessingException("T is invalid: Should be String", true);
+        }
+    }
 }

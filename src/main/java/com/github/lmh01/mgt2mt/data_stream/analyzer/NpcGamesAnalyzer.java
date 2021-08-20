@@ -29,7 +29,7 @@ public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.npcGamesMod.getBaseAnalyzer();
+        return ModManager.npcGamesModOld.getBaseAnalyzer();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public String getReplacedLine(String inputString) {
-        return ModManager.npcGamesMod.getBaseEditor().getReplacedLine(inputString);
+        return ModManager.npcGamesModOld.getBaseEditor().getReplacedLine(inputString);
     }
 
     @Override
@@ -54,17 +54,17 @@ public class NpcGamesAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public String getType() {
-        return ModManager.npcGamesMod.getType();
+        return ModManager.npcGamesModOld.getType();
     }
 
     @Override
     public void analyzeFile() throws IOException {
-        fileContent = DataStreamHelper.getContentFromFile(ModManager.npcGamesMod.getFile(), "UTF_16LE");
+        fileContent = DataStreamHelper.getContentFromFile(ModManager.npcGamesModOld.getFile(), "UTF_16LE");
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.npcGamesMod.getMainTranslationKey();
+        return ModManager.npcGamesModOld.getMainTranslationKey();
     }
 
     @Override

@@ -15,7 +15,7 @@ public class LicenceEditor extends AbstractSimpleEditor {
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.licenceMod.getAnalyzer();
+        return ModManager.licenceModOld.getAnalyzer();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class LicenceEditor extends AbstractSimpleEditor {
 
     @Override
     public File getFileToEdit() {
-        return ModManager.licenceMod.getFile();
+        return ModManager.licenceModOld.getFile();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class PublisherSharer extends AbstractAdvancedSharer {
     @Override
     public String importMod(String importFolderPath, boolean showMessages) throws IOException {
         getAnalyzer().analyzeFile();
-        ModManager.genreMod.getAnalyzer().analyzeFile();
+        ModManager.genreModOld.getAnalyzer().analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
         File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
         HashMap<String, String> map = new HashMap<>();
@@ -38,13 +38,13 @@ public class PublisherSharer extends AbstractAdvancedSharer {
         map.put("ID", Integer.toString(getAnalyzer().getFreeId()));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE")){
-                int genreID = ModManager.genreMod.getAnalyzer().getContentIdByName(entry.getValue());
+                int genreID = ModManager.genreModOld.getAnalyzer().getContentIdByName(entry.getValue());
                 if(genreID == -1){
-                    int randomGenreID = Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getFileContent().size()-1);
-                    LOGGER.info("Genre list size: " + ModManager.genreMod.getAnalyzer().getFileContent().size());
+                    int randomGenreID = Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getFileContent().size()-1);
+                    LOGGER.info("Genre list size: " + ModManager.genreModOld.getAnalyzer().getFileContent().size());
                     map.put("GENRE", Integer.toString(randomGenreID));
                 }else{
-                    map.put("GENRE", Integer.toString(ModManager.genreMod.getAnalyzer().getContentIdByName(entry.getValue())));
+                    map.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getContentIdByName(entry.getValue())));
                 }
             }else{
                 map.put(entry.getKey(), entry.getValue());
@@ -78,7 +78,7 @@ public class PublisherSharer extends AbstractAdvancedSharer {
         File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
         map.put("PIC", Integer.toString(CompanyLogoAnalyzer.getLogoNumber()));
         if(addFeature){
-            ModManager.publisherMod.getEditor().addMod(map, publisherImageFilePath.getPath());
+            ModManager.publisherModOld.getEditor().addMod(map, publisherImageFilePath.getPath());
             doOtherImportThings(importFolderPath, map.get("NAME EN"));
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
@@ -106,7 +106,7 @@ public class PublisherSharer extends AbstractAdvancedSharer {
         bw.write("[PUBLISHER]" + map.get("PUBLISHER") + System.getProperty("line.separator"));
         bw.write("[MARKET]" + map.get("MARKET") + System.getProperty("line.separator"));
         bw.write("[SHARE]" + map.get("SHARE") + System.getProperty("line.separator"));
-        bw.write("[GENRE]" + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE"))) + System.getProperty("line.separator"));
+        bw.write("[GENRE]" + ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE"))) + System.getProperty("line.separator"));
     }
 
     @Override
@@ -124,12 +124,12 @@ public class PublisherSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher") + ": " + map.get("PUBLISHER") + "\n" +
                 I18n.INSTANCE.get("commonText.marketShare") + ": " + map.get("MARKET") + "\n" +
                 I18n.INSTANCE.get("commonText.share") + ": " + map.get("SHARE") + "\n" +
-                I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE")));
+                I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE")));
     }
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.publisherMod;
+        return ModManager.publisherModOld;
     }
 
     @Override

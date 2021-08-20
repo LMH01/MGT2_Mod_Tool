@@ -20,7 +20,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.gameplayFeatureMod.getEditor()::addMod;
+        return ModManager.gameplayFeatureModOld.getEditor()::addMod;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 try{
                     badGenreIds.add(Integer.parseInt(string));
                 }catch(NumberFormatException e){
-                    int numberToAdd = ModManager.genreMod.getAnalyzer().getContentIdByName(string);
+                    int numberToAdd = ModManager.genreModOld.getAnalyzer().getContentIdByName(string);
                     if(numberToAdd != -1){
                         badGenreIds.add(numberToAdd);
                     }
@@ -45,7 +45,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 try{
                     goodGenreIds.add(Integer.parseInt(string));
                 }catch(NumberFormatException e){
-                    int numberToAdd = ModManager.genreMod.getAnalyzer().getContentIdByName(string);
+                    int numberToAdd = ModManager.genreModOld.getAnalyzer().getContentIdByName(string);
                     if(numberToAdd != -1){
                         goodGenreIds.add(numberToAdd);
                     }
@@ -67,7 +67,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 }else{
                     firstBadFeature = false;
                 }
-                badGenresFeatures.append(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(string)));
+                badGenresFeatures.append(ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(string)));
             }
         }
         StringBuilder goodGenresFeatures = new StringBuilder();
@@ -81,7 +81,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 }else{
                     firstGoodFeature = false;
                 }
-                goodGenresFeatures.append(ModManager.genreMod.getAnalyzer().getContentNameById(Integer.parseInt(string)));
+                goodGenresFeatures.append(ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(string)));
             }
         }
         String arcadeCompatibility = I18n.INSTANCE.get("commonText.yes");
@@ -96,7 +96,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.name") + ": " + workingMap.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + workingMap.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + workingMap.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.gameplayFeatureMod.getGameplayFeatureNameByTypeId(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.gameplayFeatureModOld.getGameplayFeatureNameByTypeId(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + workingMap.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + workingMap.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + workingMap.get("DEV COSTS") + "\n" +
@@ -113,7 +113,7 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.gameplayFeatureMod;
+        return ModManager.gameplayFeatureModOld;
     }
 
     @Override
@@ -135,12 +135,12 @@ public class GameplayFeatureSharer extends AbstractAdvancedSharer {
         bw.write("[SOUND]" + map.get("SOUND") + System.getProperty("line.separator"));
         bw.write("[TECH]" + map.get("TECH") + System.getProperty("line.separator"));
         if(map.get("BAD") != null){
-            bw.write("[BAD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
+            bw.write("[BAD]" + ModManager.genreModOld.getAnalyzer().getGenreNames(map.get("BAD")) + System.getProperty("line.separator"));
         }else{
             bw.write("[BAD]" + "" + System.getProperty("line.separator"));
         }
         if(map.get("GOOD") != null){
-            bw.write("[GOOD]" + ModManager.genreMod.getAnalyzer().getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
+            bw.write("[GOOD]" + ModManager.genreModOld.getAnalyzer().getGenreNames(map.get("GOOD")) + System.getProperty("line.separator"));
         }else{
             bw.write("[GOOD]" + "" + System.getProperty("line.separator"));
         }

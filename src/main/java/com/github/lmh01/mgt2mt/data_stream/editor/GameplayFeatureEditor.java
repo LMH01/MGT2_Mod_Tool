@@ -30,7 +30,7 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor {
 
     @Override
     public File getFileToEdit() {
-        return ModManager.gameplayFeatureMod.getFile();
+        return ModManager.gameplayFeatureModOld.getFile();
     }
 
     @Override
@@ -66,13 +66,13 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor {
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.gameplayFeatureMod.getAnalyzer();
+        return ModManager.gameplayFeatureModOld.getAnalyzer();
     }
 
     @Override
     public void removeMod(String name) throws IOException {
         super.removeMod(name);
-        ModManager.platformMod.getEditor().removeGameplayFeature(name);
+        ModManager.platformModOld.getEditor().removeGameplayFeature(name);
     }
 
     /**
@@ -103,14 +103,14 @@ public class GameplayFeatureEditor extends AbstractAdvancedEditor {
      */
     private void editGenreIdAllocation(Set<Integer> gameplayFeaturesIdsToEdit, int genreId, boolean addGenreId, boolean goodFeature) throws IOException {
         LOGGER.info("Editing GameplayFeatures.txt file");
-        File gameplayFeaturesFile = ModManager.gameplayFeatureMod.getFile();
+        File gameplayFeaturesFile = ModManager.gameplayFeatureModOld.getFile();
         if(gameplayFeaturesFile.exists()){
             gameplayFeaturesFile.delete();
         }
         gameplayFeaturesFile.createNewFile();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeaturesFile), StandardCharsets.UTF_8));
         bw.write("\ufeff");
-        for(Map<String, String> map : ModManager.gameplayFeatureMod.getAnalyzer().getFileContent()) {
+        for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()) {
             boolean activeGameplayFeature = false;
             for(Integer integer : gameplayFeaturesIdsToEdit){
                 if(map.get("ID").equals(Integer.toString(integer))){

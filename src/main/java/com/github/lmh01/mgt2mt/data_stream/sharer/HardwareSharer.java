@@ -34,7 +34,7 @@ public class HardwareSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.hardwareMod.getBaseEditor()::addMod;
+        return ModManager.hardwareModOld.getBaseEditor()::addMod;
     }
 
     @Override
@@ -65,13 +65,13 @@ public class HardwareSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
                 I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.hardwareMod.getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.hardwareModOld.getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
                 lastPart;
     }
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.hardwareMod;
+        return ModManager.hardwareModOld;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
 
     @Override
     public SimpleImporter getSimpleImporter() {
-        return ModManager.npcGamesMod.getBaseEditor()::addMod;
+        return ModManager.npcGamesModOld.getBaseEditor()::addMod;
     }
 
     @Override
@@ -28,14 +28,14 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
         output.append(name);
         ArrayList<Integer> alreadyAddedGenreIds = new ArrayList<>();
         for(String string : genreNames){
-            int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(string);
+            int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(string);
             if(genreId != -1){
                 if(!alreadyAddedGenreIds.contains(genreId)){
                     output.append("<").append(genreId).append(">");
                     alreadyAddedGenreIds.add(genreId);
                 }
             }else{
-                int randomGenreId = ModManager.genreMod.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getActiveIds().size()));
+                int randomGenreId = ModManager.genreModOld.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getActiveIds().size()));
                 if(!alreadyAddedGenreIds.contains(randomGenreId)){
                     output.append("<").append(randomGenreId).append(">");
                     alreadyAddedGenreIds.add(randomGenreId);
@@ -59,7 +59,7 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
         output.append(name);
         for(Integer integer : genreIds){
             try{
-                String genreName = ModManager.genreMod.getAnalyzer().getContentNameById(integer);
+                String genreName = ModManager.genreModOld.getAnalyzer().getContentNameById(integer);
                 if(!genreName.equals("null")){
                     output.append("<").append(genreName).append(">");
                 }
@@ -112,10 +112,10 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
                 genreNamesToDisplay.append("<br>");
                 currentInt = 0;
             }
-            genreNamesToDisplay.append(ModManager.genreMod.getBaseAnalyzer().getContentNameById(integer));
+            genreNamesToDisplay.append(ModManager.genreModOld.getBaseAnalyzer().getContentNameById(integer));
             currentInt++;
         }
-        message.append(ModManager.genreMod.getTypePlural()).append(": ").append(genreNamesToDisplay);
+        message.append(ModManager.genreModOld.getTypePlural()).append(": ").append(genreNamesToDisplay);
         return message.toString();
     }
 
@@ -126,12 +126,12 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
 
     @Override
     public String getType() {
-        return ModManager.npcGamesMod.getType();
+        return ModManager.npcGamesModOld.getType();
     }
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.npcGamesMod.getBaseAnalyzer();
+        return ModManager.npcGamesModOld.getBaseAnalyzer();
     }
 
     @Override
@@ -141,12 +141,12 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
 
     @Override
     public String getImportExportFileName() {
-        return ModManager.npcGamesMod.getFileName();
+        return ModManager.npcGamesModOld.getFileName();
     }
 
     @Override
     public String getMainTranslationKey() {
-        return ModManager.npcGamesMod.getMainTranslationKey();
+        return ModManager.npcGamesModOld.getMainTranslationKey();
     }
 
     @Override
@@ -156,6 +156,6 @@ public class NpcGamesSharer extends AbstractSimpleSharer {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return ModManager.npcGamesMod.getCompatibleModToolVersions();
+        return ModManager.npcGamesModOld.getCompatibleModToolVersions();
     }
 }

@@ -17,7 +17,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.engineFeatureMod.getEditor()::addMod;
+        return ModManager.engineFeatureModOld.getEditor()::addMod;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
                 I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.engineFeatureModOld.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
@@ -40,7 +40,7 @@ public class EngineFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.engineFeatureMod;
+        return ModManager.engineFeatureModOld;
     }
 
     @Override

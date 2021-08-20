@@ -150,17 +150,17 @@ public class PlatformEditor extends AbstractAdvancedEditor {
 
     @Override
     public String getType() {
-        return ModManager.platformMod.getType();
+        return ModManager.platformModOld.getType();
     }
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.platformMod.getBaseAnalyzer();
+        return ModManager.platformModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.platformMod.getFile();
+        return ModManager.platformModOld.getFile();
     }
 
     @Override
@@ -175,7 +175,7 @@ public class PlatformEditor extends AbstractAdvancedEditor {
      * @param name The name of the gameplay feature that should be removed
      */
     public void removeGameplayFeature(String name) throws IOException {
-        int genreId = ModManager.gameplayFeatureMod.getAnalyzer().getContentIdByName(name);
+        int genreId = ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(name);
         getAnalyzer().analyzeFile();
         sendLogMessage("Replacing gameplay feature id in platform file: " + name);
         Charset charset = getCharset();
@@ -194,7 +194,7 @@ public class PlatformEditor extends AbstractAdvancedEditor {
             for(Map.Entry<String, String> entry : fileContent.entrySet()){
                 if(entry.getKey().contains("NEED")){
                     if(Integer.parseInt(entry.getValue()) == genreId){
-                        outputMap.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.gameplayFeatureMod.getAnalyzer().getActiveIds().size()))));
+                        outputMap.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureModOld.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.gameplayFeatureModOld.getAnalyzer().getActiveIds().size()))));
                     }
                 }
             }

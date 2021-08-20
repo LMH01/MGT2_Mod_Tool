@@ -36,7 +36,7 @@ public class ActiveMods {
         for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
             String[] customContent;
             if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                customContent = ModManager.themeMod.getAnalyzerEn().getCustomContentString(true);
+                customContent = ModManager.themeModOld.getAnalyzerEn().getCustomContentString(true);
             }else {
                 customContent = simpleMod.getBaseAnalyzer().getCustomContentString(true);
             }
@@ -47,7 +47,7 @@ public class ActiveMods {
                 buttonMods.addActionListener(actionEvent -> {
                     JList<String> listAvailableGenres;
                     if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                        listAvailableGenres = new JList<>(ModManager.themeMod.getAnalyzerEn().getCustomContentString());
+                        listAvailableGenres = new JList<>(ModManager.themeModOld.getAnalyzerEn().getCustomContentString());
                     }else{
                         listAvailableGenres = new JList<>(simpleMod.getBaseAnalyzer().getCustomContentString());
                     }

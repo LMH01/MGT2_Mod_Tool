@@ -23,7 +23,7 @@ public class LicenceSharer extends AbstractSimpleSharer {
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.licenceMod.getAnalyzer();
+        return ModManager.licenceModOld.getAnalyzer();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class LicenceSharer extends AbstractSimpleSharer {
 
     @Override
     public String getImportExportFileName() {
-        return ModManager.licenceMod.getFileName();
+        return ModManager.licenceModOld.getFileName();
     }
 
     @Override
@@ -48,11 +48,11 @@ public class LicenceSharer extends AbstractSimpleSharer {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return ModManager.licenceMod.getCompatibleModToolVersions();    }
+        return ModManager.licenceModOld.getCompatibleModToolVersions();    }
 
     @Override
     public SimpleImporter getSimpleImporter() {
-        return ModManager.licenceMod.getEditor()::addMod;
+        return ModManager.licenceModOld.getEditor()::addMod;
     }
 
     @Override

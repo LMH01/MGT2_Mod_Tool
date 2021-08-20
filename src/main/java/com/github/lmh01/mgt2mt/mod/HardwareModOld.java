@@ -1,137 +1,65 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.HardwareAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.managed.AbstractAdvancedAnalyzer;
+import com.github.lmh01.mgt2mt.data_stream.editor.HardwareEditor;
+import com.github.lmh01.mgt2mt.data_stream.editor.managed.AbstractAdvancedEditor;
+import com.github.lmh01.mgt2mt.data_stream.sharer.HardwareSharer;
+import com.github.lmh01.mgt2mt.data_stream.sharer.managed.AbstractAdvancedSharer;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class HardwareMod extends AbstractAdvancedMod {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(HardwareMod.class);
+public class HardwareModOld extends AbstractAdvancedModOld {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HardwareModOld.class);
+    HardwareAnalyzer hardwareAnalyzer = new HardwareAnalyzer();
+    HardwareEditor hardwareEditor = new HardwareEditor();
+    HardwareSharer hardwareSharer = new HardwareSharer();
+    public ArrayList<JMenuItem> hardwareModMenuItems = getInitialModMenuItems();
+    public JMenuItem exportMenuItem = getInitialExportMenuItem();
 
     @Override
-    public <T> void addMod(T t) throws ModProcessingException {
-        try {
-            Map<String, String> map = transformGenericToMap(t);
-            analyzeFile();
-            sendLogMessage("Adding new " + getType() + ": " + map.get("NAME EN"));
-            Charset charset = getCharset();
-            File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
-                fileToEdit.delete();
-            }
-            fileToEdit.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
-                bw.write("\ufeff");
-            }
-            int currentType = 0;
-            boolean firstMap = true;
-            for(Map<String, String> fileContent : getFileContent()){
-                if(firstMap){
-                    currentType = Integer.parseInt(fileContent.get("TYP"));
-                    firstMap = false;
-                }
-                if(currentType != Integer.parseInt(fileContent.get("TYP"))){
-                    currentType = Integer.parseInt(fileContent.get("TYP"));
-                    bw.write("////////////////////////////////////////////////////////////////////");
-                    bw.write(System.getProperty("line.separator"));
-                    bw.write(System.getProperty("line.separator"));
-                }
-                printValues(fileContent, bw);
-                bw.write(System.getProperty("line.separator"));
-            }
-            if(currentType != Integer.parseInt(map.get("TYP"))){
-                bw.write("////////////////////////////////////////////////////////////////////");
-                bw.write(System.getProperty("line.separator"));
-                bw.write(System.getProperty("line.separator"));
-            }
-            printValues(map, bw);
-            bw.write(System.getProperty("line.separator"));
-            bw.write("[EOF]");
-            bw.close();
-        } catch (IOException e) {//TODO catch block schreiben
-
-        }
+    public AbstractAdvancedAnalyzer getBaseAnalyzer() {
+        return hardwareAnalyzer;
     }
 
     @Override
-    public void removeMod(String name) throws ModProcessingException {
-        try {
-            analyzeFile();
-            int modId = getContentIdByName(name);
-            sendLogMessage("Removing " + getType() + ": " + name);
-            Charset charset = getCharset();
-            File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
-                fileToEdit.delete();
-            }
-            fileToEdit.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
-                bw.write("\ufeff");
-            }
-            int currentType = 0;
-            boolean firstMap = true;
-            for(Map<String, String> fileContent : getFileContent()){
-                if (Integer.parseInt(fileContent.get("ID")) != modId) {
-                    if(firstMap){
-                        currentType = Integer.parseInt(fileContent.get("TYP"));
-                        firstMap = false;
-                    }
-                    if(currentType != Integer.parseInt(fileContent.get("TYP"))){
-                        currentType = Integer.parseInt(fileContent.get("TYP"));
-                        bw.write("////////////////////////////////////////////////////////////////////");
-                        bw.write(System.getProperty("line.separator"));
-                        bw.write(System.getProperty("line.separator"));
-                    }
-                    printValues(fileContent, bw);
-                    bw.write(System.getProperty("line.separator"));
-                }
-            }
-            bw.write("[EOF]");
-            bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + name);
-        } catch (IOException e) {//TODO catch block schreiben
-
-        }
+    public AbstractAdvancedEditor getBaseEditor() {
+        return hardwareEditor;
     }
 
     @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID",map, bw);
-        EditHelper.printLine("TYP",map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("RES POINTS", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-        EditHelper.printLine("TECHLEVEL", map, bw);
-        if(map.containsKey("ONLY_HANDHELD")){
-            EditHelper.printLine("ONLY_HANDHELD", map, bw);
-        }
-        if(map.containsKey("ONLY_STATIONARY")){
-            EditHelper.printLine("ONLY_STATIONARY", map, bw);
-        }
+    public AbstractAdvancedSharer getBaseSharer() {
+        return hardwareSharer;
+    }
+
+    @Override
+    public AbstractAdvancedModOld getAdvancedMod() {
+        return ModManager.hardwareModOld;
+    }
+
+    @Override
+    public ArrayList<JMenuItem> getModMenuItems() {
+        return hardwareModMenuItems;
+    }
+
+    @Override
+    public void sendLogMessage(String string) {
+        LOGGER.info(string);
     }
 
     @Override
@@ -140,27 +68,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getMainTranslationKey() {
-        return "hardware";
-    }
-
-    @Override
-    public AbstractBaseMod getMod() {
-        return ModManager.hardwareMod;
-    }
-
-    @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Hardware.txt");
-    }
-
-    @Override
-    protected String getDefaultContentFileName() {
-        return "default_hardware.txt";
-    }
-
-    @Override
-    protected void openAddModGui() throws ModProcessingException {
+    public void menuActionAddMod() {
         try{
             JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue"));
             final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
@@ -198,14 +106,14 @@ public class HardwareMod extends AbstractAdvancedMod {
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))){
                         boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
+                        for(String string : getBaseAnalyzer().getContentByAlphabet()){
                             if(textFieldName.getText().equals(string)){
                                 modAlreadyExists = true;
                             }
                         }
                         if(!modAlreadyExists){
                             Map<String, String> hardwareFeatureMap = new HashMap<>();
-                            hardwareFeatureMap.put("ID", Integer.toString(getFreeId()));
+                            hardwareFeatureMap.put("ID", Integer.toString(getBaseAnalyzer().getFreeId()));
                             if(!nameTranslationsAdded.get()){
                                 hardwareFeatureMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                             }else{
@@ -231,9 +139,9 @@ public class HardwareMod extends AbstractAdvancedMod {
                                     hardwareFeatureMap.put("ONLY_HANDHELD", "");
                                 }
                             }
-                            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                Backup.createBackup(getGameFile());
-                                addMod(hardwareFeatureMap);
+                            if(JOptionPane.showConfirmDialog(null, getBaseSharer().getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                Backup.createBackup(getFile());
+                                getBaseEditor().addMod(hardwareFeatureMap);
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                                 break;
@@ -255,55 +163,17 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
-        Map<String, String> map = transformGenericToMap(t);
-        boolean allowStationaryConsole = true;
-        boolean allowPortableConsole = !map.containsKey("ONLY_STATIONARY");
-        if(map.containsKey("ONLY_HANDHELD")){
-            allowStationaryConsole = false;
-        }
-        StringBuilder lastPart = new StringBuilder();
-        lastPart.append(I18n.INSTANCE.get("commonText.stationaryConsole")).append(": ");
-        if(allowStationaryConsole){
-            lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
-            lastPart.append(I18n.INSTANCE.get("commonText.no"));
-        }
-        lastPart.append("<br>").append(I18n.INSTANCE.get("commonText.portableConsole")).append(": ");
-        if(allowPortableConsole){
-            lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
-            lastPart.append(I18n.INSTANCE.get("commonText.no"));
-        }
-        return "<html>" +
-                I18n.INSTANCE.get("mod.hardware.addMod.optionPaneMessage.firstPart") + "<br><br>" +
-                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "<br>" +
-                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "<br>" +
-                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "<br>" +
-                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
-                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.hardwareModOld.getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
-                lastPart;
+    public String getMainTranslationKey() {
+        return "hardware";
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
+    public JMenuItem getExportMenuItem() {
+        return exportMenuItem;
     }
 
     @Override
-    protected Charset getCharset() {
-        return StandardCharsets.UTF_8;
-    }
-
-    @Override
-    protected String getTypeCaps() {
-        return "HARDWARE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
+    public String getFileName() {
         return "Hardware.txt";
     }
 
@@ -312,7 +182,7 @@ public class HardwareMod extends AbstractAdvancedMod {
      * @param typeName The feature type id
      * @return Returns the type name
      */
-    public int getHardwareTypeIdByName(String typeName){//TODO Rewrite to use enums
+    public int getHardwareTypeIdByName(String typeName){
         if(typeName.equals(I18n.INSTANCE.get("commonText.cpu"))){
             return 0;
         }else if(typeName.equals(I18n.INSTANCE.get("commonText.gpu"))){
@@ -343,8 +213,8 @@ public class HardwareMod extends AbstractAdvancedMod {
      * @param typeId The feature type id
      * @return Returns the type name
      */
-    public String getHardwareTypeNameById(int typeId){//TODO Rewrite to use enums
-        switch (typeId) {
+    public String getHardwareTypeNameById(int typeId){
+        switch (typeId){
             case 0: return I18n.INSTANCE.get("commonText.cpu");
             case 1: return I18n.INSTANCE.get("commonText.gpu");
             case 2: return I18n.INSTANCE.get("commonText.ram");

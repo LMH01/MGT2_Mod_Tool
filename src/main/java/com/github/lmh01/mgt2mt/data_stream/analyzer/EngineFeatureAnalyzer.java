@@ -12,7 +12,7 @@ public class EngineFeatureAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.engineFeatureMod.getFile();
+        return ModManager.engineFeatureModOld.getFile();
     }
 
     @Override

@@ -354,7 +354,7 @@ public class Backup {
             try {
                 for(AbstractSimpleModOld simpleMod : ModManager.simpleMods) {
                     if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                        String[] content = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
+                        String[] content = ModManager.themeModOld.getAnalyzerEn().getCustomContentString();
                         ProgressBarHelper.increaseMaxValue(content.length);
                         for(String string : content){
                             simpleMod.getBaseEditor().removeMod(string);

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class NPCGameListHandler {
     public static void modifyNPCGameList(){
         try {
-            ModManager.genreMod.getAnalyzer().analyzeFile();
+            ModManager.genreModOld.getAnalyzer().analyzeFile();
             JLabel labelNPCGameList = new JLabel(I18n.INSTANCE.get("window.npcGamesList.label"));
 
             JPanel panelChance = new JPanel();
@@ -36,7 +36,7 @@ public class NPCGameListHandler {
 
             JLabel labelGenre = new JLabel(I18n.INSTANCE.get("window.npcGamesList.label.genre"));
 
-            JList<String> listAvailableOperations = new JList<>(ModManager.genreMod.getAnalyzer().getCustomContentString());
+            JList<String> listAvailableOperations = new JList<>(ModManager.genreModOld.getAnalyzer().getCustomContentString());
             listAvailableOperations.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listAvailableOperations.setLayoutOrientation(JList.VERTICAL);
             listAvailableOperations.setVisibleRowCount(-1);
@@ -68,7 +68,7 @@ public class NPCGameListHandler {
                             boolean errorOccurred = false;
                             for(String string : listAvailableOperations.getSelectedValuesList()){
                                 try {
-                                    NPCGameListChanger.editNPCGames(ModManager.genreMod.getAnalyzer().getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
+                                    NPCGameListChanger.editNPCGames(ModManager.genreModOld.getAnalyzer().getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
                                     if(addGenreID){
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.added.upperCase") + " " + string + " " + I18n.INSTANCE.get("window.npcGamesList.to") + " " + I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2").replace(".", ""));
                                     }else{

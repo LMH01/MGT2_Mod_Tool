@@ -319,12 +319,12 @@ public class WindowHelper {
                 comboBox.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.type.toolTip"));
                 ArrayList<String> modelContent = new ArrayList<>();
                 for(int i=0; i<10; i++){
-                    modelContent.add(ModManager.hardwareMod.getHardwareTypeNameById(i));
+                    modelContent.add(ModManager.hardwareModOld.getHardwareTypeNameById(i));
                 }
                 String[] model = new String[modelContent.size()];
                 modelContent.toArray(model);
                 comboBox.setModel(new DefaultComboBoxModel<>(model));
-                comboBox.setSelectedItem(ModManager.hardwareMod.getHardwareTypeNameById(0));
+                comboBox.setSelectedItem(ModManager.hardwareModOld.getHardwareTypeNameById(0));
                 break;
             default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-4; Was: " + type);
         }

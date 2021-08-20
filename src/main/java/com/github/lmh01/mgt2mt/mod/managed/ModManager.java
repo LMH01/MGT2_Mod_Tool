@@ -11,38 +11,52 @@ public class ModManager{
     public static ArrayList<AbstractSimpleModOld> simpleMods = new ArrayList<>();
     public static ArrayList<AbstractAdvancedModOld> advancedMods = new ArrayList<>();
     public static ArrayList<AbstractBaseMod> mods = new ArrayList<>();
-    public static EngineFeatureModOld engineFeatureMod = new EngineFeatureModOld();
-    public static GameplayFeatureModOld gameplayFeatureMod = new GameplayFeatureModOld();
-    public static GenreModOld genreMod = new GenreModOld();
-    public static LicenceModOld licenceMod = new LicenceModOld();
-    public static PublisherMod publisherMod = new PublisherMod();
-    public static ThemeMod themeMod = new ThemeMod();
-    public static NpcGamesModOld npcGamesMod = new NpcGamesModOld();
-    public static PlatformMod platformMod = new PlatformMod();
-    public static NpcEngineModOld npcEngineMod = new NpcEngineModOld();
+    public static EngineFeatureModOld engineFeatureModOld = new EngineFeatureModOld();
+    public static GameplayFeatureModOld gameplayFeatureModOld = new GameplayFeatureModOld();
+    public static GenreModOld genreModOld = new GenreModOld();
+    public static LicenceModOld licenceModOld = new LicenceModOld();
+    public static PublisherModOld publisherModOld = new PublisherModOld();
+    public static ThemeModOld themeModOld = new ThemeModOld();
+    public static NpcGamesModOld npcGamesModOld = new NpcGamesModOld();
+    public static PlatformModOld platformModOld = new PlatformModOld();
+    public static NpcEngineModOld npcEngineModOld = new NpcEngineModOld();
     public static AntiCheatModOld antiCheatModOld = new AntiCheatModOld();
     public static CopyProtectModOld copyProtectModOld = new CopyProtectModOld();
-    public static HardwareModOld hardwareMod = new HardwareModOld();
-    public static HardwareFeatureModOld hardwareFeatureMod = new HardwareFeatureModOld();
+    public static HardwareModOld hardwareModOld = new HardwareModOld();
+    public static HardwareFeatureModOld hardwareFeatureModOld = new HardwareFeatureModOld();
+
+    public static AntiCheatMod antiCheatMod = new AntiCheatMod();
+    public static CopyProtectMod copyProtectMod = new CopyProtectMod();
+    public static EngineFeatureMod engineFeatureMod = new EngineFeatureMod();
+    public static GameplayFeatureMod gameplayFeatureMod = new GameplayFeatureMod();
+    public static GenreMod genreMod = new GenreMod();
+    public static HardwareFeatureMod hardwareFeatureMod = new HardwareFeatureMod();
+    public static HardwareMod hardwareMod = new HardwareMod();
+    public static LicenceMod licenceMod = new LicenceMod();
+    public static NpcEngineMod npcEngineMod = new NpcEngineMod();
+    public static NpcGamesMod npcGamesMod = new NpcGamesMod();
+    public static PlatformMod platformMod = new PlatformMod();
+    public static PublisherMod publisherMod = new PublisherMod();
+    public static ThemeMod themeMod = new ThemeMod();
 
     /**
      * Initializes all mods
      * Calls this method for every mod: initialize
      */
     public static void initializeMods(){
-        engineFeatureMod.initializeMod();
-        gameplayFeatureMod.initializeMod();
-        genreMod.initializeMod();
-        licenceMod.initializeMod();
-        publisherMod.initializeMod();
-        themeMod.initializeMod();
-        npcGamesMod.initializeMod();
-        platformMod.initializeMod();
-        npcEngineMod.initializeMod();
+        engineFeatureModOld.initializeMod();
+        gameplayFeatureModOld.initializeMod();
+        genreModOld.initializeMod();
+        licenceModOld.initializeMod();
+        publisherModOld.initializeMod();
+        themeModOld.initializeMod();
+        npcGamesModOld.initializeMod();
+        platformModOld.initializeMod();
+        npcEngineModOld.initializeMod();
         antiCheatModOld.initializeMod();
         copyProtectModOld.initializeMod();
-        hardwareMod.initializeMod();
-        hardwareFeatureMod.initializeMod();
+        hardwareModOld.initializeMod();
+        hardwareFeatureModOld.initializeMod();
     }
 
     /**
@@ -50,20 +64,20 @@ public class ModManager{
      */
     public static void analyzeMods(){
         try {
-            gameplayFeatureMod.getAnalyzer().analyzeFile();
-            engineFeatureMod.getAnalyzer().analyzeFile();
-            genreMod.getAnalyzer().analyzeFile();
-            themeMod.getAnalyzerEn().analyzeFile();
-            themeMod.getAnalyzerGe().analyzeFile();
-            publisherMod.getAnalyzer().analyzeFile();
-            licenceMod.getAnalyzer().analyzeFile();
-            npcGamesMod.getBaseAnalyzer().analyzeFile();
-            platformMod.getBaseAnalyzer().analyzeFile();
-            npcEngineMod.getBaseAnalyzer().analyzeFile();
+            gameplayFeatureModOld.getAnalyzer().analyzeFile();
+            engineFeatureModOld.getAnalyzer().analyzeFile();
+            genreModOld.getAnalyzer().analyzeFile();
+            themeModOld.getAnalyzerEn().analyzeFile();
+            themeModOld.getAnalyzerGe().analyzeFile();
+            publisherModOld.getAnalyzer().analyzeFile();
+            licenceModOld.getAnalyzer().analyzeFile();
+            npcGamesModOld.getBaseAnalyzer().analyzeFile();
+            platformModOld.getBaseAnalyzer().analyzeFile();
+            npcEngineModOld.getBaseAnalyzer().analyzeFile();
             antiCheatModOld.getBaseAnalyzer().analyzeFile();
             copyProtectModOld.getBaseAnalyzer().analyzeFile();
-            hardwareMod.getBaseAnalyzer().analyzeFile();
-            hardwareFeatureMod.getBaseAnalyzer().analyzeFile();
+            hardwareModOld.getBaseAnalyzer().analyzeFile();
+            hardwareFeatureModOld.getBaseAnalyzer().analyzeFile();
         } catch (IOException e) {
             e.printStackTrace();
         }

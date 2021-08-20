@@ -119,7 +119,7 @@ public class WindowAddGenrePage1 extends JFrame{
             contentPane.add(buttonExplainGenreID);
         }else{
             setBounds(100, 100, 335, 160);
-            spinnerId.setModel(new SpinnerNumberModel(ModManager.genreMod.getAnalyzer().getFreeId(), ModManager.genreMod.getAnalyzer().getFreeId(), ModManager.genreMod.getAnalyzer().getFreeId(), 1));
+            spinnerId.setModel(new SpinnerNumberModel(ModManager.genreModOld.getAnalyzer().getFreeId(), ModManager.genreModOld.getAnalyzer().getFreeId(), ModManager.genreModOld.getAnalyzer().getFreeId(), 1));
             spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
             spinnerId.setEnabled(false);
             spinnerId.setVisible(false);
@@ -170,13 +170,13 @@ public class WindowAddGenrePage1 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription){
-        for(String string : ModManager.genreMod.getAnalyzer().getContentByAlphabet()){
+        for(String string : ModManager.genreModOld.getAnalyzer().getContentByAlphabet()){
             if(string.equals(textFieldGenreName.getText())){
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"));
                 return false;
             }
         }
-        if(ModManager.genreMod.getAnalyzer().getActiveIds().contains(spinnerId.getValue())){
+        if(ModManager.genreModOld.getAnalyzer().getActiveIds().contains(spinnerId.getValue())){
             JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
             return false;
         }

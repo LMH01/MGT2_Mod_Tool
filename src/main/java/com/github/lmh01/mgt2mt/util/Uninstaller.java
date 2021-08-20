@@ -120,22 +120,22 @@ public class Uninstaller {
      */
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation){
         boolean uninstallFailed = false;
-        String[] customEngineFeatures = ModManager.engineFeatureMod.getAnalyzer().getCustomContentString();
-        String[] customGameplayFeatures = ModManager.gameplayFeatureMod.getAnalyzer().getCustomContentString();
-        String[] customGenres = ModManager.genreMod.getAnalyzer().getCustomContentString();
-        String[] customPublishers = ModManager.publisherMod.getAnalyzer().getCustomContentString();
-        String[] customThemes = ModManager.themeMod.getAnalyzerEn().getCustomContentString();
-        String[] customLicences = ModManager.licenceMod.getAnalyzer().getCustomContentString();
-        String[] customPlatforms = ModManager.platformMod.getBaseAnalyzer().getCustomContentString();
-        String[] customNpcEngines = ModManager.npcEngineMod.getBaseAnalyzer().getCustomContentString();
+        String[] customEngineFeatures = ModManager.engineFeatureModOld.getAnalyzer().getCustomContentString();
+        String[] customGameplayFeatures = ModManager.gameplayFeatureModOld.getAnalyzer().getCustomContentString();
+        String[] customGenres = ModManager.genreModOld.getAnalyzer().getCustomContentString();
+        String[] customPublishers = ModManager.publisherModOld.getAnalyzer().getCustomContentString();
+        String[] customThemes = ModManager.themeModOld.getAnalyzerEn().getCustomContentString();
+        String[] customLicences = ModManager.licenceModOld.getAnalyzer().getCustomContentString();
+        String[] customPlatforms = ModManager.platformModOld.getBaseAnalyzer().getCustomContentString();
+        String[] customNpcEngines = ModManager.npcEngineModOld.getBaseAnalyzer().getCustomContentString();
         String[] customCopyProtect = ModManager.copyProtectModOld.getBaseAnalyzer().getCustomContentString();
         String[] customAntiCheat = ModManager.antiCheatModOld.getBaseAnalyzer().getCustomContentString();
-        String[] customNpcGames = ModManager.npcGamesMod.getBaseAnalyzer().getCustomContentString();
+        String[] customNpcGames = ModManager.npcGamesModOld.getBaseAnalyzer().getCustomContentString();
         if(customNpcGames.length + customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length + customPlatforms.length + customNpcEngines.length + customCopyProtect.length + customAntiCheat.length != 0){
             ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (String customGenre : customGenres) {
                 try {
-                    ModManager.genreMod.getEditor().removeMod(customGenre);
+                    ModManager.genreModOld.getEditor().removeMod(customGenre);
                 } catch (IOException e) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
                     LOGGER.info("Genre could not be removed: " + e.getMessage());
@@ -147,7 +147,7 @@ public class Uninstaller {
             }
             for (String customPublisher : customPublishers) {
                 try {
-                    ModManager.publisherMod.getEditor().removeMod(customPublisher);
+                    ModManager.publisherModOld.getEditor().removeMod(customPublisher);
                     LOGGER.info("Publisher files have been restored to original.");
                 } catch (IOException e) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
@@ -160,7 +160,7 @@ public class Uninstaller {
             }
             for(String customPlatform : customPlatforms){
                 try {
-                    ModManager.platformMod.removeMod(customPlatform);
+                    ModManager.platformModOld.removeMod(customPlatform);
                     LOGGER.info("Platform files have been restored to original.");
                 } catch (IOException e) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.platform.failed") + " " + customPlatform + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());

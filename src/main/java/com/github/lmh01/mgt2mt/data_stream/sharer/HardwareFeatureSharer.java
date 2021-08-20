@@ -35,7 +35,7 @@ public class HardwareFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public Importer getImporter() {
-        return ModManager.hardwareFeatureMod.getBaseEditor()::addMod;
+        return ModManager.hardwareFeatureModOld.getBaseEditor()::addMod;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class HardwareFeatureSharer extends AbstractAdvancedSharer {
 
     @Override
     public AbstractAdvancedModOld getAdvancedMod() {
-        return ModManager.hardwareFeatureMod;
+        return ModManager.hardwareFeatureModOld;
     }
 
     @Override

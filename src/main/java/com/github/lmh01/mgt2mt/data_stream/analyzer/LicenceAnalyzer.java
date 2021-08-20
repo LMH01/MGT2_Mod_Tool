@@ -37,7 +37,7 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public void analyzeFile() throws IOException {
-        fileContent = DataStreamHelper.getContentFromFile(ModManager.licenceMod.getFile(), "UTF_8BOM");
+        fileContent = DataStreamHelper.getContentFromFile(ModManager.licenceModOld.getFile(), "UTF_8BOM");
     }
 
     @Override
@@ -108,7 +108,7 @@ public class LicenceAnalyzer extends AbstractSimpleAnalyzer {
 
     @Override
     public AbstractSimpleAnalyzer getAnalyzer() {
-        return ModManager.licenceMod.getAnalyzer();
+        return ModManager.licenceModOld.getAnalyzer();
     }
 
     @Override

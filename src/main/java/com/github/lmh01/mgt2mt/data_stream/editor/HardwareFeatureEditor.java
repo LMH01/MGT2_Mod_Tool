@@ -42,17 +42,17 @@ public class HardwareFeatureEditor extends AbstractAdvancedEditor {
 
     @Override
     public String getType() {
-        return ModManager.hardwareFeatureMod.getType();
+        return ModManager.hardwareFeatureModOld.getType();
     }
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.hardwareFeatureMod.getBaseAnalyzer();
+        return ModManager.hardwareFeatureModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.hardwareFeatureMod.getFile();
+        return ModManager.hardwareFeatureModOld.getFile();
     }
 
     @Override

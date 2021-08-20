@@ -12,7 +12,7 @@ public class GameplayFeatureAnalyzer extends AbstractAdvancedAnalyzer {
 
     @Override
     public File getFileToAnalyze() {
-        return ModManager.gameplayFeatureMod.getFile();
+        return ModManager.gameplayFeatureModOld.getFile();
     }
 
     @Override

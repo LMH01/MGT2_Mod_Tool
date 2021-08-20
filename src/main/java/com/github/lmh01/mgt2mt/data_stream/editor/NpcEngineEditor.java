@@ -35,17 +35,17 @@ public class NpcEngineEditor extends AbstractAdvancedEditor {
 
     @Override
     public String getType() {
-        return ModManager.npcEngineMod.getType();
+        return ModManager.npcEngineModOld.getType();
     }
 
     @Override
     public AbstractAdvancedAnalyzer getAnalyzer() {
-        return ModManager.npcEngineMod.getBaseAnalyzer();
+        return ModManager.npcEngineModOld.getBaseAnalyzer();
     }
 
     @Override
     public File getFileToEdit() {
-        return ModManager.npcEngineMod.getFile();
+        return ModManager.npcEngineModOld.getFile();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class NpcEngineEditor extends AbstractAdvancedEditor {
      * @param name The name of the genre that should be removed
      */
     public void removeGenre(String name) throws IOException {
-        int genreId = ModManager.genreMod.getAnalyzer().getContentIdByName(name);
+        int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(name);
         getAnalyzer().analyzeFile();
         sendLogMessage("Replacing genre id in npc engine file: " + name);
         Charset charset = getCharset();
@@ -76,7 +76,7 @@ public class NpcEngineEditor extends AbstractAdvancedEditor {
         for(Map<String, String> fileContent : getAnalyzer().getFileContent()){
             if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
                 fileContent.remove("GENRE");
-                fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getAnalyzer().getActiveIds().size()))));
+                fileContent.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getActiveIds().size()))));
             }
             printValues(fileContent, bw);
             bw.write(System.getProperty("line.separator"));

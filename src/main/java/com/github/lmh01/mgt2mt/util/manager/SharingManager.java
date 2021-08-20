@@ -623,7 +623,7 @@ public class SharingManager {
 
                 for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
                     if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                        failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), ModManager.themeMod.getAnalyzerEn().getFinishedCustomContentString(), simpleMod.getType()));
+                        failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), ModManager.themeModOld.getAnalyzerEn().getFinishedCustomContentString(), simpleMod.getType()));
                     }else{
                         failedExports.append(getExportFailed((string) -> simpleMod.getBaseSharer().exportMod(string, exportAsRestorePoint), simpleMod.getBaseAnalyzer().getCustomContentString(), simpleMod.getType()));
                     }

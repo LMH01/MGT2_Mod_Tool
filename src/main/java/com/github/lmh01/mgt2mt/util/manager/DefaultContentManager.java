@@ -189,7 +189,7 @@ public class DefaultContentManager {
         for (AbstractSimpleModOld simpleMod : ModManager.simpleMods) {
             strings.add(simpleMod.getBaseAnalyzer().getDefaultContentFileName());
         }
-        strings.add(ModManager.themeMod.getAnalyzerEn().getDefaultContentFileName());//This line is needed because the english default content file would not be read
+        strings.add(ModManager.themeModOld.getAnalyzerEn().getDefaultContentFileName());//This line is needed because the english default content file would not be read
         for (AbstractAdvancedModOld advancedMod : ModManager.advancedMods) {
             strings.add(advancedMod.getBaseAnalyzer().getDefaultContentFileName());
         }
