@@ -1,8 +1,9 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,21 +41,21 @@ public class WindowAddGenrePage6 extends JFrame{
     public WindowAddGenrePage6() {
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(LIST_AVAILABLE_THEMES)){
-                GenreManager.openStepWindow(7);
+                GenreMod.openStepWindow(7);
                 FRAME.dispose();
             }else{
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
                     LOGGER.info("Cleared array list with compatible themes.");
-                    GenreManager.mapNewGenre.remove("THEME COMB");
-                    GenreManager.mapNewGenre.put("THEME COMB", "");
-                    GenreManager.openStepWindow(7);
+                    GenreMod.mapNewGenre.remove("THEME COMB");
+                    GenreMod.mapNewGenre.put("THEME COMB", "");
+                    GenreMod.openStepWindow(7);
                     FRAME.dispose();
                 }
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(LIST_AVAILABLE_THEMES);
-            GenreManager.openStepWindow(5);
+            GenreMod.openStepWindow(5);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -94,16 +95,16 @@ public class WindowAddGenrePage6 extends JFrame{
         contentPane.add(buttonQuit);
     }
 
-    private void setThemesList(){
+    private void setThemesList() throws ModProcessingException {//TODO Testen, ob Funktion noch funktioniert
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> genresSelected = new ArrayList<>();
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.themeModOld.getAnalyzerEn().getContentByAlphabet()){
+        for(String string : ModManager.themeMod.getContentByAlphabet()){
             listModel.addElement(string);
-            if(GenreManager.mapNewGenre.containsKey("THEME COMB")){
-                if(GenreManager.mapNewGenre.get("THEME COMB").contains(string)) {
+            if(GenreMod.mapNewGenre.containsKey("THEME COMB")){
+                if(GenreMod.mapNewGenre.get("THEME COMB").contains(string)) {
                     genresSelected.add(currentTopic);
                 }
             }
@@ -129,7 +130,7 @@ public class WindowAddGenrePage6 extends JFrame{
     private static boolean saveInputs(JList<String> listAvailableThemes){
         LOGGER.info("Cleared array list with compatible genres.");
         StringBuilder compatibleThemes = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getFileContent().entrySet()){
             for(String string : listAvailableThemes.getSelectedValuesList()){
                 if(entry.getValue().equals(string)){
                     compatibleThemeIds.add(entry.getKey());
@@ -138,7 +139,7 @@ public class WindowAddGenrePage6 extends JFrame{
                 }
             }
         }
-        GenreManager.mapNewGenre.put("THEME COMB", compatibleThemes.toString());
+        GenreMod.mapNewGenre.put("THEME COMB", compatibleThemes.toString());
         return listAvailableThemes.getSelectedValuesList().size() != 0;
     }
 }

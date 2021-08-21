@@ -764,11 +764,10 @@ textArea.themeExportSuccessful|The following theme has been exported:
 textArea.ExportFailed.generalError.secondPart|the following error occurred:
 textArea.uninstalling|Uninstalling
 textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
-textArea.uninstalling.uninstallingAllMods.genre.failed|Uninstalling genre failed:
-textArea.uninstalling.uninstallingAllMods.publisher.failed|Uninstalling publisher failed:
-textArea.uninstalling.uninstallingAllMods.platform.failed|Uninstalling platform failed:
+textArea.uninstalling.uninstallingAllMods.mod.failed|Failed:
 textArea.uninstalling.uninstallingAllMods.success|Game files have been restored to original
 textArea.uninstalling.uninstallingAllMods.noModsFound|No mods need to be removed: No mods found
+textArea.uninstalling.uninstallingAllMods.error|The following exception was caught while mods where being uninstalled, uninstall process will continue anyway:
 textArea.deleteModManagerFiles|Deleting all mod manager files
 textArea.deletingBackups|Deleting backups
 textArea.deletingSettings|Deleting settings
@@ -952,9 +951,6 @@ window.uninstall.confirmMessage.secondPart|This can't be reverted!
 window.uninstall.confirmMessage.title|Confirm uninstall
 window.uninstall.uninstallIncomplete|There was a problem while uninstalling:
 window.uninstall.uninstallIncomplete.title|Uninstalling incomplete
-window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved|Genre could not be removed:
-window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved|Publisher could not be removed:
-window.uninstall.uninstallIncomplete.platformCouldNotBeRemoved|Platform could not be removed:
 window.uninstall.uninstallSuccessful|Your selected files have been uninstalled successfully!
 window.uninstall.uninstallSuccessful.title|Uninstalling successful
 
@@ -1021,7 +1017,7 @@ window.npcGamesList.from|from
 window.npcGamesList.confirmDialog.1|The following genre(s) will be
 window.npcGamesList.confirmDialog.2|the NPC games list.
 window.npcGamesList.confirmDialog.title|Modify NPC games list?
-window.npcGamesList.errorOccurred|<html>Something went wrong while modifying npc games list.<br>Some modifications might not have been completed.<br>For further information please take a look at the console.
+window.npcGamesList.errorOccurred|Something went wrong while modifying npc games list
 window.npcGamesList.success|The NPC games list was modified successfully.
 window.npcGamesList.noGenreSelected|<html>Unable to continue:<br>Please select at least one genre.
 

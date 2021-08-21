@@ -1,7 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
@@ -10,6 +12,8 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Uninstaller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Uninstaller.class);
@@ -17,7 +21,7 @@ public class Uninstaller {
     /**
      * Opens a gui where the user can select what should be removed. Selected items are then removed and the tool closes.
      */
-    public static void uninstall(){
+    public static void uninstall() throws ModProcessingException {
         JLabel labelDescription = new JLabel(I18n.INSTANCE.get("window.uninstall.labelDescription"));
         JCheckBox checkboxDeleteBackups = new JCheckBox(I18n.INSTANCE.get("window.uninstall.checkBoxDeleteBackups"));
         checkboxDeleteBackups.setSelected(true);
@@ -58,7 +62,12 @@ public class Uninstaller {
                         StringBuilder uninstallFailedExplanation = new StringBuilder();
                         boolean exitProgram = false;
                         if(checkboxRevertAllMods.isSelected()){
-                            uninstallFailed = uninstallAllMods(uninstallFailedExplanation);
+                            try {
+                                uninstallFailed = uninstallAllMods(uninstallFailedExplanation);
+                            } catch (ModProcessingException e) {
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.error"));
+                                TextAreaHelper.printStackTrace(e);
+                            }
                         }
                         if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                             File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
@@ -118,56 +127,30 @@ public class Uninstaller {
      * @param uninstallFailedExplanation This string builder contains reasons in case the removal of some mods fails
      * @return Returns false when the removal of mods was successful
      */
-    public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation){
+    public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {//TODO Testen, ob funktion funktioniert - auch schauen, ob die progress bar richtig angezeigt wird (Sollte jetzt besser als vorher sein)
         boolean uninstallFailed = false;
-        String[] customEngineFeatures = ModManager.engineFeatureModOld.getAnalyzer().getCustomContentString();
-        String[] customGameplayFeatures = ModManager.gameplayFeatureModOld.getAnalyzer().getCustomContentString();
-        String[] customGenres = ModManager.genreModOld.getAnalyzer().getCustomContentString();
-        String[] customPublishers = ModManager.publisherModOld.getAnalyzer().getCustomContentString();
-        String[] customThemes = ModManager.themeModOld.getAnalyzerEn().getCustomContentString();
-        String[] customLicences = ModManager.licenceModOld.getAnalyzer().getCustomContentString();
-        String[] customPlatforms = ModManager.platformModOld.getBaseAnalyzer().getCustomContentString();
-        String[] customNpcEngines = ModManager.npcEngineModOld.getBaseAnalyzer().getCustomContentString();
-        String[] customCopyProtect = ModManager.copyProtectModOld.getBaseAnalyzer().getCustomContentString();
-        String[] customAntiCheat = ModManager.antiCheatModOld.getBaseAnalyzer().getCustomContentString();
-        String[] customNpcGames = ModManager.npcGamesModOld.getBaseAnalyzer().getCustomContentString();
-        if(customNpcGames.length + customGenres.length + customPublishers.length + customGameplayFeatures.length + customEngineFeatures.length + customThemes.length + customLicences.length + customPlatforms.length + customNpcEngines.length + customCopyProtect.length + customAntiCheat.length != 0){
-            ProgressBarHelper.initializeProgressBar(0, customGenres.length + customPublishers.length, I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
-            for (String customGenre : customGenres) {
+        ArrayList<String> customContentArrayList = new ArrayList<>();
+        for (AbstractBaseMod mod : ModManager.mods) {
+            customContentArrayList.addAll(Arrays.asList(mod.getCustomContentString()));
+        }
+        if(customContentArrayList.size() != 0){
+            ProgressBarHelper.initializeProgressBar(0, customContentArrayList.size(), I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
+            for (AbstractBaseMod mod : ModManager.mods) {
+                String currentMod = "";
                 try {
-                    ModManager.genreModOld.getEditor().removeMod(customGenre);
-                } catch (IOException e) {
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.genre.failed") + " " + customGenre + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                    LOGGER.info("Genre could not be removed: " + e.getMessage());
-                    uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
+                    for (String string : mod.getCustomContentString()) {
+                        currentMod = string;
+                        mod.removeMod(string);
+                    }
+                } catch (ModProcessingException e) {
+                    TextAreaHelper.printStackTrace(e);
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + currentMod + " - " + customContentArrayList + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
+                    LOGGER.info("Mod of type " + mod.getType() + " could not be removed: " + e.getMessage());
+                    uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
                     e.printStackTrace();
                     uninstallFailed = true;
                 }
                 ProgressBarHelper.increment();
-            }
-            for (String customPublisher : customPublishers) {
-                try {
-                    ModManager.publisherModOld.getEditor().removeMod(customPublisher);
-                    LOGGER.info("Publisher files have been restored to original.");
-                } catch (IOException e) {
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.publisher.failed") + " " + customPublisher + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                    LOGGER.info("Publisher could not be removed: " + e.getMessage());
-                    uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                    e.printStackTrace();
-                    uninstallFailed = true;
-                }
-                ProgressBarHelper.increment();
-            }
-            for(String customPlatform : customPlatforms){
-                try {
-                    ModManager.platformModOld.removeMod(customPlatform);
-                    LOGGER.info("Platform files have been restored to original.");
-                } catch (IOException e) {
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.platform.failed") + " " + customPlatform + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                    uninstallFailedExplanation.append(I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.platformCouldNotBeRemoved")).append(" ").append(e.getMessage()).append(System.getProperty("line.separator"));
-                    LOGGER.info("Platform could not be removed: " + e.getMessage());
-                    e.printStackTrace();
-                }
             }
             Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));

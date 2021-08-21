@@ -68,96 +68,90 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_engine_features.txt";
     }
 
     @Override
     protected void openAddModGui() throws ModProcessingException {
-        try{
-            Backup.createBackup(ModManager.engineFeatureModOld.getFile());
-            ModManager.engineFeatureModOld.getAnalyzer().analyzeFile();
+        createBackup();
+        analyzeFile();
+        JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterFeatureName"));
+        final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
+        AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
+        JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("commonText.enterDescription"));
+        final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
+        AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslations, descriptionTranslationsAdded, 1);
+        JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(0);
+        JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+        JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
+        JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
+        JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
+        JSpinner spinnerResearchCost = WindowHelper.getResearchCostSpinner();
+        JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
+        JSpinner spinnerGameplay = WindowHelper.getPointSpinner();
+        JSpinner spinnerGraphic = WindowHelper.getPointSpinner();
+        JSpinner spinnerSound = WindowHelper.getPointSpinner();
+        JSpinner spinnerTech = WindowHelper.getPointSpinner();
 
-            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterFeatureName"));
-            final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
-            AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
-            JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
-            JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("commonText.enterDescription"));
-            final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
-            AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
-            JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslations, descriptionTranslationsAdded, 1);
-            JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(0);
-            JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
-            JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
-            JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
-            JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
-            JSpinner spinnerResearchCost = WindowHelper.getResearchCostSpinner();
-            JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
-            JSpinner spinnerGameplay = WindowHelper.getPointSpinner();
-            JSpinner spinnerGraphic = WindowHelper.getPointSpinner();
-            JSpinner spinnerSound = WindowHelper.getPointSpinner();
-            JSpinner spinnerTech = WindowHelper.getPointSpinner();
-
-            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerResearchCost, 5), WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), WindowHelper.getSpinnerPanel(spinnerGameplay, 0), WindowHelper.getSpinnerPanel(spinnerGraphic, 1), WindowHelper.getSpinnerPanel(spinnerSound, 2), WindowHelper.getSpinnerPanel(spinnerTech, 3)};
-            while(true){
-                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
-                        boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
-                            if(textFieldName.getText().equals(string)){
-                                modAlreadyExists = true;
-                            }
+        Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerResearchCost, 5), WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), WindowHelper.getSpinnerPanel(spinnerGameplay, 0), WindowHelper.getSpinnerPanel(spinnerGraphic, 1), WindowHelper.getSpinnerPanel(spinnerSound, 2), WindowHelper.getSpinnerPanel(spinnerTech, 3)};
+        while(true){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
+                    boolean modAlreadyExists = false;
+                    for(String string : getContentByAlphabet()){
+                        if(textFieldName.getText().equals(string)){
+                            modAlreadyExists = true;
                         }
-                        if(!modAlreadyExists) {
-                            Map<String, String> newEngineFeature = new HashMap<>();
-                            if (!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
-                                newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                                newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                            } else if (!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()) {
-                                newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                            } else if (nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
-                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                            } else {
-                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                                newEngineFeature.put("NAME EN", textFieldName.getText());
-                                newEngineFeature.put("DESC EN", textFieldDescription.getText());
-                            }
-                            newEngineFeature.put("ID", Integer.toString(ModManager.engineFeatureModOld.getAnalyzer().getFreeId()));
-                            newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                            newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
-                            newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
-                            newEngineFeature.put("PRICE", spinnerResearchCost.getValue().toString());
-                            newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                            newEngineFeature.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
-                            newEngineFeature.put("PIC", "");
-                            newEngineFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
-                            newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
-                            newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
-                            newEngineFeature.put("TECH", spinnerTech.getValue().toString());
-                            boolean addFeature = Summaries.showSummary(ModManager.engineFeatureModOld.getSharer().getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
-                            if (addFeature) {
-                                Backup.createBackup(getGameFile());
-                                ModManager.engineFeatureModOld.getEditor().addMod(newEngineFeature);
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.engineFeature.upperCase") + " - " + newEngineFeature.get("NAME EN"));
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
-                                break;
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
-                    break;
+                    if(!modAlreadyExists) {
+                        Map<String, String> newEngineFeature = new HashMap<>();
+                        if (!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
+                            newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                            newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                        } else if (!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()) {
+                            newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                        } else if (nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
+                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                            newEngineFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                        } else {
+                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                            newEngineFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                            newEngineFeature.put("NAME EN", textFieldName.getText());
+                            newEngineFeature.put("DESC EN", textFieldDescription.getText());
+                        }
+                        newEngineFeature.put("ID", Integer.toString(getFreeId()));
+                        newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
+                        newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                        newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
+                        newEngineFeature.put("PRICE", spinnerResearchCost.getValue().toString());
+                        newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                        newEngineFeature.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
+                        newEngineFeature.put("PIC", "");
+                        newEngineFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
+                        newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
+                        newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
+                        newEngineFeature.put("TECH", spinnerTech.getValue().toString());
+                        boolean addFeature = Summaries.showSummary(getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
+                        if (addFeature) {
+                            createBackup();
+                            addMod(newEngineFeature);
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.engineFeature.upperCase") + " - " + newEngineFeature.get("NAME EN"));
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                            break;
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
+            }else{
+                break;
             }
-        }catch(IOException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -200,7 +194,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "HARDWARE_FEATURE";
     }
 

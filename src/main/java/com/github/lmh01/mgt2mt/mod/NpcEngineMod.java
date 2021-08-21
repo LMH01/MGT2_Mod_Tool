@@ -60,7 +60,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_npc_engines.txt";
     }
 
@@ -77,11 +77,11 @@ public class NpcEngineMod extends AbstractAdvancedMod {
             JSpinner spinnerCost = WindowHelper.getCostSpinner();
 
             JLabel labelExplainGenreList = new JLabel("<html>" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.selectGenre") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
-            JList<String> listAvailableGenres = WindowHelper.getList(ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), true);
+            JList<String> listAvailableGenres = WindowHelper.getList(ModManager.genreMod.getContentByAlphabet(), true);
             JScrollPane scrollPaneAvailableGenres = WindowHelper.getScrollPane(listAvailableGenres);
 
             JLabel labelExplainPlatformList = new JLabel("<html>" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.selectPlatform"));
-            JList<String> listAvailablePlatforms = WindowHelper.getList(ModManager.platformModOld.getBaseAnalyzer().getContentByAlphabet(), false);
+            JList<String> listAvailablePlatforms = WindowHelper.getList(ModManager.platformMod.getContentByAlphabet(), false);
             JScrollPane scrollPaneAvailablePlatforms = WindowHelper.getScrollPane(listAvailablePlatforms);
 
             Object[] param = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerShare, 9), WindowHelper.getSpinnerPanel(spinnerCost, 8), labelExplainGenreList, scrollPaneAvailableGenres, labelExplainPlatformList, scrollPaneAvailablePlatforms};
@@ -94,7 +94,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                     //Filling base map (Without genre, id and names)
                                     Map<String, String> npcEngine = new HashMap<>();
                                     npcEngine.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
-                                    npcEngine.put("PLATFORM", Integer.toString(ModManager.platformModOld.getBaseAnalyzer().getContentIdByName(listAvailablePlatforms.getSelectedValue())));
+                                    npcEngine.put("PLATFORM", Integer.toString(ModManager.platformMod.getContentIdByName(listAvailablePlatforms.getSelectedValue())));
                                     npcEngine.put("PRICE", spinnerCost.getValue().toString());
                                     npcEngine.put("SHARE", spinnerShare.getValue().toString());
                                     if(listAvailableGenres.getSelectedValuesList().size() > 1){
@@ -121,7 +121,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                                     newNpcEngineMap.put("NAME EN", textFieldName.getText() + " [" + string + "]");
                                                 }
                                                 newNpcEngineMap.putAll(npcEngine);
-                                                newNpcEngineMap.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getContentIdByName(string)));
+                                                newNpcEngineMap.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(string)));
                                                 addMod(newNpcEngineMap);
                                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase") + " - " + newNpcEngineMap.get("NAME EN"));
                                                 ProgressBarHelper.increment();
@@ -139,10 +139,10 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                             npcEngine.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                             npcEngine.put("NAME EN", textFieldName.getText());
                                         }
-                                        npcEngine.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getContentIdByName(listAvailableGenres.getSelectedValue())));
+                                        npcEngine.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(listAvailableGenres.getSelectedValue())));
                                         sendLogMessage("Only a single genre has been selected. Displaying single engine dialog");
                                         if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(npcEngine), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                            Backup.createBackup(getGameFile());
+                                            createBackup();
                                             addMod(npcEngine);
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase") + " - " + npcEngine.get("NAME EN"));
                                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.npcEngine.upperCase") + ": [" + npcEngine.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase"), JOptionPane.INFORMATION_MESSAGE);
@@ -166,22 +166,21 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                 }
             }
         }catch(IOException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
+            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
         }
     }
 
     @Override
-    public Map<String, String> getChangedImportMap(Map<String, String> map) {
-        int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(map.get("GENRE"));
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
+        int genreId = ModManager.genreMod.getContentIdByName(map.get("GENRE"));
         if(genreId == -1){
-            map.replace("GENRE", Integer.toString(Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getFileContent().size()-1)));
+            map.replace("GENRE", Integer.toString(Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1)));
         }else{
             map.replace("GENRE", Integer.toString(genreId));
         }
-        int platformId = ModManager.platformModOld.getBaseAnalyzer().getContentIdByName(map.get("PLATFORM"));
+        int platformId = ModManager.platformMod.getContentIdByName(map.get("PLATFORM"));
         if(platformId == -1){
-            map.replace("PLATFORM", Integer.toString(Utils.getRandomNumber(0, ModManager.platformModOld.getBaseAnalyzer().getFileContent().size()-1)));
+            map.replace("PLATFORM", Integer.toString(Utils.getRandomNumber(0, ModManager.platformMod.getFileContent().size()-1)));
         }else{
             map.replace("PLATFORM", Integer.toString(platformId));
         }
@@ -199,9 +198,9 @@ public class NpcEngineMod extends AbstractAdvancedMod {
         if(map.get("GENRE").equals("MULTIPLE SELECTED")){
             message.append(I18n.INSTANCE.get("commonText.genre.upperCase")).append(": ").append((map.get("GENRE"))).append("<br>");
         }else{
-            message.append(I18n.INSTANCE.get("commonText.genre.upperCase")).append(": ").append(ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(map.get("GENRE")))).append("<br>");
+            message.append(I18n.INSTANCE.get("commonText.genre.upperCase")).append(": ").append(ModManager.genreMod.getContentNameById(Integer.parseInt(map.get("GENRE")))).append("<br>");
         }
-        message.append(I18n.INSTANCE.get("commonText.platform.upperCase")).append(": ").append(ModManager.platformModOld.getBaseAnalyzer().getContentNameById(Integer.parseInt(map.get("PLATFORM")))).append("<br>");
+        message.append(I18n.INSTANCE.get("commonText.platform.upperCase")).append(": ").append(ModManager.platformMod.getContentNameById(Integer.parseInt(map.get("PLATFORM")))).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.price")).append(": ").append(map.get("PRICE")).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.profitShare")).append(": ").append(map.get("SHARE")).append("<br>");
         return message.toString();
@@ -218,7 +217,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "NPC_ENGINE";
     }
 
@@ -248,7 +247,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
      */
     public void removeGenre(String name) throws ModProcessingException {
         try {
-            int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(name);
+            int genreId = ModManager.genreMod.getContentIdByName(name);
             analyzeFile();
             sendLogMessage("Replacing genre id in npc engine file: " + name);
             Charset charset = getCharset();
@@ -264,7 +263,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
             for(Map<String, String> fileContent : getFileContent()){
                 if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
                     fileContent.remove("GENRE");
-                    fileContent.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getActiveIds().size()))));
+                    fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getActiveIds().size()))));
                 }
                 printValues(fileContent, bw);
                 bw.write(System.getProperty("line.separator"));

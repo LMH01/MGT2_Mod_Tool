@@ -121,7 +121,7 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_platforms.txt";
     }
 
@@ -129,8 +129,8 @@ public class PlatformMod extends AbstractAdvancedMod {
     protected void openAddModGui() throws ModProcessingException {
         try{
             analyzeFile();
-            ModManager.genreModOld.getAnalyzer().analyzeFile();
-            ModManager.gameplayFeatureModOld.getAnalyzer().analyzeFile();
+            ModManager.genreMod.analyzeFile();
+            ModManager.gameplayFeatureMod.analyzeFile();
             final Map<String, String>[] mapManufacturerTranslations = new Map[]{new HashMap<>()};
             AtomicBoolean manufacturerTranslationsAdded = new AtomicBoolean(false);
             JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"));
@@ -182,7 +182,7 @@ public class PlatformMod extends AbstractAdvancedMod {
             JSpinner spinnerUnits = WindowHelper.getUnitsSpinner();
 
             JLabel labelGameplayFeatureList = new JLabel("<html>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.selectGameplayFeatures") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
-            JList<String> listAvailableGameplayFeatures = WindowHelper.getList(ModManager.gameplayFeatureModOld.getAnalyzer().getContentByAlphabet(), true);
+            JList<String> listAvailableGameplayFeatures = WindowHelper.getList(ModManager.gameplayFeatureMod.getContentByAlphabet(), true);
             listAvailableGameplayFeatures.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -384,7 +384,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                 }else{
                                     int currentNeededGameplayFeatureNumber = 1;
                                     for(String string : listAvailableGameplayFeatures.getSelectedValuesList()){
-                                        platformMap.put("NEED-" + currentNeededGameplayFeatureNumber, Integer.toString(ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(string)));
+                                        platformMap.put("NEED-" + currentNeededGameplayFeatureNumber, Integer.toString(ModManager.gameplayFeatureMod.getContentIdByName(string)));
                                         currentNeededGameplayFeatureNumber++;
                                     }
                                 }
@@ -396,7 +396,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                 }
                                 platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
                                 if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                    Backup.createBackup(getGameFile());
+                                    createBackup();
                                     addMod(platformMap);
                                     addImageFiles(platformMap.get("NAME EN"), finalPictureMap);
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase") + " - " + platformMap.get("NAME EN"));
@@ -417,8 +417,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                 }
             }
         }catch(IOException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
+            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - "  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
         }
     }
 
@@ -457,7 +456,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                 neededGameplayFeatures.append("<br>");
                 currentGameplayFeature = 0;
             }
-            neededGameplayFeatures.append(ModManager.gameplayFeatureModOld.getBaseAnalyzer().getContentNameById(integer));
+            neededGameplayFeatures.append(ModManager.gameplayFeatureMod.getContentNameById(integer));
             currentGameplayFeature++;
         }
         message.append(I18n.INSTANCE.get("commonText.neededGameplayFeatures")).append(": ").append(neededGameplayFeatures).append("<br>");
@@ -484,7 +483,7 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "PLATFORM";
     }
 
@@ -503,7 +502,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                 for(File file : pictures){
                     importPictureMap.put(Integer.parseInt(file.getName().replaceAll("[^0-9]","")), file);
                 }
-                ModManager.platformModOld.getEditor().addImageFiles(name, importPictureMap);
+                addImageFiles(name, importPictureMap);
             }
         }catch(IOException e){
             e.printStackTrace();
@@ -527,10 +526,10 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public Map<String, String> getChangedImportMap(Map<String, String> map) {
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
         for(Map.Entry<String, String> entry : map.entrySet()){
             if(entry.getKey().contains("NEED-")){
-                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(entry.getValue())));
+                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getContentIdByName(entry.getValue())));
             }
         }
         return map;

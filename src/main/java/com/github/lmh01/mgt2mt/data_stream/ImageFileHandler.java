@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -36,9 +36,9 @@ public class ImageFileHandler {
             }
         }else{
             //This copies the .png file to the Icon_Genres directory
-            copyGenreImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png"));
+            copyGenreImages(genreImage, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreMod.getImageFileName(genreName) + ".png"));
             //This creates the meta file in the Icon_Genres directory
-            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreManager.getImageFileName(genreName) + ".png.meta"));
+            createMetaFile(1, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\" + GenreMod.getImageFileName(genreName) + ".png.meta"));
             //This creates the meta file in the main screenshot direcotry
             createMetaFile(2, new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\" + genreID + ".meta"));
         }
@@ -51,9 +51,9 @@ public class ImageFileHandler {
      * @param outputFile This is the file that should be created
      */
     private static void copyGenreImages(File imageFile, File outputFile) throws IOException {//The JOptionPanes are disabled because an exception is shown outside of this class.
-        if(imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")){
+        if (imageFile.getPath().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png")) {
             LOGGER.info("The default image file is in use. No need to copy a new one.");
-        }else{
+        } else {
             LOGGER.info("Copying " + imageFile + " to " + outputFile);
             if(outputFile.exists()){
                 outputFile.delete();
@@ -128,7 +128,7 @@ public class ImageFileHandler {
      * @param genreId The genre id
      */
     public static void removeImageFiles(String genreName) throws ModProcessingException {
-        int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(genreName);
+        int genreId = ModManager.genreMod.getContentIdByName(genreName);
         File imageFile = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png");
         File imageFileMeta = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\icon" + genreName.replace(" ", "") + ".png.meta");
         File screenshotFolder = new File(getScreenshotsDirectory() + "\\" + genreId + "\\");

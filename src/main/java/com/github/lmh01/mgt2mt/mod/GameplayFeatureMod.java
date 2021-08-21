@@ -70,43 +70,41 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_gameplay_features.txt";
     }
 
     @Override
     protected void openAddModGui() throws ModProcessingException {
-        try{
-            Backup.createBackup(ModManager.gameplayFeatureModOld.getFile());
-            ModManager.gameplayFeatureModOld.getAnalyzer().analyzeFile();
-            final ArrayList<Integer>[] badGenreIds = new ArrayList[]{new ArrayList<>()};
-            final ArrayList<Integer>[] goodGenreIds = new ArrayList[]{new ArrayList<>()};
-            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterFeatureName"));
-            final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
-            AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
-            JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
-            JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("commonText.enterDescription"));
-            final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
-            AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
-            JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslations, descriptionTranslationsAdded, 1);
-            JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(1);
-            JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
-            JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
-            JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
-            JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
-            JSpinner spinnerResearchCost = WindowHelper.getResearchCostSpinner();
-            JSpinner spinnerGameplay = WindowHelper.getPointSpinner();
-            JSpinner spinnerGraphic = WindowHelper.getPointSpinner();
-            JSpinner spinnerSound = WindowHelper.getPointSpinner();
-            JSpinner spinnerTech = WindowHelper.getPointSpinner();
+        final ArrayList<Integer>[] badGenreIds = new ArrayList[]{new ArrayList<>()};
+        final ArrayList<Integer>[] goodGenreIds = new ArrayList[]{new ArrayList<>()};
+        JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterFeatureName"));
+        final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
+        AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
+        JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("commonText.enterDescription"));
+        final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
+        AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslations, descriptionTranslationsAdded, 1);
+        JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(1);
+        JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+        JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
+        JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
+        JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
+        JSpinner spinnerResearchCost = WindowHelper.getResearchCostSpinner();
+        JSpinner spinnerGameplay = WindowHelper.getPointSpinner();
+        JSpinner spinnerGraphic = WindowHelper.getPointSpinner();
+        JSpinner spinnerSound = WindowHelper.getPointSpinner();
+        JSpinner spinnerTech = WindowHelper.getPointSpinner();
 
-            JButton buttonBadGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres"));
-            buttonBadGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip"));
-            buttonBadGenres.addActionListener(actionEvent -> {
-                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), true);
+        JButton buttonBadGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres"));
+        buttonBadGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip"));
+        buttonBadGenres.addActionListener(actionEvent -> {
+            try {
+                ArrayList<Integer> goodGenrePositions = Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
                 ArrayList<Integer> badGenreIdsOut = new ArrayList<>();
                 for(Integer integer : goodGenrePositions){
-                    badGenreIdsOut.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(ModManager.genreModOld.getAnalyzer().getContentByAlphabet()[integer]));
+                    badGenreIdsOut.add(ModManager.genreMod.getContentIdByName(ModManager.genreMod.getContentByAlphabet()[integer]));
                 }
                 badGenreIds[0] = badGenreIdsOut;
                 if(badGenreIds[0].size() != 0){
@@ -121,14 +119,22 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 }else{
                     buttonBadGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres"));
                 }
-            });
-            JButton buttonGoodGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres"));
-            buttonGoodGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip"));
-            buttonGoodGenres.addActionListener(actionEvent -> {
-                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), true);
+            } catch (ModProcessingException e) {
+                ModManager.showException(e);
+            }
+        });
+        JButton buttonGoodGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres"));
+        buttonGoodGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip"));
+        buttonGoodGenres.addActionListener(actionEvent -> {
+            try {
+                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
                 ArrayList<Integer> goodGenreIdsOut = new ArrayList<>();
                 for(Integer integer : goodGenrePositions){
-                    goodGenreIdsOut.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(ModManager.genreModOld.getAnalyzer().getContentByAlphabet()[integer]));
+                    try {
+                        goodGenreIdsOut.add(ModManager.genreMod.getContentIdByName(ModManager.genreMod.getContentByAlphabet()[integer]));
+                    } catch (ModProcessingException e) {
+                        ModManager.showException(e);
+                    }
                 }
                 goodGenreIds[0] = goodGenreIdsOut;
                 if(goodGenreIds[0].size() != 0){
@@ -143,83 +149,82 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 }else{
                     buttonGoodGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres"));
                 }
-            });
-
-            JCheckBox checkBoxCompatibleWithArcadeCabinets = new JCheckBox(I18n.INSTANCE.get("commonText.arcadeCompatibility"));
-            checkBoxCompatibleWithArcadeCabinets.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip"));
-            checkBoxCompatibleWithArcadeCabinets.setSelected(true);
-
-            JCheckBox checkBoxCompatibleWithMobile = new JCheckBox(I18n.INSTANCE.get("commonText.mobileCompatibility"));
-            checkBoxCompatibleWithMobile.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip"));
-            checkBoxCompatibleWithMobile.setSelected(true);
-
-            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerResearchCost, 5), WindowHelper.getSpinnerPanel(spinnerGameplay, 0), WindowHelper.getSpinnerPanel(spinnerGraphic, 1), WindowHelper.getSpinnerPanel(spinnerSound, 2), WindowHelper.getSpinnerPanel(spinnerTech, 3), buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile};
-            while(true){
-                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if (!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
-                        boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
-                            if(textFieldName.getText().equals(string)){
-                                modAlreadyExists = true;
-                            }
-                        }
-                        if(!modAlreadyExists) {
-                            Map<String, String> newGameplayFeature = new HashMap<>();
-                            if(!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
-                                newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                                newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                            }else if(!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()){
-                                newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                            }else if(nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
-                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                            }else{
-                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                                newGameplayFeature.put("NAME EN", textFieldName.getText());
-                                newGameplayFeature.put("DESC EN", textFieldDescription.getText());
-                            }
-                            newGameplayFeature.put("ID", Integer.toString(ModManager.gameplayFeatureModOld.getAnalyzer().getFreeId()));
-                            newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                            newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
-                            newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
-                            newGameplayFeature.put("PRICE", spinnerResearchCost.getValue().toString());
-                            newGameplayFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                            newGameplayFeature.put("PIC", "");
-                            newGameplayFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
-                            newGameplayFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
-                            newGameplayFeature.put("SOUND", spinnerSound.getValue().toString());
-                            newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
-                            newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
-                            newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-                            if(!checkBoxCompatibleWithArcadeCabinets.isSelected()){
-                                newGameplayFeature.put("NO_ARCADE", "");
-                            }
-                            if(!checkBoxCompatibleWithMobile.isSelected()){
-                                newGameplayFeature.put("NO_MOBILE", "");
-                            }
-                            boolean addFeature = Summaries.showSummary(ModManager.gameplayFeatureModOld.getSharer().getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
-                            if(addFeature) {
-                                Backup.createBackup(getGameFile());
-                                ModManager.gameplayFeatureModOld.getEditor().addMod(newGameplayFeature);
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + " - " + newGameplayFeature.get("NAME EN"));
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + ": [" + newGameplayFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
-                                break;
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                    }
-                }else{
-                    break;
-                }
+            } catch (ModProcessingException e) {
+                ModManager.showException(e);
             }
-        }catch(IOException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
+        });
+
+        JCheckBox checkBoxCompatibleWithArcadeCabinets = new JCheckBox(I18n.INSTANCE.get("commonText.arcadeCompatibility"));
+        checkBoxCompatibleWithArcadeCabinets.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip"));
+        checkBoxCompatibleWithArcadeCabinets.setSelected(true);
+
+        JCheckBox checkBoxCompatibleWithMobile = new JCheckBox(I18n.INSTANCE.get("commonText.mobileCompatibility"));
+        checkBoxCompatibleWithMobile.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip"));
+        checkBoxCompatibleWithMobile.setSelected(true);
+
+        Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerResearchCost, 5), WindowHelper.getSpinnerPanel(spinnerGameplay, 0), WindowHelper.getSpinnerPanel(spinnerGraphic, 1), WindowHelper.getSpinnerPanel(spinnerSound, 2), WindowHelper.getSpinnerPanel(spinnerTech, 3), buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile};
+        while(true){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                if (!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
+                    boolean modAlreadyExists = false;
+                    for(String string : getContentByAlphabet()){
+                        if(textFieldName.getText().equals(string)){
+                            modAlreadyExists = true;
+                        }
+                    }
+                    if(!modAlreadyExists) {
+                        Map<String, String> newGameplayFeature = new HashMap<>();
+                        if(!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
+                            newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                            newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                        }else if(!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()){
+                            newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                        }else if(nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
+                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                            newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                        }else{
+                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                            newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
+                            newGameplayFeature.put("NAME EN", textFieldName.getText());
+                            newGameplayFeature.put("DESC EN", textFieldDescription.getText());
+                        }
+                        newGameplayFeature.put("ID", Integer.toString(getFreeId()));
+                        newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
+                        newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                        newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
+                        newGameplayFeature.put("PRICE", spinnerResearchCost.getValue().toString());
+                        newGameplayFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                        newGameplayFeature.put("PIC", "");
+                        newGameplayFeature.put("GAMEPLAY", spinnerGameplay.getValue().toString());
+                        newGameplayFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
+                        newGameplayFeature.put("SOUND", spinnerSound.getValue().toString());
+                        newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
+                        newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
+                        newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
+                        if(!checkBoxCompatibleWithArcadeCabinets.isSelected()){
+                            newGameplayFeature.put("NO_ARCADE", "");
+                        }
+                        if(!checkBoxCompatibleWithMobile.isSelected()){
+                            newGameplayFeature.put("NO_MOBILE", "");
+                        }
+                        boolean addFeature = Summaries.showSummary(getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
+                        if(addFeature) {
+                            createBackup();
+                            addMod(newGameplayFeature);
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + " - " + newGameplayFeature.get("NAME EN"));
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + ": [" + newGameplayFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                            break;
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                break;
+            }
         }
     }
 
@@ -236,7 +241,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 try{
                     badGenreIds.add(Integer.parseInt(string));
                 }catch(NumberFormatException e){
-                    int numberToAdd = ModManager.genreModOld.getAnalyzer().getContentIdByName(string);
+                    int numberToAdd = ModManager.genreMod.getContentIdByName(string);
                     if(numberToAdd != -1){
                         badGenreIds.add(numberToAdd);
                     }
@@ -246,7 +251,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 try{
                     goodGenreIds.add(Integer.parseInt(string));
                 }catch(NumberFormatException e){
-                    int numberToAdd = ModManager.genreModOld.getAnalyzer().getContentIdByName(string);
+                    int numberToAdd = ModManager.genreMod.getContentIdByName(string);
                     if(numberToAdd != -1){
                         goodGenreIds.add(numberToAdd);
                     }
@@ -268,7 +273,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 }else{
                     firstBadFeature = false;
                 }
-                badGenresFeatures.append(ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(string)));
+                badGenresFeatures.append(ModManager.genreMod.getContentNameById(Integer.parseInt(string)));
             }
         }
         StringBuilder goodGenresFeatures = new StringBuilder();
@@ -282,7 +287,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 }else{
                     firstGoodFeature = false;
                 }
-                goodGenresFeatures.append(ModManager.genreModOld.getAnalyzer().getContentNameById(Integer.parseInt(string)));
+                goodGenresFeatures.append(ModManager.genreMod.getContentNameById(Integer.parseInt(string)));
             }
         }
         String arcadeCompatibility = I18n.INSTANCE.get("commonText.yes");
@@ -297,7 +302,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 I18n.INSTANCE.get("commonText.name") + ": " + workingMap.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + workingMap.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + workingMap.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.gameplayFeatureModOld.getGameplayFeatureNameByTypeId(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + getGameplayFeatureNameByTypeId(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + workingMap.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + workingMap.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + workingMap.get("DEV COSTS") + "\n" +
@@ -323,7 +328,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "GAMEPLAY FEATURE";
     }
 
@@ -393,16 +398,17 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
      * @param goodFeature True when the id should be added as good to the feature. False when it should be added as bad.
      */
     private void editGenreIdAllocation(Set<Integer> gameplayFeaturesIdsToEdit, int genreId, boolean addGenreId, boolean goodFeature) throws ModProcessingException {
+        analyzeFile();
         try {
             LOGGER.info("Editing GameplayFeatures.txt file");
-            File gameplayFeaturesFile = ModManager.gameplayFeatureModOld.getFile();
+            File gameplayFeaturesFile = getGameFile();
             if(gameplayFeaturesFile.exists()){
                 gameplayFeaturesFile.delete();
             }
             gameplayFeaturesFile.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeaturesFile), StandardCharsets.UTF_8));
             bw.write("\ufeff");
-            for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()) {
+            for(Map<String, String> map : getFileContent()) {
                 boolean activeGameplayFeature = false;
                 for(Integer integer : gameplayFeaturesIdsToEdit){
                     if(map.get("ID").equals(Integer.toString(integer))){

@@ -2,8 +2,6 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.ThemeFileAnalyzer;
-import com.github.lmh01.mgt2mt.data_stream.editor.ThemeEditor;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -23,7 +21,6 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class ThemeMod extends AbstractSimpleMod {
 
@@ -60,14 +57,13 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_themes_en.txt";
     }
 
     @Override
     protected void openAddModGui() throws ModProcessingException {
         try {
-            ThemeFileAnalyzer.analyzeThemeFiles();
             final ArrayList<String>[] arrayListThemeTranslations = new ArrayList[]{new ArrayList<>()};
             ArrayList<Integer> arrayListCompatibleGenreIds = new ArrayList<>();
             String[] string = ModManager.genreMod.getContentByAlphabet();
@@ -103,7 +99,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.theme.addTheme.main.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         if(!textFieldThemeName.getText().isEmpty()){
-                            if(!ModManager.themeModOld.getAnalyzerEn().getFileContent().containsValue(textFieldThemeName.getText()) && !ModManager.themeModOld.getAnalyzerGe().getFileContent().containsValue(textFieldThemeName.getText())){
+                            if(!doThemeFilesContain(textFieldThemeName.getText())){
                                 arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
                                 for(Map<String, String> map : ModManager.genreMod.getFileContent()){
                                     for(String name : arrayListCompatibleGenreNames){
@@ -159,8 +155,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 }
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - "  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), e);
         }
     }
 
@@ -185,7 +180,7 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "THEME";
     }
 
@@ -222,14 +217,14 @@ public class ThemeMod extends AbstractSimpleMod {
 
     @Override
     public void removeMod(String name) throws ModProcessingException {
-        editThemeFiles(null, null, false, ThemeFileAnalyzer.getPositionOfThemeInFile(name), 0);
+        editThemeFiles(null, null, false, getPositionOfThemeInFile(name), 0);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
     }
 
     @Override
-    public boolean exportMod(String name, boolean exportAsRestorePoint) {//TODO Rewrite to throw ModProcessingException
+    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
         try {
-            Map<String, String> map = ThemeFileAnalyzer.getSingleThemeByNameMap(name);
+            Map<String, String> map = getSingleThemeByNameMap(name);
             String exportFolder;
             if(exportAsRestorePoint){
                 exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
@@ -252,7 +247,7 @@ public class ThemeMod extends AbstractSimpleMod {
             bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + System.getProperty("line.separator"));
             TranslationManager.printLanguages(bw, map);
             if(map.get("GENRE COMB") != null){
-                bw.write("[GENRE COMB]" + ModManager.genreModOld.getAnalyzer().getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+                bw.write("[GENRE COMB]" + ModManager.genreMod.getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
             }else{
                 bw.write("[GENRE COMB]" + "" + System.getProperty("line.separator"));
             }
@@ -261,27 +256,29 @@ public class ThemeMod extends AbstractSimpleMod {
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] - " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage());
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+            throw new ModProcessingException(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), e);
         }
-        return false;
     }
 
     @Override
-    public String importMod(String importFolderPath, boolean showMessages) throws IOException {//TODO Rewrite to throw ModProcessingException
+    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.theme"));
-        ThemeFileAnalyzer.analyzeThemeFiles();
+        analyzeFile();
         File fileThemeToImport = new File(importFolderPath + "\\" + getImportExportFileName());
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
         int violenceRating = 0;
-        List<Map<String, String>> list = DataStreamHelper.parseDataFile(fileThemeToImport);
+        List<Map<String, String>> list;
+        try {
+            list = DataStreamHelper.parseDataFile(fileThemeToImport);
+        } catch (IOException e) {
+            throw new ModProcessingException("File could not be parsed '" + fileThemeToImport.getName() + "': " +  e.getMessage(), e);
+        }
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE COMB")){
                 ArrayList<String> compatibleGenreNames = Utils.getEntriesFromString(entry.getValue());
                 for(String string : compatibleGenreNames){
-                    compatibleGenreIds.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(string));
+                    compatibleGenreIds.add(ModManager.genreMod.getContentIdByName(string));
                 }
             }else if(entry.getKey().equals("VIOLENCE LEVEL")){
                 violenceRating = Integer.parseInt(entry.getValue());
@@ -300,7 +297,7 @@ public class ThemeMod extends AbstractSimpleMod {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
             return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
         }
-        for(Map.Entry<Integer, String> entry : ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
             if(entry.getValue().equals(map.get("NAME EN"))){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
                 LOGGER.info("Theme already exists - The theme name is already taken");
@@ -310,14 +307,14 @@ public class ThemeMod extends AbstractSimpleMod {
         try {
             if(showMessages){
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    ModManager.themeModOld.getEditor().addMod(map, compatibleGenreIds, violenceRating);
+                    addMod(map, compatibleGenreIds, violenceRating);
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
                 }
             }else{
-                ModManager.themeModOld.getEditor().addMod(map, compatibleGenreIds, violenceRating);
+                addMod(map, compatibleGenreIds, violenceRating);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), I18n.INSTANCE.get("dialog.sharingHandler.unableToAddPublisher"), JOptionPane.ERROR_MESSAGE);
+            throw new ModProcessingException(I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + " - " + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), e);
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
         return "true";
@@ -358,7 +355,7 @@ public class ThemeMod extends AbstractSimpleMod {
             }
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("The custom theme file could not be generated: " + e.getMessage());
+            throw new ModProcessingException("The custom theme file could not be generated: " + e.getMessage(), e);
         }
     }
 
@@ -441,68 +438,41 @@ public class ThemeMod extends AbstractSimpleMod {
                 bw.close();
             }
         } catch (IOException e) {
-            throw new ModProcessingException("Error while editing the theme files: " + e.getMessage());
+            throw new ModProcessingException("Error while editing the theme files: " + e.getMessage(), e);
         }
     }
 
     /**
      * Edits the genre ids for the themes in Themes_GE.txt file
      * @param genreID The genre id that should be added/removed
-     * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the whole file. If the genre id should only be removed from the input theme ids use {@link ThemeEditor#editGenreAllocationAdvanced(int, boolean, Set, boolean)} instead.
+     * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the whole file. If the genre id should only be removed from the input theme ids use {@link ThemeMod#editGenreAllocationAdvanced(int, boolean, Set, boolean)} instead.
      * @param compatibleThemeIds A set containing all compatible theme ids.
      */
-    public void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws IOException {
+    public void editGenreAllocation(int genreID, boolean addGenreID, Set<Integer> compatibleThemeIds) throws ModProcessingException {
         editGenreAllocationAdvanced(genreID, addGenreID, compatibleThemeIds, !addGenreID);
     }
 
     /**
      * Edits the genre ids for the themes in Themes_GE.txt file.
-     * This function will only remove the genre id from the selected theme ids and not from every theme like in {@link ThemeEditor#editGenreAllocation(int, boolean, Set)}.
+     * This function will only remove the genre id from the selected theme ids and not from every theme like in {@link ThemeMod#editGenreAllocation(int, boolean, Set)}.
      * @param genreID The genre id that should be added/removed
      * @param addGenreID True when the genre id should be added to the file. False when the genre id should be removed from the file.
      * @param themeIds A set containing all theme ids that should be modified.
      * @param removeIdFromWholeFile If true the genre id will be removed from the whole file
      */
-    public void editGenreAllocationAdvanced(int genreID, boolean addGenreID, Set<Integer> themeIds, boolean removeIdFromWholeFile) throws IOException {
-        ThemeFileAnalyzer.analyzeThemeFiles();
-        File fileTopicsGe = ModManager.themeModOld.getFileGe();
-        if(fileTopicsGe.exists()){
-            fileTopicsGe.delete();
-        }
-        fileTopicsGe.createNewFile();
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTopicsGe), StandardCharsets.UTF_16LE));
-        Map<Integer, String> map = ModManager.themeModOld.getAnalyzerGe().getFileContent();
-        boolean firstLine = true;
-        for(Integer i : map.keySet()){
-            if(addGenreID){
-                if(themeIds.contains(i)){
-                    if (Settings.enableDebugLogging) {
-                        LOGGER.info(i + " - Y: " + map.get(i));
-                    }
-                    if(!firstLine){
-                        bw.write(System.getProperty("line.separator"));
-                    }
-                    if(!map.get(i).contains("<" + genreID + ">")){
-                        bw.write(map.get(i) + "<" + genreID + ">");
-                    }else{
-                        bw.write(map.get(i));
-                    }
-                }else{
-                    if (!firstLine) {
-                        bw.write(System.getProperty("line.separator"));
-                    }
-                    if (Settings.enableDebugLogging) {
-                        LOGGER.info(i + " - N: " + map.get(i));
-                    }
-                    bw.write(map.get(i));
-                }
-            }else{
-                if(removeIdFromWholeFile){
-                    if (!firstLine) {
-                        bw.write(System.getProperty("line.separator"));
-                    }
-                    bw.write(map.get(i).replace("<" + genreID + ">", ""));
-                }else{
+    public void editGenreAllocationAdvanced(int genreID, boolean addGenreID, Set<Integer> themeIds, boolean removeIdFromWholeFile) throws ModProcessingException {
+        analyzeFile();
+        try {
+            File fileThemesGe = new File(Utils.getMGT2TextFolderPath() + "//DE//Themes_GE.txt");
+            if(fileThemesGe.exists()){
+                fileThemesGe.delete();
+            }
+            fileThemesGe.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileThemesGe), StandardCharsets.UTF_16LE));
+            Map<Integer, String> map = getFileContent();
+            boolean firstLine = true;
+            for(Integer i : map.keySet()){
+                if(addGenreID){
                     if(themeIds.contains(i)){
                         if (Settings.enableDebugLogging) {
                             LOGGER.info(i + " - Y: " + map.get(i));
@@ -510,7 +480,11 @@ public class ThemeMod extends AbstractSimpleMod {
                         if(!firstLine){
                             bw.write(System.getProperty("line.separator"));
                         }
-                        bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                        if(!map.get(i).contains("<" + genreID + ">")){
+                            bw.write(map.get(i) + "<" + genreID + ">");
+                        }else{
+                            bw.write(map.get(i));
+                        }
                     }else{
                         if (!firstLine) {
                             bw.write(System.getProperty("line.separator"));
@@ -520,11 +494,38 @@ public class ThemeMod extends AbstractSimpleMod {
                         }
                         bw.write(map.get(i));
                     }
+                }else{
+                    if(removeIdFromWholeFile){
+                        if (!firstLine) {
+                            bw.write(System.getProperty("line.separator"));
+                        }
+                        bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                    }else{
+                        if(themeIds.contains(i)){
+                            if (Settings.enableDebugLogging) {
+                                LOGGER.info(i + " - Y: " + map.get(i));
+                            }
+                            if(!firstLine){
+                                bw.write(System.getProperty("line.separator"));
+                            }
+                            bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                        }else{
+                            if (!firstLine) {
+                                bw.write(System.getProperty("line.separator"));
+                            }
+                            if (Settings.enableDebugLogging) {
+                                LOGGER.info(i + " - N: " + map.get(i));
+                            }
+                            bw.write(map.get(i));
+                        }
+                    }
                 }
+                firstLine = false;
             }
-            firstLine = false;
+            bw.close();
+        } catch (IOException e) {
+            throw new ModProcessingException("Something went wrong while analyzing the german theme file: " + e.getMessage(), e);
         }
-        bw.close();
     }
 
     /**
@@ -540,10 +541,10 @@ public class ThemeMod extends AbstractSimpleMod {
             if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
             }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
-
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
             }else{
                 break;
+                //throw new ModProcessingException("Unable to determine what charset to use", true); //TODO Diese Zeile hier hinzufügen
             }
             String currentLine;
             int currentLineNumber =1;
@@ -600,9 +601,9 @@ public class ThemeMod extends AbstractSimpleMod {
     public static int getPositionOfThemeInFile(String themeNameEn){
         int position = 1;
         if(Settings.enableDebugLogging){
-            LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + ModManager.themeModOld.getAnalyzerEn().getFileContent().size());
+            LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + ModManager.themeMod.getFileContent().size());
         }
-        for(Map.Entry<Integer, String> entry: ModManager.themeModOld.getAnalyzerEn().getFileContent().entrySet()){
+        for(Map.Entry<Integer, String> entry: ModManager.themeMod.getFileContent().entrySet()){
             if(Settings.enableDebugLogging){
                 LOGGER.info("Value: " + entry.getValue());
             }
@@ -613,5 +614,35 @@ public class ThemeMod extends AbstractSimpleMod {
             }
         }
         return position;
+    }
+
+    /**
+     * @param inputString The string that should be checked if it is contained within a theme file
+     * @return True if a theme file contains string as theme name
+     * @throws ModProcessingException If something went wrong
+     */
+    public boolean doThemeFilesContain(String inputString) throws ModProcessingException {//TODO schauen, ob die Funktion hier funktioniert
+        for(String string : TranslationManager.TRANSLATION_KEYS){
+            File themeFile = Utils.getThemeFile(string);
+            Map<Integer, String> currentThemeFileContent;
+            try {
+                if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_8BOM");
+                }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_16LE");
+                }else{
+                    throw new ModProcessingException("Unable to determine what charset to use", true);
+                }
+                for (Map.Entry<Integer, String> entry : currentThemeFileContent.entrySet()) {
+                    if (getReplacedLine(entry.getValue()).equals(inputString)) {
+                        return true;
+                    }
+                }
+                return false;
+            } catch (IOException e) {
+                throw new ModProcessingException("Error while analyzing file '" + themeFile.getName() + "':" + e.getMessage(), e);
+            }
+        }
+        return false;
     }
 }

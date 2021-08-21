@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,18 +34,18 @@ public class WindowAddGenrePage10 extends JFrame{
     }
 
     public WindowAddGenrePage10() {
-        buttonAddScreenshot.addActionListener(actionEvent -> ModManager.genreModOld.setGenreScreenshots(screenshotFiles, buttonAddScreenshot));
+        buttonAddScreenshot.addActionListener(actionEvent -> ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot));
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots.confirm"), I18n.INSTANCE.get("frame.title.reset"), JOptionPane.YES_NO_OPTION) == 0){
                 screenshotFiles.get().clear();
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            GenreManager.openStepWindow(11);
+            GenreMod.openStepWindow(11);
             FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            GenreManager.openStepWindow(9);
+            GenreMod.openStepWindow(9);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {

@@ -103,29 +103,34 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
-    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException, IOException {
+    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
         File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
-        Map<String, String> importMap = DataStreamHelper.parseDataFile(fileToImport).get(0);
+        Map<String, String> map;
+        try {
+            map = DataStreamHelper.parseDataFile(fileToImport).get(0);
+        } catch (IOException e) {
+            throw new ModProcessingException("File could not be parsed '" + fileToImport.getName() + "': " +  e.getMessage());
+        }
         boolean CanBeImported = false;
         for(String string : getCompatibleModToolVersions()){
-            if(string.equals(importMap.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
+            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
                 CanBeImported = true;
             }
         }
         if(!CanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + getReplacedLine(importMap.get("LINE")));
-            return getType() + " [" + getReplacedLine(importMap.get("LINE")) + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + importMap.get("MGT2MT VERSION");
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + getReplacedLine(map.get("LINE")));
+            return getType() + " [" + getReplacedLine(map.get("LINE")) + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + map.get("MGT2MT VERSION");
         }
         for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
-            if(entry.getValue().equals(importMap.get("LINE"))){
+            if(entry.getValue().equals(map.get("LINE"))){
                 sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + getReplacedLine(importMap.get("LINE")));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + getReplacedLine(map.get("LINE")));
                 return "false";
             }
         }
-        String importLine = getModifiedImportLine(importMap.get("LINE"));
+        String importLine = getModifiedImportLine(map.get("LINE"));
         boolean addFeature = true;
         if(showMessages){
             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(importLine)) != JOptionPane.YES_OPTION){
@@ -135,9 +140,9 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         if(addFeature){
             addMod(importLine);
             if(showMessages){
-                JOptionPane.showMessageDialog(null, getType() + " [" + getReplacedLine(importMap.get("LINE")) + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
+                JOptionPane.showMessageDialog(null, getType() + " [" + getReplacedLine(map.get("LINE")) + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + getReplacedLine(importMap.get("LINE")));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + getReplacedLine(map.get("LINE")));
         }
         return "true";
     }
@@ -200,18 +205,22 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     /**
-     * @return A string containing all active things sorted by alphabet.
+     * @return String containing all active things sorted by alphabet.
      */
     @Override
-    public final String[] getContentByAlphabet(){
-        ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
-        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
-            arrayListAvailableThingsSorted.add(getReplacedLine(entry.getValue()));
+    public final String[] getContentByAlphabet() throws ModProcessingException {
+        try {
+            ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
+            for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
+                arrayListAvailableThingsSorted.add(getReplacedLine(entry.getValue()));
+            }
+            Collections.sort(arrayListAvailableThingsSorted);
+            String[] string = new String[arrayListAvailableThingsSorted.size()];
+            arrayListAvailableThingsSorted.toArray(string);
+            return string;
+        } catch (NullPointerException e) {
+            throw new ModProcessingException("Could not return the file content: This is caused because " + getType() + " mod was not analyzed.", true);
         }
-        Collections.sort(arrayListAvailableThingsSorted);
-        String[] string = new String[arrayListAvailableThingsSorted.size()];
-        arrayListAvailableThingsSorted.toArray(string);
-        return string;
     }
 
     /**

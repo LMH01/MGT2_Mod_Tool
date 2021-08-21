@@ -1,8 +1,9 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
@@ -35,7 +36,7 @@ public class WindowAddGenrePage11 extends JFrame{
 
     public WindowAddGenrePage11() {
         buttonBrowse.addActionListener(actionEvent -> {
-            String imageFilePath = ModManager.genreModOld.getGenreImageFilePath(false, true, textFieldImagePath);
+            String imageFilePath = ModManager.genreMod.getGenreImageFilePath(false, true, textFieldImagePath);
             if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
@@ -44,29 +45,31 @@ public class WindowAddGenrePage11 extends JFrame{
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            if(textFieldImagePath.getText().isEmpty()){
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
-                    FRAME.dispose();
-                    GenreManager.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
-                    WindowMain.checkActionAvailability();
-                }
-            }else{
-                String imageFilePath = ModManager.genreModOld.getGenreImageFilePath(true, false, textFieldImagePath);
-                if(!imageFilePath.equals("error")){
-                    genreIcon = new File(imageFilePath);
-                    FRAME.dispose();
-                    GenreManager.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
-                    GenreManager.addGenre(GenreManager.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
-                    WindowMain.checkActionAvailability();
-                }else if(textFieldImagePath.getText().isEmpty()){
+            AbstractBaseMod.startModThread(() -> {
+                if(textFieldImagePath.getText().isEmpty()){
+                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                        genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+                        FRAME.dispose();
+                        GenreMod.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
+                        ModManager.genreMod.addGenre(GenreMod.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
+                        WindowMain.checkActionAvailability();
+                    }
+                }else{
+                    String imageFilePath = ModManager.genreMod.getGenreImageFilePath(true, false, textFieldImagePath);
+                    if(!imageFilePath.equals("error")){
+                        genreIcon = new File(imageFilePath);
+                        FRAME.dispose();
+                        GenreMod.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
+                        ModManager.genreMod.addGenre(GenreMod.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
+                        WindowMain.checkActionAvailability();
+                    }else if(textFieldImagePath.getText().isEmpty()){
 
+                    }
                 }
-            }
+            }, "WindowAddGenrePage11ButtonNext");
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            GenreManager.openStepWindow(10);
+            GenreMod.openStepWindow(10);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {

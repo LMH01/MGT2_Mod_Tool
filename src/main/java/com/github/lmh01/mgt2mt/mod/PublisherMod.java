@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
@@ -11,12 +12,13 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -70,14 +73,13 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_publisher.txt";
     }
 
     @Override
     protected void openAddModGui() throws ModProcessingException {
         try {
-            ModManager.publisherModOld.getAnalyzer().analyzeFile();
             JTextField textFieldName = new JTextField(I18n.INSTANCE.get("commonText.enterName"));
 
             JComboBox comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
@@ -116,13 +118,13 @@ public class PublisherMod extends AbstractAdvancedMod {
             buttonSelectGenre.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip"));
             buttonSelectGenre.addActionListener(actionEvent -> {
                 try {
-                    ModManager.genreModOld.getAnalyzer().analyzeFile();
+                    ModManager.genreMod.analyzeFile();
                     JLabel labelChooseGenre = new JLabel(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select"));
                     ArrayList<String> availableGenres = new ArrayList<>();
                     String[] string;
-                    string = ModManager.genreModOld.getAnalyzer().getContentByAlphabet();
+                    string = ModManager.genreMod.getContentByAlphabet();
                     for(String string1 : string){
-                        Map<String, String> genreMap = ModManager.genreModOld.getAnalyzer().getSingleContentMapByName(string1);
+                        Map<String, String> genreMap = ModManager.genreMod.getSingleContentMapByName(string1);
                         int genreDate = Integer.parseInt(genreMap.get("DATE").replaceAll("[^0-9]", ""));
                         if(Integer.parseInt(spinnerUnlockYear.getValue().toString()) >= genreDate){
                             if(Utils.getNumberForMonth(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))){
@@ -144,15 +146,14 @@ public class PublisherMod extends AbstractAdvancedMod {
                     if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.selectGenre"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                         if(!listAvailableGenres.isSelectionEmpty()){
                             String currentGenre = listAvailableGenres.getSelectedValue();
-                            genreID.set(ModManager.genreModOld.getAnalyzer().getContentIdByName(currentGenre));
+                            genreID.set(ModManager.genreMod.getContentIdByName(currentGenre));
                             buttonSelectGenre.setText(currentGenre);
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select.error") + ":\n\n" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                    e.printStackTrace();
+                } catch (ModProcessingException e) {
+                    ModManager.showException(e);
                 }
             });
             panelGenre.add(labelGenre);
@@ -167,7 +168,7 @@ public class PublisherMod extends AbstractAdvancedMod {
             while(!breakLoop){
                 if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                     boolean publisherAlreadyExists = false;
-                    for(String string : ModManager.publisherModOld.getAnalyzer().getContentByAlphabet()){
+                    for(String string : getContentByAlphabet()){
                         if(textFieldName.getText().equals(string)){
                             publisherAlreadyExists = true;
                         }
@@ -198,7 +199,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                                     I18n.INSTANCE.get("commonText.share") + ": " + spinnerShare.getValue().toString() + "\n" +
                                     I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
                                 Map<String, String> map = new HashMap<>();
-                                map.put("ID", Integer.toString(ModManager.publisherModOld.getAnalyzer().getFreeId()));
+                                map.put("ID", Integer.toString(getFreeId()));
                                 map.put("NAME EN", textFieldName.getText());
                                 map.put("NAME GE", textFieldName.getText());
                                 map.put("NAME TU", textFieldName.getText());
@@ -254,7 +255,7 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "PUBLISHER";
     }
 
@@ -332,7 +333,7 @@ public class PublisherMod extends AbstractAdvancedMod {
      */
     public void removeGenre(String name) throws ModProcessingException {
         try {
-            int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(name);
+            int genreId = ModManager.genreMod.getContentIdByName(name);
             analyzeFile();
             sendLogMessage("Replacing genre id in publisher file: " + name);
             Charset charset = getCharset();
@@ -348,7 +349,7 @@ public class PublisherMod extends AbstractAdvancedMod {
             for(Map<String, String> fileContent : getFileContent()){
                 if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
                     fileContent.remove("GENRE");
-                    fileContent.put("GENRE", Integer.toString(ModManager.genreModOld.getAnalyzer().getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreModOld.getAnalyzer().getActiveIds().size()))));
+                    fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getActiveIds().size()))));
                 }
                 printValues(fileContent, bw);
                 bw.write(System.getProperty("line.separator"));
@@ -358,5 +359,64 @@ public class PublisherMod extends AbstractAdvancedMod {
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while editing the game file for mod " + getType() + ": " + e.getMessage());
         }
+    }
+
+    public final String REAL_PUBLISHER_ZIP_URL = "https://www.dropbox.com/s/gkn7y2he1we3fgc/Publishers.zip?dl=1";
+
+    /**
+     * Asks the user if he is sure that the existing publishers should be replaced with the real publisher equivalents
+     */
+    public void realPublishers(){//TODO Testen, ob Funktion noch geht
+        AbstractBaseMod.startModThread(() -> {
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                try{
+                    ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"), false, false);
+                    File publisherZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher.zip");
+                    File publisherUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher");
+                    boolean downloadFiles = true;
+                    if(publisherUnzipped.exists()){
+                        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists"), "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                            downloadFiles = false;
+                        }else{
+                            DataStreamHelper.deleteDirectory(publisherZip, false);
+                            DataStreamHelper.deleteDirectory(publisherUnzipped, false);
+                        }
+                    }
+                    if(downloadFiles){
+                        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
+                        DataStreamHelper.downloadZip(REAL_PUBLISHER_ZIP_URL, publisherZip.getPath());
+                        ProgressBarHelper.resetProgressBar();
+                        DataStreamHelper.unzip(publisherZip.getPath(), publisherUnzipped);
+                    }
+                    LOGGER.info("Real publisher files are ready.");
+                    LOGGER.info("Removing existing publishers...");
+                    ProgressBarHelper.initializeProgressBar(0, ModManager.publisherMod.getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
+                    for(String string : ModManager.publisherMod.getDefaultContent()){
+                        ModManager.publisherMod.removeMod(string);
+                        ProgressBarHelper.increment();
+                    }
+                    LOGGER.info("Original publishers have been removed!");
+                    LOGGER.info("Adding new publishers...");
+                    ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
+                    ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
+                    SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.importMod(string, false), ModManager.publisherMod.getCompatibleModToolVersions(), new AtomicBoolean(false));
+                    ModManager.publisherMod.analyzeFile();
+                    if(ModManager.publisherMod.getActiveIds().contains(-1)){
+                        ModManager.publisherMod.removeMod("Dummy");
+                    }
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
+                }catch (IOException e){
+                    e.printStackTrace();
+                    String errorMessageToDisplay;
+                    if(e.getMessage().equals("www.dropbox.com")){
+                        errorMessageToDisplay = I18n.INSTANCE.get("commonText.noInternet");
+                    }else{
+                        errorMessageToDisplay = e.getMessage();
+                    }
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + " " + errorMessageToDisplay, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }, "runnableReplacePublisherWithRealPublishers");
     }
 }

@@ -44,7 +44,7 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_licences";
     }
 
@@ -75,7 +75,7 @@ public class LicenceMod extends AbstractSimpleMod {
                         newLicence.append("[SPORT]");
                     }
                     boolean licenceAlreadyExists = false;
-                    for(Map.Entry<Integer, String> entry : ModManager.licenceModOld.getAnalyzer().getFileContent().entrySet()){
+                    for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
                         if(entry.getValue().equals(newLicence.toString())){
                             LOGGER.info("Licence already exists");
                             licenceAlreadyExists = true;
@@ -87,16 +87,11 @@ public class LicenceMod extends AbstractSimpleMod {
                                 .append(textFieldName.getText()).append(System.getProperty("line.separator"))
                                 .append("Type: ").append(comboBoxType.getSelectedItem());
                         if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                            try {
-                                Backup.createBackup(getGameFile());
-                                ModManager.licenceModOld.getEditor().addMod(newLicence.toString());
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.licence.upperCase") + " - " + textFieldName.getText());
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.licence.upperCase") + ": [" + textFieldName.getText() + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
-                                break;
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
-                            }
+                            createBackup();
+                            addMod(newLicence.toString());
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.licence.upperCase") + " - " + textFieldName.getText());
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.licence.upperCase") + ": [" + textFieldName.getText() + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                            break;
                         }
                     }else{
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
@@ -135,7 +130,7 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "LICENCE";
     }
 

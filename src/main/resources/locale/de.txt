@@ -757,11 +757,10 @@ textArea.themeExportSuccessful|Das folgende Thema wurde exportiert:
 textArea.ExportFailed.generalError.secondPart|ist folgender Fehler aufgetreten:
 textArea.uninstalling|Deinstalliere
 textArea.uninstalling.uninstallingAllMods|Deinstalliere alle Mods
-textArea.uninstalling.uninstallingAllMods.genre.failed|Deinstallation des Genre fehlgeschlagen:
-textArea.uninstalling.uninstallingAllMods.publisher.failed|Deinstallation des Publisher fehlgeschlagen:
-textArea.uninstalling.uninstallingAllMods.platform.failed|Deinstallation der Platform fehlgeschlagen:
+textArea.uninstalling.uninstallingAllMods.mod.failed|Fehlgeschlagen:
 textArea.uninstalling.uninstallingAllMods.success|Spieldateien wurden zu ihrem original Zustand zurückgesetzt
 textArea.uninstalling.uninstallingAllMods.noModsFound|Es müssen keine Mods entfernt werden: Keine Mods gefunden
+textArea.uninstalling.uninstallingAllMods.error|Die folgende Fehlermeldung ist aufgetreten, während die Mods deinstalliert werden sollten, der Deinstallationsprozess wird trotzdem fortgesetzt:
 textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
 textArea.deletingBackups|Lösche Backups
 textArea.deletingSettings|Lösche Einstellungen
@@ -945,9 +944,6 @@ window.uninstall.confirmMessage.secondPart|Dies kann nicht rückgängig gemacht 
 window.uninstall.confirmMessage.title|Bestätigen der Deinstallation
 window.uninstall.uninstallIncomplete|Bei der Deinstallation ist ein Problem aufgetreten:
 window.uninstall.uninstallIncomplete.title|Deinstallation unvollstäding
-window.uninstall.uninstallIncomplete.genreCouldNotBeRemoved|Genre konnte nicht entfernt werden:
-window.uninstall.uninstallIncomplete.publisherCouldNotBeRemoved|Publisher konnte nicht entfernt werden:
-window.uninstall.uninstallIncomplete.platformCouldNotBeRemoved|Platform konnte nicht entfernt werden:
 window.uninstall.uninstallSuccessful|Die ausgewählten Dateien wurden erfolgreich deinstalliert!
 window.uninstall.uninstallSuccessful.title|Deinstallation erfolgreich
 
@@ -1014,7 +1010,7 @@ window.npcGamesList.from|von
 window.npcGamesList.confirmDialog.1|Die folgenden Genre(s) werden
 window.npcGamesList.confirmDialog.2|der NPC-Spieleliste.
 window.npcGamesList.confirmDialog.title|Liste der NPC-Spiele ändern?
-window.npcGamesList.errorOccurred|<html>Beim Ändern der Liste der NPC-Spiele ist ein Fehler aufgetreten.<br>Einige Änderungen wurden möglicherweise nicht abgeschlossen.<br>Weitere Informationen sind in der Konsole zu finden.
+window.npcGamesList.errorOccurred|Liste der NPC-Spiele konnte nicht geändert werden
 window.npcGamesList.success|Die NPC-Spieleliste wurde erfolgreich geändert.
 window.npcGamesList.noGenreSelected|<html>Fortsetzung nicht möglich:<br>Bitte wähle mindestens ein Genre aus.
 

@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class WindowAddGenrePage9 extends JFrame{
     public WindowAddGenrePage9() {
         buttonNext.addActionListener(actionEvent -> {
             if(saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl) || Settings.disableSafetyFeatures){
-                GenreManager.openStepWindow(10);
+                GenreMod.openStepWindow(10);
                 FRAME.dispose();
             }else{
                 JOptionPane.showMessageDialog(new Frame(), "Can't continue:\nThe combined value has to be 100.\nIt is currently at: " + combinedValue);
@@ -47,7 +47,7 @@ public class WindowAddGenrePage9 extends JFrame{
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl);
-            GenreManager.openStepWindow(8);
+            GenreMod.openStepWindow(8);
             FRAME.dispose();
 
         });
@@ -106,10 +106,10 @@ public class WindowAddGenrePage9 extends JFrame{
         spinnerGraphic.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Graphic priority in %");
         spinnerSound.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Sound priority in %");
         spinnerControl.setToolTipText("<html>[Range: 5 - 85; Default: 25; Steps of 5]<br>Control priority in %");
-        spinnerGameplay.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("GAMEPLAY")), 5, 85, 5));
-        spinnerGraphic.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("GRAPHIC")), 5, 85, 5));
-        spinnerSound.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("SOUND")), 5, 85, 5));
-        spinnerControl.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("CONTROL")), 5, 85, 5));
+        spinnerGameplay.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("GAMEPLAY")), 5, 85, 5));
+        spinnerGraphic.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("GRAPHIC")), 5, 85, 5));
+        spinnerSound.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("SOUND")), 5, 85, 5));
+        spinnerControl.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("CONTROL")), 5, 85, 5));
         if(Settings.disableSafetyFeatures){
             ((JSpinner.DefaultEditor)spinnerGameplay.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerGraphic.getEditor()).getTextField().setEditable(true);
@@ -133,14 +133,14 @@ public class WindowAddGenrePage9 extends JFrame{
                 Integer.parseInt(spinnerControl.getValue().toString());
         LOGGER.info("combined value: " + combinedValue);
         if(combinedValue == 100 && testIfDividableBy5(spinnerGameplay,spinnerGraphic, spinnerSound, spinnerControl)){
-            GenreManager.mapNewGenre.remove("GAMEPLAY");
-            GenreManager.mapNewGenre.remove("GRAPHIC");
-            GenreManager.mapNewGenre.remove("SOUND");
-            GenreManager.mapNewGenre.remove("CONTROL");
-            GenreManager.mapNewGenre.put("GAMEPLAY", spinnerGameplay.getValue().toString());
-            GenreManager.mapNewGenre.put("GRAPHIC", spinnerGraphic.getValue().toString());
-            GenreManager.mapNewGenre.put("SOUND", spinnerSound.getValue().toString());
-            GenreManager.mapNewGenre.put("CONTROL", spinnerControl.getValue().toString());
+            GenreMod.mapNewGenre.remove("GAMEPLAY");
+            GenreMod.mapNewGenre.remove("GRAPHIC");
+            GenreMod.mapNewGenre.remove("SOUND");
+            GenreMod.mapNewGenre.remove("CONTROL");
+            GenreMod.mapNewGenre.put("GAMEPLAY", spinnerGameplay.getValue().toString());
+            GenreMod.mapNewGenre.put("GRAPHIC", spinnerGraphic.getValue().toString());
+            GenreMod.mapNewGenre.put("SOUND", spinnerSound.getValue().toString());
+            GenreMod.mapNewGenre.put("CONTROL", spinnerControl.getValue().toString());
             LOGGER.info("Gameplay = " + spinnerGameplay.getValue().toString());
             LOGGER.info("graphic = " + spinnerGraphic.getValue().toString());
             LOGGER.info("sound = " + spinnerSound.getValue().toString());

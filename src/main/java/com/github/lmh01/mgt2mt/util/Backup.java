@@ -2,9 +2,9 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedModOld;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleModOld;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -268,13 +268,8 @@ public class Backup {
      */
     private static ArrayList<File> getBackupFiles(){
         ArrayList<File> backupFiles = new ArrayList<>();
-        for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
-            backupFiles.add(advancedMod.getFile());
-        }
-        for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
-            if(!simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                backupFiles.add(simpleMod.getFile());
-            }
+        for (AbstractBaseMod mod : ModManager.mods) {
+            backupFiles.add(mod.getGameFile());
         }
         backupFiles.add(Utils.getNpcGamesFile());
         return backupFiles;
@@ -352,30 +347,14 @@ public class Backup {
             StringBuilder uninstallFailedExplanation = new StringBuilder();
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
             try {
-                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods) {
-                    if(simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                        String[] content = ModManager.themeModOld.getAnalyzerEn().getCustomContentString();
-                        ProgressBarHelper.increaseMaxValue(content.length);
-                        for(String string : content){
-                            simpleMod.getBaseEditor().removeMod(string);
-                            ProgressBarHelper.increment();
-                        }
-                    }else{
-                        String[] content = simpleMod.getBaseAnalyzer().getCustomContentString();
-                        for (String string : content){
-                            simpleMod.getBaseEditor().removeMod(string);
-                            ProgressBarHelper.increment();
-                        }
-                    }
-                }
-                for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
-                    String[] content = advancedMod.getBaseAnalyzer().getCustomContentString();
-                    for (String string : content){
-                        advancedMod.getBaseEditor().removeMod(string);
+                for (AbstractBaseMod mod : ModManager.mods) {//TODO schauen, ob das so funktioniert, insbesondere mit blick auf die Themen
+                    String[] content = mod.getCustomContentString();
+                    for (String string : content) {
+                        mod.removeMod(string);
                         ProgressBarHelper.increment();
                     }
                 }
-            }catch (IOException e){
+            }catch (ModProcessingException e){
                 uninstallFailed = true;
                 uninstallFailedExplanation.append(e.getMessage());
             }

@@ -155,102 +155,97 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_hardware.txt";
     }
 
     @Override
     protected void openAddModGui() throws ModProcessingException {
-        try{
-            JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue"));
-            final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
-            AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
-            JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
-            JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"));
-            final Map<String, String>[] mapDescriptionTranslation = new Map[]{new HashMap<>()};
-            AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
-            JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslation, descriptionTranslationsAdded, 0);
-            JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
-            JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
-            JComboBox<String> comboBoxType = WindowHelper.getTypeComboBox(4);
-            JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
-            JSpinner spinnerCost = WindowHelper.getBaseSpinner("commonText.cost.spinner.toolTip", 500000, 0, 10000000, 10000);
-            JSpinner spinnerDevelopmentCost = WindowHelper.getBaseSpinner("commonText.developmentCost.spinner", 1000000, 0, 100000000, 10000);
-            JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
+        JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue"));
+        final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
+        AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
+        JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"));
+        final Map<String, String>[] mapDescriptionTranslation = new Map[]{new HashMap<>()};
+        AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslation, descriptionTranslationsAdded, 0);
+        JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+        JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
+        JComboBox<String> comboBoxType = WindowHelper.getTypeComboBox(4);
+        JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
+        JSpinner spinnerCost = WindowHelper.getBaseSpinner("commonText.cost.spinner.toolTip", 500000, 0, 10000000, 10000);
+        JSpinner spinnerDevelopmentCost = WindowHelper.getBaseSpinner("commonText.developmentCost.spinner", 1000000, 0, 100000000, 10000);
+        JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
 
-            JComboBox<String> comboBoxExclusivity = new JComboBox<>(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"), I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value2")}));
-            comboBoxExclusivity.setSelectedItem(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"));
-            comboBoxExclusivity.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip"));
-            comboBoxExclusivity.setEnabled(false);
+        JComboBox<String> comboBoxExclusivity = new JComboBox<>(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"), I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value2")}));
+        comboBoxExclusivity.setSelectedItem(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"));
+        comboBoxExclusivity.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip"));
+        comboBoxExclusivity.setEnabled(false);
 
-            AtomicBoolean lastValue = new AtomicBoolean(false);
-            JCheckBox checkBoxEnableExclusivity = new JCheckBox(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole"));
-            checkBoxEnableExclusivity.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip"));
-            checkBoxEnableExclusivity.addChangeListener(changeListener -> {
-                if(checkBoxEnableExclusivity.isSelected() != lastValue.get()){
-                    comboBoxExclusivity.setEnabled(checkBoxEnableExclusivity.isSelected());
-                    lastValue.set(checkBoxEnableExclusivity.isSelected());
-                }
-            });
+        AtomicBoolean lastValue = new AtomicBoolean(false);
+        JCheckBox checkBoxEnableExclusivity = new JCheckBox(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole"));
+        checkBoxEnableExclusivity.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip"));
+        checkBoxEnableExclusivity.addChangeListener(changeListener -> {
+            if(checkBoxEnableExclusivity.isSelected() != lastValue.get()){
+                comboBoxExclusivity.setEnabled(checkBoxEnableExclusivity.isSelected());
+                lastValue.set(checkBoxEnableExclusivity.isSelected());
+            }
+        });
 
-            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerCost, 8), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), checkBoxEnableExclusivity, comboBoxExclusivity};
-            while(true){
-                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))){
-                        boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
-                            if(textFieldName.getText().equals(string)){
-                                modAlreadyExists = true;
+        Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerCost, 8), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), checkBoxEnableExclusivity, comboBoxExclusivity};
+        while(true){
+            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+                if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))){
+                    boolean modAlreadyExists = false;
+                    for(String string : getContentByAlphabet()){
+                        if(textFieldName.getText().equals(string)){
+                            modAlreadyExists = true;
+                        }
+                    }
+                    if(!modAlreadyExists){
+                        Map<String, String> hardwareFeatureMap = new HashMap<>();
+                        hardwareFeatureMap.put("ID", Integer.toString(getFreeId()));
+                        if(!nameTranslationsAdded.get()){
+                            hardwareFeatureMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
+                        }else{
+                            hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
+                            hardwareFeatureMap.put("NAME EN", textFieldName.getText());
+                        }
+                        if(!descriptionTranslationsAdded.get()){
+                            hardwareFeatureMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
+                        }else{
+                            hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslation[0], "DESC"));
+                            hardwareFeatureMap.put("DESC EN", textFieldDescription.getText());
+                        }
+                        hardwareFeatureMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())) + " " + spinnerUnlockYear.getValue().toString());
+                        hardwareFeatureMap.put("RES POINTS", spinnerResearchPoints.getValue().toString());
+                        hardwareFeatureMap.put("PRICE", spinnerCost.getValue().toString());
+                        hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+                        hardwareFeatureMap.put("TYP", Integer.toString(getHardwareTypeIdByName(Objects.requireNonNull(comboBoxType.getSelectedItem()).toString())));
+                        hardwareFeatureMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
+                        if(checkBoxEnableExclusivity.isSelected()){
+                            if(Objects.requireNonNull(comboBoxExclusivity.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"))){
+                                hardwareFeatureMap.put("ONLY_STATIONARY", "");
+                            }else{
+                                hardwareFeatureMap.put("ONLY_HANDHELD", "");
                             }
                         }
-                        if(!modAlreadyExists){
-                            Map<String, String> hardwareFeatureMap = new HashMap<>();
-                            hardwareFeatureMap.put("ID", Integer.toString(getFreeId()));
-                            if(!nameTranslationsAdded.get()){
-                                hardwareFeatureMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                            }else{
-                                hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
-                                hardwareFeatureMap.put("NAME EN", textFieldName.getText());
-                            }
-                            if(!descriptionTranslationsAdded.get()){
-                                hardwareFeatureMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                            }else{
-                                hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslation[0], "DESC"));
-                                hardwareFeatureMap.put("DESC EN", textFieldDescription.getText());
-                            }
-                            hardwareFeatureMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())) + " " + spinnerUnlockYear.getValue().toString());
-                            hardwareFeatureMap.put("RES POINTS", spinnerResearchPoints.getValue().toString());
-                            hardwareFeatureMap.put("PRICE", spinnerCost.getValue().toString());
-                            hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                            hardwareFeatureMap.put("TYP", Integer.toString(getHardwareTypeIdByName(Objects.requireNonNull(comboBoxType.getSelectedItem()).toString())));
-                            hardwareFeatureMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
-                            if(checkBoxEnableExclusivity.isSelected()){
-                                if(Objects.requireNonNull(comboBoxExclusivity.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"))){
-                                    hardwareFeatureMap.put("ONLY_STATIONARY", "");
-                                }else{
-                                    hardwareFeatureMap.put("ONLY_HANDHELD", "");
-                                }
-                            }
-                            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                Backup.createBackup(getGameFile());
-                                addMod(hardwareFeatureMap);
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
-                                break;
-                            }
-                        }else{
-                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                        if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            createBackup();
+                            addMod(hardwareFeatureMap);
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                            break;
                         }
                     }else{
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }else{
-                    break;
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
+            }else{
+                break;
             }
-        }catch(IOException e){
-            TextAreaHelper.appendText(e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -283,7 +278,7 @@ public class HardwareMod extends AbstractAdvancedMod {
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
                 I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.hardwareModOld.getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
+                I18n.INSTANCE.get("commonText.type") + ": " + getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
                 lastPart;
     }
 
@@ -298,7 +293,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "HARDWARE";
     }
 

@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class WindowAddGenrePage2 extends JFrame{
     public WindowAddGenrePage2() {
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerUnlockYear, comboBoxGenreUnlockMonth);
-            GenreManager.openStepWindow(3);
+            GenreMod.openStepWindow(3);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -46,7 +46,7 @@ public class WindowAddGenrePage2 extends JFrame{
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerUnlockYear, comboBoxGenreUnlockMonth);
-            GenreManager.openStepWindow(1);
+            GenreMod.openStepWindow(1);
             FRAME.dispose();
         });
     }
@@ -63,11 +63,11 @@ public class WindowAddGenrePage2 extends JFrame{
 
         if(Settings.disableSafetyFeatures){
             spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-            spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
+            spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(true);
         }else{
             spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
-            spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
+            spinnerUnlockYear.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("UNLOCK YEAR")), 1976, 2050, 1));
             ((JSpinner.DefaultEditor)spinnerUnlockYear.getEditor()).getTextField().setEditable(false);
         }
 
@@ -82,7 +82,7 @@ public class WindowAddGenrePage2 extends JFrame{
         comboBoxGenreUnlockMonth.setBounds(120, 35, 100, 23);
         comboBoxGenreUnlockMonth.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
         comboBoxGenreUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-        comboBoxGenreUnlockMonth.setSelectedItem(GenreManager.mapNewGenre.get("UNLOCK MONTH"));
+        comboBoxGenreUnlockMonth.setSelectedItem(GenreMod.mapNewGenre.get("UNLOCK MONTH"));
         contentPane.add(comboBoxGenreUnlockMonth);
 
         JLabel labelGenreID = new JLabel(I18n.INSTANCE.get("commonText.unlockYear") + ":");
@@ -105,9 +105,9 @@ public class WindowAddGenrePage2 extends JFrame{
         contentPane.add(spinnerUnlockYear);
     }
     private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox<String> comboBoxGenreUnlockMonth){
-        GenreManager.mapNewGenre.put("DATE", Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
-        GenreManager.mapNewGenre.put("UNLOCK MONTH", comboBoxGenreUnlockMonth.getSelectedItem().toString());
-        GenreManager.mapNewGenre.put("UNLOCK YEAR", spinnerUnlockYear.getValue().toString());
+        GenreMod.mapNewGenre.put("DATE", Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+        GenreMod.mapNewGenre.put("UNLOCK MONTH", comboBoxGenreUnlockMonth.getSelectedItem().toString());
+        GenreMod.mapNewGenre.put("UNLOCK YEAR", spinnerUnlockYear.getValue().toString());
         LOGGER.info("genre unlock year: " +  Integer.parseInt(spinnerUnlockYear.getValue().toString()));
         LOGGER.info("Genre unlock month: " + comboBoxGenreUnlockMonth.getSelectedItem().toString());
     }

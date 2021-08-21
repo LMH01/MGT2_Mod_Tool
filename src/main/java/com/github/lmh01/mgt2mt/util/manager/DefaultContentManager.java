@@ -34,6 +34,7 @@ public class DefaultContentManager {
     private static final String NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL = "https://www.dropbox.com/s/hd7f7c2b9ybr5gt/newest_default_content_version.txt?dl=1";
     private static final String NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL = "https://www.dropbox.com/s/7l89pg9x4venqje/newest_default_content.toml?dl=1";
     public static final File DEFAULT_CONTENT_FILE = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content.toml");
+
     /**
      * Analyzes the current default content file "%appdata%\LMH01\MGT2_Mod_Manager\default_content.toml" to
      * determine if they are up-to-date.
@@ -186,12 +187,8 @@ public class DefaultContentManager {
      */
     private static ArrayList<String> getDefaultContentNames(){
         ArrayList<String> strings = new ArrayList<>();
-        for (AbstractSimpleModOld simpleMod : ModManager.simpleMods) {
-            strings.add(simpleMod.getBaseAnalyzer().getDefaultContentFileName());
-        }
-        strings.add(ModManager.themeModOld.getAnalyzerEn().getDefaultContentFileName());//This line is needed because the english default content file would not be read
-        for (AbstractAdvancedModOld advancedMod : ModManager.advancedMods) {
-            strings.add(advancedMod.getBaseAnalyzer().getDefaultContentFileName());
+        for (AbstractBaseMod mod : ModManager.mods) {
+            strings.add(mod.getDefaultContentFileName());
         }
         return strings;
     }

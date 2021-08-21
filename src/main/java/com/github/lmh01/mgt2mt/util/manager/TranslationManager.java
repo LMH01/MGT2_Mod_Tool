@@ -16,8 +16,9 @@ public class TranslationManager {
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR","CH","CT","IT", "ES", "RO", "JA", "RU", "TU"};
     public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"CZ","EN",  "FR", "GE", "HU", "KO", "PB", "PL"};
+
     /**
-     * @return Returns a array list with the user input that should be used as translation. See cases for translation position in array list.
+     * @return An array list with the user input that should be used as translation. See cases for translation position in array list.
      */
     public static ArrayList<String> getTranslationsArrayList(){
         ArrayList<String> arrayListTranslations = new ArrayList<>();
@@ -56,7 +57,7 @@ public class TranslationManager {
     }
 
     /**
-     * @return Returns a map containing the translations for each language.
+     * @return A map containing the translations for each language.
      */
     public static Map<String, String> getTranslationsMap(){
         Map<String, String> map = new HashMap<>();
@@ -113,7 +114,7 @@ public class TranslationManager {
 
     /**
      * @param nameEN The name that should be added
-     * @return Returns a map with the translation keys where every name translation is set as the english one
+     * @return A map with the translation keys where every name translation is set as the english one
      */
     public static Map<String, String> getDefaultNameTranslations(String nameEN){
         Map<String, String> returnMap = new HashMap<>();
@@ -125,7 +126,7 @@ public class TranslationManager {
 
     /**
      * @param descriptionEN The description that should be added
-     * @return Returns a map with the translation keys where every description translation is set as the english one
+     * @return A map with the translation keys where every description translation is set as the english one
      */
     public static Map<String, String> getDefaultDescriptionTranslations(String descriptionEN){
         Map<String, String> returnMap = new HashMap<>();

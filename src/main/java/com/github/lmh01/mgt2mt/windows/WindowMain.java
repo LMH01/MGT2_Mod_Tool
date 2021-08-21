@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class WindowMain {
         m11.addActionListener(actionEvent -> WindowSettings.createFrame());
         M_12_UPDATE_CHECK.addActionListener(actionEvent -> UpdateChecker.checkForUpdates(true));
         M_13_UNINSTALL.setToolTipText(I18n.INSTANCE.get("window.main.file.uninstall.toolTip"));
-        M_13_UNINSTALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableUninstall, "Uninstall"));
+        M_13_UNINSTALL.addActionListener(actionEvent -> AbstractBaseMod.startModThread(Uninstaller::uninstall, "Uninstall"));
         JMenuItem m14About = new JMenuItem(I18n.INSTANCE.get("window.main.file.about"));
         m14About.addActionListener(actionEvent -> About.showAboutPopup());
         MB.add(M_1_FILE);
@@ -94,17 +95,17 @@ public class WindowMain {
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
         M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableImportFromURL, "runnableImportFromURL"));
         M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
-        M_22_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableNPCGamesList, "runnableNPCGamesList"));
+        M_22_NPC_GAMES_LIST.addActionListener(actionEvent -> AbstractBaseMod.startModThread(NPCGameListHandler::modifyNPCGameList, "runnableNPCGamesList"));
         M_23_ADD_COMPANY_ICON.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddCompanyIcon, "runnableAddCompanyIcon"));
         m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
-        m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableShowActiveMods, "runnableShowActiveMods"));
+        m210ShowActiveMods.addActionListener(actionEvent -> AbstractBaseMod.startModThread(ActiveMods::showActiveMods, "runnableShowActiveMods"));
         MB.add(M_2_MODS);
         M_2_MODS.add(M_21_IMPORT);
         initializeModMenus();
         M_2_MODS.add(M_22_NPC_GAMES_LIST);
         M_2_MODS.add(M_23_ADD_COMPANY_ICON);
         M_2_MODS.add(m210ShowActiveMods);
-        M_233_CHANGE_GENRE_THEME_FIT.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableEditGenreThemeFit, "EditGenreThemeFit"));
+        M_233_CHANGE_GENRE_THEME_FIT.addActionListener(actionEvent -> AbstractBaseMod.startModThread(ContentEditor::editGenreThemeFit, "EditGenreThemeFit"));
         M_31_EXPORT.add(M_317_EXPORT_ALL);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportAll, "runnableExportAll"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
@@ -157,7 +158,7 @@ public class WindowMain {
         setSafetyFeatureComponents();
         JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
         m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
-        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherModOld.realPublishers());
+        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherMod.realPublishers());
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
@@ -226,25 +227,13 @@ public class WindowMain {
                         noModRestorePointSet = false;
                     }
                 }
-                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){
-                    simpleMod.setMainMenuButtonAvailability();
-                    if(!simpleMod.getType().equals(I18n.INSTANCE.get("commonText.theme.upperCase"))){
-                        if(simpleMod.getBaseAnalyzer().getCustomContentString(true).length > 0){
-                            noModsAvailable = false;
-                        }
-                    }else{
-                        if(ModManager.themeModOld.getAnalyzerEn().getCustomContentString(true).length > 0){
-                            noModsAvailable = false;
-                        }
-                    }
-                }
-                for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
-                    advancedMod.setMainMenuButtonAvailability();
-                    if(advancedMod.getBaseAnalyzer().getCustomContentString(true).length > 0){
+                for (AbstractBaseMod mod : ModManager.mods) {//TODO schauen, ob das noch funktioniert, insbesondere im Bezug auf Themen
+                    mod.setMainMenuButtonAvailability();
+                    if(mod.getCustomContentString(true).length > 0) {
                         noModsAvailable = false;
                     }
                 }
-                if(ModManager.genreModOld.getAnalyzer().getCustomContentString(true).length > 0){
+                if(ModManager.genreMod.getCustomContentString(true).length > 0){
                     M_22_NPC_GAMES_LIST.setEnabled(true);
                     M_22_NPC_GAMES_LIST.setToolTipText("");
                 }else{
@@ -297,13 +286,13 @@ public class WindowMain {
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit.toolTip"));
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
-            }catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException | ModProcessingException e) {//TODO schauen, ob ich hier vielleicht die menuItems sperren sollte, falls eine exception auftritt
+                TextAreaHelper.printStackTrace(e);
                 LOGGER.info("Error: " + e.getMessage());
-                e.printStackTrace();
             }
             WindowMain.lockMenuItems(false);
             setSafetyFeatureComponents();
-        }else{
+        } else {
             LOGGER.info("Action availability was not checked because the mgt2 folder is invalid!");
         }
         ProgressBarHelper.resetProgressBar();
@@ -379,28 +368,20 @@ public class WindowMain {
     public static void initializeModMenus(){
         if(!modMenusInitialized){
             if(Settings.useAutomaticModMenus){
-                for(AbstractSimpleModOld simpleMod : ModManager.simpleMods){//Use this when the menus should be allocated automatically
-                    JMenu menu = new JMenu(simpleMod.getTypePlural());
-                    for(JMenuItem menuItem : simpleMod.getModMenuItems()){
+                for (AbstractBaseMod mod : ModManager.mods) {
+                    JMenu menu = new JMenu(mod.getTypePlural());
+                    for(JMenuItem menuItem : mod.getModMenuItems()){
                         menu.add(menuItem);
                     }
                     MOD_MENUS.add(menu);
-                    M_31_EXPORT.add(simpleMod.getExportMenuItem());
-                }
-                for(AbstractAdvancedModOld advancedMod : ModManager.advancedMods){
-                    JMenu menu = new JMenu(advancedMod.getTypePlural());
-                    for(JMenuItem menuItem : advancedMod.getModMenuItems()){
-                        menu.add(menuItem);
-                    }
-                    MOD_MENUS.add(menu);
-                    M_31_EXPORT.add(advancedMod.getExportMenuItem());
+                    M_31_EXPORT.add(mod.getExportMenuItem());
                 }
                 for(JMenu menu : MOD_MENUS){
                     M_2_MODS.add(menu);
                 }
             }else{
                 //Manual menu allocation:
-                /*JMenu menu = new JMenu(ModManager.genreMod.getTypePlural());
+                JMenu menu = new JMenu(ModManager.genreMod.getTypePlural());
                 for(JMenuItem menuItem : ModManager.genreMod.getModMenuItems()){
                     menu.add(menuItem);
                 }
@@ -491,20 +472,7 @@ public class WindowMain {
                 M_31_EXPORT.add(ModManager.antiCheatMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.copyProtectMod.getExportMenuItem());
                 M_31_EXPORT.add(ModManager.hardwareMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.hardwareFeatureMod.getExportMenuItem());*/
-                Debug.initializeMods();
-                for (AbstractBaseMod mod : Debug.mods) {
-                    LOGGER.info("Adding menus for mod: " + mod.getType());
-                    JMenu menu = new JMenu(mod.getTypePlural());
-                    for(JMenuItem menuItem : mod.getModMenuItems()){
-                        menu.add(menuItem);
-                    }
-                    MOD_MENUS.add(menu);
-                    M_31_EXPORT.add(mod.getExportMenuItem());
-                }
-                for(JMenu menu : MOD_MENUS){
-                    M_2_MODS.add(menu);
-                }
+                M_31_EXPORT.add(ModManager.hardwareFeatureMod.getExportMenuItem());
             }
             modMenusInitialized = true;
         }
@@ -521,7 +489,7 @@ public class WindowMain {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
                 }
                 Backup.restoreBackup(true, true);
-            } catch (IOException e) {
+            } catch (IOException | ModProcessingException e) {//TODO schauen, ob es richtig ist hier die ModProcessingException zu catchen
                 e.printStackTrace();
                 if(Utils.showConfirmDialog(1, e)){
                     Backup.restoreBackup(true, true);

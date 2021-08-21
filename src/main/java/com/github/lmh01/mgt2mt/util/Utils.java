@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -236,8 +237,9 @@ public class Utils {
     /**
      * Takes the input string and replaces the genreNames with the corresponding genre id.
      * @return Returns a list of genre ids.
+     * @throws ModProcessingException If {@link com.github.lmh01.mgt2mt.mod.GenreMod#getContentIdByName(String)} fails.
      */
-    public static String convertGenreNamesToId(String genreNamesRaw){
+    public static String convertGenreNamesToId(String genreNamesRaw) throws ModProcessingException {
         if(genreNamesRaw.length() > 0){
             StringBuilder genreIds = new StringBuilder();
             int charPosition = 0;
@@ -249,7 +251,7 @@ public class Utils {
                     if(Settings.enableDebugLogging){
                         LOGGER.info("genreName: " + currentName);
                     }
-                    int genreId = ModManager.genreModOld.getAnalyzer().getContentIdByName(currentName.toString());
+                    int genreId = ModManager.genreMod.getContentIdByName(currentName.toString());
                     if(genreId != -1){
                         genreIds.append("<").append(genreId).append(">");
                     }
@@ -317,8 +319,8 @@ public class Utils {
      * @param genreId The genre id for which the file should be searched
      * @return Returns a String containing theme ids
      */
-    public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeModOld.getFileGe()), StandardCharsets.UTF_16LE));
+    public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {//TODO Testen, ob die Funktion noch funktioniert
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
         boolean firstLine = true;
         int lineNumber = 1;
         StringBuilder compatibleThemes = new StringBuilder();
@@ -349,7 +351,7 @@ public class Utils {
     public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if(goodFeature){
-            for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()){
+            for(Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()){
                 if(map.get("GOOD") != null){
                     if(map.get("GOOD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -357,7 +359,7 @@ public class Utils {
                 }
             }
         }else{
-            for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()){
+            for(Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()){
                 if(map.get("BAD") != null){
                     if(map.get("BAD").contains("<" + genreId + ">")){
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -378,20 +380,6 @@ public class Utils {
      * @return Returns the selected entries as array list.
      */
     public static ArrayList<Integer> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
-        return getSelectedEntries(labelText, windowTile, stringArraySafetyFeaturesOn, stringArraySafetyFeaturesDisabled, showNoSelectionMessage, false);
-    }
-
-    /**
-     * Opens a window where the user can select entries from a list.
-     * @param labelText The text that should be displayed at the top of the window
-     * @param windowTile The window title that the window should get
-     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
-     * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
-     * @param returnGenreIds If true the return value is a array list containing genre ids. If false the position of the selected entries is returned.
-     * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
-     * @return Returns the selected entries as array list.
-     */
-    public static ArrayList<Integer> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage, boolean returnGenreIds){
         ArrayList<Integer> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
@@ -412,11 +400,7 @@ public class Utils {
         if(JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             if(!listAvailableEntries.isSelectionEmpty()){
                 for(String string : listAvailableEntries.getSelectedValuesList()){
-                    if(returnGenreIds){
-                        returnValues.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(string));
-                    }else{
-                        returnValues.add(getPositionInList(string, existingListContent));
-                    }
+                    returnValues.add(getPositionInList(string, existingListContent));
                 }
             }else{
                 if(showNoSelectionMessage){
@@ -432,7 +416,7 @@ public class Utils {
      * @param arrayList The array list containing the values
      * @return Returns the values in the respective formatting
      */
-    public static String transformArrayListToString(ArrayList<?> arrayList){
+    public static String transformArrayListToString(ArrayList<?> arrayList) {
         StringBuilder returnString = new StringBuilder();
         for(Object object : arrayList){
             returnString.append("<").append(object.toString()).append(">");
@@ -443,7 +427,7 @@ public class Utils {
     /**
      * Checks the array lists if they have mutual entries. Returns true if the do. Returns false if the don't
      */
-    public static boolean checkForMutualEntries(ArrayList<?> arrayList1, ArrayList<?> arrayList2){
+    public static boolean checkForMutualEntries(ArrayList<?> arrayList1, ArrayList<?> arrayList2) {
         for(Object object1 : arrayList1){
             for(Object object2 : arrayList2){
                 if(object1 == object2){
@@ -474,7 +458,7 @@ public class Utils {
      * @param arrayList The array list that should be converted
      * @return Returns a string array
      */
-    public static String[] convertArrayListToArray(ArrayList<String> arrayList){
+    public static String[] convertArrayListToArray(ArrayList<String> arrayList) {
         String[] strings = new String[arrayList.size()];
         strings = arrayList.toArray(strings);
         return strings;
@@ -485,7 +469,7 @@ public class Utils {
      * @param listContent A list containing the selected entries
      * @return Returns the position of the item in the list
      */
-    public static int getPositionInList(String itemInList, String[] listContent){
+    public static int getPositionInList(String itemInList, String[] listContent) {
         int currentNumber = 0;
         for(String string : listContent){
             if(string.equals(itemInList)){
@@ -499,7 +483,7 @@ public class Utils {
     /**
      * @return Returns a random number between and including origin and range.
      */
-    public static int getRandomNumber(int origin, int range){
+    public static int getRandomNumber(int origin, int range) {
         return ThreadLocalRandom.current().nextInt(origin, range);
     }
 
@@ -508,7 +492,7 @@ public class Utils {
      * @param inputNumber The input number
      * @return Returns the rounded number
      */
-    public static int roundToNextFive(int inputNumber){
+    public static int roundToNextFive(int inputNumber) {
         double num = inputNumber;
         if (num % 5 == 0)
             return (int) num;
@@ -524,10 +508,10 @@ public class Utils {
      * @param inputNumber The input number
      * @return Returns the rounded number
      */
-    public static int roundToNextHundred(int inputNumber){
-        try{
+    public static int roundToNextHundred(int inputNumber) {
+        try {
             return (inputNumber + 50) / 100 * 100;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -538,10 +522,10 @@ public class Utils {
      * @param inputNumber The input number
      * @return Returns the rounded number
      */
-    public static int roundToNextThousand(int inputNumber){
-        try{
+    public static int roundToNextThousand(int inputNumber) {
+        try {
             return (inputNumber + 500) / 1000 * 1000;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -599,7 +583,7 @@ public class Utils {
      * DEC = 12
      * @param string The input string that should be converted - Converts the whole string and just searches for the month keyword
      */
-    public static int getNumberForMonth(String string) throws IllegalArgumentException {
+    public static int getNumberForMonth(String string) throws IllegalArgumentException { //TODO Replace with enum / throw ModProcessingException
         if(string.contains("JAN")){
             return 1;
         }else if(string.contains("FEB")){

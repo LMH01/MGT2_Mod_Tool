@@ -1,8 +1,10 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -44,22 +46,26 @@ public class WindowAddGenrePage7 extends JFrame{
     }
     public WindowAddGenrePage7() {
         buttonNext.addActionListener(actionEvent -> {
-            if(!saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD)){
-                GenreManager.openStepWindow(8);
-                FRAME.dispose();
-            }else{
-                if(Settings.disableSafetyFeatures){
-                    GenreManager.openStepWindow(8);
+            AbstractBaseMod.startModThread(() -> {
+                if(!saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD)){
+                    GenreMod.openStepWindow(8);
                     FRAME.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
+                    if(Settings.disableSafetyFeatures){
+                        GenreMod.openStepWindow(8);
+                        FRAME.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
+                    }
                 }
-            }
+            }, "WindowAddGenrePage7ButtonNext");
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD);
-            GenreManager.openStepWindow(6);
-            FRAME.dispose();
+            AbstractBaseMod.startModThread(() -> {
+                saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD);
+                GenreMod.openStepWindow(6);
+                FRAME.dispose();
+            }, "WindowAddGenrePage7ButtonPrevious");
         });
         buttonQuit.addActionListener(actionEvent -> {
             if(Utils.showConfirmDialog(1)){
@@ -102,16 +108,16 @@ public class WindowAddGenrePage7 extends JFrame{
         contentPane.add(buttonQuit);
     }
 
-    private void setGameplayListGood(){
+    private void setGameplayListGood() throws ModProcessingException {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> gameplayFeaturesSelected = new ArrayList<>();
         LIST_GAMEPLAY_FEATURES_GOOD.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.gameplayFeatureModOld.getAnalyzer().getContentByAlphabet()){
+        for(String string : ModManager.gameplayFeatureMod.getContentByAlphabet()){
             listModel.addElement(string);
-            if(GenreManager.mapNewGenre.containsKey("GAMEPLAYFEATURE GOOD")){
-                if(GenreManager.mapNewGenre.get("GAMEPLAYFEATURE GOOD").contains(string)) {
+            if(GenreMod.mapNewGenre.containsKey("GAMEPLAYFEATURE GOOD")){
+                if(GenreMod.mapNewGenre.get("GAMEPLAYFEATURE GOOD").contains(string)) {
                     gameplayFeaturesSelected.add(currentTopic);
                 }
             }
@@ -135,16 +141,16 @@ public class WindowAddGenrePage7 extends JFrame{
         contentPane.add(SCROLL_PANE_GAMEPLAY_FEATURES_GOOD);
     }
 
-    private void setGameplayListBad(){
+    private void setGameplayListBad() throws ModProcessingException {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> gameplayFeaturesSelected = new ArrayList<>();
         LIST_GAMEPLAY_FEATURES_BAD.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.gameplayFeatureModOld.getAnalyzer().getContentByAlphabet()){
+        for(String string : ModManager.gameplayFeatureMod.getContentByAlphabet()){
             listModel.addElement(string);
-            if(GenreManager.mapNewGenre.containsKey("GAMEPLAYFEATURE BAD")){
-                if(GenreManager.mapNewGenre.get("GAMEPLAYFEATURE BAD").contains(string)) {
+            if(GenreMod.mapNewGenre.containsKey("GAMEPLAYFEATURE BAD")){
+                if(GenreMod.mapNewGenre.get("GAMEPLAYFEATURE BAD").contains(string)) {
                     gameplayFeaturesSelected.add(currentTopic);
                 }
             }
@@ -174,20 +180,20 @@ public class WindowAddGenrePage7 extends JFrame{
      * @param listGameplayFeaturesBad The list containing the gameplay features that work bad together with the genre
      * @return Returns true when the lists don't have mutual selected entries.
      */
-    private static boolean saveInputs(JList<String> listGameplayFeaturesGood, JList<String> listGameplayFeaturesBad){
+    private static boolean saveInputs(JList<String> listGameplayFeaturesGood, JList<String> listGameplayFeaturesBad) throws ModProcessingException {
         gameplayFeaturesBadIds.clear();
         gameplayFeaturesGoodIds.clear();
-        GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE BAD");
-        GenreManager.mapNewGenre.remove("GAMEPLAYFEATURE GOOD");
+        GenreMod.mapNewGenre.remove("GAMEPLAYFEATURE BAD");
+        GenreMod.mapNewGenre.remove("GAMEPLAYFEATURE GOOD");
         LOGGER.info("Cleared map entries for good/bad gameplay features.");
         StringBuilder gameplayFeaturesGood = new StringBuilder();
         StringBuilder gameplayFeaturesBad = new StringBuilder();
-        for(Map<String, String> map : ModManager.gameplayFeatureModOld.getAnalyzer().getFileContent()){
+        for(Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
                     if(entry.getKey().equals("NAME EN")){
                         if(entry.getValue().equals(string)){
-                            gameplayFeaturesBadIds.add(ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(entry.getValue()));
+                            gameplayFeaturesBadIds.add(ModManager.gameplayFeatureMod.getContentIdByName(entry.getValue()));
                             gameplayFeaturesBad.append("<").append(string).append(">");
                             LOGGER.info("Gameplay feature bad: " + entry.getKey() + " | " + entry.getValue());
                         }
@@ -196,7 +202,7 @@ public class WindowAddGenrePage7 extends JFrame{
                 for(String string : listGameplayFeaturesGood.getSelectedValuesList()){
                     if(entry.getKey().equals("NAME EN")){
                         if(entry.getValue().equals(string)){
-                            gameplayFeaturesGoodIds.add(ModManager.gameplayFeatureModOld.getAnalyzer().getContentIdByName(entry.getValue()));
+                            gameplayFeaturesGoodIds.add(ModManager.gameplayFeatureMod.getContentIdByName(entry.getValue()));
                             gameplayFeaturesGood.append("<").append(string).append(">");
                             LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
                         }
@@ -204,8 +210,8 @@ public class WindowAddGenrePage7 extends JFrame{
                 }
             }
         }
-        GenreManager.mapNewGenre.put("GAMEPLAYFEATURE BAD", gameplayFeaturesBad.toString());
-        GenreManager.mapNewGenre.put("GAMEPLAYFEATURE GOOD", gameplayFeaturesGood.toString());
+        GenreMod.mapNewGenre.put("GAMEPLAYFEATURE BAD", gameplayFeaturesBad.toString());
+        GenreMod.mapNewGenre.put("GAMEPLAYFEATURE GOOD", gameplayFeaturesGood.toString());
         boolean mutualEntries = false;
         for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
             for(String string2 : listGameplayFeaturesGood.getSelectedValuesList()){

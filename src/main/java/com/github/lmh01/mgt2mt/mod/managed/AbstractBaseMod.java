@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.util.Debug;
+import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
@@ -23,7 +23,7 @@ import java.util.Collections;
  * Should be used with {@link AbstractAdvancedMod} or {@link AbstractSimpleMod}.
  */
 public abstract class AbstractBaseMod {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedModOld.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBaseMod.class);
 
     private final ArrayList<JMenuItem> modMenuItems;
     private final JMenuItem exportMenuItem;
@@ -66,26 +66,34 @@ public abstract class AbstractBaseMod {
     }
 
     /**
-     * This function is called when the button add mod is clicked
+     * This function is called when the button add mod is clicked.
+     * Creates a backup and analyzes the mod files before the action is performed.
      */
     private void doAddModMenuItemAction() {
-        startModThread(this::openAddModGui, "runnableAdd" + getType().replaceAll("\\s+",""));
+        startModThread(() -> {
+            analyzeFile();
+            openAddModGui();
+        }, "runnableAdd" + getType().replaceAll("\\s+",""));
     }
 
     /**
-     * This function is called when the button remove mod is clicked
+     * This function is called when the button remove mod is clicked.
+     * Analyzes the game file before the action is performed.
      */
     private void removeModMenuItemAction() {
         startModThread(() -> {
+            analyzeFile();
             OperationHelper.process(this::removeMod, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
         }, "runnableRemove" + getType().replaceAll("\\s+",""));
     }
 
     /**
-     * This function is called when the button export mod is clicked
+     * This function is called when the button export mod is clicked.
+     * Analyzes the game file before the action is performed.
      */
     private void exportMenuItemAction() {
         startModThread(() -> {
+            analyzeFile();
             OperationHelper.process((string) -> exportMod(string, false), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
         }, "runnableExport" + getType().replaceAll("\\s+",""));
     }
@@ -171,7 +179,7 @@ public abstract class AbstractBaseMod {
      * Starts a thread that can catch a {@link ModProcessingException}.
      * If that exception is caught an error message displayed and printed into the text area. The thread will terminate.
      */
-    private void startModThread(ModAction action, String threadName) {
+    public static void startModThread(ModAction action, String threadName) {
         Thread thread = new Thread(() -> {
             try {
                 action.run();
@@ -179,10 +187,7 @@ public abstract class AbstractBaseMod {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.firstPart") + " " + threadName);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.secondPart"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                TextAreaHelper.appendText(sw.toString());
+                TextAreaHelper.printStackTrace(e);
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.modProcessingException.firstPart")  + " " + threadName + "\n" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage().replace(" - ", "\n - "), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 LOGGER.info("Error in thread: " + threadName + "; Reason: " + e.getMessage());
             }
@@ -268,6 +273,44 @@ public abstract class AbstractBaseMod {
     }
 
     /**
+     * Creates a backup of the mod files specific to this mod
+     * @throws ModProcessingException If something went wrong while doing the backup
+     */
+    public void createBackup() throws ModProcessingException {
+        try {
+            Backup.createBackup(getGameFile());
+        } catch (IOException e) {
+            throw new ModProcessingException("Error while creating backup for " + getType() + " mod files: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Sets the main menu buttons to active/disabled depending on if active mods are found
+     * @throws ModProcessingException If custom content string could not be returned
+     */
+    public final void setMainMenuButtonAvailability() throws ModProcessingException {
+        String[] customContentString = getCustomContentString(true);
+        for(JMenuItem menuItem : getModMenuItems()){
+            if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
+                if(customContentString.length > 0){
+                    menuItem.setEnabled(true);
+                    menuItem.setToolTipText("");
+                }else{
+                    menuItem.setEnabled(false);
+                    menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+                }
+            }
+        }
+        if(customContentString.length > 0){
+            getExportMenuItem().setEnabled(true);
+            getExportMenuItem().setToolTipText("");
+        }else{
+            getExportMenuItem().setEnabled(false);
+            getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+        }
+    }
+
+    /**
      * Analyzes the mod file.
      * Overwriting this function is not recommended without calling super.analyzeFile().
      */
@@ -307,7 +350,7 @@ public abstract class AbstractBaseMod {
     /**
      * @return The file name of the file that contains the default content.
      */
-    protected abstract String getDefaultContentFileName();
+    public abstract String getDefaultContentFileName();
 
     /**
      * Opens a gui where the user can add the new mod.
@@ -349,13 +392,13 @@ public abstract class AbstractBaseMod {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
-    public abstract String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException, IOException;//TODO Remove IOException and let only the ModProcessingException get thrown
+    public abstract String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException;//TODO Remove IOException and let only the ModProcessingException get thrown
 
     /**
      * @return The type name in caps
      * Eg. GAMEPLAY FEATURE, ENGINE FEATURE, GENRE
      */
-    protected abstract String getTypeCaps();
+    public abstract String getTypeCaps();
 
     /**
      * @return The export/import file name under which the mod can be found

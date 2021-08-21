@@ -15,13 +15,10 @@ public class ThreadHandler {
     private static int threadsRunning = 0;
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
     public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
-    public static Runnable runnableUninstall = Uninstaller::uninstall;
     public static Runnable runnableImportAll = SharingManager::importAll;
-    public static Runnable runnableShowActiveMods = ActiveMods::showActiveMods;
     public static Runnable runnableDeleteExports = Uninstaller::deleteAllExports;
     public static Runnable runnableImportFromURL = ImportFromURLHelper::importFromURL;
     public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
-    public static Runnable runnableNPCGamesList = NPCGameListHandler::modifyNPCGameList;
     public static Runnable runnableCreateRestorePoint = RestorePointHelper::setRestorePoint;
     public static Runnable runnableRestoreToRestorePoint = RestorePointHelper::restoreToRestorePoint;
     public static Runnable runnableCreateFullBackup = () -> Backup.createBackup("full");
@@ -30,7 +27,6 @@ public class ThreadHandler {
     public static Runnable runnableRestoreLatestBackup = WindowMain::restoreLatestBackup;
     public static Runnable runnableRestoreSaveGameBackup = Backup::restoreSaveGameBackup;
     public static Runnable runnableCreateNewInitialBackup = Backup::createNewInitialBackup;
-    public static Runnable runnableEditGenreThemeFit = ContentEditor::editGenreThemeFit;
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();

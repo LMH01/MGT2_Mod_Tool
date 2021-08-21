@@ -45,7 +45,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected String getDefaultContentFileName() {
+    public String getDefaultContentFileName() {
         return "default_npcGames.txt";
     }
 
@@ -55,7 +55,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
         JTextField textFieldName = new JTextField();
 
         JLabel labelExplainList = new JLabel("<html>" + I18n.INSTANCE.get("mod.npcGames.addMod.selectGenres") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
-        JList<String> listAvailableThemes = WindowHelper.getList(ModManager.genreModOld.getAnalyzer().getContentByAlphabet(), true);
+        JList<String> listAvailableThemes = WindowHelper.getList(ModManager.genreMod.getContentByAlphabet(), true);
         JScrollPane scrollPaneAvailableGenres = WindowHelper.getScrollPane(listAvailableThemes);
 
         Object[] params = {labelModName, textFieldName, labelExplainList, scrollPaneAvailableGenres};
@@ -65,7 +65,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
                 if(!newModName.isEmpty()){
                     if(listAvailableThemes.getSelectedValuesList().size() != 0){
                         boolean modAlreadyExists = false;
-                        for(String string : ModManager.npcGamesModOld.getBaseAnalyzer().getContentByAlphabet()){
+                        for(String string : getContentByAlphabet()){
                             if (newModName.equals(string)) {
                                 modAlreadyExists = true;
                                 break;
@@ -76,23 +76,18 @@ public class NpcGamesMod extends AbstractSimpleMod {
                             newModLine.append(newModName).append(" ");
                             ArrayList<Integer> genreIds = new ArrayList<>();
                             for(String string : listAvailableThemes.getSelectedValuesList()){
-                                genreIds.add(ModManager.genreModOld.getAnalyzer().getContentIdByName(string));
+                                genreIds.add(ModManager.genreMod.getContentIdByName(string));
                             }
                             Collections.sort(genreIds);
                             for(Integer integer : genreIds){
                                 newModLine.append("<").append(integer).append(">");
                             }
                             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                                try {
-                                    Backup.createBackup(getGameFile());
-                                    ModManager.npcGamesModOld.getBaseEditor().addMod(newModLine.toString());
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getType() + " - " + newModName);
-                                    JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));
-                                    break;
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
-                                }
+                                createBackup();
+                                addMod(newModLine.toString());
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getType() + " - " + newModName);
+                                JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));
+                                break;
                             }
                         }else{
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.unableToAdd") + " " + getType() + " - " + I18n.INSTANCE.get("commonText.modAlreadyExists"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
@@ -123,7 +118,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
         output.append(name);
         for(Integer integer : genreIds){
             try{
-                String genreName = ModManager.genreModOld.getAnalyzer().getContentNameById(integer);
+                String genreName = ModManager.genreMod.getContentNameById(integer);
                 if(!genreName.equals("null")){
                     output.append("<").append(genreName).append(">");
                 }
@@ -145,7 +140,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected String getTypeCaps() {
+    public String getTypeCaps() {
         return "NPC_GAME";
     }
 

@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseModOld;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -17,19 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Contains functions that are helpful when specific parts should be added to a window
  */
 public class WindowHelper {
-
-    /**
-     * @param baseMod The base mod
-     * @param textField The name text area
-     * @return Returns a new panel containing the components of the name
-     */
-    public static JPanel getNamePanel(AbstractBaseModOld baseMod, JTextField textField){//TODO Diese Funktion löschen
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel(baseMod.getType() + " " + I18n.INSTANCE.get("commonText.name") + ":");
-        panel.add(label);
-        panel.add(textField);
-        return panel;
-    }
 
     /**
      * @param baseMod The base mod
@@ -99,7 +85,7 @@ public class WindowHelper {
      * @param type Declares what string should be used for the label. For further information look into the function
      * @return Returns a new panel containing the components of the type
      */
-    public static JPanel getSpinnerPanel(JSpinner spinner, int type){
+    public static JPanel getSpinnerPanel(JSpinner spinner, int type){//TODO Rewrite to throw ModProcessingException and to use enum
         JPanel panel = new JPanel();
         JLabel label;
         switch (type){
@@ -319,12 +305,12 @@ public class WindowHelper {
                 comboBox.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.type.toolTip"));
                 ArrayList<String> modelContent = new ArrayList<>();
                 for(int i=0; i<10; i++){
-                    modelContent.add(ModManager.hardwareModOld.getHardwareTypeNameById(i));
+                    modelContent.add(ModManager.hardwareMod.getHardwareTypeNameById(i));
                 }
                 String[] model = new String[modelContent.size()];
                 modelContent.toArray(model);
                 comboBox.setModel(new DefaultComboBoxModel<>(model));
-                comboBox.setSelectedItem(ModManager.hardwareModOld.getHardwareTypeNameById(0));
+                comboBox.setSelectedItem(ModManager.hardwareMod.getHardwareTypeNameById(0));
                 break;
             default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-4; Was: " + type);
         }

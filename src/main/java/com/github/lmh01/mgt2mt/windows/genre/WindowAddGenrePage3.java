@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -36,12 +36,12 @@ public class WindowAddGenrePage3 extends JFrame{
     public WindowAddGenrePage3() {
         buttonNext.addActionListener(actionEvent -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
-            GenreManager.openStepWindow(4);
+            GenreMod.openStepWindow(4);
             FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(spinnerResearchPoints, spinnerDevelopmentCost, spinnerGenrePrice);
-            GenreManager.openStepWindow(2);
+            GenreMod.openStepWindow(2);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -67,16 +67,16 @@ public class WindowAddGenrePage3 extends JFrame{
         spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 100.000; " + I18n.INSTANCE.get("commonText.default") + ": 3.000]" + "<br>" + I18n.INSTANCE.get("commonText.developmentCost.spinner.toolTip"));
         spinnerGenrePrice.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 150.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchCost.spinner.toolTip"));
         if(Settings.disableSafetyFeatures){
-            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 0, Integer.MAX_VALUE, 1));
-            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 0, Integer.MAX_VALUE, 1));
-            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("PRICE")), 0, Integer.MAX_VALUE, 1));
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("RES POINTS")), 0, Integer.MAX_VALUE, 1));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("DEV COSTS")), 0, Integer.MAX_VALUE, 1));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("PRICE")), 0, Integer.MAX_VALUE, 1));
             ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(true);
         }else{
-            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("RES POINTS")), 0, 10000, 100));
-            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("DEV COSTS")), 0, 100000, 1000));
-            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreManager.mapNewGenre.get("PRICE")), 0, 1000000, 1000));
+            spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("RES POINTS")), 0, 10000, 100));
+            spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("DEV COSTS")), 0, 100000, 1000));
+            spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("PRICE")), 0, 1000000, 1000));
             ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
             ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
             ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(false);
@@ -110,12 +110,12 @@ public class WindowAddGenrePage3 extends JFrame{
         contentPane.add(buttonQuit);
     }
     private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){
-        GenreManager.mapNewGenre.remove("RES POINTS");
-        GenreManager.mapNewGenre.remove("DEV COSTS");
-        GenreManager.mapNewGenre.remove("PRICE");
-        GenreManager.mapNewGenre.put("RES POINTS", spinnerResearchPoints.getValue().toString());
-        GenreManager.mapNewGenre.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-        GenreManager.mapNewGenre.put("PRICE", spinnerGenrePrice.getValue().toString());
+        GenreMod.mapNewGenre.remove("RES POINTS");
+        GenreMod.mapNewGenre.remove("DEV COSTS");
+        GenreMod.mapNewGenre.remove("PRICE");
+        GenreMod.mapNewGenre.put("RES POINTS", spinnerResearchPoints.getValue().toString());
+        GenreMod.mapNewGenre.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
+        GenreMod.mapNewGenre.put("PRICE", spinnerGenrePrice.getValue().toString());
         LOGGER.info("genre research points: " + Integer.parseInt(spinnerResearchPoints.getValue().toString()));
         LOGGER.info("genre development cost: " + Integer.parseInt(spinnerDevelopmentCost.getValue().toString()));
         LOGGER.info("genre price: " + Integer.parseInt(spinnerGenrePrice.getValue().toString()));

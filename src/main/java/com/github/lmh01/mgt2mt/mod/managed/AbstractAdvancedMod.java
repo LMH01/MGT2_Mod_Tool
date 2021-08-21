@@ -120,7 +120,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     @Override
-    public boolean exportMod(String name, boolean exportAsRestorePoint) {
+    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
         try{
             analyzeFile();
             Map<String, String> map = getSingleContentMapByName(name);
@@ -163,11 +163,16 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
     @Override
-    public String importMod(String importFolderPath, boolean showMessages) throws IOException, ModProcessingException {
+    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
         File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
-        Map<String, String> map = DataStreamHelper.parseDataFile(fileToImport).get(0);
+        Map<String, String> map;
+        try {
+            map = DataStreamHelper.parseDataFile(fileToImport).get(0);
+        } catch (IOException e) {
+            throw new ModProcessingException("File could not be parsed '" + fileToImport.getName() + "': " +  e.getMessage());
+        }
         map.put("ID", Integer.toString(getFreeId()));
         boolean CanBeImported = false;
         for(String string : getCompatibleModToolVersions()){
@@ -223,7 +228,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      * @return Returns the map that contains the import values
      * Can be overwritten to adjust specific values
      */
-    public Map<String, String> getChangedImportMap(Map<String, String> map){
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
         return map;
     }
 
