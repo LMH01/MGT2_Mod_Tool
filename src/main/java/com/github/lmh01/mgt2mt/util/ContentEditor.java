@@ -32,7 +32,7 @@ public class ContentEditor {
                         boolean addGenre = !Objects.requireNonNull(comboBoxOperation.getSelectedItem()).toString().equals(I18n.INSTANCE.get("commonText.remove.upperCase"));
                         HashSet<Integer> themeIds = new HashSet<>();
                         for(String string : themeList.getSelectedValuesList()){
-                            themeIds.add(ThemeMod.getPositionOfThemeInFile(string));
+                            themeIds.add(ModManager.themeMod.getPositionOfThemeInFile(string));
                         }
                         StringBuilder errors = new StringBuilder();
                         for(String string : genreList.getSelectedValuesList()){

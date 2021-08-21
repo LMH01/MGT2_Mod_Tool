@@ -377,7 +377,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
                     currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_16LE");
                 }else{
-                    break;
+                    throw new ModProcessingException("Unable to determine what charset to use", true);
                 }
                 if(themeFile.exists()){
                     themeFile.delete();
@@ -390,7 +390,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
                     bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_16LE));
                 }else{
-                    break;
+                    throw new ModProcessingException("Unable to determine what charset to use", true);
                 }
                 int currentLine = 1;
                 boolean firstLine = true;
@@ -463,12 +463,12 @@ public class ThemeMod extends AbstractSimpleMod {
     public void editGenreAllocationAdvanced(int genreID, boolean addGenreID, Set<Integer> themeIds, boolean removeIdFromWholeFile) throws ModProcessingException {
         analyzeFile();
         try {
-            File fileThemesGe = new File(Utils.getMGT2TextFolderPath() + "//DE//Themes_GE.txt");
-            if(fileThemesGe.exists()){
-                fileThemesGe.delete();
+            File file = new File(Utils.getMGT2TextFolderPath() + "//GE//Themes_GE.txt");
+            if(file.exists()){
+                file.delete();
             }
-            fileThemesGe.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileThemesGe), StandardCharsets.UTF_16LE));
+            file.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_16LE));
             Map<Integer, String> map = getFileContent();
             boolean firstLine = true;
             for(Integer i : map.keySet()){
@@ -532,82 +532,81 @@ public class ThemeMod extends AbstractSimpleMod {
      * @param themeNameEn Theme name for which the map should be returned
      * @return A single theme map. This map is used to export the theme.
      */
-    public static Map<String, String> getSingleThemeByNameMap(String themeNameEn) throws IOException {
-        Map<String, String> map = new HashMap<>();
-        int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn);
-        for(String string : TranslationManager.TRANSLATION_KEYS){
-            LOGGER.info("Current Translation Key: " + string);
-            BufferedReader reader;
-            if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
-            }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
-            }else{
-                break;
-                //throw new ModProcessingException("Unable to determine what charset to use", true); //TODO Diese Zeile hier hinzufügen
-            }
-            String currentLine;
-            int currentLineNumber =1;
-            boolean firstLine = true;
-            while((currentLine = reader.readLine()) != null){
-                if(firstLine){
-                    currentLine = Utils.removeUTF8BOM(currentLine);
-                    firstLine = false;
+    public Map<String, String> getSingleThemeByNameMap(String themeNameEn) throws ModProcessingException {
+        try {
+            Map<String, String> map = new HashMap<>();
+            int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn);
+            for(String string : TranslationManager.TRANSLATION_KEYS){
+                LOGGER.info("Current Translation Key: " + string);
+                BufferedReader reader;
+                if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+                    reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
+                }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+                    reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
+                }else{
+                    throw new ModProcessingException("Unable to determine what charset to use", true);
                 }
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("Reading file: " + string);
-                }
-                if(currentLineNumber == positionOfThemeInFiles){
-                    if(string.equals("GE")){
-                        String replaceViolenceLevel = currentLine.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "").replace("<M4>", "").replace("<M5>", "");
-                        String nameGe = replaceViolenceLevel.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
-                        nameGe = nameGe.trim();
-                        map.put("NAME " + string, nameGe);
-                        if(currentLine.contains("M1")){
-                            map.put("VIOLENCE LEVEL", "1");
-                        }else if(currentLine.contains("M2")){
-                            map.put("VIOLENCE LEVEL", "2");
-                        }else if(currentLine.contains("M3")){
-                            map.put("VIOLENCE LEVEL", "3");
-                        }else if(currentLine.contains("M4")){
-                            map.put("VIOLENCE LEVEL", "4");
-                        }else if(currentLine.contains("M5")){
-                            map.put("VIOLENCE LEVEL", "5");
+                String currentLine;
+                int currentLineNumber =1;
+                boolean firstLine = true;
+                while((currentLine = reader.readLine()) != null){
+                    if(firstLine){
+                        currentLine = Utils.removeUTF8BOM(currentLine);
+                        firstLine = false;
+                    }
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("Reading file: " + string);
+                    }
+                    if(currentLineNumber == positionOfThemeInFiles){
+                        if(string.equals("GE")){
+                            String replaceViolenceLevel = currentLine.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "").replace("<M4>", "").replace("<M5>", "");
+                            String nameGe = replaceViolenceLevel.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
+                            nameGe = nameGe.trim();
+                            map.put("NAME " + string, nameGe);
+                            if(currentLine.contains("M1")){
+                                map.put("VIOLENCE LEVEL", "1");
+                            }else if(currentLine.contains("M2")){
+                                map.put("VIOLENCE LEVEL", "2");
+                            }else if(currentLine.contains("M3")){
+                                map.put("VIOLENCE LEVEL", "3");
+                            }else if(currentLine.contains("M4")){
+                                map.put("VIOLENCE LEVEL", "4");
+                            }else if(currentLine.contains("M5")){
+                                map.put("VIOLENCE LEVEL", "5");
+                            }else{
+                                map.put("VIOLENCE LEVEL", "0");
+                            }
+                            map.put("GENRE COMB", replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim());
+                            if(Settings.enableDebugLogging){
+                                LOGGER.info("GENRE COMB: [" + replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim() + "]");
+                            }
                         }else{
-                            map.put("VIOLENCE LEVEL", "0");
-                        }
-                        map.put("GENRE COMB", replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim());
-                        if(Settings.enableDebugLogging){
-                            LOGGER.info("GENRE COMB: [" + replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim() + "]");
-                        }
-                    }else{
-                        map.put("NAME " + string, currentLine);
-                        if(Settings.enableDebugLogging){
-                            LOGGER.info("NAME " + string + " | " + currentLine);
+                            map.put("NAME " + string, currentLine);
+                            if(Settings.enableDebugLogging){
+                                LOGGER.info("NAME " + string + " | " + currentLine);
+                            }
                         }
                     }
+                    currentLineNumber++;
                 }
-                currentLineNumber++;
+                reader.close();
             }
-            reader.close();
+            return map;
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to return single theme map", e);
         }
-        return map;
     }
 
     /**
      * @param themeNameEn The theme name that should be searched.
      * @return Returns the position of the specified genre in the themesNamesEn file.
      */
-    public static int getPositionOfThemeInFile(String themeNameEn){
+    public int getPositionOfThemeInFile(String themeNameEn) throws ModProcessingException {
+        analyzeFile();
         int position = 1;
-        if(Settings.enableDebugLogging){
-            LOGGER.info("01 - MAP_ACTIVE_THEMES_EN.size(): " + ModManager.themeMod.getFileContent().size());
-        }
         for(Map.Entry<Integer, String> entry: ModManager.themeMod.getFileContent().entrySet()){
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Value: " + entry.getValue());
-            }
-            if(entry.getValue().equals(themeNameEn)){
+            LOGGER.info(entry.getKey() + " | " + entry.getValue());
+            if(getReplacedLine(entry.getValue()).equals(themeNameEn)){
                 return position;
             }else{
                 position++;

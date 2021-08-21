@@ -285,7 +285,7 @@ public class GenreMod extends AbstractAdvancedMod {
         }//Here
         Set<Integer> compatibleThemeIds = new HashSet<>();
         for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
-            compatibleThemeIds.add(ThemeMod.getPositionOfThemeInFile(string));
+            compatibleThemeIds.add(ModManager.themeMod.getPositionOfThemeInFile(string));
         }
         Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
         Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
