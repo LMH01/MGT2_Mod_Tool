@@ -195,12 +195,12 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
 
     @Override
     public String getTypeCaps() {
-        return "HARDWARE_FEATURE";
+        return "ENGINE_FEATURE";
     }
 
     @Override
     public String getImportExportFileName() {
-        return "HardwareFeatures.txt";
+        return "engineFeature.txt";
     }
 
     /**

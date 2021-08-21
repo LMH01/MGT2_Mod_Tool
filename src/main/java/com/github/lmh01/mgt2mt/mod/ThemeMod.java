@@ -605,7 +605,6 @@ public class ThemeMod extends AbstractSimpleMod {
         analyzeFile();
         int position = 1;
         for(Map.Entry<Integer, String> entry: ModManager.themeMod.getFileContent().entrySet()){
-            LOGGER.info(entry.getKey() + " | " + entry.getValue());
             if(getReplacedLine(entry.getValue()).equals(themeNameEn)){
                 return position;
             }else{
