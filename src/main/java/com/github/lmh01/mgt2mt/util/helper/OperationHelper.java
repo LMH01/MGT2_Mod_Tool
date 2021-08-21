@@ -54,8 +54,7 @@ public class OperationHelper {
                         boolean multipleExports = listAvailableOperations.getSelectedValuesList().size() > 0;
                         int numberOfOperations = listAvailableOperations.getSelectedValuesList().size();
                         StringBuilder failedOperations = new StringBuilder();
-                        ProgressBarHelper.increaseMaxValue(numberOfOperations);
-                        ProgressBarHelper.increment();
+                        ProgressBarHelper.increaseMaxValue(numberOfOperations-1);
                         for(int i=0; i<listAvailableOperations.getSelectedValuesList().size(); i++){
                             String currentExport = listAvailableOperations.getSelectedValuesList().get(i);
                             try{
