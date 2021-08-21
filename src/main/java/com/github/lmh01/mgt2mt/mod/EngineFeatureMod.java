@@ -208,7 +208,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
      * @param featureType The feature type string
      * @return Returns the type number
      */
-    public int getEngineFeatureTypeByName(String featureType){
+    public int getEngineFeatureTypeByName(String featureType){//TODO rewrite to use enum
         switch (featureType){
             case "Graphic": return 0;
             case "Sound": return 1;

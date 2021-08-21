@@ -69,7 +69,7 @@ public class PublisherMod extends AbstractAdvancedMod {
 
     @Override
     public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Platforms.txt");
+        return new File(Utils.getMGT2DataPath() + "Publisher.txt");
     }
 
     @Override

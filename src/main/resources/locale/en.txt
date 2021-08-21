@@ -217,14 +217,10 @@ analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Error w
 analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modded publisher found:
 analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scanning for modded publisher complete
 analyzer.publisher.getCustomContentString.progressBar|Scanning for modded publisher
-analyzer.themeEn.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning themes:
-analyzer.themeEn.getCustomContentString.customEngineFeatureFound|Modded theme found:
-analyzer.themeEn.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes complete
-analyzer.themeEn.getCustomContentString.progressBar|Scanning for modded themes
-analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning themes (GE):
-analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modded theme (GE):
-analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes (GE) complete
-analyzer.themeGe.getCustomContentString.progressBar|Scanning for modded themes (GE)
+analyzer.theme.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning themes:
+analyzer.theme.getCustomContentString.customEngineFeatureFound|Modded theme found:
+analyzer.theme.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes complete
+analyzer.theme.getCustomContentString.progressBar|Scanning for modded themes
 analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc games:
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modded npc game:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc games complete

@@ -109,7 +109,7 @@ public abstract class AbstractBaseMod {
      * @param disableTextAreaMessage True when the messages should not be written to the text area.
      * @return Returns an array that contains all custom contents
      */
-    public final String[] getCustomContentString(boolean disableTextAreaMessage) throws ModProcessingException {
+    public String[] getCustomContentString(boolean disableTextAreaMessage) throws ModProcessingException {
         String[] contentByAlphabet = getContentByAlphabet();
         ArrayList<String> arrayListCustomContent = new ArrayList<>();
         ProgressBarHelper.initializeProgressBar(getDefaultContent().length, getFileContentSize(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.progressBar"), !disableTextAreaMessage);
@@ -290,6 +290,7 @@ public abstract class AbstractBaseMod {
      */
     public final void setMainMenuButtonAvailability() throws ModProcessingException {
         String[] customContentString = getCustomContentString(true);
+        LOGGER.info(getType() + " customContentString length:" + customContentString.length);
         for(JMenuItem menuItem : getModMenuItems()){
             if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
                 if(customContentString.length > 0){

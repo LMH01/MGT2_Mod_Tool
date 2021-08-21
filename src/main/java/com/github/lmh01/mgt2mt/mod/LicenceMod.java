@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -147,5 +149,43 @@ public class LicenceMod extends AbstractSimpleMod {
     @Override
     public String getModFileCharset() {
         return "UTF_8BOM";
+    }
+
+    @Override
+    public String[] getCustomContentString(boolean disableTextAreaMessage) throws ModProcessingException {
+        String[] allLicenceNamesByAlphabet = getContentByAlphabet();
+
+        ArrayList<String> arrayListCustomLicences = new ArrayList<>();
+
+        ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"), !disableTextAreaMessage);
+        int currentProgressBarValue = 0;
+        for (String s : allLicenceNamesByAlphabet) {
+            boolean defaultGenre = false;
+            for (String licenceName : getDefaultContent()) {
+                if (s.equals(licenceName)) {
+                    defaultGenre = true;
+                    break;
+                }
+                if(s.equals("Chronicles of Nornio [5]")){
+                    defaultGenre = true;
+                }
+            }
+            if (!defaultGenre) {
+                arrayListCustomLicences.add(s);
+                if(!disableTextAreaMessage){
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicenceFound") + " " + s);
+                }
+            }
+            currentProgressBarValue++;
+            ProgressBarHelper.setValue(currentProgressBarValue);
+        }
+        if(!disableTextAreaMessage){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicencesComplete"));
+        }
+        ProgressBarHelper.resetProgressBar();
+        arrayListCustomLicences.remove("Chronicles of Nornio [5]");
+        String[] string = new String[arrayListCustomLicences.size()];
+        arrayListCustomLicences.toArray(string);
+        return string;
     }
 }

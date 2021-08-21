@@ -208,7 +208,6 @@ public class WindowMain {
         frame.setVisible(true);
     }
     public static void disposeFrame(){
-        Debug.test();
         frame.dispose();
         System.exit(0);
     }
@@ -517,12 +516,16 @@ public class WindowMain {
         }
     }
     private static void openGithubPage(){
-        if(JOptionPane.showConfirmDialog(null, "Open Github page?", "Open page?", JOptionPane.YES_NO_OPTION) == 0){
-            try {
-                Utils.openGithubPage();
-            } catch (Exception e) {
-                Utils.showErrorMessage(2, e);
-                e.printStackTrace();
+        if (MadGamesTycoon2ModTool.VERSION.contains("dev")) {
+            Debug.test();
+        } else {
+            if (JOptionPane.showConfirmDialog(null, "Open Github page?", "Open page?", JOptionPane.YES_NO_OPTION) == 0) {
+                try {
+                    Utils.openGithubPage();
+                } catch (Exception e) {
+                    Utils.showErrorMessage(2, e);
+                    e.printStackTrace();
+                }
             }
         }
     }

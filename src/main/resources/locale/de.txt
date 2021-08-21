@@ -210,14 +210,10 @@ analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Fehler 
 analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modifizierten Publisher gefunden:
 analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Publishern abgeschlossen
 analyzer.publisher.getCustomContentString.progressBar|Scannen nach modifizierten Publishern
-analyzer.themeEn.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Themen:
-analyzer.themeEn.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema gefunden:
-analyzer.themeEn.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen abgeschlossen
-analyzer.themeEn.getCustomContentString.progressBar|Scannen nach modifizierten Themen
-analyzer.themeGe.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Themen (GE):
-analyzer.themeGe.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema (GE) gefunden:
-analyzer.themeGe.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen (GE) abgeschlossen
-analyzer.themeGe.getCustomContentString.progressBar|Scannen nach modifizierten Themen (GE)
+analyzer.theme.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Themen:
+analyzer.theme.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema gefunden:
+analyzer.theme.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen abgeschlossen
+analyzer.theme.getCustomContentString.progressBar|Scannen nach modifizierten Themen
 analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Npc Spielen:
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modifiziertes Npc Spiel gefunden:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Spielen abgeschlossen

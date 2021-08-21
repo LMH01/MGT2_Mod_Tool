@@ -38,7 +38,7 @@ public class ActiveMods {
                 });
                 panel.add(label);
                 panel.add(button);
-                objects.add(mod);
+                objects.add(panel);
                 noModsActive = false;
             }
         }

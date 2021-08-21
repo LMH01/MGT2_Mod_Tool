@@ -27,39 +27,37 @@ public class ModManager{
      */
     public static void initializeMods(){
         antiCheatMod.initializeMod();
+        copyProtectMod.initializeMod();
+        engineFeatureMod.initializeMod();
         gameplayFeatureMod.initializeMod();
         genreMod.initializeMod();
-        licenceMod.initializeMod();
-        publisherMod.initializeMod();
-        themeMod.initializeMod();
-        npcGamesMod.initializeMod();
-        platformMod.initializeMod();
-        npcEngineMod.initializeMod();
-        antiCheatMod.initializeMod();
-        copyProtectMod.initializeMod();
-        hardwareMod.initializeMod();
         hardwareFeatureMod.initializeMod();
+        hardwareMod.initializeMod();
+        licenceMod.initializeMod();
+        npcEngineMod.initializeMod();
+        npcGamesMod.initializeMod();
+        publisherMod.initializeMod();
+        platformMod.initializeMod();
+        themeMod.initializeMod();
     }
 
     /**
      * Analyzes all mods and calls MOD.getAnalyzer().analyze();
      */
-    public static void analyzeMods(){
-        AbstractBaseMod.startModThread(() -> {
-            gameplayFeatureMod.analyzeFile();
-            engineFeatureMod.analyzeFile();
-            genreMod.analyzeFile();
-            themeMod.analyzeFile();
-            publisherMod.analyzeFile();
-            licenceMod.analyzeFile();
-            npcGamesMod.analyzeFile();
-            platformMod.analyzeFile();
-            npcEngineMod.analyzeFile();
-            antiCheatMod.analyzeFile();
-            copyProtectMod.analyzeFile();
-            hardwareMod.analyzeFile();
-            hardwareFeatureMod.analyzeFile();//TODO Hier mal testen, was passiert, wenn eine Exception auftritt
-        }, "AnalyzeAllMods");
+    public static void analyzeMods() throws ModProcessingException {
+        antiCheatMod.analyzeFile();
+        copyProtectMod.analyzeFile();
+        engineFeatureMod.analyzeFile();
+        gameplayFeatureMod.analyzeFile();
+        genreMod.analyzeFile();
+        hardwareFeatureMod.analyzeFile();
+        hardwareMod.analyzeFile();
+        licenceMod.analyzeFile();
+        npcEngineMod.analyzeFile();
+        npcGamesMod.analyzeFile();
+        publisherMod.analyzeFile();
+        platformMod.analyzeFile();
+        themeMod.analyzeFile();
     }
 
     /**
