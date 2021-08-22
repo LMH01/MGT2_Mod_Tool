@@ -1,0 +1,51 @@
+This file contains tasks that I still have to do and ideas on what I could implement. Some things are written in german because it is easier for me to write them in german
+
+TODO (Make it possible to)
+    - do some things with just the command line (eg. check for updates or open folders) maybe make it possible to add themes by command
+    Command line: arguments with which a .zip file can be selected that is extracted and searched for compatible mods. Then asks the user if these mods should be imported
+
+TODO Add later but nice feature:
+
+TODO s other ideas (not required before first release):
+    - Alles von Add Genre in ein großes Fenster packen? Vlt. als zweite option ein Genre hinzuzufügen
+
+Not Shure:
+     - Rewrite Settings window to a nicer
+//TODO Abstrakte Mod-Klasse neu schreiben:
+    AbstractBaseMod soll alle klassen bekommen, die sich Simple und Advanced mod teilen. Außerdem sollen da AbstractAnalyzer, AbstractEditor und AbstractSharer mit rein
+        Das Einzige, was in die AbstractSimpleMod und AbstractAdvancedMod klassen rein kommt ist explizit etwas, was vom Datei-Format abhängt
+        Alle methoden, bei denen etwas schief laufen kann, sollen die exception throwen. Diese wird dann am ende auf "oberster Ebene" gehandeled
+
+//TODO Export und Import soll .toml -Dateien benutzen.
+    Außerdem soll es möglich sein mods durch eine in der import datei vermerkte Zeile zu entfernen
+
+//TODO Add option to edit already added things Eg. Genres -> Edit genres
+    A list of all added things is shown (All genres when safety features are disabled)
+    Click entry to load the values
+    Windows is then opened where the values can be changed
+    Afterwards the old features is removed and the new one is added
+    Plan wie ich es machen will:
+    - Es wird bei jedem Mod ein neues Untermenü geben: "*Modname* bearbeiten"
+    - Wenn man dann darauf klickt, wird ein Fenster geöffnet, in welchem alle gefundenen mods und Default-Inhalte angezeigt werden.
+    - Aus diesem Menü kann man sich dann eine Sache heraussuchen. Klickt man weiter passiert folgendes:
+        - Die aktuellen Werte werden geladen und in einem Fenster angezeigt, welches so aussieht, wie das, mit welchem man einen neuen Mod hinzufügen kann.
+            -> Die Funktion, welche das Fenster öffnet sollte dann die Map als Rückgabewert haben, damit man damit dann den Mod hinzufügen kann
+        - Wenn man dann weiter klickt wird eine bestätigungsnachricht angezeigt. Wird diese aktzeptiert, wird der vorherige Mod entfernt und mit dem modifizierten ersetzt.
+            Zusätzlich wird der modifizierte mod noch hierhin exportiert: "Appdata\Roaming\LMH01\MGT2_Mod_Manager\Edits\KATEGORIE\NAME"
+            Dieser export wird mit .toml dateien geschehen, in dieser Datei steht dann auch drin, dass dieser Mod einen anderen ersetzt.
+            Beim Import wird dann der alte Mod entfernt und mit dem neuen ersetzt.
+
+//TODO Feature hinzufügen, mit welchem Modpacks erstellt und importiert werden können.
+    Bei diesen Modpacks sollte man dann auch auswählen können, dass spezifische mods beim importieren dieses Modpacks entfernt werden sollen.
+    Das soll mit .toml Dateien realisiert werden
+
+//TODO Thread namen anschauen und gucken, ob ich die besser/einheitlicher machen kann
+    z.B.:
+    if you have several threads of the same nature, enumerate them with IDs that are unique to one execution of the application or one log file, whichever fits your logging habits.
+
+//TODO Alle Progress bar operations noch einmal überprüfen und ggf. progressbar anpassen und konsistenter machen (auf jeden Fall für Import und Export)
+//TODO Schauen, warum import von genres so ewig dauert
+//TODO Schauen, warum das Genre Horror nicht gelöscht werden kann, sondern eine NumberFormatException throwed, wenns es entfernt werden sollte
+//TODO Schauen, warum das austauschen der Publisher nicht mehr geht -> in der Publishers.txt Datei steht bei den Bildern "null", deswegen geht es nicht -> mal schauen, warum da null reingeschrieben wird
+//TODO generell mal schauen, ob es geht jeden einzelnen mod hinzuzufügen und dass er im Spiel erkannt wird
+//TODO Schauen, ob es noch/wieder geht genres hinzuzufügen
