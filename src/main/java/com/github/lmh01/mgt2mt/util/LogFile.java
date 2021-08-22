@@ -37,6 +37,8 @@ public class LogFile {
             LOGGER.info("Logging to file is now active!");
             bw.write("Mod tool version: " + MadGamesTycoon2ModTool.VERSION);
             bw.write(System.getProperty("line.separator"));
+            bw.write("OS: "  + System.getProperty("os.name"));
+            bw.write(System.getProperty("line.separator"));
             bw.write("Current date: " + Utils.getCurrentDateTime());
             bw.write(System.getProperty("line.separator"));
             bw.write("Current settings:");
