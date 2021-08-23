@@ -2,10 +2,13 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.util.I18n;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class ModManager{
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModManager.class);
     public static ArrayList<AbstractBaseMod> mods = new ArrayList<>();
     public static AntiCheatMod antiCheatMod = new AntiCheatMod();
     public static CopyProtectMod copyProtectMod = new CopyProtectMod();
@@ -39,6 +42,7 @@ public class ModManager{
         publisherMod.initializeMod();
         platformMod.initializeMod();
         themeMod.initializeMod();
+        LOGGER.info("Total mods active: " + mods.size());
     }
 
     /**

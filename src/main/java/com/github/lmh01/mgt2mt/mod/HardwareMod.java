@@ -233,8 +233,8 @@ public class HardwareMod extends AbstractAdvancedMod {
                         if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             createBackup();
                             addMod(hardwareFeatureMap);
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
-                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardware.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
+                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardware.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
                     }else{

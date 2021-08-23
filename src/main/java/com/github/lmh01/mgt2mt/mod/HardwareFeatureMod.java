@@ -31,6 +31,7 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
 
     @Override
     protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+        EditHelper.printLine("ID", map, bw);
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);
         EditHelper.printLine("RES POINTS", map, bw);

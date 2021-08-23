@@ -26,6 +26,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -298,10 +299,8 @@ public class PublisherMod extends AbstractAdvancedMod {
      */
     private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{
         try {
-            publisherImageTarget.createNewFile();
             if(!publisherImageTarget.equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
-                publisherImageTarget.createNewFile();
-                Files.copy(Paths.get(publisherImageTarget.getPath()), Paths.get(publisherImageTarget.getPath()));
+                Files.copy(Paths.get(publisherImageSource.getPath()), Paths.get(publisherImageTarget.getPath()), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             throw new ModProcessingException("Copying image file for new publisher failed: " + e.getMessage(), e);

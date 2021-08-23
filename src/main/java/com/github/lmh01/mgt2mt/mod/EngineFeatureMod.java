@@ -158,29 +158,20 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     @Override
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
         Map<String, String> map = transformGenericToMap(t);
-        StringBuilder lastPart = new StringBuilder();
-        lastPart.append(I18n.INSTANCE.get("commonText.needInternet")).append(": ");
-        if(map.containsKey("NEEDINTERNET")){
-            lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
-            lastPart.append(I18n.INSTANCE.get("commonText.no"));
-        }
-        lastPart.append("<br>").append(I18n.INSTANCE.get("commonText.stationary")).append(": ");
-        if(map.containsKey("ONLY_STATIONARY")){
-            lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
-            lastPart.append(I18n.INSTANCE.get("commonText.no"));
-        }
-        return "<html>" +
-                I18n.INSTANCE.get("mod.hardwareFeature.addMod.optionPaneMessage.firstPart") + "<br><br>" +
-                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "<br>" +
-                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "<br>" +
-                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "<br>" +
-                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
-                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.quality") + ": " + map.get("QUALITY") + "<br>" +
-                lastPart;
+        return I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
+                I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
+                I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
+                I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
+                I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
+                I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
+                I18n.INSTANCE.get("commonText.techLevel") + ": " + map.get("TECHLEVEL") + "\n" +
+                "\n*" + I18n.INSTANCE.get("commonText.points") + "*\n\n" +
+                I18n.INSTANCE.get("commonText.gameplay") + ": " + map.get("GAMEPLAY") + "\n" +
+                I18n.INSTANCE.get("commonText.graphic") + ": " + map.get("GRAPHIC") + "\n" +
+                I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "\n" +
+                I18n.INSTANCE.get("commonText.tech") + ": " + map.get("TECH") + "\n";
     }
 
     @Override
