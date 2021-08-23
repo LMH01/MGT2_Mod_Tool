@@ -296,13 +296,15 @@ public class PublisherMod extends AbstractAdvancedMod {
      * @param publisherImageTarget The file to what the image file should be copied to
      * @throws ModProcessingException If the copying for the image file fails
      */
-    private static void copyPublisherIcon(File publisherImageSource, File publisherImageTarget) throws ModProcessingException{
+    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{
         try {
-            if(!publisherImageSource.equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
-                Files.copy(Paths.get(publisherImageSource.getPath()), Paths.get(publisherImageTarget.getPath()));
+            publisherImageTarget.createNewFile();
+            if(!publisherImageTarget.equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
+                publisherImageTarget.createNewFile();
+                Files.copy(Paths.get(publisherImageTarget.getPath()), Paths.get(publisherImageTarget.getPath()));
             }
         } catch (IOException e) {
-            throw new ModProcessingException("Copying image file for new publisher failed: " + e.getMessage());
+            throw new ModProcessingException("Copying image file for new publisher failed: " + e.getMessage(), e);
         }
     }
 

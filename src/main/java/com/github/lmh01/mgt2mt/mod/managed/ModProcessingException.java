@@ -19,7 +19,7 @@ public class ModProcessingException extends Exception {
     public ModProcessingException(String s) {
         message = s;
         internal = false;
-        cause = this;
+        cause = null;
     }
 
     /**
@@ -41,7 +41,7 @@ public class ModProcessingException extends Exception {
     public ModProcessingException(String s, boolean internalIssue) {
         message = s;
         internal = internalIssue;
-        cause = this;
+        cause = null;
     }
 
     /**
