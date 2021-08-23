@@ -147,7 +147,7 @@ public abstract class AbstractBaseMod {
     /**
      * @return The custom content string that has been computed previously
      */
-    public final String[] getFinishedCustomContentString() {
+    public String[] getFinishedCustomContentString() {
         return customContent;
     }
 

@@ -640,7 +640,7 @@ public class SharingManager {
         int currentProgressBarValue = 0;
         int currentExportFailed = 1;
         for(String string : strings){
-            if(exporter.export(string)){
+            if(!exporter.export(string)){
                 if(firstExportFailed){
                     stringBuilder.append(exportName).append(": ");
                 }else{
@@ -658,7 +658,6 @@ public class SharingManager {
             currentProgressBarValue++;
             ProgressBarHelper.setValue(currentProgressBarValue);
         }
-        TextAreaHelper.appendText(exportName + " " + I18n.INSTANCE.get("textArea.exportComplete"));
         ProgressBarHelper.resetProgressBar();
         if(exportFailed){
             stringBuilder.append(System.getProperty("line.separator"));

@@ -168,7 +168,7 @@ public class GenreMod extends AbstractAdvancedMod {
                 fileDataFolder.mkdirs();
             }
             if(fileExportedGenreIcon.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.genreExportFailed.alreadyExported") + " " + name);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
                 return false;
             }
             if(Settings.enableDebugLogging){

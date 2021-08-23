@@ -186,6 +186,7 @@ public class LicenceMod extends AbstractSimpleMod {
         arrayListCustomLicences.remove("Chronicles of Nornio [5]");
         String[] string = new String[arrayListCustomLicences.size()];
         arrayListCustomLicences.toArray(string);
+        setFinishedCustomContentString(string);
         return string;
     }
 }

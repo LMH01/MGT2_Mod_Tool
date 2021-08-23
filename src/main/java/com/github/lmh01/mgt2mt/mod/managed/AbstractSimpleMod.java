@@ -76,7 +76,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
             File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
             if(fileExportedMod.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportFailed.alreadyExported") + " " + name);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
                 return false;
             }else{
                 fileExportFolderPath.mkdirs();
@@ -88,11 +88,11 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             bw.write("[LINE]" + getModifiedExportLine(string) + System.getProperty("line.separator"));
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] - " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage());
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + e.getMessage());
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
         }
         return false;

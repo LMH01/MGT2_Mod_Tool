@@ -450,29 +450,8 @@ mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|<html>Wähle hi
 
 sharer.exportFailed.generalError.firstPart|Export nicht möglich:
 sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
-sharer.engineFeature.exportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
-sharer.engineFeature.exportSuccessful|Das folgende Engine Feature wurde exportiert:
 sharer.engineFeature.optionPaneMessage.main|Dein Engine Feature ist bereit:
-sharer.gameplayFeature.exportFailed.alreadyExported|Das folgende Gameplay Feature wurde nicht exportiert, da es bereits exportiert wurde:
-sharer.gameplayFeature.exportSuccessful|Das folgende Gameplay Feature wurde exportiert:
-sharer.publisher.exportFailed.alreadyExported|Der folgende Publisher wurde nicht exportiert, da er bereits exportiert wurde:
-sharer.publisher.exportSuccessful|Der folgende Publisher wurde exportiert:
-sharer.genre.exportFailed.alreadyExported|Das folgende Genre wurde nicht exportiert, da es bereits exportiert wurde:
-sharer.genre.exportSuccessful|Das folgende Genre wurde exportiert:
-sharer.theme.exportSuccessful|Das folgende Thema wurde exportiert:
 sharer.theme.optionPaneMessage.main|Dein Thema is bereit:
-sharer.licence.exportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
-sharer.licence.exportSuccessful|Die folgende Lizenz wurde exportiert:
-sharer.npcGames.exportFailed.alreadyExported|Das folgende Npc Spiel wurde nicht exportiert, da es bereits exportiert wurde:
-sharer.npcGames.exportSuccessful|Das folgende Npc Spiel wurde exportiert:
-sharer.npcEngine.exportFailed.alreadyExported|Die folgende Npc Engine wurde nicht exportiert, da sie bereits exportiert wurde:
-sharer.npcEngine.exportSuccessful|Die folgende Npc Engine wurde exportiert:
-sharer.platform.exportFailed.alreadyExported|Die folgende Plattform wurde nicht exportiert, da sie bereits exportiert wurde:
-sharer.platform.exportSuccessful|Die folgende Plattform wurde exportiert:
-sharer.antiCheat.exportFailed.alreadyExported|Der folgende Anti Cheat wurde nicht exportiert, da er bereits exportiert wurde:
-sharer.antiCheat.exportSuccessful|Der folgende Anit Cheat wurde exportiert:
-sharer.copyProtect.exportFailed.alreadyExported|Der folgende Kopierschutz wurde nicht exportiert, da er bereits exportiert wurde:
-sharer.copyProtect.exportSuccessful|Der folgende Kopierschutz wurde exportiert:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
 sharer.importMod.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
 sharer.importMod.alreadyExists.short|bereits vorhanden ist
@@ -480,6 +459,9 @@ sharer.importMod.nameTaken|Name ist bereits vergeben
 sharer.importMod.couldNotBeImported.firstPart|konnte nicht importiert werden
 sharer.importMod.couldNotBeImported.secondPart|nicht mit der aktuellen Mod Tool Version kompatibel ist
 sharer.importMod.couldNotBeImported.thirdPart|wurde exportiert in Version:
+sharer.exported|Exportiert:
+sharer.notExported|Nicht exportiert:
+sharer.modAlreadyExported|Dieser Mod wurde bereits exportiert
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?

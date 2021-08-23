@@ -235,7 +235,7 @@ public class ThemeMod extends AbstractSimpleMod {
             File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
             File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
             if(fileExportedTheme.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.themeExportFailed.alreadyExported") + " " + name);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
                 return false;
             }else{
                 fileExportFolderPath.mkdirs();
