@@ -126,7 +126,9 @@ public class PublisherMod extends AbstractAdvancedMod {
                     for(String string1 : string){
                         Map<String, String> genreMap = ModManager.genreMod.getSingleContentMapByName(string1);
                         int genreDate = Integer.parseInt(genreMap.get("DATE").replaceAll("[^0-9]", ""));
-                        if(Integer.parseInt(spinnerUnlockYear.getValue().toString()) >= genreDate){
+                        if(Integer.parseInt(spinnerUnlockYear.getValue().toString()) > genreDate){
+                            availableGenres.add(string1);
+                        } else if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) == genreDate) {
                             if(Utils.getNumberForMonth(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))){
                                 availableGenres.add(string1);
                             }
