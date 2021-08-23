@@ -253,7 +253,7 @@ public class ThemeMod extends AbstractSimpleMod {
             }
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer." + getMainTranslationKey() + ".exportSuccessful") + " " + name);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
             return true;
         } catch (IOException e) {
             throw new ModProcessingException(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), e);

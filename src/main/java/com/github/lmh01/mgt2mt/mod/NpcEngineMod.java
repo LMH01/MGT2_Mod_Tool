@@ -172,17 +172,31 @@ public class NpcEngineMod extends AbstractAdvancedMod {
 
     @Override
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
-        int genreId = ModManager.genreMod.getContentIdByName(map.get("GENRE"));
-        if(genreId == -1){
-            map.replace("GENRE", Integer.toString(Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1)));
-        }else{
-            map.replace("GENRE", Integer.toString(genreId));
+        int genreId;
+        boolean genreValid = false;
+        try {
+            genreId = Integer.parseInt(map.get("GENRE"));
+            if (ModManager.genreMod.getActiveIds().contains(genreId)) {
+                genreValid = true;
+            }
+        } catch (NumberFormatException e) {
+            throw new ModProcessingException("Could not parse " + map.get("GENRE") + " to integer", e);
         }
-        int platformId = ModManager.platformMod.getContentIdByName(map.get("PLATFORM"));
-        if(platformId == -1){
+        if(!genreValid){
+            map.replace("GENRE", Integer.toString(Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1)));
+        }
+        int platformId;
+        boolean platformValid = false;
+        try {
+            platformId = Integer.parseInt(map.get("PLATFORM"));
+            if (ModManager.platformMod.getActiveIds().contains(platformId)) {
+                platformValid = true;
+            }
+        } catch (NumberFormatException e) {
+            throw new ModProcessingException("Could not parse " + map.get("PLATFORM") + " to integer", e);
+        }
+        if(!platformValid){
             map.replace("PLATFORM", Integer.toString(Utils.getRandomNumber(0, ModManager.platformMod.getFileContent().size()-1)));
-        }else{
-            map.replace("PLATFORM", Integer.toString(platformId));
         }
         return super.getChangedImportMap(map);
     }

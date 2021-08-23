@@ -18,6 +18,7 @@ Not Shure:
 
 //TODO Export und Import soll .toml -Dateien benutzen.
     Außerdem soll es möglich sein mods durch eine in der import datei vermerkte Zeile zu entfernen
+    Bei den Export-Dateien sollten keine IDs beschrieben werden, sondern die namen der Mods. Falls mods beim import nicht existieren, zufällig aus vorhandenen auswählen
 
 //TODO Add option to edit already added things Eg. Genres -> Edit genres
     A list of all added things is shown (All genres when safety features are disabled)

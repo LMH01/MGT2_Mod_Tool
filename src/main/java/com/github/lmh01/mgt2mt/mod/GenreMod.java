@@ -219,7 +219,7 @@ public class GenreMod extends AbstractAdvancedMod {
             bw.print("[GAMEPLAYFEATURE BAD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, false) + System.getProperty("line.separator"));
             bw.print("[GENRE END]");
             bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.genreExportSuccessful") + " " + name);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
         }catch (IOException e){//
             throw new ModProcessingException(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] - " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage());
         }

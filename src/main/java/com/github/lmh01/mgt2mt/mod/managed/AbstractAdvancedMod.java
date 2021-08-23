@@ -259,7 +259,9 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
 
     @Override
     public final int getContentIdByName(String name) throws ModProcessingException{
+        analyzeFile();
         for(Map<String, String> map : getFileContent()){
+            sendLogMessage("Input string: " + name + " | map: " + map.get("NAME EN"));
             if(map.get("NAME EN").equals(name)){
                 return Integer.parseInt(map.get("ID"));
             }

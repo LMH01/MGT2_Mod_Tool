@@ -527,12 +527,13 @@ public class PlatformMod extends AbstractAdvancedMod {
 
     @Override
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
-        for(Map.Entry<String, String> entry : map.entrySet()){
+        return super.getChangedImportMap(map);
+        /*for(Map.Entry<String, String> entry : map.entrySet()){
             if(entry.getKey().contains("NEED-")){
                 map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getContentIdByName(entry.getValue())));
             }
         }
-        return map;
+        return map;*/
     }
 
     /**
