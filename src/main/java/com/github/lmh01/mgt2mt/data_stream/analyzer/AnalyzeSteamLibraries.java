@@ -21,12 +21,11 @@ public class AnalyzeSteamLibraries {
         BufferedReader bf = new BufferedReader(new FileReader(steamLibraryFoldersVDF));
         arrayListSteamLibraries.add(STEAM_LIBRARY_DEFAULT_FOLDER);
         String currentLine;
-        int currentPath = 1;
         while((currentLine = bf.readLine()) != null){
-            if(currentLine.matches(".*\\d.*") && !currentLine.contains("TimeNextStatsReport") && !currentLine.contains("ContentStatsID")){
-                arrayListSteamLibraries.add(currentLine.replace("\"" + currentPath + "\"", "").replace("\"", "").replaceAll("\\d", "").replaceAll("\\s+","").replace("SteamGames", "Steam Games"));
-                LOGGER.info("Added entry to Steam Libraries Array: " + arrayListSteamLibraries.get(currentPath-1));
-                currentPath++;
+            if (currentLine.contains("\"path\"")) {
+                final String trim = currentLine.replace("\"path\"", "").replaceAll("\"+", "").trim();
+                arrayListSteamLibraries.add(trim);
+                LOGGER.info("Added entry to Steam Libraries Array: " + trim);
             }
         }
         return  arrayListSteamLibraries;
