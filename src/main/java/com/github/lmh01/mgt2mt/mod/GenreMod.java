@@ -75,7 +75,7 @@ public class GenreMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.3b","1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "2.0.0", "2.0.1", "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override
@@ -231,6 +231,7 @@ public class GenreMod extends AbstractAdvancedMod {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.genre"));
         ModManager.genreMod.analyzeFile();
         ModManager.gameplayFeatureMod.analyzeFile();
+        ModManager.themeMod.analyzeFile();
         int newGenreId = ModManager.genreMod.getFreeId();
         File fileGenreToImport = new File(importFolderPath + "\\genre.txt");
         File fileScreenshotFolder = new File(Utils.getMGT2ScreenshotsPath() + "//" + newGenreId);
@@ -247,14 +248,13 @@ public class GenreMod extends AbstractAdvancedMod {
             if(entry.getKey().equals("GENRE COMB")){
                 map.put("GENRE COMB", Utils.convertGenreNamesToId(entry.getValue()));
             }else if(entry.getKey().equals("THEME COMB")){
-                ArrayList<String> arrayList = Utils.getEntriesFromString(entry.getValue().replaceAll("-", ""));
+                ArrayList<String> arrayList = Utils.getEntriesFromString(entry.getValue());
                 StringBuilder themeIds = new StringBuilder();
+                ArrayList<String> themes = new ArrayList<>(Arrays.asList(ModManager.themeMod.getContentByAlphabet()));
                 for(String string : arrayList){
-                    int idToSearch = Integer.parseInt(string.replaceAll("[^0-9]", ""))-1;
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("Current id to search: " + idToSearch);
+                    if (themes.contains(string)) {
+                        themeIds.append("<").append(string).append(">");
                     }
-                    themeIds.append("<").append(ModManager.themeMod.getFileContent().get(idToSearch+1)).append(">");
                 }
                 map.put("THEME COMB", themeIds.toString());
             }else{

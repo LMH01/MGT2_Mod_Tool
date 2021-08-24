@@ -132,7 +132,7 @@ public class WindowAddGenrePage6 extends JFrame{
         StringBuilder compatibleThemes = new StringBuilder();
         for(Map.Entry<Integer, String> entry : ModManager.themeMod.getFileContent().entrySet()){
             for(String string : listAvailableThemes.getSelectedValuesList()){
-                if(entry.getValue().equals(string)){
+                if(ModManager.themeMod.getReplacedLine(entry.getValue()).equals(string)){
                     compatibleThemeIds.add(entry.getKey());
                     compatibleThemes.append("<").append(string).append(">");
                     LOGGER.info("Compatible Theme: " + entry.getKey() + " | " + entry.getValue());

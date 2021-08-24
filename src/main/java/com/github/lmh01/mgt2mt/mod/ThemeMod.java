@@ -464,6 +464,7 @@ public class ThemeMod extends AbstractSimpleMod {
         analyzeFile();
         try {
             File file = new File(Utils.getMGT2TextFolderPath() + "//GE//Themes_GE.txt");
+            Map<Integer, String> mapGer = DataStreamHelper.getContentFromFile(file, "UTF_16LE");
             if(file.exists()){
                 file.delete();
             }
@@ -481,25 +482,25 @@ public class ThemeMod extends AbstractSimpleMod {
                             bw.write(System.getProperty("line.separator"));
                         }
                         if(!map.get(i).contains("<" + genreID + ">")){
-                            bw.write(map.get(i) + "<" + genreID + ">");
+                            bw.write(mapGer.get(i) + "<" + genreID + ">");
                         }else{
-                            bw.write(map.get(i));
+                            bw.write(mapGer.get(i));
                         }
                     }else{
                         if (!firstLine) {
                             bw.write(System.getProperty("line.separator"));
                         }
                         if (Settings.enableDebugLogging) {
-                            LOGGER.info(i + " - N: " + map.get(i));
+                            LOGGER.info(i + " - N: " + mapGer.get(i));
                         }
-                        bw.write(map.get(i));
+                        bw.write(mapGer.get(i));
                     }
                 }else{
                     if(removeIdFromWholeFile){
                         if (!firstLine) {
                             bw.write(System.getProperty("line.separator"));
                         }
-                        bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                        bw.write(mapGer.get(i).replace("<" + genreID + ">", ""));
                     }else{
                         if(themeIds.contains(i)){
                             if (Settings.enableDebugLogging) {
@@ -508,15 +509,15 @@ public class ThemeMod extends AbstractSimpleMod {
                             if(!firstLine){
                                 bw.write(System.getProperty("line.separator"));
                             }
-                            bw.write(map.get(i).replace("<" + genreID + ">", ""));
+                            bw.write(mapGer.get(i).replace("<" + genreID + ">", ""));
                         }else{
                             if (!firstLine) {
                                 bw.write(System.getProperty("line.separator"));
                             }
                             if (Settings.enableDebugLogging) {
-                                LOGGER.info(i + " - N: " + map.get(i));
+                                LOGGER.info(i + " - N: " + mapGer.get(i));
                             }
-                            bw.write(map.get(i));
+                            bw.write(mapGer.get(i));
                         }
                     }
                 }
@@ -602,7 +603,6 @@ public class ThemeMod extends AbstractSimpleMod {
      * @return Returns the position of the specified genre in the themesNamesEn file.
      */
     public int getPositionOfThemeInFile(String themeNameEn) throws ModProcessingException {
-        analyzeFile();
         int position = 1;
         for(Map.Entry<Integer, String> entry: ModManager.themeMod.getFileContent().entrySet()){
             if(getReplacedLine(entry.getValue()).equals(themeNameEn)){

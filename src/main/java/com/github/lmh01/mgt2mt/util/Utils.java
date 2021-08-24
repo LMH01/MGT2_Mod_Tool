@@ -322,7 +322,6 @@ public class Utils {
     public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {//TODO Testen, ob die Funktion noch funktioniert
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
         boolean firstLine = true;
-        int lineNumber = 1;
         StringBuilder compatibleThemes = new StringBuilder();
         String currentLine;
         while((currentLine = br.readLine()) != null){
@@ -332,12 +331,9 @@ public class Utils {
             }
             if(currentLine.contains(Integer.toString(genreId))){
                 compatibleThemes.append("<");
-                compatibleThemes.append(currentLine.replace(" ", "_").replace("<", "").replace(">", "").replaceAll("[0-9]", ""));
-                compatibleThemes.append("-");
-                compatibleThemes.append(lineNumber);
+                compatibleThemes.append(ModManager.themeMod.getReplacedLine(currentLine));
                 compatibleThemes.append(">");
             }
-            lineNumber++;
         }
         br.close();
         return compatibleThemes.toString();
