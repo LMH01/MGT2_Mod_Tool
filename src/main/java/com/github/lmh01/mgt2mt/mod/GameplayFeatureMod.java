@@ -337,6 +337,20 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         return "gameplayFeature.txt";
     }
 
+    @Override
+    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        map.replace("GOOD", ModManager.genreMod.getGenreNames(map.get("GOOD")));
+        map.replace("BAD", ModManager.genreMod.getGenreNames(map.get("BAD")));
+        return map;
+    }
+
+    @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        map.replace("GOOD", getGenreIds(map.get("GOOD")));
+        map.replace("BAD", getGenreIds(map.get("BAD")));
+        return map;
+    }
+
     /**
      * Converts the input string into the respective type number
      * @param featureType The feature type string
@@ -465,5 +479,45 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
         }
+    }
+
+    /**
+     * @param genreNamesRaw The string containing the genre ids that should be transformed.
+     *                      If a genre id is not found a random one will be inserted
+     * @return A list of genre names
+     * @throws ModProcessingException If {@link GenreMod#getContentNameById(int)} fails.
+     */
+    private String getGenreIds(String genreNamesRaw) throws ModProcessingException {
+        //TODO Option in die Einstellungen packen, mit welcher man entscheiden kann, was passieren soll, wenn beim Import ein name nicht gefunden wird.
+        //  Entweder zufällige id heraussuchen oder einfach ganz weg lassen
+        LOGGER.info("genreNamesRaw: " + genreNamesRaw);
+        StringBuilder genreNames = new StringBuilder();
+        int charPosition = 0;
+        StringBuilder currentString = new StringBuilder();
+        for(int i = 0; i<genreNamesRaw.length(); i++){
+            if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
+                //Nothing happens
+            }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("genreNumber: " + currentString);
+                }
+                genreNames.append("<");
+                try {
+                    genreNames.append(ModManager.genreMod.getContentIdByName(currentString.toString()));
+                } catch (ModProcessingException e) {
+                    genreNames.append(Utils.getRandomNumber(ModManager.genreMod.getActiveIds().indexOf(Collections.min(ModManager.genreMod.getActiveIds())), ModManager.genreMod.getMaxId()));
+                }
+                genreNames.append(">");
+                genreNames.append("<").append(ModManager.genreMod.getContentIdByName(currentString.toString())).append(">");
+                currentString = new StringBuilder();
+            }else{
+                currentString.append(genreNamesRaw.charAt(charPosition));
+                if(Settings.enableDebugLogging){
+                    LOGGER.info("currentNumber: " + currentString);
+                }
+            }
+            charPosition++;
+        }
+        return genreNames.toString();
     }
 }

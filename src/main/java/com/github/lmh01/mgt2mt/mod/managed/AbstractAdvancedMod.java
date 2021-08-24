@@ -123,7 +123,12 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
         try{
             analyzeFile();
-            Map<String, String> map = getSingleContentMapByName(name);
+            Map<String, String> map;
+            try {
+                map = getChangedExportMap(getSingleContentMapByName(name));
+            } catch (NullPointerException | NumberFormatException e) {
+                throw new ModProcessingException("The export map could not be changed", e);
+            }
             String exportFolder;
             if(exportAsRestorePoint){
                 exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
@@ -200,7 +205,11 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             }
         }
         if(addFeature){
-            addMod(getChangedImportMap(map));
+            try {
+                addMod(getChangedImportMap(map));
+            } catch (NullPointerException | NumberFormatException e) {
+                throw new ModProcessingException("The import map could not be changed", e);
+            }
             doOtherImportThings(importFolderPath, map.get("NAME EN"));
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
@@ -225,10 +234,18 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     /**
-     * @return Returns the map that contains the import values
+     * @return The map that contains the import values
      * Can be overwritten to adjust specific values
      */
-    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        return map;
+    }
+
+    /**
+     * @return The map that contains the import values
+     * Can be overwritten to adjust specific map values
+     */
+    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
         return map;
     }
 
@@ -260,11 +277,14 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     @Override
     public final int getContentIdByName(String name) throws ModProcessingException{
         analyzeFile();
-        for(Map<String, String> map : getFileContent()){
-            sendLogMessage("Input string: " + name + " | map: " + map.get("NAME EN"));
-            if(map.get("NAME EN").equals(name)){
-                return Integer.parseInt(map.get("ID"));
+        try {
+            for(Map<String, String> map : getFileContent()){
+                if(map.get("NAME EN").equals(name)){
+                    return Integer.parseInt(map.get("ID"));
+                }
             }
+        } catch (NullPointerException e) {
+            throw new ModProcessingException("The id for sub-mod '" + name + "' of mod " + getType() + " was not found.", e);
         }
         throw new ModProcessingException("The id for sub-mod '" + name + "' of mod " + getType() + " was not found.");
     }
@@ -359,6 +379,21 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             return (Map<String, String>) t;
         } catch (ClassCastException e) {
             throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
+        }
+    }
+
+    /**
+     * Use this function to simply transform the map entry from the mod name to the mod id. If the mod name is not found then
+     * a random id is placed in the map.
+     * @param map The map that contains the value that should be replaced
+     * @param mapKey The map key for which the value should be replaced
+     * @param mod The mod for which the name should be replaced with the id
+     */
+    protected void replaceImportMapEntry(Map<String, String> map, String mapKey, AbstractBaseMod mod) {
+        try {
+            map.replace(mapKey, Integer.toString(mod.getContentIdByName(map.get(mapKey))));
+        } catch (ModProcessingException e) {
+            map.replace(mapKey, Integer.toString(Utils.getRandomNumber(0, mod.getMaxId())));
         }
     }
 }

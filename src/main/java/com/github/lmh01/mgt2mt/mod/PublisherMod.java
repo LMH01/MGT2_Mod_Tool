@@ -271,13 +271,23 @@ public class PublisherMod extends AbstractAdvancedMod {
     public void removeMod(String name) throws ModProcessingException {
         super.removeMod(name);
         int iconId = getPublisherIconIdByName(name);
-        if(iconId>146){
+        if (iconId > 146) {
             File publisherIcon = new File(Utils.getMGT2CompanyLogosPath() + iconId + ".png");
             LOGGER.info("publisherIcon: " + publisherIcon.getPath());
-            if(publisherIcon.exists()){
+            if (publisherIcon.exists()) {
                 publisherIcon.delete();
                 LOGGER.info("Image file for publisher " + name + " has been removed.");
             }
+        }
+    }
+
+    @Override
+    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException {
+        try {
+            map.replace("GENRE", ModManager.genreMod.getContentNameById(Integer.parseInt(map.get("GENRE"))));
+            return map;
+        } catch (NumberFormatException | NullPointerException e) {
+            throw new ModProcessingException("The export map could not be changed", e);
         }
     }
 
@@ -289,6 +299,73 @@ public class PublisherMod extends AbstractAdvancedMod {
         }
         File fileGenreIconToExport = new File(Utils.getMGT2CompanyLogosPath() + singleContentMap.get("PIC") + ".png");
         Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedPublisherIcon.getPath()));
+    }
+
+    @Override
+    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
+        analyzeFile();
+        ModManager.genreMod.analyzeFile();
+        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
+        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        HashMap<String, String> map = new HashMap<>();
+        List<Map<String, String>> list;
+        try {
+            list = DataStreamHelper.parseDataFile(fileToImport);
+        } catch (IOException e) {
+            throw new ModProcessingException("File could not be parsed '" + fileToImport.getName() + "': " +  e.getMessage());
+        }
+        map.put("ID", Integer.toString(getFreeId()));
+        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
+            if(entry.getKey().equals("GENRE")){
+                int genreID = ModManager.genreMod.getContentIdByName(entry.getValue());
+                if(genreID == -1){
+                    int randomGenreID = Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1);
+                    LOGGER.info("Genre list size: " + ModManager.genreMod.getFileContent().size());
+                    map.put("GENRE", Integer.toString(randomGenreID));
+                }else{
+                    map.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(entry.getValue())));
+                }
+            }else{
+                map.put(entry.getKey(), entry.getValue());
+            }
+        }
+        boolean CanBeImported = false;
+        for(String string : getCompatibleModToolVersions()){
+            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
+                CanBeImported = true;
+            }
+        }
+        if(!CanBeImported && !Settings.disableSafetyFeatures){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + map.get("NAME EN"));
+            return getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + map.get("MGT2MT VERSION");
+        }
+        for(Map<String, String> existingContent : getFileContent()){
+            for(Map.Entry<String, String> entry : existingContent.entrySet()){
+                if(entry.getValue().equals(map.get("NAME EN"))){
+                    sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + map.get("NAME EN"));
+                    return "false";
+                }
+            }
+        }
+        boolean addFeature = true;
+        if(showMessages){
+            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(map)) != JOptionPane.YES_OPTION){
+                addFeature = false;
+            }
+        }
+        File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
+        map.put("PIC", Integer.toString(CompanyLogoAnalyzer.getLogoNumber()));
+        if(addFeature){
+            ModManager.publisherMod.addMod(map);
+            copyPublisherIcon(new File(Utils.getCompanyLogosPath() + "//" + map.get("PIC") + ".png"), new File(publisherImageFilePath.toString()));
+            doOtherImportThings(importFolderPath, map.get("NAME EN"));
+            if(showMessages){
+                JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
+            }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("NAME EN"));
+        }
+        return "true";
     }
 
     /**
@@ -350,9 +427,14 @@ public class PublisherMod extends AbstractAdvancedMod {
                 bw.write("\ufeff");
             }
             for(Map<String, String> fileContent : getFileContent()){
-                if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
-                    fileContent.remove("GENRE");
-                    fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getActiveIds().size()))));
+                try {
+                    if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
+                        fileContent.remove("GENRE");
+                        fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getActiveIds().size()))));
+                    }
+                } catch (NumberFormatException e) {
+                    bw.close();
+                    throw new ModProcessingException("Genre can not be removed from publisher file", e);
                 }
                 printValues(fileContent, bw);
                 bw.write(System.getProperty("line.separator"));

@@ -171,34 +171,16 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        map.replace("GENRE", ModManager.genreMod.getContentNameById(Integer.parseInt(map.get("GENRE"))));
+        return map;
+    }
+
+    @Override
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException {
-        int genreId;
-        boolean genreValid = false;
-        try {
-            genreId = Integer.parseInt(map.get("GENRE"));
-            if (ModManager.genreMod.getActiveIds().contains(genreId)) {
-                genreValid = true;
-            }
-        } catch (NumberFormatException e) {
-            throw new ModProcessingException("Could not parse " + map.get("GENRE") + " to integer", e);
-        }
-        if(!genreValid){
-            map.replace("GENRE", Integer.toString(Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1)));
-        }
-        int platformId;
-        boolean platformValid = false;
-        try {
-            platformId = Integer.parseInt(map.get("PLATFORM"));
-            if (ModManager.platformMod.getActiveIds().contains(platformId)) {
-                platformValid = true;
-            }
-        } catch (NumberFormatException e) {
-            throw new ModProcessingException("Could not parse " + map.get("PLATFORM") + " to integer", e);
-        }
-        if(!platformValid){
-            map.replace("PLATFORM", Integer.toString(Utils.getRandomNumber(0, ModManager.platformMod.getFileContent().size()-1)));
-        }
-        return super.getChangedImportMap(map);
+        replaceImportMapEntry(map, "GENRE", ModManager.genreMod);
+        replaceImportMapEntry(map, "PLATFORM", ModManager.platformMod);
+        return map;
     }
 
     @Override

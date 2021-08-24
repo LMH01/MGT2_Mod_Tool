@@ -137,13 +137,13 @@ public class GenreMod extends AbstractAdvancedMod {
 
     @Override
     public void removeMod(String name) throws ModProcessingException {
-        super.removeMod(name);
         ModManager.themeMod.editGenreAllocation(getContentIdByName(name), false, null);
         ModManager.gameplayFeatureMod.removeGenreId(getContentIdByName(name));
         ImageFileHandler.removeImageFiles(name);
         ModManager.publisherMod.removeGenre(name);
         ModManager.npcEngineMod.removeGenre(name);
         NpcGamesMod.editNPCGames(ModManager.genreMod.getContentIdByName(name), false, 0);
+        super.removeMod(name);
     }
 
     @Override
@@ -608,6 +608,7 @@ public class GenreMod extends AbstractAdvancedMod {
      * @throws ModProcessingException If {@link GenreMod#getContentNameById(int)} fails.
      */
     public String getGenreNames(String genreNumbersRaw) throws ModProcessingException {
+        LOGGER.info("genreNumbersRaw: " + genreNumbersRaw);
         StringBuilder genreNames = new StringBuilder();
         int charPosition = 0;
         StringBuilder currentNumber = new StringBuilder();
