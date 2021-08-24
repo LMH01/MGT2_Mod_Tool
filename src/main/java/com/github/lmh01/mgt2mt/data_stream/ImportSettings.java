@@ -6,15 +6,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 public class ImportSettings{
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
 
-    public static boolean Import(String fileLocation) {
+    /**
+     * @param path Path to the settings file
+     * @return true if import was successful
+     */
+    public static boolean Import(Path path) {
         LOGGER.info("Starting settings import process...");
         try {
-            LOGGER.info("Scanning for File '" + fileLocation + "'...");
-            File file = new File(fileLocation);
+            LOGGER.info("Scanning for File '" + path + "'...");
+            File file = path.toFile();
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             LOGGER.info("Beginning to import settings from file: " + file);

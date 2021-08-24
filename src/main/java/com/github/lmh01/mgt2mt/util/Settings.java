@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeSteamLibraries;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
@@ -10,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Settings {
     public static String mgt2FilePath = "";
     public static String steamLibraryFolder = "";
-    public static final String MGT2_MOD_MANAGER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//";
+    public static final Path MGT2_MOD_MANAGER_PATH;
     public static boolean enableDebugLogging = false;
     public static boolean disableSafetyFeatures = false;
     public static boolean enableCustomFolder = false;
@@ -32,6 +35,14 @@ public class Settings {
         setMGT2Folder(false);
         setSettings(false, false, false, false, mgt2FilePath, true, true, true, "English", "Release", true);
         LOGGER.info("Settings have been reset.");
+    }
+
+    static {
+        if (MadGamesTycoon2ModTool.isWindows()) {
+            MGT2_MOD_MANAGER_PATH = Paths.get(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//");
+        } else {
+            MGT2_MOD_MANAGER_PATH = Paths.get(System.getProperty("user.home"), ".local", "share", "mgt2_mod_tool");
+        }
     }
 
     /**
@@ -65,7 +76,7 @@ public class Settings {
      * Imports the settings from file.
      */
     public static void importSettings(){
-        if(ImportSettings.Import(MGT2_MOD_MANAGER_PATH + "//settings.txt")){
+        if(ImportSettings.Import(Paths.get(MGT2_MOD_MANAGER_PATH + "/settings.txt"))){
             LOGGER.info("Settings have been imported successfully.");
         }
         setLanguage(Settings.language);
@@ -117,11 +128,17 @@ public class Settings {
         try {
             ArrayList<String> arrayListSteamLibraries = AnalyzeSteamLibraries.getSteamLibraries();
             for (String arrayListSteamLibrary : arrayListSteamLibraries) {
+                LOGGER.info("Current Path: " + arrayListSteamLibrary + "/steamapps/common/Mad Games Tycoon 2/");
+                if (validateMGT2Folder(arrayListSteamLibrary + "/steamapps/common/Mad Games Tycoon 2/", false, true)) {
+                    LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "/steamapps/common/Mad Games Tycoon 2/");
+                    return arrayListSteamLibrary + "/steamapps/common/Mad Games Tycoon 2/";
+                }//TODO Check if this still works under windows if yes delete commented out part
+                /*
                 LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
                 if (validateMGT2Folder(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", false, true)) {
                     LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
                     return arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
-                }
+                }*/
             }
             LOGGER.info("MGT2 folder not found");
         } catch (IOException e) {

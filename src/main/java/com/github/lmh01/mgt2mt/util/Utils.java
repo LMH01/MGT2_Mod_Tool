@@ -10,6 +10,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -460,6 +461,22 @@ public class Utils {
     public static void open(String path){
         try {
             File file = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + e.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Opens the given folder
+     */
+    public static void open(Path path){
+        try {
+            File file = path.toFile();
             if(!file.exists()){
                 file.mkdirs();
             }
