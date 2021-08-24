@@ -317,13 +317,12 @@ public class PublisherMod extends AbstractAdvancedMod {
         map.put("ID", Integer.toString(getFreeId()));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE")){
-                int genreID = ModManager.genreMod.getContentIdByName(entry.getValue());
-                if(genreID == -1){
+                try {
+                    map.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(entry.getValue())));
+                } catch (ModProcessingException e) {
                     int randomGenreID = Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1);
                     LOGGER.info("Genre list size: " + ModManager.genreMod.getFileContent().size());
                     map.put("GENRE", Integer.toString(randomGenreID));
-                }else{
-                    map.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(entry.getValue())));
                 }
             }else{
                 map.put(entry.getKey(), entry.getValue());

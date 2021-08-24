@@ -1,5 +1,13 @@
 This file contains the changelog of the tool (incomplete)
 
+Coming in v2.3.0
+
+Improved text area outputs when importing, exporting, adding or removing mods
+Improved the error handling massively: Whenever something goes wrong the stacktrace is now written to the text area and an explanation of what went wrong is displayed
+Internal code has been massively improved
+(Improved the way imports work: Importing things should no longer fail when a required mod is missing, instead a random one will be selected. This has already been implemented for some mods but this update adds this feature to all mods)
+ -> Diesen changelog eintrag ggf. rausnehmen, da Import/Export ja eh neu geschrieben wird
+
 Coming in v2.1.0
 
 New  feature:
