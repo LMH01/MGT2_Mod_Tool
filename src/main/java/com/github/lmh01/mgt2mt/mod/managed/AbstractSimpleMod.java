@@ -231,14 +231,14 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     /**
      * This function can be used to change the import line
      */
-    public String getModifiedImportLine(String importLine){
+    public String getModifiedImportLine(String importLine) throws ModProcessingException {
         return importLine;
     }
 
     /**
      * This function can be used to change the export line
      */
-    public String getModifiedExportLine(String exportLine){
+    public String getModifiedExportLine(String exportLine) throws ModProcessingException {
         return exportLine;
     }
 

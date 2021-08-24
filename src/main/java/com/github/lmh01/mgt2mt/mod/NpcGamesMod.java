@@ -26,7 +26,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
     }
 
     @Override
@@ -203,5 +203,27 @@ public class NpcGamesMod extends AbstractSimpleMod {
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while editing npcGames.txt file: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String getModifiedExportLine(String exportLine) throws ModProcessingException {
+        ArrayList<String> strings = Utils.getEntriesFromString(exportLine);
+        StringBuilder output = new StringBuilder();
+        output.append(getReplacedLine(exportLine)).append(" ");
+        for (String string : strings) {
+            output.append("<").append(ModManager.genreMod.getContentNameById(Integer.parseInt(string))).append(">");
+        }
+        return output.toString();
+    }
+
+    @Override
+    public String getModifiedImportLine(String importLine) throws ModProcessingException {
+        ArrayList<String> strings = Utils.getEntriesFromString(importLine);
+        StringBuilder output = new StringBuilder();
+        output.append(getReplacedLine(importLine)).append(" ");
+        for (String string : strings) {
+            output.append("<").append(ModManager.genreMod.getContentIdByName(string)).append(">");
+        }
+        return output.toString();
     }
 }

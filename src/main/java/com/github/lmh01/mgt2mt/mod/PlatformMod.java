@@ -83,17 +83,32 @@ public class PlatformMod extends AbstractAdvancedMod {
             bw.write(pictureChangeYear);
             bw.write(System.getProperty("line.separator"));
         }
-        ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("NEED")){
-                gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
+        try {
+            ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().contains("NEED")){
+                    gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
+                }
             }
-        }
-        int numberOfRunsB = 1;
-        for(Integer integer : gameplayFeatureIds){
-            bw.write("[NEED-" + numberOfRunsB + "]" + integer);
-            bw.write(System.getProperty("line.separator"));
-            numberOfRunsB++;
+            int numberOfRunsB = 1;
+            for(Integer integer : gameplayFeatureIds){
+                bw.write("[NEED-" + numberOfRunsB + "]" + integer);
+                bw.write(System.getProperty("line.separator"));
+                numberOfRunsB++;
+            }
+        } catch (NumberFormatException e) {
+            ArrayList<String> gameplayFeatureNames = new ArrayList<>();
+            for(Map.Entry<String, String> entry : map.entrySet()){
+                if(entry.getKey().contains("NEED")){
+                    gameplayFeatureNames.add(entry.getValue());
+                }
+            }
+            int numberOfRunsB = 1;
+            for(String string : gameplayFeatureNames){
+                bw.write("[NEED-" + numberOfRunsB + "]" + string);
+                bw.write(System.getProperty("line.separator"));
+                numberOfRunsB++;
+            }
         }
         EditHelper.printLine("COMPLEX",map, bw);
         EditHelper.printLine("INTERNET",map, bw);
@@ -102,7 +117,7 @@ public class PlatformMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
     }
 
     @Override
@@ -523,6 +538,26 @@ public class PlatformMod extends AbstractAdvancedMod {
             File outputFile = new File(exportPictures.getPath() + "//" + entry.getKey() + ".png");
             Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(outputFile.getPath()));
         }
+    }
+
+    @Override
+    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                map.replace(entry.getKey(), ModManager.gameplayFeatureMod.getContentNameById(Integer.parseInt(entry.getValue())));
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                replaceImportMapEntry(map, entry.getKey(), ModManager.gameplayFeatureMod);
+            }
+        }
+        return map;
     }
 
     /**
