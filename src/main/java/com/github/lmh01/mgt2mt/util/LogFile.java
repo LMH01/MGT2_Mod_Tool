@@ -15,7 +15,7 @@ public class LogFile {
     static {
         try {
             logFile = new File(Settings.MGT2_MOD_MANAGER_PATH + Utils.getCurrentDateTime() + ".log");
-            File mainFolder = new File(Settings.MGT2_MOD_MANAGER_PATH);
+            File mainFolder = Settings.MGT2_MOD_MANAGER_PATH.toFile();
             if(!mainFolder.exists()){
                 mainFolder.mkdirs();
             }
@@ -37,7 +37,7 @@ public class LogFile {
             LOGGER.info("Logging to file is now active!");
             bw.write("Mod tool version: " + MadGamesTycoon2ModTool.VERSION);
             bw.write(System.getProperty("line.separator"));
-            bw.write("OS: "  + System.getProperty("os.name"));
+            bw.write("OS: " + System.getProperty("os.name"));
             bw.write(System.getProperty("line.separator"));
             bw.write("Current date: " + Utils.getCurrentDateTime());
             bw.write(System.getProperty("line.separator"));

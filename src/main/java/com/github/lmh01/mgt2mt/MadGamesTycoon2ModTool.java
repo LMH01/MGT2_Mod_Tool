@@ -3,18 +3,31 @@ package com.github.lmh01.mgt2mt;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
+import com.github.lmh01.mgt2mt.util.OSType;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
+import java.awt.*;
 import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
+    public static final OSType OS_TYPE;
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);//TODO add output that writes the os version in console (when i do the linux port)
     public static final String VERSION = "2.3.0-dev";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
     public static final String CURRENT_RELEASE_VERSION = "2.2.1";//When this version number has been detected as the newest release version the update available message is held back
+
+    static {
+        if (System.getProperty("os.name").contains("Linux")){
+            OS_TYPE = OSType.LINUX;
+        } else {
+            OS_TYPE = OSType.WINDOWS;
+        }
+        LOGGER.info("MGT2_Mod_Tool is running under " + System.getProperty("os.name"));
+    }
+
     public static void main(String[] args){
         Settings.importSettings();
         if(Settings.language.equals("English")){
@@ -36,6 +49,13 @@ public class MadGamesTycoon2ModTool {
         }else{
             LOGGER.info("Initial backups where not created/completed because the mgt2 folder is invalid");
         }
-        ThreadHandler.threadPerformStartTasks().start();
+        //ThreadHandler.threadPerformStartTasks().start();
+    }
+
+    /**
+     * @return True if os is Linux
+     */
+    public static boolean isWindows() {
+        return OS_TYPE.equals(OSType.WINDOWS);
     }
 }

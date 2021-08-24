@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -70,10 +71,9 @@ public class Uninstaller {
                             }
                         }
                         if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
-                            File modManagerPath = new File(Settings.MGT2_MOD_MANAGER_PATH);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deleteModManagerFiles"));
                             LogFile.stopLogging();
-                            DataStreamHelper.deleteDirectory(modManagerPath);
+                            DataStreamHelper.deleteDirectory(Settings.MGT2_MOD_MANAGER_PATH.toFile());//TODO schauen, ob das noch geht
                             exitProgram = true;
                         }else{
                             if(checkboxDeleteBackups.isSelected()){

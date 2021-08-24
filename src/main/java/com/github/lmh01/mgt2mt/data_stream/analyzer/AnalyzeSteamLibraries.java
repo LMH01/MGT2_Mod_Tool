@@ -1,14 +1,26 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 
 public class AnalyzeSteamLibraries {
-    private static final String STEAM_LIBRARY_FOLDERS_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
-    private static final String STEAM_LIBRARY_DEFAULT_FOLDER = "C:\\Program Files (x86)\\Steam\\";
+    private static final String STEAM_LIBRARY_FOLDERS_PATH;
+    private static final String STEAM_LIBRARY_DEFAULT_FOLDER;
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeSteamLibraries.class);
+
+    static {
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        if (MadGamesTycoon2ModTool.isWindows()) {
+            STEAM_LIBRARY_FOLDERS_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
+            STEAM_LIBRARY_DEFAULT_FOLDER = "C:\\Program Files (x86)\\Steam\\";
+        } else {
+            STEAM_LIBRARY_FOLDERS_PATH = "/home/louis/.local/share/Steam/steamapps/libraryfolders.vdf";
+            STEAM_LIBRARY_DEFAULT_FOLDER = "/home/louis/.local/share/Steam/";
+        }
+    }
 
     /**
      * @return Returns an array list containing all steam libraries.

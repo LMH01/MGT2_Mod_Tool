@@ -43,3 +43,5 @@ task createZip(type: Zip, group: 'build') {
     destinationDirectory = new File("build/releases")
     archiveFileName = "MGT2_Mod_Tool_${project.version}.zip"
 }
+
+compileJava {options.encoding = "UTF-8"}
