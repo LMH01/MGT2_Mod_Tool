@@ -30,7 +30,7 @@ public class DefaultContentManager {
      * This is the version in which the default content files are initially saved.
      * It indicates to what game update the default files correspond that ship with this tool.
      */
-    private static final String DEFAULT_CONTENT_VERSION = "BUILD 2021.08.13A";
+    private static final String DEFAULT_CONTENT_VERSION = "BUILD 2021.08.25A";
     private static final String NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL = "https://www.dropbox.com/s/hd7f7c2b9ybr5gt/newest_default_content_version.txt?dl=1";
     private static final String NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL = "https://www.dropbox.com/s/7l89pg9x4venqje/newest_default_content.toml?dl=1";
     public static final File DEFAULT_CONTENT_FILE = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content.toml");
