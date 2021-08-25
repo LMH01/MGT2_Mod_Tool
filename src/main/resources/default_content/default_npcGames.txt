@@ -106,7 +106,7 @@ Brainstorm <1>
 Break down <1>
 Breath of Ice <2><3><15>
 Bridge of Storm <4><13>
-Bridge Racer <7>
+Bridge Racer <7><17>
 Bright Rain <4><13>
 Broken Edge <5><12><14><16>
 Bronco <0><6>
@@ -319,7 +319,7 @@ Galaxy Taxi <5><12><14><16>
 Galileo <2><3><15>
 Galioth <4><13>
 Game Console Tycoon <9><11>
-Game of the Witches <1>
+Game of Witches <1>
 Game Over <10>
 Gargoyle Mission <2><3><15>
 Gate of Secret <2><3><15>
@@ -492,7 +492,7 @@ Master of Ring <10>
 Master of Universe <4><13>
 Masterix <1>
 Max IQ <1>
-Maximum Speed <7>
+Maximum Speed <7><17>
 Maximus <1>
 MDDK <5><12><14><16>
 Mech Force <5><12><14><16>
@@ -783,12 +783,12 @@ Stranger Of New Worlds <10>
 Street Basketball <8>
 Street Boxer <10>
 Street Gangs: The Fight <10>
-Street Kart <7>
+Street Kart <7><17>
 Street Kombat <10>
 Streetfrog <0><6>
 Streets of New York <5><12><14><16>
 Strike <7>
-Stunt Race <7>
+Stunt Race <7><17>
 SUB <4><13>
 Submarine Torpedos <7>
 Submarine U88 <7>
@@ -804,12 +804,12 @@ Super Darios <2><3><15>
 Super Drive <7>
 Super Giants <5><12><14><16>
 Super Gladiator <10>
-Super Grand Prix <7>
+Super Grand Prix <7><17>
 Super Ice Hockey <8>
 Super Kicker <8>
 Super Mega Blade <5><12><14><16>
 Super Mindgames <1>
-Super Motorsport <7>
+Super Motorsport <7><17>
 Super Pang Buster <0><6>
 Super Pilotwings <7>
 Super Ping Pong <8>
@@ -819,11 +819,11 @@ Super Shoots <5><12><14><16>
 Super Shuttle <7>
 Super Skateboard <8>
 Super Space Force <5><12><14><16>
-Super Team Racing <7>
+Super Team Racing <7><17>
 Super Tech Tycoon <9><11>
 Super Time Travellers <5><12><14><16>
 Super Train Sim <7>
-Super Wheel <7>
+Super Wheel <7><17>
 Super Wings <7>
 Super Wrestling <10>
 Superboy <2><3><15>
@@ -921,8 +921,8 @@ The Pirates's Witches <2><3><15>
 The Planet <7>
 The President <4><13>
 The Puzzle <1>
-The Race: Europe <7>
-The Race: Monaco <7>
+The Race: Europe <7><17>
+The Race: Monaco <7><17>
 The Railroad <9><11>
 The Red Hole <2><3><15>
 The Rising Prince <4><13>
@@ -1173,3 +1173,59 @@ Zybermorphing <5>
 Hyper Drive Rally <17>
 Mech: Steel Warriors <7>
 Alpha Xenomorph <14>
+Streetmania <17>
+Project DRIVE <17>
+Super Motorsport <17>
+xRacing <17>
+Super Rally <17>
+Offroad Xtreme <17>
+Mega Off-Road Racing <17>
+4x4 Racer <17>
+Superbike 2000 <17>
+Overdrive Karts <17>
+Urban Auto Club <17>
+Battle Race <17>
+Beach Buggy <17>
+Crazy Drift <17>
+Crazy Truckers <17>
+Mountain Racers <17>
+Comic Kart <17>
+Rally Boy <17>
+Driver & Car <17>
+Speedway 2050 <17>
+Rally Superstars <17>
+Cool Kart Racer <17>
+Super Crash <17>
+Beach Taxi <17>
+Rallymania <17>
+Extreme Curves <17>
+Ways of Thunder <17>
+Drift Champions <17>
+L.A. Racers <17>
+Z-Type: Motorsport <17>
+G-Zero: Legends <17>
+FX Race Stars <17>
+GRIP Motorsport <17>
+GTI Autosport <17>
+4x4: World Tour <17>
+Hot: Turbo Racing <17>
+Drag Racing: Evolution <17>
+Arcade Racer 3000 <17>
+King of Route 99 <17>
+V8 Street Racing <17>
+MiniRace <17>
+Mega Machines <17>
+Midnight Kart <17>
+Super Nitro <17>
+Monaco Racer <17>
+World Race <17>
+Performance <17>
+Power Rally <17>
+Real Kart <17>
+Accelerated <17>
+Super G Racing <17>
+The Trucks <17>
+Tokyo Racer <17>
+X-Drift <17>
+Extreme Motors <17>
+Maximum Speed <17>

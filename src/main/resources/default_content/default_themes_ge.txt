@@ -213,3 +213,4 @@ Skateboards <1><6><7><8><16><17>
 Handball <0><8><9>
 Tischtennis <0><8><9>
 Segeln <0><4><7><8><13><16><17>
+Früchte <0><1><6><16>
