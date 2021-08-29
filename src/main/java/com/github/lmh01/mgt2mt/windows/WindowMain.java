@@ -13,7 +13,6 @@ import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -366,112 +365,16 @@ public class WindowMain {
 
     public static void initializeModMenus(){
         if(!modMenusInitialized){
-            if(Settings.useAutomaticModMenus){
-                for (AbstractBaseMod mod : ModManager.mods) {
-                    JMenu menu = new JMenu(mod.getTypePlural());
-                    for(JMenuItem menuItem : mod.getModMenuItems()){
-                        menu.add(menuItem);
-                    }
-                    MOD_MENUS.add(menu);
-                    M_31_EXPORT.add(mod.getExportMenuItem());
-                }
-                for(JMenu menu : MOD_MENUS){
-                    M_2_MODS.add(menu);
-                }
-            }else{
-                //Manual menu allocation:
-                JMenu menu = new JMenu(ModManager.genreMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.genreMod.getModMenuItems()){
+            for (AbstractBaseMod mod : ModManager.mods) {
+                JMenu menu = new JMenu(mod.getTypePlural());
+                for(JMenuItem menuItem : mod.getModMenuItems()){
                     menu.add(menuItem);
                 }
-                JMenu menu2 = new JMenu(ModManager.themeMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.themeMod.getModMenuItems()){
-                    menu2.add(menuItem);
-                }
-                menu2.add(M_233_CHANGE_GENRE_THEME_FIT);
-                JMenu menu3 = new JMenu(ModManager.publisherMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.publisherMod.getModMenuItems()){
-                    menu3.add(menuItem);
-                }
-                JMenu menu4 = new JMenu(ModManager.engineFeatureMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.engineFeatureMod.getModMenuItems()){
-                    menu4.add(menuItem);
-                }
-                JMenu menu5 = new JMenu(ModManager.gameplayFeatureMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.gameplayFeatureMod.getModMenuItems()){
-                    menu5.add(menuItem);
-                }
-                JMenu menu6 = new JMenu(ModManager.licenceMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.licenceMod.getModMenuItems()){
-                    menu6.add(menuItem);
-                }
-                JMenu menu7 = new JMenu(ModManager.npcGamesMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.npcGamesMod.getModMenuItems()){
-                    menu7.add(menuItem);
-                }
-                JMenu menu8 = new JMenu(ModManager.npcEngineMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.npcEngineMod.getModMenuItems()){
-                    menu8.add(menuItem);
-                }
-                JMenu menu9 = new JMenu(ModManager.platformMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.platformMod.getModMenuItems()){
-                    menu9.add(menuItem);
-                }
-                JMenu menu10 = new JMenu(ModManager.antiCheatMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.antiCheatMod.getModMenuItems()){
-                    menu10.add(menuItem);
-                }
-                JMenu menu11 = new JMenu(ModManager.copyProtectMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.copyProtectMod.getModMenuItems()){
-                    menu11.add(menuItem);
-                }
-                JMenu menu12 = new JMenu(ModManager.hardwareMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.hardwareMod.getModMenuItems()){
-                    menu12.add(menuItem);
-                }
-                JMenu menu13 = new JMenu(ModManager.hardwareFeatureMod.getTypePlural());
-                for(JMenuItem menuItem : ModManager.hardwareFeatureMod.getModMenuItems()){
-                    menu13.add(menuItem);
-                }
                 MOD_MENUS.add(menu);
-                MOD_MENUS.add(menu2);
-                MOD_MENUS.add(menu3);
-                MOD_MENUS.add(menu4);
-                MOD_MENUS.add(menu5);
-                MOD_MENUS.add(menu6);
-                MOD_MENUS.add(menu7);
-                MOD_MENUS.add(menu8);
-                MOD_MENUS.add(menu9);
-                MOD_MENUS.add(menu10);
-                MOD_MENUS.add(menu11);
-                MOD_MENUS.add(menu12);
-                MOD_MENUS.add(menu13);
+                M_31_EXPORT.add(mod.getExportMenuItem());
+            }
+            for(JMenu menu : MOD_MENUS){
                 M_2_MODS.add(menu);
-                M_2_MODS.add(menu2);
-                M_2_MODS.add(menu3);
-                M_2_MODS.add(menu4);
-                M_2_MODS.add(menu5);
-                M_2_MODS.add(menu6);
-                M_2_MODS.add(menu7);
-                M_2_MODS.add(menu8);
-                M_2_MODS.add(menu9);
-                M_2_MODS.add(menu10);
-                M_2_MODS.add(menu11);
-                M_2_MODS.add(menu12);
-                M_2_MODS.add(menu13);
-                M_31_EXPORT.add(ModManager.genreMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.themeMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.publisherMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.engineFeatureMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.gameplayFeatureMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.licenceMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.npcGamesMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.npcEngineMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.platformMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.antiCheatMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.copyProtectMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.hardwareMod.getExportMenuItem());
-                M_31_EXPORT.add(ModManager.hardwareFeatureMod.getExportMenuItem());
             }
             modMenusInitialized = true;
         }

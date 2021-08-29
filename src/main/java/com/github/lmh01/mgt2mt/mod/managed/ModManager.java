@@ -29,19 +29,19 @@ public class ModManager{
      * Calls this method for every mod: initialize
      */
     public static void initializeMods(){
-        antiCheatMod.initializeMod();
-        copyProtectMod.initializeMod();
+        genreMod.initializeMod();
+        themeMod.initializeMod();
+        publisherMod.initializeMod();
         engineFeatureMod.initializeMod();
         gameplayFeatureMod.initializeMod();
-        genreMod.initializeMod();
-        hardwareFeatureMod.initializeMod();
-        hardwareMod.initializeMod();
         licenceMod.initializeMod();
-        npcEngineMod.initializeMod();
         npcGamesMod.initializeMod();
-        publisherMod.initializeMod();
+        npcEngineMod.initializeMod();
         platformMod.initializeMod();
-        themeMod.initializeMod();
+        antiCheatMod.initializeMod();
+        copyProtectMod.initializeMod();
+        hardwareMod.initializeMod();
+        hardwareFeatureMod.initializeMod();
         LOGGER.info("Total mods active: " + mods.size());
     }
 
