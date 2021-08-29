@@ -56,3 +56,5 @@ Not Shure:
 
 /TODO Add option that i can sort the mods easily: One option would be to replace the mod array list with a mod map:
     Map<AbstractBaseMod, Integer> integer is the mod number than so that it is easier to sort the mods in the main window for example
+
+/TODO Fix that the program will not crash if the steam library folders are not found: Reason: path is null or something like that

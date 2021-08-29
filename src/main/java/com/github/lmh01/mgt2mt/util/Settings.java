@@ -38,7 +38,7 @@ public class Settings {
 
     static {
         if (MadGamesTycoon2ModTool.isWindows()) {
-            MGT2_MOD_MANAGER_PATH = Paths.get(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//");
+            MGT2_MOD_MANAGER_PATH = Paths.get(System.getenv("APPDATA") + "/LMH01/MGT2_Mod_Manager");
         } else {
             MGT2_MOD_MANAGER_PATH = Paths.get(System.getProperty("user.home"), ".local", "share", "mgt2_mod_tool");
         }

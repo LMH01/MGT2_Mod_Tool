@@ -16,8 +16,8 @@ public class AnalyzeSteamLibraries {
     static {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         if (MadGamesTycoon2ModTool.isWindows()) {
-            STEAM_LIBRARY_FOLDERS_PATH = Paths.get("C", "Program Files (x86)", "Steam", "steamapps", "libraryfolders.vdf");
-            STEAM_LIBRARY_DEFAULT_FOLDER = Paths.get("C", "Program Files (x86)", "Steam");
+            STEAM_LIBRARY_FOLDERS_PATH = Paths.get("C:", "Program Files (x86)", "Steam", "steamapps", "libraryfolders.vdf");
+            STEAM_LIBRARY_DEFAULT_FOLDER = Paths.get("C:", "Program Files (x86)", "Steam");
         } else {
             STEAM_LIBRARY_FOLDERS_PATH = Paths.get(System.getProperty("user.home"), ".local", "share", "Steam", "steamapps", "libraryfolders.vdf");
             STEAM_LIBRARY_DEFAULT_FOLDER = Paths.get(System.getProperty("user.home"), ".local", "share", "Steam");
