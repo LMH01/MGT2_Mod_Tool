@@ -6,10 +6,7 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -20,6 +17,9 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class ThemeMod extends AbstractSimpleMod {
@@ -53,7 +53,12 @@ public class ThemeMod extends AbstractSimpleMod {
      */
     @Override
     public File getGameFile() {
-        return new File(Settings.MGT2_MOD_MANAGER_PATH + "themes.txt");
+        return ModManagerPaths.MAIN.getPath().resolve(getGameFileName()).toFile();
+    }
+
+    @Override
+    protected String getGameFileName() {
+        return "themes.txt";
     }
 
     @Override
@@ -225,31 +230,30 @@ public class ThemeMod extends AbstractSimpleMod {
     public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
         try {
             Map<String, String> map = getSingleThemeByNameMap(name);
-            String exportFolder;
+            Path exportFolder;
             if(exportAsRestorePoint){
-                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
             }else{
-                exportFolder = Utils.getMGT2ModToolExportFolder();
+                exportFolder = ModManagerPaths.EXPORT.getPath();
             }
-            final String EXPORTED_PUBLISHER_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
-            File fileExportFolderPath = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH);
-            File fileExportedTheme = new File(EXPORTED_PUBLISHER_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
+            final Path EXPORTED_THEME_MAIN_FOLDER_PATH = exportFolder.resolve(getExportFolder() + "/" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", ""));
+            File fileExportedTheme = EXPORTED_THEME_MAIN_FOLDER_PATH.resolve(getImportExportFileName()).toFile();
             if(fileExportedTheme.exists()){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
                 return false;
             }else{
-                fileExportFolderPath.mkdirs();
+                Files.createDirectories(EXPORTED_THEME_MAIN_FOLDER_PATH);
             }
             fileExportedTheme.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedTheme), StandardCharsets.UTF_8));
-            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
-            bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
-            bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + System.getProperty("line.separator"));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
+            bw.write("[" + getTypeCaps() + " START]" + "\r\n");
+            bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + "\r\n");
             TranslationManager.printLanguages(bw, map);
             if(map.get("GENRE COMB") != null){
-                bw.write("[GENRE COMB]" + ModManager.genreMod.getGenreNames(map.get("GENRE COMB")) + System.getProperty("line.separator"));
+                bw.write("[GENRE COMB]" + ModManager.genreMod.getGenreNames(map.get("GENRE COMB")) + "\r\n");
             }else{
-                bw.write("[GENRE COMB]" + "" + System.getProperty("line.separator"));
+                bw.write("[GENRE COMB]" + "" + "\r\n");
             }
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
@@ -261,10 +265,10 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
+    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.theme"));
         analyzeFile();
-        File fileThemeToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        File fileThemeToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
         ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
         int violenceRating = 0;
@@ -334,14 +338,14 @@ public class ThemeMod extends AbstractSimpleMod {
      * The file is being written in a way that the theme name is english but that the data is still preserved.
      */
     @SuppressWarnings("ConstantConditions")
-    private void writeCustomThemeFile() throws ModProcessingException {
+    public void writeCustomThemeFile() throws ModProcessingException {
         try {
             if(getGameFile().exists()) {
                 getGameFile().delete();
             }
             getGameFile().createNewFile();
-            Map<Integer, String> ger = DataStreamHelper.getContentFromFile(new File(Utils.getMGT2TextFolderPath() + "//GE//Themes_GE.txt"), "UTF_16LE");
-            Map<Integer, String> eng = DataStreamHelper.getContentFromFile(new File(Utils.getMGT2TextFolderPath() + "//EN//Themes_EN.txt"), "UTF_16LE");
+            Map<Integer, String> ger = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("GE", "Themes_GE.txt")).toFile(), "UTF_16LE");
+            Map<Integer, String> eng = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("EN", "Themes_EN.txt")).toFile(), "UTF_16LE");
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(getGameFile()), getCharset()));boolean firstLine = true;
             for (int i = 1; i<=ger.size(); i++) {
                 String name = eng.get(i);
@@ -349,7 +353,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 if (firstLine) {
                     firstLine = false;
                 } else {
-                    bw.write(System.getProperty("line.separator"));
+                    bw.write("\r\n");
                 }
                 bw.write(name + " " + data);
             }
@@ -398,10 +402,10 @@ public class ThemeMod extends AbstractSimpleMod {
                     if(!firstLine){
                         if(!addTheme){
                             if(currentLine != removeThemePosition) {
-                                bw.write(System.getProperty("line.separator"));
+                                bw.write("\r\n");
                             }
                         }else{
-                            bw.write(System.getProperty("line.separator"));
+                            bw.write("\r\n");
                         }
                     }else{
                         firstLine = false;
@@ -413,7 +417,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 }
                 try{
                     if(addTheme) {
-                        bw.write(System.getProperty("line.separator"));
+                        bw.write("\r\n");
                         if(string.equals("GE")){
                             StringBuilder genreIdsToPrint = new StringBuilder();
                             genreIdsToPrint.append(" ");
@@ -463,7 +467,7 @@ public class ThemeMod extends AbstractSimpleMod {
     public void editGenreAllocationAdvanced(int genreID, boolean addGenreID, Set<Integer> themeIds, boolean removeIdFromWholeFile) throws ModProcessingException {
         analyzeFile();
         try {
-            File file = new File(Utils.getMGT2TextFolderPath() + "//GE//Themes_GE.txt");
+            File file = MGT2Paths.TEXT.getPath().resolve("GE/Themes_GE.txt").toFile();
             Map<Integer, String> mapGer = DataStreamHelper.getContentFromFile(file, "UTF_16LE");
             if(file.exists()){
                 file.delete();
@@ -479,7 +483,7 @@ public class ThemeMod extends AbstractSimpleMod {
                             LOGGER.info(i + " - Y: " + map.get(i));
                         }
                         if(!firstLine){
-                            bw.write(System.getProperty("line.separator"));
+                            bw.write("\r\n");
                         }
                         if(!map.get(i).contains("<" + genreID + ">")){
                             bw.write(mapGer.get(i) + "<" + genreID + ">");
@@ -488,7 +492,7 @@ public class ThemeMod extends AbstractSimpleMod {
                         }
                     }else{
                         if (!firstLine) {
-                            bw.write(System.getProperty("line.separator"));
+                            bw.write("\r\n");
                         }
                         if (Settings.enableDebugLogging) {
                             LOGGER.info(i + " - N: " + mapGer.get(i));
@@ -498,7 +502,7 @@ public class ThemeMod extends AbstractSimpleMod {
                 }else{
                     if(removeIdFromWholeFile){
                         if (!firstLine) {
-                            bw.write(System.getProperty("line.separator"));
+                            bw.write("\r\n");
                         }
                         bw.write(mapGer.get(i).replace("<" + genreID + ">", ""));
                     }else{
@@ -507,12 +511,12 @@ public class ThemeMod extends AbstractSimpleMod {
                                 LOGGER.info(i + " - Y: " + map.get(i));
                             }
                             if(!firstLine){
-                                bw.write(System.getProperty("line.separator"));
+                                bw.write("\r\n");
                             }
                             bw.write(mapGer.get(i).replace("<" + genreID + ">", ""));
                         }else{
                             if (!firstLine) {
-                                bw.write(System.getProperty("line.separator"));
+                                bw.write("\r\n");
                             }
                             if (Settings.enableDebugLogging) {
                                 LOGGER.info(i + " - N: " + mapGer.get(i));

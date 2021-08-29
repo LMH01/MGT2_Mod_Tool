@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class ImportSettings{
+public class ImportSettings{//TODO Rewrite to use .toml file
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
 
     /**
@@ -28,7 +29,7 @@ public class ImportSettings{
             while((currentLine = reader.readLine()) != null) {
                 switch(setting) {
                     case 1:
-                        Settings.mgt2FilePath = currentLine; break;
+                        Settings.mgt2Path = Paths.get(currentLine); break;
                     case 2:
                         if(currentLine.equals("true")){
                             Settings.enableDisclaimerMessage = true;
@@ -48,7 +49,7 @@ public class ImportSettings{
                             Settings.disableSafetyFeatures = false;
                         } break;
                     case 5:
-                        Settings.steamLibraryFolder = currentLine; break;
+                        Settings.steamLibraryFolder = Paths.get(currentLine); break;
                     case 6:
                         if(currentLine.equals("true")){
                             Settings.enableCustomFolder = true;

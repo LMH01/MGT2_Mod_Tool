@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public class ProgressBarHelper {
+public class ProgressBarHelper {//TODO Rewrite to extend JProgressBar to make it more save. (Not sure on that)
     private static final Logger LOGGER = LoggerFactory.getLogger(ProgressBarHelper.class);
     private static String currentProgressBarString = "";
     private static boolean progressBarRunning = false;

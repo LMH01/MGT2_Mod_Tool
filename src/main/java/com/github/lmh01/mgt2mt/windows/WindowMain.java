@@ -109,9 +109,9 @@ public class WindowMain {
         M_31_EXPORT.add(M_317_EXPORT_ALL);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableExportAll, "runnableExportAll"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
-        m35.addActionListener(actionEvent -> Utils.open(Utils.getMGT2ModToolExportFolder()));
+        m35.addActionListener(actionEvent -> Utils.open(ModManagerPaths.EXPORT.getPath()));
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
-        m36.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableDeleteExports, "runnableDeleteExports"));
+        m36.addActionListener(actionEvent -> AbstractBaseMod.startModThread(Uninstaller::deleteAllExports, "runnableDeleteExports"));
         M_3_SHARE.add(M_31_EXPORT);
         M_3_SHARE.add(m35);
         M_3_SHARE.add(m36);
@@ -149,7 +149,7 @@ public class WindowMain {
         M_44_DELETE_ALL_BACKUPS.addActionListener(actionEvent -> Backup.deleteAllBackups());
         JMenuItem m45penBackupFolder = new JMenuItem(I18n.INSTANCE.get("window.main.backup.openBackupFolder"));
         m45penBackupFolder.setToolTipText(I18n.INSTANCE.get("window.main.backup.openBackupFolder.toolTip"));
-        m45penBackupFolder.addActionListener(actionEvent -> Utils.open(Settings.MGT2_MOD_MANAGER_PATH + "//Backup//"));
+        m45penBackupFolder.addActionListener(actionEvent -> Utils.open(ModManagerPaths.BACKUP.getPath()));
         MB.add(M_4_BACKUP);
         M_4_BACKUP.add(m41);
         M_4_BACKUP.add(M_42_RESTORE_BACKUP);
@@ -162,10 +162,10 @@ public class WindowMain {
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
-        m53OpenMGT2Folder.addActionListener(actionEvent -> Utils.open(Settings.mgt2FilePath));
+        m53OpenMGT2Folder.addActionListener(actionEvent -> Utils.open(Settings.mgt2Path));
         JMenuItem m54OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
         m54OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
-        m54OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER.getPath()));
+        m54OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER));
         MB.add(M_5_UTIL);
         M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
@@ -222,7 +222,7 @@ public class WindowMain {
                 ModManager.analyzeMods();
                 boolean noModRestorePointSet = true;
                 if(!Settings.disableSafetyFeatures) {
-                    if(new File(Utils.getMGT2ModToolModRestorePointFolder()).exists()){
+                    if(ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()){
                         noModRestorePointSet = false;
                     }
                 }

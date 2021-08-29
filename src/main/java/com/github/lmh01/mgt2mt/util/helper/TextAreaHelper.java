@@ -19,7 +19,7 @@ public class TextAreaHelper {
     }
 
     /**
-     * Prints the stacktrace of the exception into the text area
+     * Prints the stacktrace of the exception into the text area and into the console
      * @param e Exception for which the exception should be printed
      */
     public static void printStackTrace(Exception e) {

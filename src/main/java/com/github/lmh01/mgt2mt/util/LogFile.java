@@ -14,8 +14,8 @@ public class LogFile {
 
     static {
         try {
-            logFile = new File(Settings.MGT2_MOD_MANAGER_PATH + Utils.getCurrentDateTime() + ".log");
-            File mainFolder = Settings.MGT2_MOD_MANAGER_PATH.toFile();
+            logFile = ModManagerPaths.MAIN.getPath().resolve(Utils.getCurrentDateTime() + ".log").toFile();
+            File mainFolder = ModManagerPaths.MAIN.getPath().toFile();
             if(!mainFolder.exists()){
                 mainFolder.mkdirs();
             }
@@ -62,7 +62,7 @@ public class LogFile {
     public static void printCurrentSettings(){
         try {
             bw.write("Language: " + Settings.language + "\n" +
-                    "MGT2 file path: " + Settings.mgt2FilePath + "\n" +
+                    "MGT2 file path: " + Settings.mgt2Path + "\n" +
                     "Steam library folder: " + Settings.steamLibraryFolder + "\n" +
                     "Update branch: " + Settings.updateBranch+ "\n" +
                     "Disable safety features: " + Settings.disableSafetyFeatures + "\n" +
@@ -99,16 +99,15 @@ public class LogFile {
         try {
             bw.close();
             LOGGER.info("Logging to file has been stopped!");
-            File latestLog = new File(Settings.MGT2_MOD_MANAGER_PATH + "latest.log");
+            File latestLog = ModManagerPaths.MAIN.getPath().resolve("latest.log").toFile();
             if(latestLog.exists()){
                 latestLog.delete();
             }
             Files.copy(Paths.get(logFile.getPath()), Paths.get(latestLog.getPath()));
             if(Settings.saveLogs){
-                File storageFile = new File(Settings.MGT2_MOD_MANAGER_PATH + "//logs//" + logFile.getName());
-                File storageDirectory = new File(Settings.MGT2_MOD_MANAGER_PATH + "//logs//");
-                if(!storageDirectory.exists()){
-                    storageDirectory.mkdirs();
+                File storageFile = ModManagerPaths.LOG.getPath().resolve(logFile.getName()).toFile();
+                if(!ModManagerPaths.LOG.getPath().toFile().exists()){
+                    ModManagerPaths.LOG.getPath().toFile().mkdirs();
                 }
                 Files.move(Paths.get(logFile.getPath()), Paths.get(storageFile.getPath()));
             }

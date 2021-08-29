@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -40,11 +39,11 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
         EditHelper.printLine("QUALITY", map, bw);
         if(map.containsKey("ONLY_STATIONARY")){
             bw.write("[ONLY_STATIONARY]");
-            bw.write(System.getProperty("line.separator"));
+            bw.write("\r\n");
         }
         if(map.containsKey("NEEDINTERNET")){
             bw.write("[NEEDINTERNET]");
-            bw.write(System.getProperty("line.separator"));
+            bw.write("\r\n");
         }
     }
 
@@ -64,8 +63,8 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "HardwareFeatures.txt");
+    public String getGameFileName() {
+        return "HardwareFeatures.txt";
     }
 
     @Override

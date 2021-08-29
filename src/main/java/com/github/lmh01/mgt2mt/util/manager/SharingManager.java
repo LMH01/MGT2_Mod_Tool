@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.Importer;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.*;
@@ -35,39 +36,39 @@ public class SharingManager {
     /**
      * Uses the import function to import the content of the import folder.
      * @param importName The name that is written in some JOptionPanes. Eg. genre, publisher, theme
-     * @param importFunction The function that imports the files
+     * @param importer The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param importFolder The import folder where the files are stored.
      * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
 
-    public static boolean importThings(String importName, ReturnValue importFunction, String[] compatibleModToolVersions, File importFolder, AtomicBoolean showAlreadyExistMessage){
-        return importThings(null, importName, importFunction, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
+    public static boolean importThings(String importName, Importer importer, String[] compatibleModToolVersions, File importFolder, AtomicBoolean showAlreadyExistMessage){
+        return importThings(null, importName, importer, compatibleModToolVersions, false, importFolder, showAlreadyExistMessage);
     }
 
     /**
      * Opens a gui where the user can select a folder from which the files should be imported. Only supports one type import.
      * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
      * @param importName The name that is written is some JOptionPanes. Eg. genre, publisher, theme
-     * @param importFunction The function that imports the files
+     * @param importer The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param askForImportFolder  If true the user will be asked to select a folder. If false the import folder will be used that passed as argument.
      * @param importFolder The import folder where the files are stored. The folder is used when ask for import folder is false.
      * @param showAlreadyExistMessage When true a message is displayed that the choose import does already exist
      */
-    private static boolean importThings(String fileName, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder, AtomicBoolean showAlreadyExistMessage){
+    private static boolean importThings(String fileName, String importName, Importer importer, String[] compatibleModToolVersions, boolean askForImportFolder, File importFolder, AtomicBoolean showAlreadyExistMessage){
         try {
             if(askForImportFolder){
-                ArrayList<String> importFolders = getImportFolderPath(fileName);
+                ArrayList<File> importFolders = getImportFolderPath(fileName);
                 try{
-                    for(String folder : importFolders){
-                        analyzeReturnValue(importName, importFunction.getReturnValue(folder), compatibleModToolVersions, showAlreadyExistMessage);
+                    for(File folder : importFolders){
+                        analyzeReturnValue(importName, importer.getReturnValue(folder.toPath()), compatibleModToolVersions, showAlreadyExistMessage);
                     }
                 }catch(NullPointerException ignored){
 
                 }
             }else{
-                analyzeReturnValue(importName, importFunction.getReturnValue(importFolder.getPath()), compatibleModToolVersions, showAlreadyExistMessage);
+                analyzeReturnValue(importName, importer.getReturnValue(importFolder.toPath()), compatibleModToolVersions, showAlreadyExistMessage);
             }
             return true;
         }catch(ModProcessingException e) {
@@ -79,28 +80,11 @@ public class SharingManager {
     }
 
     /**
-     * Prompts the user to select folders
-     * @return Returns the folders as files.
-     */
-    public static ArrayList<File> getFoldersAsFile(){
-        ArrayList<String> arrayList = getImportFolderPath("import", true);
-        ArrayList<File> files = new ArrayList<>();
-        try{
-            for(String string : Objects.requireNonNull(arrayList)){
-                files.add(new File(string));
-            }
-        }catch(NullPointerException ignored){
-            return null;
-        }
-        return files;
-    }
-
-    /**
      * This function will prompt the user to choose a folder where the files to import are located
      * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
-     * @return Returns the selected folders, ready for import
+     * @return Selected folders, ready for import
      */
-    private static ArrayList<String> getImportFolderPath(String fileName){
+    private static ArrayList<File> getImportFolderPath(String fileName){
         return getImportFolderPath(fileName, false);
     }
 
@@ -108,9 +92,9 @@ public class SharingManager {
      * This function will prompt the user to choose a folder where the files to import are located
      * @param fileName This is the file the tool will search for in the folder. Eg. genre.txt or publisher.txt
      * @param skipCheckForContent True when the folder should not be checked if it contains the fileName. Useful when the return string should contain all folders.
-     * @return Returns the selected folders, ready for import.
+     * @return Selected folders, ready for import.
      */
-    private static ArrayList<String> getImportFolderPath(String fileName, boolean skipCheckForContent){
+    private static ArrayList<File> getImportFolderPath(String fileName, boolean skipCheckForContent){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
@@ -139,14 +123,14 @@ public class SharingManager {
             int return_value = fileChooser.showOpenDialog(null);
             if(return_value == JFileChooser.APPROVE_OPTION){
                 File[] files = fileChooser.getSelectedFiles();
-                ArrayList<String> importFolders = new ArrayList<>();
+                ArrayList<File> importFolders = new ArrayList<>();
                 for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
-                    String importFolder = files[i].getPath();
+                    File importFolder = files[i];
                     if(skipCheckForContent){
                         importFolders.add(importFolder);
                     }else{
-                        if(DataStreamHelper.doesFolderContainFile(importFolder, fileName)){
-                            File fileGenreToImport = new File(importFolder + "//" + fileName);
+                        if(DataStreamHelper.doesFolderContainFile(importFolder.toPath(), fileName)){
+                            File fileGenreToImport = new File(importFolder + "/" + fileName);
                             BufferedReader br = new BufferedReader(new FileReader(fileGenreToImport));
                             String currentLine = br.readLine();
                             br.close();
@@ -209,7 +193,7 @@ public class SharingManager {
      * It is then possible to import everything at once.
      */
     public static void importAll() {
-        importAll(false, "");
+        importAll(false, Paths.get(""));
     }
 
     /**
@@ -218,15 +202,15 @@ public class SharingManager {
      * @param importFromRestorePoint True when this function is called from import point restore. Will change some messages.
      * @param folderPath If not empty, this folder will be used as root folder where the search is started. This will prevent the message to the user that folders should be selected.
      */
-    public static void importAll(boolean importFromRestorePoint, String folderPath){
+    public static void importAll(boolean importFromRestorePoint, Path folderPath){
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.start"));
         ArrayList<File> directories;
-        if(folderPath.isEmpty()){
+        if(folderPath.toString().isEmpty()){
             LOGGER.info("Opening window where the user can select the folders that should be searched for imports");
-            directories = getFoldersAsFile();
+            directories = getImportFolderPath("import", true);;
         }else{
             directories = new ArrayList<>();
-            directories.add(new File(folderPath));
+            directories.add(folderPath.toFile());
         }
         Map<AbstractBaseMod, ArrayList<File>> importModFiles = new HashMap<>();
         Map<AbstractBaseMod, ArrayList<String>> importModNames = new HashMap<>();
@@ -257,6 +241,7 @@ public class SharingManager {
                             ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importAll.indexing"));
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingFolder") + " " + start);
                             List<String> collect = stream
+                                    //.peek(obj -> TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingFolder.indexed") + " " + obj))
                                     .map(obj -> {
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.indexingFolder.indexed") + " " + obj);
                                         return String.valueOf(obj);
@@ -309,11 +294,11 @@ public class SharingManager {
                                             }
                                             if(unzipFile){
                                                 try {
-                                                    File extractedFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//" + currentZipArchiveNumber);
-                                                    DataStreamHelper.unzip(string, extractedFolder);
+                                                    Path extractedFolder = ModManagerPaths.TEMP.getPath().resolve(Integer.toString(currentZipArchiveNumber.get()));
+                                                    DataStreamHelper.unzip(Paths.get(string), extractedFolder);
                                                     ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.scanningDirectories"));
                                                     currentZipArchiveNumber.getAndIncrement();
-                                                    directories.add(extractedFolder);
+                                                    directories.add(extractedFolder.toFile());
                                                 } catch (IOException e) {
                                                     e.printStackTrace();
                                                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart") + "\n\n" + string + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage() + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
@@ -498,8 +483,7 @@ public class SharingManager {
         }
         //Delete the temp .zip extractions
         ProgressBarHelper.resetProgressBar();
-        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
-        if(tempFolder.exists()){
+        if(ModManagerPaths.TEMP.toFile().exists()){
             ThreadHandler.startThread(ThreadHandler.runnableDeleteTempFolder, "runnableDeleteTempFolder");
         }
     }
@@ -550,23 +534,23 @@ public class SharingManager {
      * @param selectedEntryNumbers If not empty only the files numbers listed in this array are imported
      * @param importNothing If true nothing will be imported.
      * @param importName The name that is written in some JOptionPanes. Eg. genre, publisher, theme
-     * @param importFunction The function that imports the files
+     * @param importer The function that imports the files
      * @param compatibleModToolVersions A array containing the compatible mod tool versions for the import file
      * @param showAlreadyExistPopups When true a message is displayed that the choose import does already exist
      * @return Returns true when the import was successful. Returns false when something went wrong
      */
-    public static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, ReturnValue importFunction, String[] compatibleModToolVersions, AtomicBoolean showAlreadyExistPopups){
+    public static boolean importAllFiles(ArrayList<File> files, ArrayList<Integer> selectedEntryNumbers, boolean importNothing, String importName, Importer importer, String[] compatibleModToolVersions, AtomicBoolean showAlreadyExistPopups){
         int currentFile = 0;
         if(!importNothing){
             boolean failed = false;
             for(File file : files){
                 if(selectedEntryNumbers.size() == 0){
-                    if(importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
+                    if(importThings(importName, importer, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
                         failed = true;
                     }
                 }else{
                     if(selectedEntryNumbers.contains(currentFile)){
-                        if(importThings(importName, importFunction, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
+                        if(importThings(importName, importer, compatibleModToolVersions, file.getParentFile(), showAlreadyExistPopups)){
                             failed = true;
                         }
                     }
@@ -606,15 +590,15 @@ public class SharingManager {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                         }else{
                             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
                             }
                         }
                     }else{
                         if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.export.alreadyExported1") + ":\n\n" + failedExports + "\n" + I18n.INSTANCE.get("dialog.export.alreadyExported2") + "\n\n", I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                             if(exportAsRestorePoint){
-                                Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Mod_Restore_Point//Current_Restore_Point//"));
+                                Desktop.getDesktop().open(ModManagerPaths.CURRENT_RESTORE_POINT.toFile());
                             }else{
-                                Desktop.getDesktop().open(new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//"));
+                                Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
                             }
                         }
                     }
@@ -648,7 +632,7 @@ public class SharingManager {
                 }
                 if(currentExportFailed == 10){
                     currentExportFailed = 1;
-                    stringBuilder.append(System.getProperty("line.separator"));
+                    stringBuilder.append("\r\n");
                 }
                 stringBuilder.append(string);
                 firstExportFailed = false;
@@ -660,7 +644,7 @@ public class SharingManager {
         }
         ProgressBarHelper.resetProgressBar();
         if(exportFailed){
-            stringBuilder.append(System.getProperty("line.separator"));
+            stringBuilder.append("\r\n");
         }
         return stringBuilder.toString();
     }

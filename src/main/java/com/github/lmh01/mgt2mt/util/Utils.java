@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -12,6 +13,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -35,57 +37,13 @@ public class Utils {
                 LocalDateTime.now().getMinute() + "-" +
                 LocalDateTime.now().getSecond();
     }
-    /**
-     * @return Returns the path to \Mad Games Tycoon 2_Data\Extern\Text\DATA\
-     */
-    public static String getMGT2DataPath(){
-        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\DATA\\";
-    }
-
-    public static String getMGT2TextFolderPath(){
-        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Text\\";
-    }
-
-    public static String getMGT2ScreenshotsPath(){
-        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Screenshots\\";
-    }
-
-    public static String getMGT2GenreIconsPath(){
-        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\";
-    }
-
-    public static String getMGT2CompanyLogosPath(){
-        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\";
-    }
-
-    public static String getMGT2ModToolExportFolder(){
-        return Settings.MGT2_MOD_MANAGER_PATH + "//Export//";
-    }
-
-    public static String getMGT2ModToolModRestorePointFolder() {return Settings.MGT2_MOD_MANAGER_PATH + "//Mod_Restore_Point//Current_Restore_Point//";}
-
-    public static String getMGT2ModToolModRestorePointStorageFolder() {return Settings.MGT2_MOD_MANAGER_PATH + "//Mod_Restore_Point//Old_Restore_Points//";}
-
-    /**
-     * @return Returns the genre file inside the mgt2 folder.
-     */
-    public static File getNpcGamesFile(){
-        return new File(getMGT2DataPath() + "\\NpcGames.txt");
-    }
 
     /**
      * @param saveGameNumber The save game number
      * @return Returns the save game file for the input save game number
      */
     public static File getSaveGameFile(int saveGameNumber){
-        return new File(Backup.FILE_SAVE_GAME_FOLDER + "//" + "savegame" + saveGameNumber + ".txt");
-    }
-
-    /**
-     * @return Returns the path to this folder \Mad Games Tycoon 2_Data\Extern\CompanyLogos\.
-     */
-    public static String getCompanyLogosPath(){
-        return Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\";
+        return new File(Backup.FILE_SAVE_GAME_FOLDER + "/" + "savegame" + saveGameNumber + ".txt");
     }
 
     /**
@@ -167,7 +125,7 @@ public class Utils {
      */
     public static File getThemeFile(int languageKey){
         String currentLanguageKey = TranslationManager.TRANSLATION_KEYS[languageKey];
-        return new File(Utils.getMGT2TextFolderPath() + "//" + currentLanguageKey + "//Themes_" + currentLanguageKey + ".txt");
+        return MGT2Paths.TEXT.getPath().resolve(Paths.get(currentLanguageKey, "Themes_" + currentLanguageKey + ".txt")).toFile();
     }
 
     /**
@@ -175,14 +133,14 @@ public class Utils {
      * @return Returns the themes file for the specified language.
      */
     public static File getThemeFile(String languageKey){
-        return new File(Utils.getMGT2TextFolderPath() + "//" + languageKey + "//Themes_" + languageKey + ".txt");
+        return MGT2Paths.TEXT.getPath().resolve(languageKey + "/Themes_" + languageKey + ".txt").toFile();
     }
 
     /**
      * Opens a file chooser where a single image file can be selected.
-     * @return Returns the selected image file path
+     * @return The selected image file path
      */
-    public static String getImagePath(){
+    public static Path getImagePath() throws ModProcessingException{
         return getImagePath(false);
     }
 
@@ -191,7 +149,7 @@ public class Utils {
      * @param showConfirmMessage Set true to display a message that the image file has been set.
      * @return Returns the selected image file path
      */
-    public static String getImagePath(boolean showConfirmMessage){
+    public static Path getImagePath(boolean showConfirmMessage) throws ModProcessingException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
 
@@ -221,17 +179,17 @@ public class Utils {
                     if(showConfirmMessage){
                         JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFileSet"));
                     }
-                    return fileChooser.getSelectedFile().getPath();
+                    return fileChooser.getSelectedFile().toPath();
                 }else{
                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
-                    return "error";
+                    throw new ModProcessingException("Image file could not be selected: Please select a .png file");
                 }
             }else{
-                return "canceled";
+                throw new ModProcessingException("Image selection has been canceled");
             }
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
-            return "error";
+            throw new ModProcessingException("Image file could not be selected: " + e.getMessage(), e);
         }
     }
 
@@ -433,22 +391,6 @@ public class Utils {
             }
         }
         return false;
-    }
-
-    /**
-     * Opens the given folder
-     */
-    public static void open(String path){
-        try {
-            File file = new File(path);
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            Desktop.getDesktop().open(file);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + e.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
     }
 
     /**

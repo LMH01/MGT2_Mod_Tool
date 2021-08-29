@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -48,8 +47,8 @@ public class AntiCheatMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "antiCheat.txt");
+    public String getGameFileName() {
+        return "AntiCheat.txt";
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.io.IOException;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
@@ -16,7 +17,6 @@ public class ThreadHandler {
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
     public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
     public static Runnable runnableImportAll = SharingManager::importAll;
-    public static Runnable runnableDeleteExports = Uninstaller::deleteAllExports;
     public static Runnable runnableImportFromURL = ImportFromURLHelper::importFromURL;
     public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
     public static Runnable runnableCreateRestorePoint = RestorePointHelper::setRestorePoint;
@@ -93,13 +93,16 @@ public class ThreadHandler {
         }
     }
     /**
-     * Deletes the temp folder and initializes a progress bar.
+     * Deletes the temp folder and initializes the progress bar for that action
      */
     private static void deleteTempFolder(){
-        File tempFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Temp//");
-        if(tempFolder.exists()){
-            DataStreamHelper.deleteDirectory(tempFolder);
-            LOGGER.info("Deleted temp folder.");
+        if(ModManagerPaths.TEMP.getPath().toFile().exists()){
+            try {
+                LOGGER.info("Deleted temp folder.");
+                DataStreamHelper.deleteDirectory(ModManagerPaths.TEMP.getPath(), true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

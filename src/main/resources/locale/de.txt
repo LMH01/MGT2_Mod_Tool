@@ -924,6 +924,8 @@ window.uninstall.uninstallIncomplete|Bei der Deinstallation ist ein Problem aufg
 window.uninstall.uninstallIncomplete.title|Deinstallation unvollstäding
 window.uninstall.uninstallSuccessful|Die ausgewählten Dateien wurden erfolgreich deinstalliert!
 window.uninstall.uninstallSuccessful.title|Deinstallation erfolgreich
+window.uninstall.exports.message|Sollen wirklich alle Exports gelöscht werden?
+window.uninstall.exports.success|Alle Exports wurden gelöscht.
 
 window.settings.button.back.toolTip|Klicke, um zum Hauptmenü zurück zu kommen
 window.settings.button.resetSettings.label|Einstellungen zurücksetzen

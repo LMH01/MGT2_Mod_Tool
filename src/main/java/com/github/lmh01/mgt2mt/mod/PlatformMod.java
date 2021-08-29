@@ -6,8 +6,8 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -45,7 +46,7 @@ public class PlatformMod extends AbstractAdvancedMod {
         for(String string : TranslationManager.TRANSLATION_KEYS){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 if(entry.getKey().equals("MANUFACTURER " + string)){
-                    bw.write("[MANUFACTURER " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
+                    bw.write("[MANUFACTURER " + string + "]" + entry.getValue() + "\r\n");
                 }
             }
         }
@@ -70,18 +71,18 @@ public class PlatformMod extends AbstractAdvancedMod {
         if(map.containsKey("PIC-1")){
             for(Map.Entry<Integer, String> entry : pictures.entrySet()){
                 bw.write("[PIC-" + entry.getKey() + "]" + entry.getValue());
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
         }else{
             for(int i=1; i<=pictureChangeYears.size()+1; i++){
                 bw.write("[PIC-" + i + "]" + map.get("NAME EN").replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + i + ".png");
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
         }
         Collections.sort(pictureChangeYears);
         for (String pictureChangeYear : pictureChangeYears) {
             bw.write(pictureChangeYear);
-            bw.write(System.getProperty("line.separator"));
+            bw.write("\r\n");
         }
         try {
             ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
@@ -93,7 +94,7 @@ public class PlatformMod extends AbstractAdvancedMod {
             int numberOfRunsB = 1;
             for(Integer integer : gameplayFeatureIds){
                 bw.write("[NEED-" + numberOfRunsB + "]" + integer);
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
                 numberOfRunsB++;
             }
         } catch (NumberFormatException e) {
@@ -106,7 +107,7 @@ public class PlatformMod extends AbstractAdvancedMod {
             int numberOfRunsB = 1;
             for(String string : gameplayFeatureNames){
                 bw.write("[NEED-" + numberOfRunsB + "]" + string);
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
                 numberOfRunsB++;
             }
         }
@@ -131,8 +132,8 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Platforms.txt");
+    public String getGameFileName() {
+        return "Platforms.txt";
     }
 
     @Override
@@ -262,12 +263,16 @@ public class PlatformMod extends AbstractAdvancedMod {
                             panelChangeDate.add(comboBoxChangeMonth);
                             panelChangeDate.add(spinnerChangeYear);
                             buttonSelectImage.addActionListener(actionEvent3 -> {
-                                File newImageFile = new File(Utils.getImagePath());
-                                imageFile.set(newImageFile);
-                                if(newImageFile.exists()){
-                                    buttonSelectImage.setText(I18n.INSTANCE.get("commonText.imageSelected"));
-                                }else{
-                                    buttonSelectImage.setText(I18n.INSTANCE.get("commonText.selectImage"));
+                                try {
+                                    File newImageFile = Utils.getImagePath().toFile();
+                                    imageFile.set(newImageFile);
+                                    if(newImageFile.exists()){
+                                        buttonSelectImage.setText(I18n.INSTANCE.get("commonText.imageSelected"));
+                                    }else{
+                                        buttonSelectImage.setText(I18n.INSTANCE.get("commonText.selectImage"));
+                                    }
+                                } catch (ModProcessingException ignored) {
+
                                 }
                             });
                             if(!firstImage[0]){
@@ -283,7 +288,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                         }else{
                                             comboBoxChangeMonth.setEnabled(true);
                                             spinnerChangeYear.setEnabled(true);
-                                            textAreaAddedImages.append(System.getProperty("line.separator"));
+                                            textAreaAddedImages.append("\r\n");
                                         }
                                         textAreaAddedImages.append(Objects.requireNonNull(comboBoxChangeMonth.getSelectedItem()) + " " + spinnerChangeYear.getValue().toString() + " - " + imageFile.get().getPath());
                                         pictureMap.put(Integer.parseInt(spinnerChangeYear.getValue().toString()), imageFile.get());
@@ -508,11 +513,11 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void doOtherImportThings(String importFolderPath, String name) {
+    public void doOtherImportThings(Path importFolderPath, String name) {
         try{
-            File importFolderPictureFolder = new File(importFolderPath + "//DATA//pictures//");
+            File importFolderPictureFolder = importFolderPath.resolve("DATA/pictures").toFile();
             if(importFolderPictureFolder.exists()){
-                ArrayList<File> pictures = DataStreamHelper.getFilesInFolderWhiteList(importFolderPictureFolder.getPath(), ".png");
+                ArrayList<File> pictures = DataStreamHelper.getFilesInFolderWhiteList(Paths.get(importFolderPictureFolder.getPath()), ".png");
                 Map<Integer, File> importPictureMap = new HashMap<>();
                 for(File file : pictures){
                     importPictureMap.put(Integer.parseInt(file.getName().replaceAll("[^0-9]","")), file);
@@ -525,17 +530,17 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
-        File exportPictures = new File(exportFolderDataPath + "//pictures//");
-        exportPictures.mkdirs();
+    public void doOtherExportThings(String name, Path exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+        Path exportPictures = exportFolderDataPath.resolve("pictures");
+        exportPictures.toFile().mkdirs();
         Map<Integer, File> picturesToExport = new HashMap<>();
         for(Map.Entry<String, String> entry : singleContentMap.entrySet()){
             if(entry.getKey().contains("PIC")){
-                picturesToExport.put(Integer.parseInt(entry.getKey().replaceAll("[^0-9]","")), new File(Settings.mgt2FilePath + "//Mad Games Tycoon 2_Data//Extern//Icons_Platforms//" + entry.getValue()));
+                picturesToExport.put(Integer.parseInt(entry.getKey().replaceAll("[^0-9]","")), MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()).toFile());
             }
         }
         for(Map.Entry<Integer, File> entry : picturesToExport.entrySet()){
-            File outputFile = new File(exportPictures.getPath() + "//" + entry.getKey() + ".png");
+            File outputFile = exportPictures.resolve(entry.getKey() + ".png").toFile();
             Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(outputFile.getPath()));
         }
     }
@@ -617,7 +622,7 @@ public class PlatformMod extends AbstractAdvancedMod {
      */
     public void addImageFiles(String platformName, Map<Integer, File> imageFiles) throws IOException {
         for(Map.Entry<Integer, File> entry : imageFiles.entrySet()){
-            File destinationFile = new File(Settings.mgt2FilePath + "//Mad Games Tycoon 2_Data//Extern//Icons_Platforms//" + platformName.replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + entry.getKey() + ".png");
+            File destinationFile = MGT2Paths.PLATFORM_ICONS.getPath().resolve(platformName.replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + entry.getKey() + ".png").toFile();
             Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(destinationFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
         }
     }

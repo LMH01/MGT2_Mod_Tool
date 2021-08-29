@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -12,9 +13,9 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
-
-//TODO Klasse aufräumen -> Funktionen schön sortieren
 
 /**
  * This class is used to create new mods.
@@ -44,10 +45,10 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             }
             for(Map<String, String> fileContent : getFileContent()){
                 printValues(fileContent, bw);
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
             printValues(map, bw);
-            bw.write(System.getProperty("line.separator"));
+            bw.write("\r\n");
             bw.write("[EOF]");
             bw.close();
         } catch (ClassCastException e) {
@@ -76,7 +77,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             for(Map<String, String> fileContent : getFileContent()){
                 if (Integer.parseInt(fileContent.get("ID")) != modId) {
                     printValues(fileContent, bw);
-                    bw.write(System.getProperty("line.separator"));
+                    bw.write("\r\n");
                 }
             }
             bw.write("[EOF]");
@@ -129,29 +130,28 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             } catch (NullPointerException | NumberFormatException e) {
                 throw new ModProcessingException("The export map could not be changed", e);
             }
-            String exportFolder;
+            Path exportFolder;
             if(exportAsRestorePoint){
-                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
             }else{
-                exportFolder = Utils.getMGT2ModToolExportFolder();
+                exportFolder = ModManagerPaths.EXPORT.getPath();
             }
-            final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", "");
-            File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
-            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
+            final Path EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder.resolve(getExportFolder() + "/" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", ""));
+            File fileExportedMod = EXPORTED_MOD_MAIN_FOLDER_PATH.resolve(getImportExportFileName()).toFile();
             if(fileExportedMod.exists()){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
                 return false;
             }else{
-                fileExportFolderPath.mkdirs();
+                Files.createDirectories(EXPORTED_MOD_MAIN_FOLDER_PATH);
             }
             fileExportedMod.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
-            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
-            bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
+            bw.write("[" + getTypeCaps() + " START]" + "\r\n");
             printValues(map, bw);
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
-            doOtherExportThings(name, EXPORTED_MOD_MAIN_FOLDER_PATH + "//DATA//", map);
+            doOtherExportThings(name, EXPORTED_MOD_MAIN_FOLDER_PATH.resolve("DATA"), map);
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
             return true;
         }catch(IOException | ModProcessingException e){
@@ -168,10 +168,10 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
     @Override
-    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
+    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        File fileToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
         Map<String, String> map;
         try {
             map = DataStreamHelper.parseDataFile(fileToImport).get(0);
@@ -222,14 +222,14 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     /**
      * Put things in this function that should be executed when the txt file has been exported.
      */
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException, ModProcessingException{
+    public void doOtherExportThings(String name, Path exportFolderDataPath, Map<String, String> singleContentMap) throws IOException, ModProcessingException{
 
     }
 
     /**
      * Put things in this function that should be executed when the txt file has been imported.
      */
-    public void doOtherImportThings(String importFolderPath, String name) throws ModProcessingException {
+    public void doOtherImportThings(Path importFolderPath, String name) throws ModProcessingException {
 
     }
 

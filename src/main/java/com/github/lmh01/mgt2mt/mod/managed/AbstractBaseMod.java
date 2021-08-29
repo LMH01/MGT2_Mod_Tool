@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -319,7 +321,14 @@ public abstract class AbstractBaseMod {
     /**
      * The file that should be analyzed and edited.
      */
-    public abstract File getGameFile();
+    public File getGameFile() {
+        return MGT2Paths.TEXT_DATA.getPath().resolve(getGameFileName()).toFile();
+    }
+
+    /**
+     * @return The name of the game file. E.g. AntiCheat.txt
+     */
+    protected abstract String getGameFileName();//TODO schauen, ob backups noch unter windows erstellt werden können (weil Dateiname der Mods geändert)(gild aber nur für AntiCheat und CopyProtect)
 
     /**
      * Returns the currently highest id
@@ -392,7 +401,7 @@ public abstract class AbstractBaseMod {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
-    public abstract String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException;//TODO Remove IOException and let only the ModProcessingException get thrown
+    public abstract String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException;//TODO Remove IOException and let only the ModProcessingException get thrown
 
     /**
      * @return The type name in caps
@@ -410,6 +419,6 @@ public abstract class AbstractBaseMod {
      * @return The name of the mod export folder
      */
     public String getExportFolder() {
-        return "//" + getType() + "//";
+        return getType();
     }
 }

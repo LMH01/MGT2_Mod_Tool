@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
@@ -20,7 +21,7 @@ public class WindowAddGenrePage11 extends JFrame{
     JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
     JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JTextField textFieldImagePath = new JTextField();
-    File genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+    File genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
 
     public static void createFrame(){
         EventQueue.invokeLater(() -> {
@@ -41,14 +42,14 @@ public class WindowAddGenrePage11 extends JFrame{
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
             }else{
-                textFieldImagePath.setText(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+                textFieldImagePath.setText(ImageFileHandler.defaultGenreIcon.toString());
             }
         });
         buttonNext.addActionListener(actionEvent -> {
             AbstractBaseMod.startModThread(() -> {
                 if(textFieldImagePath.getText().isEmpty()){
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                        genreIcon = new File(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\Icons_Genres\\iconSkill.png");
+                        genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
                         FRAME.dispose();
                         GenreMod.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
                         ModManager.genreMod.addGenre(GenreMod.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);

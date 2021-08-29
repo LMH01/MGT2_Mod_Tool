@@ -8,17 +8,18 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class WindowSettings extends JFrame {
+public class WindowSettings extends JFrame {//TODO test if this window is still working
 
     static final WindowSettings FRAME = new WindowSettings();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowSettings.class);
     private static boolean customFolderSetAndValid = false;
     private static boolean unsavedChanges = false;
-    static String inputFolder = "";//This string contains the current mgt2folder when the program is started
-    private static String outputFolder = "";//This string contains the folder path that should be set
+    static Path inputFolder = null;//This string contains the current mgt2folder when the program is started
+    private static Path outputFolder = null;//This string contains the folder path that should be set
     JComboBox comboBoxMGT2FolderOperation = new JComboBox();
     JComboBox comboBoxLanguage = new JComboBox();
     JComboBox comboBoxUpdateChannel = new JComboBox();
@@ -119,9 +120,9 @@ public class WindowSettings extends JFrame {
             LOGGER.info("Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), \"Manual\")" + Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual"));
             LOGGER.info("manualWasLastSelectedOption.get(): " + manualWasLastSelectedOption.get());
             LOGGER.info("customFolderSetAndValid: " + customFolderSetAndValid);
-            if(!doNotPerformComboBoxActionListener.get()){
-                if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && automaticWasLastSelectedOption.get()){
-                    if(!customFolderSetAndValid){
+            if(!doNotPerformComboBoxActionListener.get()) {
+                if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && automaticWasLastSelectedOption.get()) {
+                    if(!customFolderSetAndValid) {
                         try {
                             automaticWasLastSelectedOption.set(false);
                             manualWasLastSelectedOption.set(true);
@@ -131,7 +132,7 @@ public class WindowSettings extends JFrame {
                             fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
                             int return_value = fileChooser.showOpenDialog(null);
                             if(return_value == JFileChooser.APPROVE_OPTION){
-                                String mgt2Folder = fileChooser.getSelectedFile().getPath();
+                                Path mgt2Folder = fileChooser.getSelectedFile().toPath();
                                 if(Settings.validateMGT2Folder(mgt2Folder, false, false)){
                                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderSet"));
                                     outputFolder = mgt2Folder;
@@ -158,20 +159,20 @@ public class WindowSettings extends JFrame {
                             classNotFoundException.printStackTrace();
                         }
                     }
-                }else if (comboBoxMGT2FolderOperation.getSelectedItem().equals("Automatic") && manualWasLastSelectedOption.get()){
-                    String mgt2Folder = Settings.getMGT2FilePath();
-                    if(!mgt2Folder.isEmpty()){
+                } else if (comboBoxMGT2FolderOperation.getSelectedItem().equals("Automatic") && manualWasLastSelectedOption.get()) {
+                    Path mgt2Folder = Settings.getMGT2FilePath();
+                    if (mgt2Folder != null) {
                         outputFolder = mgt2Folder;
                         customFolderSetAndValid = false;
                         unsavedChanges = true;
                         automaticWasLastSelectedOption.set(true);
                         manualWasLastSelectedOption.set(false);
-                    }else{
-                        if(customFolderSetAndValid){
+                    } else {
+                        if (customFolderSetAndValid) {
                             manualWasLastSelectedOption.set(true);
                             automaticWasLastSelectedOption.set(false);
                             comboBoxMGT2FolderOperation.setSelectedItem("Manual");
-                            Settings.validateMGT2Folder(Settings.mgt2FilePath, false, true);
+                            Settings.validateMGT2Folder(Settings.mgt2Path, false, true);
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.automaticSelected.folderNotFound"));
                         }
                     }
@@ -188,7 +189,7 @@ public class WindowSettings extends JFrame {
             LOGGER.info("output folder: " + outputFolder);
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 boolean performTasks = false;
-                if(Settings.getMGT2FilePath().isEmpty() && customFolderSetAndValid){
+                if((Settings.getMGT2FilePath() == null) && customFolderSetAndValid){//TODO check if this still works
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.noAutomaticFolderFound"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                         performTasks = true;
                     }
@@ -197,7 +198,7 @@ public class WindowSettings extends JFrame {
                 }
                 if(performTasks){
                     Settings.setMGT2Folder(true);
-                    outputFolder = Settings.mgt2FilePath;
+                    outputFolder = Settings.mgt2Path;
                     Settings.enableCustomFolder = false;
                     doNotPerformComboBoxActionListener.set(true);
                     automaticWasLastSelectedOption.set(true);
@@ -277,8 +278,8 @@ public class WindowSettings extends JFrame {
     }
 
     private void loadCurrentSelections(){
-        inputFolder = Settings.mgt2FilePath;
-        outputFolder = Settings.mgt2FilePath;
+        inputFolder = Settings.mgt2Path;
+        outputFolder = Settings.mgt2Path;
         doNotPerformComboBoxActionListener.set(false);
         if(Settings.enableCustomFolder && Settings.mgt2FolderIsCorrect){
             comboBoxMGT2FolderOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Manual", "Automatic"}));
@@ -298,7 +299,7 @@ public class WindowSettings extends JFrame {
         checkBoxDebugMode.setSelected(Settings.enableDebugLogging);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
         checkBoxSaveLogs.setSelected(Settings.saveLogs);
-        comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + Settings.mgt2FilePath);
+        comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + Settings.mgt2Path);
         if(Settings.mgt2FolderIsCorrect){
             checkBoxDisableSafety.setEnabled(true);
         }else{
@@ -330,7 +331,7 @@ public class WindowSettings extends JFrame {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.disableSafetyFeatures")).append(" ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));
         }
         if(!inputFolder.equals(outputFolder)){
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2FilePath).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2Path).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
         }
         if(!Settings.language.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString())){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.language")).append(" ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));

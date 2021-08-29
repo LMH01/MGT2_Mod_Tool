@@ -1,10 +1,15 @@
 This file contains the changelog of the tool (incomplete)
 
+Important:
+- Previously exported genres, npc games and platforms will not work together with this release
+- Restore points that have been created prior to this release will not be able to get restored automatically because the file path has changed
+
 Coming in v2.3.0
 
 Improved text area outputs when importing, exporting, adding or removing mods
 Improved the error handling massively: Whenever something goes wrong the stacktrace is now written to the text area and an explanation of what went wrong is displayed
 Internal code has been massively improved
+Internal handling of paths and files has been improved: Renamed some folders to be more consistent
 (Improved the way imports work: Importing things should no longer fail when a required mod is missing, instead a random one will be selected. This has already been implemented for some mods but this update adds this feature to all mods)
  -> Diesen changelog eintrag ggf. rausnehmen, da Import/Export ja eh neu geschrieben wird
 

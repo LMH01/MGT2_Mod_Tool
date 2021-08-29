@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Uninstaller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Uninstaller.class);
@@ -73,35 +72,49 @@ public class Uninstaller {
                         if(checkboxDeleteBackups.isSelected() && checkboxDeleteConfigFiles.isSelected() && checkboxDeleteExports.isSelected()){
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deleteModManagerFiles"));
                             LogFile.stopLogging();
-                            DataStreamHelper.deleteDirectory(Settings.MGT2_MOD_MANAGER_PATH.toFile());//TODO schauen, ob das noch geht
+                            try {
+                                DataStreamHelper.deleteDirectory(ModManagerPaths.MAIN.getPath());
+                            } catch (IOException e) {
+                                throw new ModProcessingException("Unable to delete mod manager directory", e);
+                            }
                             exitProgram = true;
                         }else{
                             if(checkboxDeleteBackups.isSelected()){
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingBackups"));
-                                File backupFolder = new File(Backup.BACKUP_FOLDER_PATH);
                                 if(Settings.disableSafetyFeatures){
-                                    DataStreamHelper.deleteDirectory(backupFolder);
+                                    try {
+                                        DataStreamHelper.deleteDirectory(ModManagerPaths.BACKUP.getPath());
+                                    } catch (IOException e) {
+                                        throw new ModProcessingException("Unable to delete mod backup folder", e);
+                                    }
                                 }else{
-                                    ArrayList<File> filesInBackupFolder = DataStreamHelper.getFilesInFolder(backupFolder.getPath());
+                                    ArrayList<File> filesInBackupFolder = DataStreamHelper.getFilesInFolder(ModManagerPaths.BACKUP.getPath());
                                     for(File file : filesInBackupFolder){
                                         if(!file.getPath().endsWith(".initialBackup")){
-                                            DataStreamHelper.deleteDirectory(file);
+                                            try {
+                                                Files.delete(file.toPath());
+                                            } catch (IOException e) {
+                                                throw new ModProcessingException("Unable to delete backup", e);
+                                            }
                                         }
                                     }
                                 }
                                 LOGGER.info("Backups have been deleted.");
                             }
                             if(checkboxDeleteConfigFiles.isSelected()){
-                                File configFile = new File(System.getenv("appdata") + "//LMH01//MGT2_Mod_Manager//settings.txt");
+                                File configFile = ModManagerPaths.MAIN.getPath().resolve("settings.txt").toFile();
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingSettings"));
                                 configFile.deleteOnExit();
                                 LOGGER.info("Settings file has been deleted.");
                                 exitProgram = true;
                             }
                             if(checkboxDeleteExports.isSelected()){
-                                File exportFolder = new File(Settings.MGT2_MOD_MANAGER_PATH + "//Export//");
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingExports"));
-                                DataStreamHelper.deleteDirectory(exportFolder);
+                                try {
+                                    DataStreamHelper.deleteDirectory(ModManagerPaths.EXPORT.getPath());
+                                } catch (IOException e) {
+                                    throw new ModProcessingException("Unable to delete export folder", e);
+                                }
                                 LOGGER.info("Exports have been deleted.");
                             }
                         }
@@ -147,7 +160,6 @@ public class Uninstaller {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + currentMod + " - " + customContentArrayList + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
                     LOGGER.info("Mod of type " + mod.getType() + " could not be removed: " + e.getMessage());
                     uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
-                    e.printStackTrace();
                     uninstallFailed = true;
                 }
                 ProgressBarHelper.increment();
@@ -160,10 +172,15 @@ public class Uninstaller {
         }
         return uninstallFailed;
     }
-    public static void deleteAllExports(){
-        if(JOptionPane.showConfirmDialog(null, "Are you sure that you wan't to delete all exports?", "Delete exports?", JOptionPane.YES_NO_OPTION) == 0){
-            DataStreamHelper.deleteDirectory(new File(Utils.getMGT2ModToolExportFolder()));
-            JOptionPane.showMessageDialog(null, "All exports have been deleted.");
+
+    public static void deleteAllExports() throws ModProcessingException{
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.exports.message"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == 0){
+            try {
+                DataStreamHelper.deleteDirectory(ModManagerPaths.EXPORT.getPath());
+            } catch (IOException e) {
+                throw new ModProcessingException("Unable to delete export folder", e);
+            }
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.exports.success"));
         }
     }
 }

@@ -2,15 +2,13 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -25,6 +23,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -51,6 +50,9 @@ public class PublisherMod extends AbstractAdvancedMod {
         EditHelper.printLine("MARKET", map, bw);
         EditHelper.printLine("SHARE", map, bw);
         EditHelper.printLine("GENRE", map, bw);
+        if(map.containsKey("ONLYMOBILE")) {
+            EditHelper.printLine("ONLYMOBILE", map, bw);
+        }
     }
 
     @Override
@@ -69,8 +71,8 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Publisher.txt");
+    public String getGameFileName() {
+        return "Publisher.txt";
     }
 
     @Override
@@ -86,16 +88,19 @@ public class PublisherMod extends AbstractAdvancedMod {
             JComboBox comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
             JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
 
-            AtomicReference<String> publisherImageFilePath = new AtomicReference<>(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png");
+            AtomicReference<Path> publisherImageFilePath = new AtomicReference<>(ImageFileHandler.defaultPublisherIcon);
             JPanel panelPublisherIcon = new JPanel();
             JLabel labelPublisherIcon = new JLabel(I18n.INSTANCE.get("mod.publisher.icon") + ":");
             JButton buttonBrowseIcon = new JButton(I18n.INSTANCE.get("commonText.browse"));
             buttonBrowseIcon.addActionListener(actionEvent -> {
-                String imageFilePath = Utils.getImagePath();
-                if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
-                    publisherImageFilePath.set(imageFilePath);
-                }else{
-                    publisherImageFilePath.set(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png");
+                try {
+                    Path imageFilePath = Utils.getImagePath();
+                    if (imageFilePath.toFile().exists()) {
+                        publisherImageFilePath.set(imageFilePath);
+                    }
+                } catch (ModProcessingException e) {
+                    publisherImageFilePath.set(ImageFileHandler.defaultPublisherIcon);
+                    e.printStackTrace();
                 }
             });
             panelPublisherIcon.add(labelPublisherIcon);
@@ -187,7 +192,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                         }else{
                             ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
                             int logoId;
-                            if(publisherImageFilePath.toString().equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
+                            if(publisherImageFilePath.get().equals(ImageFileHandler.defaultPublisherIcon)){
                                 logoId = 87;
                             }else{
                                 logoId = CompanyLogoAnalyzer.getLogoNumber();
@@ -216,7 +221,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                                 map.put("GENRE", genreID.toString());
                                 Backup.createBackup(getGameFile());
                                 addMod(map);
-                                copyPublisherIcon(new File(Utils.getCompanyLogosPath() + "//" + map.get("PIC") + ".png"), new File(publisherImageFilePath.toString()));
+                                copyPublisherIcon(new File(MGT2Paths.COMPANY_ICONS.getPath() + "/" + map.get("PIC") + ".png"), new File(publisherImageFilePath.toString()));
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.publisher") + " - " + map.get("NAME EN"));
                                 JOptionPane.showMessageDialog(null, "Publisher " + map.get("NAME EN") + " has been added successfully", "Publisher added", JOptionPane.INFORMATION_MESSAGE);
                                 breakLoop = true;
@@ -272,7 +277,7 @@ public class PublisherMod extends AbstractAdvancedMod {
         super.removeMod(name);
         int iconId = getPublisherIconIdByName(name);
         if (iconId > 146) {
-            File publisherIcon = new File(Utils.getMGT2CompanyLogosPath() + iconId + ".png");
+            File publisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve(Paths.get(iconId + ".png")).toFile();
             LOGGER.info("publisherIcon: " + publisherIcon.getPath());
             if (publisherIcon.exists()) {
                 publisherIcon.delete();
@@ -292,21 +297,21 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void doOtherExportThings(String name, String exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
+    public void doOtherExportThings(String name, Path exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
         File fileExportedPublisherIcon = new File(exportFolderDataPath + "//icon.png");
         if(!fileExportedPublisherIcon.exists()){
-            new File(exportFolderDataPath).mkdirs();
+            exportFolderDataPath.toFile().mkdirs();
         }
-        File fileGenreIconToExport = new File(Utils.getMGT2CompanyLogosPath() + singleContentMap.get("PIC") + ".png");
+        File fileGenreIconToExport = MGT2Paths.COMPANY_ICONS.getPath().resolve(singleContentMap.get("PIC") + ".png").toFile();
         Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedPublisherIcon.getPath()));
     }
 
     @Override
-    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
+    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ModManager.genreMod.analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        File fileToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
         HashMap<String, String> map = new HashMap<>();
         List<Map<String, String>> list;
         try {
@@ -353,11 +358,11 @@ public class PublisherMod extends AbstractAdvancedMod {
                 addFeature = false;
             }
         }
-        File publisherImageFilePath = new File(importFolderPath + "//DATA//icon.png");
+        File publisherImageFilePath = new File(importFolderPath + "/DATA/icon.png");
         map.put("PIC", Integer.toString(CompanyLogoAnalyzer.getLogoNumber()));
         if(addFeature){
             ModManager.publisherMod.addMod(map);
-            copyPublisherIcon(new File(Utils.getCompanyLogosPath() + "//" + map.get("PIC") + ".png"), new File(publisherImageFilePath.toString()));
+            copyPublisherIcon(new File(MGT2Paths.COMPANY_ICONS.getPath() + "/" + map.get("PIC") + ".png"), new File(publisherImageFilePath.toString()));
             doOtherImportThings(importFolderPath, map.get("NAME EN"));
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
@@ -373,9 +378,9 @@ public class PublisherMod extends AbstractAdvancedMod {
      * @param publisherImageTarget The file to what the image file should be copied to
      * @throws ModProcessingException If the copying for the image file fails
      */
-    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{
+    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{//TODO check if this function still works
         try {
-            if(!publisherImageTarget.equals(Settings.mgt2FilePath + "\\Mad Games Tycoon 2_Data\\Extern\\CompanyLogos\\87.png")){
+            if(!publisherImageTarget.equals(ImageFileHandler.defaultPublisherIcon.toFile())) {
                 Files.copy(Paths.get(publisherImageSource.getPath()), Paths.get(publisherImageTarget.getPath()), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
@@ -436,7 +441,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                     throw new ModProcessingException("Genre can not be removed from publisher file", e);
                 }
                 printValues(fileContent, bw);
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
             bw.write("[EOF]");
             bw.close();
@@ -455,10 +460,10 @@ public class PublisherMod extends AbstractAdvancedMod {
             if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
                 try{
                     ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"), false, false);
-                    File publisherZip = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher.zip");
-                    File publisherUnzipped = new File(Settings.MGT2_MOD_MANAGER_PATH + "Downloads//publisher");
+                    Path publisherZip = ModManagerPaths.DOWNLOAD.getPath().resolve("publisher.zip");
+                    Path publisherUnzipped = ModManagerPaths.DOWNLOAD.getPath().resolve("publisher");
                     boolean downloadFiles = true;
-                    if(publisherUnzipped.exists()){
+                    if(publisherUnzipped.toFile().exists()){
                         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists"), "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
                             downloadFiles = false;
                         }else{
@@ -468,9 +473,9 @@ public class PublisherMod extends AbstractAdvancedMod {
                     }
                     if(downloadFiles){
                         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
-                        DataStreamHelper.downloadZip(REAL_PUBLISHER_ZIP_URL, publisherZip.getPath());
+                        DataStreamHelper.downloadZip(REAL_PUBLISHER_ZIP_URL, publisherZip);
                         ProgressBarHelper.resetProgressBar();
-                        DataStreamHelper.unzip(publisherZip.getPath(), publisherUnzipped);
+                        DataStreamHelper.unzip(publisherZip, publisherUnzipped);
                     }
                     LOGGER.info("Real publisher files are ready.");
                     LOGGER.info("Removing existing publishers...");
@@ -481,7 +486,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                     }
                     LOGGER.info("Original publishers have been removed!");
                     LOGGER.info("Adding new publishers...");
-                    ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped, "publisher.txt");
+                    ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped.toFile(), "publisher.txt");
                     ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
                     SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.importMod(string, false), ModManager.publisherMod.getCompatibleModToolVersions(), new AtomicBoolean(false));
                     ModManager.publisherMod.analyzeFile();

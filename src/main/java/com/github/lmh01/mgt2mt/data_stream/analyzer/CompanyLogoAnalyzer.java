@@ -1,11 +1,13 @@
 package com.github.lmh01.mgt2mt.data_stream.analyzer;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class CompanyLogoAnalyzer {
@@ -15,8 +17,8 @@ public class CompanyLogoAnalyzer {
      * @return Returns a free logo number for a company logo.
      */
     public static int getLogoNumber(){
-        File companyLogosPath = new File(Utils.getCompanyLogosPath());
-        ArrayList<File> companyLogos = DataStreamHelper.getFilesInFolder(companyLogosPath.getPath());
+        Path path = MGT2Paths.COMPANY_ICONS.getPath();
+        ArrayList<File> companyLogos = DataStreamHelper.getFilesInFolder(path);
         int currentMaxNumber = 0;
         for (File companyLogo : companyLogos) {
             if (Settings.enableDebugLogging) {

@@ -14,9 +14,8 @@ import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,13 +51,13 @@ public class DataStreamHelper {
      * Downloads the specified zip file to the destination.
      * Prints message to text area.
      */
-    public static void downloadZip(String URL, String destination) throws IOException {
-        File destinationFile = new File(destination);
+    public static void downloadZip(String URL, Path destination) throws IOException {
+        File destinationFile = destination.toFile();
         if(destinationFile.exists()){
             destinationFile.delete();
         }
         destinationFile.getParentFile().mkdirs();
-        new FileOutputStream(destination).getChannel().transferFrom(Channels.newChannel(new URL(URL).openStream()), 0, Long.MAX_VALUE);
+        new FileOutputStream(destinationFile).getChannel().transferFrom(Channels.newChannel(new URL(URL).openStream()), 0, Long.MAX_VALUE);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.downloadZip.downloadSuccess") + " " + URL + " -> " + destination);
         LOGGER.info("The zip file from " + URL + " has been successfully downloaded to " + destination);
     }
@@ -128,8 +127,10 @@ public class DataStreamHelper {
      * @param folder The folder that should be tested if contains the file.
      * @param content The content that should be found.
      * @return Returns true when the input file is the MGT2 folder.
+     * @deprecated Use {@link DataStreamHelper#doesFolderContainFile(Path, String)} instead
      */
-    public static boolean doesFolderContainFile(String folder, String content){
+    @Deprecated
+    public static boolean doesFolderContainFile(String folder, String content){//TODO Delete function
         File file = new File(folder);
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
@@ -143,6 +144,29 @@ public class DataStreamHelper {
             }
         }else{
             LOGGER.info("File \"" + content + "\"does not exist in folder \"" + folder + "\"");
+        }
+        return false;
+    }
+
+    /**
+     * @param path The folder that should be tested if contains the file.
+     * @param content The content that should be found.
+     * @return Returns true when the input file is the MGT2 folder.
+     */
+    public static boolean doesFolderContainFile(Path path, String content){
+        File file = path.toFile();
+        if(file.exists()){
+            File[] filesInFolder = file.listFiles();
+            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
+                if(filesInFolder[i].getName().equals(content)){
+                    return true;
+                }
+                if(Settings.enableDebugLogging){
+                    LOGGER.info(filesInFolder[i].getName());
+                }
+            }
+        }else{
+            LOGGER.info("File \"" + content + "\"does not exist in folder \"" + path + "\"");
         }
         return false;
     }
@@ -178,20 +202,20 @@ public class DataStreamHelper {
     }
 
     /**
-     * @param folder The folder that should be searched for files.
+     * @param path The folder that should be searched for files.
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolder(String folder){
-        return getFilesInFolderBlackList(folder, "EMPTY");
+    public static ArrayList<File> getFilesInFolder(Path path){
+        return getFilesInFolderBlackList(path, "EMPTY");
     }
 
     /**
-     * @param folder The folder that should be searched for files.
+     * @param path The folder that should be searched for files.
      * @param blackList When the string entered here is found in the filename the file wont be added to the arrayListFiles.
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolderBlackList(String folder, String blackList){
-        File file = new File(folder);
+    public static ArrayList<File> getFilesInFolderBlackList(Path path, String blackList){
+        File file = path.toFile();
         ArrayList<File> arrayListFiles = new ArrayList<>();
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
@@ -208,12 +232,12 @@ public class DataStreamHelper {
     }
 
     /**
-     * @param folder The folder that should be searched for files.
+     * @param path The folder that should be searched for files.
      * @param whiteList When the string entered here is found/equals the filename the file will be added to the arrayListFiles. All other files wont be added
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolderWhiteList(String folder, String whiteList){
-        File file = new File(folder);
+    public static ArrayList<File> getFilesInFolderWhiteList(Path path, String whiteList){
+        File file = path.toFile();
         ArrayList<File> arrayListFiles = new ArrayList<>();
         if(file.exists()){
             File[] filesInFolder = file.listFiles();
@@ -234,20 +258,20 @@ public class DataStreamHelper {
      * @param zipFile The input zip file
      * @param destination The destination where the file should be unzipped to.
      */
-    public static void unzip(String zipFile, File destination) throws IOException {
+    public static void unzip(Path zipFile, Path destination) throws IOException {
         TimeHelper.startMeasureTimeThread();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.secondPart"));
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.preparing"));
-        ProgressBarHelper.increaseMaxValue(getZipInputStreamSize(zipFile));
+        ProgressBarHelper.increaseMaxValue(getZipInputStreamSize(zipFile.toFile()));
         byte[] buffer = new byte[1024];
-        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile.toFile()));
         ZipEntry zipEntry = zis.getNextEntry();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + Utils.convertSecondsToTime(TimeHelper.getMeasuredTime()) + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
-            File newFile = newFile(destination, zipEntry);
+            File newFile = newFile(destination.toFile(), zipEntry);
             if(Settings.enableDebugLogging){
                 LOGGER.info("Unzipped file: " + newFile.getPath());
             }
@@ -295,7 +319,7 @@ public class DataStreamHelper {
     /**
      * Returns the amount of files in the input stream
      */
-    private static int getZipInputStreamSize(String zipFile) throws IOException {
+    private static int getZipInputStreamSize(File zipFile) throws IOException {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
         ZipEntry zipEntry = zis.getNextEntry();
         int zipEntryAmount = 0;
@@ -310,10 +334,10 @@ public class DataStreamHelper {
 
     /**
      * @param rootDirectory The directory where the file search is started
-     * @param fileToSearch The file name that should be searched
+     * @param fileName The file name that should be searched
      * @return Returns a array list containing all files that match the file to search
      */
-    public static ArrayList<File> getFiles(File rootDirectory, String fileToSearch) throws IOException {
+    public static ArrayList<File> getFiles(File rootDirectory, String fileName) throws IOException {
         ArrayList<File> arrayList = new ArrayList<>();
         Path start = Paths.get(rootDirectory.getPath());
         try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
@@ -323,8 +347,8 @@ public class DataStreamHelper {
                     .collect(Collectors.toList());
 
             collect.forEach((string) -> {
-                if(string.contains(fileToSearch)){
-                    LOGGER.info(fileToSearch + ": " + string);
+                if(string.contains(fileName)){
+                    LOGGER.info(fileName + ": " + string);
                     arrayList.add(new File(string));
                 }
                 if(Settings.enableDebugLogging){
@@ -337,18 +361,19 @@ public class DataStreamHelper {
 
     /**
      * Copied from https://www.baeldung.com/java-copy-directory
-     * @param sourceDirectoryLocation The source
-     * @param destinationDirectoryLocation The destination
+     * @param sourceDirectory The source
+     * @param destinationDirectory The destination
      */
-    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
+    public static void copyDirectory(Path sourceDirectory, Path destinationDirectory)//TODO check if function still works
             throws IOException {
         ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.copyDirectory.title"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.copyDirectory.title") + ": " + sourceDirectoryLocation + " -> " + destinationDirectoryLocation);
-        Files.walk(Paths.get(sourceDirectoryLocation))
+        Files.createDirectories(destinationDirectory);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.copyDirectory.title") + ": " + sourceDirectory + " -> " + destinationDirectory);
+        Files.walk(sourceDirectory)
                 .forEach(source -> {
                     ProgressBarHelper.increaseMaxValue(1);
-                    Path destination = Paths.get(destinationDirectoryLocation, source.toString()
-                            .substring(sourceDirectoryLocation.length()));
+                    Path destination = Paths.get(destinationDirectory.toString(), source.toString()
+                            .substring(sourceDirectory.toString().length()));
                     try {
                         Files.copy(source, destination);
                     } catch (IOException e) {
@@ -362,7 +387,7 @@ public class DataStreamHelper {
     /**
      * Deletes a complete directory with its contents
      */
-    public static void deleteDirectory(File directoryToBeDeleted){
+    public static void deleteDirectory(Path directoryToBeDeleted) throws IOException {
         deleteDirectory(directoryToBeDeleted, true);
     }
 
@@ -370,47 +395,40 @@ public class DataStreamHelper {
      * Deletes a directory with its contents
      * @param initializeProgressBar True when the progress bar should be initialized. Otherwise only the text will be changed and the value will increment.
      */
-    public static void deleteDirectory(File directoryToBeDeleted, boolean initializeProgressBar){
+    public static void deleteDirectory(Path directoryToBeDeleted, boolean initializeProgressBar) throws IOException {
         if(initializeProgressBar){
             try{
-                ProgressBarHelper.initializeProgressBar(0, Objects.requireNonNull(directoryToBeDeleted.listFiles()).length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+                ProgressBarHelper.initializeProgressBar(0, Objects.requireNonNull(directoryToBeDeleted.toFile().listFiles()).length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
             }catch (NullPointerException ignored){
-                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
             }
         }else{
             try{
-                ProgressBarHelper.increaseMaxValue(Objects.requireNonNull(directoryToBeDeleted.listFiles()).length);
+                ProgressBarHelper.increaseMaxValue(Objects.requireNonNull(directoryToBeDeleted.toFile().listFiles()).length);
                 ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.delete"));
             }catch (NullPointerException ignored){
-                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.getPath());
+                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
             }
         }
-        deleteDirectoryProcess(directoryToBeDeleted);
-        directoryToBeDeleted.delete();
+        try (Stream<Path> files = Files.list(directoryToBeDeleted)) {
+            ProgressBarHelper.increaseMaxValue((int)files.count());
+        }
+        Files.walkFileTree(directoryToBeDeleted, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                LOGGER.info("Deleting file: " + file);
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc)
+                    throws IOException {
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
+            }
+        });
         ProgressBarHelper.resetProgressBar();
-    }
-
-    /**
-     * Parts copied from https://www.baeldung.com/java-delete-directory
-     */
-    private static void deleteDirectoryProcess(File directoryToBeDeleted ){
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                try{
-                    ProgressBarHelper.increaseMaxValue(Objects.requireNonNull(file.listFiles()).length);
-                }catch(NullPointerException ignored){
-
-                }
-                deleteDirectoryProcess(file);
-                LogFile.write(I18n.INSTANCE.get("progressBar.delete") + " " + file.getPath());
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("Deleting file: " + file.getPath());
-                }
-            }
-        }
-        ProgressBarHelper.increment();
-        directoryToBeDeleted.delete();
     }
 
     /**
@@ -428,7 +446,7 @@ public class DataStreamHelper {
             if (file.isFile()) {
                 System.out.println(file.getAbsolutePath());
             } else if (file.isDirectory()) {
-                resultList.addAll(getFilesInFolder(file.getAbsolutePath()));
+                resultList.addAll(getFilesInFolder(Paths.get(file.getPath())));
             }
         }
         return resultList;

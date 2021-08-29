@@ -103,10 +103,10 @@ public class TranslationManager {
         for(String string : TranslationManager.TRANSLATION_KEYS){
             for(Map.Entry<String, String> entry : map.entrySet()){
                 if(entry.getKey().equals("NAME " + string)){
-                    bw.write("[NAME " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
+                    bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
                 }
                 if(entry.getKey().equals("DESC " + string)){
-                    bw.write("[DESC " + string + "]" + entry.getValue() + System.getProperty("line.separator"));
+                    bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
                 }
             }
         }

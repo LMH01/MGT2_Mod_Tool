@@ -5,16 +5,14 @@ import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
+import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -33,7 +31,7 @@ public class DefaultContentManager {
     private static final String DEFAULT_CONTENT_VERSION = "BUILD 2021.08.25A";
     private static final String NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL = "https://www.dropbox.com/s/hd7f7c2b9ybr5gt/newest_default_content_version.txt?dl=1";
     private static final String NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL = "https://www.dropbox.com/s/7l89pg9x4venqje/newest_default_content.toml?dl=1";
-    public static final File DEFAULT_CONTENT_FILE = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content.toml");
+    public static final File DEFAULT_CONTENT_FILE = ModManagerPaths.MAIN.getPath().resolve("default_content.toml").toFile();
 
     /**
      * Analyzes the current default content file "%appdata%\LMH01\MGT2_Mod_Manager\default_content.toml" to
@@ -171,7 +169,7 @@ public class DefaultContentManager {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.initializingTool") + ": " + I18n.INSTANCE.get("progressBar.downloadingDefaultContentUpdate"));
         LOGGER.info("Updating default content toml file...");
         try {
-            File tomlDownload = new File(Settings.MGT2_MOD_MANAGER_PATH + "//default_content_update.toml");
+            File tomlDownload = ModManagerPaths.MAIN.getPath().resolve("default_content_update.toml").toFile();
             DataStreamHelper.downloadFile(NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL, tomlDownload);
             DEFAULT_CONTENT_FILE.delete();
             Files.copy(Paths.get(tomlDownload.getPath()), Paths.get(DEFAULT_CONTENT_FILE.getPath()));

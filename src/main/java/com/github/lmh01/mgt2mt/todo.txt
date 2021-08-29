@@ -18,7 +18,8 @@ Not Shure:
 
 //TODO Export und Import soll .toml -Dateien benutzen.
     Außerdem soll es möglich sein mods durch eine in der import datei vermerkte Zeile zu entfernen
-    Bei den Export-Dateien sollten keine IDs beschrieben werden, sondern die namen der Mods. Falls mods beim import nicht existieren, zufällig aus vorhandenen auswählen
+    Bei den Export-Dateien sollten keine IDs beschrieben werden, sondern die namen der Mods.
+    Falls mods beim import nicht existieren, zufällig aus vorhandenen auswählen -> Dabei aber aufpassen, dass mods sich gegenseitig finden, also der Publisher den Genre mod findet, für den er geschrieben ist
 
 //TODO Add option to edit already added things Eg. Genres -> Edit genres
     A list of all added things is shown (All genres when safety features are disabled)
@@ -45,8 +46,13 @@ Not Shure:
     if you have several threads of the same nature, enumerate them with IDs that are unique to one execution of the application or one log file, whichever fits your logging habits.
 
 //TODO Alle Progress bar operations noch einmal überprüfen und ggf. progressbar anpassen und konsistenter machen (auf jeden Fall für Import und Export)
-//TODO Schauen, warum import von genres so ewig dauert
 //TODO Schauen, warum das Genre Horror nicht gelöscht werden kann, sondern eine NumberFormatException throwed, wenns es entfernt werden sollte
-//TODO Schauen, warum das austauschen der Publisher nicht mehr geht -> in der Publishers.txt Datei steht bei den Bildern "null", deswegen geht es nicht -> mal schauen, warum da null reingeschrieben wird
-//TODO generell mal schauen, ob es geht jeden einzelnen mod hinzuzufügen und dass er im Spiel erkannt wird
-//TODO Schauen, ob es noch/wieder geht genres hinzuzufügen
+
+//TODO Clean up logging
+
+//TODO Write tests
+
+/TODO when done with Linux support: See if programm keeps working in Windows
+
+/TODO Add option that i can sort the mods easily: One option would be to replace the mod array list with a mod map:
+    Map<AbstractBaseMod, Integer> integer is the mod number than so that it is easier to sort the mods in the main window for example

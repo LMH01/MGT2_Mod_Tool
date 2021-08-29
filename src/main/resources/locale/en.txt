@@ -7,13 +7,6 @@ button.cancel|Cancel
 commonBodies.areYouSure|Are you sure?
 commonBodies.exception|Exception:
 
-commonText.testSimpleMod|test simple mod
-commonText.testSimpleMod.upperCase|Test simple mod
-commonText.testSimpleMod.upperCase.plural|Test simple mods
-commonText.testAdvancedMod|test advanced mod
-commonText.testAdvancedMod.upperCase|Test advanced mod
-commonText.testAdvancedMod.upperCase.plural|Test advanced mods
-
 commonText.genre|genre
 commonText.genre.upperCase|Genre
 commonText.genre.upperCase.plural|Genres
@@ -458,7 +451,6 @@ mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|Select here for
 sharer.exportFailed.generalError.firstPart|Unable to export:
 sharer.exportFailed.generalError.secondPart|The following error occurred:
 sharer.engineFeature.optionPaneMessage.main|Your engine feature is ready:
-sharer.genre.exportFailed.alreadyExported|The following genre was not exported because it has already been exported:
 sharer.theme.optionPaneMessage.main|Your theme is ready:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
 sharer.importMod.alreadyExists|The following mod has not been imported because it already exists:
@@ -759,7 +751,7 @@ textArea.import.notCompatible.2|Genre was exported in version:
 textArea.import.specialPublisherNotExisting|The following publisher was not imported because the special genre does not exist:
 textArea.importAll.start|Starting import process
 textArea.importAll.cancel|Import process has been canceled
-textArea.importAll.completed|Import precess has been completed
+textArea.importAll.completed|Import process has been completed
 textArea.importAll.scanningDirectories|Scanning directories for compatible mods
 textArea.importAll.currentPath|Current path:
 textArea.importAll.indexingFolder|Indexing folder:
@@ -932,6 +924,8 @@ window.uninstall.uninstallIncomplete|There was a problem while uninstalling:
 window.uninstall.uninstallIncomplete.title|Uninstalling incomplete
 window.uninstall.uninstallSuccessful|Your selected files have been uninstalled successfully!
 window.uninstall.uninstallSuccessful.title|Uninstalling successful
+window.uninstall.exports.message|Are you sure that you want to delete all exports?
+window.uninstall.exports.success|All exports have been deleted.
 
 window.settings.button.back.toolTip|Click to get to the main page
 window.settings.button.resetSettings.label|Reset Settings

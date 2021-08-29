@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
-import com.github.lmh01.mgt2mt.data_stream.NPCGameListChanger;
+import com.github.lmh01.mgt2mt.mod.NpcGamesMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -16,7 +16,6 @@ public class NPCGameListHandler {
 
     /**
      * Opens a window where the user can modify the npc games list
-     * @throws ModProcessingException
      */
     public static void modifyNPCGameList() throws ModProcessingException {
         ModManager.genreMod.analyzeFile();
@@ -53,7 +52,7 @@ public class NPCGameListHandler {
         while(true){
             if(JOptionPane.showConfirmDialog(null, objects, I18n.INSTANCE.get("window.npcGamesList.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION ){
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append(I18n.INSTANCE.get("window.npcGamesList.confirmDialog.1")).append(System.getProperty("line.separator"));
+                stringBuilder.append(I18n.INSTANCE.get("window.npcGamesList.confirmDialog.1")).append("\r\n");
                 boolean addGenreID;
                 if(Objects.equals(comboBoxOperation.getSelectedItem(), I18n.INSTANCE.get("window.npcGamesList.comboBox.operation.value_1"))) {
                     addGenreID = true;
@@ -62,9 +61,9 @@ public class NPCGameListHandler {
                     addGenreID = false;
                     stringBuilder.append(I18n.INSTANCE.get("window.npcGamesList.removed")).append(" ").append(I18n.INSTANCE.get("window.npcGamesList.from")).append(" ");
                 }
-                stringBuilder.append(I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2")).append(System.getProperty("line.separator"));
+                stringBuilder.append(I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2")).append("\r\n");
                 for(String string : listAvailableOperations.getSelectedValuesList()){
-                    stringBuilder.append(string).append(System.getProperty("line.separator"));
+                    stringBuilder.append(string).append("\r\n");
                 }
                 if(!listAvailableOperations.getSelectedValuesList().isEmpty()){
                     if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("window.npcGamesList.confirmDialog.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -72,13 +71,13 @@ public class NPCGameListHandler {
                         ProgressBarHelper.increment();
                         for(String string : listAvailableOperations.getSelectedValuesList()){
                             try {
-                                NPCGameListChanger.editNPCGames(ModManager.genreMod.getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
+                                NpcGamesMod.editNPCGames(ModManager.genreMod.getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
                                 if(addGenreID){
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.added.upperCase") + " " + string + " " + I18n.INSTANCE.get("window.npcGamesList.to") + " " + I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2").replace(".", ""));
                                 }else{
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.removed.upperCase") + " " + string + " " + I18n.INSTANCE.get("window.npcGamesList.from") + " " + I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2").replace(".", ""));
                                 }
-                            } catch (IOException e) {
+                            } catch (ModProcessingException e) {
                                 throw new ModProcessingException(I18n.INSTANCE.get("window.npcGamesList.errorOccurred") + ": " + e.getMessage(), e);
                             }
                             ProgressBarHelper.increment();

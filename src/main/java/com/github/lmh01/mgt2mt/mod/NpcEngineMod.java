@@ -55,8 +55,8 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "NpcEngines.txt");
+    public String getGameFileName() {
+        return "NpcEngines.txt";
     }
 
     @Override
@@ -262,7 +262,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                     fileContent.put("GENRE", Integer.toString(ModManager.genreMod.getActiveIds().get(Utils.getRandomNumber(0, ModManager.genreMod.getActiveIds().size()))));
                 }
                 printValues(fileContent, bw);
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
             bw.write("[EOF]");
             bw.close();

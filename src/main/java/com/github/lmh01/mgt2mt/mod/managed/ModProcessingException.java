@@ -62,8 +62,6 @@ public class ModProcessingException extends Exception {
         s.append(message);
         if (internal) {
             s.append(" - This error is caused by faulty code! Please contact the developer so this problem can be fixed!");
-        } else {
-            s.append(" - This error is likely caused by corrupted files!");
         }
         return s.toString();
     }

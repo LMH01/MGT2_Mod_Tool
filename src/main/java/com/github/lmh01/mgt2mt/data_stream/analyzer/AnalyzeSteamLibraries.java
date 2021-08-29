@@ -4,21 +4,23 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class AnalyzeSteamLibraries {
-    private static final String STEAM_LIBRARY_FOLDERS_PATH;
-    private static final String STEAM_LIBRARY_DEFAULT_FOLDER;
+    private static final Path STEAM_LIBRARY_FOLDERS_PATH;
+    private static final Path STEAM_LIBRARY_DEFAULT_FOLDER;
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeSteamLibraries.class);
 
     static {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         if (MadGamesTycoon2ModTool.isWindows()) {
-            STEAM_LIBRARY_FOLDERS_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
-            STEAM_LIBRARY_DEFAULT_FOLDER = "C:\\Program Files (x86)\\Steam\\";
+            STEAM_LIBRARY_FOLDERS_PATH = Paths.get("C", "Program Files (x86)", "Steam", "steamapps", "libraryfolders.vdf");
+            STEAM_LIBRARY_DEFAULT_FOLDER = Paths.get("C", "Program Files (x86)", "Steam");
         } else {
-            STEAM_LIBRARY_FOLDERS_PATH = "/home/louis/.local/share/Steam/steamapps/libraryfolders.vdf";
-            STEAM_LIBRARY_DEFAULT_FOLDER = "/home/louis/.local/share/Steam/";
+            STEAM_LIBRARY_FOLDERS_PATH = Paths.get(System.getProperty("user.home"), ".local", "share", "Steam", "steamapps", "libraryfolders.vdf");
+            STEAM_LIBRARY_DEFAULT_FOLDER = Paths.get(System.getProperty("user.home"), ".local", "share", "Steam");
         }
     }
 
@@ -29,9 +31,8 @@ public class AnalyzeSteamLibraries {
     public static ArrayList<String> getSteamLibraries() throws IOException {
         LOGGER.info("Scanning steam libraries...");
         ArrayList<String> arrayListSteamLibraries = new ArrayList<>();
-        File steamLibraryFoldersVDF = new File(STEAM_LIBRARY_FOLDERS_PATH);
-        BufferedReader bf = new BufferedReader(new FileReader(steamLibraryFoldersVDF));
-        arrayListSteamLibraries.add(STEAM_LIBRARY_DEFAULT_FOLDER);
+        BufferedReader bf = new BufferedReader(new FileReader(STEAM_LIBRARY_FOLDERS_PATH.toFile()));
+        arrayListSteamLibraries.add(STEAM_LIBRARY_DEFAULT_FOLDER.toString());
         String currentLine;
         while((currentLine = bf.readLine()) != null){
             if (currentLine.contains("\"path\"")) {

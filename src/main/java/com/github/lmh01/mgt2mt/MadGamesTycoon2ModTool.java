@@ -1,16 +1,18 @@
 package com.github.lmh01.mgt2mt;
 
+import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.OSType;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import java.awt.*;
 import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
@@ -45,11 +47,17 @@ public class MadGamesTycoon2ModTool {
         WindowMain.createFrame();
         Settings.validateMGT2Folder();
         if(Settings.mgt2FolderIsCorrect){
+            try {
+                ModManager.themeMod.writeCustomThemeFile();
+            } catch (ModProcessingException e) {
+                TextAreaHelper.printStackTrace(e);
+                e.printStackTrace();
+            }
             Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
         }else{
             LOGGER.info("Initial backups where not created/completed because the mgt2 folder is invalid");
         }
-        //ThreadHandler.threadPerformStartTasks().start();
+        ThreadHandler.threadPerformStartTasks().start();
     }
 
     /**

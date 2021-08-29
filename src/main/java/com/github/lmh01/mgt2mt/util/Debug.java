@@ -3,10 +3,16 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
+import jdk.internal.loader.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -24,8 +30,8 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             File file = new File("D://Temp//npcGames2.txt");
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            BufferedReader br = new BufferedReader(new FileReader(Utils.getMGT2DataPath() + "//NpcGames.txt"));
-            Map<Integer, String> map = DataStreamHelper.getContentFromFile(new File(Utils.getMGT2DataPath() + "//NpcGames.txt"), "UTF_16LE");
+            BufferedReader br = new BufferedReader(new FileReader(MGT2Paths.TEXT_DATA.getPath() + "//NpcGames.txt"));
+            Map<Integer, String> map = DataStreamHelper.getContentFromFile(new File(MGT2Paths.TEXT_DATA.getPath() + "//NpcGames.txt"), "UTF_16LE");
 
             ModManager.npcGamesMod.analyzeFile();
             assert map != null;
@@ -81,7 +87,40 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
         }
     }
 
+    private void testResource(Resource resource) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                LOGGER.info("line: " + currentLine);
+            }
+            reader.close();
+        } catch (IOException ex) {
+            LOGGER.error(ex.toString());
+        }
+    }
+
     public static void test(){
+        try {
+            Backup.createBackup(ModManager.publisherMod.getGameFile(), false, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*Path path = Paths.get(System.getProperty("user.home"), ".local", "share", "mgt2_mod_tool");
+        LOGGER.info("Path: " + path);
+        File file = new File(System.getProperty("user.home") + ".local/share/mgt2_mod_tool");
+        LOGGER.info("File.getPath(): " + file.getPath());*/
+
+        /*try {
+            Enumeration<URL> enumeration = ClassLoader.getSystemResources("");
+            for (URL url : Collections.list(enumeration)) {
+                LOGGER.info("url: " + url.getPath());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+        /*
         try {
             LOGGER.info("Engine feature mod custom content: " + ModManager.engineFeatureMod.getCustomContentString().length);
             for (String string : ModManager.engineFeatureMod.getCustomContentString()) {
@@ -89,7 +128,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             }
         } catch (ModProcessingException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //writeHelpFile();
         /*AbstractAdvancedMod testMod1 = new TestMod1();

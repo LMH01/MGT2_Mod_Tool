@@ -42,10 +42,10 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         EditHelper.printLine("GOOD", map, bw);
         EditHelper.printLine("BAD", map, bw);
         if(map.get("NO_ARCADE") != null){
-            bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
+            bw.write("[NO_ARCADE]");bw.write("\r\n");
         }
         if(map.get("NO_MOBILE") != null){
-            bw.write("[NO_MOBILE]");bw.write(System.getProperty("line.separator"));
+            bw.write("[NO_MOBILE]");bw.write("\r\n");
         }
     }
 
@@ -65,8 +65,8 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "GameplayFeatures.txt");
+    public String getGameFileName() {
+        return "GameplayFeatures.txt";
     }
 
     @Override
@@ -452,27 +452,27 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 if(activeGameplayFeature || !addGenreId){
                     if(addGenreId){
                         if(goodFeature){
-                            bw.write("[GOOD]" + mapValueGood);bw.write("<" + genreId + ">");bw.write(System.getProperty("line.separator"));
-                            bw.write("[BAD]" + mapValueBad);bw.write(System.getProperty("line.separator"));
+                            bw.write("[GOOD]" + mapValueGood);bw.write("<" + genreId + ">");bw.write("\r\n");
+                            bw.write("[BAD]" + mapValueBad);bw.write("\r\n");
                         }else{
-                            bw.write("[GOOD]" + mapValueGood);bw.write(System.getProperty("line.separator"));
-                            bw.write("[BAD]" + mapValueBad);bw.write("<" + genreId + ">");bw.write(System.getProperty("line.separator"));
+                            bw.write("[GOOD]" + mapValueGood);bw.write("\r\n");
+                            bw.write("[BAD]" + mapValueBad);bw.write("<" + genreId + ">");bw.write("\r\n");
                         }
                     }else{
-                        bw.write("[GOOD]" + mapValueGood.replace("<" + genreId + ">", ""));bw.write(System.getProperty("line.separator"));
-                        bw.write("[BAD]" + mapValueBad.replace("<" + genreId + ">", ""));bw.write(System.getProperty("line.separator"));
+                        bw.write("[GOOD]" + mapValueGood.replace("<" + genreId + ">", ""));bw.write("\r\n");
+                        bw.write("[BAD]" + mapValueBad.replace("<" + genreId + ">", ""));bw.write("\r\n");
                     }
                 }else{
-                    bw.write("[GOOD]" + mapValueGood);bw.write(System.getProperty("line.separator"));
-                    bw.write("[BAD]" + mapValueBad);bw.write(System.getProperty("line.separator"));
+                    bw.write("[GOOD]" + mapValueGood);bw.write("\r\n");
+                    bw.write("[BAD]" + mapValueBad);bw.write("\r\n");
                 }
                 if(map.get("NO_ARCADE") != null){
-                    bw.write("[NO_ARCADE]");bw.write(System.getProperty("line.separator"));
+                    bw.write("[NO_ARCADE]");bw.write("\r\n");
                 }
                 if(map.get("NO_MOBILE") != null){
-                    bw.write("[NO_MOBILE]");bw.write(System.getProperty("line.separator"));
+                    bw.write("[NO_MOBILE]");bw.write("\r\n");
                 }
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
             bw.write("[EOF]");
             bw.close();
@@ -489,7 +489,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
      */
     private String getGenreIds(String genreNamesRaw) throws ModProcessingException {
         //TODO Option in die Einstellungen packen, mit welcher man entscheiden kann, was passieren soll, wenn beim Import ein name nicht gefunden wird.
-        //  Entweder zufällige id heraussuchen oder einfach ganz weg lassen
+        //  Entweder zufällige id heraussuchen oder einfach ganz weg lassen - Gehört mit zu import rework
         LOGGER.info("genreNamesRaw: " + genreNamesRaw);
         StringBuilder genreNames = new StringBuilder();
         int charPosition = 0;

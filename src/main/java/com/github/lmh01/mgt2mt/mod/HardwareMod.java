@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -54,19 +53,19 @@ public class HardwareMod extends AbstractAdvancedMod {
                 if(currentType != Integer.parseInt(fileContent.get("TYP"))){
                     currentType = Integer.parseInt(fileContent.get("TYP"));
                     bw.write("////////////////////////////////////////////////////////////////////");
-                    bw.write(System.getProperty("line.separator"));
-                    bw.write(System.getProperty("line.separator"));
+                    bw.write("\r\n");
+                    bw.write("\r\n");
                 }
                 printValues(fileContent, bw);
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
             }
             if(currentType != Integer.parseInt(map.get("TYP"))){
                 bw.write("////////////////////////////////////////////////////////////////////");
-                bw.write(System.getProperty("line.separator"));
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
+                bw.write("\r\n");
             }
             printValues(map, bw);
-            bw.write(System.getProperty("line.separator"));
+            bw.write("\r\n");
             bw.write("[EOF]");
             bw.close();
         } catch (IOException e) {//TODO catch block schreiben
@@ -101,11 +100,11 @@ public class HardwareMod extends AbstractAdvancedMod {
                     if(currentType != Integer.parseInt(fileContent.get("TYP"))){
                         currentType = Integer.parseInt(fileContent.get("TYP"));
                         bw.write("////////////////////////////////////////////////////////////////////");
-                        bw.write(System.getProperty("line.separator"));
-                        bw.write(System.getProperty("line.separator"));
+                        bw.write("\r\n");
+                        bw.write("\r\n");
                     }
                     printValues(fileContent, bw);
-                    bw.write(System.getProperty("line.separator"));
+                    bw.write("\r\n");
                 }
             }
             bw.write("[EOF]");
@@ -150,8 +149,8 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Hardware.txt");
+    public String getGameFileName() {
+        return "Hardware.txt";
     }
 
     @Override

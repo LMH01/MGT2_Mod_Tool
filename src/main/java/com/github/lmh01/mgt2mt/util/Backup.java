@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
@@ -23,8 +24,15 @@ import java.util.*;
 public class Backup {
     private static final Logger LOGGER = LoggerFactory.getLogger(Backup.class);
     private static String latestBackupFolderName = "";
-    public static final String BACKUP_FOLDER_PATH = System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//";
-    public static final File FILE_SAVE_GAME_FOLDER = new File(System.getenv("USERPROFILE") + "\\appdata\\locallow\\Eggcode\\Mad Games Tycoon 2\\");
+    public static final Path FILE_SAVE_GAME_FOLDER;
+
+    static {
+        if (MadGamesTycoon2ModTool.isWindows()) {
+            FILE_SAVE_GAME_FOLDER = Paths.get(System.getenv("USERPROFILE") + "/appdata/locallow/Eggcode/Mad Games Tycoon 2");
+        } else {
+            FILE_SAVE_GAME_FOLDER = Paths.get(System.getProperty("user.home"), ".local/share/Steam/steamapps/compatdata/1342330/pfx/drive_c/users/steamuser/AppData/LocalLow/Eggcode/Mad Games Tycoon 2");
+        }
+    }
 
     /**
      * Creates a backup of a given file.
@@ -41,17 +49,18 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup, boolean initialBackup, boolean showTextAreaMessages) throws IOException {
+        LOGGER.info("Creating backup of file: " + fileToBackup.getPath());
         String currentTimeAndDay = Utils.getCurrentDateTime();
         boolean initialBackupAlreadyExists = false;
         latestBackupFolderName = currentTimeAndDay;
-        File backupFileFolder = new File(BACKUP_FOLDER_PATH + currentTimeAndDay + "//");
-        File directoryBackup = new File(BACKUP_FOLDER_PATH);
+        Path backupStorageFolder = ModManagerPaths.BACKUP.getPath().resolve(currentTimeAndDay);
+        File directoryBackup = ModManagerPaths.BACKUP.getPath().toFile();
         if(!directoryBackup.exists()){
             directoryBackup.mkdirs();
         }
         File fileLatestBackupOfInputFile;
         if(initialBackup){
-            fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".initialBackup");
+            fileLatestBackupOfInputFile = ModManagerPaths.BACKUP.getPath().resolve(fileToBackup.getName() + ".initialBackup").toFile();
             if(fileLatestBackupOfInputFile.exists()){
                 if(Settings.enableDebugLogging){
                     LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
@@ -59,15 +68,15 @@ public class Backup {
                 initialBackupAlreadyExists = true;
             }
         }else{
-            fileLatestBackupOfInputFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + fileToBackup.getName()+ ".latestBackup");
+            fileLatestBackupOfInputFile = ModManagerPaths.BACKUP.getPath().resolve(fileToBackup.getName() + ".latestBackup").toFile();
         }
         if(!initialBackupAlreadyExists){
             if(fileLatestBackupOfInputFile.exists()){
-                if(!backupFileFolder.exists()){//Creates directory if backup directory for specified time does not exist
-                    backupFileFolder.mkdirs();
+                if(!backupStorageFolder.toFile().exists()){//Creates directory if backup directory for specified time does not exist
+                    backupStorageFolder.toFile().mkdirs();
                 }
                 LOGGER.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
-                File fileBackupSaved = new File(backupFileFolder.getPath() + "\\" + fileToBackup.getName());
+                File fileBackupSaved = backupStorageFolder.resolve(fileToBackup.getName()).toFile();
                 if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
                     LOGGER.info("The file inside the storage folder does already exist. deleting...");
                     fileBackupSaved.delete();
@@ -119,13 +128,13 @@ public class Backup {
         try {
             LOGGER.info("Restoring backup.");
             for(File file : getBackupFiles()){
-                File backupFile;
+                Path backupFile;
                 if(initialBackup){
-                    backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + file.getName() + ".initialBackup");
+                    backupFile = ModManagerPaths.BACKUP.getPath().resolve(file.getName() + ".initialBackup");
                 }else{
-                    backupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//" + file.getName());
+                    backupFile = ModManagerPaths.BACKUP.getPath().resolve(latestBackupFolderName + "/" + file.getName());
                 }
-                Files.copy(Paths.get(backupFile.getPath()), Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+                Files.copy(backupFile, Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
             }
             restoreThemeFileBackups(initialBackup);
             if(initialBackup){
@@ -161,7 +170,7 @@ public class Backup {
      */
     public static void restoreSaveGameBackup(){
         try {
-            ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(Backup.BACKUP_FOLDER_PATH, "savegame");
+            ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(ModManagerPaths.BACKUP.getPath(), "savegame");
             Set<String> saveGameSlots = new HashSet<>();
             for(File file : files){
                 saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
@@ -194,9 +203,9 @@ public class Backup {
      * @param saveGameSlot The slot where the save game is saved that should be restored
      */
     public static void restoreSaveGameBackup(int saveGameSlot) throws IOException {
-        File saveGameBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//savegame" + saveGameSlot + ".txt");
+        File saveGameBackup = ModManagerPaths.BACKUP.getPath().resolve(latestBackupFolderName + "/savegame" + saveGameSlot + ".txt").toFile();
         if (!saveGameBackup.exists()) {
-            saveGameBackup = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//savegame" + saveGameSlot + ".txt.initialBackup");
+            saveGameBackup = ModManagerPaths.BACKUP.getPath().resolve("/savegame" + saveGameSlot + ".txt.initialBackup").toFile();
         }
         Files.copy(Paths.get(saveGameBackup.getPath()), Paths.get(Utils.getSaveGameFile(saveGameSlot).getPath()), StandardCopyOption.REPLACE_EXISTING);
     }
@@ -206,14 +215,14 @@ public class Backup {
      */
     private static void restoreThemeFileBackups(boolean initialBackup) throws IOException {
         for(int i = 0; i< TranslationManager.TRANSLATION_KEYS.length; i++){
-            File currentBackupFile;
+            Path currentBackupFile;
             if(initialBackup){
-                currentBackupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");
+                currentBackupFile = ModManagerPaths.BACKUP.getPath().resolve("Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");
             }else{
-                currentBackupFile = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//" + latestBackupFolderName + "//Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt");
+                currentBackupFile = ModManagerPaths.BACKUP.getPath().resolve(latestBackupFolderName + "/Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");
             }
-            Files.copy(Paths.get(currentBackupFile.getPath()), Paths.get(Utils.getThemeFile(i).getPath()), StandardCopyOption.REPLACE_EXISTING);
-            LOGGER.info("File " + currentBackupFile.getPath() + " has been restored.");
+            Files.copy(currentBackupFile, Paths.get(Utils.getThemeFile(i).getPath()), StandardCopyOption.REPLACE_EXISTING);
+            LOGGER.info("File " + currentBackupFile + " has been restored.");
             ProgressBarHelper.increment();
         }
     }
@@ -224,7 +233,7 @@ public class Backup {
     public static void deleteAllBackups(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
-                File backupFolder = new File(BACKUP_FOLDER_PATH);
+                File backupFolder = ModManagerPaths.BACKUP.getPath().toFile();
                 if(backupFolder.exists()){
                     Files.walk(Paths.get(backupFolder.getPath()))
                             .sorted(Comparator.reverseOrder())
@@ -271,7 +280,6 @@ public class Backup {
         for (AbstractBaseMod mod : ModManager.mods) {
             backupFiles.add(mod.getGameFile());
         }
-        backupFiles.add(Utils.getNpcGamesFile());
         return backupFiles;
     }
 
@@ -307,8 +315,8 @@ public class Backup {
      * Create a backup of each save game.
      */
     public static void backupSaveGames(boolean initialBackup) throws IOException {
-        if(Backup.FILE_SAVE_GAME_FOLDER.exists()){
-            File[] filesInFolder = Backup.FILE_SAVE_GAME_FOLDER.listFiles();
+        if(Backup.FILE_SAVE_GAME_FOLDER.toFile().exists()){
+            File[] filesInFolder = Backup.FILE_SAVE_GAME_FOLDER.toFile().listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(filesInFolder[i].getName().contains("savegame")){
                     File backupFile = new File(filesInFolder[i].getPath());
@@ -361,12 +369,12 @@ public class Backup {
             if(uninstallFailed){
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
             }else{
-                ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//", ".initialBackup");
-                File oldInitialBackupFolder = new File(System.getenv("APPDATA") + "//LMH01//MGT2_Mod_Manager//Backup//InitialBackups//" + Utils.getCurrentDateTime() + "//");
+                ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(ModManagerPaths.BACKUP.getPath(), ".initialBackup");
+                File oldInitialBackupFolder = ModManagerPaths.BACKUP.getPath().resolve("InitialBackups/" + Utils.getCurrentDateTime()).toFile();
                 oldInitialBackupFolder.mkdirs();
                 ProgressBarHelper.initializeProgressBar(0, files.size(), I18n.INSTANCE.get("progressBar.moveOldInitialBackupFiles"), true);
                 for(File file : files){
-                    File oldInitialBackup = new File(oldInitialBackupFolder.getPath() + "//" + file.getName());
+                    File oldInitialBackup = new File(oldInitialBackupFolder.getPath() + "/" + file.getName());
                     try{
                         Files.move(Paths.get(file.getPath()), Paths.get(oldInitialBackup.getPath()));
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.movingFile") + file.getPath() + " -> " + oldInitialBackup.getPath());

@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Summaries;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -63,8 +62,8 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "EngineFeatures.txt");
+    public String getGameFileName() {
+        return "EngineFeatures.txt";
     }
 
     @Override

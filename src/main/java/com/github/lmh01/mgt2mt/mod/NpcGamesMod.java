@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -40,8 +41,8 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "NpcGames.txt");
+    public String getGameFileName() {
+        return "NpcGames.txt";
     }
 
     @Override
@@ -177,29 +178,29 @@ public class NpcGamesMod extends AbstractSimpleMod {
      */
     public static void editNPCGames(int genreID, boolean addGenreID, int chance) throws ModProcessingException {
         try {
-            File fileNpcGamesTemp = new File(Utils.getMGT2DataPath() + "\\NpcGames.txt.temp");
+            File fileNpcGamesTemp = MGT2Paths.TEXT_DATA.getPath().resolve("NpcGames.txt.temp").toFile();
             fileNpcGamesTemp.createNewFile();
-            Backup.createBackup(Utils.getNpcGamesFile());
+            Backup.createBackup(ModManager.npcGamesMod.getGameFile());
             LOGGER.info("NpcGames.txt.temp has been created");
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getNpcGamesFile()), StandardCharsets.UTF_16LE));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.npcGamesMod.getGameFile()), StandardCharsets.UTF_16LE));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileNpcGamesTemp), StandardCharsets.UTF_16LE));
             String currentLine;
             while((currentLine = br.readLine()) != null){
                 if(addGenreID){
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 100);
                     if(randomNum>(100-chance)){
-                        bw.write(currentLine + "<" + genreID + ">" + System.getProperty("line.separator"));
+                        bw.write(currentLine + "<" + genreID + ">" + "\r\n");
                     }else{
-                        bw.write(currentLine + System.getProperty("line.separator"));
+                        bw.write(currentLine + "\r\n");
                     }
                 }else{
-                    bw.write(currentLine.replace("<" + genreID + ">", "") + System.getProperty("line.separator"));
+                    bw.write(currentLine.replace("<" + genreID + ">", "") + "\r\n");
                 }
             }
             br.close();
             bw.close();
-            Utils.getNpcGamesFile().delete();
-            fileNpcGamesTemp.renameTo(Utils.getNpcGamesFile());
+            ModManager.npcGamesMod.getGameFile().delete();
+            fileNpcGamesTemp.renameTo(ModManager.npcGamesMod.getGameFile());
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while editing npcGames.txt file: " + e.getMessage());
         }

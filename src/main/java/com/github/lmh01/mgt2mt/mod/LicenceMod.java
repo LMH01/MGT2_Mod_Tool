@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -41,13 +39,13 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    public File getGameFile() {
-        return new File(Utils.getMGT2DataPath() + "Licence.txt");
+    public String getGameFileName() {
+        return "Licence.txt";
     }
 
     @Override
     public String getDefaultContentFileName() {
-        return "default_licences";
+        return "default_licences.txt";
     }
 
     @Override
@@ -85,8 +83,8 @@ public class LicenceMod extends AbstractSimpleMod {
                     }
                     if(!licenceAlreadyExists){
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append(I18n.INSTANCE.get("mod.licence.addMod.confirm")).append(":").append(System.getProperty("line.separator"))
-                                .append(textFieldName.getText()).append(System.getProperty("line.separator"))
+                        stringBuilder.append(I18n.INSTANCE.get("mod.licence.addMod.confirm")).append(":").append("\r\n")
+                                .append(textFieldName.getText()).append("\r\n")
                                 .append("Type: ").append(comboBoxType.getSelectedItem());
                         if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             createBackup();

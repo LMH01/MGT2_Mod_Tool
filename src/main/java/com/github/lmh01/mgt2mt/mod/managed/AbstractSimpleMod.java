@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -15,6 +16,8 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -66,26 +69,27 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         try {
             analyzeFile();
             String string = getLine(name);
-            String exportFolder;
+            Path exportFolder;
             if(exportAsRestorePoint){
-                exportFolder = Utils.getMGT2ModToolModRestorePointFolder();
+                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
             }else{
-                exportFolder = Utils.getMGT2ModToolExportFolder();
+                exportFolder = ModManagerPaths.EXPORT.getPath();
             }
-            final String EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder + "//" + getExportFolder() + "//" + name.replaceAll("[^a-zA-Z0-9]", "");
-            File fileExportFolderPath = new File(EXPORTED_MOD_MAIN_FOLDER_PATH);
-            File fileExportedMod = new File(EXPORTED_MOD_MAIN_FOLDER_PATH + "//" + getImportExportFileName());
+            final Path EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder.resolve(getExportFolder() + "/" + name.replaceAll("[^a-zA-Z0-9]", ""));
+            LOGGER.info("ExportFolder path: " + exportFolder);
+            LOGGER.info("Exported mod main folder path: " + EXPORTED_MOD_MAIN_FOLDER_PATH);
+            File fileExportedMod = EXPORTED_MOD_MAIN_FOLDER_PATH.resolve(getImportExportFileName()).toFile();
             if(fileExportedMod.exists()){
                 TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
                 return false;
             }else{
-                fileExportFolderPath.mkdirs();
+                Files.createDirectories(EXPORTED_MOD_MAIN_FOLDER_PATH);
             }
             fileExportedMod.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
-            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + System.getProperty("line.separator"));
-            bw.write("[" + getTypeCaps() + " START]" + System.getProperty("line.separator"));
-            bw.write("[LINE]" + getModifiedExportLine(string) + System.getProperty("line.separator"));
+            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
+            bw.write("[" + getTypeCaps() + " START]" + "\r\n");
+            bw.write("[LINE]" + getModifiedExportLine(string) + "\r\n");
             bw.write("[" + getTypeCaps() + " END]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
@@ -103,10 +107,10 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
-    public String importMod(String importFolderPath, boolean showMessages) throws ModProcessingException {
+    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = new File(importFolderPath + "\\" + getImportExportFileName());
+        File fileToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
         Map<String, String> map;
         try {
             map = DataStreamHelper.parseDataFile(fileToImport).get(0);
@@ -169,7 +173,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             for(int i=1; i<=getFileContent().size(); i++){
                 if(addMod){
                     if(!firstLine){
-                        bw.write(System.getProperty("line.separator"));
+                        bw.write("\r\n");
                     }else{
                         firstLine = false;
                     }
@@ -177,7 +181,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
                 }else{
                     if(!getReplacedLine(getFileContent().get(i)).equals(mod)){
                         if(!firstLine){
-                            bw.write(System.getProperty("line.separator"));
+                            bw.write("\r\n");
                         }else{
                             firstLine = false;
                         }
@@ -186,7 +190,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
                 }
             }
             if(addMod){
-                bw.write(System.getProperty("line.separator"));
+                bw.write("\r\n");
                 bw.write(mod);
             }else{
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
