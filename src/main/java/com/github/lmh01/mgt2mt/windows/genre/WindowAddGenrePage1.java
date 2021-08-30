@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -218,7 +219,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 continueWithTranslations = false;
             }
             Settings.enableGenreNameTranslationInfo = !checkBoxDontShowAgain.isSelected();
-            ExportSettings.export();
+            ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
         }
         if(continueWithTranslations){
             mapNameTranslations = TranslationManager.getTranslationsMap();
@@ -240,7 +241,7 @@ public class WindowAddGenrePage1 extends JFrame{
                 continueWithTranslations = false;
             }
             Settings.enableGenreDescriptionTranslationInfo = !checkBoxDontShowAgain.isSelected();
-            ExportSettings.export();
+            ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
         }
         if(continueWithTranslations){
             mapDescriptionTranslations = TranslationManager.getTranslationsMap();

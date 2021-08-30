@@ -3,58 +3,52 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class ExportSettings {//TODO Rewrite to use .toml file
+public class ExportSettings {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExportSettings.class);
-    public static void export() {
+
+    /**
+     * Exports the current settings to file
+     * @param file The file where the settings should be saved to
+     */
+    public static void export(File file) {
         try {
+            LOGGER.info("Saving settings...");
             File directory = ModManagerPaths.MAIN.toFile();
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-            File file = ModManagerPaths.MAIN.getPath().resolve("settings.txt").toFile();
             if (file.exists()) {
                 file.delete();
             }
-            LOGGER.info("Saving settings to file " + file.getPath());
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Creating settings.txt");
-            }
             file.createNewFile();
-            if(Settings.enableDebugLogging){ LOGGER.info("Successfully created the file settings.txt"); }
-            PrintWriter pw = new PrintWriter(new FileWriter(file));
-            if(Settings.enableDebugLogging){ LOGGER.info("Writing to file..."); }
-            pw.print(Settings.mgt2Path + "\n" +
-                    Settings.enableDisclaimerMessage + "\n" +
-                    Settings.enableDebugLogging + "\n" +
-                    Settings.disableSafetyFeatures + "\n" +
-                    Settings.steamLibraryFolder + "\n" +
-                    Settings.enableCustomFolder + "\n" +
-                    Settings.enableGenreNameTranslationInfo + "\n" +
-                    Settings.enableGenreDescriptionTranslationInfo + "\n" +
-                    Settings.language + "\n" +
-                    Settings.updateBranch+ "\n" +
-                    Settings.saveLogs);
-            pw.close();
-            if(Settings.enableDebugLogging){
-                LOGGER.info(Settings.mgt2Path.toString());
-                LOGGER.info(Settings.enableDebugLogging + "");
-                LOGGER.info(Settings.disableSafetyFeatures + "");
-                LOGGER.info("Writing to file successful!");
-            }
+            TomlWriter tomlWriter = new TomlWriter();
+            Map<String, Object> map = new HashMap<>();
+            map.put("mgt2Path", Settings.mgt2Path.toString());
+            map.put("enableDisclaimerMessage", Settings.enableDisclaimerMessage);
+            map.put("enableDebugLogging", Settings.enableDebugLogging);
+            map.put("disableSafetyFeatures", Settings.disableSafetyFeatures);
+            map.put("enableCustomFolder", Settings.enableCustomFolder);
+            map.put("enableGenreNameTranslationInfo", Settings.enableGenreNameTranslationInfo);
+            map.put("enableGenreDescriptionTranslationInfo", Settings.enableGenreDescriptionTranslationInfo);
+            map.put("language", Settings.language);
+            map.put("updateBranch", Settings.updateBranch);
+            map.put("saveLogs", Settings.saveLogs);
+            tomlWriter.write(map, file);
             LOGGER.info("Settings have been saved.");
-            LogFile.write("Settings have been saved to file: " + file.getPath());
-        } catch (Exception e) {
-            LogFile.write("Something went wrong wile saving the settings: ");
+            LogFile.write("Settings have been saved to file: " + file);
+        } catch (IOException e) {
+            LogFile.write("Something went wrong wile saving the settings: " + e.getMessage());
             LogFile.printStacktrace(e);
             e.printStackTrace();
         }
-
     }
 }

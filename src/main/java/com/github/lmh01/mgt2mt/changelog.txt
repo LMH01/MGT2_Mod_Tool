@@ -1,6 +1,7 @@
 This file contains the changelog of the tool (incomplete)
 
 Important:
+- Previously saved settings will not work together with this release
 - Previously exported genres, npc games and platforms will not work together with this release
 - Restore points that have been created prior to this release will not be able to get restored automatically because the file path has changed
 
@@ -12,6 +13,7 @@ The tool now works under Linux
 
 Other:
 
+Settings file now uses the .toml file format
 Improved text area outputs when importing, exporting, adding or removing mods
 Improved the error handling massively: Whenever something goes wrong the stacktrace is now written to the text area and an explanation of what went wrong is displayed
 Internal code has been massively improved

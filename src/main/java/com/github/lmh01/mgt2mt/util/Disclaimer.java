@@ -19,7 +19,7 @@ public class Disclaimer {
             if(Settings.enableDisclaimerMessage){
                 if(JOptionPane.showConfirmDialog(null, params, "Important information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION){
                     Settings.enableDisclaimerMessage = false;
-                    ExportSettings.export();
+                    ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
                 }
             }
             WindowMain.checkActionAvailability();

@@ -63,7 +63,7 @@ public class Settings {
         Settings.saveLogs = saveLogs;
         setLanguage(language);
         validateMGT2Folder(mgt2FilePath, false, true);
-        ExportSettings.export();
+        ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
         LogFile.write("Settings set:");
         LogFile.printCurrentSettings();
         if(showSuccessDialog){
@@ -75,7 +75,7 @@ public class Settings {
      * Imports the settings from file.
      */
     public static void importSettings(){
-        if(ImportSettings.Import(Paths.get(MGT2_MOD_MANAGER_PATH + "/settings.txt"))){
+        if(ImportSettings.Import(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile())){
             LOGGER.info("Settings have been imported successfully.");
         }
         setLanguage(Settings.language);
@@ -110,7 +110,7 @@ public class Settings {
             if (showFolderDetectedMessage) {
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically") + Settings.mgt2Path, I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically.windowTitle"), JOptionPane.INFORMATION_MESSAGE);
             }
-            ExportSettings.export();
+            ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
         }else{
             Settings.mgt2Path = null;
             mgt2FolderIsCorrect = false;
