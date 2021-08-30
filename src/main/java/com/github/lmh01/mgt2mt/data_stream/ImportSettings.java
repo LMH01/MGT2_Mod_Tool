@@ -17,6 +17,9 @@ public class ImportSettings{//TODO Rewrite to use .toml file
     public static boolean Import(File file) {
         try {
             LOGGER.info("Importing settings...");
+            if (!file.exists()) {
+                return false;
+            }
             Toml toml = new Toml().read(file);
             Settings.mgt2Path = Paths.get(toml.getString("mgt2Path"));
             Settings.enableDisclaimerMessage = toml.getBoolean("enableDisclaimerMessage");

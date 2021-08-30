@@ -77,6 +77,8 @@ public class Settings {
     public static void importSettings(){
         if(ImportSettings.Import(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile())){
             LOGGER.info("Settings have been imported successfully.");
+        } else {
+            Settings.resetSettings();
         }
         setLanguage(Settings.language);
     }
