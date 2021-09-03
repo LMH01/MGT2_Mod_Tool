@@ -339,8 +339,12 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     @Override
     public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
-        map.replace("GOOD", ModManager.genreMod.getGenreNames(map.get("GOOD")));
-        map.replace("BAD", ModManager.genreMod.getGenreNames(map.get("BAD")));
+        if (map.containsKey("GOOD")) {
+            map.replace("GOOD", ModManager.genreMod.getGenreNames(map.get("GOOD")));
+        }
+        if (map.containsKey("BAD")) {
+            map.replace("BAD", ModManager.genreMod.getGenreNames(map.get("BAD")));
+        }
         return map;
     }
 
