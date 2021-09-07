@@ -55,6 +55,11 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getExportType() {
+        return "npc_engine";
+    }
+
+    @Override
     public String getGameFileName() {
         return "NpcEngines.txt";
     }
@@ -122,7 +127,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                                 }
                                                 newNpcEngineMap.putAll(npcEngine);
                                                 newNpcEngineMap.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(string)));
-                                                addMod(newNpcEngineMap);
+                                                addModToFile(newNpcEngineMap);
                                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase") + " - " + newNpcEngineMap.get("NAME EN"));
                                                 ProgressBarHelper.increment();
                                             }
@@ -143,7 +148,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                         sendLogMessage("Only a single genre has been selected. Displaying single engine dialog");
                                         if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(npcEngine), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                             createBackup();
-                                            addMod(npcEngine);
+                                            addModToFile(npcEngine);
                                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase") + " - " + npcEngine.get("NAME EN"));
                                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.npcEngine.upperCase") + ": [" + npcEngine.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.npcEngine.upperCase"), JOptionPane.INFORMATION_MESSAGE);
                                             break;
@@ -171,7 +176,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         map.replace("GENRE", ModManager.genreMod.getContentNameById(Integer.parseInt(map.get("GENRE"))));
         return map;
     }

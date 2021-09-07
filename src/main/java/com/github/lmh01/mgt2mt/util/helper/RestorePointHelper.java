@@ -1,8 +1,10 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.manager.ExportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -20,9 +22,8 @@ public class RestorePointHelper {
      * Exports all currently installed mods to this folder: "MGT2_Mod_Manager\Mod_Restore_Point\Current_Restore_Point"
      * When a restore point has already been set the old files will be moved in a storage folder.
      */
-    public static void setRestorePoint(){
+    public static void setRestorePoint() throws ModProcessingException {
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.createRestorePoint"), I18n.INSTANCE.get("dialog.restorePoint.createRestorePoint.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
             if(ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()){
                 LOGGER.info("Restore Point does already exist");
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.restorePointDoesAlreadyExist"), I18n.INSTANCE.get("dialog.restorePoint.restorePointDoesAlreadyExist.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
@@ -30,9 +31,11 @@ public class RestorePointHelper {
                     try {
                         DataStreamHelper.copyDirectory(ModManagerPaths.CURRENT_RESTORE_POINT.getPath(), ModManagerPaths.OLD_RESTORE_POINT.getPath().resolve(Utils.getCurrentDateTime()));
                         LOGGER.info("Old restore point has been copied into the storage folder");
-                        DataStreamHelper.deleteDirectory(ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
+                        DataStreamHelper.deleteDirectory(ModManagerPaths.CURRENT_RESTORE_POINT.getPath(), true);
                         LOGGER.info("Old restore point has been deleted from folder: " + ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
-                        SharingManager.exportAll(true);
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
+                        SharingManager.exportAll(ExportType.RESTORE_POINT);
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
                     } catch (IOException e) {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.errorWhileMoving"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.restorePoint.moveRestorePointFailed"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
@@ -42,7 +45,9 @@ public class RestorePointHelper {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restorePointNotCreatedAlreadyExists"));
                 }
             }else{
-                SharingManager.exportAll(true);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
+                SharingManager.exportAll(ExportType.RESTORE_POINT);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
             }
         }
     }

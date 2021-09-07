@@ -278,24 +278,28 @@ public class Utils {
      * @param genreId The genre id for which the file should be searched
      * @return Returns a String containing theme ids
      */
-    public static String getCompatibleThemeIdsForGenre(int genreId) throws IOException {//TODO Testen, ob die Funktion noch funktioniert
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
-        boolean firstLine = true;
-        StringBuilder compatibleThemes = new StringBuilder();
-        String currentLine;
-        while((currentLine = br.readLine()) != null){
-            if(firstLine){
-                currentLine = Utils.removeUTF8BOM(currentLine);
-                firstLine = false;
+    public static String getCompatibleThemeIdsForGenre(int genreId) throws ModProcessingException {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
+            boolean firstLine = true;
+            StringBuilder compatibleThemes = new StringBuilder();
+            String currentLine;
+            while((currentLine = br.readLine()) != null){
+                if(firstLine){
+                    currentLine = Utils.removeUTF8BOM(currentLine);
+                    firstLine = false;
+                }
+                if(currentLine.contains(Integer.toString(genreId))){
+                    compatibleThemes.append("<");
+                    compatibleThemes.append(ModManager.themeMod.getReplacedLine(currentLine));
+                    compatibleThemes.append(">");
+                }
             }
-            if(currentLine.contains(Integer.toString(genreId))){
-                compatibleThemes.append("<");
-                compatibleThemes.append(ModManager.themeMod.getReplacedLine(currentLine));
-                compatibleThemes.append(">");
-            }
+            br.close();
+            return compatibleThemes.toString();
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to retrieve theme ids for genre", e);
         }
-        br.close();
-        return compatibleThemes.toString();
     }
 
     /**
@@ -574,5 +578,12 @@ public class Utils {
     public static String convertIntToString(int inputInt){
         DecimalFormat formatter = new DecimalFormat("###,###.###");
         return formatter.format(inputInt);
+    }
+
+    /**
+     * Turns the input string to lowercase and replaces all whitespaces and symbols with space
+     */
+    public static String convertName(String string) {
+        return string.toLowerCase().trim().replaceAll("[^a-zA-Z0-9]", "_");
     }
 }

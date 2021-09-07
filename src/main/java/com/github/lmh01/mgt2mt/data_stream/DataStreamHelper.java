@@ -1,13 +1,12 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
+import com.github.lmh01.mgt2mt.util.helper.TimeHelperOld;
+import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -259,7 +258,7 @@ public class DataStreamHelper {
      * @param destination The destination where the file should be unzipped to.
      */
     public static void unzip(Path zipFile, Path destination) throws IOException {
-        TimeHelper.startMeasureTimeThread();
+        TimeHelperOld.startMeasureTimeThread();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.secondPart"));
@@ -269,7 +268,7 @@ public class DataStreamHelper {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile.toFile()));
         ZipEntry zipEntry = zis.getNextEntry();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + Utils.convertSecondsToTime(TimeHelper.getMeasuredTime()) + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + Utils.convertSecondsToTime(TimeHelperOld.getMeasuredTime()) + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
             File newFile = newFile(destination.toFile(), zipEntry);
             if(Settings.enableDebugLogging){
@@ -360,18 +359,19 @@ public class DataStreamHelper {
     }
 
     /**
-     * Copied from https://www.baeldung.com/java-copy-directory
+     * Copied from https://www.baeldung.com/java-copy-directory.
+     * Will use the progress bar.
      * @param sourceDirectory The source
      * @param destinationDirectory The destination
      */
-    public static void copyDirectory(Path sourceDirectory, Path destinationDirectory)//TODO check if function still works
+    public static void copyDirectory(Path sourceDirectory, Path destinationDirectory)
             throws IOException {
         ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.copyDirectory.title"));
         Files.createDirectories(destinationDirectory);
         TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.copyDirectory.title") + ": " + sourceDirectory + " -> " + destinationDirectory);
+        ProgressBarHelper.increaseMaxValue((int)getFileCount(sourceDirectory));
         Files.walk(sourceDirectory)
                 .forEach(source -> {
-                    ProgressBarHelper.increaseMaxValue(1);
                     Path destination = Paths.get(destinationDirectory.toString(), source.toString()
                             .substring(sourceDirectory.toString().length()));
                     try {
@@ -381,11 +381,12 @@ public class DataStreamHelper {
                     }
                     ProgressBarHelper.increment();
                 });
-        ProgressBarHelper.increment();
+        ProgressBarHelper.resetProgressBar();
     }
 
     /**
-     * Deletes a complete directory with its contents
+     * Deletes a complete directory with its contents.
+     * Will use the progress bar.
      */
     public static void deleteDirectory(Path directoryToBeDeleted) throws IOException {
         deleteDirectory(directoryToBeDeleted, true);
@@ -393,31 +394,26 @@ public class DataStreamHelper {
 
     /**
      * Deletes a directory with its contents
-     * @param initializeProgressBar True when the progress bar should be initialized. Otherwise only the text will be changed and the value will increment.
+     * @param useProgressBar True when the progress bar should be used.
      */
-    public static void deleteDirectory(Path directoryToBeDeleted, boolean initializeProgressBar) throws IOException {
-        if(initializeProgressBar){
+    public static void deleteDirectory(Path directoryToBeDeleted, boolean useProgressBar) throws IOException {
+        if (useProgressBar) {
             try{
-                ProgressBarHelper.initializeProgressBar(0, Objects.requireNonNull(directoryToBeDeleted.toFile().listFiles()).length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
+                ProgressBarHelper.initializeProgressBar(0, Objects.requireNonNull(directoryToBeDeleted.toFile().listFiles()).length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.toFile().getName());
             }catch (NullPointerException ignored){
                 ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
             }
-        }else{
-            try{
-                ProgressBarHelper.increaseMaxValue(Objects.requireNonNull(directoryToBeDeleted.toFile().listFiles()).length);
-                ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.delete"));
-            }catch (NullPointerException ignored){
-                ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
-            }
+            ProgressBarHelper.increaseMaxValue((int) getFileCount(directoryToBeDeleted));
         }
-        try (Stream<Path> files = Files.list(directoryToBeDeleted)) {
-            ProgressBarHelper.increaseMaxValue((int)files.count());
-        }
+        LOGGER.info("current progress: " + WindowMain.PROGRESS_BAR.getValue() + "/" + WindowMain.PROGRESS_BAR.getMaximum());
         Files.walkFileTree(directoryToBeDeleted, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 LOGGER.info("Deleting file: " + file);
                 Files.delete(file);
+                if (useProgressBar) {
+                    ProgressBarHelper.increment();
+                }
                 return FileVisitResult.CONTINUE;
             }
 
@@ -428,27 +424,19 @@ public class DataStreamHelper {
                 return FileVisitResult.CONTINUE;
             }
         });
-        ProgressBarHelper.resetProgressBar();
+        LOGGER.info("current progress: " + WindowMain.PROGRESS_BAR.getValue() + "/" + WindowMain.PROGRESS_BAR.getMaximum());
+        if (useProgressBar) {
+            ProgressBarHelper.resetProgressBar();
+        }
     }
 
     /**
-     * @param directoryName The directory that should be searched.
-     * @return Returns a list containing all files in the input folder plus subfolders
+     * @return The number of files in the directory and its subdirectories
      */
-    public static List<File> getFilesInFolderAndSubfolder(String directoryName){
-        File directory = new File(directoryName);
-
-        // get all the files from a directory
-        File[] fList = directory.listFiles();
-        assert fList != null;
-        List<File> resultList = new ArrayList<>(Arrays.asList(fList));
-        for (File file : fList) {
-            if (file.isFile()) {
-                System.out.println(file.getAbsolutePath());
-            } else if (file.isDirectory()) {
-                resultList.addAll(getFilesInFolder(Paths.get(file.getPath())));
-            }
-        }
-        return resultList;
+    public static long getFileCount(Path dir) throws IOException {
+        return Files.walk(dir)
+                .parallel()
+                .filter(p -> !p.toFile().isDirectory())
+                .count();
     }
 }

@@ -358,7 +358,7 @@ public class Backup {
                 for (AbstractBaseMod mod : ModManager.mods) {//TODO schauen, ob das so funktioniert, insbesondere mit blick auf die Themen
                     String[] content = mod.getCustomContentString();
                     for (String string : content) {
-                        mod.removeMod(string);
+                        mod.removeModFromFile(string);
                         ProgressBarHelper.increment();
                     }
                 }

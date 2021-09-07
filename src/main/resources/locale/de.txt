@@ -28,9 +28,9 @@ commonText.theme.upperCase.plural|Themen
 commonText.npcGames|Npc Spiel
 commonText.npcGames.upperCase|Npc Spiel
 commonText.npcGames.upperCase.plural|Npc Spiele
-commonText.platform|Platform
-commonText.platform.upperCase|Platform
-commonText.platform.upperCase.plural|Platformen
+commonText.platform|Plattform
+commonText.platform.upperCase|Plattform
+commonText.platform.upperCase.plural|Plattformen
 commonText.npcEngine|Npc Engine
 commonText.npcEngine.upperCase|Npc Engine
 commonText.npcEngine.upperCase.plural|Npc Engines
@@ -189,6 +189,8 @@ commonText.screen|Bildschirm
 commonText.stationaryConsole|Stationäre Konsole
 commonText.portableConsole|Portable Konsole
 commonText.reason|Grund:
+commonText.alreadyExported|Der Mod wurde bereits exportiert
+commonText.after|nach
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -218,10 +220,10 @@ analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Fehler b
 analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modifiziertes Npc Spiel gefunden:
 analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Spielen abgeschlossen
 analyzer.npcGames.getCustomContentString.progressBar|Scannen nach modifizierten Npc Spielen
-analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Platformen:
-analyzer.platform.getCustomContentString.customEngineFeatureFound|Modifizierte Platform gefunden:
-analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Platformen abgeschlossen
-analyzer.platform.getCustomContentString.progressBar|Scannen nach modifizierten Platformen
+analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Plattformen:
+analyzer.platform.getCustomContentString.customEngineFeatureFound|Modifizierte Plattform gefunden:
+analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Plattformen abgeschlossen
+analyzer.platform.getCustomContentString.progressBar|Scannen nach modifizierten Plattformen
 analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc Engines:
 analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modifizierte Npc Engine gefunden:
 analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Engines abgeschlossen
@@ -264,9 +266,9 @@ modManager.theme.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Them
 modManager.npcGames.windowMain.modButton.addMod|Npc Spiel hinzufügen
 modManager.npcGames.windowMain.modButton.removeMod|Npc Spiel entfernen
 modManager.npcGames.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Npc Spiel verfügbar
-modManager.platform.windowMain.modButton.addMod|Platform hinzufügen
-modManager.platform.windowMain.modButton.removeMod|Platform entfernen
-modManager.platform.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Platform verfügbar
+modManager.platform.windowMain.modButton.addMod|Plattform hinzufügen
+modManager.platform.windowMain.modButton.removeMod|Plattform entfernen
+modManager.platform.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Plattform verfügbar
 modManager.npcEngine.windowMain.modButton.addMod|Npc Engine hinzufügen
 modManager.npcEngine.windowMain.modButton.removeMod|Npc Engine entfernen
 modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Npc Engine verfügbar
@@ -334,11 +336,11 @@ mod.theme.addTheme.components.label.explainList|<html>Wähle aus, welche Genres 
 mod.npcGames.addMod.selectGenres|Wähle die Genres aus, die mit dem neuen Npc Spiel kompatibel sein sollen:
 mod.npcGames.addMod.components.labelName|Gib den Namen für das Npc Spiel ein:
 mod.npcGames.addMod.optionPaneMessage.firstPart|Dieses Npc Spiel hinzufügen?
-mod.platform.addPlatform.optionPaneMessage.firstPart|Diese Platform hinzufügen?
+mod.platform.addPlatform.optionPaneMessage.firstPart|Diese Plattform hinzufügen?
 mod.platform.addPlatform.components.textFieldName.initialValue|GIB EINEN PLATFORMNAMEN EIN
 mod.platform.addPlatform.components.textFieldManufacturer.initialValue|GIB DEN NAMEN DES HERSTELLERS EIN
 mod.platform.addPlatform.components.button.addManufacturerTranslations.label|Übersetzungen für den Hersteller hinzufügen
-mod.platform.addPlatform.components.comboBox.type.toolTip|Wähle aus, von welechem Typ die Platform sein soll
+mod.platform.addPlatform.components.comboBox.type.toolTip|Wähle aus, von welchem Typ die Plattform sein soll
 mod.platform.addPlatform.components.comboBox.type.computer|Computer
 mod.platform.addPlatform.components.comboBox.type.console|Konsole
 mod.platform.addPlatform.components.comboBox.type.handheld|Handheld
@@ -369,7 +371,7 @@ mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Na
 mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Diese Npc Engine hinzufügen?
 mod.npcEngine.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC ENGINE EIN
-mod.npcEngine.addMod.components.unlockYear.additionalToolTip|Das Erscheinungsjahr gibt an, welches Technologie Level die Engine bekommt und welche features sie enthällt
+mod.npcEngine.addMod.components.unlockYear.additionalToolTip|Das Erscheinungsjahr gibt an, welches Technologie Level die Engine bekommt und welche features sie enthält
 mod.npcEngine.addMod.components.selectGenre|Wähle das Genre aus, welches das Spezialgenre für die Engine sein soll:<br>Werden mehrere Genres ausgewählt, so werden<br>mehrere Engines erstellt, je eine für jedes ausgewählte Genre.<br>Dabei wird der Name des Genres dann hinter den Namen der Engine gehängt.
 mod.npcEngine.addMod.components.selectPlatform|Wähle die Plattform aus, welche die Spezialplattform für die Engine sein soll:
 mod.npcEngine.addMod.components.spinner.share.toolTip|Lege die Gewinnbeteiligung für die Engine fest.<br>Wenn ein Spiel mit dieser Engine erstellt wird, wird der Betrag (in %) an den Engine-Entwickler bezahlt.
@@ -472,7 +474,7 @@ dialog.restorePoint.restore.mainDialog|<html>Bist du sicher, dass die Mods auf d
 dialog.restorePoint.restore.mainDialog.title|Mods wiederherstellen
 
 dialog.export.exportSuccessful|<html>Alle Einträge wurden erfolgreich exportiert!<br><br>Soll der Ordner geöffnet werden, in welchem sie gespeichert wurden?
-dialog.export.restorePointSuccessful|Der Wiederherstellungspunkt wurde erfolgreich erstellt!
+dialog.export.restorePointSuccessful|Wiederherstellungspunkt wurde erfolgreich erstellt!
 dialog.export.error|Fehler beim Exportieren
 dialog.export.alreadyExported1|Die folgenden Einträge wurden nicht exportiert, da sie bereits exportiert wurden
 dialog.export.alreadyExported2|Soll der Exportordner geöffnet werden?
@@ -564,10 +566,13 @@ dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|Der ausgew�
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|Der ausgewählte Ordner enthält nicht die
 dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>Datei.<br>Bitte wähle den richtigen Ordner.
 dialog.sharingManager.couldNotBeImported|konnte nicht importiert werden
-dialog.sharingManager.couldNotBeImported.2|ist nicht mit der aktuellen Mod-Tool Version kompatiebel
+dialog.sharingManager.couldNotBeImported.2|ist nicht mit der aktuellen Mod-Tool Version kompatibel
 dialog.sharingManager.couldNotBeImported.3|wurde dieser Version exportiert:
 dialog.sharingManager.nameTaken|Name ist schon vergeben
-dialog.sharingManager.exportAll.mainMessage|<html>Bist du dir sicher, dass ale Mods exportiert werden sollen?<br>Mods, die bereits exportiert wurden, werden nicht noch einmal exportiert.
+dialog.sharingManager.exportAll.mainMessage.part1|<html>Bist du dir sicher, dass alle Mods exportiert werden sollen?
+dialog.sharingManager.exportAll.mainMessage.part2|<br>Wenn einzel Export an ist, werden mods, die bereits exportiert wurden, nicht noch einmal exportiert.<br>Wenn einzel Export aus ist, werden Bilder von Mods, die bereits exportiert wurden, nicht noch einmal exportiert.
+dialog.sharingManager.exportAll.singleExport|Einzel Export
+dialog.sharingManager.exportAll.singleExport.toolTip|<html>Wenn aktiviert: Die Mods werden in einzelne Ordner exportiert und nicht in einen Datei- und einen Assets-Ordner.<br>Dies führt zu einer längeren Exportzeit.<br>Wenn du einzelne Mods teilen möchtest, sollte diese Option aktiviert werden.
 dialog.sharingManager.selectImports|Wähle aus, was importiert werden soll:
 
 dialog.updateChecker.noUpdateAvailable|<html>Du benutzt die neueste Version. Kein Update verfügbar.
@@ -582,7 +587,7 @@ dialog.updateChecker.latestGameVersionNotCompatible|<html>Warnung:<br><br>Dieses
 
 dialog.analyzeExistingLicences.errorWhileScanningLicences|Fehler beim scannen von Lizenzen:
 dialog.analyzeExistingLicences.errorWhileScanningPublishers|Fehler beim scannen von Publishern:
-dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Fehler beim scannen von Platformen:
+dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Fehler beim scannen von Plattformen:
 
 dialog.dataStreamHelper.newFile.entryOutOfTarget|Der Eintrag befindet sich außerhalb des Zielverzeichnisses:
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Verzeichnis konnte nicht erstellt werden
@@ -683,7 +688,7 @@ progressBar.moddedGenre|Scannen nach modifizierten Genres
 progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
 progressBar.moddedPublishers|Scannen nach modifizierten Publishern
 progressBar.moddedThemes|Scannen nach modifizierten Themen
-progressBar.moddedPlatforms|Scannen nach modifizierten Platformen
+progressBar.moddedPlatforms|Scannen nach modifizierten Plattformen
 progressBar.startingExport|Exportiere
 progressBar.delete|Lösche:
 progressBar.scanningDirectories|Durchsuche Ordner
@@ -702,6 +707,7 @@ progressBar.moveOldInitialBackupFiles|Verschiebe altes Initial-Backup
 progressBar.creatingInitialBackup|Initial-Backup wird erstellt
 progressBar.initializingTool|Initialisiere Tool
 progressBar.downloadingDefaultContentUpdate|Lade Update für die "default_content" Datei herunter
+progressBar.export.creatingExportMap|Erstelle export map
 
 textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
 textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
@@ -714,7 +720,7 @@ textArea.moddedPublishersComplete|Scannen nach modifizierten Publishern abgeschl
 textArea.moddedLicenceFound|Modifizierte Lizenz gefunden:
 textArea.moddedLicencesComplete|Scannen nach modifizierten Lizenzen abgeschlossen
 textArea.moddedPlatformFound|Modifizierte Platform gefunden:
-textArea.moddedPlatformsComplete|Scannen nach modifizierten Platformen abgeschlossen
+textArea.moddedPlatformsComplete|Scannen nach modifizierten Plattformen abgeschlossen
 textArea.moddedThemeFound|Modifiziertes Thema gefunden:
 textArea.moddedThemesComplete|Scannen nach modifizierten Themen abgeschlossen
 textArea.exportComplete|Export abgeschlossen
@@ -784,6 +790,13 @@ textArea.movingFile|Verschiebe Datei:
 textArea.modProcessingException.firstPart|Fehler in Thread:
 textArea.modProcessingException.secondPart|Der Vorgang wurde abgebrochen!
 textArea.modProcessingException.thirdPart|Stacktrace:
+textArea.export.all_single.started|Starte Mods zu einzelnen Dateien zu exportieren
+textArea.export_compact.writing_toml|Schreibe toml Datei
+textArea.export.starting|Beginne alle Mods zu exportieren
+textArea.export.creatingExportMap|Erstelle export map
+textArea.export.addingEntry|Füge eintrag zur map hinzu
+textArea.export.exportingImage|Exportiere Bild
+textArea.export.imageNotExported|ACHTUNG: Das folgende Bild wurde nicht kopiert, da es im export Ordner bereits existiert
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

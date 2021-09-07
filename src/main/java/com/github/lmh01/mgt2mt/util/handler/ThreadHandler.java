@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
 import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.mod.managed.ModAction;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
@@ -8,18 +10,18 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.File;
+
+import javax.swing.*;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
-    public static Runnable runnableExportAll = () -> SharingManager.exportAll(false);
     public static Runnable runnableImportAll = SharingManager::importAll;
     public static Runnable runnableImportFromURL = ImportFromURLHelper::importFromURL;
     public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
-    public static Runnable runnableCreateRestorePoint = RestorePointHelper::setRestorePoint;
     public static Runnable runnableRestoreToRestorePoint = RestorePointHelper::restoreToRestorePoint;
     public static Runnable runnableCreateFullBackup = () -> Backup.createBackup("full");
     public static Runnable runnableCreateSaveGameBackup = () -> Backup.createBackup("save_game");
@@ -92,6 +94,27 @@ public class ThreadHandler {
             startControlThread(thread);
         }
     }
+
+    /**
+     * Starts a thread that can catch a {@link ModProcessingException}.
+     * If that exception is caught an error message displayed and printed into the text area. The thread will terminate.
+     */
+    public static void startModThread(ModAction action, String threadName) {
+        Thread thread = new Thread(() -> {
+            try {
+                action.run();
+            } catch (ModProcessingException e) {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.firstPart") + " " + threadName);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.secondPart"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
+                TextAreaHelper.printStackTrace(e);
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.modProcessingException.firstPart")  + " " + threadName + "\n" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage().replace(" - ", "\n - "), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                LOGGER.info("Error in thread: " + threadName + "; Reason: " + e.getMessage());
+            }
+        });
+        startThread(thread, threadName);
+    }
+
     /**
      * Deletes the temp folder and initializes the progress bar for that action
      */
@@ -115,10 +138,10 @@ public class ThreadHandler {
             while(threadToWaitFor.isAlive()){
             }
             if(threadsRunning<2){
-                LOGGER.info("Thread died: " + threadToWaitFor.getName());
+                LOGGER.info("Thread died : " + threadToWaitFor.getName());
                 WindowMain.checkActionAvailability();
             }else{
-                LOGGER.info("Thread died but another thread is still running. Exit tasks are not executed. Thread that died: " + threadToWaitFor.getName());
+                LOGGER.info("Thread died : " + threadToWaitFor.getName() + ". Another threat is still running, exit tasks are not executed");
             }
             threadsRunning--;
         });

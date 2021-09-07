@@ -7,7 +7,6 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Summaries;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -59,6 +57,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     @Override
     public AbstractBaseMod getMod() {
         return ModManager.engineFeatureMod;
+    }
+
+    @Override
+    public String getExportType() {
+        return "engine_feature";
     }
 
     @Override
@@ -137,7 +140,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                         boolean addFeature = Summaries.showSummary(getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                         if (addFeature) {
                             createBackup();
-                            addMod(newEngineFeature);
+                            addModToFile(newEngineFeature);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.engineFeature.upperCase") + " - " + newEngineFeature.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;

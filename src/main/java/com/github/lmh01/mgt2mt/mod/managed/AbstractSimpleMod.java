@@ -6,7 +6,6 @@ import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
@@ -20,9 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-
-//TODO Klasse aufräumen -> Funktionen schön sortieren
 
 /**
  * This class is used to create new mods.
@@ -44,7 +42,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     @Override
-    public <T> void addMod(T t) throws ModProcessingException {
+    public <T> void addModToFile(T t) throws ModProcessingException {
         if (t instanceof String) {
             String string = (String) t;
             editFile(true, string);
@@ -54,52 +52,15 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     @Override
-    public void removeMod(String name) throws ModProcessingException {
+    public void removeModFromFile(String name) throws ModProcessingException {
         editFile(false, name);
     }
 
-    /**
-     * Exports the mod
-     * @param name The name for the mod that should be exported
-     * @param exportAsRestorePoint True when the mod should be exported as restore point. False otherwise
-     * @return Returns true when the mod has been exported successfully. Returns false when the mod has already been exported.
-     */
     @Override
-    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
-        try {
-            analyzeFile();
-            String string = getLine(name);
-            Path exportFolder;
-            if(exportAsRestorePoint){
-                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
-            }else{
-                exportFolder = ModManagerPaths.EXPORT.getPath();
-            }
-            final Path EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder.resolve(getExportFolder() + "/" + name.replaceAll("[^a-zA-Z0-9]", ""));
-            LOGGER.info("ExportFolder path: " + exportFolder);
-            LOGGER.info("Exported mod main folder path: " + EXPORTED_MOD_MAIN_FOLDER_PATH);
-            File fileExportedMod = EXPORTED_MOD_MAIN_FOLDER_PATH.resolve(getImportExportFileName()).toFile();
-            if(fileExportedMod.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
-                return false;
-            }else{
-                Files.createDirectories(EXPORTED_MOD_MAIN_FOLDER_PATH);
-            }
-            fileExportedMod.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
-            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
-            bw.write("[" + getTypeCaps() + " START]" + "\r\n");
-            bw.write("[LINE]" + getModifiedExportLine(string) + "\r\n");
-            bw.write("[" + getTypeCaps() + " END]");
-            bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + e.getMessage());
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-        }
-        return false;
+    public Map<String, String> getExportMap(String name) throws ModProcessingException {
+        Map<String, String> map = new HashMap<>();
+        map.put("line", getLine(name));
+        return map;
     }
 
     /**
@@ -142,7 +103,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             }
         }
         if(addFeature){
-            addMod(importLine);
+            addModToFile(importLine);
             if(showMessages){
                 JOptionPane.showMessageDialog(null, getType() + " [" + getReplacedLine(map.get("LINE")) + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
             }

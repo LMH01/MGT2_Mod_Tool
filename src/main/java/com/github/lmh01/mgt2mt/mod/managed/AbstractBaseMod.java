@@ -1,12 +1,11 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.MGT2Paths;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -15,10 +14,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
-
-//TODO Alle funktionen hier drin nach Nutzen sortieren (wenn alles fertig)
-// Auch noch einmal drüber schauen, welche funktionen private oder protected sein sollten
-// Auch in AbstractAdvancedMod und AbstractSimpleMod nachschauen!
+import java.util.Map;
 
 /**
  * This class is used to create new mods.
@@ -34,7 +30,7 @@ public abstract class AbstractBaseMod {
     String[] customContent = {};
 
     {
-        modMenuItems = getInitialModMenuItems();
+        modMenuItems = getInitialModMenuItems();//TODO See if it works to initialize the default content string in this initializer so that the default content is not always recomputed
         exportMenuItem = getInitialExportMenuItem();
     }
 
@@ -72,7 +68,7 @@ public abstract class AbstractBaseMod {
      * Creates a backup and analyzes the mod files before the action is performed.
      */
     private void doAddModMenuItemAction() {
-        startModThread(() -> {
+        ThreadHandler.startModThread(() -> {
             analyzeFile();
             openAddModGui();
         }, "runnableAdd" + getType().replaceAll("\\s+",""));
@@ -83,9 +79,9 @@ public abstract class AbstractBaseMod {
      * Analyzes the game file before the action is performed.
      */
     private void removeModMenuItemAction() {
-        startModThread(() -> {
+        ThreadHandler.startModThread(() -> {
             analyzeFile();
-            OperationHelper.process(this::removeMod, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
+            OperationHelper.process(this::removeModFromFile, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
         }, "runnableRemove" + getType().replaceAll("\\s+",""));
     }
 
@@ -94,9 +90,15 @@ public abstract class AbstractBaseMod {
      * Analyzes the game file before the action is performed.
      */
     private void exportMenuItemAction() {
-        startModThread(() -> {
+        ThreadHandler.startModThread(() -> {
             analyzeFile();
-            OperationHelper.process((string) -> exportMod(string, false), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
+            Path path;
+            if (Settings.enableExportStorage) {
+                path = ModManagerPaths.EXPORT.getPath().resolve("single/" + Utils.getCurrentDateTime());
+            } else {
+                path = ModManagerPaths.EXPORT.getPath().resolve("single");
+            }
+            OperationHelper.process((string) -> SharingManager.exportSingleMod(this, string, path), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
         }, "runnableExport" + getType().replaceAll("\\s+",""));
     }
 
@@ -178,26 +180,6 @@ public abstract class AbstractBaseMod {
     public abstract int getContentIdByName(String name) throws ModProcessingException;
 
     /**
-     * Starts a thread that can catch a {@link ModProcessingException}.
-     * If that exception is caught an error message displayed and printed into the text area. The thread will terminate.
-     */
-    public static void startModThread(ModAction action, String threadName) {
-        Thread thread = new Thread(() -> {
-            try {
-                action.run();
-            } catch (ModProcessingException e) {
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.firstPart") + " " + threadName);
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.secondPart"));
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
-                TextAreaHelper.printStackTrace(e);
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.modProcessingException.firstPart")  + " " + threadName + "\n" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage().replace(" - ", "\n - "), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                LOGGER.info("Error in thread: " + threadName + "; Reason: " + e.getMessage());
-            }
-        });
-        ThreadHandler.startThread(thread, threadName);
-    }
-
-    /**
      * The translation key that is specific to the mod
      * Eg. gameplayFeature
      */
@@ -226,18 +208,18 @@ public abstract class AbstractBaseMod {
     }
 
     /**
-     * Adds a new mod to the file
+     * Adds a new mod to the file.
      * @param t This map/string contains the values that should be printed to the file
      * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
      * @throws ModProcessingException when {@literal <T>} is not valid
      */
-    public abstract <T> void addMod(T t) throws ModProcessingException;
+    public abstract <T> void addModToFile(T t) throws ModProcessingException;
 
     /**
      * Removes the input mod from the text file
      * @param name The mod name that should be removed
      */
-    public abstract void removeMod(String name) throws ModProcessingException;
+    public abstract void removeModFromFile(String name) throws ModProcessingException;
 
     /**
      * @return Returns the mod that should be initialized
@@ -265,6 +247,11 @@ public abstract class AbstractBaseMod {
             return I18n.INSTANCE.get("commonText." + getMainTranslationKey());
         }
     }
+
+    /**
+     * @return What type the mod is. Returns for example: genre, hardware_feature, npc_game. These values will are not changed by localisation.
+     */
+    public abstract String getExportType();
 
     /**
      * Eg. Genres, Engine features
@@ -363,7 +350,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * Opens a gui where the user can add the new mod.
-     * This function will then add the mod and call {@link AbstractBaseMod#addMod(Object)}.
+     * This function will then add the mod and call {@link AbstractBaseMod#addModToFile(Object)}.
      * @throws ModProcessingException If something went wrong
      */
     protected abstract void openAddModGui() throws ModProcessingException;//TODO Diese Funktion wird später umgeschrieben, sodass eingaben auch in die Felder geladen werden können
@@ -389,19 +376,22 @@ public abstract class AbstractBaseMod {
     protected abstract Charset getCharset();
 
     /**
-     * Exports the mod
+     * Returns a map containing the content that should be written into the export toml file.
+     * To export an advanced mod this method should be called together with {@link AbstractAdvancedMod#exportImages(String, Path)}.
+     * If the export map should be changed use {@link AbstractAdvancedMod#getChangedExportMap(Map, String)}.
+     * To change what line is written in the map when a simple mod is exported use {@link AbstractSimpleMod#getReplacedLine(String)}.
      * @param name The name for the mod that should be exported
-     * @param exportAsRestorePoint True when the mod should be exported as restore point. False otherwise
-     * @return Returns true when the mod has been exported successfully. Returns false when the mod has already been exported.
+     * @return Map containing the content that should be written to the export toml file
+     * @throws ModProcessingException When something went wrong while copying the image files or creating the map
      */
-    public abstract boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException;
+    public abstract Map<String, String> getExportMap(String name) throws ModProcessingException;
 
     /**
      * Imports the mod.
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
-    public abstract String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException;//TODO Remove IOException and let only the ModProcessingException get thrown
+    public abstract String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException;
 
     /**
      * @return The type name in caps

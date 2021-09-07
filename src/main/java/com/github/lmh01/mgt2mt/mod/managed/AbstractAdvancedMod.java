@@ -27,7 +27,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> void addMod(T t) throws ModProcessingException {
+    public <T> void addModToFile(T t) throws ModProcessingException {
         try {
             //This map contains the contents of the mod that should be added
             Map<String, String> map = (Map<String, String>) t;
@@ -59,7 +59,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     @Override
-    public void removeMod(String name) throws ModProcessingException {
+    public void removeModFromFile(String name) throws ModProcessingException {
         try {
             analyzeFile();
             int modId = getContentIdByName(name);
@@ -121,45 +121,11 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     @Override
-    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
-        try{
-            analyzeFile();
-            Map<String, String> map;
-            try {
-                map = getChangedExportMap(getSingleContentMapByName(name));
-            } catch (NullPointerException | NumberFormatException e) {
-                throw new ModProcessingException("The export map could not be changed", e);
-            }
-            Path exportFolder;
-            if(exportAsRestorePoint){
-                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
-            }else{
-                exportFolder = ModManagerPaths.EXPORT.getPath();
-            }
-            final Path EXPORTED_MOD_MAIN_FOLDER_PATH = exportFolder.resolve(getExportFolder() + "/" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", ""));
-            File fileExportedMod = EXPORTED_MOD_MAIN_FOLDER_PATH.resolve(getImportExportFileName()).toFile();
-            if(fileExportedMod.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
-                return false;
-            }else{
-                Files.createDirectories(EXPORTED_MOD_MAIN_FOLDER_PATH);
-            }
-            fileExportedMod.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedMod), StandardCharsets.UTF_8));
-            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
-            bw.write("[" + getTypeCaps() + " START]" + "\r\n");
-            printValues(map, bw);
-            bw.write("[" + getTypeCaps() + " END]");
-            bw.close();
-            doOtherExportThings(name, EXPORTED_MOD_MAIN_FOLDER_PATH.resolve("DATA"), map);
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
-            return true;
-        }catch(IOException | ModProcessingException e){
-            e.printStackTrace();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + e.getMessage());
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-        }
-        return false;
+    public final Map<String, String> getExportMap(String name) throws ModProcessingException {
+        Map<String, String> map = getChangedExportMap(getSingleContentMapByName(name), name);
+        map.remove("ID");
+        map.remove("PIC");
+        return map;
     }
 
     /**
@@ -206,7 +172,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
         }
         if(addFeature){
             try {
-                addMod(getChangedImportMap(map));
+                addModToFile(getChangedImportMap(map));
             } catch (NullPointerException | NumberFormatException e) {
                 throw new ModProcessingException("The import map could not be changed", e);
             }
@@ -221,8 +187,25 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
 
     /**
      * Put things in this function that should be executed when the txt file has been exported.
-     */
+     * @deprecated Use {@link AbstractAdvancedMod#exportImages(String, Path)} and {@link AbstractAdvancedMod#getChangedExportMap(Map, String)} instead
+     * */
+    @Deprecated
     public void doOtherExportThings(String name, Path exportFolderDataPath, Map<String, String> singleContentMap) throws IOException, ModProcessingException{
+
+    }
+
+    /**
+     * Exports all image files that belong to the mod and returns a map that contains the names of the image files
+     * @param name The mod name for which the image files should be exported
+     * @param assetsFolder The folder where the image files should be copied to
+     * @return A map that contains the names of the image files.
+     * These entries will be searched by {@link AbstractAdvancedMod#importImages()} when the mod is imported again.
+     */
+    public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
+        return new HashMap<>();
+    }
+
+    public void importImages() throws ModProcessingException {//TODO When import function is written use this function and write java doc
 
     }
 
@@ -235,17 +218,18 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
 
     /**
      * @return The map that contains the import values
-     * Can be overwritten to adjust specific values
+     * Can be overwritten to adjust specific values. Useful if mod name should be replaced with mod id.
      */
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
         return map;
     }
 
     /**
-     * @return The map that contains the import values
-     * Can be overwritten to adjust specific map values
+     * @return The map that contains the export values.
+     * @param name The name of the mod for which the export map should be changed
+     * Can be overwritten to adjust specific map values. Useful if mod id should be replaced with mod name.
      */
-    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         return map;
     }
 
@@ -364,7 +348,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     /**
-     * This function is called by {@link AbstractAdvancedMod#addMod(Object)}. The values that are stored in the map will be written to the file by the buffered writer.
+     * This function is called by {@link AbstractAdvancedMod#addModToFile(Object)}. The values that are stored in the map will be written to the file by the buffered writer.
      * @throws IOException Is thrown if something went wrong when the file is being written
      */
     protected abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;

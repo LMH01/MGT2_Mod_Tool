@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -129,6 +130,11 @@ public class PlatformMod extends AbstractAdvancedMod {
     @Override
     public AbstractBaseMod getMod() {
         return ModManager.platformMod;
+    }
+
+    @Override
+    public String getExportType() {
+        return "platform";
     }
 
     @Override
@@ -417,7 +423,7 @@ public class PlatformMod extends AbstractAdvancedMod {
                                 platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
                                 if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                     createBackup();
-                                    addMod(platformMap);
+                                    addModToFile(platformMap);
                                     addImageFiles(platformMap.get("NAME EN"), finalPictureMap);
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase") + " - " + platformMap.get("NAME EN"));
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.platform.upperCase") + ": [" + platformMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase"), JOptionPane.INFORMATION_MESSAGE);
@@ -546,10 +552,33 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED")) {
                 map.replace(entry.getKey(), ModManager.gameplayFeatureMod.getContentNameById(Integer.parseInt(entry.getValue())));
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
+        Map<String, String> map = new HashMap<>();
+        for(Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()){
+            if(entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")){
+                String imageName = Utils.convertName(getType()) + "_" + Utils.convertName(name) + "_icon_" + entry.getKey().replaceAll("[^0-9]","") + ".png";
+                map.put("pic_" + entry.getKey().replaceAll("[^0-9]",""), imageName);
+                File outputFile = assetsFolder.resolve(imageName).toFile();
+                if (!outputFile.exists()) {
+                    try {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.exportingImage") + ": " + getType() + " - " + imageName);
+                        Files.copy(MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()), outputFile.toPath());
+                    } catch (IOException e) {
+                        throw new ModProcessingException("Platform image files could not be copied", e);
+                    }
+                } else {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.imageNotExported") + ": " + MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()));
+                }
             }
         }
         return map;

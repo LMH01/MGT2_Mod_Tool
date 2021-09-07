@@ -65,6 +65,11 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getExportType() {
+        return "gameplay_feature";
+    }
+
+    @Override
     public String getGameFileName() {
         return "GameplayFeatures.txt";
     }
@@ -211,7 +216,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                         boolean addFeature = Summaries.showSummary(getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
                         if(addFeature) {
                             createBackup();
-                            addMod(newGameplayFeature);
+                            addModToFile(newGameplayFeature);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + " - " + newGameplayFeature.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + ": [" + newGameplayFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
@@ -338,7 +343,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public Map<String, String> getChangedExportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         if (map.containsKey("GOOD")) {
             map.replace("GOOD", ModManager.genreMod.getGenreNames(map.get("GOOD")));
         }

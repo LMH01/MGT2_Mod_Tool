@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class WindowAddGenrePage5 extends JFrame{
     }
     public WindowAddGenrePage5() {
         buttonNext.addActionListener(actionEvent -> {
-            AbstractBaseMod.startModThread(() -> {
+            ThreadHandler.startModThread(() -> {
                 if(saveInputs(LIST_AVAILABLE_GENRES)){
                     GenreMod.openStepWindow(6);
                     FRAME.dispose();
@@ -51,7 +52,7 @@ public class WindowAddGenrePage5 extends JFrame{
             }, "WindowAddGenrePage5ButtonNext");
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            AbstractBaseMod.startModThread(() -> {
+            ThreadHandler.startModThread(() -> {
                 saveInputs(LIST_AVAILABLE_GENRES);
                 GenreMod.openStepWindow(4);
                 FRAME.dispose();

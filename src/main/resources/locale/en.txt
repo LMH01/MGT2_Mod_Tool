@@ -189,6 +189,9 @@ commonText.screen|Screen
 commonText.stationaryConsole|Stationary console
 commonText.portableConsole|Portable console
 commonText.reason|Reason:
+commonText.alreadyExported|Mod has already been exported
+commonText.after|after
+textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -463,7 +466,7 @@ sharer.exported|Exported:
 sharer.notExported|Not exported:
 sharer.modAlreadyExported|This mod has already been exported
 
-dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods are exported into a specific folder.<br>Warning: Developer logos will not be saved!
+dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods will be exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
 dialog.restorePoint.restorePointDoesAlreadyExist|<html>A restore point has already been created.<br><br>Would you like to create a new restore point and move the old files into a storage folder?
 dialog.restorePoint.restorePointDoesAlreadyExist.title|Restore point already exists
@@ -472,7 +475,7 @@ dialog.restorePoint.restore.mainDialog|<html>Are you sure that you would like to
 dialog.restorePoint.restore.mainDialog.title|Restore mods
 
 dialog.export.exportSuccessful|<html>All entries have been exported successfully!<br><br>Do you want to open the folder where they have been saved?
-dialog.export.restorePointSuccessful|The restore point has been created successfully!
+dialog.export.restorePointSuccessful|Restore point has been created successfully!
 dialog.export.error|Error while exporting
 dialog.export.alreadyExported1|The following entries have not been exported because they were already exported
 dialog.export.alreadyExported2|Do you want to open the export folder?
@@ -567,7 +570,10 @@ dialog.sharingManager.couldNotBeImported|could not be imported
 dialog.sharingManager.couldNotBeImported.2|is not with the current mod tool version compatible
 dialog.sharingManager.couldNotBeImported.3|was exported in version:
 dialog.sharingManager.nameTaken|name is already taken
-dialog.sharingManager.exportAll.mainMessage|<html>Are you sure that all mods should be exported?<br>Previously exported mods will not be exported again.
+dialog.sharingManager.exportAll.mainMessage.part1|<html>Are you sure that all mods should be exported?
+dialog.sharingManager.exportAll.mainMessage.part2|<br>If single export is on: Previously exported mods will not be exported again.<br>If single export is off: Pictures of mods that have been exported already, will not be exported again.
+dialog.sharingManager.exportAll.singleExport|Single export
+dialog.sharingManager.exportAll.singleExport.toolTip|<html>If activated: The mods will be exported into individual folders and not in one file and one assets folder.<br>This will result in a longer export time.<br>If you would like to share single mods this option should be activated.
 dialog.sharingManager.selectImports|Select what should be imported:
 
 dialog.updateChecker.noUpdateAvailable|<html>You are using the newest version.<br>No update available.
@@ -702,6 +708,7 @@ progressBar.moveOldInitialBackupFiles|Moving old initial backup
 progressBar.creatingInitialBackup|Creating initial backup
 progressBar.initializingTool|Initializing tool
 progressBar.downloadingDefaultContentUpdate|Downloading default content update
+progressBar.export.creatingExportMap|Creating export map
 
 textArea.moddedEngineFeatureFound|Modded engine feature found:
 textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
@@ -717,7 +724,7 @@ textArea.moddedThemeFound|Modded theme found:
 textArea.moddedThemesComplete|Scanning for modded themes complete
 textArea.moddedPlatformFound|Modded platform found:
 textArea.moddedPlatformsComplete|Scanning for modded platforms complete
-textArea.exportComplete|export complete
+textArea.exportComplete|Export complete
 textArea.engineFeatureExportFailed.alreadyExported|The following engine feature was not exported because it has already been exported:
 textArea.engineFeatureExportFailed.generalError.fistPart|While exporting engine feature
 textArea.engineFeatureExportSuccessful|The following engine feature has been exported:
@@ -784,6 +791,12 @@ textArea.movingFile|Moving file:
 textArea.modProcessingException.firstPart|Error in thread:
 textArea.modProcessingException.secondPart|The process has been terminated!
 textArea.modProcessingException.thirdPart|Stacktrace:
+textArea.export.all_single.started|Beginning to export mods into separate files
+textArea.export_compact.writing_toml|Writing toml file
+textArea.export.starting|Beginning to export all mods
+textArea.export.creatingExportMap|Creating export map
+textArea.export.addingEntry|Adding entry to map
+textArea.export.exportingImage|Exporting image
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?

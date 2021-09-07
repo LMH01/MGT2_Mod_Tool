@@ -148,6 +148,7 @@ public class DefaultContentManager {
      * Use {@link ReadDefaultContent#getDefault(String)} instead, if you would like to get the custom content that is saved in appdata.
      */
     private static String[] getDefaultFromSystemResource(String fileName) throws IOException {
+        LOGGER.info("file name: " + fileName);
         ArrayList<String> arrayList = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/" + fileName)), StandardCharsets.UTF_8));
         String currentLine;

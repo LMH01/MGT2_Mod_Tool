@@ -41,6 +41,11 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
+    public String getExportType() {
+        return "npc_game";
+    }
+
+    @Override
     public String getGameFileName() {
         return "NpcGames.txt";
     }
@@ -85,7 +90,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
                             }
                             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                 createBackup();
-                                addMod(newModLine.toString());
+                                addModToFile(newModLine.toString());
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getType() + " - " + newModName);
                                 JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));
                                 break;

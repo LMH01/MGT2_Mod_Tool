@@ -87,6 +87,11 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public String getExportType() {
+        return "genre";
+    }
+
+    @Override
     public String getGameFileName() {
         return "Genres.txt";
     }
@@ -134,99 +139,58 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void removeMod(String name) throws ModProcessingException {
+    public void removeModFromFile(String name) throws ModProcessingException {
         ModManager.themeMod.editGenreAllocation(getContentIdByName(name), false, null);
         ModManager.gameplayFeatureMod.removeGenreId(getContentIdByName(name));
         ImageFileHandler.removeImageFiles(name);
         ModManager.publisherMod.removeGenre(name);
         ModManager.npcEngineMod.removeGenre(name);
         NpcGamesMod.editNPCGames(ModManager.genreMod.getContentIdByName(name), false, 0);
-        super.removeMod(name);
+        super.removeModFromFile(name);
     }
 
     @Override
-    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
+        int id = getContentIdByName(name);
+        map.replace("GENRE COMB", ModManager.genreMod.getGenreNames(id));
+        map.put("THEME COMB", Utils.getCompatibleThemeIdsForGenre(ModManager.genreMod.getPositionInFileContentListById(id)));
+        map.put("GAMEPLAYFEATURE GOOD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, true));
+        map.put("GAMEPLAYFEATURE BAD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));
+        return map;
+    }
+
+    @Override
+    public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
+        Map<String, String> map = new HashMap<>();
+        int id = getContentIdByName(name);
+        String iconName = getType().toLowerCase().replaceAll(" ", "_") + "_" + name.toLowerCase().replaceAll(" ", "_") + "_icon.png";
+        File fileExportedGenreIcon = assetsFolder.resolve(iconName).toFile();
         try {
-            int genreId = ModManager.genreMod.getContentIdByName(name);
-            int positionInGenreList = ModManager.genreMod.getPositionInFileContentListById(genreId);
-            Path exportFolder;
-            if(exportAsRestorePoint){
-                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
-            }else{
-                exportFolder = ModManagerPaths.EXPORT.getPath();
-            }
-            final Path mainExportFolder = exportFolder.resolve("genres/" + name.replaceAll("[^a-zA-Z0-9]", ""));
-            final Path fileDataFolder = mainExportFolder.resolve("DATA");
-            File fileExportedGenre = mainExportFolder.resolve("genre.txt").toFile();
-            File fileExportedGenreIcon = fileDataFolder.resolve("icon.png").toFile();
-            File fileGenreIconToExport = MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("NAME EN").replaceAll(" ", "") + ".png").toFile();
-            File fileGenreScreenshotsToExport = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(genreId)).toFile();
             if(!fileExportedGenreIcon.exists()){
-                Files.createDirectories(fileDataFolder);
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.exportingImage") + ": " + getType() + " - " + iconName);
+                File fileGenreIconToExport = MGT2Paths.GENRE_ICONS.getPath().resolve(getSingleContentMapByName(name).get("PIC")).toFile();
+                Files.copy(fileGenreIconToExport.toPath(), fileExportedGenreIcon.toPath());
+                map.put("iconName", iconName);
+            } else {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.imageNotExported") + ": " + MGT2Paths.GENRE_ICONS.getPath().resolve(getSingleContentMapByName(name).get("PIC")).toFile());
             }
-            if(fileExportedGenreIcon.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
-                return false;
-            }
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Copying image files to export folder...");
-            }
-            Files.copy(Paths.get(fileGenreIconToExport.getPath()),Paths.get(fileExportedGenreIcon.getPath()));
-            DataStreamHelper.copyDirectory(fileGenreScreenshotsToExport.toPath(), fileDataFolder.resolve("screenshots"));
-            ArrayList<File> files = DataStreamHelper.getFilesInFolder(fileDataFolder.resolve("screenshots"));
-            for (File file: files) {
-                if (file.getName().endsWith(".meta")) {
-                    Files.delete(file.toPath());
+            for (File file : DataStreamHelper.getFilesInFolder(MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(id)))) {
+                if (file.getName().endsWith(".png")) {
+                    String imageName = Utils.convertName(getType()) + "_" + Utils.convertName(name) + "_screenshot_" + file.getName();
+                    File exportedImage = assetsFolder.resolve(imageName).toFile();
+                    map.put("screenshot" + file.getName().replace(".png", "") + "Name", imageName);
+                    if (!exportedImage.exists()) {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.exportingImage") + ": " + getType() + " - " + imageName);
+                        Files.copy(file.toPath(), exportedImage.toPath());
+                    } else {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.imageNotExported") + ": " + file);
+                    }
                 }
             }
-            Files.createFile(fileExportedGenre.toPath());
-            PrintWriter bw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileExportedGenre), StandardCharsets.UTF_8));
-            bw.write("\ufeff");//Makes the file UTF8-BOM
-            bw.print("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
-            bw.print("[GENRE START]" + "\r\n");
-            for(String translationKey : TranslationManager.TRANSLATION_KEYS){
-                if(ModManager.genreMod.getFileContent().get(positionInGenreList).get("NAME " + translationKey) != null){
-                    bw.print("[NAME " + translationKey + "]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("NAME " + translationKey)  + "\r\n");
-                }else{
-                    bw.print("[NAME " + translationKey + "]" + name + "\r\n");
-                }
-                if(ModManager.genreMod.getFileContent().get(positionInGenreList).get("DESC " + translationKey) != null) {
-                    bw.print("[DESC " + translationKey + "]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("DESC " + translationKey)  + "\r\n");
-                }else{
-                    bw.print("[DESC " + translationKey + "]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("DESC EN") + "\r\n");
-                }
-            }
-            bw.print("[DATE]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("DATE") + "\r\n");
-            bw.print("[RES POINTS]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("RES POINTS") + "\r\n");
-            bw.print("[PRICE]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("PRICE") + "\r\n");
-            bw.print("[DEV COSTS]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("DEV COSTS") + "\r\n");
-            bw.print("[TGROUP]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("TGROUP") + "\r\n");
-            bw.print("[GAMEPLAY]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("GAMEPLAY") + "\r\n");
-            bw.print("[GRAPHIC]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("GRAPHIC") + "\r\n");
-            bw.print("[SOUND]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("SOUND") + "\r\n");
-            bw.print("[CONTROL]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("CONTROL") + "\r\n");
-            bw.print("[GENRE COMB]" + ModManager.genreMod.getGenreNames(genreId) + "\r\n");
-            bw.print("[THEME COMB]" + Utils.getCompatibleThemeIdsForGenre(positionInGenreList) + "\r\n");
-            bw.print("[FOCUS0]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS0") + "\r\n");
-            bw.print("[FOCUS1]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS1") + "\r\n");
-            bw.print("[FOCUS2]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS2") + "\r\n");
-            bw.print("[FOCUS3]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS3") + "\r\n");
-            bw.print("[FOCUS4]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS4") + "\r\n");
-            bw.print("[FOCUS5]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS5") + "\r\n");
-            bw.print("[FOCUS6]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS6") + "\r\n");
-            bw.print("[FOCUS7]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("FOCUS7") + "\r\n");
-            bw.print("[ALIGN0]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("ALIGN0") + "\r\n");
-            bw.print("[ALIGN1]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("ALIGN1") + "\r\n");
-            bw.print("[ALIGN2]" + ModManager.genreMod.getFileContent().get(positionInGenreList).get("ALIGN2") + "\r\n");
-            bw.print("[GAMEPLAYFEATURE GOOD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, true) + "\r\n");
-            bw.print("[GAMEPLAYFEATURE BAD]" + Utils.getCompatibleGameplayFeatureIdsForGenre(genreId, false) + "\r\n");
-            bw.print("[GENRE END]");
-            bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
-        }catch (IOException e){//
-            throw new ModProcessingException(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] - " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage());
+        } catch (IOException e) {
+            throw new ModProcessingException("Genre image files could not be copied", e);
         }
-        return true;
+        return map;
     }
 
     @Override
@@ -446,7 +410,7 @@ public class GenreMod extends AbstractAdvancedMod {
             }
             if(continueAnyway | imageFileAccessedSuccess){
                 try {
-                    addMod(map);
+                    addModToFile(map);
                     ModManager.themeMod.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
                     ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
                     ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);

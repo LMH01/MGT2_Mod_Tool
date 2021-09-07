@@ -42,6 +42,7 @@ public class ExportSettings {
             map.put("language", Settings.language);
             map.put("updateBranch", Settings.updateBranch);
             map.put("saveLogs", Settings.saveLogs);
+            map.put("enableExportStorage", Settings.enableExportStorage);
             tomlWriter.write(map, file);
             LOGGER.info("Settings have been saved.");
             LogFile.write("Settings have been saved to file: " + file);

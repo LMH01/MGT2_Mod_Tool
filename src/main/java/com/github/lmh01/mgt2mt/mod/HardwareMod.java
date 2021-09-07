@@ -6,7 +6,6 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -28,7 +27,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(HardwareMod.class);
 
     @Override
-    public <T> void addMod(T t) throws ModProcessingException {
+    public <T> void addModToFile(T t) throws ModProcessingException {
         try {
             Map<String, String> map = transformGenericToMap(t);
             analyzeFile();
@@ -74,7 +73,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void removeMod(String name) throws ModProcessingException {
+    public void removeModFromFile(String name) throws ModProcessingException {
         try {
             analyzeFile();
             int modId = getContentIdByName(name);
@@ -146,6 +145,11 @@ public class HardwareMod extends AbstractAdvancedMod {
     @Override
     public AbstractBaseMod getMod() {
         return ModManager.hardwareMod;
+    }
+
+    @Override
+    public String getExportType() {
+        return "hardware";
     }
 
     @Override
@@ -231,7 +235,7 @@ public class HardwareMod extends AbstractAdvancedMod {
                         }
                         if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             createBackup();
-                            addMod(hardwareFeatureMap);
+                            this.addModToFile(hardwareFeatureMap);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardware.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardware.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;

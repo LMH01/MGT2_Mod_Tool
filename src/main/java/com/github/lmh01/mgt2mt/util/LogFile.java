@@ -71,7 +71,8 @@ public class LogFile {
                     "Enable custom folder: " + Settings.enableCustomFolder + "\n" +
                     "Enable genre name translation info: " + Settings.enableGenreNameTranslationInfo + "\n" +
                     "Enable genre description translation info: " + Settings.enableGenreDescriptionTranslationInfo + "\n" +
-                    "Save logs: " + Settings.saveLogs);
+                    "Save logs: " + Settings.saveLogs + "\n" +
+                    "Enable export storage: " + Settings.enableExportStorage);
             bw.write(System.getProperty("line.separator"));
         } catch (IOException e) {
             e.printStackTrace();

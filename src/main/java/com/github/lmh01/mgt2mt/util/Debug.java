@@ -1,19 +1,17 @@
 package com.github.lmh01.mgt2mt.util;
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.manager.ExportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
-import jdk.internal.loader.Resource;
+import com.moandjiezana.toml.Toml;
+import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -87,25 +85,14 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
         }
     }
 
-    private void testResource(Resource resource) {
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                LOGGER.info("line: " + currentLine);
-            }
-            reader.close();
-        } catch (IOException ex) {
-            LOGGER.error(ex.toString());
-        }
-    }
-
     public static void test(){
-        try {
-            Backup.createBackup(ModManager.publisherMod.getGameFile(), false, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /*ThreadHandler.startModThread(() -> {
+            SharingManager.exportSingleMod(ModManager.genreMod, "Strategy");
+        }, "exportMod");*/
+        //ThreadHandler.startModThread(() -> SharingManager.exportAll(ExportType.ALL_BUNDLED), "ExportBundledMods");
+        //ThreadHandler.startModThread(() -> SharingManager.exportAll(ExportType.ALL_SINGLE), "ExportSingleMods");
+        //ThreadHandler.startModThread(() -> SharingManager.exportAll(ExportType.RESTORE_POINT), "ExportRestorePoint");
+        //tomlTest();
         /*Path path = Paths.get(System.getProperty("user.home"), ".local", "share", "mgt2_mod_tool");
         LOGGER.info("Path: " + path);
         File file = new File(System.getProperty("user.home") + ".local/share/mgt2_mod_tool");
@@ -154,4 +141,82 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             e.printStackTrace();
         }*/
     }
+
+    private static void tomlTest() {//This function contains tests on how the toml file formatting for the export/import rework could work
+        ThreadHandler.startModThread(() -> {
+            //Inserting the values into the toml map (mainMap)
+            //The maps are put into each other so that the toml file is more organized
+            Map<String, Object> mainMap = new HashMap<>();
+            Map<String, Object> simpleMods = new HashMap<>();
+            Map<String, Object> advancedMods = new HashMap<>();
+            for (AbstractBaseMod mod : ModManager.mods) {
+                Map<Integer, Object> modMap = new HashMap<>();
+                int modNumber = 0;
+                if (mod instanceof AbstractSimpleMod) {
+                    for (String string : mod.getContentByAlphabet()) {
+                        modMap.put(modNumber, ((AbstractSimpleMod) mod).getLine(string));
+                        modNumber++;
+                    }
+                    simpleMods.put(mod.getType().replaceAll(" ", "_").toLowerCase(), modMap);
+                }
+                if (mod instanceof AbstractAdvancedMod) {
+                    for (String string : mod.getContentByAlphabet()) {
+                        modMap.put(modNumber, ((AbstractAdvancedMod) mod).getSingleContentMapByName(string));
+                        modNumber++;
+                    }
+                    advancedMods.put(mod.getType().replaceAll(" ", "_").toLowerCase(), modMap);
+                }
+            }
+            mainMap.put("simple_mods", simpleMods);
+            mainMap.put("advanced_mods", advancedMods);
+            mainMap.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
+            try {
+                //Writing the toml file
+                File tomlFile = new File("D:/Temp/mods.toml");
+                tomlFile.delete();
+                TomlWriter tomlWriter = new TomlWriter();
+                tomlWriter.write(mainMap, tomlFile);
+                LOGGER.info("A new default content toml file has been created successfully!");
+            } catch(IOException e) {
+                LOGGER.info("A problem occurred while writing a new default content toml file: " + e.getMessage());
+                e.printStackTrace();
+            }
+            LOGGER.info("reading toml");
+            Toml toml = new Toml().read(new File("D:/Temp/mods.toml"));
+
+            //Entries can be retrieved either this way
+            Map<String, Object> map = toml.toMap();
+            Map<String, Object> simpleMods2 = (Map<String, Object>) map.get("advanced_mods");
+            Map<String, Object> advancedMods2 = (Map<String, Object>) map.get("simple_mods");
+            for (Map.Entry<String, Object> entry : simpleMods2.entrySet()) {
+                LOGGER.info("simple mod: " + entry.getKey());
+            }
+            for (Map.Entry<String, Object> entry : advancedMods2.entrySet()) {
+                LOGGER.info("advanced mod: " + entry.getKey());
+            }
+
+            //Or this way
+            LOGGER.info("price: " + toml.getString("advanced_mods.anti_cheat.1.PRICE"));
+            LOGGER.info("licence: " + toml.getString("simple_mods.licence.20"));
+            LOGGER.info("mod_tool_version: " + toml.getString("mod_tool_version"));
+        }, "write test mods.toml file");
+    }
+
+    private static void test2() {
+        BClass obj = new BClass();
+        obj.aMap.put("item", 1);
+
+        TomlWriter tomlWriter = new TomlWriter.Builder()
+                .indentValuesBy(2)
+                .indentTablesBy(4)
+                .padArrayDelimitersBy(3)
+                .build();
+
+        String tomlString = tomlWriter.write(obj);
+        LOGGER.info(tomlString);
+    }
+}
+
+class BClass {
+    Map<String, Integer> aMap = new HashMap<>();
 }

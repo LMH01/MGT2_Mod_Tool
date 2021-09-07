@@ -153,7 +153,7 @@ public class Uninstaller {
                 try {
                     for (String string : mod.getCustomContentString()) {
                         currentMod = string;
-                        mod.removeMod(string);
+                        mod.removeModFromFile(string);
                     }
                 } catch (ModProcessingException e) {
                     TextAreaHelper.printStackTrace(e);

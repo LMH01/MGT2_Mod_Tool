@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
@@ -7,8 +8,10 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.Importer;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.*;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
+import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -23,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -565,88 +569,157 @@ public class SharingManager {
     }
 
     /**
-     * Exports all available things when the user accepts.
-     * @param exportAsRestorePoint When true all detected mods will be exported as restore point. This means that no message is displayed to the user and that the folder is different
+     * Exports the specified mod to the export folder.
+     * Writes a message to the text area if mod export was successful or if mod was already exported
+     * @param mod The mod_type the mod belongs to
+     * @param name The name of the mod that should be exported
+     * @param folder The root folder where the mods should be exported to
+     * @return True when the mod has been exported successfully. False when the mod has already been exported.
      */
-    public static void exportAll(boolean exportAsRestorePoint){
-        AbstractBaseMod.startModThread(() -> {
-            boolean exportFiles = false;
-            if(exportAsRestorePoint){
-                exportFiles = true;
-            }else{
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage"), I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    exportFiles = true;
+    public static boolean exportSingleMod(AbstractBaseMod mod, String name, Path folder) throws ModProcessingException {
+        LOGGER.info("exporting mod: " + name);
+        Path path = folder.resolve(mod.getExportType());
+        String fileName = mod.getExportType() + "_" + Utils.convertName(name) + ".toml";
+        if (!Files.exists(path.resolve(fileName)) && !Files.exists(path.resolve(Utils.convertName(name) + "/" + fileName))) {
+            try {
+                Files.createDirectories(path);
+                Map<String, String> map = mod.getExportMap(name);
+                map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
+                map.put("type", ExportType.ALL_SINGLE.getTypeName());
+                map.put("mod_type", mod.getExportType());
+                TomlWriter tomlWriter = new TomlWriter();
+                if (mod instanceof AbstractSimpleMod) {
+                    tomlWriter.write(map, path.resolve(fileName).toFile());
+                } else if (mod instanceof AbstractAdvancedMod) {
+                    Path singleMod = path.resolve(Utils.convertName(name));
+                    Path assets = singleMod.resolve("assets");
+                    Files.createDirectories(assets);
+                    map.putAll(((AbstractAdvancedMod)mod).exportImages(name, assets));
+                    tomlWriter.write(map, singleMod.resolve(fileName).toFile());
                 }
+            } catch (IOException e) {
+                throw new ModProcessingException("Unable to export mod", e);
             }
-            if(exportFiles){
-                StringBuilder failedExports = new StringBuilder();
-                try{
-                    for (AbstractBaseMod mod : ModManager.mods) {
-                        failedExports.append(getExportFailed((string) -> mod.exportMod(string, exportAsRestorePoint), mod.getFinishedCustomContentString(), mod.getType()));
-                    }
-                    if(failedExports.toString().isEmpty()){
-                        if(exportAsRestorePoint){
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
-                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
-                        }else{
-                            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                                Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
-                            }
-                        }
-                    }else{
-                        if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.export.alreadyExported1") + ":\n\n" + failedExports + "\n" + I18n.INSTANCE.get("dialog.export.alreadyExported2") + "\n\n", I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                            if(exportAsRestorePoint){
-                                Desktop.getDesktop().open(ModManagerPaths.CURRENT_RESTORE_POINT.toFile());
-                            }else{
-                                Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
-                            }
-                        }
-                    }
-                } catch(IOException e) {
-                    throw new ModProcessingException(I18n.INSTANCE.get("dialog.export.error") + ": " + e.getMessage(), e);
-                }
-            }
-        }, "runnableExportAll");
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + mod.getMainTranslationKey() + " - " + name);
+            return true;
+        } else {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + mod.getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("commonText.alreadyExported"));
+            return false;
+        }
     }
 
     /**
-     * Uses the input exporter to export a list of entries. This function may only be called by {@link SharingManager#exportAll(boolean)} )}.
-     * @param exporter The export function that should be used
-     * @param strings The array containing the entries
-     * @param exportName The name that should be written when a error occurs. Eg. Genre, Theme
-     * @return Returns a string of errors if something failed to export
+     * Exports all currently installed mods. It is recommended to start this function inside a thread.
+     * The text area and the progress bar are used to display progress.
+     * @throws ModProcessingException If something went wrong while exporting mods
+     * @param exportType Determines how and to where the mods should be exported
      */
-    private static String getExportFailed(Exporter exporter, String[] strings, String exportName) throws ModProcessingException {
-        StringBuilder stringBuilder = new StringBuilder();
-        boolean firstExportFailed = true;
-        boolean exportFailed = false;
-        ProgressBarHelper.initializeProgressBar(0, strings.length, I18n.INSTANCE.get("progressBar.startingExport") + " " + exportName);
-        int currentProgressBarValue = 0;
-        int currentExportFailed = 1;
-        for(String string : strings){
-            if(!exporter.export(string)){
-                if(firstExportFailed){
-                    stringBuilder.append(exportName).append(": ");
-                }else{
-                    stringBuilder.append(", ");
-                }
-                if(currentExportFailed == 10){
-                    currentExportFailed = 1;
-                    stringBuilder.append("\r\n");
-                }
-                stringBuilder.append(string);
-                firstExportFailed = false;
-                exportFailed = true;
-                currentExportFailed++;
+    public static void exportAll(ExportType exportType) throws ModProcessingException {
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
+        timeHelper.measureTime();
+        if (exportType.equals(ExportType.ALL_SINGLE)) {
+            Path exportFolder;
+            if (Settings.enableExportStorage) {
+                exportFolder = ModManagerPaths.EXPORT.getPath().resolve("single/" + Utils.getCurrentDateTime());
+            } else {
+                exportFolder = ModManagerPaths.EXPORT.getPath().resolve("single/");
             }
-            currentProgressBarValue++;
-            ProgressBarHelper.setValue(currentProgressBarValue);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.all_single.started"));
+            ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("commonText.exporting"));
+            for (AbstractBaseMod mod : ModManager.mods) {
+                ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
+                ProgressBarHelper.setText(I18n.INSTANCE.get("commonText.exporting") + " " + mod.getType());
+                for (String string : mod.getCustomContentString()) {
+                    exportSingleMod(mod, string, exportFolder);
+                    ProgressBarHelper.increment();
+                }
+            }
+        } else {//TODO check that getContentByAlphabet is replaced with getCustomContentString in release version
+            ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.export.creatingExportMap"));
+            Path path;
+            Map<String, Object> map = new HashMap<>();
+            String tomlName;
+            if (exportType.equals(ExportType.RESTORE_POINT)) {
+                path = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
+                map.put("type", exportType.getTypeName());
+                tomlName = "restore_point";
+            } else {
+                if (Settings.enableExportStorage) {
+                    path = ModManagerPaths.EXPORT.getPath().resolve("bundled/" + Utils.getCurrentDateTime());
+                } else {
+                    path = ModManagerPaths.EXPORT.getPath().resolve("bundled/");
+                }
+                map.put("type", exportType.getTypeName());
+                tomlName = "export";
+            }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.starting"));
+            try {
+                Files.createDirectories(path.resolve("assets"));
+                Files.createDirectories(path);
+                TomlWriter tomlWriter = new TomlWriter();
+                Map<String, Object> simpleMods = new HashMap<>();
+                Map<String, Object> advancedMods = new HashMap<>();
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.creatingExportMap"));
+                for (AbstractBaseMod mod : ModManager.mods) {
+                    Map<String, Object> modMap = new HashMap<>();
+                    ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
+                    for (String string : mod.getCustomContentString()) {
+                        Map<String, String> singleModMap = mod.getExportMap(string);
+                        if (mod instanceof AbstractAdvancedMod) {//This will add the image name(s) to the map if required and copy the image files
+                            singleModMap.putAll(((AbstractAdvancedMod)mod).exportImages(string, path.resolve("assets")));
+                        }
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
+                        modMap.put(string, singleModMap);
+                        ProgressBarHelper.increment();
+                    }
+                    if (mod instanceof AbstractSimpleMod) {
+                        simpleMods.put(mod.getExportType(), modMap);
+                    } else {
+                        advancedMods.put(mod.getExportType(), modMap);
+                    }
+                }
+                map.put("simple_mods", simpleMods);
+                map.put("advanced_mods", advancedMods);
+                map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
+                ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.export_compact.writing_toml"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export_compact.writing_toml") + ": " + path.resolve(tomlName + ".toml"));
+                tomlWriter.write(map, path.resolve(tomlName + ".toml").toFile());
+            } catch (IOException e) {
+                throw new ModProcessingException("Unable to create restore point", e);
+            }
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.exportComplete"));
+        LOGGER.info("Exporting mods as " + exportType.getTypeName() + " took " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " milliseconds!");
         ProgressBarHelper.resetProgressBar();
-        if(exportFailed){
-            stringBuilder.append("\r\n");
+    }
+
+    /**
+     * Opens a JOptionPane where the user can decide how the mods should be exported: Single or bundled
+     */
+    public static void displayExportModsWindow() throws ModProcessingException {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage.part1"));
+        if (!Settings.enableExportStorage) {
+            stringBuilder.append(I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage.part2"));
         }
-        return stringBuilder.toString();
+        JLabel label = new JLabel(stringBuilder.toString());
+        JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport"));
+        checkBox.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport.toolTip"));
+        JComponent[] components = {label, checkBox};
+        if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if (checkBox.isSelected()) {
+                exportAll(ExportType.ALL_SINGLE);
+            } else {
+                exportAll(ExportType.ALL_BUNDLED);
+            }
+            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                try {
+                    Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
+                } catch (IOException e) {
+                    throw new ModProcessingException("Unable to open export folder", e);
+                }
+            }
+        }
     }
 
     /**
@@ -680,7 +753,7 @@ public class SharingManager {
      * Checks the input file for compatibility with this mod tool version using the input compatible versions array
      * @return Returns the name that is stored in NAME EN in the input file. Returns false when no name has been found
      */
-    private static String getImportName(File inputFile){//TODO Testen ob funktion noch funktioniert
+    private static String getImportName(File inputFile){
         try {
             Map<String, String> map = DataStreamHelper.parseDataFile(inputFile).get(0);
             if(map.get("NAME EN") != null){

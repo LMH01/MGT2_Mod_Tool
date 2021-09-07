@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -46,7 +47,7 @@ public class WindowAddGenrePage11 extends JFrame{
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            AbstractBaseMod.startModThread(() -> {
+            ThreadHandler.startModThread(() -> {
                 if(textFieldImagePath.getText().isEmpty()){
                     if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
                         genreIcon = ImageFileHandler.defaultGenreIcon.toFile();

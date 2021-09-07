@@ -46,6 +46,11 @@ public class ThemeMod extends AbstractSimpleMod {
         return ModManager.themeMod;
     }
 
+    @Override
+    public String getExportType() {
+        return "theme";
+    }
+
     /**
      *
      * @return The file that should be analyzed. This is not the direct game file it returns the file that is generated
@@ -216,52 +221,14 @@ public class ThemeMod extends AbstractSimpleMod {
      */
     @Deprecated
     @Override
-    public <T> void addMod(T t) throws ModProcessingException {
+    public <T> void addModToFile(T t) throws ModProcessingException {
         throw new ModProcessingException("Call to addMod(T t) is invalid. This function is not implemented for theme mod", true);
     }
 
     @Override
-    public void removeMod(String name) throws ModProcessingException {
+    public void removeModFromFile(String name) throws ModProcessingException {
         editThemeFiles(null, null, false, getPositionOfThemeInFile(name), 0);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
-    }
-
-    @Override
-    public boolean exportMod(String name, boolean exportAsRestorePoint) throws ModProcessingException {
-        try {
-            Map<String, String> map = getSingleThemeByNameMap(name);
-            Path exportFolder;
-            if(exportAsRestorePoint){
-                exportFolder = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
-            }else{
-                exportFolder = ModManagerPaths.EXPORT.getPath();
-            }
-            final Path EXPORTED_THEME_MAIN_FOLDER_PATH = exportFolder.resolve(getExportFolder() + "/" + map.get("NAME EN").replaceAll("[^a-zA-Z0-9]", ""));
-            File fileExportedTheme = EXPORTED_THEME_MAIN_FOLDER_PATH.resolve(getImportExportFileName()).toFile();
-            if(fileExportedTheme.exists()){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("sharer.modAlreadyExported"));
-                return false;
-            }else{
-                Files.createDirectories(EXPORTED_THEME_MAIN_FOLDER_PATH);
-            }
-            fileExportedTheme.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileExportedTheme), StandardCharsets.UTF_8));
-            bw.write("[MGT2MT VERSION]" + MadGamesTycoon2ModTool.VERSION + "\r\n");
-            bw.write("[" + getTypeCaps() + " START]" + "\r\n");
-            bw.write("[VIOLENCE LEVEL]" + map.get("VIOLENCE LEVEL") + "\r\n");
-            TranslationManager.printLanguages(bw, map);
-            if(map.get("GENRE COMB") != null){
-                bw.write("[GENRE COMB]" + ModManager.genreMod.getGenreNames(map.get("GENRE COMB")) + "\r\n");
-            }else{
-                bw.write("[GENRE COMB]" + "" + "\r\n");
-            }
-            bw.write("[" + getTypeCaps() + " END]");
-            bw.close();
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + getMainTranslationKey() + " - " + name);
-            return true;
-        } catch (IOException e) {
-            throw new ModProcessingException(I18n.INSTANCE.get("sharer.exportFailed.generalError.firstPart") + " [" + name + "] " + I18n.INSTANCE.get("sharer.exportFailed.generalError.secondPart") + " " + e.getMessage(), e);
-        }
     }
 
     @Override

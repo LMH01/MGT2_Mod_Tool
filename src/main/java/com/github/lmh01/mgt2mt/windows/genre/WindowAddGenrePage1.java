@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class WindowAddGenrePage1 extends JFrame{
 
     public WindowAddGenrePage1() {
         buttonNext.addActionListener(actionEvent -> {
-            AbstractBaseMod.startModThread(() -> {
+            ThreadHandler.startModThread(() -> {
                 if(saveInputs(spinnerId, textFieldGenreName, textFieldGenreDescription)){
                     GenreMod.openStepWindow(2);
                     FRAME.dispose();
