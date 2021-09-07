@@ -186,15 +186,6 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     /**
-     * Put things in this function that should be executed when the txt file has been exported.
-     * @deprecated Use {@link AbstractAdvancedMod#exportImages(String, Path)} and {@link AbstractAdvancedMod#getChangedExportMap(Map, String)} instead
-     * */
-    @Deprecated
-    public void doOtherExportThings(String name, Path exportFolderDataPath, Map<String, String> singleContentMap) throws IOException, ModProcessingException{
-
-    }
-
-    /**
      * Exports all image files that belong to the mod and returns a map that contains the names of the image files
      * @param name The mod name for which the image files should be exported
      * @param assetsFolder The folder where the image files should be copied to

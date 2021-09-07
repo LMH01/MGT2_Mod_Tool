@@ -2,7 +2,7 @@ This file contains the changelog of the tool (incomplete)
 
 Important:
 - Previously saved settings will not work together with this release
-- Previously exported genres, npc games and platforms will not work together with this release
+- Previously exported mods will not work together with this release
 - Restore points that have been created prior to this release will not be able to get restored automatically because the file path has changed
 
 Coming in v2.3.0
@@ -10,6 +10,8 @@ Coming in v2.3.0
 New feature:
 
 The tool now works under Linux
+Mod export has been rewritten to use .toml files. This increases the speed at wich mods are exported.
+Mods can now be exported in a bundle, this means that all mod data is stored in a single .toml file
 
 Other:
 

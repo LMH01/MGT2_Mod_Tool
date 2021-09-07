@@ -536,22 +536,6 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void doOtherExportThings(String name, Path exportFolderDataPath, Map<String, String> singleContentMap) throws IOException {
-        Path exportPictures = exportFolderDataPath.resolve("pictures");
-        exportPictures.toFile().mkdirs();
-        Map<Integer, File> picturesToExport = new HashMap<>();
-        for(Map.Entry<String, String> entry : singleContentMap.entrySet()){
-            if(entry.getKey().contains("PIC")){
-                picturesToExport.put(Integer.parseInt(entry.getKey().replaceAll("[^0-9]","")), MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()).toFile());
-            }
-        }
-        for(Map.Entry<Integer, File> entry : picturesToExport.entrySet()){
-            File outputFile = exportPictures.resolve(entry.getKey() + ".png").toFile();
-            Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(outputFile.getPath()));
-        }
-    }
-
-    @Override
     public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED")) {

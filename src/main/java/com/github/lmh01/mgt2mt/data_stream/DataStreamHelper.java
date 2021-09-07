@@ -5,7 +5,7 @@ import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.util.helper.TimeHelperOld;
+import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -120,31 +121,6 @@ public class DataStreamHelper {
         }
         reader.close();
         return fileParts;
-    }
-
-    /**
-     * @param folder The folder that should be tested if contains the file.
-     * @param content The content that should be found.
-     * @return Returns true when the input file is the MGT2 folder.
-     * @deprecated Use {@link DataStreamHelper#doesFolderContainFile(Path, String)} instead
-     */
-    @Deprecated
-    public static boolean doesFolderContainFile(String folder, String content){//TODO Delete function
-        File file = new File(folder);
-        if(file.exists()){
-            File[] filesInFolder = file.listFiles();
-            for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(filesInFolder[i].getName().equals(content)){
-                    return true;
-                }
-                if(Settings.enableDebugLogging){
-                    LOGGER.info(filesInFolder[i].getName());
-                }
-            }
-        }else{
-            LOGGER.info("File \"" + content + "\"does not exist in folder \"" + folder + "\"");
-        }
-        return false;
     }
 
     /**
@@ -258,7 +234,8 @@ public class DataStreamHelper {
      * @param destination The destination where the file should be unzipped to.
      */
     public static void unzip(Path zipFile, Path destination) throws IOException {
-        TimeHelperOld.startMeasureTimeThread();
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.SECONDS);
+        timeHelper.measureTime();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.secondPart"));
@@ -268,7 +245,7 @@ public class DataStreamHelper {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile.toFile()));
         ZipEntry zipEntry = zis.getNextEntry();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + Utils.convertSecondsToTime(TimeHelperOld.getMeasuredTime()) + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + Utils.convertSecondsToTime((int)timeHelper.getMeasuredTime(TimeUnit.SECONDS)) + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
             File newFile = newFile(destination.toFile(), zipEntry);
             if(Settings.enableDebugLogging){
