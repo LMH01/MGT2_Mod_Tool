@@ -225,8 +225,30 @@ public class ThemeMod extends AbstractSimpleMod {
         throw new ModProcessingException("Call to addMod(T t) is invalid. This function is not implemented for theme mod", true);
     }
 
-    //TODO Add theme translation export. the genres and the target group should be written in separate lines
+    @Override
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getExportMap(String name) throws ModProcessingException {
+        Map<String, Object> map = new HashMap<>();
+        String line = getModifiedExportLine(getLine(name));
+        Map<String, Object> dependencyMap = getDependencyMap(line);
+        for (AbstractBaseMod mod : ModManager.mods) {
+            try {
+                Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());
+                if (set != null) {
+                    if (!set.isEmpty()) {
+                        map.put("dependencies", dependencyMap);
+                    }
+                }
+            } catch (ClassCastException e) {
+                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
+            }
+        }
+        map.put("line", line);
+        map.putAll(getThemeTranslations(name));
+        return map;
+    }
 
+    //TODO Add theme translation export. the genres and the target group should be written in separate lines
 
     @Override
     public String getModifiedExportLine(String exportLine) throws ModProcessingException {
@@ -247,7 +269,15 @@ public class ThemeMod extends AbstractSimpleMod {
     @Override
     protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        Set<String> genres = new HashSet<>(Utils.getEntriesFromString(transformGenericToString(t)));
+        Set<String> genres = new HashSet<>();
+        for (String string : Utils.getEntriesFromString(transformGenericToString(t))) {
+            if (!string.contains("M1") && !string.contains("M2") && !string.contains("M3") && !string.contains("M4") && !string.contains("M5")) {
+                genres.add(string);
+                LOGGER.info("added: " + string);
+            } else {
+                LOGGER.info("not added: " + string);
+            }
+        }
         map.put(ModManager.genreMod.getExportType(), genres);
         return map;
     }
@@ -640,5 +670,51 @@ public class ThemeMod extends AbstractSimpleMod {
             }
         }
         return false;
+    }
+
+    /**
+     * @param name The english theme name for which the translations should be returned
+     * @return A map that contains all translations for the theme
+     */
+    public Map<String, String> getThemeTranslations(String name) throws ModProcessingException {
+        try {
+            Map<String, String> map = new HashMap<>();
+            int positionOfThemeInFiles = getPositionOfThemeInFile(name);
+            for(String string : TranslationManager.TRANSLATION_KEYS){
+                LOGGER.info("Current Translation Key: " + string);
+                BufferedReader reader;
+                if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
+                    reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
+                }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
+                    reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
+                }else{
+                    throw new ModProcessingException("Unable to determine what charset to use", true);
+                }
+                String currentLine;
+                int currentLineNumber =1;
+                boolean firstLine = true;
+                while((currentLine = reader.readLine()) != null){
+                    if(firstLine){
+                        currentLine = Utils.removeUTF8BOM(currentLine);
+                        firstLine = false;
+                    }
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("Reading file: " + string);
+                    }
+                    if(currentLineNumber == positionOfThemeInFiles){
+                        if(string.equals("GE")){
+                            map.put("NAME " + string, getReplacedLine(currentLine));
+                        }else{
+                            map.put("NAME " + string, currentLine);
+                        }
+                    }
+                    currentLineNumber++;
+                }
+                reader.close();
+            }
+            return map;
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to return theme translations", e);
+        }
     }
 }
