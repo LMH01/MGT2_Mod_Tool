@@ -128,6 +128,11 @@ public class HardwareMod extends AbstractAdvancedMod {
         if(map.containsKey("ONLY_STATIONARY")){
             EditHelper.printLine("ONLY_STATIONARY", map, bw);
         }
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")){
+                bw.write("[" + entry.getKey() + "]" + entry.getValue() + "\r\n");
+            }
+        }
     }
 
     @Override
@@ -224,6 +229,19 @@ public class HardwareMod extends AbstractAdvancedMod {
                         hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                         hardwareFeatureMap.put("TYP", Integer.toString(getHardwareTypeIdByName(Objects.requireNonNull(comboBoxType.getSelectedItem()).toString())));
                         hardwareFeatureMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
+                        if (comboBoxType.getSelectedItem().equals(I18n.INSTANCE.get("commonText.controller"))) {
+                            if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) < 1992) {
+                                hardwareFeatureMap.put("NEED-1", "45");
+                            } else {
+                                hardwareFeatureMap.put("NEED-1", "51");
+                            }
+                        }
+                        if (comboBoxType.getSelectedItem().equals(I18n.INSTANCE.get("commonText.screen"))) {
+                            hardwareFeatureMap.put("NEED-1", "45");
+                            if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) > 2001) {
+                                hardwareFeatureMap.put("NEED-2", "56");
+                            }
+                        }
                         if(checkBoxEnableExclusivity.isSelected()){
                             if(Objects.requireNonNull(comboBoxExclusivity.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"))){
                                 hardwareFeatureMap.put("ONLY_STATIONARY", "");
