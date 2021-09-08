@@ -666,7 +666,7 @@ public class SharingManager {
                             singleModMap.putAll(((AbstractAdvancedMod)mod).exportImages(string, path.resolve("assets")));
                         }
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
-                        modMap.put(string, singleModMap);
+                        modMap.put(Utils.convertName(string), singleModMap);
                         ProgressBarHelper.increment();
                     }
                     if (mod instanceof AbstractSimpleMod) {
