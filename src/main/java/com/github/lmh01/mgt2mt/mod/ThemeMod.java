@@ -225,6 +225,33 @@ public class ThemeMod extends AbstractSimpleMod {
         throw new ModProcessingException("Call to addMod(T t) is invalid. This function is not implemented for theme mod", true);
     }
 
+    //TODO Add theme translation export. the genres and the target group should be written in separate lines
+
+
+    @Override
+    public String getModifiedExportLine(String exportLine) throws ModProcessingException {
+        ArrayList<String> strings = Utils.getEntriesFromString(exportLine);
+        StringBuilder output = new StringBuilder();
+        output.append(getReplacedLine(exportLine)).append(" ");
+        for (String string : strings) {
+            output.append("<");
+            try {
+                output.append(ModManager.genreMod.getContentNameById(Integer.parseInt(string))).append(">");
+            } catch (NumberFormatException ignored) {
+                output.append(string).append(">");
+            }
+        }
+        return output.toString();
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genres = new HashSet<>(Utils.getEntriesFromString(transformGenericToString(t)));
+        map.put(ModManager.genreMod.getExportType(), genres);
+        return map;
+    }
+
     @Override
     public void removeModFromFile(String name) throws ModProcessingException {
         editThemeFiles(null, null, false, getPositionOfThemeInFile(name), 0);

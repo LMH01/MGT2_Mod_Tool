@@ -17,10 +17,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class is used to create new mods.
@@ -57,10 +54,30 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     @Override
-    public Map<String, String> getExportMap(String name) throws ModProcessingException {
-        Map<String, String> map = new HashMap<>();
-        map.put("line", getLine(name));
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getExportMap(String name) throws ModProcessingException {
+        Map<String, Object> map = new HashMap<>();
+        String line = getModifiedExportLine(getLine(name));
+        Map<String, Object> dependencyMap = getDependencyMap(name);
+        for (AbstractBaseMod mod : ModManager.mods) {
+            try {
+                Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());
+                if (set != null) {
+                    if (!set.isEmpty()) {
+                        map.put("dependencies", getDependencyMap(name));
+                    }
+                }
+            } catch (ClassCastException e) {
+                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
+            }
+        }
+        map.put("line", line);
         return map;
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        return new HashMap<>();
     }
 
     /**

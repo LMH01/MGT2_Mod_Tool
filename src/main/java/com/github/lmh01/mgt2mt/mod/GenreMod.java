@@ -160,6 +160,19 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, String> modMap = transformGenericToMap(t);
+        Map<String, Object> map = new HashMap<>();
+        map.put(getExportType(), new HashSet<>(Utils.getEntriesFromString(modMap.get("GENRE COMB"))));
+        map.put(ModManager.themeMod.getExportType(), new HashSet<>(Utils.getEntriesFromString(modMap.get("THEME COMB"))));
+        Set<String> gameplayFeatures = new HashSet<>();
+        gameplayFeatures.addAll(Utils.getEntriesFromString(modMap.get("GAMEPLAYFEATURE GOOD")));
+        gameplayFeatures.addAll(Utils.getEntriesFromString(modMap.get("GAMEPLAYFEATURE BAD")));
+        map.put(ModManager.gameplayFeatureMod.getExportType(), gameplayFeatures);
+        return map;
+    }
+
+    @Override
     public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
         Map<String, String> map = new HashMap<>();
         int id = getContentIdByName(name);

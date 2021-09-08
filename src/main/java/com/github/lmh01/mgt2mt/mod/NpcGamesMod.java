@@ -17,8 +17,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class NpcGamesMod extends AbstractSimpleMod {
@@ -217,9 +216,23 @@ public class NpcGamesMod extends AbstractSimpleMod {
         StringBuilder output = new StringBuilder();
         output.append(getReplacedLine(exportLine)).append(" ");
         for (String string : strings) {
-            output.append("<").append(ModManager.genreMod.getContentNameById(Integer.parseInt(string))).append(">");
+            try {
+                output.append("<").append(ModManager.genreMod.getContentNameById(Integer.parseInt(string))).append(">");
+            } catch (NumberFormatException e) {
+                LOGGER.info("unable to parse export line: " + exportLine);
+                e.printStackTrace();
+                return getReplacedLine(exportLine);
+            }
         }
         return output.toString();
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genres = new HashSet<>(Utils.getEntriesFromString(transformGenericToString(t)));
+        map.put(ModManager.genreMod.getExportType(), genres);
+        return map;
     }
 
     @Override

@@ -17,9 +17,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HardwareMod extends AbstractAdvancedMod {
@@ -115,7 +113,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {//TODO add that "NEED" is printed
         EditHelper.printLine("ID",map, bw);
         EditHelper.printLine("TYP",map, bw);
         TranslationManager.printLanguages(bw, map);
@@ -303,6 +301,30 @@ public class HardwareMod extends AbstractAdvancedMod {
     @Override
     public String getImportExportFileName() {
         return "Hardware.txt";
+    }
+
+    @Override
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                map.replace(entry.getKey(), ModManager.gameplayFeatureMod.getContentNameById(Integer.parseInt(entry.getValue())));
+            }
+        }
+        return map;
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, String> modMap = transformGenericToMap(t);
+        Map<String, Object> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        for (Map.Entry<String, String> entry : modMap.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                set.add(entry.getValue());
+            }
+        }
+        map.put(ModManager.gameplayFeatureMod.getExportType(), set);
+        return map;
     }
 
     /**

@@ -11,10 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class RestorePointHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestorePointHelper.class);
@@ -58,7 +55,7 @@ public class RestorePointHelper {
     public static void restoreToRestorePoint(){
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog"), I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreToRestorePoint"));
-            SharingManager.importAll(true, ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
+            SharingManager.importAllOld(true, ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
         }
     }
 }

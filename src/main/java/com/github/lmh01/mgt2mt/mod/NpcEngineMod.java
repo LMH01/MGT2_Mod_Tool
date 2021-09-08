@@ -19,10 +19,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NpcEngineMod extends AbstractAdvancedMod {
@@ -177,7 +174,25 @@ public class NpcEngineMod extends AbstractAdvancedMod {
 
     @Override
     public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
-        map.replace("GENRE", ModManager.genreMod.getContentNameById(Integer.parseInt(map.get("GENRE"))));
+        if(!name.equals("Without Engine")) {
+            map.replace("GENRE", ModManager.genreMod.getContentNameById(Integer.parseInt(map.get("GENRE"))));
+            map.replace("PLATFORM", ModManager.platformMod.getContentNameById(Integer.parseInt(map.get("PLATFORM"))));
+        }
+        return map;
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, String> modMap = transformGenericToMap(t);
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genres = new HashSet<>();
+        genres.add(modMap.get("GENRE"));
+        LOGGER.info("genre: " + modMap.get("GENRE"));
+        map.put(ModManager.genreMod.getExportType(), genres);
+        Set<String> platforms = new HashSet<>();
+        platforms.add(modMap.get("PLATFORM"));
+        LOGGER.info("platform: " + modMap.get("PLATFORM"));
+        map.put(ModManager.platformMod.getExportType(), platforms);
         return map;
     }
 

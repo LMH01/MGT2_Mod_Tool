@@ -4,6 +4,8 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.moandjiezana.toml.Toml;
@@ -11,6 +13,9 @@ import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -86,6 +91,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
     }
 
     public static void test(){
+        test3();
         /*ThreadHandler.startModThread(() -> {
             SharingManager.exportSingleMod(ModManager.genreMod, "Strategy");
         }, "exportMod");*/
@@ -214,6 +220,65 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
         String tomlString = tomlWriter.write(obj);
         LOGGER.info(tomlString);
+    }
+
+    private static void test3() {
+        ThreadHandler.startModThread(() -> {
+            ExportType exportType = ExportType.ALL_BUNDLED;
+            ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.export.creatingExportMap"));
+            Path path;
+            Map<String, Object> map = new HashMap<>();
+            String tomlName;
+            if (exportType.equals(ExportType.RESTORE_POINT)) {
+                path = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
+                map.put("type", exportType.getTypeName());
+                tomlName = "restore_point";
+            } else {
+                if (Settings.enableExportStorage) {
+                    path = ModManagerPaths.EXPORT.getPath().resolve("bundled/" + Utils.getCurrentDateTime());
+                } else {
+                    path = ModManagerPaths.EXPORT.getPath().resolve("bundled/");
+                }
+                map.put("type", exportType.getTypeName());
+                tomlName = "export";
+            }
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.starting"));
+            try {
+                Files.createDirectories(path.resolve("assets"));
+                Files.createDirectories(path);
+                TomlWriter tomlWriter = new TomlWriter();
+                Map<String, Object> simpleMods = new HashMap<>();
+                Map<String, Object> advancedMods = new HashMap<>();
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.creatingExportMap"));
+                Map<String, Object> modMap = new HashMap<>();
+                AbstractAdvancedMod mod = ModManager.npcEngineMod;
+                ProgressBarHelper.increaseMaxValue(mod.getContentByAlphabet().length);
+                for (String string : mod.getContentByAlphabet()) {
+                    Map<String, Object> singleModMap = mod.getExportMap(string);
+                    for (Map.Entry<String, Object> entry : singleModMap.entrySet()) {
+                        LOGGER.info(entry.getKey() + " | " + entry.getValue());
+                    }
+                    //This will add the image name(s) to the map if required and copy the image files
+                    singleModMap.putAll(mod.exportImages(string, path.resolve("assets")));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
+                    modMap.put(string, singleModMap);
+                    ProgressBarHelper.increment();
+                }
+                advancedMods.put(mod.getExportType(), modMap);
+                map.put("simple_mods", simpleMods);
+                map.put("advanced_mods", advancedMods);
+                map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
+                ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.export_compact.writing_toml"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export_compact.writing_toml") + ": " + path.resolve(tomlName + ".toml"));
+                try {
+                    tomlWriter.write(map, path.resolve(tomlName + ".toml").toFile());
+                } catch (NullPointerException e) {
+                    throw new ModProcessingException("Unable to write .toml file", e);
+                }
+            } catch (IOException e) {
+                throw new ModProcessingException("Unable to export mods", e);
+            }
+        }, "test");
     }
 }
 

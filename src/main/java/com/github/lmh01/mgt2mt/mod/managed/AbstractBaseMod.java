@@ -249,7 +249,7 @@ public abstract class AbstractBaseMod {
     }
 
     /**
-     * @return What type the mod is. Returns for example: genre, hardware_feature, npc_game. These values will are not changed by localisation.
+     * @return What type the mod is. Returns for example: genre, hardware_feature, npc_game. These values are not changed by localisation.
      */
     public abstract String getExportType();
 
@@ -384,7 +384,18 @@ public abstract class AbstractBaseMod {
      * @return Map containing the content that should be written to the export toml file
      * @throws ModProcessingException When something went wrong while copying the image files or creating the map
      */
-    public abstract Map<String, String> getExportMap(String name) throws ModProcessingException;
+    public abstract Map<String, Object> getExportMap(String name) throws ModProcessingException;
+
+    /**
+     * Returns a map that contains the dependencies of the mod. This map is printed into the export file.
+     * This function should be overwritten by each mod that needs dependencies.
+     * Map coding: key = modName | value = hash set of the required mods that belong to the modName
+     * @param t This map/string contains the values that will be used to create the dependency map
+     * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
+     * @return A map that contains the dependencies for the mod that should be exported
+     * @throws ModProcessingException When something went wrong while creating the dependency map or when {@literal <T>} is not valid.
+     */
+    protected abstract <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException;
 
     /**
      * Imports the mod.

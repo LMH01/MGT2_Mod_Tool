@@ -13,13 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
-    public static Runnable runnableImportAll = SharingManager::importAll;
+    public static Runnable runnableImportAll = SharingManager::importAllOld;
     public static Runnable runnableImportFromURL = ImportFromURLHelper::importFromURL;
     public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
     public static Runnable runnableRestoreToRestorePoint = RestorePointHelper::restoreToRestorePoint;

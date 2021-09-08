@@ -546,6 +546,20 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, String> modMap = transformGenericToMap(t);
+        Map<String, Object> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        for (Map.Entry<String, String> entry : modMap.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                set.add(entry.getValue());
+            }
+        }
+        map.put(ModManager.gameplayFeatureMod.getExportType(), set);
+        return map;
+    }
+
+    @Override
     public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
         Map<String, String> map = new HashMap<>();
         for(Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()){

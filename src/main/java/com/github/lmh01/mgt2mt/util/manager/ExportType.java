@@ -1,7 +1,5 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
-import java.nio.file.Path;
-
 public enum ExportType {
 
     /**

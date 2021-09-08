@@ -27,11 +27,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -300,6 +297,16 @@ public class PublisherMod extends AbstractAdvancedMod {
         } catch (NumberFormatException | NullPointerException e) {
             throw new ModProcessingException("The export map could not be changed", e);
         }
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, String> modMap = transformGenericToMap(t);
+        Map<String, Object> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        set.add(modMap.get("GENRE"));
+        map.put(ModManager.genreMod.getExportType(), set);
+        return map;
     }
 
     @Override

@@ -9,6 +9,8 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -121,11 +123,31 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     @Override
-    public final Map<String, String> getExportMap(String name) throws ModProcessingException {
-        Map<String, String> map = getChangedExportMap(getSingleContentMapByName(name), name);
+    @SuppressWarnings("unchecked")
+    public final Map<String, Object> getExportMap(String name) throws ModProcessingException {
+        Map<String, String> modMap = getChangedExportMap(getSingleContentMapByName(name), name);
+        Map<String, Object> map = new HashMap<>(modMap);
+        Map<String, Object> dependencyMap = getDependencyMap(modMap);
+        for (AbstractBaseMod mod : ModManager.mods) {
+            try {
+                Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());
+                if (set != null) {
+                    if (!set.isEmpty()) {
+                        map.put("dependencies", getDependencyMap(modMap));
+                    }
+                }
+            } catch (ClassCastException e) {
+                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
+            }
+        }
         map.remove("ID");
         map.remove("PIC");
         return map;
+    }
+
+    @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        return new HashMap<>();
     }
 
     /**
@@ -271,13 +293,17 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      */
     public final String getContentNameById(int id) throws ModProcessingException{
         try {
-            Map<Integer, String> idNameMap = new HashMap<>();
-            for(Map<String, String> map : getFileContent()){
-                idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
+            if (id >= 0) {
+                Map<Integer, String> idNameMap = new HashMap<>();
+                for(Map<String, String> map : getFileContent()){
+                    idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
+                }
+                return idNameMap.get(id);
+            } else {
+                throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.");
             }
-            return idNameMap.get(id);
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + "could not be returned. The id is invalid.", true);
+            throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.", e, true);
         }
     }
 

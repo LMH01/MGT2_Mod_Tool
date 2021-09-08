@@ -354,6 +354,21 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        Map<String, String> modMap = transformGenericToMap(t);
+        Map<String, Object> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        if (modMap.containsKey("GOOD")) {
+            set.addAll(Utils.getEntriesFromString(modMap.get("GOOD")));
+        }
+        if (modMap.containsKey("BAD")) {
+            set.addAll(Utils.getEntriesFromString(modMap.get("BAD")));
+        }
+        map.put(ModManager.genreMod.getExportType(), set);
+        return map;
+    }
+
+    @Override
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
         map.replace("GOOD", getGenreIds(map.get("GOOD")));
         map.replace("BAD", getGenreIds(map.get("BAD")));

@@ -574,16 +574,15 @@ public class SharingManager {
      * @param mod The mod_type the mod belongs to
      * @param name The name of the mod that should be exported
      * @param folder The root folder where the mods should be exported to
-     * @return True when the mod has been exported successfully. False when the mod has already been exported.
      */
-    public static boolean exportSingleMod(AbstractBaseMod mod, String name, Path folder) throws ModProcessingException {
+    public static void exportSingleMod(AbstractBaseMod mod, String name, Path folder) throws ModProcessingException {
         LOGGER.info("exporting mod: " + name);
         Path path = folder.resolve(mod.getExportType());
         String fileName = mod.getExportType() + "_" + Utils.convertName(name) + ".toml";
         if (!Files.exists(path.resolve(fileName)) && !Files.exists(path.resolve(Utils.convertName(name) + "/" + fileName))) {
             try {
                 Files.createDirectories(path);
-                Map<String, String> map = mod.getExportMap(name);
+                Map<String, Object> map = mod.getExportMap(name);
                 map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
                 map.put("type", ExportType.ALL_SINGLE.getTypeName());
                 map.put("mod_type", mod.getExportType());
@@ -601,10 +600,8 @@ public class SharingManager {
                 throw new ModProcessingException("Unable to export mod", e);
             }
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + mod.getMainTranslationKey() + " - " + name);
-            return true;
         } else {
             TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + mod.getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("commonText.alreadyExported"));
-            return false;
         }
     }
 
@@ -683,9 +680,13 @@ public class SharingManager {
                 map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
                 ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.export_compact.writing_toml"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export_compact.writing_toml") + ": " + path.resolve(tomlName + ".toml"));
-                tomlWriter.write(map, path.resolve(tomlName + ".toml").toFile());
+                try {
+                    tomlWriter.write(map, path.resolve(tomlName + ".toml").toFile());
+                } catch (NullPointerException e) {
+                    throw new ModProcessingException("Unable to write .toml file", e);
+                }
             } catch (IOException e) {
-                throw new ModProcessingException("Unable to create restore point", e);
+                throw new ModProcessingException("Unable to export mods", e);
             }
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.exportComplete"));
