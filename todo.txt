@@ -48,13 +48,13 @@ Not Shure:
 //TODO Alle Progress bar operations noch einmal überprüfen und ggf. progressbar anpassen und konsistenter machen (auf jeden Fall für Import und Export)
 //TODO Schauen, warum das Genre Horror nicht gelöscht werden kann, sondern eine NumberFormatException throwed, wenns es entfernt werden sollte
 
-//TODO Clean up logging -> "Thread died:" should only be shown when debug logging is active: All console spamming logs should be removed completely.
+//TODO Clean up logging/completely redo logging -> "Thread died:" should only be shown when debug logging is active: All console spamming logs should be removed completely.
 
 //TODO Write tests
 
-/TODO when done with Linux support: See if programm keeps working in Windows
-
-/TODO Add option that i can sort the mods easily: One option would be to replace the mod array list with a mod map:
-    Map<AbstractBaseMod, Integer> integer is the mod number than so that it is easier to sort the mods in the main window for example
-
 /TODO Fix that the program will not crash if the steam library folders are not found: Reason: path is null or something like that
+
+/TODO Remove unneeded localisation
+
+/TODO Add function to utils menu called "Update Files" This will create a restore point, remove all mods, prompt the user to verify the game files, create a new initial backup and restore the restore point
+    -> maybe another function name would be more appropriate but i can't think of one now
