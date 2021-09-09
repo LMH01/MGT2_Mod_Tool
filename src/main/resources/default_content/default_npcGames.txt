@@ -700,7 +700,7 @@ Secret of the Stars <2><3><15>
 Serpents And Witches <2><3><15>
 Seven Cities of Silver <4><13>
 Seven Rings <10>
-Seventh Dreams <0><6>
+Seventh Dream <0><6>
 Seventh Future <5><12><14><16>
 Shadow Alliance <7>
 Shadow of the Monster <2><3><15>
@@ -1229,4 +1229,286 @@ Tokyo Racer <17>
 X-Drift <17>
 Extreme Motors <17>
 Maximum Speed <17>
-Seventh Dream <0><6>
+Fantasy Sports Super Challenge <8>
+Snow Sports League <8>
+Masters and Times <0><1>
+Fightstyle <10>
+Huntingace <5><14><16>
+Summerworld <8>
+Watersim <7>
+Rock Climbing World Cup <8>
+Gym Stars <8>
+Wrestlinglife <8><10>
+Huntingmaster <5><14><16>
+Fightinglife <10>
+Fantasy Sports <8>
+Teams and Trophies <8>
+Basketslam <8>
+Basketballlife <8>
+Martialworld <5>
+Martialtime <5>
+Gun Paradise <5><14><16
+Dart Unleashed <8>
+Champs of Fame <8>
+Karatestyle <10>
+Snowmaster <8>
+Sportmaster <8>
+World Class Master Series <8>
+Beach Super Stars <8>
+Golfstar <8>
+Baseballlife <8>
+Dodgeballart <8>
+Cricketsim <8>
+Formula One Master Challenge <17>
+Martial Arts: The Street <10>
+Wrestlingtime <8><10>
+Cricket Super Stars <8>
+Touchdown Super Stars <8>
+Heroes of Premierships <8><9>
+Archery Masters <8>
+Winterworld <2><3><4><5><6><11><13><14><16>
+Speedpro <17>
+Hockeyslam <8>
+Snowart <8>
+Extreme Sports Ultra <8>
+Masters of Swords <4><13>
+Rugbymax <8>
+Volleyballmaster <8>
+Soccerstar <8>
+Golflife <8>
+Rugby Masters <8>
+Rising Stars of Zulur <3>
+Volleyballpros <8>
+Streetmaster <17>
+Horse Race <8>
+Cricketpro <8>
+Strengthstyle <8>
+Waterchamp <8>
+Nightmare Offensive <4><5><13>
+Ancient Domination <4><5><13>
+Elements of Destruction <4><5><13>
+God of Retaliation <4><5><13>
+Crowns and Machines <4><5><13>
+Anarchy and Wonder <4><5><13>
+Tradefront <9>
+Grimclad <4><5><13>
+Bulletfight <4><5><13>
+Dragonpro <4><5><13>
+Future Alert <4><5><13>
+Dragon Crisis <4><5><13>
+Force of Pain <4><5><13><14><16>
+King of Heaven <4><5><13>
+Crowns and Gladiators <4><5><13>
+Domination and Corruption <4><5><13>
+Clanlife <4><5><13>
+Dreadtide <4><5><13><14><16>
+Angelrise <4><5><13><14><16>
+Ironbot <4><5><13><14><16>
+Emergency Conflict <4><5><13>
+Infinite Vendetta <4><5><13><14><16>
+Force of Chaos <4><5><13><14><16>
+Balance of Havoc <4><5><13><14><16>
+Mercenaries and Creatures <4><5><13><14><16>
+War and Annihilation <4><5><13><14><16>
+Knightslayer <4><5><13><14><16>
+Heavenmania <4><5><13><14><16>
+Soulcast <4><5><13><14><16>
+Astrofight <4><5><13><14><16>
+Mutant Civilization  <4><5><13>
+Solar Apocalypse <4><5><13>
+Werewolves of Agony <4><5><13>
+Fields of Siege <4><5><13>
+Spirits and Leaders <4><5><13>
+Terror and Command <4><5><13>
+Ironcraft <4><5><13>
+Spacehunt <4><5><13><14><16>
+Warplan <4><5><13>
+Kingdom Tycoon <4><5><13>
+Naval Twilight <4><5><13>
+Force of Wrath <4><5><13>
+Acts of Anarchy <4><5><13><14><16>
+Leaders and Masters <4><5><13>
+Fame and Misery <4><5><13>
+Evomania <4><5><13><14><16>
+Biopath <4><5><13><14><16>
+Spellspeed <4><5><13>
+Soulmaster <4><5><13><14><16>
+Crown Offensive <4><5><13>
+Battlefield Strategy <4><5><13>
+Whispers of Vengeance <4><5><13><14><16>
+Beasts of Twilight <4><5><13><14><16>
+Monsters and Champions <4><5><13>
+Warfare and Violence <4><5><13>
+Antitale <4><5><13><14><16>
+Bulletreign <4><5><13><14><16>
+Combatland <4><5><13><14><16>
+Warpro <4><5><13><14><16>
+Titan Wrath <4><5><13><14><16>
+Dragon Liberation <4><5><13><14><16>
+Hordes of Conquest <4><5><13>
+Army of Corruption <4><5><13><14><16>
+Bombs and Cannons <4><5><13><14><16>
+Anarchy and Alliances <4><5><13>
+Cyberforce <4><5><13><14><16>
+Spelllife <4><5><13>
+Soulstrike <4><5><13><14><16>
+Heavenborne <4><5><13><14><16>
+Monster Commander <4><5><13>
+Midnight Resistance <4><5><13>
+Price of Shadows <4><5><13><14><16>
+Blood of Ruins <4><5><13><14><16>
+Castles and Crowns <4><5><13>
+Peril and Tactics <4><5><13>
+Bulletborne <4><5><13><14><16>
+Bloodage <4><5><13><14><16>
+Hellbase <4><5><13>
+Skycommand <4><5><13>
+Infinite Revolution <4><5><13><14><16>
+Armored Destruction <4><5><13><14><16>
+Realms of Steel <4><5><13><14><16>
+Fires of Fortune <4><5><13><14><16>
+Dungeons and Lords <3>
+Frontblade <4><5><13><14><16>
+Fleetnight <4><5><13>
+Cyberrise <4><5><13><14><16>
+Magemind <4><5><13><14><16>
+Act of Danger <4><5><13><14><16>
+Castlemaster <4><5><13>
+Bladeguard <4><5><13><14><16>
+Crossbow Tales <3><4>
+Helicopters: The Mission <7>
+Heroes and Rulers <4>
+Skyfighter <7>
+Castlegear <4><13>
+Alliances and Space <4><13>
+Combatcorp <5><14><16>
+Starblade <5><14><16>
+Castlemaster <3><4>
+Arcanetech <3><4>
+Railroad Extrem <9>
+Agriculture Company <9><11>
+Nations of Simalgri <4><13>
+Tankfighter <5><7>
+Soullife <3><5>
+Robotraid <4><14><16>
+Destruction Initiative <4><14><16>
+Machines and Gods <4><13>
+Policespeed <17>
+Wildlife Simulator <7>
+Clans and History <4><13>
+Phantombase <5><14><16>
+Flightbots <5><7>
+Battle Universe <4><13>
+Rifle Combat <5>
+Zombies of Rux <5>
+Chemicals and Stars <0><1>
+Magecraft <4><13>
+Racelife <17>
+Cannon Champion <5>
+Colonies of Androids <11>
+Farmhero <9>
+Lifepath <0><1>
+Destruction Control <5>
+Stars of Dynasties <4><13>
+Kings and Champions <4><13>
+Roads of USA <17>
+Mining Tycoon <9><11>
+Familymaster <0><1>
+Phantom: SpecOps <5>
+Hospital Builder <11>
+Flightcommand <7>
+Flightstrike <7>
+Sail Captain <0>
+Undercover Hell <5>
+Spells of Ikuri <3>
+Brutalspace <5>
+Darkhunt <5>
+Lightmind <0><1>
+Forsaken Curse <3>
+Giants of Magic <4><13>
+Brutalfire <5>
+Dreampath <0><1>
+Arcanemaster <4><13>
+Skystar <5>
+Ironcrest <3>
+Shadows of Love <15>
+Mortalblade <10>
+Werewolf King <5><6>
+Spelltale <3>
+Darkside <3>
+Dragons of Conjury <3>
+Ironcry <5>
+Phantomcry <5><14><16>
+Epic Destiny <3>
+Souls of Nightmares <2>
+Embercrest <3>
+Deadfight <10>
+Alien Legions <4><13>
+Rune Quest <3>
+Darkage <3>
+Hellguard <3>
+Phantomcry <5><14><16>
+Knightcry <3>
+Dreadrage <5><14><16>
+Royal Code <4>
+Sanguine Investigation <2>
+Legends of Orion <4>
+Cyber Driver <17>
+Ghostcry <15>
+Crystalcast <3>
+Soultale <3>
+Darknite <5>
+Evil Dragon <3>
+Digital Enigma <2>
+Knightscape <3>
+Astrostorm <5>
+Spirits of Vengeance <2>
+Cyberstar <5>
+Ghostpoint <5>
+Dreammist <2>
+Bad Treasure <0><1>
+Lords of Mystery <4><13>
+Warland <4><13>
+Full On Magic <0><1>
+Tiny Wish <0><1>
+Elves of Triraldia <3>
+Brutalcraft <10>
+Dynamind <0><1>
+Helltale <5>
+Bionite <5><14><16>
+Solar Moon <3>
+Last Mirror <2>
+Mysteries of Memories <2>
+Soul Signs <2>
+Defcore <5><14><16>
+Dynablade <5><14><16>
+Dragonsky <3>
+Bulletborne <5><14><16>
+Cosmic Freedom <4><13>
+Special Assault <5><14><16>
+Dreadshock <5><14><16>
+Bad Machine <0><1>
+Bladeblaze <5><6>
+Astroworks <0><1>
+Battlerain <4><13>
+Eternal Signs <3>
+Human Freedom <4><13>
+Alphashot <5><14><16>
+Demonheart <3>
+Castleplan <11>
+Android Master <0><5>
+Ghost Guardians <3>
+Dragon Chronicles <3>
+Bladeshock <5><6>
+Crystalcry <3>
+Bullet Curse <5><14><16>
+Armageddon Predator <5><14><16>
+Dragonbot <5>
+Forgotten Blade <3><4><5>
+Bluemind <0><1>
+Immortal Universe <5><13>
+Frozen Call <2>
+Destroy of Logic <1>
+Ultraside <5>
+Blocklight <0><1>
+Datamania <0><1>
