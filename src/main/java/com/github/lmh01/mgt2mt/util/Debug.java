@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
+import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
@@ -30,15 +31,18 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
     public static void writeHelpFile(){
         try{
-            File file = new File("D://Temp//npcGames2.txt");
+            LOGGER.info("writing help file");
+            File file = new File("D:/Temp/npc_games_new.txt");
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            BufferedReader br = new BufferedReader(new FileReader(MGT2Paths.TEXT_DATA.getPath() + "//NpcGames.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(Paths.get("D:/Temp/MGT2/toml/exported_licence.txt").toFile()));
             Map<Integer, String> map = DataStreamHelper.getContentFromFile(new File(MGT2Paths.TEXT_DATA.getPath() + "//NpcGames.txt"), "UTF_16LE");
 
+            ArrayList<String> game_npcGames = new ArrayList<>();
             ModManager.npcGamesMod.analyzeFile();
             assert map != null;
             for(Map.Entry<Integer, String> entry : map.entrySet()){
+                //game_npcGames.add(ModManager.licenceMod.getReplacedLine(entry.getValue()));
                 try{
                     bw.write(entry.getValue());
                     bw.write("\n");
@@ -46,11 +50,48 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
                 }
             }
+            bw.close();
+            /*Collections.sort(game_npcGames);
+            for (String string : game_npcGames) {
+                bw.write(string);
+                bw.write("\n");
+            }
+            bw.close();
+
+            String line;
+            ArrayList<String> exported_npcGames = new ArrayList<>();
+            while ((line = br.readLine()) != null) {
+                exported_npcGames.add(line);
+            }
+
+            Collections.sort(exported_npcGames);
+            File newFile = Paths.get("D:/Temp/MGT2/toml/exported_licence_sorted.txt").toFile();
+            BufferedWriter bw1 = new BufferedWriter(new FileWriter(newFile));
+            for (String string : exported_npcGames) {
+                bw1.write(string + "\r\n");
+            }
+            bw1.close();
+
+            LOGGER.info("exported_npcGames size: " + exported_npcGames.size());
+            LOGGER.info("game_npcGames size: " + game_npcGames.size());
+
+            boolean matched = false;
+            for (String string : game_npcGames) {
+                for (String string1 : exported_npcGames) {
+                    if (string.equals(string1)) {
+                        //LOGGER.info("both maps contain: " + string);
+                        matched = true;
+                    }
+                }
+                if (!matched) {
+                    LOGGER.info("map does not contain: " + string);
+                }
+            }
+             */
             /*for(Map.Entry<Integer, String> entry : ModManager.themeMod.getAnalyzerEn().getFileContent().entrySet()){
                 bw.write(entry.getValue());
                 bw.write("\n");
             }*/
-            bw.close();
         }catch (IOException | ModProcessingException ignored){
 
         }
@@ -91,7 +132,16 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
     }
 
     public static void test(){
-        test3();
+        //writeHelpFile();
+        ThreadHandler.startModThread(() -> {
+            //SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp"));
+            Set<Path> set = new HashSet<>();
+            //set.add(Paths.get("C:/Games"));
+            set.add(Paths.get("D:/Temp/MGT2/toml/import"));
+            SharingManager.importAll(ImportType.MANUEL, set);
+        }, "importAll");
+
+
         /*ThreadHandler.startModThread(() -> {
             SharingManager.exportSingleMod(ModManager.genreMod, "Strategy");
         }, "exportMod");*/
@@ -259,7 +309,6 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
                         LOGGER.info(entry.getKey() + " | " + entry.getValue());
                     }
                     //This will add the image name(s) to the map if required and copy the image files
-                    singleModMap.putAll(mod.exportImages(string, path.resolve("assets")));
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
                     modMap.put(string, singleModMap);
                     ProgressBarHelper.increment();

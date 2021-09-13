@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
+import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +92,7 @@ public class WindowMain {
         m213GetMoreMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.getMoreMods.toolTip"));
         m213GetMoreMods.addActionListener(actionEvent -> openMoreModsPage());
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
-        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableImportAll, "runnableImportAll"));
+        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {SharingManager.importAll(ImportType.MANUEL);}, "runnableImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
         M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableImportFromURL, "runnableImportFromURL"));
         M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
@@ -142,7 +143,7 @@ public class WindowMain {
         M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
         M_431_CREATE_MOD_RESTORE_POINT.addActionListener(actionEvent -> ThreadHandler.startModThread(RestorePointHelper::setRestorePoint, "CreateRestorePoint"));
         M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.toolTip"));
-        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreToRestorePoint, "RestoreToRestorePoint"));
+        M_432_RESTORE_MOD_RESTORE_POINT.addActionListener(actionEvent -> ThreadHandler.startModThread(RestorePointHelper::restoreToRestorePoint, "RestoreToRestorePoint"));
         m43RestorePoint.add(M_431_CREATE_MOD_RESTORE_POINT);
         m43RestorePoint.add(M_432_RESTORE_MOD_RESTORE_POINT);
         M_44_DELETE_ALL_BACKUPS.setToolTipText(I18n.INSTANCE.get("window.main.backup.deleteAllBackups.toolTip"));

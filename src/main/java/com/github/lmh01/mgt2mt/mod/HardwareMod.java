@@ -113,7 +113,7 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {//TODO add that "NEED" is printed
+    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
         EditHelper.printLine("ID",map, bw);
         EditHelper.printLine("TYP",map, bw);
         TranslationManager.printLanguages(bw, map);
@@ -137,7 +137,7 @@ public class HardwareMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
     }
 
     @Override
@@ -319,6 +319,13 @@ public class HardwareMod extends AbstractAdvancedMod {
     @Override
     public String getImportExportFileName() {
         return "Hardware.txt";
+    }
+
+    @Override
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
+        arrayList.add(ModManager.gameplayFeatureMod);
+        return arrayList;
     }
 
     @Override

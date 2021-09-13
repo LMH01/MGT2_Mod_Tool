@@ -3,10 +3,7 @@ package com.github.lmh01.mgt2mt.mod;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -31,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class GenreMod extends AbstractAdvancedMod {
+public class GenreMod extends AbstractComplexMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenreMod.class);
     //New Variables
@@ -139,10 +136,18 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
+        arrayList.add(ModManager.themeMod);
+        arrayList.add(ModManager.gameplayFeatureMod);
+        arrayList.add(ModManager.genreMod);
+        return arrayList;
+    }
+
+    @Override
     public void removeModFromFile(String name) throws ModProcessingException {
         ModManager.themeMod.editGenreAllocation(getContentIdByName(name), false, null);
         ModManager.gameplayFeatureMod.removeGenreId(getContentIdByName(name));
-        ImageFileHandler.removeImageFiles(name);
         ModManager.publisherMod.removeGenre(name);
         ModManager.npcEngineMod.removeGenre(name);
         NpcGamesMod.editNPCGames(ModManager.genreMod.getContentIdByName(name), false, 0);
@@ -150,9 +155,15 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        map.put("GENRE COMB", convertGenreNamesToId(map.get("GENRE COMB"), true));
+        return map;
+    }
+
+    @Override
     public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         int id = getContentIdByName(name);
-        map.replace("GENRE COMB", ModManager.genreMod.getGenreNames(id));
+        map.replace("GENRE COMB", getGenreNames(id));
         map.put("THEME COMB", Utils.getCompatibleThemeIdsForGenre(ModManager.genreMod.getPositionInFileContentListById(id)));
         map.put("GAMEPLAYFEATURE GOOD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, true));
         map.put("GAMEPLAYFEATURE BAD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));
@@ -207,6 +218,63 @@ public class GenreMod extends AbstractAdvancedMod {
     }
 
     @Override
+    protected Map<String, String> importImages(Map<String, String> map) throws ModProcessingException {
+        return new HashMap<>();
+    }
+
+    @Override
+    public void removeImageFiles(String name) throws ModProcessingException {
+        ImageFileHandler.removeImageFiles(name);
+    }
+
+    @Override
+    public void importMod(Map<String, Object> map) throws ModProcessingException {
+        analyzeFile();
+        analyzeDependencies();
+        Map<String, String> importMap = getChangedImportMap(Utils.transformObjectMapToStringMap(map));
+        importMap.put("ID", Integer.toString(getModIdByNameFromImportHelperMap(map.get("mod_name").toString())));
+        int newGenreId = ModManager.genreMod.getFreeId();
+        Path screenshotFolder = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(newGenreId));
+        for(Map.Entry<String, String> entry : importMap.entrySet()){
+            if(entry.getKey().equals("THEME COMB")){
+                ArrayList<String> arrayList = Utils.getEntriesFromString(entry.getValue());
+                StringBuilder themeIds = new StringBuilder();
+                ArrayList<String> themes = new ArrayList<>(Arrays.asList(ModManager.themeMod.getContentByAlphabet()));
+                for(String string : arrayList){
+                    if (themes.contains(string)) {
+                        themeIds.append("<").append(string).append(">");
+                    }
+                }
+                map.put("THEME COMB", themeIds.toString());
+            }else{
+                map.put(entry.getKey(), entry.getValue());
+            }
+        }
+        if(screenshotFolder.toFile().exists()){
+            try {
+                DataStreamHelper.deleteDirectory(screenshotFolder);
+            } catch (IOException e){
+                throw new ModProcessingException("Unable to delete screenshot folder: " + screenshotFolder, e);
+            }
+        }
+        Set<Integer> compatibleThemeIds = new HashSet<>();
+        for(String string : Utils.getEntriesFromString(importMap.get("THEME COMB"))){
+            compatibleThemeIds.add(ModManager.themeMod.getPositionOfThemeInFile(string));
+        }
+        Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
+        Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
+        for(String string : Utils.getEntriesFromString(importMap.get("GAMEPLAYFEATURE BAD"))){
+            gameplayFeaturesBadIds.add(ModManager.gameplayFeatureMod.getModIdByNameFromImportHelperMap(string));
+        }
+        for(String string : Utils.getEntriesFromString(importMap.get("GAMEPLAYFEATURE GOOD"))){
+            gameplayFeaturesGoodIds.add(ModManager.gameplayFeatureMod.getModIdByNameFromImportHelperMap(string));
+        }
+        ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderWhiteList(Paths.get("assets_folder"), "genre_" + map.get("mod_name").toString().toLowerCase() + "_screenshot");
+        File genreIcon = Paths.get(importMap.get("assets_folder")).resolve(importMap.get("iconName")).toFile();
+        addGenre(importMap, compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, false);
+    }
+
+    @Override
     public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.genre"));
         ModManager.genreMod.analyzeFile();
@@ -226,7 +294,7 @@ public class GenreMod extends AbstractAdvancedMod {
         map.put("ID", Integer.toString(newGenreId));
         for(Map.Entry<String, String> entry : list.get(0).entrySet()){
             if(entry.getKey().equals("GENRE COMB")){
-                map.put("GENRE COMB", Utils.convertGenreNamesToId(entry.getValue()));
+                map.put("GENRE COMB", convertGenreNamesToId(entry.getValue(), true));
             }else if(entry.getKey().equals("THEME COMB")){
                 ArrayList<String> arrayList = Utils.getEntriesFromString(entry.getValue());
                 StringBuilder themeIds = new StringBuilder();
@@ -288,7 +356,7 @@ public class GenreMod extends AbstractAdvancedMod {
     /**
      * Adds a new genre to mad games tycoon 2
      */
-    public static void startStepByStepGuide() throws ModProcessingException {//TODO change to throw ModProcessingException
+    public static void startStepByStepGuide() throws ModProcessingException {
         ModManager.genreMod.analyzeFile();
         resetVariables();
         ModManager.genreMod.createBackup();
@@ -421,28 +489,28 @@ public class GenreMod extends AbstractAdvancedMod {
                     continueAnyway = true;
                 }
             }
-            if(continueAnyway | imageFileAccessedSuccess){
+            if (continueAnyway | imageFileAccessedSuccess) {
                 try {
-                    addModToFile(map);
+                    addModToFile (map) ;
                     ModManager.themeMod.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
                     ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
                     ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
                     genreAdded(map, genreIcon, showMessages);
-                    if(showSummaryFromImport){
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN"));
-                    }else{
+                    if (showSummaryFromImport) {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
+                    } else {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + mapNewGenre.get("NAME EN"));
                     }
                 } catch (ModProcessingException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var2"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var3"));
             }
-        }else if(returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION){
+        } else if (returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION) {
             //Click no or close window
-            if(!showSummaryFromImport){
+            if (!showSummaryFromImport) {
                 WindowAddGenrePage11.createFrame();
             }
         }
@@ -558,7 +626,7 @@ public class GenreMod extends AbstractAdvancedMod {
      * @param genreId The genre id from which the genre comb names should be transformed
      * @return A list of genre names
      */
-    public String getGenreNames(int genreId) throws ModProcessingException {
+    private String getGenreNames(int genreId) throws ModProcessingException {
         int genrePositionInList = getPositionInFileContentListById(genreId);
         String genreNumbersRaw = getFileContent().get(genrePositionInList).get("GENRE COMB");
         StringBuilder genreNames = new StringBuilder();
@@ -792,6 +860,53 @@ public class GenreMod extends AbstractAdvancedMod {
                 e.printStackTrace();
                 return "error";
             }
+        }
+    }
+
+    /**
+     * Takes the input string and replaces the genreNames with the corresponding genre id.
+     * @param useImportHelperMap If true {@link AbstractBaseMod#getModIdByNameFromImportHelperMap(String)} will be used to retrieve the mod id.
+     *                           If false {@link AbstractBaseMod#getContentIdByName(String)} will be used to retrieve the mod id.
+     * @return Returns a list of genre ids.
+     * @throws ModProcessingException If {@link AbstractBaseMod#getContentIdByName(String)} or {@link AbstractBaseMod#getModIdByNameFromImportHelperMap(String)} fails.
+     */
+    public static String convertGenreNamesToId(String genreNamesRaw, boolean useImportHelperMap) throws ModProcessingException {
+        if(genreNamesRaw.length() > 0){
+            StringBuilder genreIds = new StringBuilder();
+            int charPosition = 0;
+            StringBuilder currentName = new StringBuilder();
+            for(int i = 0; i<genreNamesRaw.length(); i++){
+                if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
+                    //Nothing happens
+                }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("genreName: " + currentName);
+                    }
+                    int genreId;
+                    if (useImportHelperMap) {
+                        genreId = ModManager.genreMod.getModIdByNameFromImportHelperMap(currentName.toString());
+                    } else {
+                        genreId = ModManager.genreMod.getContentIdByName(currentName.toString());
+                    }
+                    if(genreId != -1){
+                        genreIds.append("<").append(genreId).append(">");
+                    }
+                    currentName = new StringBuilder();
+                }else{
+                    currentName.append(genreNamesRaw.charAt(charPosition));
+                    if(Settings.enableDebugLogging){
+                        LOGGER.info("currentNumber: " + currentName);
+                    }
+                }
+                charPosition++;
+            }
+            String.valueOf(genreNamesRaw.charAt(1));
+            if(Settings.enableDebugLogging){
+                LOGGER.info("Genre ids: " + genreIds);
+            }
+            return genreIds.toString();
+        }else{
+            return "";
         }
     }
 }

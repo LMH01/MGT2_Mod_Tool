@@ -7,7 +7,7 @@ public class ModProcessingException extends Exception {
     //TODO code überschauen, ob irgendwo die exception nicht mit übergeben wurde
     //  testen, wie die exception aussieht, wenn sie ausgelöst wird. Auch schauen, ob getCause irgendwie benutzt wird
     //  ggf. noch in AbstractBaseMod bei der startModThread() Funktion schauen, ob ich da getCause noch irgendwie einbauen kann
-
+    // TODO Think about removing the "this error is caused by faulty code" string and functions that create such an exception
     private final String message;
     private final boolean internal;
     private final Exception cause;

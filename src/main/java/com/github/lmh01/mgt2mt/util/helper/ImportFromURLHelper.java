@@ -3,14 +3,11 @@ package com.github.lmh01.mgt2mt.util.helper;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class ImportFromURLHelper {
     /**
@@ -31,7 +28,7 @@ public class ImportFromURLHelper {
                 Path downloadUnzipped = ModManagerPaths.DOWNLOAD.getPath().resolve(currentDateTime + "download");
                 DataStreamHelper.downloadZip(textFieldUrl.getText(), downloadZip);
                 DataStreamHelper.unzip(downloadZip, downloadUnzipped);
-                SharingManager.importAll(false, downloadUnzipped);
+                SharingManager.importAllOld(false, downloadUnzipped);
             } catch (IOException e) {
                 e.printStackTrace();
                 String errorMessageToDisplay;

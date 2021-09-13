@@ -155,6 +155,13 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
+        arrayList.add(ModManager.genreMod);
+        return arrayList;
+    }
+
+    @Override
     public String getReplacedLine(String inputString) {
         StringBuilder outputString = new StringBuilder();
         boolean nameComplete = false;
@@ -236,13 +243,17 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    public String getModifiedImportLine(String importLine) throws ModProcessingException {
-        ArrayList<String> strings = Utils.getEntriesFromString(importLine);
-        StringBuilder output = new StringBuilder();
-        output.append(getReplacedLine(importLine)).append(" ");
-        for (String string : strings) {
-            output.append("<").append(ModManager.genreMod.getContentIdByName(string)).append(">");
+    public String getChangedImportLine(String importLine) throws ModProcessingException {
+        try {
+            ArrayList<String> strings = Utils.getEntriesFromString(importLine);
+            StringBuilder output = new StringBuilder();
+            output.append(getReplacedLine(importLine)).append(" ");
+            for (String string : strings) {
+                output.append("<").append(ModManager.genreMod.getModIdByNameFromImportHelperMap(string)).append(">");
+            }
+            return output.toString();
+        } catch (NullPointerException e) {
+            throw new ModProcessingException("Unable to change import line", e);
         }
-        return output.toString();
     }
 }

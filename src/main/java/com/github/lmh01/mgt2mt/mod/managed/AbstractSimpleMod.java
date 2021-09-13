@@ -1,10 +1,8 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -15,7 +13,6 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -72,6 +69,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             }
         }
         map.put("line", line);
+        map.put("mod_name", name);
         return map;
     }
 
@@ -80,11 +78,19 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         return new HashMap<>();
     }
 
+    @Override
+    public void importMod(Map<String, Object> map) throws ModProcessingException {
+        analyzeDependencies();
+        addModToFile(getChangedImportLine((String) map.get("line")));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
+    }
+
     /**
      * Imports the mod.
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
      */
+    @Deprecated
     public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
@@ -112,7 +118,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
                 return "false";
             }
         }
-        String importLine = getModifiedImportLine(map.get("LINE"));
+        String importLine = getChangedImportLine(map.get("LINE"));
         boolean addFeature = true;
         if(showMessages){
             if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(importLine)) != JOptionPane.YES_OPTION){
@@ -206,14 +212,14 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     /**
-     * Replaces the input string and returns the replaced string
+     * Replaces the input string to only contain the mod name. All data in the line is removed.
      */
     public abstract String getReplacedLine(String inputString);
 
     /**
      * This function can be used to change the import line
      */
-    public String getModifiedImportLine(String importLine) throws ModProcessingException {
+    public String getChangedImportLine(String importLine) throws ModProcessingException {
         return importLine;
     }
 
@@ -287,5 +293,17 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         } else {
             throw new ModProcessingException("T is invalid: Should be String", true);
         }
+    }
+
+    /**
+     * Initializes the import helper map for this mod with all currently installed mods.
+     */
+    @Override
+    public void initializeImportHelperMap() throws ModProcessingException {
+        Map<String, Integer> helperMap = new HashMap<>();
+        for (Map.Entry<Integer, String> entry : getFileContent().entrySet()) {
+            helperMap.put(getReplacedLine(entry.getValue()), entry.getKey());
+        }
+        importHelperMap = helperMap;
     }
 }

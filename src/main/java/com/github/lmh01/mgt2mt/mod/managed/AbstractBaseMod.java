@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,6 +29,7 @@ public abstract class AbstractBaseMod {
     int maxId = 0;
     String[] defaultContent = {};
     String[] customContent = {};
+    Map<String, Integer> importHelperMap = new HashMap<>();
 
     {
         modMenuItems = getInitialModMenuItems();//TODO See if it works to initialize the default content string in this initializer so that the default content is not always recomputed
@@ -81,7 +83,7 @@ public abstract class AbstractBaseMod {
     private void removeModMenuItemAction() {
         ThreadHandler.startModThread(() -> {
             analyzeFile();
-            OperationHelper.process(this::removeModFromFile, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
+            OperationHelper.process(this::removeMod, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
         }, "runnableRemove" + getType().replaceAll("\\s+",""));
     }
 
@@ -164,6 +166,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * @return A string containing all active things sorted by alphabet.
+     * @throws ModProcessingException If content can not be read because the file was not analyzed
      */
     public abstract String[] getContentByAlphabet() throws ModProcessingException;
 
@@ -173,6 +176,7 @@ public abstract class AbstractBaseMod {
     public abstract int getFileContentSize();
 
     /**
+     * If the id should be returned for mods that will be imported and that have not been added to the game use {@link AbstractBaseMod#getContentIdByName(String)}.
      * @param name The name
      * @return The id for the specified name.
      * @throws ModProcessingException When the name does not exist
@@ -219,7 +223,16 @@ public abstract class AbstractBaseMod {
      * Removes the input mod from the text file
      * @param name The mod name that should be removed
      */
-    public abstract void removeModFromFile(String name) throws ModProcessingException;
+    protected abstract void removeModFromFile(String name) throws ModProcessingException;
+
+    /**
+     * Removes the mod from the game.
+     * This includes image files
+     * @param name The mod name that should be removed
+     */
+    public void removeMod(String name) throws ModProcessingException {
+        removeModFromFile(name);
+    }
 
     /**
      * @return Returns the mod that should be initialized
@@ -315,7 +328,7 @@ public abstract class AbstractBaseMod {
     /**
      * @return The name of the game file. E.g. AntiCheat.txt
      */
-    protected abstract String getGameFileName();//TODO schauen, ob backups noch unter windows erstellt werden können (weil Dateiname der Mods geändert)(gild aber nur für AntiCheat und CopyProtect)
+    protected abstract String getGameFileName();
 
     /**
      * Returns the currently highest id
@@ -377,7 +390,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * Returns a map containing the content that should be written into the export toml file.
-     * To export an advanced mod this method should be called together with {@link AbstractAdvancedMod#exportImages(String, Path)}.
+     * To export an advanced mod this method should be called together with {@link AbstractComplexMod#exportImages(String, Path)}.
      * If the export map should be changed use {@link AbstractAdvancedMod#getChangedExportMap(Map, String)}.
      * To change what line is written in the map when a simple mod is exported use {@link AbstractSimpleMod#getReplacedLine(String)}.
      * @param name The name for the mod that should be exported
@@ -401,8 +414,19 @@ public abstract class AbstractBaseMod {
      * Imports the mod.
      * @param importFolderPath The path for the folder where the import files are stored
      * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
+     * @deprecated Use {@link AbstractBaseMod#importMod(Map)} instead.
      */
+    @Deprecated
     public abstract String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException;
+
+    /**
+     * Imports the mod to the game.
+     * Will edit the game files and import pictures, if needed.
+     * {@link AbstractBaseMod#addModToFile(Object)} is used to edit the game file(s).
+     * @param map The map that contains the values that are required to import the mod.
+     * @throws ModProcessingException If something went wrong while importing the mod
+     */
+    public abstract void importMod(Map<String, Object> map) throws ModProcessingException;
 
     /**
      * @return The type name in caps
@@ -414,12 +438,64 @@ public abstract class AbstractBaseMod {
      * @return The export/import file name under which the mod can be found
      * Eg. gameplayFeature.txt, engineFeature.txt
      */
+    @Deprecated
     public abstract String getImportExportFileName();
 
     /**
      * @return The name of the mod export folder
      */
+    @Deprecated
     public String getExportFolder() {
         return getType();
+    }
+
+    /**
+     * @return An array list that contains all the dependencies of the mod
+     */
+    public abstract ArrayList<AbstractBaseMod> getDependencies();
+
+    /**
+     * Analyses all dependencies of this mod
+     * @throws ModProcessingException If analysis of a mod fails
+     */
+    public final void analyzeDependencies() throws ModProcessingException{
+        for (AbstractBaseMod mod : getDependencies()) {
+            mod.analyzeFile();
+        }
+    }
+
+    /**
+     * Initializes the import helper map for this mod with all currently installed mods.
+     */
+    public abstract void initializeImportHelperMap() throws ModProcessingException;
+
+    /**
+     * Adds a new entry to the import helper map.
+     * The mod id will be selected automatically.
+     * @param name The mod name that should be added to the map.
+     */
+    public final void addEntryToImportHelperMap(String name) {
+        importHelperMap.put(name, getFreeId());
+        maxId++;
+    }
+
+    /**
+     * Returns the mod id for the mod name that is stored in the {@link AbstractBaseMod#importHelperMap}.
+     * This includes mods that are not yet added to the game and that have been added to this map prior by using {@link AbstractBaseMod#addEntryToImportHelperMap(String)}.
+     * This function should not be confused with {@link AbstractBaseMod#getContentIdByName(String)}.
+     * @param name The name of the mod.
+     * @return The mod id for the mod name.
+     * @throws ModProcessingException If import helper map is empty or the mod name does not exist in the map.
+     */
+    public final int getModIdByNameFromImportHelperMap(String name) throws ModProcessingException {
+        if (!importHelperMap.isEmpty()) {
+            try {
+                return importHelperMap.get(name);
+            } catch (NullPointerException e) {
+                throw new ModProcessingException("The mod name " + name + " does not exist in the import map", e);
+            }
+        } else {
+            throw new ModProcessingException("Import helper map is not initialized.", true);
+        }
     }
 }

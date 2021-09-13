@@ -1,8 +1,8 @@
 This file contains tasks that I still have to do and ideas on what I could implement. Some things are written in german because it is easier for me to write them in german
 
 TODO (Make it possible to)
-    - do some things with just the command line (eg. check for updates or open folders) maybe make it possible to add themes by command
-    Command line: arguments with which a .zip file can be selected that is extracted and searched for compatible mods. Then asks the user if these mods should be imported
+    - do some things with just the command line (eg. check for updates or open folders) maybe make it possible to add themes by
+    command line: arguments with which a .zip file can be selected that is extracted and searched for compatible mods. Then asks the user if these mods should be imported
 
 TODO Add later but nice feature:
 
@@ -11,15 +11,6 @@ TODO s other ideas (not required before first release):
 
 Not Shure:
      - Rewrite Settings window to a nicer
-//TODO Abstrakte Mod-Klasse neu schreiben:
-    AbstractBaseMod soll alle klassen bekommen, die sich Simple und Advanced mod teilen. Außerdem sollen da AbstractAnalyzer, AbstractEditor und AbstractSharer mit rein
-        Das Einzige, was in die AbstractSimpleMod und AbstractAdvancedMod klassen rein kommt ist explizit etwas, was vom Datei-Format abhängt
-        Alle methoden, bei denen etwas schief laufen kann, sollen die exception throwen. Diese wird dann am ende auf "oberster Ebene" gehandeled
-
-//TODO Export und Import soll .toml -Dateien benutzen.
-    Außerdem soll es möglich sein mods durch eine in der import datei vermerkte Zeile zu entfernen
-    Bei den Export-Dateien sollten keine IDs beschrieben werden, sondern die namen der Mods.
-    Falls mods beim import nicht existieren, zufällig aus vorhandenen auswählen -> Dabei aber aufpassen, dass mods sich gegenseitig finden, also der Publisher den Genre mod findet, für den er geschrieben ist
 
 //TODO Add option to edit already added things Eg. Genres -> Edit genres
     A list of all added things is shown (All genres when safety features are disabled)
@@ -58,3 +49,8 @@ Not Shure:
 
 /TODO Add function to utils menu called "Update Files" This will create a restore point, remove all mods, prompt the user to verify the game files, create a new initial backup and restore the restore point
     -> maybe another function name would be more appropriate but i can't think of one now
+
+/TODO Check that each mod works properly and check if export/import works with translations
+    Check if it works to import 5 of each mod together -> This will test if mods that depend on each other can be imported correctly
+
+/TODO Change that when the initial backup is restored and mods are removed the initial backup is not restored two times

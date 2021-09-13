@@ -283,7 +283,7 @@ public class WindowHelper {
         switch(type){
             case 0:
                 comboBox.setToolTipText(I18n.INSTANCE.get("mod.engineFeature.addMod.components.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Artificial Intelligence", "Physics"}));
+                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Artificial Intelligence", "Physics"}));//TODO Replace with translations
                 comboBox.setSelectedItem("Graphic");
                 break;
             case 1:

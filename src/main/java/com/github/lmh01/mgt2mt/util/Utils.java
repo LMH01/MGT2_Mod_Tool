@@ -194,46 +194,6 @@ public class Utils {
     }
 
     /**
-     * Takes the input string and replaces the genreNames with the corresponding genre id.
-     * @return Returns a list of genre ids.
-     * @throws ModProcessingException If {@link com.github.lmh01.mgt2mt.mod.GenreMod#getContentIdByName(String)} fails.
-     */
-    public static String convertGenreNamesToId(String genreNamesRaw) throws ModProcessingException {
-        if(genreNamesRaw.length() > 0){
-            StringBuilder genreIds = new StringBuilder();
-            int charPosition = 0;
-            StringBuilder currentName = new StringBuilder();
-            for(int i = 0; i<genreNamesRaw.length(); i++){
-                if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
-                    //Nothing happens
-                }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("genreName: " + currentName);
-                    }
-                    int genreId = ModManager.genreMod.getContentIdByName(currentName.toString());
-                    if(genreId != -1){
-                        genreIds.append("<").append(genreId).append(">");
-                    }
-                    currentName = new StringBuilder();
-                }else{
-                    currentName.append(genreNamesRaw.charAt(charPosition));
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("currentNumber: " + currentName);
-                    }
-                }
-                charPosition++;
-            }
-            String.valueOf(genreNamesRaw.charAt(1));
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Genre ids: " + genreIds);
-            }
-            return genreIds.toString();
-        }else{
-            return "";
-        }
-    }
-
-    /**
      * Converts the input string to an array list containing the elements of the string. Input string formatting: <s1><s2><s3>. The content between the <> is added to the array list.
      * @param string Input string
      * @return Returns an array list containing the elements of string
@@ -259,7 +219,8 @@ public class Utils {
     }
 
     /**
-     * Returns the part before the first <
+     * Returns the part before the first <.
+     * Trims the string to remove whitespaces.
      * See {@link Utils#getEntriesFromString(String)} for more information
      */
     public static String getFirstPart(String string) throws NullPointerException{
@@ -271,7 +232,7 @@ public class Utils {
                 break;
             }
         }
-        return output.toString();
+        return output.toString().trim();
     }
 
     /**
@@ -585,5 +546,22 @@ public class Utils {
      */
     public static String convertName(String string) {
         return string.toLowerCase().trim().replaceAll("[^a-zA-Z0-9]", "_");
+    }
+
+    /**
+     * Transforms the input map of format {@literal Map<String, Object> to Map<String, String>}.
+     * If an object can not be cast to string it will not be placed in the map that is returned.
+     * @return The transformed map
+     */
+    public static Map<String, String> transformObjectMapToStringMap(Map<String, Object> map) {
+        Map<String, String> returnMap = new HashMap<>();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            try {
+                returnMap.put(entry.getKey(), (String) entry.getValue());
+            } catch (ClassCastException ignored) {
+
+            }
+        }
+        return returnMap;
     }
 }

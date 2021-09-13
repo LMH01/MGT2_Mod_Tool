@@ -136,11 +136,33 @@ public class Uninstaller {
     }
 
     /**
+     * Removes all currently installed mods.
+     * Will write a message to the text area in case the removal of some mods fails.
+     * Uses {@link Uninstaller#uninstallAllMods(StringBuilder)} to remove the mods.
+     */
+    public static void uninstallAllMods() {
+        StringBuilder failedUninstalls = new StringBuilder();
+        boolean modRemovalFailed;
+        try {
+            modRemovalFailed = Uninstaller.uninstallAllMods(failedUninstalls);
+        } catch (ModProcessingException e) {
+            TextAreaHelper.printStackTrace(e);
+            modRemovalFailed = true;
+        }
+        if(modRemovalFailed){
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.notAllModsRemoved") + " " + failedUninstalls);
+            LOGGER.info("Something went wrong while uninstalling mods, however this should not necessarily impact the uninstall process: " + failedUninstalls);
+        }else{
+            LOGGER.info("All mods have been removed");
+        }
+    }
+
+    /**
      * Removes all currently installed mods
      * @param uninstallFailedExplanation This string builder contains reasons in case the removal of some mods fails
      * @return Returns false when the removal of mods was successful
      */
-    public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {//TODO Testen, ob funktion funktioniert - auch schauen, ob die progress bar richtig angezeigt wird (Sollte jetzt besser als vorher sein)
+    public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {
         boolean uninstallFailed = false;
         ArrayList<String> customContentArrayList = new ArrayList<>();
         for (AbstractBaseMod mod : ModManager.mods) {
@@ -153,7 +175,7 @@ public class Uninstaller {
                 try {
                     for (String string : mod.getCustomContentString()) {
                         currentMod = string;
-                        mod.removeModFromFile(string);
+                        mod.removeMod(string);
                     }
                 } catch (ModProcessingException e) {
                     TextAreaHelper.printStackTrace(e);

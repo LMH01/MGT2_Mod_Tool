@@ -369,6 +369,7 @@ mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlre
 mod.platform.addPlatform.title|Plattform hinzufügen
 mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Namen für den Hersteller ein!
 mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:
+mod.platform.removeImageFiles.failed|Fehler beim Entfernen des Plattformbildes
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Diese Npc Engine hinzufügen?
 mod.npcEngine.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC ENGINE EIN
 mod.npcEngine.addMod.components.unlockYear.additionalToolTip|Das Erscheinungsjahr gibt an, welches Technologie Level die Engine bekommt und welche features sie enthält
@@ -541,6 +542,10 @@ dialog.sharingManager.importAll.summary.importErredMessageTitle.var1|Fehler beim
 dialog.sharingManager.importAll.summary.importErredMessageTitle.var2|Fehler beim Importieren
 dialog.sharingManager.importAll.summary.importSuccessfulMessage.var1|<html>Wiederherstellung abgeschlossen:<br>Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt.
 dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2|<html>Import abgeschlossen:<br>Alle Mods (die noch nicht vorhanden waren) wurden importiert.
+dialog.sharingManager.importAll.summary.importSuccessful|<html>Import abgeschlossen:<br>Alle Mods wurden importiert.
+dialog.sharingManager.importAll.summary.importSuccessful.title|Import abgeschlossen
+dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored|<html>Wiederherstellung abgeschlossen:<br>Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt.
+dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title|Wiederherstellung abgeschlossen
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1|Wiederherstellung abgeschlossen
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2|Import abgeschlossen
 dialog.sharingManager.importAll.importReady.message.title|Import bereit
@@ -661,6 +666,7 @@ frame.title.reset|Zurücksetzen?
 frame.title.information|Information
 frame.title.import|Importieren
 frame.title.areYouSure|Bist du dir sicher?
+frame.title.missingDependency|Fehlende Abhängigkeit
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
@@ -766,6 +772,47 @@ textArea.importAll.indexingComplete|Indizierung abgeschlossen: Durchsuche Indizi
 textArea.importAll.scanningDirectories.complete.firstPart|Das Scannen der Ordner ist abgeschlossen.
 textArea.importAll.scanningDirectories.complete.secondPart|Zeit:
 textArea.importAll.scanningDirectories.complete.thirdPart|Die folgenden Mods sind für den Import bereit:
+textArea.importAll.searchingForTomlFiles|Durchsuche Ordner nach .toml-Dateien
+textArea.importAll.foundTomlFile|Toml Datei gefunden
+textArea.importAll.searchingFolder|Durchsuche Ordner
+textArea.importAll.totalTomlFilesFound|Toml-Dateien insgesamt gefunden
+textArea.importAll.searchComplete|Suche nach .toml-Dateien abgeschlossen. Dauerte
+textArea.importAll.searchingTomlFilesForMods|Durchsuche .toml-Dateien nach Mods
+textArea.importAll.analyzeTomlFiles|Analysiere .toml-Dateien, um herauszufinden, ob sie mods beinhalten
+textArea.importAll.readingToml|Lese .toml-Datei
+textArea.importAll.readingFiles|Lese Dateien
+textArea.importAll.tomlNotValid|Lesen abgebrochen: Datei enthält kein gültiges toml
+textArea.importAll.foundCompatibleFiles|Dateien gefunden, die Mods enthalten
+textArea.importAll.singleMods|Einzelne Mod-Dateien
+textArea.importAll.bundledMods|Gebündelte Mod-Dateien
+textArea.importAll.searchingFilesForMods|Durchsuche Dateien nach mods
+textArea.importAll.noCompatibleTomlFilesFound|Es wurden keine Dateien gefunden, die mods enthalten.
+textArea.importAll.modCompatible|Mod gefunden
+textArea.importAll.modNotCompatible.firstPart|Nicht kompatiblen Mod gefunden
+textArea.importAll.modNotCompatible.secondPart|Exportiert in Version:
+textArea.importAll.modNotCompatible.thirdPart|Benötigte Version:
+textArea.importAll.totalModsFound|Gesamtzahl der gefundenen Mods
+textArea.importAll.duplicated|Dupliziert
+textArea.importAll.unique|Einzigartig
+textArea.importAll.alreadyAdded|Bereits hinzugefügt
+textArea.importAll.incompatible|Inkompatibel
+textArea.importAll.modsDuplicated|Mod wurde bereits gefunden, er wird nicht noch einmal zur Import-Liste hinzugefügt
+textArea.importAll.modAlreadyAdded|Mod ist bereits zum spiel hinzugefügt, er wird deshalb nicht zur Import-List hinzugefügt
+textArea.importAll.checkingDependencies|Prüfe Abhängigkeiten
+textArea.importAll.noUniqueModsFound|Es wurden keine neuen Mods gefunden, die hinzugefügt werden könnten
+textArea.importAll.requiresDependencies|Mod erfordert Abhängigkeiten
+textArea.importAll.dependencyDoesNotExist.firstPart|Fehlende Abhängigkeit
+textArea.importAll.dependencyDoesNotExist.secondPart|wird ersetzt durch
+textArea.importAll.dependencyCheckComplete|Abhängigkeitsprüfung abgeschlossen
+textArea.importAll.dependencyCheck.optionPane.part1|Achtung, es wurde eine fehlende Abhängigkeit gefunden
+textArea.importAll.dependencyCheck.optionPane.part2|Wähle bitte einen Ersatz aus der Liste aus
+textArea.importAll.dependencyCheck.optionPane.part3|Wenn kein Eintrag aus der Liste ausgewählt wurde, wird ein Ersatz zufällig bestimmt.<br>Klicke auf abbrechen, um den Importier-Prozess abzubrechen.
+textArea.importAll.modsFound.part1|Suche nach Mods abgeschlossen, gefunden
+textArea.importAll.modsFound.part2|Klicke auf ok, damit sie zum Spiel hinzugefügt werden
+textArea.importAll.importCanceled|Import abgebrochen
+textArea.importAll.replacingOfMapEntryFailed|WARNUNG: Import-Map Eintrag konnte nicht mit der richtigen Mod-Id ersetzt werden, stattdessen wird die id durch eine zufällige id ersetzt. Grund
+textArea.importAll.settingNewModIds|Setze Neue Mod-IDs
+textArea.importAll.noTomlFilesFound|Importieren nicht möglich: Keine .toml-Dateien gefunden
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach

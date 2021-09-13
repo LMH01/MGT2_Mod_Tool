@@ -2,16 +2,12 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -36,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PlatformMod extends AbstractAdvancedMod {
+public class PlatformMod extends AbstractComplexMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlatformMod.class);
 
@@ -519,6 +515,13 @@ public class PlatformMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
+        arrayList.add(ModManager.gameplayFeatureMod);
+        return arrayList;
+    }
+
+    @Override
     public void doOtherImportThings(Path importFolderPath, String name) {
         try{
             File importFolderPictureFolder = importFolderPath.resolve("DATA/pictures").toFile();
@@ -557,6 +560,37 @@ public class PlatformMod extends AbstractAdvancedMod {
         }
         map.put(ModManager.gameplayFeatureMod.getExportType(), set);
         return map;
+    }
+
+    @Override
+    public Map<String, String> importImages(Map<String, String> map) throws ModProcessingException {
+        Map<String, String> imageMap = new HashMap<>();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("pic_")) {
+                try {
+                    importImage(map, entry.getKey(), MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()));
+                    imageMap.remove("PIC-" + entry.getKey().replaceAll("[^0-9]",""));
+                    imageMap.put("PIC-" + entry.getKey().replaceAll("[^0-9]",""), entry.getValue());
+                } catch (IOException e) {//TODO Think about this mod processing exception throw: Maybe it should be better to just print a warning message to the text area that the image file will not be copied, if it already exists
+                    throw new ModProcessingException("Platform image files could not be copied", e);
+                }
+            }
+        }
+        return imageMap;
+    }
+
+    @Override
+    public void removeImageFiles(String name) throws ModProcessingException {
+        for(Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()){
+            if(entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")){
+                Path path = MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue());
+                try {
+                    Files.delete(path);
+                } catch (IOException e) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("frame.title.warning") + ": " + I18n.INSTANCE.get("mod.platform.removeImageFiles.failed"));
+                }
+            }
+        }
     }
 
     @Override

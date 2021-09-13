@@ -4,10 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -33,7 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class PublisherMod extends AbstractAdvancedMod {
+public class PublisherMod extends AbstractComplexMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherMod.class);
 
@@ -55,7 +52,7 @@ public class PublisherMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.6.0", "1.7.0", "1.7.1", "1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "2.0.0", "2.0.1", "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
     }
 
     @Override
@@ -276,17 +273,10 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public void removeModFromFile(String name) throws ModProcessingException {
-        super.removeModFromFile(name);
-        int iconId = getPublisherIconIdByName(name);
-        if (iconId > 146) {
-            File publisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve(Paths.get(iconId + ".png")).toFile();
-            LOGGER.info("publisherIcon: " + publisherIcon.getPath());
-            if (publisherIcon.exists()) {
-                publisherIcon.delete();
-                LOGGER.info("Image file for publisher " + name + " has been removed.");
-            }
-        }
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
+        arrayList.add(ModManager.genreMod);
+        return arrayList;
     }
 
     @Override
@@ -300,6 +290,12 @@ public class PublisherMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        replaceImportMapEntry(map, "GENRE", ModManager.genreMod);
+        return map;
+    }
+
+    @Override
     protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, String> modMap = transformGenericToMap(t);
         Map<String, Object> map = new HashMap<>();
@@ -307,6 +303,32 @@ public class PublisherMod extends AbstractAdvancedMod {
         set.add(modMap.get("GENRE"));
         map.put(ModManager.genreMod.getExportType(), set);
         return map;
+    }
+
+    @Override
+    public Map<String, String> importImages(Map<String, String> map) throws ModProcessingException {
+        Map<String, String> imageMap = new HashMap<>();
+        try {
+            String iconId = Integer.toString(CompanyLogoAnalyzer.getLogoNumber());
+            importImage(map, "iconName", MGT2Paths.COMPANY_ICONS.getPath().resolve(iconId + ".png"));
+            imageMap.put("PIC", iconId);
+        } catch (IOException e) {
+            throw new ModProcessingException("Publisher image files could not be copied", e);
+        }
+        return imageMap;
+    }
+
+    @Override
+    public void removeImageFiles(String name) throws ModProcessingException {
+        int iconId = getPublisherIconIdByName(name);
+        if (iconId > 146) {
+            File publisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve(Paths.get(iconId + ".png")).toFile();
+            LOGGER.info("publisherIcon: " + publisherIcon.getPath());
+            if (publisherIcon.exists()) {
+                publisherIcon.delete();
+                LOGGER.info("Image file for publisher " + name + " has been removed.");
+            }
+        }
     }
 
     @Override
@@ -401,7 +423,7 @@ public class PublisherMod extends AbstractAdvancedMod {
      * @param publisherImageTarget The file to what the image file should be copied to
      * @throws ModProcessingException If the copying for the image file fails
      */
-    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{//TODO check if this function still works
+    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{
         try {
             if(!publisherImageTarget.equals(ImageFileHandler.defaultPublisherIcon.toFile())) {
                 Files.copy(Paths.get(publisherImageSource.getPath()), Paths.get(publisherImageTarget.getPath()), StandardCopyOption.REPLACE_EXISTING);
@@ -504,7 +526,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                     LOGGER.info("Removing existing publishers...");
                     ProgressBarHelper.initializeProgressBar(0, ModManager.publisherMod.getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
                     for(String string : ModManager.publisherMod.getDefaultContent()){
-                        ModManager.publisherMod.removeModFromFile(string);
+                        ModManager.publisherMod.removeMod(string);
                         ProgressBarHelper.increment();
                     }
                     LOGGER.info("Original publishers have been removed!");
@@ -514,7 +536,7 @@ public class PublisherMod extends AbstractAdvancedMod {
                     SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.importMod(string, false), ModManager.publisherMod.getCompatibleModToolVersions(), new AtomicBoolean(false));
                     ModManager.publisherMod.analyzeFile();
                     if(ModManager.publisherMod.getActiveIds().contains(-1)){
-                        ModManager.publisherMod.removeModFromFile("Dummy");
+                        ModManager.publisherMod.removeMod("Dummy");
                     }
                     TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));

@@ -1,10 +1,7 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -51,7 +48,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "2.0.0", "2.0.1", "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
     }
 
     @Override
@@ -343,6 +340,13 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
+        arrayList.add(ModManager.genreMod);
+        return arrayList;
+    }
+
+    @Override
     public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         if (map.containsKey("GOOD")) {
             map.replace("GOOD", ModManager.genreMod.getGenreNames(map.get("GOOD")));
@@ -372,6 +376,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
         map.replace("GOOD", getGenreIds(map.get("GOOD")));
         map.replace("BAD", getGenreIds(map.get("BAD")));
+        map.put("PIC", "");
         return map;
     }
 
@@ -507,14 +512,10 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     /**
      * @param genreNamesRaw The string containing the genre ids that should be transformed.
-     *                      If a genre id is not found a random one will be inserted
      * @return A list of genre names
-     * @throws ModProcessingException If {@link GenreMod#getContentNameById(int)} fails.
+     * @throws ModProcessingException If import helper throws an exception
      */
     private String getGenreIds(String genreNamesRaw) throws ModProcessingException {
-        //TODO Option in die Einstellungen packen, mit welcher man entscheiden kann, was passieren soll, wenn beim Import ein name nicht gefunden wird.
-        //  Entweder zufällige id heraussuchen oder einfach ganz weg lassen - Gehört mit zu import rework
-        LOGGER.info("genreNamesRaw: " + genreNamesRaw);
         StringBuilder genreNames = new StringBuilder();
         int charPosition = 0;
         StringBuilder currentString = new StringBuilder();
@@ -525,14 +526,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 if(Settings.enableDebugLogging){
                     LOGGER.info("genreNumber: " + currentString);
                 }
-                genreNames.append("<");
-                try {
-                    genreNames.append(ModManager.genreMod.getContentIdByName(currentString.toString()));
-                } catch (ModProcessingException e) {
-                    genreNames.append(Utils.getRandomNumber(ModManager.genreMod.getActiveIds().indexOf(Collections.min(ModManager.genreMod.getActiveIds())), ModManager.genreMod.getMaxId()));
-                }
-                genreNames.append(">");
-                genreNames.append("<").append(ModManager.genreMod.getContentIdByName(currentString.toString())).append(">");
+                genreNames.append("<").append(ModManager.genreMod.getModIdByNameFromImportHelperMap(currentString.toString()));genreNames.append(">");
                 currentString = new StringBuilder();
             }else{
                 currentString.append(genreNamesRaw.charAt(charPosition));

@@ -3,7 +3,7 @@ This file contains the changelog of the tool (incomplete)
 Important:
 - Previously saved settings will not work together with this release
 - Previously exported mods will not work together with this release
-- Restore points that have been created prior to this release will not be able to get restored automatically because the file path has changed
+- Restore points that have been created prior to this release will not work together with this release
 
 Coming in v2.3.0
 
@@ -11,11 +11,13 @@ New feature:
 
 The tool now works under Linux
 Mod export has been rewritten to use .toml files. This increases the speed at wich mods are exported.
+Mod import has been rewritten from scratch. The result is a massive speed improvement, better reliability and more user-friendliness
 Mods can now be exported in a bundle, this means that all mod data is stored in a single .toml file
 
 Other:
 
 Settings file now uses the .toml file format
+Improved performance when handling files
 Improved text area outputs when importing, exporting, adding or removing mods
 Improved the error handling massively: Whenever something goes wrong the stacktrace is now written to the text area and an explanation of what went wrong is displayed
 Internal code has been massively improved
@@ -23,6 +25,9 @@ Internal handling of paths and files has been improved: Renamed some folders to 
 (Improved the way imports work: Importing things should no longer fail when a required mod is missing, instead a random one will be selected. This has already been implemented for some mods but this update adds this feature to all mods)
  -> Diesen changelog eintrag ggf. rausnehmen, da Import/Export ja eh neu geschrieben wird
 
+Bug fixes:
+
+When the hardware file was modified a specific data entry was not written to the file. This caused the controllers and screens to lose the requirements needed to implement them into a console.
 
 Coming in v2.1.0
 

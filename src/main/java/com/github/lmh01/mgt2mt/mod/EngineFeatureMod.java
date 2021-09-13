@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION,"1.8.0", "1.8.1", "1.8.2", "1.8.3", "1.8.3a", "1.9.0", "1.10.0", "1.10.1", "1.10.2", "1.10.3", "1.11.0", "1.12.0", "2.0.0", "2.0.1", "2.0.2", "2.0.3", "2.0.4", "2.0.5", "2.0.6", "2.0.7", "2.1.0", "2.1.1", "2.1.2", "2.2.0", "2.2.0a", "2.2.1"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
     }
 
     @Override
@@ -187,6 +188,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+        return new HashMap<>();
+    }
+
+    @Override
     public String getTypeCaps() {
         return "ENGINE_FEATURE";
     }
@@ -194,6 +200,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     @Override
     public String getImportExportFileName() {
         return "engineFeature.txt";
+    }
+
+    @Override
+    public ArrayList<AbstractBaseMod> getDependencies() {
+        return new ArrayList<>();
     }
 
     /**

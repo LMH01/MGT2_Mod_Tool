@@ -18,10 +18,8 @@ public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
-    public static Runnable runnableImportAll = SharingManager::importAllOld;
     public static Runnable runnableImportFromURL = ImportFromURLHelper::importFromURL;
     public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
-    public static Runnable runnableRestoreToRestorePoint = RestorePointHelper::restoreToRestorePoint;
     public static Runnable runnableCreateFullBackup = () -> Backup.createBackup("full");
     public static Runnable runnableCreateSaveGameBackup = () -> Backup.createBackup("save_game");
     public static Runnable runnableRestoreInitialBackup = WindowMain::restoreInitialBackup;

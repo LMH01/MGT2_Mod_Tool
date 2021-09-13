@@ -1,10 +1,13 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.Uninstaller;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
+import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -52,10 +55,10 @@ public class RestorePointHelper {
     /**
      * This will remove all currently installed mods and replace them with the mods that have been exported previously as restore point
      */
-    public static void restoreToRestorePoint(){
+    public static void restoreToRestorePoint() throws ModProcessingException {
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog"), I18n.INSTANCE.get("dialog.restorePoint.restore.mainDialog.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreToRestorePoint"));
-            SharingManager.importAllOld(true, ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
+            SharingManager.importAll(ImportType.RESTORE_POINT, ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
         }
     }
 }

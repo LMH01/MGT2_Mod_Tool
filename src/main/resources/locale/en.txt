@@ -370,6 +370,7 @@ mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlre
 mod.platform.addPlatform.title|Add platform
 mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the manufacturer first!
 mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:
+mod.platform.removeImageFiles.failed|Failed to remove platform image file
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Add this npc engine?
 mod.npcEngine.addMod.components.textFieldName.initialValue|ENTER NPC ENGINE NAME
 mod.npcEngine.addMod.components.unlockYear.additionalToolTip|This determines the technology level and the amout of engine features the engine has.
@@ -542,6 +543,10 @@ dialog.sharingManager.importAll.summary.importErredMessageTitle.var1|Error while
 dialog.sharingManager.importAll.summary.importErredMessageTitle.var2|Error while importing
 dialog.sharingManager.importAll.summary.importSuccessfulMessage.var1|<html>Restoration complete:<br>All mods have been restored to the restore point.
 dialog.sharingManager.importAll.summary.importSuccessfulMessage.var2|<html>Import complete:<br>All features (that did not already exist) have been imported.
+dialog.sharingManager.importAll.summary.importSuccessful|<html>Import complete:<br>All mods have been imported.
+dialog.sharingManager.importAll.summary.importSuccessful.title|Import complete
+dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored|<html>Restoration complete:<br>All mods have been restored to the restore point.
+dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title|Restoration complete
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var1|Restoration complete
 dialog.sharingManager.importAll.summary.importSuccessfulMessageTitle.var2|Import complete
 dialog.sharingManager.importAll.importReady.message.title|Import ready
@@ -662,6 +667,7 @@ frame.title.reset|Reset?
 frame.title.information|Information
 frame.title.import|Import
 frame.title.areYouSure|Are you sure?
+frame.title.missingDependency|Missing dependency
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be
@@ -767,6 +773,48 @@ textArea.importAll.indexingComplete|Indexing complete: Scanning indexed folders 
 textArea.importAll.scanningDirectories.complete.firstPart|The selected directories have been scanned.
 textArea.importAll.scanningDirectories.complete.secondPart|Time:
 textArea.importAll.scanningDirectories.complete.thirdPart|The following things are ready for import:
+textArea.importAll.searchingForTomlFiles|Searching folders for .toml files
+textArea.importAll.foundTomlFile|Toml file found
+textArea.importAll.searchingFolder|Searching folder
+textArea.importAll.totalTomlFilesFound|Total .toml files found
+textArea.importAll.searchComplete|Search for .toml files complete. Took
+textArea.importAll.searchingTomlFilesForMods|Searching toml files for mods
+textArea.importAll.analyzeTomlFiles|Analyzing .toml files to determine if they contain mods
+textArea.importAll.readingToml|Reading toml file
+textArea.importAll.readingFiles|Reading files
+textArea.importAll.tomlNotValid|Reading aborted: file does not contain valid toml
+textArea.importAll.foundCompatibleFiles|Found files that contain mods
+textArea.importAll.singleMods|Single mod files
+textArea.importAll.bundledMods|Bundled mod files
+textArea.importAll.searchingFilesForMods|Searching files for mods
+textArea.importAll.noCompatibleTomlFilesFound|No files were found that contain mods.
+textArea.importAll.modCompatible|Found mod
+textArea.importAll.modNotCompatible.firstPart|Found incompatible mod
+textArea.importAll.modNotCompatible.secondPart|Mod was exported in version
+textArea.importAll.modNotCompatible.thirdPart|Required version
+textArea.importAll.totalModsFound|Total number of mods found
+textArea.importAll.duplicated|Duplicated
+textArea.importAll.unique|Unique
+textArea.importAll.alreadyAdded|Already added
+textArea.importAll.incompatible|Incompatible
+textArea.importAll.corrupted|Corrupted
+textArea.importAll.modsDuplicated|Mod has already been found, it will not be added to the import list again
+textArea.importAll.modAlreadyAdded|Mod is already added to the game, so it will not be added to the import list
+textArea.importAll.checkingDependencies|Checking dependencies
+textArea.importAll.noUniqueModsFound|No new mods were found, that could be added
+textArea.importAll.requiresDependencies|Mod requires dependencies
+textArea.importAll.dependencyDoesNotExist.firstPart|Missing dependency
+textArea.importAll.dependencyDoesNotExist.secondPart|will be replaced by
+textArea.importAll.dependencyCheckComplete|Dependency check complete
+textArea.importAll.dependencyCheck.optionPane.part1|Warning dependency not found
+textArea.importAll.dependencyCheck.optionPane.part2|Please choose a replacement from the list
+textArea.importAll.dependencyCheck.optionPane.part3|If no entry is selected, the replacement will be random.<br>Click cancel to cancel the import process.
+textArea.importAll.modsFound.part1|Search for mods completed, found
+textArea.importAll.modsFound.part2|Click ok to add them to the game.
+textArea.importAll.importCanceled|Import canceled
+textArea.importAll.replacingOfMapEntryFailed|WARNING: Import-Map entry could not be replaced with the correct mod id, instead the id will be replaced by a random id. Reason
+textArea.importAll.settingNewModIds|Setting new mod ids
+textArea.importAll.noTomlFilesFound|Unable to import: No .toml files found
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to

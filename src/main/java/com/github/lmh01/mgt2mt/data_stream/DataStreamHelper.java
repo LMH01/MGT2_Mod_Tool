@@ -233,8 +233,8 @@ public class DataStreamHelper {
      * @param zipFile The input zip file
      * @param destination The destination where the file should be unzipped to.
      */
-    public static void unzip(Path zipFile, Path destination) throws IOException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.SECONDS);
+    public static void unzip(Path zipFile, Path destination) throws IOException, IllegalArgumentException{
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
         timeHelper.measureTime();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
@@ -245,7 +245,7 @@ public class DataStreamHelper {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile.toFile()));
         ZipEntry zipEntry = zis.getNextEntry();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + Utils.convertSecondsToTime((int)timeHelper.getMeasuredTime(TimeUnit.SECONDS)) + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + (int)timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
             File newFile = newFile(destination.toFile(), zipEntry);
             if(Settings.enableDebugLogging){
@@ -295,7 +295,7 @@ public class DataStreamHelper {
     /**
      * Returns the amount of files in the input stream
      */
-    private static int getZipInputStreamSize(File zipFile) throws IOException {
+    private static int getZipInputStreamSize(File zipFile) throws IOException, IllegalArgumentException{
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
         ZipEntry zipEntry = zis.getNextEntry();
         int zipEntryAmount = 0;
@@ -311,7 +311,7 @@ public class DataStreamHelper {
     /**
      * @param rootDirectory The directory where the file search is started
      * @param fileName The file name that should be searched
-     * @return Returns a array list containing all files that match the file to search
+     * @return Returns an array list containing all files that match the file to search
      */
     public static ArrayList<File> getFiles(File rootDirectory, String fileName) throws IOException {
         ArrayList<File> arrayList = new ArrayList<>();

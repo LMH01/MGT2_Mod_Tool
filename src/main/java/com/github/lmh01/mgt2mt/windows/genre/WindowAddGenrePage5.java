@@ -139,7 +139,7 @@ public class WindowAddGenrePage5 extends JFrame{
             for(String string : listAvailableGenres.getSelectedValuesList()){
                 compatibleGenres.append("<").append(string).append(">");
             }
-            GenreMod.mapNewGenre.put("GENRE COMB", Utils.convertGenreNamesToId(compatibleGenres.toString()));
+            GenreMod.mapNewGenre.put("GENRE COMB", GenreMod.convertGenreNamesToId(compatibleGenres.toString(), false));
             return true;
         }else{
             return false;

@@ -1,15 +1,12 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.io.*;
@@ -17,13 +14,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
  * This class is used to create new mods.
  * Use this class if the mod uses files with the system "[Key]Value".
+ * If image files should be processed create a new mod using {@link AbstractComplexMod}
  */
-public abstract class AbstractAdvancedMod extends AbstractBaseMod {
+public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See what functions should be final (Also do that for each of the oder abstract mod classes)
 
     List<Map<String, String>> fileContent;
 
@@ -54,9 +53,9 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             bw.write("[EOF]");
             bw.close();
         } catch (ClassCastException e) {
-            throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
+            throw new ModProcessingException("T is invalid: Should be Map<String, String>", e, true);
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage(), e);
         }
     }
 
@@ -111,7 +110,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
             }
             setMaxId(currentMaxId);
         } catch (IOException e) {
-            throw new ModProcessingException("Unable to analyze game file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Unable to analyze game file for mod " + getType() + ": " + e.getMessage(), e);
         }
     }
 
@@ -142,20 +141,24 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
         }
         map.remove("ID");
         map.remove("PIC");
+        map.put("mod_name", name);
         return map;
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
-        return new HashMap<>();
+    public void importMod(Map<String, Object> map) throws ModProcessingException {
+        analyzeFile();
+        analyzeDependencies();
+        Map<String, String> importMap = getChangedImportMap(Utils.transformObjectMapToStringMap(map));
+        sendLogMessage("mod id in map: " + map.get("ID"));
+        sendLogMessage("mod id returned from helper map: " + map.get("mod_name") + " - " + getModIdByNameFromImportHelperMap(map.get("mod_name").toString()));
+        importMap.put("ID", Integer.toString(getModIdByNameFromImportHelperMap(map.get("mod_name").toString())));
+        addModToFile(importMap);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
     }
 
-    /**
-     * Imports the mod.
-     * @param importFolderPath The path for the folder where the import files are stored
-     * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
-     */
     @Override
+    @Deprecated
     public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
         analyzeFile();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
@@ -208,42 +211,11 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     /**
-     * Exports all image files that belong to the mod and returns a map that contains the names of the image files
-     * @param name The mod name for which the image files should be exported
-     * @param assetsFolder The folder where the image files should be copied to
-     * @return A map that contains the names of the image files.
-     * These entries will be searched by {@link AbstractAdvancedMod#importImages()} when the mod is imported again.
-     */
-    public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
-        return new HashMap<>();
-    }
-
-    public void importImages() throws ModProcessingException {//TODO When import function is written use this function and write java doc
-
-    }
-
-    /**
      * Put things in this function that should be executed when the txt file has been imported.
      */
+    @Deprecated
     public void doOtherImportThings(Path importFolderPath, String name) throws ModProcessingException {
 
-    }
-
-    /**
-     * @return The map that contains the import values
-     * Can be overwritten to adjust specific values. Useful if mod name should be replaced with mod id.
-     */
-    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
-        return map;
-    }
-
-    /**
-     * @return The map that contains the export values.
-     * @param name The name of the mod for which the export map should be changed
-     * Can be overwritten to adjust specific map values. Useful if mod id should be replaced with mod name.
-     */
-    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
-        return map;
     }
 
     @Override
@@ -370,6 +342,24 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
      */
     protected abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
 
+
+    /**
+     * @return The map that contains the import values
+     * Can be overwritten to adjust specific values. Useful if mod name should be replaced with mod id.
+     */
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        return map;
+    }
+
+    /**
+     * @return The map that contains the export values.
+     * @param name The name of the mod for which the export map should be changed
+     * Can be overwritten to adjust specific map values. Useful if mod id should be replaced with mod name.
+     */
+    public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
+        return map;
+    }
+
     /**
      * Transforms the generic to an {@literal Map<String, String>}.
      * @throws ModProcessingException If transformation fails
@@ -384,17 +374,33 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     /**
-     * Use this function to simply transform the map entry from the mod name to the mod id. If the mod name is not found then
-     * a random id is placed in the map.
+     * Use this function to simply transform the map entry from the mod name to the mod id.
+     * This function uses {@link AbstractBaseMod#getModIdByNameFromImportHelperMap(String)} to retrieve the mod id.
+     * If the entry is not found a warning message is printed into the text area
      * @param map The map that contains the value that should be replaced
      * @param mapKey The map key for which the value should be replaced
      * @param mod The mod for which the name should be replaced with the id
      */
     protected void replaceImportMapEntry(Map<String, String> map, String mapKey, AbstractBaseMod mod) {
         try {
-            map.replace(mapKey, Integer.toString(mod.getContentIdByName(map.get(mapKey))));
+            map.replace(mapKey, Integer.toString(mod.getModIdByNameFromImportHelperMap(map.get(mapKey))));
         } catch (ModProcessingException e) {
             map.replace(mapKey, Integer.toString(Utils.getRandomNumber(0, mod.getMaxId())));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.replacingOfMapEntryFailed") + ": " + e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initializeImportHelperMap() throws ModProcessingException {
+        Map<String, Integer> helperMap = new HashMap<>();
+        for(Map<String, String> map : getFileContent()){
+            try {
+                helperMap.put(map.get("NAME EN"), Integer.parseInt(map.get("ID")));
+            } catch (NullPointerException e) {
+                throw new ModProcessingException("Import helper map can not be initialized", e);
+            }
+        }
+        importHelperMap = helperMap;
     }
 }
