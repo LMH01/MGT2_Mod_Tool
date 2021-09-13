@@ -297,7 +297,7 @@ public class Utils {
      * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
      * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
      * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
-     * @return Returns the selected entry names
+     * @return Returns the selected entry names. If cancel is pressed null is returned.
      */
     public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
         Set<String> returnValues = new HashSet<>();
@@ -317,15 +317,13 @@ public class Utils {
 
         Object[] params = {labelChooseEntry, scrollPaneAvailableEntries};
 
-        if(JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+        int returnValue = JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION);
+        if (returnValue == JOptionPane.OK_OPTION) {
             if(!listAvailableEntries.isSelectionEmpty()){
                 returnValues.addAll(listAvailableEntries.getSelectedValuesList());
-            }else{
-                if(showNoSelectionMessage){
-                    JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
-
-                }
             }
+        } else if (returnValue == JOptionPane.CANCEL_OPTION) {
+            return null;
         }
         return returnValues;
     }

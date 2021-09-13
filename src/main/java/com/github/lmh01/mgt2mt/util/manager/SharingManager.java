@@ -415,7 +415,7 @@ public class SharingManager {
         int modsDuplicated = 0;
         int modsAlreadyAdded = 0;
         int modsIncompatible = 0;
-        for (Map<String, Object> map : singleMods) {//TODO Check why duplicated mods can be added when they are placed in single mods and bundled mods
+        for (Map<String, Object> map : singleMods) {
             if (map.containsKey("\"NAME EN\"")) {
                 LOGGER.info("single mod instance found!: " + map.get("\"NAME EN\""));
             } else {
@@ -762,33 +762,26 @@ public class SharingManager {
      * @param panel The panel where the components should be added
      * @param selectedEntries An atomic reference where the return values should be saved
      */
-    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport){//TODO decide if i should keep this function and reuse it when i implement the feature that all found mods are displayed (like it was in the old import function)
+    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport){
         JLabel label = new JLabel(labelText);
         JButton button = new JButton(set.size() + "/" + set.size());
         disableImport.set(false);
         button.addActionListener(actionEvent -> {
-            Set<String> selectedMods = getSelectedEntries(set);
-            selectedEntries.set(selectedMods);
-            if(selectedMods.isEmpty()){
-                LOGGER.info("Import disabled for: " + labelText.replaceAll(":", ""));
-                disableImport.set(true);
-            }else{
-                LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
-                disableImport.set(false);
+            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)),false);
+            if (selectedMods != null) {
+                selectedEntries.set(selectedMods);
+                if(selectedMods.isEmpty()){
+                    LOGGER.info("Import disabled for: " + labelText.replaceAll(":", ""));
+                    disableImport.set(true);
+                }else{
+                    LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
+                    disableImport.set(false);
+                }
+                button.setText(selectedEntries.get().size() + "/" + set.size());
             }
-            button.setText(selectedEntries.get().size() + "/" + set.size());
         });
         panel.add(label);
         panel.add(button);
-    }
-
-    /**
-     * Opens a gui where the user can select entries.
-     * @param set The set that contains the mod names
-     * @return Returns an array list containing numbers of selected entries
-     */
-    private static Set<String> getSelectedEntries(Set<String> set){//TODO hinzufügen, dass wenn abbrechen gedrückt wird, nicht gespeichert wird, was gerade angezeigt wird
-        return Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)),false);
     }
 
     /**
