@@ -22,8 +22,8 @@ class UtilsTest {
 
     @Test
     public void getFirstPartTest() {
-        Assertions.assertEquals("louis ", Utils.getFirstPart("louis <banana>"));
-        Assertions.assertEquals("it's me ", Utils.getFirstPart("it's me <cannon>"));
+        Assertions.assertEquals("louis", Utils.getFirstPart("louis <banana>"));
+        Assertions.assertEquals("it's me", Utils.getFirstPart(" it's me <cannon>"));
         Assertions.assertEquals("some_string", Utils.getFirstPart("some_string<bonk>"));
     }
 

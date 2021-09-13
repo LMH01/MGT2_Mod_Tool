@@ -120,7 +120,7 @@ public class NpcGamesMod extends AbstractSimpleMod {
         }
         String name = Utils.getFirstPart(line);
         StringBuilder output = new StringBuilder();
-        output.append(name);
+        output.append(name).append(" ");
         for(Integer integer : genreIds){
             try{
                 String genreName = ModManager.genreMod.getContentNameById(integer);
