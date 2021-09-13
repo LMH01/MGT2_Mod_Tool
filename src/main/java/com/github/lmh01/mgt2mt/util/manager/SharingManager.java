@@ -33,7 +33,7 @@ public class SharingManager {
     public static void importAll(ImportType importType) throws ModProcessingException {
         Set<Path> paths = getImportFolders();
         if (paths != null) {
-            importAll(importType, getImportFolders());
+            importAll(importType, paths);
         }
     }
 
