@@ -94,7 +94,7 @@ public class WindowMain {
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
         M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {SharingManager.importAll(ImportType.MANUEL);}, "runnableImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
-        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableImportFromURL, "runnableImportFromURL"));
+        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startModThread(ImportFromURLHelper::importFromURL, "runnableImportFromURL"));
         M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
         M_22_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startModThread(NPCGameListHandler::modifyNPCGameList, "runnableNPCGamesList"));
         M_23_ADD_COMPANY_ICON.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddCompanyIcon, "runnableAddCompanyIcon"));
