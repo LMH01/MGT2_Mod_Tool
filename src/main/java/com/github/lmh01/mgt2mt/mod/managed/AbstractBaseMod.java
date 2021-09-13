@@ -468,4 +468,29 @@ public abstract class AbstractBaseMod {
             throw new ModProcessingException("Import helper map is not initialized.", true);
         }
     }
+
+    /**
+     * Returns the mod name for the mod id that is stored in the {@link AbstractBaseMod#importHelperMap}.
+     * This includes mods that are not yet added to the game and that have been added to this map prior by using {@link AbstractBaseMod#addEntryToImportHelperMap(String)}.
+     * This function should not be confused with {@link AbstractBaseMod#getContentIdByName(String)}.
+     * @param id The id of the mod.
+     * @return The mod id for the mod name.
+     * @throws ModProcessingException If import helper map is empty or the mod name does not exist in the map.
+     */
+    public final String getModNameByIdFromImportHelperMap(int id) throws ModProcessingException {
+        if (!importHelperMap.isEmpty()) {
+            try {
+                for (Map.Entry<String, Integer> entry : importHelperMap.entrySet()) {
+                    if (entry.getValue().equals(id)) {
+                        return entry.getKey();
+                    }
+                }
+                throw new ModProcessingException("The mod id " + id + " does not exist in the import map");
+            } catch (NullPointerException e) {
+                throw new ModProcessingException("The mod id " + id + " does not exist in the import map", e);
+            }
+        } else {
+            throw new ModProcessingException("Import helper map is not initialized.", true);
+        }
+    }
 }

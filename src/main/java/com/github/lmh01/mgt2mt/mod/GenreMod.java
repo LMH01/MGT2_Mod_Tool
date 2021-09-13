@@ -332,13 +332,13 @@ public class GenreMod extends AbstractComplexMod {
      * @param map The map that includes the values.
      * @param compatibleThemeIds A set containing all compatible theme ids
      * @param genreScreenshots Array list containing all screenshot files
-     * @param showSummaryFromImport True when called from genre import
+     * @param calledFromImport True when called from genre import
      * @param genreIcon The genre icon file
      * @param showMessages True when the messages should be shown. False if not.
      * @return Returns true when the user clicked yes on the confirm popup
      * @throws ModProcessingException When something went wrong while adding the genre
      */
-    public boolean addGenre(Map<String, String> map, Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean showSummaryFromImport, File genreIcon, boolean showMessages) throws ModProcessingException {
+    public boolean addGenre(Map<String, String> map, Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean calledFromImport, File genreIcon, boolean showMessages) throws ModProcessingException {
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genreIcon.getPath()));
         JLabel labelFirstPart = new JLabel("<html>" + I18n.INSTANCE.get("dialog.genreManager.addGenre.mainBody.genreIsReady") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.id") + ":" + map.get("ID") + "<br>" +
@@ -350,7 +350,7 @@ public class GenreMod extends AbstractComplexMod {
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
                 I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "<br>" +
                 I18n.INSTANCE.get("commonText.targetGroup") + ": " + getTargetGroups(map) + "<br>" + "");
-        JButton buttonCompatibleGenres = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.compatibleGenres"), convertMapEntryToList(map, "GENRE COMB", true), I18n.INSTANCE.get("commonText.compatibleGenres") + ":");
+        JButton buttonCompatibleGenres = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.compatibleGenres"), convertMapEntryToList(map, "GENRE COMB", true, calledFromImport), I18n.INSTANCE.get("commonText.compatibleGenres") + ":");
         JButton buttonCompatibleThemes = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.compatibleThemes"), convertMapEntryToList(map, "THEME COMB"), I18n.INSTANCE.get("commonText.compatibleThemes") + ":");
         JButton buttonBadGameplayFeatures = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.badGameplayFeatures"), convertMapEntryToList(map, "GAMEPLAYFEATURE BAD"), I18n.INSTANCE.get("commonText.badGameplayFeatures") + ":");
         JButton buttonGoodGameplayFeatures = WindowHelper.getListDisplayButton(I18n.INSTANCE.get("commonText.goodGameplayFeatures"), convertMapEntryToList(map, "GAMEPLAYFEATURE GOOD"), I18n.INSTANCE.get("commonText.goodGameplayFeatures") + ":");
@@ -373,7 +373,7 @@ public class GenreMod extends AbstractComplexMod {
                 I18n.INSTANCE.get("commonText.sound") + ": " + map.get("SOUND") + "%<br>" +
                 I18n.INSTANCE.get("commonText.control") + ": " + map.get("CONTROL") + "%<br><br>");
         int returnValue;
-        if(showSummaryFromImport){
+        if(calledFromImport){
             if(showMessages){
                 labelSecondPart.setText(labelSecondPart.getText() + I18n.INSTANCE.get("dialog.genreManager.addGenre.bodyButtonExplanation.var1"));
                 Object[] params = {labelFirstPart, buttonCompatibleGenres, buttonCompatibleThemes, buttonBadGameplayFeatures, buttonGoodGameplayFeatures, labelSecondPart};
@@ -407,7 +407,7 @@ public class GenreMod extends AbstractComplexMod {
                     ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
                     ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
                     genreAdded(map, genreIcon, showMessages);
-                    if (showSummaryFromImport) {
+                    if (calledFromImport) {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
                     } else {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + mapNewGenre.get("NAME EN"));
@@ -421,7 +421,7 @@ public class GenreMod extends AbstractComplexMod {
             }
         } else if (returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION) {
             //Click no or close window
-            if (!showSummaryFromImport) {
+            if (!calledFromImport) {
                 WindowAddGenrePage11.createFrame();
             }
         }
@@ -467,7 +467,7 @@ public class GenreMod extends AbstractComplexMod {
      * @return Returns a string containing all entries that are listed as value under the map key.
      */
     private static String[] convertMapEntryToList(Map<String, String> map, String mapKey) throws ModProcessingException {
-        return convertMapEntryToList(map, mapKey, false);
+        return convertMapEntryToList(map, mapKey, false, false);
     }
 
     /**
@@ -477,7 +477,7 @@ public class GenreMod extends AbstractComplexMod {
      * @return Returns a string containing all entries that are listed as value under the map key.
      * @throws ModProcessingException If {@link GenreMod#getContentNameById(int)} fails.
      */
-    private static String[] convertMapEntryToList(Map<String, String> map, String mapKey, boolean convertAsGenres) throws ModProcessingException {
+    private static String[] convertMapEntryToList(Map<String, String> map, String mapKey, boolean convertAsGenres, boolean importMod) throws ModProcessingException {
         String input = map.get(mapKey);
         StringBuilder currentString = new StringBuilder();
         ArrayList<String> outputArray = new ArrayList<>();
@@ -487,7 +487,11 @@ public class GenreMod extends AbstractComplexMod {
                 //Nothing happens
             }else if (String.valueOf(input.charAt(i)).equals(">")){
                 if(convertAsGenres){
-                    outputArray.add(ModManager.genreMod.getContentNameById(Integer.parseInt(currentString.toString())));
+                    if (importMod) {
+                        outputArray.add(ModManager.genreMod.getModNameByIdFromImportHelperMap(Integer.parseInt(currentString.toString())));
+                    } else {
+                        outputArray.add(ModManager.genreMod.getContentNameById(Integer.parseInt(currentString.toString())));
+                    }
                 }else{
                     outputArray.add(currentString.toString());
                 }
