@@ -75,30 +75,46 @@ public class SharingManager {
                 }
                 Set<Map<String, Object>> modMaps = getImportMaps(singleMods, bundledMods);
                 if (!modMaps.isEmpty()) {
-                    /*TODO Change the message to show all detected mods and make the user selected what mods should be imported
-                        After that the dependency check and import should be done*/
-                    boolean importMods = false;
-                    if (importType.equals(ImportType.REAL_PUBLISHERS)) {
-                        importMods = true;
+                    JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
+                    JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport"));
+                    checkBox.setToolTipText(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport.toolTip"));
+                    JComponent[] components = {label, checkBox};
+                    boolean continueImport = false;
+                    if (importType.equals(ImportType.RESTORE_POINT) || importType.equals(ImportType.REAL_PUBLISHERS)) {
+                        continueImport = true;
                     } else {
-                        if (JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"), I18n.INSTANCE.get(""), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                            importMods = true;
+                        if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("frame.title.import"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            continueImport = true;
                         }
                     }
-                    if (importMods) {
-                        Set<Map<String, Object>> modsChecked = checkDependencies(modMaps);
-                        if (modsChecked != null) {
-                            setImportHelperMaps(modsChecked);
-                            importAllMods(modsChecked);
-                            if(importType.equals(ImportType.RESTORE_POINT)){
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"));
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
-                            }else{
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
+                    if (continueImport) {
+                        Set<Map<String, Object>> importMap;
+                        if (checkBox.isSelected()) {
+                            importMap = getCustomizedImportMap(importType, modMaps);
+                        } else {
+                            importMap = modMaps;
+                        }
+                        if (!importMap.isEmpty()) {
+                            Set<Map<String, Object>> modsChecked = checkDependencies(importMap);
+                            if (modsChecked != null) {
+                                setImportHelperMaps(modsChecked);
+                                importAllMods(modsChecked);
+                                if(importType.equals(ImportType.RESTORE_POINT)){
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"));
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
+                                }else{
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
+                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
+                                }
+                            } else {
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                             }
                         } else {
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                            if(importType.equals(ImportType.RESTORE_POINT)){
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
+                            }else{
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                            }
                         }
                     } else {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
@@ -117,6 +133,65 @@ public class SharingManager {
         }
         if(ModManagerPaths.TEMP.toFile().exists()){
             ThreadHandler.startThread(ThreadHandler.runnableDeleteTempFolder, "runnableDeleteTempFolder");
+        }
+    }
+
+    /**
+     * Opens a gui to the user where they can select what mods should be added to the game.
+     * The mods that can be chosen are placed in the set.
+     * @param set The set where the mods are placed in
+     * @return A new set that contains only the mods that have been selected by the user
+     */
+    private static Set<Map<String, Object>> getCustomizedImportMap(ImportType importType, Set<Map<String, Object>> set) {
+        Map<AbstractBaseMod, JPanel> importModPanels = new HashMap<>();
+        Map<AbstractBaseMod, AtomicBoolean> enabledMods = new HashMap<>();
+        Map<AbstractBaseMod, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
+        for (AbstractBaseMod mod : ModManager.mods) {
+            Set<String> modNames = new HashSet<>();
+            for (Map<String, Object> map : set) {
+                if (map.get("mod_type").equals(mod.getExportType())) {
+                    modNames.add(map.get("mod_name").toString());
+                }
+            }
+            selectedMods.put(mod, new AtomicReference<>(modNames));
+            enabledMods.put(mod, new AtomicBoolean(true));
+            importModPanels.put(mod, new JPanel());
+        }
+        for (AbstractBaseMod mod : ModManager.mods) {
+            setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod));
+        }
+        String labelStartText;
+        String labelEndText;
+        if(importType.equals(ImportType.RESTORE_POINT)){
+            labelStartText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.startText.var1");
+            labelEndText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.endText.var1");
+        }else{
+            labelStartText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.startText.var2");
+            labelEndText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.endText.var2");
+        }
+        JLabel labelStart = new JLabel(labelStartText);
+        JLabel labelEnd = new JLabel(labelEndText);
+        Object[] params;
+        ArrayList<JPanel> panels = new ArrayList<>();
+        for(Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()){
+            panels.add(entry.getValue());
+        }
+        Object[] modPanels = panels.toArray(new Object[0]);
+        params = new Object[]{labelStart, modPanels, labelEnd};
+        if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            Set<Map<String, Object>> modMap = new HashSet<>();
+            for (AbstractBaseMod mod : ModManager.mods) {
+                for (Map<String, Object> map : set) {
+                    for (String string : selectedMods.get(mod).get()) {
+                        if (map.get("mod_name").equals(string)) {
+                            modMap.add(map);
+                        }
+                    }
+                }
+            }
+            return modMap;
+        } else {
+            return new HashSet<>();
         }
     }
 
@@ -201,7 +276,7 @@ public class SharingManager {
             try {
                 Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
                     @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                         if (!abortImport.get()) {
                             if (file.toFile().getName().endsWith(".toml")) {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.foundTomlFile") + ": " + file);
@@ -683,25 +758,25 @@ public class SharingManager {
     /**
      * Adds gui components to be displayed in the summary.
      * @param labelText The label text
-     * @param files The array list containing the feature specific files
+     * @param set The set that contains the mod names of the specific mod
      * @param panel The panel where the components should be added
-     * @param selectedEntries A atomic reference where the return values should be saved
+     * @param selectedEntries An atomic reference where the return values should be saved
      */
-    private static void setFeatureAvailableGuiComponents(String labelText, ArrayList<File> files, JPanel panel, AtomicReference<ArrayList<Integer>> selectedEntries, AtomicBoolean disableImport){//TODO decide if i should keep this function and reuse it when i implement the feature that all found mods are displayed (like it was in the old import function)
+    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport){//TODO decide if i should keep this function and reuse it when i implement the feature that all found mods are displayed (like it was in the old import function)
         JLabel label = new JLabel(labelText);
-        JButton button = new JButton(files.size() + "/" + files.size());
+        JButton button = new JButton(set.size() + "/" + set.size());
         disableImport.set(false);
         button.addActionListener(actionEvent -> {
-            ArrayList<Integer> arrayList = getSelectedEntries(files);
-            selectedEntries.set(arrayList);
-            if(arrayList.isEmpty()){
+            Set<String> selectedMods = getSelectedEntries(set);
+            selectedEntries.set(selectedMods);
+            if(selectedMods.isEmpty()){
                 LOGGER.info("Import disabled for: " + labelText.replaceAll(":", ""));
                 disableImport.set(true);
             }else{
                 LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
                 disableImport.set(false);
             }
-            button.setText(selectedEntries.get().size() + "/" + files.size());
+            button.setText(selectedEntries.get().size() + "/" + set.size());
         });
         panel.add(label);
         panel.add(button);
@@ -709,15 +784,11 @@ public class SharingManager {
 
     /**
      * Opens a gui where the user can select entries.
-     * @param files The files that should be scanned for the name that is displayed in the guis
-     * @return Returns a array list containing numbers of selected entries
+     * @param set The set that contains the mod names
+     * @return Returns an array list containing numbers of selected entries
      */
-    private static ArrayList<Integer> getSelectedEntries(ArrayList<File> files){//TODO hinzufügen, dass wenn abbrechen gedrückt wird, nicht gespeichert wird, was gerade angezeigt wird
-        ArrayList<String> listEntries = new ArrayList<>();//TODO fix this function if I decide to keep it
-        for(File file : files){
-            //listEntries.add(getImportName(file));
-        }
-        return Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(listEntries), Utils.convertArrayListToArray(listEntries),false);
+    private static Set<String> getSelectedEntries(Set<String> set){//TODO hinzufügen, dass wenn abbrechen gedrückt wird, nicht gespeichert wird, was gerade angezeigt wird
+        return Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)),false);
     }
 
     /**

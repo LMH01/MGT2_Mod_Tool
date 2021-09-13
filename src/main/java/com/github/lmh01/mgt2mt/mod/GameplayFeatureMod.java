@@ -103,7 +103,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         buttonBadGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip"));
         buttonBadGenres.addActionListener(actionEvent -> {
             try {
-                ArrayList<Integer> goodGenrePositions = Utils.getSelectedEntries("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
+                ArrayList<Integer> goodGenrePositions = Utils.getSelectedEntriesOld("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
                 ArrayList<Integer> badGenreIdsOut = new ArrayList<>();
                 for(Integer integer : goodGenrePositions){
                     badGenreIdsOut.add(ModManager.genreMod.getContentIdByName(ModManager.genreMod.getContentByAlphabet()[integer]));
@@ -129,7 +129,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         buttonGoodGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip"));
         buttonGoodGenres.addActionListener(actionEvent -> {
             try {
-                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntries("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
+                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntriesOld("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
                 ArrayList<Integer> goodGenreIdsOut = new ArrayList<>();
                 for(Integer integer : goodGenrePositions){
                     try {

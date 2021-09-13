@@ -532,7 +532,7 @@ dialog.sharingManager.importAll.guiComponents.checkBox.disableImportPopups|Disab
 dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups|Disable already exists popups
 dialog.sharingManager.importAll.guiComponents.checkBox.disableAlreadyExistsPopups.toolTip|<html>Check to disable popups that something already exists
 dialog.sharingManager.importAll.summary.startText.var1|The following mods can be restored:
-dialog.sharingManager.importAll.summary.startText.var2|The following objects can be imported:
+dialog.sharingManager.importAll.summary.startText.var2|The following mods can be imported:
 dialog.sharingManager.importAll.summary.endText.var1|<html>The numbers indicate how many entries,<br>out of the available entries will be restored.<br><br>Tip:<br>If you wish not to restore everything,<br>click the button(s) to select what entries should be restored.<br><br>Do you want to start the restoration process?
 dialog.sharingManager.importAll.summary.endText.var2|<html>The numbers indicate how many entries,<br>out of the available entries will be imported.<br><br>Tip:<br>If you wish not to import everything,<br>click the button(s) to select what entries should be imported.<br><br>Do you want to start the import process?
 dialog.sharingManager.importAll.summary.disableImportPopupsText.var1|<html>Check to disable confirm messages that something can be restored
@@ -668,6 +668,7 @@ frame.title.information|Information
 frame.title.import|Import
 frame.title.areYouSure|Are you sure?
 frame.title.missingDependency|Missing dependency
+frame.title.restorePointReady|Restore point ready
 
 processor.chooseEntries.label.firstPart|Select the
 processor.chooseEntries.label.secondPart|(s) that should be
@@ -810,7 +811,10 @@ textArea.importAll.dependencyCheck.optionPane.part1|Warning dependency not found
 textArea.importAll.dependencyCheck.optionPane.part2|Please choose a replacement from the list
 textArea.importAll.dependencyCheck.optionPane.part3|If no entry is selected, the replacement will be random.<br>Click cancel to cancel the import process.
 textArea.importAll.modsFound.part1|Search for mods completed, found
-textArea.importAll.modsFound.part2|Click ok to add them to the game.
+textArea.importAll.modsFound.part2|Do you want to add the mods to the game?
+textArea.importAll.restorePointReady|Restore point ready<br>Click ok to restore the restore point
+textArea.importAll.checkBox.customizeImport|Customize import
+textArea.importAll.checkBox.customizeImport.toolTip|Check this box so that when you continue a window is opened in which you can customize which mods should be imported
 textArea.importAll.importCanceled|Import canceled
 textArea.importAll.replacingOfMapEntryFailed|WARNING: Import-Map entry could not be replaced with the correct mod id, instead the id will be replaced by a random id. Reason
 textArea.importAll.settingNewModIds|Setting new mod ids

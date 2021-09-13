@@ -667,6 +667,7 @@ frame.title.information|Information
 frame.title.import|Importieren
 frame.title.areYouSure|Bist du dir sicher?
 frame.title.missingDependency|Fehlende Abhängigkeit
+frame.title.restorePointReady|Wiederherstellungspunkt bereit
 
 processor.chooseEntries.label.firstPart|Währe die
 processor.chooseEntries.label.secondPart|(s) aus, mit denen folgendes gemacht werden soll:
@@ -808,7 +809,10 @@ textArea.importAll.dependencyCheck.optionPane.part1|Achtung, es wurde eine fehle
 textArea.importAll.dependencyCheck.optionPane.part2|Wähle bitte einen Ersatz aus der Liste aus
 textArea.importAll.dependencyCheck.optionPane.part3|Wenn kein Eintrag aus der Liste ausgewählt wurde, wird ein Ersatz zufällig bestimmt.<br>Klicke auf abbrechen, um den Importier-Prozess abzubrechen.
 textArea.importAll.modsFound.part1|Suche nach Mods abgeschlossen, gefunden
-textArea.importAll.modsFound.part2|Klicke auf ok, damit sie zum Spiel hinzugefügt werden
+textArea.importAll.modsFound.part2|Sollen die Mods zum Spiel hinzugefügt werden?
+textArea.importAll.restorePointReady|Wiederherstellungspunkt bereit<br>Klicke auf OK, um den Wiederherstellungspunkt wiederherzustellen
+textArea.importAll.checkBox.customizeImport|Import anpassen
+textArea.importAll.checkBox.customizeImport.toolTip|Aktiviere diese Option, damit beim fortfahren ein Fenster geöffnet wird, in welchem die Mods angepasst werden können
 textArea.importAll.importCanceled|Import abgebrochen
 textArea.importAll.replacingOfMapEntryFailed|WARNUNG: Import-Map Eintrag konnte nicht mit der richtigen Mod-Id ersetzt werden, stattdessen wird die id durch eine zufällige id ersetzt. Grund
 textArea.importAll.settingNewModIds|Setze Neue Mod-IDs

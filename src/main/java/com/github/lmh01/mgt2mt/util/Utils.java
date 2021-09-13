@@ -297,9 +297,49 @@ public class Utils {
      * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
      * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
      * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
+     * @return Returns the selected entry names
+     */
+    public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
+        Set<String> returnValues = new HashSet<>();
+        JLabel labelChooseEntry = new JLabel(labelText);
+        String[] existingListContent;
+        if(Settings.disableSafetyFeatures){
+            existingListContent = stringArraySafetyFeaturesDisabled;
+        }else {
+            existingListContent = stringArraySafetyFeaturesOn;
+        }
+        JList<String> listAvailableEntries = new JList<>(existingListContent);
+        listAvailableEntries.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listAvailableEntries.setLayoutOrientation(JList.VERTICAL);
+        listAvailableEntries.setVisibleRowCount(-1);
+        JScrollPane scrollPaneAvailableEntries = new JScrollPane(listAvailableEntries);
+        scrollPaneAvailableEntries.setPreferredSize(new Dimension(315,140));
+
+        Object[] params = {labelChooseEntry, scrollPaneAvailableEntries};
+
+        if(JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            if(!listAvailableEntries.isSelectionEmpty()){
+                returnValues.addAll(listAvailableEntries.getSelectedValuesList());
+            }else{
+                if(showNoSelectionMessage){
+                    JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        }
+        return returnValues;
+    }
+
+    /**
+     * Opens a window where the user can select entries from a list.
+     * @param labelText The text that should be displayed at the top of the window
+     * @param windowTile The window title that the window should get
+     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
+     * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
+     * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
      * @return Returns the selected entries as array list.
      */
-    public static ArrayList<Integer> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
+    public static ArrayList<Integer> getSelectedEntriesOld(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
         ArrayList<Integer> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
