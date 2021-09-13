@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
@@ -26,7 +27,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -311,7 +311,7 @@ public class PublisherMod extends AbstractComplexMod {
     @Override
     public void removeImageFiles(String name) throws ModProcessingException {
         int iconId = getPublisherIconIdByName(name);
-        if (iconId > 146) {
+        if (iconId > 164) {
             File publisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve(Paths.get(iconId + ".png")).toFile();
             LOGGER.info("publisherIcon: " + publisherIcon.getPath());
             if (publisherIcon.exists()) {
@@ -419,7 +419,7 @@ public class PublisherMod extends AbstractComplexMod {
         }
     }
 
-    public final String REAL_PUBLISHER_ZIP_URL = "https://www.dropbox.com/s/gkn7y2he1we3fgc/Publishers.zip?dl=1";
+    public final String REAL_PUBLISHER_ZIP_URL = "https://www.dropbox.com/s/3tzbizxj4evfptn/RealPublishersNew.zip?dl=1";
 
     /**
      * Asks the user if he is sure that the existing publishers should be replaced with the real publisher equivalents
@@ -455,9 +455,7 @@ public class PublisherMod extends AbstractComplexMod {
                     }
                     LOGGER.info("Original publishers have been removed!");
                     LOGGER.info("Adding new publishers...");
-                    ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped.toFile(), "publisher.txt");
-                    ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));//TODO FIX function
-                    //SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.importMod(string, false), ModManager.publisherMod.getCompatibleModToolVersions(), new AtomicBoolean(false));
+                    SharingManager.importAll(ImportType.REAL_PUBLISHERS, publisherUnzipped);
                     ModManager.publisherMod.analyzeFile();
                     if(ModManager.publisherMod.getActiveIds().contains(-1)){
                         ModManager.publisherMod.removeMod("Dummy");

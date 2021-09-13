@@ -15,5 +15,10 @@ public enum ImportType {
     /**
      * Indicates that the import is a download
      */
-    DOWNLOAD();
+    DOWNLOAD(),
+
+    /**
+     * Indicates that the import are real publishers
+     */
+    REAL_PUBLISHERS()
 }

@@ -101,7 +101,7 @@ public class ImageFileHandler {
     /**
      * Removes all custom publisher icons
      */
-    public static void removePublisherIcons(){//TODO Check if this still works
+    public static void removePublisherIcons(){
         ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(MGT2Paths.GENRE_SCREENSHOTS.getPath(), ".png");
         for(File file : files){
             try{

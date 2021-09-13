@@ -6,7 +6,6 @@ import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
-import com.github.lmh01.mgt2mt.windows.WindowMain;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
@@ -18,13 +17,10 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
@@ -81,7 +77,15 @@ public class SharingManager {
                 if (!modMaps.isEmpty()) {
                     /*TODO Change the message to show all detected mods and make the user selected what mods should be imported
                         After that the dependency check and import should be done*/
-                    if (JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"), I18n.INSTANCE.get(""), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                    boolean importMods = false;
+                    if (importType.equals(ImportType.REAL_PUBLISHERS)) {
+                        importMods = true;
+                    } else {
+                        if (JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"), I18n.INSTANCE.get(""), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                            importMods = true;
+                        }
+                    }
+                    if (importMods) {
                         Set<Map<String, Object>> modsChecked = checkDependencies(modMaps);
                         if (modsChecked != null) {
                             setImportHelperMaps(modsChecked);
