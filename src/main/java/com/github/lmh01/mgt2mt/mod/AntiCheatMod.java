@@ -134,16 +134,6 @@ public class AntiCheatMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "ANTI_CHEAT";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "antiCheat.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         return new ArrayList<>();
     }

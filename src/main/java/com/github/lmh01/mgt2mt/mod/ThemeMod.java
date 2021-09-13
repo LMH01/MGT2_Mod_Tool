@@ -144,7 +144,15 @@ public class ThemeMod extends AbstractSimpleMod {
                                     }else if(Integer.parseInt(Objects.requireNonNull(comboBoxViolenceLevel.getSelectedItem().toString())) == 6){
                                         ageNumber = 1;
                                     }
-                                    addModOld(themeTranslations, arrayListCompatibleGenreIds, ageNumber);
+                                    StringBuilder line = new StringBuilder();
+                                    line.append(textFieldThemeName.getText()).append(" ");
+                                    for (Integer integer : arrayListCompatibleGenreIds) {
+                                        line.append("<").append(integer).append(">");
+                                    }
+                                    if (ageNumber != 0) {
+                                        line.append("<").append("M").append(ageNumber).append(">");
+                                    }
+                                    addMod(themeTranslations, line.toString());
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + textFieldThemeName.getText());
                                     JOptionPane.showMessageDialog(null, "The new theme has been added successfully!");
                                     breakLoop = true;
@@ -189,16 +197,6 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "THEME";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "theme.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);
@@ -223,7 +221,7 @@ public class ThemeMod extends AbstractSimpleMod {
 
     /**
      * @deprecated DO NOT USE THIS FUNCTION. IT IS NOT IMPLEMENTED FOR THEME MOD
-     * Use {@link ThemeMod#addModOld(Map, ArrayList, int)} instead!
+     * Use {@link ThemeMod#addMod(Map, String)}  instead!
      */
     @Deprecated
     @Override
@@ -286,7 +284,7 @@ public class ThemeMod extends AbstractSimpleMod {
 
     @Override
     public void removeModFromFile(String name) throws ModProcessingException {
-        editThemeFilesOld(null, null, false, getPositionOfThemeInFile(name), 0);
+        editThemeFiles(null, null, false, getPositionOfThemeInFile(name));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + name);
     }
 
@@ -318,66 +316,6 @@ public class ThemeMod extends AbstractSimpleMod {
         return stringBuilder.toString();
     }
 
-    @Override
-    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.theme"));
-        analyzeFile();
-        File fileThemeToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
-        ArrayList<Integer> compatibleGenreIds = new ArrayList<>();
-        HashMap<String, String> map = new HashMap<>();
-        int violenceRating = 0;
-        List<Map<String, String>> list;
-        try {
-            list = DataStreamHelper.parseDataFile(fileThemeToImport);
-        } catch (IOException e) {
-            throw new ModProcessingException("File could not be parsed '" + fileThemeToImport.getName() + "': " +  e.getMessage(), e);
-        }
-        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
-            if(entry.getKey().equals("GENRE COMB")){
-                ArrayList<String> compatibleGenreNames = Utils.getEntriesFromString(entry.getValue());
-                for(String string : compatibleGenreNames){
-                    compatibleGenreIds.add(ModManager.genreMod.getContentIdByName(string));
-                }
-            }else if(entry.getKey().equals("VIOLENCE LEVEL")){
-                violenceRating = Integer.parseInt(entry.getValue());
-            }else{
-                map.put(entry.getKey(), entry.getValue());
-            }
-        }
-
-        boolean themeCanBeImported = false;
-        for(String string : getCompatibleModToolVersions()){
-            if(string.equals(map.get("MGT2MT VERSION"))){
-                themeCanBeImported = true;
-            }
-        }
-        if(!themeCanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
-            return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
-        }
-        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
-            if(entry.getValue().equals(map.get("NAME EN"))){
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
-                LOGGER.info("Theme already exists - The theme name is already taken");
-                return "false";
-            }
-        }
-        try {
-            if(showMessages){
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme") + "\n\n" + map.get("NAME EN"), I18n.INSTANCE.get("dialog.sharingHandler.theme.addTheme.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    addModOld(map, compatibleGenreIds, violenceRating);
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.theme.upperCase") + " " + map.get("NAME EN") + " " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
-                }
-            }else{
-                addModOld(map, compatibleGenreIds, violenceRating);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ModProcessingException(I18n.INSTANCE.get("dialog.sharingHandler.unableToAddTheme") + ":" + map.get("NAME EN") + " - " + I18n.INSTANCE.get("commonBodies.exception") + e.getMessage(), e);
-        }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + I18n.INSTANCE.get("window.main.share.export.theme") + " - " + map.get("NAME EN"));
-        return "true";
-    }
-
     /**
      * Adds a new theme to the theme files
      * @param map The map containing the theme translations
@@ -385,17 +323,6 @@ public class ThemeMod extends AbstractSimpleMod {
      */
     public void addMod(Map<String, String> map, String line) throws ModProcessingException {
         editThemeFiles(map, line, true, 0);
-    }
-
-    /**
-     * Adds a new theme to the theme files
-     * @param map The map containing the theme translations
-     * @param arrayListCompatibleGenres The array list containing the compatible genres
-     * @deprecated Use {@link ThemeMod#addMod(Map, String)}  instead.
-     */
-    @Deprecated
-    public void addModOld(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, int violenceLevel) throws ModProcessingException {
-        editThemeFilesOld(map, arrayListCompatibleGenres, true, 0, violenceLevel);
     }
 
     /**
@@ -486,91 +413,6 @@ public class ThemeMod extends AbstractSimpleMod {
                             genreIdsToPrint.append(" ");
                             bw.write(line);
                         } else {
-                            if(Settings.enableDebugLogging){
-                                LOGGER.info("current string: " + string);
-                            }
-                            bw.write(map.get("NAME " + string));
-                        }
-                    }
-                } catch (NullPointerException ignored) {
-
-                }
-                bw.close();
-            }
-        } catch (IOException e) {
-            throw new ModProcessingException("Error while editing the theme files: " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Adds/removes a theme to the theme files
-     * @param map The map containing the translations
-     * @param arrayListCompatibleGenres The array list where the compatible genre ids are listed.
-     * @param addTheme True when the theme should be added. False when the theme should be removed.
-     * @param removeThemePosition The position where the theme is positioned that should be removed.
-     * @param violenceLevel This is the number that will be added to the theme entry in the german file. This declares how much the age rating should be influenced when a game is made with this topic
-     * @deprecated Use {@link ThemeMod#editThemeFiles(Map, String, boolean, int)} instead.
-     */
-    @Deprecated
-    public void editThemeFilesOld(Map<String, String> map, ArrayList<Integer> arrayListCompatibleGenres, boolean addTheme, int removeThemePosition, int violenceLevel) throws ModProcessingException {
-        try {
-            for(String string : TranslationManager.TRANSLATION_KEYS){
-                File themeFile = Utils.getThemeFile(string);
-                Map<Integer, String> currentThemeFileContent;
-                if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_8BOM");
-                }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_16LE");
-                }else{
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
-                }
-                if(themeFile.exists()){
-                    themeFile.delete();
-                }
-                themeFile.createNewFile();
-                BufferedWriter bw;
-                if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
-                    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_8));
-                    bw.write("\ufeff");//Makes the file UTF8 BOM
-                }else if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)){
-                    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_16LE));
-                }else{
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
-                }
-                int currentLine = 1;
-                boolean firstLine = true;
-                for(int i = 0; i< Objects.requireNonNull(currentThemeFileContent).size(); i++){
-                    if(!firstLine){
-                        if(!addTheme){
-                            if(currentLine != removeThemePosition) {
-                                bw.write("\r\n");
-                            }
-                        }else{
-                            bw.write("\r\n");
-                        }
-                    }else{
-                        firstLine = false;
-                    }
-                    if(addTheme || currentLine != removeThemePosition) {
-                        bw.write(currentThemeFileContent.get(currentLine));
-                    }
-                    currentLine++;
-                }
-                try{
-                    if(addTheme) {
-                        bw.write("\r\n");
-                        if(string.equals("GE")){
-                            StringBuilder genreIdsToPrint = new StringBuilder();
-                            genreIdsToPrint.append(" ");
-                            bw.write(map.get("NAME GE"));
-                            for(Integer genreId : arrayListCompatibleGenres){
-                                genreIdsToPrint.append("<").append(genreId).append(">");
-                            }
-                            if(violenceLevel != 0){
-                                genreIdsToPrint.append("<").append("M").append(violenceLevel).append(">");
-                            }
-                            bw.write(genreIdsToPrint.toString());
-                        }else{
                             if(Settings.enableDebugLogging){
                                 LOGGER.info("current string: " + string);
                             }

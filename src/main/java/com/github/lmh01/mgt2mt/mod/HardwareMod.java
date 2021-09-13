@@ -312,16 +312,6 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "HARDWARE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "Hardware.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.gameplayFeatureMod);

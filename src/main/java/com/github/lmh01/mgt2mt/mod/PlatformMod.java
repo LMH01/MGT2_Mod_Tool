@@ -505,37 +505,10 @@ public class PlatformMod extends AbstractComplexMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "PLATFORM";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "platform.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.gameplayFeatureMod);
         return arrayList;
-    }
-
-    @Override
-    public void doOtherImportThings(Path importFolderPath, String name) {
-        try{
-            File importFolderPictureFolder = importFolderPath.resolve("DATA/pictures").toFile();
-            if(importFolderPictureFolder.exists()){
-                ArrayList<File> pictures = DataStreamHelper.getFilesInFolderWhiteList(Paths.get(importFolderPictureFolder.getPath()), ".png");
-                Map<Integer, File> importPictureMap = new HashMap<>();
-                for(File file : pictures){
-                    importPictureMap.put(Integer.parseInt(file.getName().replaceAll("[^0-9]","")), file);
-                }
-                addImageFiles(name, importPictureMap);
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
     }
 
     @Override

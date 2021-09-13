@@ -27,8 +27,8 @@ public class ImportFromURLHelper {
                 Path downloadZip = ModManagerPaths.DOWNLOAD.getPath().resolve(currentDateTime + "download.zip");
                 Path downloadUnzipped = ModManagerPaths.DOWNLOAD.getPath().resolve(currentDateTime + "download");
                 DataStreamHelper.downloadZip(textFieldUrl.getText(), downloadZip);
-                DataStreamHelper.unzip(downloadZip, downloadUnzipped);
-                SharingManager.importAllOld(false, downloadUnzipped);
+                DataStreamHelper.unzip(downloadZip, downloadUnzipped);//TODO FIX
+                //SharingManager.importAllOld(false, downloadUnzipped);
             } catch (IOException e) {
                 e.printStackTrace();
                 String errorMessageToDisplay;

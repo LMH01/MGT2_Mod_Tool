@@ -233,16 +233,6 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "NPC_ENGINE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "npcEngine.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);

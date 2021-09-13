@@ -145,16 +145,6 @@ public class CopyProtectMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "COPY_PROTECT";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "copyProtect.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         return new ArrayList<>();
     }

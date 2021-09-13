@@ -126,16 +126,6 @@ public class GenreMod extends AbstractComplexMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "GENRE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "genre.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.themeMod);
@@ -272,85 +262,6 @@ public class GenreMod extends AbstractComplexMod {
         ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderWhiteList(Paths.get("assets_folder"), "genre_" + map.get("mod_name").toString().toLowerCase() + "_screenshot");
         File genreIcon = Paths.get(importMap.get("assets_folder")).resolve(importMap.get("iconName")).toFile();
         addGenre(importMap, compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, false);
-    }
-
-    @Override
-    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + I18n.INSTANCE.get("window.main.share.export.genre"));
-        ModManager.genreMod.analyzeFile();
-        ModManager.gameplayFeatureMod.analyzeFile();
-        ModManager.themeMod.analyzeFile();
-        int newGenreId = ModManager.genreMod.getFreeId();
-        File fileGenreToImport = importFolderPath.resolve("genre.txt").toFile();
-        Path screenshotFolder = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(newGenreId));
-        File fileScreenshotsToImport = importFolderPath.resolve("DATA/screenshots").toFile();
-        Map<String, String> map = new HashMap<>();
-        List<Map<String, String>> list;
-        try {
-            list = DataStreamHelper.parseDataFile(fileGenreToImport);
-        } catch (IOException e) {
-            throw new ModProcessingException("File could not be parsed '" + fileGenreToImport.getName() + "': " +  e.getMessage());
-        }
-        map.put("ID", Integer.toString(newGenreId));
-        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
-            if(entry.getKey().equals("GENRE COMB")){
-                map.put("GENRE COMB", convertGenreNamesToId(entry.getValue(), true));
-            }else if(entry.getKey().equals("THEME COMB")){
-                ArrayList<String> arrayList = Utils.getEntriesFromString(entry.getValue());
-                StringBuilder themeIds = new StringBuilder();
-                ArrayList<String> themes = new ArrayList<>(Arrays.asList(ModManager.themeMod.getContentByAlphabet()));
-                for(String string : arrayList){
-                    if (themes.contains(string)) {
-                        themeIds.append("<").append(string).append(">");
-                    }
-                }
-                map.put("THEME COMB", themeIds.toString());
-            }else{
-                map.put(entry.getKey(), entry.getValue());
-            }
-        }
-        boolean genreCanBeImported = false;
-        for(String string : getCompatibleModToolVersions()){
-            if(string.equals(map.get("MGT2MT VERSION"))){
-                genreCanBeImported = true;
-            }
-        }
-        if(!genreCanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN") + " - " + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION")));
-            return I18n.INSTANCE.get("textArea.import.notCompatible" + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN") + "\n" + I18n.INSTANCE.get("textArea.import.notCompatible.2") + " " + map.get("MGT2MT VERSION"));
-        }
-        for(Map<String, String> map2 : ModManager.genreMod.getFileContent()){
-            for(Map.Entry<String, String> entry : map2.entrySet()){
-                if(entry.getValue().equals(map.get("NAME EN"))){
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.alreadyExists") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + map.get("NAME EN"));
-                    LOGGER.info("Genre already exists - The genre name is already taken");
-                    return "false";
-                }
-            }
-        }
-        if(screenshotFolder.toFile().exists()){
-            try {
-                DataStreamHelper.deleteDirectory(screenshotFolder);
-            } catch (IOException e){
-                throw new ModProcessingException("Unable to delete screenshot folder: " + screenshotFolder, e);
-            }
-        }//Here
-        Set<Integer> compatibleThemeIds = new HashSet<>();
-        for(String string : Utils.getEntriesFromString(map.get("THEME COMB"))){
-            compatibleThemeIds.add(ModManager.themeMod.getPositionOfThemeInFile(string));
-        }
-        Set<Integer> gameplayFeaturesBadIds = new HashSet<>();
-        Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
-        for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE BAD"))){
-            gameplayFeaturesBadIds.add(ModManager.gameplayFeatureMod.getContentIdByName(string));
-        }
-        for(String string : Utils.getEntriesFromString(map.get("GAMEPLAYFEATURE GOOD"))){
-            gameplayFeaturesGoodIds.add(ModManager.gameplayFeatureMod.getContentIdByName(string));
-        }
-        ArrayList<File> genreScreenshots = DataStreamHelper.getFilesInFolderBlackList(fileScreenshotsToImport.toPath(), ".meta");
-        File genreIcon = new File(importFolderPath + "//DATA//icon.png");
-        addGenre(map,compatibleThemeIds, gameplayFeaturesBadIds, gameplayFeaturesGoodIds, genreScreenshots,true, genreIcon, showMessages);
-        return "true";
     }
 
     /**

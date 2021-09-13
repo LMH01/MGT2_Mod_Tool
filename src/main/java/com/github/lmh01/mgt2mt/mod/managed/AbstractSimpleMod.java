@@ -86,56 +86,6 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     /**
-     * Imports the mod.
-     * @param importFolderPath The path for the folder where the import files are stored
-     * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
-     */
-    @Deprecated
-    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
-        analyzeFile();
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
-        Map<String, String> map;
-        try {
-            map = DataStreamHelper.parseDataFile(fileToImport).get(0);
-        } catch (IOException e) {
-            throw new ModProcessingException("File could not be parsed '" + fileToImport.getName() + "': " +  e.getMessage());
-        }
-        boolean CanBeImported = false;
-        for(String string : getCompatibleModToolVersions()){
-            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
-                CanBeImported = true;
-            }
-        }
-        if(!CanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + getReplacedLine(map.get("LINE")));
-            return getType() + " [" + getReplacedLine(map.get("LINE")) + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + map.get("MGT2MT VERSION");
-        }
-        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
-            if(entry.getValue().equals(map.get("LINE"))){
-                sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
-                TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + getReplacedLine(map.get("LINE")));
-                return "false";
-            }
-        }
-        String importLine = getChangedImportLine(map.get("LINE"));
-        boolean addFeature = true;
-        if(showMessages){
-            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(importLine)) != JOptionPane.YES_OPTION){
-                addFeature = false;
-            }
-        }
-        if(addFeature){
-            addModToFile(importLine);
-            if(showMessages){
-                JOptionPane.showMessageDialog(null, getType() + " [" + getReplacedLine(map.get("LINE")) + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
-            }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + getReplacedLine(map.get("LINE")));
-        }
-        return "true";
-    }
-
-    /**
      * Edits the mod file
      * @param addMod If true the mod will be added. If false the mod fill be removed
      * @param mod If add mod is true: This string will be printed into the text file. If add mod is false: The string is the mod name which mod should be removed

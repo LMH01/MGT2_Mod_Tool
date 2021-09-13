@@ -411,15 +411,6 @@ public abstract class AbstractBaseMod {
     protected abstract <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException;
 
     /**
-     * Imports the mod.
-     * @param importFolderPath The path for the folder where the import files are stored
-     * @return Returns "true" when the mod has been imported successfully. Returns "false" when the mod already exists. Returns mod tool version of import mod when mod is not compatible with current mod tool.
-     * @deprecated Use {@link AbstractBaseMod#importMod(Map)} instead.
-     */
-    @Deprecated
-    public abstract String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException;
-
-    /**
      * Imports the mod to the game.
      * Will edit the game files and import pictures, if needed.
      * {@link AbstractBaseMod#addModToFile(Object)} is used to edit the game file(s).
@@ -427,27 +418,6 @@ public abstract class AbstractBaseMod {
      * @throws ModProcessingException If something went wrong while importing the mod
      */
     public abstract void importMod(Map<String, Object> map) throws ModProcessingException;
-
-    /**
-     * @return The type name in caps
-     * Eg. GAMEPLAY FEATURE, ENGINE FEATURE, GENRE
-     */
-    public abstract String getTypeCaps();
-
-    /**
-     * @return The export/import file name under which the mod can be found
-     * Eg. gameplayFeature.txt, engineFeature.txt
-     */
-    @Deprecated
-    public abstract String getImportExportFileName();
-
-    /**
-     * @return The name of the mod export folder
-     */
-    @Deprecated
-    public String getExportFolder() {
-        return getType();
-    }
 
     /**
      * @return An array list that contains all the dependencies of the mod

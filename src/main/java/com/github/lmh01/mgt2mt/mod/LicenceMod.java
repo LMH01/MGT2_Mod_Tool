@@ -133,16 +133,6 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "LICENCE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "licence.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         return new ArrayList<>();
     }

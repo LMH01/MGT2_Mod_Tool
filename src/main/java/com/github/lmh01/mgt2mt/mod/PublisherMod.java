@@ -263,16 +263,6 @@ public class PublisherMod extends AbstractComplexMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "PUBLISHER";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "publisher.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);
@@ -349,72 +339,6 @@ public class PublisherMod extends AbstractComplexMod {
         }
         map.put("iconName", imageName);
         return map;
-    }
-
-    @Override
-    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
-        analyzeFile();
-        ModManager.genreMod.analyzeFile();
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
-        HashMap<String, String> map = new HashMap<>();
-        List<Map<String, String>> list;
-        try {
-            list = DataStreamHelper.parseDataFile(fileToImport);
-        } catch (IOException e) {
-            throw new ModProcessingException("File could not be parsed '" + fileToImport.getName() + "': " +  e.getMessage());
-        }
-        map.put("ID", Integer.toString(getFreeId()));
-        for(Map.Entry<String, String> entry : list.get(0).entrySet()){
-            if(entry.getKey().equals("GENRE")){
-                try {
-                    map.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(entry.getValue())));
-                } catch (ModProcessingException e) {
-                    int randomGenreID = Utils.getRandomNumber(0, ModManager.genreMod.getFileContent().size()-1);
-                    LOGGER.info("Genre list size: " + ModManager.genreMod.getFileContent().size());
-                    map.put("GENRE", Integer.toString(randomGenreID));
-                }
-            }else{
-                map.put(entry.getKey(), entry.getValue());
-            }
-        }
-        boolean CanBeImported = false;
-        for(String string : getCompatibleModToolVersions()){
-            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
-                CanBeImported = true;
-            }
-        }
-        if(!CanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + map.get("NAME EN"));
-            return getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + map.get("MGT2MT VERSION");
-        }
-        for(Map<String, String> existingContent : getFileContent()){
-            for(Map.Entry<String, String> entry : existingContent.entrySet()){
-                if(entry.getValue().equals(map.get("NAME EN"))){
-                    sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + map.get("NAME EN"));
-                    return "false";
-                }
-            }
-        }
-        boolean addFeature = true;
-        if(showMessages){
-            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(map)) != JOptionPane.YES_OPTION){
-                addFeature = false;
-            }
-        }
-        File publisherImageFilePath = new File(importFolderPath + "/DATA/icon.png");
-        map.put("PIC", Integer.toString(CompanyLogoAnalyzer.getLogoNumber()));
-        if(addFeature){
-            ModManager.publisherMod.addModToFile(map);
-            copyPublisherIcon(new File(MGT2Paths.COMPANY_ICONS.getPath() + "/" + map.get("PIC") + ".png"), new File(publisherImageFilePath.toString()));
-            doOtherImportThings(importFolderPath, map.get("NAME EN"));
-            if(showMessages){
-                JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
-            }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("NAME EN"));
-        }
-        return "true";
     }
 
     /**
@@ -532,8 +456,8 @@ public class PublisherMod extends AbstractComplexMod {
                     LOGGER.info("Original publishers have been removed!");
                     LOGGER.info("Adding new publishers...");
                     ArrayList<File> filesToImport = DataStreamHelper.getFiles(publisherUnzipped.toFile(), "publisher.txt");
-                    ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));
-                    SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.importMod(string, false), ModManager.publisherMod.getCompatibleModToolVersions(), new AtomicBoolean(false));
+                    ProgressBarHelper.initializeProgressBar(0, filesToImport.size(), I18n.INSTANCE.get(""));//TODO FIX function
+                    //SharingManager.importAllFiles(filesToImport, new ArrayList<>(), false, "publisher", (string) -> ModManager.publisherMod.importMod(string, false), ModManager.publisherMod.getCompatibleModToolVersions(), new AtomicBoolean(false));
                     ModManager.publisherMod.analyzeFile();
                     if(ModManager.publisherMod.getActiveIds().contains(-1)){
                         ModManager.publisherMod.removeMod("Dummy");

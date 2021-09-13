@@ -158,67 +158,6 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     }
 
     @Override
-    @Deprecated
-    public String importMod(Path importFolderPath, boolean showMessages) throws ModProcessingException {
-        analyzeFile();
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + getType());
-        File fileToImport = importFolderPath.resolve(getImportExportFileName()).toFile();
-        Map<String, String> map;
-        try {
-            map = DataStreamHelper.parseDataFile(fileToImport).get(0);
-        } catch (IOException e) {
-            throw new ModProcessingException("File could not be parsed '" + fileToImport.getName() + "': " +  e.getMessage());
-        }
-        map.put("ID", Integer.toString(getFreeId()));
-        boolean CanBeImported = false;
-        for(String string : getCompatibleModToolVersions()){
-            if(string.equals(map.get("MGT2MT VERSION")) || Settings.disableSafetyFeatures){
-                CanBeImported = true;
-            }
-        }
-        if(!CanBeImported && !Settings.disableSafetyFeatures){
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.notCompatible") + " " + getType() + " - " + map.get("NAME EN"));
-            return getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.firstPart") + ":\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.secondPart") + "\n" + getType() + " " + I18n.INSTANCE.get("sharer.importMod.couldNotBeImported.thirdPart") + " " + map.get("MGT2MT VERSION");
-        }
-        for(Map<String, String> existingContent : getFileContent()){
-            for(Map.Entry<String, String> entry : existingContent.entrySet()){
-                if(entry.getValue().equals(map.get("NAME EN"))){
-                    sendLogMessage(getType() + " " + I18n.INSTANCE.get("sharer.importMod.alreadyExists.short") + " - " + getType() + " " + I18n.INSTANCE.get("sharer.importMod.nameTaken"));
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.importMod.alreadyExists") + " " + getType() + " - " + map.get("NAME EN"));
-                    return "false";
-                }
-            }
-        }
-        boolean addFeature = true;
-        if(showMessages){
-            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(getChangedImportMap(map))) != JOptionPane.YES_OPTION){
-                addFeature = false;
-            }
-        }
-        if(addFeature){
-            try {
-                addModToFile(getChangedImportMap(map));
-            } catch (NullPointerException | NumberFormatException e) {
-                throw new ModProcessingException("The import map could not be changed", e);
-            }
-            doOtherImportThings(importFolderPath, map.get("NAME EN"));
-            if(showMessages){
-                JOptionPane.showMessageDialog(null, getType() + " [" + map.get("NAME EN") + "] " + I18n.INSTANCE.get("dialog.sharingHandler.hasBeenAdded"));
-            }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("NAME EN"));
-        }
-        return "true";
-    }
-
-    /**
-     * Put things in this function that should be executed when the txt file has been imported.
-     */
-    @Deprecated
-    public void doOtherImportThings(Path importFolderPath, String name) throws ModProcessingException {
-
-    }
-
-    @Override
     public String[] getContentByAlphabet() throws ModProcessingException {
         try {
             ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();

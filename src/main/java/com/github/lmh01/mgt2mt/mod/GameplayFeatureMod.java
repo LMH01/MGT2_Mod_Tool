@@ -330,16 +330,6 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "GAMEPLAY FEATURE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "gameplayFeature.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);

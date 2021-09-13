@@ -193,16 +193,6 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "ENGINE_FEATURE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "engineFeature.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         return new ArrayList<>();
     }

@@ -145,16 +145,6 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "NPC_GAME";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "npcGame.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);

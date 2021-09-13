@@ -120,14 +120,6 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             importFiles.add(file);
             ArrayList<Integer> integers = new ArrayList<>();
             integers.add(0);
-            SharingManager.importAllFiles(importFiles, integers, false, "AdvancedTestMod", (string) -> {
-                try {
-                    return themeMod.importMod(string, true);
-                } catch (ModProcessingException e) {
-                    e.printStackTrace();
-                    return "";
-                }
-            }, themeMod.getCompatibleModToolVersions(), new AtomicBoolean(true));
         }
     }
 

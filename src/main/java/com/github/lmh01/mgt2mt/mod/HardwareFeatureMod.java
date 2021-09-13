@@ -196,16 +196,6 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public String getTypeCaps() {
-        return "HARDWARE_FEATURE";
-    }
-
-    @Override
-    public String getImportExportFileName() {
-        return "HardwareFeatures.txt";
-    }
-
-    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         return new ArrayList<>();
     }
