@@ -71,6 +71,7 @@ public class ProgressBarHelper {//TODO Rewrite in a way like TimeHelper (so that
      * @param showProgressInText  If true the progress will be displayed in text
      */
     public static void initializeProgressBar(int minValue, int maxValue, String text, boolean setTextArea, boolean disableMeasuredTime, boolean showProgressInText) {
+        resetProgressBar();
         secondsElapsed = 0;
         if (!disableMeasuredTime) {
             timeEnabled = true;
