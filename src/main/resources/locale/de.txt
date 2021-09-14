@@ -1006,6 +1006,7 @@ window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon Ordner:
 window.settings.changesInSettings.language|Sprache:
 window.settings.changesInSettings.updateChannel|Update Kanal:
 window.settings.changesInSettings.saveLogs|Logs speichern:
+window.settings.changesInSettings.exportStorage|Export lager aktivieren:
 window.settings.changesNotSaved.part1|Es wurden Änderungen gemacht, die noch nicht gespeichert wurden:
 window.settings.changesNotSaved.part2|Möchtest du sie speichern?
 window.settings.changesNotSaved.title|Ungespeicherte änderungen
@@ -1037,6 +1038,8 @@ window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach U
 window.settings.windowTitle|Einstellungen
 window.settings.checkBox.saveLogs|Logs speichern
 window.settings.checkBox.saveLogs.toolTip|<html>Aktiviere diese box, damit alle Logs abgespeichert werden.<br>Wenn deaktiviert, wird nur der letzte Log abgespeichert.
+window.settings.exportStorage.checkBoxText|Exports lagern
+window.settings.exportStorage.checkBoxText.toolTip|Wenn aktiviert, werden Exports nicht mehr überschrieben, sondern für jeden Export wird ein neuer Ordner erstellt
 
 window.npcGamesList.title|Ändere die Liste der NPC-Spiele
 window.npcGamesList.label|<html>Wähle aus, welches Genre zur Liste der NPC-Spiele hinzugefügt / daraus entfernt werden soll.<br>Wenn das Genre in der Liste der NPC-Spiele aufgeführt ist, können NPC-Unternehmen Spiele mit dem ausgewählten Genre erstellen.

@@ -24,7 +24,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
     JComboBox comboBoxLanguage = new JComboBox();
     JComboBox comboBoxUpdateChannel = new JComboBox();
     JCheckBox checkBoxDisableSafety = new JCheckBox(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxText"));
-    JCheckBox checkBoxDebugMode = new JCheckBox(I18n.INSTANCE.get("window.settings.debugMode.checkBoxText"));
+    JCheckBox checkBoxExportStorage = new JCheckBox(I18n.INSTANCE.get("window.settings.exportStorage.checkBoxText"));
     JCheckBox checkBoxSaveLogs = new JCheckBox(I18n.INSTANCE.get("window.settings.checkBox.saveLogs"));
     AtomicBoolean doNotPerformComboBoxActionListener = new AtomicBoolean(false);
 
@@ -54,13 +54,13 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         SettingsText.setBounds(137, 11, 100, 19);
         contentPane.add(SettingsText);
 
-        checkBoxDebugMode.setBounds(20, 40, 250, 23);
-        checkBoxDebugMode.setToolTipText(I18n.INSTANCE.get("window.settings.debugMode.checkBoxToolTip"));
-        checkBoxDebugMode.addActionListener(e -> {
-            LOGGER.info("checkBoxDebugMode action: " + e.getActionCommand());
-            unsavedChanges = checkBoxDebugMode.isSelected() != Settings.enableDebugLogging;
+        checkBoxExportStorage.setBounds(20, 40, 250, 23);
+        checkBoxExportStorage.setToolTipText(I18n.INSTANCE.get("window.settings.exportStorage.checkBoxText.toolTip"));
+        checkBoxExportStorage.addActionListener(e -> {
+            LOGGER.info("checkBoxExportStorage action: " + e.getActionCommand());
+            unsavedChanges = checkBoxExportStorage.isSelected() != Settings.enableExportStorage;
         });
-        contentPane.add(checkBoxDebugMode);
+        contentPane.add(checkBoxExportStorage);
 
         checkBoxDisableSafety.setBounds(20, 70, 250, 23);
         checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxToolTip"));
@@ -217,9 +217,9 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         btnBack.setToolTipText(I18n.INSTANCE.get("window.settings.button.back.toolTip"));
         btnBack.addActionListener(actionEvent -> {
             if(unsavedChanges){
-                String unsavedChanges = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+                String unsavedChanges = getChangesInSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.changesNotSaved.part1") + "\n\n" + unsavedChanges + "\n" + I18n.INSTANCE.get("window.settings.changesNotSaved.part2"), I18n.INSTANCE.get("window.settings.changesNotSaved.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+                    setCurrentSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
                     WindowMain.checkActionAvailability();
                     customFolderSetAndValid = false;
                     WindowSettings.FRAME.dispose();
@@ -241,7 +241,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
             if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonBodies.areYouSure"), I18n.INSTANCE.get("window.settings.button.resetSettings.label"), JOptionPane.YES_NO_OPTION) == 0) {
                 Settings.resetSettings();
                 doNotPerformComboBoxActionListener.set(true);
-                checkBoxDebugMode.setSelected(false);
+                checkBoxExportStorage.setSelected(false);
                 checkBoxDisableSafety.setSelected(false);
                 customFolderSetAndValid = false;
                 comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
@@ -259,12 +259,12 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         btnSave.setBounds(230, 222, 89, 23);
         btnSave.setToolTipText(I18n.INSTANCE.get("window.settings.button.save.toolTip"));
         btnSave.addActionListener(actionEvent -> {
-            String unsavedChangesList = getChangesInSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+            String unsavedChangesList = getChangesInSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
             if(unsavedChangesList.isEmpty()){
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.button.save.nothingToSave"));
             }else{
                 if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.button.save.saveSettings") + "\n\n" + unsavedChangesList, I18n.INSTANCE.get("window.settings.button.save.saveSettings.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
-                    setCurrentSettings(checkBoxDebugMode, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+                    setCurrentSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
                     WindowMain.checkActionAvailability();
                     Backup.createInitialBackup();
                     unsavedChanges = false;
@@ -296,7 +296,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         }else{
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
         }
-        checkBoxDebugMode.setSelected(Settings.enableDebugLogging);
+        checkBoxExportStorage.setSelected(Settings.enableExportStorage);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
         checkBoxSaveLogs.setSelected(Settings.saveLogs);
         comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + Settings.mgt2Path);
@@ -310,22 +310,20 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
 
     /**
      * Applies the local changes in the settings to the global settings by calling Settings.setSettings(...)
-     * @param checkBoxDebugMode The debug mode checkbox
-     * @param checkBoxDisableSafety The disable safety features checkbox
      */
-    private static void setCurrentSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
-        Settings.setSettings(true, checkBoxDebugMode.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString(), checkBoxSaveLogs.isSelected());
+    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
+        Settings.setSettings(true, checkBoxExportStorage.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString(), checkBoxSaveLogs.isSelected());
     }
 
     /**
-     * @param checkBoxDebugMode The debug mode checkbox
+     * @param checkBoxExportStorage The debug mode checkbox
      * @param checkBoxDisableSafety The disable safety features checkbox
      * @return Returns the changes that have been made to the settings
      */
-    private static String getChangesInSettings(JCheckBox checkBoxDebugMode,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
+    private static String getChangesInSettings(JCheckBox checkBoxExportStorage,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
         StringBuilder unsavedChanges = new StringBuilder();
-        if(Settings.enableDebugLogging != checkBoxDebugMode.isSelected()){
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.debugLogging")).append(" ").append(Settings.enableDebugLogging).append(" -> ").append(checkBoxDebugMode.isSelected()).append(System.getProperty("line.separator"));
+        if(Settings.enableExportStorage != checkBoxExportStorage.isSelected()){
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableDebugLogging).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
         }
         if(Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()){
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.disableSafetyFeatures")).append(" ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));

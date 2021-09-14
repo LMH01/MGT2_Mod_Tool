@@ -47,13 +47,13 @@ public class Settings {
 
     /**
      * Sets the settings. This is the only function that can change the settings. The changed values will be written to the settings.txt file.
-     * @param enableDebugLogging True when debug logging is on.
+     * @param enableExportStorage True when exports should be stored in multiple folders
      * @param disableSafetyFeatures True when the safety features are disabled.
      * @param mgt2FilePath The custom folder path
      * @param enableCustomFolder True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableDebugLogging, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs){
-        Settings.enableDebugLogging = enableDebugLogging;
+    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs){
+        Settings.enableExportStorage = enableExportStorage;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
         Settings.enableDisclaimerMessage = showDisclaimerMessage;
