@@ -121,12 +121,12 @@ public class NpcGamesMod extends AbstractSimpleMod {
         }
         String name = Utils.getFirstPart(line);
         StringBuilder output = new StringBuilder();
-        output.append(name).append(" ");
+        output.append(I18n.INSTANCE.get("commonText.name")).append(": ").append(name).append("\n").append("\n").append(I18n.INSTANCE.get("commonText.genre.upperCase.plural")).append(":").append("\n").append("\n");
         for (Integer integer : genreIds) {
             try {
                 String genreName = ModManager.genreMod.getContentNameById(integer);
                 if (!genreName.equals("null")) {
-                    output.append("<").append(genreName).append(">");
+                    output.append(genreName).append("\n");
                 }
             } catch (ArrayIndexOutOfBoundsException ignored) {
 
