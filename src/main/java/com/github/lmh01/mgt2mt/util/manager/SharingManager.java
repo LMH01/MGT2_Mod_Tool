@@ -278,9 +278,13 @@ public class SharingManager {
             return new ArrayList<>();
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchComplete") + " " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
+        LOGGER.info("Search for .toml files complete. Took " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
         return tomlFiles;
     }
 
+    /**
+     * Searches all folders in the path for .toml files and returns a set of toml files
+     */
     private static Set<Path> getTomlFiles(Path path, AtomicBoolean abortImport, JCheckBox checkBoxPreventZipMessage, AtomicBoolean unzipAutomatic, AtomicInteger currentZipArchiveNumber) throws ModProcessingException {
         Set<Path> tomlFiles = new HashSet<>();
         if (!abortImport.get()) {
@@ -418,6 +422,8 @@ public class SharingManager {
     private static Set<Map<String, Object>> getImportMaps(ArrayList<Map<String, Object>> singleMods, ArrayList<Map<String, Object>> bundledMods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, singleMods.size() + bundledMods.size(), I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
+        timeHelper.measureTime();
         /*
          * ModType = Simple or advanced
          * Map<String, Object> = The map that contains the values for the specific mod.
@@ -519,7 +525,7 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.incompatible") + ": " + modsIncompatible);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.duplicated") + ": " + modsDuplicated);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.unique") + ": " + uniqueMods);
-        LOGGER.info("Found a total of " + modsTotal + " mods");
+        LOGGER.info("Search for mods complete. Found " + modsTotal + " mods after " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
         if (Settings.enableDebugLogging) {
             for (Map<String, Object> map : mods) {
                 LOGGER.info("Name: " + map.get("mod_name") + " | type: " + map.get("base_mod_type"));
@@ -764,6 +770,8 @@ public class SharingManager {
      */
     private static void importAllMods(Set<Map<String, Object>> mods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
+        timeHelper.measureTime();
         for (AbstractBaseMod mod : ModManager.mods) {
             for (Map<String, Object> map : mods) {
                 if (map.get("mod_type").equals(mod.getExportType())) {
@@ -778,6 +786,7 @@ public class SharingManager {
             }
         }
         ProgressBarHelper.resetProgressBar();
+        LOGGER.info("Import completed after " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
     }
 
     /**

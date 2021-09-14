@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public class TimeHelper {//TODO This time helper should also be used when mods are imported (also when searching folders for mods)
+public class TimeHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(TimeHelper.class);
 
     private static int timeHelpersActive = 0;

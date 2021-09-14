@@ -37,9 +37,6 @@ Not Shure:
     if you have several threads of the same nature, enumerate them with IDs that are unique to one execution of the application or one log file, whichever fits your logging habits.
 
 //TODO Alle Progress bar operations noch einmal überprüfen und ggf. progressbar anpassen und konsistenter machen (auf jeden Fall für Import und Export)
-//TODO Schauen, warum das Genre Horror nicht gelöscht werden kann, sondern eine NumberFormatException throwed, wenns es entfernt werden sollte
-
-//TODO Clean up logging/completely redo logging -> "Thread died:" should only be shown when debug logging is active: All console spamming logs should be removed completely.
 
 //TODO Write tests
 
