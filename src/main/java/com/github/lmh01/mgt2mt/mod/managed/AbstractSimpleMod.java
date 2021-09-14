@@ -52,13 +52,13 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     public Map<String, Object> getExportMap(String name) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
         String line = getModifiedExportLine(getLine(name));
-        Map<String, Object> dependencyMap = getDependencyMap(name);
+        Map<String, Object> dependencyMap = getDependencyMap(line);
         for (AbstractBaseMod mod : ModManager.mods) {
             try {
                 Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());
                 if (set != null) {
                     if (!set.isEmpty()) {
-                        map.put("dependencies", getDependencyMap(name));
+                        map.put("dependencies", dependencyMap);
                     }
                 }
             } catch (ClassCastException e) {
