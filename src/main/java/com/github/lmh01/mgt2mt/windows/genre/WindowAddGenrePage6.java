@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class WindowAddGenrePage6 extends JFrame{
+public class WindowAddGenrePage6 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
     public static Set<Integer> compatibleThemeIds = new HashSet<>();
@@ -26,25 +27,26 @@ public class WindowAddGenrePage6 extends JFrame{
     final JList<String> LIST_AVAILABLE_THEMES = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_THEMES = new JScrollPane(LIST_AVAILABLE_THEMES);
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
                 FRAME.setThemesList();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
+
     public WindowAddGenrePage6() {
         buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(LIST_AVAILABLE_THEMES)){
+            if (saveInputs(LIST_AVAILABLE_THEMES)) {
                 GenreMod.openStepWindow(7);
                 FRAME.dispose();
-            }else{
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
+            } else {
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
                     LOGGER.info("Cleared array list with compatible themes.");
                     GenreMod.mapNewGenre.remove("THEME COMB");
                     GenreMod.mapNewGenre.put("THEME COMB", "");
@@ -59,12 +61,13 @@ public class WindowAddGenrePage6 extends JFrame{
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
-    private void setGuiComponents(){
+
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 360, 260);
         setResizable(false);
@@ -101,10 +104,10 @@ public class WindowAddGenrePage6 extends JFrame{
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.themeMod.getContentByAlphabet()){
+        for (String string : ModManager.themeMod.getContentByAlphabet()) {
             listModel.addElement(string);
-            if(GenreMod.mapNewGenre.containsKey("THEME COMB")){
-                if(GenreMod.mapNewGenre.get("THEME COMB").contains(string)) {
+            if (GenreMod.mapNewGenre.containsKey("THEME COMB")) {
+                if (GenreMod.mapNewGenre.get("THEME COMB").contains(string)) {
                     genresSelected.add(currentTopic);
                 }
             }
@@ -114,7 +117,7 @@ public class WindowAddGenrePage6 extends JFrame{
         //Converts ArrayList to int[]
         final int[] selectedIndices = new int[genresSelected.size()];
         int index = 0;
-        for (final Integer value: genresSelected) {
+        for (final Integer value : genresSelected) {
             selectedIndices[index++] = value;
         }
 
@@ -124,15 +127,16 @@ public class WindowAddGenrePage6 extends JFrame{
         LIST_AVAILABLE_THEMES.setVisibleRowCount(-1);
         LIST_AVAILABLE_THEMES.setSelectedIndices(selectedIndices);
 
-        SCROLL_PANE_AVAILABLE_THEMES.setBounds(10,55, 315,140);
+        SCROLL_PANE_AVAILABLE_THEMES.setBounds(10, 55, 315, 140);
         contentPane.add(SCROLL_PANE_AVAILABLE_THEMES);
     }
-    private static boolean saveInputs(JList<String> listAvailableThemes){
+
+    private static boolean saveInputs(JList<String> listAvailableThemes) {
         LOGGER.info("Cleared array list with compatible genres.");
         StringBuilder compatibleThemes = new StringBuilder();
-        for(Map.Entry<Integer, String> entry : ModManager.themeMod.getFileContent().entrySet()){
-            for(String string : listAvailableThemes.getSelectedValuesList()){
-                if(ModManager.themeMod.getReplacedLine(entry.getValue()).equals(string)){
+        for (Map.Entry<Integer, String> entry : ModManager.themeMod.getFileContent().entrySet()) {
+            for (String string : listAvailableThemes.getSelectedValuesList()) {
+                if (ModManager.themeMod.getReplacedLine(entry.getValue()).equals(string)) {
                     compatibleThemeIds.add(entry.getKey());
                     compatibleThemes.append("<").append(string).append(">");
                     LOGGER.info("Compatible Theme: " + entry.getKey() + " | " + entry.getValue());

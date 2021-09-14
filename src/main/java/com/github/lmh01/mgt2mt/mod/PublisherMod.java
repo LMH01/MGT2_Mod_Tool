@@ -4,7 +4,10 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractComplexMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
@@ -13,6 +16,7 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -22,8 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -42,7 +46,7 @@ public class PublisherMod extends AbstractComplexMod {
         EditHelper.printLine("MARKET", map, bw);
         EditHelper.printLine("SHARE", map, bw);
         EditHelper.printLine("GENRE", map, bw);
-        if(map.containsKey("ONLYMOBILE")) {
+        if (map.containsKey("ONLYMOBILE")) {
             EditHelper.printLine("ONLYMOBILE", map, bw);
         }
     }
@@ -126,13 +130,13 @@ public class PublisherMod extends AbstractComplexMod {
                     ArrayList<String> availableGenres = new ArrayList<>();
                     String[] string;
                     string = ModManager.genreMod.getContentByAlphabet();
-                    for(String string1 : string){
+                    for (String string1 : string) {
                         Map<String, String> genreMap = ModManager.genreMod.getSingleContentMapByName(string1);
                         int genreDate = Integer.parseInt(genreMap.get("DATE").replaceAll("[^0-9]", ""));
-                        if(Integer.parseInt(spinnerUnlockYear.getValue().toString()) > genreDate){
+                        if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) > genreDate) {
                             availableGenres.add(string1);
                         } else if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) == genreDate) {
-                            if(Utils.getNumberForMonth(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))){
+                            if (Utils.getNumberForMonth(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))) {
                                 availableGenres.add(string1);
                             }
                         }
@@ -144,16 +148,16 @@ public class PublisherMod extends AbstractComplexMod {
                     listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
                     listAvailableGenres.setVisibleRowCount(-1);
                     JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableGenres);
-                    scrollPaneAvailableGenres.setPreferredSize(new Dimension(315,140));
+                    scrollPaneAvailableGenres.setPreferredSize(new Dimension(315, 140));
 
                     Object[] params = {labelChooseGenre, scrollPaneAvailableGenres};
 
-                    if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.selectGenre"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                        if(!listAvailableGenres.isSelectionEmpty()){
+                    if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.selectGenre"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                        if (!listAvailableGenres.isSelectionEmpty()) {
                             String currentGenre = listAvailableGenres.getSelectedValue();
                             genreID.set(ModManager.genreMod.getContentIdByName(currentGenre));
                             buttonSelectGenre.setText(currentGenre);
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                         }
                     }
@@ -170,31 +174,31 @@ public class PublisherMod extends AbstractComplexMod {
 
             Object[] params = {WindowHelper.getNamePanel(this, textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, 12), WindowHelper.getSpinnerPanel(spinnerShare, 9), panelGenre};
             boolean breakLoop = false;
-            while(!breakLoop){
-                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+            while (!breakLoop) {
+                if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     boolean publisherAlreadyExists = false;
-                    for(String string : getContentByAlphabet()){
-                        if(textFieldName.getText().equals(string)){
+                    for (String string : getContentByAlphabet()) {
+                        if (textFieldName.getText().equals(string)) {
                             publisherAlreadyExists = true;
                         }
                     }
-                    if(publisherAlreadyExists){
+                    if (publisherAlreadyExists) {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        if(textFieldName.getText().equals("") || textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterName"))){
+                    } else {
+                        if (textFieldName.getText().equals("") || textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterName"))) {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), "", JOptionPane.INFORMATION_MESSAGE);
                             textFieldName.setText(I18n.INSTANCE.get("commonText.enterName"));
-                        }else if(buttonSelectGenre.getText().equals("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ")){
+                        } else if (buttonSelectGenre.getText().equals("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        ")) {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.selectGenreFirst"), "", JOptionPane.INFORMATION_MESSAGE);
-                        }else{
+                        } else {
                             ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
                             int logoId;
-                            if(publisherImageFilePath.get().equals(ImageFileHandler.defaultPublisherIcon)){
+                            if (publisherImageFilePath.get().equals(ImageFileHandler.defaultPublisherIcon)) {
                                 logoId = 87;
-                            }else{
+                            } else {
                                 logoId = CompanyLogoAnalyzer.getLogoNumber();
                             }
-                            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.firstPart") + "\n\n" +
+                            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.firstPart") + "\n\n" +
                                     I18n.INSTANCE.get("commonText.name") + ": " + textFieldName.getText() + "\n" +
                                     I18n.INSTANCE.get("commonText.date") + ": " + Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString() + "\n" +
                                     I18n.INSTANCE.get("dialog.genreManager.addGenre.pic") + "\n" +
@@ -202,7 +206,7 @@ public class PublisherMod extends AbstractComplexMod {
                                     I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher") + ": " + Utils.getTranslatedValueFromBoolean(checkBoxIsPublisher.isSelected()) + "\n" +
                                     I18n.INSTANCE.get("commonText.marketShare") + ": " + spinnerMarketShare.getValue().toString() + "\n" +
                                     I18n.INSTANCE.get("commonText.share") + ": " + spinnerShare.getValue().toString() + "\n" +
-                                    I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION){
+                                    I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + buttonSelectGenre.getText(), "Add publisher?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
                                 Map<String, String> map = new HashMap<>();
                                 map.put("ID", Integer.toString(getFreeId()));
                                 map.put("NAME EN", textFieldName.getText());
@@ -225,13 +229,13 @@ public class PublisherMod extends AbstractComplexMod {
                             }
                         }
                     }
-                }else{
+                } else {
                     break;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>"  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("commonText.unableToAdd") + getType() + "<br>" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), I18n.INSTANCE.get("commonText.unableToAdd") + getType(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -318,7 +322,7 @@ public class PublisherMod extends AbstractComplexMod {
         Map<String, String> map = new HashMap<>();
         String imageName = getType().toLowerCase().replaceAll(" ", "_") + "_" + name.toLowerCase().replaceAll(" ", "_") + "_icon.png";
         File fileExportedPublisherIcon = assetsFolder.resolve(imageName).toFile();
-        if(!fileExportedPublisherIcon.exists()){
+        if (!fileExportedPublisherIcon.exists()) {
             try {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.exportingImage") + ": " + getType() + " - " + imageName);
                 File filePublisherIconToExport = MGT2Paths.COMPANY_ICONS.getPath().resolve(getSingleContentMapByName(name).get("PIC") + ".png").toFile();
@@ -335,13 +339,14 @@ public class PublisherMod extends AbstractComplexMod {
 
     /**
      * Copies source to target
+     *
      * @param publisherImageSource New publisher image file that should be copied
      * @param publisherImageTarget The file to what the image file should be copied to
      * @throws ModProcessingException If the copying for the image file fails
      */
-    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException{
+    private static void copyPublisherIcon(File publisherImageTarget, File publisherImageSource) throws ModProcessingException {
         try {
-            if(!publisherImageTarget.equals(ImageFileHandler.defaultPublisherIcon.toFile())) {
+            if (!publisherImageTarget.equals(ImageFileHandler.defaultPublisherIcon.toFile())) {
                 Files.copy(Paths.get(publisherImageSource.getPath()), Paths.get(publisherImageTarget.getPath()), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
@@ -351,11 +356,12 @@ public class PublisherMod extends AbstractComplexMod {
 
     /**
      * Searches the image files for the publisher name id and returns it if found
+     *
      * @param publisherNameEN The name for the publisher for which the id should be searched
      * @return The id of the publisher icon
      * @throws ModProcessingException If id was not found
      */
-    private int getPublisherIconIdByName(String publisherNameEN) throws ModProcessingException{
+    private int getPublisherIconIdByName(String publisherNameEN) throws ModProcessingException {
         List<Map<String, String>> list = ModManager.publisherMod.getFileContent();
         try {
             for (Map<String, String> map : list) {
@@ -373,6 +379,7 @@ public class PublisherMod extends AbstractComplexMod {
      * Removes the specified genre from the publisher file.
      * If the genre is found another genre id is randomly assigned
      * If the genre is not found, nothing happens
+     *
      * @param name The genre that should be removed
      * @throws ModProcessingException When something went wrong
      */
@@ -383,15 +390,15 @@ public class PublisherMod extends AbstractComplexMod {
             DebugHelper.debug(LOGGER, "Replacing genre id in publisher file: " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
+            if (fileToEdit.exists()) {
                 fileToEdit.delete();
             }
             fileToEdit.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
+            if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
-            for(Map<String, String> fileContent : getFileContent()){
+            for (Map<String, String> fileContent : getFileContent()) {
                 try {
                     if (Integer.parseInt(fileContent.get("GENRE")) == genreId) {
                         fileContent.remove("GENRE");
@@ -416,23 +423,23 @@ public class PublisherMod extends AbstractComplexMod {
     /**
      * Asks the user if he is sure that the existing publishers should be replaced with the real publisher equivalents
      */
-    public void realPublishers(){
+    public void realPublishers() {
         ThreadHandler.startModThread(() -> {
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                try{
-                    ProgressBarHelper.initializeProgressBar(0,1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"), false, false);
+            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.mainMessage"), "Replace publisher?", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                try {
+                    ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.publisherHelper.replaceWithRealPublishers.initialize"), false, false);
                     Path publisherZip = ModManagerPaths.DOWNLOAD.getPath().resolve("publisher.zip");
                     Path publisherUnzipped = ModManagerPaths.DOWNLOAD.getPath().resolve("publisher");
                     boolean downloadFiles = true;
-                    if(publisherUnzipped.toFile().exists()){
-                        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists"), "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                    if (publisherUnzipped.toFile().exists()) {
+                        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists"), "?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
                             downloadFiles = false;
-                        }else{
+                        } else {
                             DataStreamHelper.deleteDirectory(publisherZip, false);
                             DataStreamHelper.deleteDirectory(publisherUnzipped, false);
                         }
                     }
-                    if(downloadFiles){
+                    if (downloadFiles) {
                         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.downloadZip"));
                         DataStreamHelper.downloadZip(REAL_PUBLISHER_ZIP_URL, publisherZip);
                         ProgressBarHelper.resetProgressBar();
@@ -441,7 +448,7 @@ public class PublisherMod extends AbstractComplexMod {
                     LOGGER.info("Real publisher files are ready.");
                     LOGGER.info("Removing existing publishers...");
                     ProgressBarHelper.initializeProgressBar(0, ModManager.publisherMod.getDefaultContent().length, I18n.INSTANCE.get("progressBar.replacePublisher.removingOriginalPublishers"));
-                    for(String string : ModManager.publisherMod.getDefaultContent()){
+                    for (String string : ModManager.publisherMod.getDefaultContent()) {
                         ModManager.publisherMod.removeMod(string);
                         ProgressBarHelper.increment();
                     }
@@ -449,17 +456,17 @@ public class PublisherMod extends AbstractComplexMod {
                     LOGGER.info("Adding new publishers...");
                     SharingManager.importAll(ImportType.REAL_PUBLISHERS, publisherUnzipped);
                     ModManager.publisherMod.analyzeFile();
-                    if(ModManager.publisherMod.getActiveIds().contains(-1)){
+                    if (ModManager.publisherMod.getActiveIds().contains(-1)) {
                         ModManager.publisherMod.removeMod("Dummy");
                     }
                     TextAreaHelper.appendText(I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success").replace("<html>", "").replace("<br>", " "));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.success"));
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                     String errorMessageToDisplay;
-                    if(e.getMessage().equals("www.dropbox.com")){
+                    if (e.getMessage().equals("www.dropbox.com")) {
                         errorMessageToDisplay = I18n.INSTANCE.get("commonText.noInternet");
-                    }else{
+                    } else {
                         errorMessageToDisplay = e.getMessage();
                     }
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("publisherHelper.replaceWithRealPublishers.somethingWentWrong") + " " + errorMessageToDisplay, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);

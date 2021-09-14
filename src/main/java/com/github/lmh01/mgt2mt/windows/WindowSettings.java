@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -28,19 +29,19 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
     JCheckBox checkBoxSaveLogs = new JCheckBox(I18n.INSTANCE.get("window.settings.checkBox.saveLogs"));
     AtomicBoolean doNotPerformComboBoxActionListener = new AtomicBoolean(false);
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
                 FRAME.loadCurrentSelections();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public WindowSettings(){
+    public WindowSettings() {
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 343, 290);
 
@@ -66,7 +67,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxToolTip"));
         checkBoxDisableSafety.addActionListener(e -> {
             LOGGER.info("checkBoxDisableSafety action: " + e.getActionCommand());
-            if(checkBoxDisableSafety.isSelected()){
+            if (checkBoxDisableSafety.isSelected()) {
                 checkBoxDisableSafety.setSelected(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.safetyFeatures.warning"), I18n.INSTANCE.get("window.settings.safetyFeatures.warning.title"), JOptionPane.YES_NO_OPTION) == 0);
             }
             unsavedChanges = checkBoxDisableSafety.isSelected() != Settings.disableSafetyFeatures;
@@ -85,21 +86,21 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         comboBoxLanguage.setBounds(117, 130, 100, 23);
         comboBoxLanguage.setToolTipText(I18n.INSTANCE.get("window.settings.language.comboBox.toolTip"));
         comboBoxLanguage.addActionListener(actionEvent -> {
-            if(!Objects.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Settings.language)){
-                if(Objects.equals(comboBoxLanguage.getSelectedItem().toString(), "Deutsch")){
+            if (!Objects.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Settings.language)) {
+                if (Objects.equals(comboBoxLanguage.getSelectedItem().toString(), "Deutsch")) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.language.informationMessage") + System.getProperty("line.separator") + I18n.INSTANCE.get("window.settings.language.informationMessageTranslationIncomplete"));
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.language.informationMessage"));
                 }
                 unsavedChanges = true;
-            }else{
+            } else {
                 unsavedChanges = false;
             }
         });
         contentPane.add(comboBoxLanguage);
 
         JLabel labelUpdateBranch = new JLabel(I18n.INSTANCE.get("window.settings.updateChannel.label"));
-        labelUpdateBranch.setBounds(20,158, 127, 14);
+        labelUpdateBranch.setBounds(20, 158, 127, 14);
         contentPane.add(labelUpdateBranch);
 
         comboBoxUpdateChannel.setBounds(117, 155, 100, 23);
@@ -120,27 +121,27 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
             LOGGER.info("Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), \"Manual\")" + Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual"));
             LOGGER.info("manualWasLastSelectedOption.get(): " + manualWasLastSelectedOption.get());
             LOGGER.info("customFolderSetAndValid: " + customFolderSetAndValid);
-            if(!doNotPerformComboBoxActionListener.get()) {
-                if(Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && automaticWasLastSelectedOption.get()) {
-                    if(!customFolderSetAndValid) {
+            if (!doNotPerformComboBoxActionListener.get()) {
+                if (Objects.equals(comboBoxMGT2FolderOperation.getSelectedItem(), "Manual") && automaticWasLastSelectedOption.get()) {
+                    if (!customFolderSetAndValid) {
                         try {
                             automaticWasLastSelectedOption.set(false);
                             manualWasLastSelectedOption.set(true);
                             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
                             JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
                             fileChooser.setDialogTitle(I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.title"));
-                            fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+                            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                             int return_value = fileChooser.showOpenDialog(null);
-                            if(return_value == JFileChooser.APPROVE_OPTION){
+                            if (return_value == JFileChooser.APPROVE_OPTION) {
                                 Path mgt2Folder = fileChooser.getSelectedFile().toPath();
-                                if(Settings.validateMGT2Folder(mgt2Folder, false, false)){
+                                if (Settings.validateMGT2Folder(mgt2Folder, false, false)) {
                                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderSet"));
                                     outputFolder = mgt2Folder;
                                     customFolderSetAndValid = true;
                                     automaticWasLastSelectedOption.set(false);
                                     manualWasLastSelectedOption.set(true);
                                     unsavedChanges = true;
-                                }else{
+                                } else {
                                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderInvalid"), I18n.INSTANCE.get("window.settings.mgt2location.chooseFolder.folderInvalid.title"), JOptionPane.ERROR_MESSAGE);
                                     comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
                                     automaticWasLastSelectedOption.set(true);
@@ -148,7 +149,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
                                     customFolderSetAndValid = false;
                                     unsavedChanges = false;
                                 }
-                            }else{
+                            } else {
                                 comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
                                 automaticWasLastSelectedOption.set(true);
                                 manualWasLastSelectedOption.set(false);
@@ -187,16 +188,16 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         buttonResetCustomFolder.addActionListener(actionEvent -> {
             LOGGER.info("input folder: " + inputFolder);
             LOGGER.info("output folder: " + outputFolder);
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 boolean performTasks = false;
-                if((Settings.getMGT2FilePath() == null) && customFolderSetAndValid){//TODO check if this still works
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.noAutomaticFolderFound"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                if ((Settings.getMGT2FilePath() == null) && customFolderSetAndValid) {//TODO check if this still works
+                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.noAutomaticFolderFound"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         performTasks = true;
                     }
-                }else{
+                } else {
                     performTasks = true;
                 }
-                if(performTasks){
+                if (performTasks) {
                     Settings.setMGT2Folder(true);
                     outputFolder = Settings.mgt2Path;
                     Settings.enableCustomFolder = false;
@@ -216,9 +217,9 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         btnBack.setBounds(10, 222, 69, 23);
         btnBack.setToolTipText(I18n.INSTANCE.get("window.settings.button.back.toolTip"));
         btnBack.addActionListener(actionEvent -> {
-            if(unsavedChanges){
+            if (unsavedChanges) {
                 String unsavedChanges = getChangesInSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.changesNotSaved.part1") + "\n\n" + unsavedChanges + "\n" + I18n.INSTANCE.get("window.settings.changesNotSaved.part2"), I18n.INSTANCE.get("window.settings.changesNotSaved.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.changesNotSaved.part1") + "\n\n" + unsavedChanges + "\n" + I18n.INSTANCE.get("window.settings.changesNotSaved.part2"), I18n.INSTANCE.get("window.settings.changesNotSaved.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                     setCurrentSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
                     WindowMain.checkActionAvailability();
                     customFolderSetAndValid = false;
@@ -227,7 +228,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
                 }
             }
             unsavedChanges = false;
-            if(Settings.mgt2FolderIsCorrect){
+            if (Settings.mgt2FolderIsCorrect) {
                 WindowMain.checkActionAvailability();
             }
             WindowSettings.FRAME.dispose();
@@ -260,10 +261,10 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         btnSave.setToolTipText(I18n.INSTANCE.get("window.settings.button.save.toolTip"));
         btnSave.addActionListener(actionEvent -> {
             String unsavedChangesList = getChangesInSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
-            if(unsavedChangesList.isEmpty()){
+            if (unsavedChangesList.isEmpty()) {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.button.save.nothingToSave"));
-            }else{
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.button.save.saveSettings") + "\n\n" + unsavedChangesList, I18n.INSTANCE.get("window.settings.button.save.saveSettings.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            } else {
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.button.save.saveSettings") + "\n\n" + unsavedChangesList, I18n.INSTANCE.get("window.settings.button.save.saveSettings.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                     setCurrentSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
                     WindowMain.checkActionAvailability();
                     Backup.createInitialBackup();
@@ -277,32 +278,32 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         contentPane.add(btnSave);
     }
 
-    private void loadCurrentSelections(){
+    private void loadCurrentSelections() {
         inputFolder = Settings.mgt2Path;
         outputFolder = Settings.mgt2Path;
         doNotPerformComboBoxActionListener.set(false);
-        if(Settings.enableCustomFolder && Settings.mgt2FolderIsCorrect){
+        if (Settings.enableCustomFolder && Settings.mgt2FolderIsCorrect) {
             comboBoxMGT2FolderOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Manual", "Automatic"}));
-        }else{
+        } else {
             comboBoxMGT2FolderOperation.setModel(new DefaultComboBoxModel<>(new String[]{"Automatic", "Manual"}));
         }
-        if(Settings.language.equals("English")){
+        if (Settings.language.equals("English")) {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"English", "Deutsch"}));
-        }else if(Settings.language.equals("Deutsch")){
+        } else if (Settings.language.equals("Deutsch")) {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
         }
-        if(Settings.updateBranch.equals("Release")){
+        if (Settings.updateBranch.equals("Release")) {
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Release", "Alpha"}));
-        }else{
+        } else {
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
         }
         checkBoxExportStorage.setSelected(Settings.enableExportStorage);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
         checkBoxSaveLogs.setSelected(Settings.saveLogs);
         comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + Settings.mgt2Path);
-        if(Settings.mgt2FolderIsCorrect){
+        if (Settings.mgt2FolderIsCorrect) {
             checkBoxDisableSafety.setEnabled(true);
-        }else{
+        } else {
             comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + I18n.INSTANCE.get("window.settings.mgt2location.toolTip.notSet"));
         }
         customFolderSetAndValid = Settings.enableCustomFolder;
@@ -311,8 +312,8 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
     /**
      * Applies the local changes in the settings to the global settings by calling Settings.setSettings(...)
      */
-    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
-        Settings.setSettings(true, checkBoxExportStorage.isSelected(),checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString(), checkBoxSaveLogs.isSelected());
+    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
+        Settings.setSettings(true, checkBoxExportStorage.isSelected(), checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString(), checkBoxSaveLogs.isSelected());
     }
 
     /**
@@ -320,24 +321,24 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
      * @param checkBoxDisableSafety The disable safety features checkbox
      * @return Returns the changes that have been made to the settings
      */
-    private static String getChangesInSettings(JCheckBox checkBoxExportStorage,JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs){
+    private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
         StringBuilder unsavedChanges = new StringBuilder();
-        if(Settings.enableExportStorage != checkBoxExportStorage.isSelected()){
+        if (Settings.enableExportStorage != checkBoxExportStorage.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableDebugLogging).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
         }
-        if(Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()){
+        if (Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.disableSafetyFeatures")).append(" ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));
         }
-        if(!inputFolder.equals(outputFolder)){
+        if (!inputFolder.equals(outputFolder)) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2Path).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
         }
-        if(!Settings.language.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString())){
+        if (!Settings.language.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString())) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.language")).append(" ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
-        if(!Settings.updateBranch.equals(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString())){
+        if (!Settings.updateBranch.equals(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString())) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.updateChannel")).append(" ").append(Settings.updateBranch).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
-        if(Settings.saveLogs != checkBoxSaveLogs.isSelected()){
+        if (Settings.saveLogs != checkBoxSaveLogs.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.saveLogs")).append(" ").append(Settings.saveLogs).append(" -> ").append(checkBoxSaveLogs.isSelected()).append(System.getProperty("line.separator"));
         }
         return unsavedChanges.toString();

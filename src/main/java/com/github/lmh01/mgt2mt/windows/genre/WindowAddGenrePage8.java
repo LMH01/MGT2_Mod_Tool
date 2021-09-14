@@ -6,11 +6,12 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class WindowAddGenrePage8 extends JFrame{
+public class WindowAddGenrePage8 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage8.class);
     static final WindowAddGenrePage8 FRAME = new WindowAddGenrePage8();
     JPanel contentPane = new JPanel();
@@ -29,14 +30,14 @@ public class WindowAddGenrePage8 extends JFrame{
     JSpinner spinnerDesign10 = new JSpinner();
     JSpinner spinnerDesign11 = new JSpinner();
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
                 FRAME.setSpinners();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -44,7 +45,7 @@ public class WindowAddGenrePage8 extends JFrame{
 
     public WindowAddGenrePage8() {
         buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(false, spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5, spinnerDesign6, spinnerDesign7, spinnerDesign8, spinnerDesign9, spinnerDesign10, spinnerDesign11)){
+            if (saveInputs(false, spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5, spinnerDesign6, spinnerDesign7, spinnerDesign8, spinnerDesign9, spinnerDesign10, spinnerDesign11)) {
                 GenreMod.openStepWindow(9);
                 FRAME.dispose();
             }
@@ -55,13 +56,13 @@ public class WindowAddGenrePage8 extends JFrame{
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
 
-    private void setGuiComponents(){
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 410);
         setResizable(false);
@@ -136,7 +137,7 @@ public class WindowAddGenrePage8 extends JFrame{
         contentPane.add(buttonQuit);
     }
 
-    private void setSpinners(){
+    private void setSpinners() {
         spinnerDesign1.setBounds(200, 35, 100, 23);
         spinnerDesign2.setBounds(200, 60, 100, 23);
         spinnerDesign3.setBounds(200, 85, 100, 23);
@@ -171,30 +172,30 @@ public class WindowAddGenrePage8 extends JFrame{
         spinnerDesign9.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("ALIGN0")), 0, 10, 1));
         spinnerDesign10.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("ALIGN1")), 0, 10, 1));
         spinnerDesign11.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("ALIGN2")), 0, 10, 1));
-        if(Settings.disableSafetyFeatures){
-            ((JSpinner.DefaultEditor)spinnerDesign1.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign2.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign3.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign4.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign5.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign6.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign7.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign8.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign9.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign10.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDesign11.getEditor()).getTextField().setEditable(true);
-        }else{
-            ((JSpinner.DefaultEditor)spinnerDesign1.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign2.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign3.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign4.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign5.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign6.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign7.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign8.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign9.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign10.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDesign11.getEditor()).getTextField().setEditable(false);
+        if (Settings.disableSafetyFeatures) {
+            ((JSpinner.DefaultEditor) spinnerDesign1.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign2.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign3.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign4.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign5.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign6.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign7.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign8.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign9.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign10.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDesign11.getEditor()).getTextField().setEditable(true);
+        } else {
+            ((JSpinner.DefaultEditor) spinnerDesign1.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign2.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign3.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign4.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign5.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign6.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign7.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign8.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign9.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign10.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDesign11.getEditor()).getTextField().setEditable(false);
         }
         contentPane.add(spinnerDesign1);
         contentPane.add(spinnerDesign2);
@@ -211,6 +212,7 @@ public class WindowAddGenrePage8 extends JFrame{
 
     /**
      * Safes the input to the genre map
+     *
      * @return Returns false when the values from spinner 1-8 are combined bigger than 40
      */
     private static boolean saveInputs(boolean calledFromButtonPrevious, JSpinner spinnerDesign1, JSpinner spinnerDesign2, JSpinner spinnerDesign3, JSpinner spinnerDesign4, JSpinner spinnerDesign5, JSpinner spinnerDesign6, JSpinner spinnerDesign7, JSpinner spinnerDesign8, JSpinner spinnerDesign9, JSpinner spinnerDesign10, JSpinner spinnerDesign11) {
@@ -223,18 +225,18 @@ public class WindowAddGenrePage8 extends JFrame{
                 + Integer.parseInt(spinnerDesign7.getValue().toString())
                 + Integer.parseInt(spinnerDesign8.getValue().toString());
         boolean saveValues = false;
-        if(Settings.disableSafetyFeatures){
+        if (Settings.disableSafetyFeatures) {
             saveValues = true;
-        }else if(combinedValue == 40){
+        } else if (combinedValue == 40) {
             saveValues = true;
-        }else{
-            if(!calledFromButtonPrevious){
+        } else {
+            if (!calledFromButtonPrevious) {
                 JOptionPane.showMessageDialog(null, "Unable to continue:\n\nThe combined value of the design focus spinners has to be 40!\nIt is currently: " + combinedValue, "Unable to continue", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 saveValues = true;
             }
         }
-        if(saveValues){
+        if (saveValues) {
             GenreMod.mapNewGenre.remove("FOCUS0");
             GenreMod.mapNewGenre.remove("FOCUS1");
             GenreMod.mapNewGenre.remove("FOCUS2");
@@ -269,7 +271,7 @@ public class WindowAddGenrePage8 extends JFrame{
             LOGGER.info("Design direction 2 = " + spinnerDesign10.getValue().toString());
             LOGGER.info("Design direction 3 = " + spinnerDesign11.getValue().toString());
             return true;
-        }else{
+        } else {
             return false;
         }
     }

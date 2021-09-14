@@ -1,13 +1,14 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeSteamLibraries;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.data_stream.ImportSettings;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.AnalyzeSteamLibraries;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -31,7 +32,8 @@ public class Settings {
     public static boolean enableExportStorage = false; //If true each new export will be saved in a new folder.
     public static String language = "English";
     public static String updateBranch = "Release";
-    public static void resetSettings(){
+
+    public static void resetSettings() {
         setMGT2Folder(false);
         setSettings(false, false, false, false, mgt2Path, true, true, true, "English", "Release", true);
         LOGGER.info("Settings have been reset.");
@@ -47,12 +49,13 @@ public class Settings {
 
     /**
      * Sets the settings. This is the only function that can change the settings. The changed values will be written to the settings.txt file.
-     * @param enableExportStorage True when exports should be stored in multiple folders
+     *
+     * @param enableExportStorage   True when exports should be stored in multiple folders
      * @param disableSafetyFeatures True when the safety features are disabled.
-     * @param mgt2FilePath The custom folder path
-     * @param enableCustomFolder True when the custom folder is enabled.
+     * @param mgt2FilePath          The custom folder path
+     * @param enableCustomFolder    True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs){
+    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs) {
         Settings.enableExportStorage = enableExportStorage;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
@@ -67,7 +70,7 @@ public class Settings {
         ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
         LogFile.write("Settings set:");
         LogFile.printCurrentSettings();
-        if(showSuccessDialog){
+        if (showSuccessDialog) {
             JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.settingsSaved"));
         }
     }
@@ -75,8 +78,8 @@ public class Settings {
     /**
      * Imports the settings from file.
      */
-    public static void importSettings(){
-        if(ImportSettings.Import(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile())){
+    public static void importSettings() {
+        if (ImportSettings.Import(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile())) {
             LOGGER.info("Settings have been imported successfully.");
         } else {
             Settings.resetSettings();
@@ -86,12 +89,13 @@ public class Settings {
 
     /**
      * Sets the application language
+     *
      * @param language The language that should be set
      */
-    public static void setLanguage(String language){
-        if(language.equals("English")){
+    public static void setLanguage(String language) {
+        if (language.equals("English")) {
             I18n.INSTANCE.setCurrentLocale("en");
-        }else if(language.equals("Deutsch")){
+        } else if (language.equals("Deutsch")) {
             I18n.INSTANCE.setCurrentLocale("de");
         }
         Settings.language = language;
@@ -101,11 +105,12 @@ public class Settings {
      * Tris to set the folder where mgt2 is located automatically.
      * If the folder is found all corresponding variables are updated and the settings are exported.
      * If the folder is not found the menus are locked and a message is shown.
+     *
      * @param showFolderDetectedMessage True when a message should be displayed if the folder has been found.
      */
-    public static void setMGT2Folder(boolean showFolderDetectedMessage){
+    public static void setMGT2Folder(boolean showFolderDetectedMessage) {
         Path mgt2Folder = getMGT2FilePath();
-        if(mgt2Folder != null){
+        if (mgt2Folder != null) {
             steamLibraryFolder = mgt2Folder.getParent().getParent().getParent();
             Settings.mgt2Path = mgt2Folder;
             mgt2FolderIsCorrect = true;
@@ -114,7 +119,7 @@ public class Settings {
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically") + Settings.mgt2Path, I18n.INSTANCE.get("settings.mgt2FolderSetAutomatically.windowTitle"), JOptionPane.INFORMATION_MESSAGE);
             }
             ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
-        }else{
+        } else {
             Settings.mgt2Path = null;
             mgt2FolderIsCorrect = false;
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
@@ -126,7 +131,7 @@ public class Settings {
      * Returns the folder path if found.
      * Returns nothing when folder is not found
      */
-    public static Path getMGT2FilePath(){
+    public static Path getMGT2FilePath() {
         try {
             ArrayList<String> steamLibraries = AnalyzeSteamLibraries.getSteamLibraries();
             for (String string : steamLibraries) {
@@ -155,8 +160,8 @@ public class Settings {
      * Checks if the mgt2 folder is valid
      * If the folder is invalid a message is shown to the user and the steam libraries are searched for mgt2.
      */
-    public static void validateMGT2Folder(){
-        if(!validateMGT2Folder(mgt2Path, false, true)){
+    public static void validateMGT2Folder() {
+        if (!validateMGT2Folder(mgt2Path, false, true)) {
             setMGT2Folder(false);
         }
     }
@@ -164,26 +169,27 @@ public class Settings {
     /**
      * Checks if the mgt2 folder is valid
      * If the folder is invalid a message is shown to the user
+     *
      * @param path The folder that should be checked for MGT2.
      * @return Returns true when the folder is valid, returns false when the folder is invalid.
      */
-    public static boolean validateMGT2Folder(Path path, boolean showMessage, boolean setFolderAvailability){
+    public static boolean validateMGT2Folder(Path path, boolean showMessage, boolean setFolderAvailability) {
         boolean folderValid;
         LOGGER.info("Checking MGT2 folder validity: " + path);
-        if(DataStreamHelper.doesFolderContainFile(path, "Mad Games Tycoon 2.exe")){
+        if (DataStreamHelper.doesFolderContainFile(path, "Mad Games Tycoon 2.exe")) {
             LOGGER.info("MGT2 file path is valid.");
             mgt2FolderIsCorrect = true;
             folderValid = true;
-        }else{
+        } else {
             LOGGER.info("MGT2 file path is invalid.");
-            if(showMessage){
+            if (showMessage) {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
             }
             mgt2FolderIsCorrect = false;
             enableCustomFolder = false;
-            folderValid =  false;
+            folderValid = false;
         }
-        if(setFolderAvailability){
+        if (setFolderAvailability) {
             WindowMain.setMGT2FolderAvailability(folderValid);
         }
         return folderValid;
@@ -191,6 +197,7 @@ public class Settings {
 
     /**
      * It is not recommended to use this function please use {@link ModManagerPaths} instead
+     *
      * @return The path to /mgt2_mod_manager
      */
     public static Path getMgt2ModManagerPath() {

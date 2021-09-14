@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class WindowAddGenrePage10 extends JFrame{
+public class WindowAddGenrePage10 extends JFrame {
     static final WindowAddGenrePage10 FRAME = new WindowAddGenrePage10();
     public static AtomicReference<ArrayList<File>> screenshotFiles = new AtomicReference<>(new ArrayList<>());
     JPanel contentPane = new JPanel();
@@ -21,13 +22,13 @@ public class WindowAddGenrePage10 extends JFrame{
     JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
     JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -36,7 +37,7 @@ public class WindowAddGenrePage10 extends JFrame{
     public WindowAddGenrePage10() {
         buttonAddScreenshot.addActionListener(actionEvent -> ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot));
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots.confirm"), I18n.INSTANCE.get("frame.title.reset"), JOptionPane.YES_NO_OPTION) == 0){
+            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots.confirm"), I18n.INSTANCE.get("frame.title.reset"), JOptionPane.YES_NO_OPTION) == 0) {
                 screenshotFiles.get().clear();
             }
         });
@@ -49,13 +50,13 @@ public class WindowAddGenrePage10 extends JFrame{
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
 
-    private void setGuiComponents(){
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
@@ -76,11 +77,11 @@ public class WindowAddGenrePage10 extends JFrame{
         contentPane.add(buttonAddScreenshot);
 
         JLabel labelYouCanSkipThisStep = new JLabel(I18n.INSTANCE.get("mod.genre.screenshots.text.1"));
-        labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
+        labelYouCanSkipThisStep.setBounds(15, 55, 300, 23);
         contentPane.add(labelYouCanSkipThisStep);
 
         JLabel labelAddYourOwnGenre = new JLabel(I18n.INSTANCE.get("mod.genre.screenshots.text.2"));
-        labelAddYourOwnGenre.setBounds(15,75, 300, 23);
+        labelAddYourOwnGenre.setBounds(15, 75, 300, 23);
         contentPane.add(labelAddYourOwnGenre);
 
         buttonResetAddedScreenshots.setBounds(210, 30, 80, 23);

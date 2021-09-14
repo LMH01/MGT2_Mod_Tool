@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public enum MGT2Paths {
 

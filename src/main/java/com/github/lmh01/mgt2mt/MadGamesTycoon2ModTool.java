@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt;
 
-import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
@@ -12,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.util.Locale;
 
@@ -22,7 +22,7 @@ public class MadGamesTycoon2ModTool {
     public static final String CURRENT_RELEASE_VERSION = "2.2.1";//When this version number has been detected as the newest release version the update available message is held back
 
     static {
-        if (System.getProperty("os.name").contains("Linux")){
+        if (System.getProperty("os.name").contains("Linux")) {
             OS_TYPE = OSType.LINUX;
         } else {
             OS_TYPE = OSType.WINDOWS;
@@ -30,13 +30,13 @@ public class MadGamesTycoon2ModTool {
         LOGGER.info("MGT2_Mod_Tool is running under " + System.getProperty("os.name"));
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Settings.importSettings();
-        if(Settings.language.equals("English")){
-            Locale locale = new Locale("en","US");//Sets the language to english
+        if (Settings.language.equals("English")) {
+            Locale locale = new Locale("en", "US");//Sets the language to english
             JOptionPane.setDefaultLocale(locale);
-        }else if(Settings.language.equals("Deutsch")){
-            Locale locale = new Locale("de","DE");//Sets the language to english
+        } else if (Settings.language.equals("Deutsch")) {
+            Locale locale = new Locale("de", "DE");//Sets the language to english
             JOptionPane.setDefaultLocale(locale);
         }
         LogFile.startLogging();
@@ -46,7 +46,7 @@ public class MadGamesTycoon2ModTool {
         ToolTipManager.sharedInstance().setInitialDelay(500);
         WindowMain.createFrame();
         Settings.validateMGT2Folder();
-        if(Settings.mgt2FolderIsCorrect){
+        if (Settings.mgt2FolderIsCorrect) {
             try {
                 ModManager.themeMod.writeCustomThemeFile();
             } catch (ModProcessingException e) {
@@ -54,7 +54,7 @@ public class MadGamesTycoon2ModTool {
                 e.printStackTrace();
             }
             Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
-        }else{
+        } else {
             LOGGER.info("Initial backups where not created/completed because the mgt2 folder is invalid");
         }
         ThreadHandler.threadPerformStartTasks().start();

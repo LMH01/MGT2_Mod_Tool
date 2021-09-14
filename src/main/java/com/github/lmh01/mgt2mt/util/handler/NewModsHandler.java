@@ -2,8 +2,11 @@ package com.github.lmh01.mgt2mt.util.handler;
 
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class NewModsHandler {
-    public static void addCompanyIcon(){
+    public static void addCompanyIcon() {
         try {
             Path imageFilePath = Utils.getImagePath();
             File imageFileSource = imageFilePath.toFile();

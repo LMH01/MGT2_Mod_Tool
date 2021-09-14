@@ -1,11 +1,11 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
@@ -29,9 +29,9 @@ public class Utils {
     /**
      * @return returns the current date time in format: YYYY-MM-DD-HH-MM-SS
      */
-    public static String getCurrentDateTime(){
+    public static String getCurrentDateTime() {
         return LocalDateTime.now().getYear() + "-" +
-                LocalDateTime.now().getMonth() + "-"+
+                LocalDateTime.now().getMonth() + "-" +
                 LocalDateTime.now().getDayOfMonth() + "-" +
                 LocalDateTime.now().getHour() + "-" +
                 LocalDateTime.now().getMinute() + "-" +
@@ -42,7 +42,7 @@ public class Utils {
      * @param saveGameNumber The save game number
      * @return Returns the save game file for the input save game number
      */
-    public static File getSaveGameFile(int saveGameNumber){
+    public static File getSaveGameFile(int saveGameNumber) {
         return new File(Backup.FILE_SAVE_GAME_FOLDER + "/" + "savegame" + saveGameNumber + ".txt");
     }
 
@@ -59,26 +59,32 @@ public class Utils {
 
     /**
      * Opens a message dialog with a specified error message.
+     *
      * @param errorMessageKey the error message key. see this functions for meanings
-     * @param e The exception
+     * @param e               The exception
      */
-    public static void showErrorMessage(int errorMessageKey, Exception e){
-        switch(errorMessageKey){
+    public static void showErrorMessage(int errorMessageKey, Exception e) {
+        switch (errorMessageKey) {
             // 1 = Used when AnalyzeExistingGenres.analyzeGenreFile() or AnalyzeThemes.analyzeThemesFile() an exception.
-            case 1: JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("errorMessages.gameFilesNotAnalyzed") + "\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE); break;
+            case 1:
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("errorMessages.gameFilesNotAnalyzed") + "\n\nException:\n" + e.getMessage(), "Unable to continue", JOptionPane.ERROR_MESSAGE);
+                break;
             // 2 = When it is unsuccessful to open the github repository.
-            case 2: JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("errorMessages.unableToOpenWebPage") + "\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE); break;
+            case 2:
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("errorMessages.unableToOpenWebPage") + "\n\nException:\n" + e.getMessage(), "Can't open page", JOptionPane.ERROR_MESSAGE);
+                break;
         }
     }
 
     /**
      * Opens a message dialog with a specified error message.
+     *
      * @param confirmMessageKey The confirm message key. See this functions for meanings.
-     * @param e The exception
+     * @param e                 The exception
      * @return Returns true when the user clicks yes. Returns false when the user clicks no.
      */
-    public static boolean showConfirmDialog(int confirmMessageKey, Exception e){
-        if(confirmMessageKey == 1){
+    public static boolean showConfirmDialog(int confirmMessageKey, Exception e) {
+        if (confirmMessageKey == 1) {
             return JOptionPane.showConfirmDialog(null, "The backup could not be created.\n\nException:\n" + e.getMessage() + "\nDo you want to continue anyway?", "Unable to backup file", JOptionPane.YES_NO_OPTION) == 0;
         }
         return true;
@@ -86,15 +92,17 @@ public class Utils {
 
     /**
      * Opens a confirm dialog with a specified message.
+     *
      * @param confirmMessageKey The confirm message key. See this function for meanings.
      * @return Returns true when the user clicks yes. Returns false when the user clicks no.
      */
-    public static boolean showConfirmDialog(int confirmMessageKey){
-        if(confirmMessageKey == 1){
+    public static boolean showConfirmDialog(int confirmMessageKey) {
+        if (confirmMessageKey == 1) {
             return JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.quit.confirmMessage"), I18n.INSTANCE.get("mod.genre.quit.confirmMessage.title"), JOptionPane.YES_NO_OPTION) == 0;
         }
         return true;
     }
+
     /**
      * Opens the Github page for MGT2MT in the default browser.
      */
@@ -113,9 +121,9 @@ public class Utils {
      * @param imageFile The image file that should be resized
      * @return Returns the resized image file
      */
-    public static ImageIcon getSmallerImageIcon(ImageIcon imageFile){
+    public static ImageIcon getSmallerImageIcon(ImageIcon imageFile) {
         Image image = imageFile.getImage(); // transform it
-        Image resizedImage = image.getScaledInstance(64, 64,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image resizedImage = image.getScaledInstance(64, 64, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         return new ImageIcon(resizedImage);  // transform it back
     }
 
@@ -123,7 +131,7 @@ public class Utils {
      * @param languageKey They key number for the language to use. For more information see this functions content.
      * @return Returns the themes file for the specified language.
      */
-    public static File getThemeFile(int languageKey){
+    public static File getThemeFile(int languageKey) {
         String currentLanguageKey = TranslationManager.TRANSLATION_KEYS[languageKey];
         return MGT2Paths.TEXT.getPath().resolve(Paths.get(currentLanguageKey, "Themes_" + currentLanguageKey + ".txt")).toFile();
     }
@@ -132,20 +140,22 @@ public class Utils {
      * @param languageKey They key for the language to use. For more information see this functions content.
      * @return Returns the themes file for the specified language.
      */
-    public static File getThemeFile(String languageKey){
+    public static File getThemeFile(String languageKey) {
         return MGT2Paths.TEXT.getPath().resolve(languageKey + "/Themes_" + languageKey + ".txt").toFile();
     }
 
     /**
      * Opens a file chooser where a single image file can be selected.
+     *
      * @return The selected image file path
      */
-    public static Path getImagePath() throws ModProcessingException{
+    public static Path getImagePath() throws ModProcessingException {
         return getImagePath(false);
     }
 
     /**
      * Opens a file chooser where a single image file can be selected.
+     *
      * @param showConfirmMessage Set true to display a message that the image file has been set.
      * @return Returns the selected image file path
      */
@@ -156,7 +166,7 @@ public class Utils {
             javax.swing.filechooser.FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
                 @Override
                 public boolean accept(File f) {
-                    if(f.getName().contains(".png")){
+                    if (f.getName().contains(".png")) {
                         return true;
                     }
                     return f.isDirectory();
@@ -174,17 +184,17 @@ public class Utils {
 
             int return_value = fileChooser.showOpenDialog(null);
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
-            if(return_value == JFileChooser.APPROVE_OPTION){
-                if(fileChooser.getSelectedFile().getName().contains(".png")){
-                    if(showConfirmMessage){
+            if (return_value == JFileChooser.APPROVE_OPTION) {
+                if (fileChooser.getSelectedFile().getName().contains(".png")) {
+                    if (showConfirmMessage) {
                         JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFileSet"));
                     }
                     return fileChooser.getSelectedFile().toPath();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
                     throw new ModProcessingException("Image file could not be selected: Please select a .png file");
                 }
-            }else{
+            } else {
                 throw new ModProcessingException("Image selection has been canceled");
             }
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
@@ -195,22 +205,23 @@ public class Utils {
 
     /**
      * Converts the input string to an array list containing the elements of the string. Input string formatting: <s1><s2><s3>. The content between the <> is added to the array list.
+     *
      * @param string Input string
      * @return Returns an array list containing the elements of string
      */
-    public static ArrayList<String> getEntriesFromString(String string) throws NullPointerException{
+    public static ArrayList<String> getEntriesFromString(String string) throws NullPointerException {
         ArrayList<String> arrayList = new ArrayList<>();
         StringBuilder currentEntry = new StringBuilder();
         boolean workingOnEntry = false;
-        for(Character character : string.toCharArray()){
-            if(character.toString().equals("<")){
+        for (Character character : string.toCharArray()) {
+            if (character.toString().equals("<")) {
                 workingOnEntry = true;
-            }else if(character.toString().equals(">")){
+            } else if (character.toString().equals(">")) {
                 arrayList.add(currentEntry.toString());
                 currentEntry = new StringBuilder();
                 workingOnEntry = false;
-            }else{
-                if(workingOnEntry){
+            } else {
+                if (workingOnEntry) {
                     currentEntry.append(character);
                 }
             }
@@ -223,12 +234,12 @@ public class Utils {
      * Trims the string to remove whitespaces.
      * See {@link Utils#getEntriesFromString(String)} for more information
      */
-    public static String getFirstPart(String string) throws NullPointerException{
+    public static String getFirstPart(String string) throws NullPointerException {
         StringBuilder output = new StringBuilder();
-        for(Character character : string.toCharArray()){
-            if(!character.toString().equals("<")){
+        for (Character character : string.toCharArray()) {
+            if (!character.toString().equals("<")) {
                 output.append(character);
-            }else{
+            } else {
                 break;
             }
         }
@@ -245,12 +256,12 @@ public class Utils {
             boolean firstLine = true;
             StringBuilder compatibleThemes = new StringBuilder();
             String currentLine;
-            while((currentLine = br.readLine()) != null){
-                if(firstLine){
+            while ((currentLine = br.readLine()) != null) {
+                if (firstLine) {
                     currentLine = Utils.removeUTF8BOM(currentLine);
                     firstLine = false;
                 }
-                if(currentLine.contains(Integer.toString(genreId))){
+                if (currentLine.contains(Integer.toString(genreId))) {
                     compatibleThemes.append("<");
                     compatibleThemes.append(ModManager.themeMod.getReplacedLine(currentLine));
                     compatibleThemes.append(">");
@@ -264,24 +275,24 @@ public class Utils {
     }
 
     /**
-     * @param genreId The genre id for which the file should be searched
+     * @param genreId     The genre id for which the file should be searched
      * @param goodFeature True when the file should be searched for good features. False when it should be searched for bad features.
      * @return Returns a String containing gameplay feature names
      */
     public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
-        if(goodFeature){
-            for(Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()){
-                if(map.get("GOOD") != null){
-                    if(map.get("GOOD").contains("<" + genreId + ">")){
+        if (goodFeature) {
+            for (Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()) {
+                if (map.get("GOOD") != null) {
+                    if (map.get("GOOD").contains("<" + genreId + ">")) {
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
                     }
                 }
             }
-        }else{
-            for(Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()){
-                if(map.get("BAD") != null){
-                    if(map.get("BAD").contains("<" + genreId + ">")){
+        } else {
+            for (Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()) {
+                if (map.get("BAD") != null) {
+                    if (map.get("BAD").contains("<" + genreId + ">")) {
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
                     }
                 }
@@ -292,20 +303,21 @@ public class Utils {
 
     /**
      * Opens a window where the user can select entries from a list.
-     * @param labelText The text that should be displayed at the top of the window
-     * @param windowTile The window title that the window should get
-     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
+     *
+     * @param labelText                         The text that should be displayed at the top of the window
+     * @param windowTile                        The window title that the window should get
+     * @param stringArraySafetyFeaturesOn       An array containing the list items when the safety features are on
      * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
-     * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
+     * @param showNoSelectionMessage            If true the message that something should be selected, when selection is empty is not shown.
      * @return Returns the selected entry names. If cancel is pressed null is returned.
      */
-    public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
+    public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage) {
         Set<String> returnValues = new HashSet<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
-        if(Settings.disableSafetyFeatures){
+        if (Settings.disableSafetyFeatures) {
             existingListContent = stringArraySafetyFeaturesDisabled;
-        }else {
+        } else {
             existingListContent = stringArraySafetyFeaturesOn;
         }
         JList<String> listAvailableEntries = new JList<>(existingListContent);
@@ -313,13 +325,13 @@ public class Utils {
         listAvailableEntries.setLayoutOrientation(JList.VERTICAL);
         listAvailableEntries.setVisibleRowCount(-1);
         JScrollPane scrollPaneAvailableEntries = new JScrollPane(listAvailableEntries);
-        scrollPaneAvailableEntries.setPreferredSize(new Dimension(315,140));
+        scrollPaneAvailableEntries.setPreferredSize(new Dimension(315, 140));
 
         Object[] params = {labelChooseEntry, scrollPaneAvailableEntries};
 
         int returnValue = JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION);
         if (returnValue == JOptionPane.OK_OPTION) {
-            if(!listAvailableEntries.isSelectionEmpty()){
+            if (!listAvailableEntries.isSelectionEmpty()) {
                 returnValues.addAll(listAvailableEntries.getSelectedValuesList());
             }
         } else if (returnValue == JOptionPane.CANCEL_OPTION) {
@@ -330,20 +342,21 @@ public class Utils {
 
     /**
      * Opens a window where the user can select entries from a list.
-     * @param labelText The text that should be displayed at the top of the window
-     * @param windowTile The window title that the window should get
-     * @param stringArraySafetyFeaturesOn An array containing the list items when the safety features are on
+     *
+     * @param labelText                         The text that should be displayed at the top of the window
+     * @param windowTile                        The window title that the window should get
+     * @param stringArraySafetyFeaturesOn       An array containing the list items when the safety features are on
      * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
-     * @param showNoSelectionMessage If true the message that something should be selected, when selection is empty is not shown.
+     * @param showNoSelectionMessage            If true the message that something should be selected, when selection is empty is not shown.
      * @return Returns the selected entries as array list.
      */
-    public static ArrayList<Integer> getSelectedEntriesOld(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage){
+    public static ArrayList<Integer> getSelectedEntriesOld(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage) {
         ArrayList<Integer> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
-        if(Settings.disableSafetyFeatures){
+        if (Settings.disableSafetyFeatures) {
             existingListContent = stringArraySafetyFeaturesDisabled;
-        }else {
+        } else {
             existingListContent = stringArraySafetyFeaturesOn;
         }
         JList<String> listAvailableEntries = new JList<>(existingListContent);
@@ -351,17 +364,17 @@ public class Utils {
         listAvailableEntries.setLayoutOrientation(JList.VERTICAL);
         listAvailableEntries.setVisibleRowCount(-1);
         JScrollPane scrollPaneAvailableEntries = new JScrollPane(listAvailableEntries);
-        scrollPaneAvailableEntries.setPreferredSize(new Dimension(315,140));
+        scrollPaneAvailableEntries.setPreferredSize(new Dimension(315, 140));
 
         Object[] params = {labelChooseEntry, scrollPaneAvailableEntries};
 
-        if(JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-            if(!listAvailableEntries.isSelectionEmpty()){
-                for(String string : listAvailableEntries.getSelectedValuesList()){
+        if (JOptionPane.showConfirmDialog(null, params, windowTile, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+            if (!listAvailableEntries.isSelectionEmpty()) {
+                for (String string : listAvailableEntries.getSelectedValuesList()) {
                     returnValues.add(getPositionInList(string, existingListContent));
                 }
-            }else{
-                if(showNoSelectionMessage){
+            } else {
+                if (showNoSelectionMessage) {
                     JOptionPane.showMessageDialog(null, "Please select a genre first.", "Action unavailable", JOptionPane.ERROR_MESSAGE);
 
                 }
@@ -376,7 +389,7 @@ public class Utils {
      */
     public static String transformArrayListToString(ArrayList<?> arrayList) {
         StringBuilder returnString = new StringBuilder();
-        for(Object object : arrayList){
+        for (Object object : arrayList) {
             returnString.append("<").append(object.toString()).append(">");
         }
         return returnString.toString();
@@ -386,9 +399,9 @@ public class Utils {
      * Checks the array lists if they have mutual entries. Returns true if the do. Returns false if the don't
      */
     public static boolean checkForMutualEntries(ArrayList<?> arrayList1, ArrayList<?> arrayList2) {
-        for(Object object1 : arrayList1){
-            for(Object object2 : arrayList2){
-                if(object1 == object2){
+        for (Object object1 : arrayList1) {
+            for (Object object2 : arrayList2) {
+                if (object1 == object2) {
                     return true;
                 }
             }
@@ -399,10 +412,10 @@ public class Utils {
     /**
      * Opens the given folder
      */
-    public static void open(Path path){
+    public static void open(Path path) {
         try {
             File file = path.toFile();
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.mkdirs();
             }
             Desktop.getDesktop().open(file);
@@ -423,14 +436,14 @@ public class Utils {
     }
 
     /**
-     * @param itemInList The item from which the position should be returned
+     * @param itemInList  The item from which the position should be returned
      * @param listContent A list containing the selected entries
      * @return Returns the position of the item in the list
      */
     public static int getPositionInList(String itemInList, String[] listContent) {
         int currentNumber = 0;
-        for(String string : listContent){
-            if(string.equals(itemInList)){
+        for (String string : listContent) {
+            if (string.equals(itemInList)) {
                 return currentNumber;
             }
             currentNumber++;
@@ -447,6 +460,7 @@ public class Utils {
 
     /**
      * Rounds the input number up/down to the next five
+     *
      * @param inputNumber The input number
      * @return Returns the rounded number
      */
@@ -463,6 +477,7 @@ public class Utils {
 
     /**
      * Rounds the input number up/down to the next hundred
+     *
      * @param inputNumber The input number
      * @return Returns the rounded number
      */
@@ -477,6 +492,7 @@ public class Utils {
 
     /**
      * Rounds the input number up/down to the next thousand
+     *
      * @param inputNumber The input number
      * @return Returns the rounded number
      */
@@ -516,7 +532,7 @@ public class Utils {
     /**
      * Converts the input seconds to minutes and seconds
      */
-    public static String convertSecondsToTime(int second){
+    public static String convertSecondsToTime(int second) {
         int minutes = (second % 3600) / 60;
         int seconds = second % 60;
 
@@ -526,10 +542,10 @@ public class Utils {
     /**
      * @return Returns the value of the boolean translated
      */
-    public static String getTranslatedValueFromBoolean(boolean value){
-        if(value){
+    public static String getTranslatedValueFromBoolean(boolean value) {
+        if (value) {
             return I18n.INSTANCE.get("commonText.yes");
-        }else{
+        } else {
             return I18n.INSTANCE.get("commonText.no");
         }
     }
@@ -539,32 +555,33 @@ public class Utils {
      * JAN = 1
      * ...
      * DEC = 12
+     *
      * @param string The input string that should be converted - Converts the whole string and just searches for the month keyword
      */
     public static int getNumberForMonth(String string) throws IllegalArgumentException { //TODO Replace with enum / throw ModProcessingException
-        if(string.contains("JAN")){
+        if (string.contains("JAN")) {
             return 1;
-        }else if(string.contains("FEB")){
+        } else if (string.contains("FEB")) {
             return 2;
-        }else if(string.contains("MAR")){
+        } else if (string.contains("MAR")) {
             return 3;
-        }else if(string.contains("APR")){
+        } else if (string.contains("APR")) {
             return 4;
-        }else if(string.contains("MAY")){
+        } else if (string.contains("MAY")) {
             return 5;
-        }else if(string.contains("JUN")){
+        } else if (string.contains("JUN")) {
             return 6;
-        }else if(string.contains("JUL")){
+        } else if (string.contains("JUL")) {
             return 7;
-        }else if(string.contains("AUG")){
+        } else if (string.contains("AUG")) {
             return 8;
-        }else if(string.contains("SEP")){
+        } else if (string.contains("SEP")) {
             return 9;
-        }else if(string.contains("OCT")){
+        } else if (string.contains("OCT")) {
             return 10;
-        }else if(string.contains("NOV")){
+        } else if (string.contains("NOV")) {
             return 11;
-        }else if(string.contains("DEC")){
+        } else if (string.contains("DEC")) {
             return 12;
         }
         throw new IllegalArgumentException("The input string is invalid: " + string);
@@ -572,9 +589,10 @@ public class Utils {
 
     /**
      * Converts the input integer to string in the following way: 1000000 -> 1.000.000
+     *
      * @return Returns the converted number as string
      */
-    public static String convertIntToString(int inputInt){
+    public static String convertIntToString(int inputInt) {
         DecimalFormat formatter = new DecimalFormat("###,###.###");
         return formatter.format(inputInt);
     }
@@ -589,6 +607,7 @@ public class Utils {
     /**
      * Transforms the input map of format {@literal Map<String, Object> to Map<String, String>}.
      * If an object can not be cast to string it will not be placed in the map that is returned.
+     *
      * @return The transformed map
      */
     public static Map<String, String> transformObjectMapToStringMap(Map<String, Object> map) {

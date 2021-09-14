@@ -1,24 +1,25 @@
 package com.github.lmh01.mgt2mt.util;
+
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.*;
+import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
-import com.github.lmh01.mgt2mt.util.manager.ImportType;
-import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This file contains functions that are used for debug purposes only
@@ -29,8 +30,8 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
     public static ArrayList<AbstractBaseMod> mods = new ArrayList<>();
     static ThemeMod themeMod = new ThemeMod();
 
-    public static void writeHelpFile(){
-        try{
+    public static void writeHelpFile() {
+        try {
             LOGGER.info("writing help file");
             File file = new File("D:/Temp/npc_games_new.txt");
             file.createNewFile();
@@ -41,12 +42,12 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             ArrayList<String> game_npcGames = new ArrayList<>();
             ModManager.npcGamesMod.analyzeFile();
             assert map != null;
-            for(Map.Entry<Integer, String> entry : map.entrySet()){
+            for (Map.Entry<Integer, String> entry : map.entrySet()) {
                 //game_npcGames.add(ModManager.licenceMod.getReplacedLine(entry.getValue()));
-                try{
+                try {
                     bw.write(entry.getValue());
                     bw.write("\n");
-                }catch(NullPointerException ignored){
+                } catch (NullPointerException ignored) {
 
                 }
             }
@@ -92,10 +93,11 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
                 bw.write(entry.getValue());
                 bw.write("\n");
             }*/
-        }catch (IOException | ModProcessingException ignored){
+        } catch (IOException | ModProcessingException ignored) {
 
         }
     }
+
     public static void initializeMods() {
         mods.add(themeMod);
         try {
@@ -123,7 +125,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
         }
     }
 
-    public static void test(){
+    public static void test() {
         //writeHelpFile();
         /*ThreadHandler.startModThread(() -> {
             //SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp"));
@@ -225,7 +227,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
                 TomlWriter tomlWriter = new TomlWriter();
                 tomlWriter.write(mainMap, tomlFile);
                 LOGGER.info("A new default content toml file has been created successfully!");
-            } catch(IOException e) {
+            } catch (IOException e) {
                 LOGGER.info("A problem occurred while writing a new default content toml file: " + e.getMessage());
                 e.printStackTrace();
             }

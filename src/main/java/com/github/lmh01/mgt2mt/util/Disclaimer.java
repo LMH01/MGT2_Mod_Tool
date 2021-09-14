@@ -10,14 +10,14 @@ import javax.swing.*;
 public class Disclaimer {
     private static final Logger LOGGER = LoggerFactory.getLogger(Disclaimer.class);
 
-    public static void showDisclaimer(){
-        if(Settings.enableDisclaimerMessage){
+    public static void showDisclaimer() {
+        if (Settings.enableDisclaimerMessage) {
             String string = I18n.INSTANCE.get("disclaimer.disclaimerText");
             JLabel labelMessage = new JLabel(string);
             Object[] params = {labelMessage};
             LOGGER.info("enableDisclaimerMessage: " + Settings.enableDisclaimerMessage);
-            if(Settings.enableDisclaimerMessage){
-                if(JOptionPane.showConfirmDialog(null, params, "Important information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION){
+            if (Settings.enableDisclaimerMessage) {
+                if (JOptionPane.showConfirmDialog(null, params, "Important information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
                     Settings.enableDisclaimerMessage = false;
                     ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
                 }

@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.mod.GenreMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -10,6 +9,7 @@ import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class WindowAddGenrePage7 extends JFrame{
+public class WindowAddGenrePage7 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
     static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
     public static Set<Integer> gameplayFeaturesGoodIds = new HashSet<>();
@@ -32,7 +32,7 @@ public class WindowAddGenrePage7 extends JFrame{
     final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_BAD = new JScrollPane(LIST_GAMEPLAY_FEATURES_BAD);
     final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_GOOD = new JScrollPane(LIST_GAMEPLAY_FEATURES_GOOD);
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
@@ -40,22 +40,23 @@ public class WindowAddGenrePage7 extends JFrame{
                 FRAME.setGameplayListBad();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
+
     public WindowAddGenrePage7() {
         buttonNext.addActionListener(actionEvent -> {
             ThreadHandler.startModThread(() -> {
-                if(!saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD)){
+                if (!saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD)) {
                     GenreMod.openStepWindow(8);
                     FRAME.dispose();
-                }else{
-                    if(Settings.disableSafetyFeatures){
+                } else {
+                    if (Settings.disableSafetyFeatures) {
                         GenreMod.openStepWindow(8);
                         FRAME.dispose();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -69,12 +70,13 @@ public class WindowAddGenrePage7 extends JFrame{
             }, "WindowAddGenrePage7ButtonPrevious");
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
-    private void setGuiComponents(){
+
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 665, 260);
         setResizable(false);
@@ -115,10 +117,10 @@ public class WindowAddGenrePage7 extends JFrame{
         LIST_GAMEPLAY_FEATURES_GOOD.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.gameplayFeatureMod.getContentByAlphabet()){
+        for (String string : ModManager.gameplayFeatureMod.getContentByAlphabet()) {
             listModel.addElement(string);
-            if(GenreMod.mapNewGenre.containsKey("GAMEPLAYFEATURE GOOD")){
-                if(GenreMod.mapNewGenre.get("GAMEPLAYFEATURE GOOD").contains(string)) {
+            if (GenreMod.mapNewGenre.containsKey("GAMEPLAYFEATURE GOOD")) {
+                if (GenreMod.mapNewGenre.get("GAMEPLAYFEATURE GOOD").contains(string)) {
                     gameplayFeaturesSelected.add(currentTopic);
                 }
             }
@@ -128,7 +130,7 @@ public class WindowAddGenrePage7 extends JFrame{
         //Converts ArrayList to int[]
         final int[] selectedIndices = new int[gameplayFeaturesSelected.size()];
         int index = 0;
-        for (final Integer value: gameplayFeaturesSelected) {
+        for (final Integer value : gameplayFeaturesSelected) {
             selectedIndices[index++] = value;
         }
 
@@ -138,7 +140,7 @@ public class WindowAddGenrePage7 extends JFrame{
         LIST_GAMEPLAY_FEATURES_GOOD.setVisibleRowCount(-1);
         LIST_GAMEPLAY_FEATURES_GOOD.setSelectedIndices(selectedIndices);
 
-        SCROLL_PANE_GAMEPLAY_FEATURES_GOOD.setBounds(10,45, 315,140);
+        SCROLL_PANE_GAMEPLAY_FEATURES_GOOD.setBounds(10, 45, 315, 140);
         contentPane.add(SCROLL_PANE_GAMEPLAY_FEATURES_GOOD);
     }
 
@@ -148,10 +150,10 @@ public class WindowAddGenrePage7 extends JFrame{
         LIST_GAMEPLAY_FEATURES_BAD.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for(String string : ModManager.gameplayFeatureMod.getContentByAlphabet()){
+        for (String string : ModManager.gameplayFeatureMod.getContentByAlphabet()) {
             listModel.addElement(string);
-            if(GenreMod.mapNewGenre.containsKey("GAMEPLAYFEATURE BAD")){
-                if(GenreMod.mapNewGenre.get("GAMEPLAYFEATURE BAD").contains(string)) {
+            if (GenreMod.mapNewGenre.containsKey("GAMEPLAYFEATURE BAD")) {
+                if (GenreMod.mapNewGenre.get("GAMEPLAYFEATURE BAD").contains(string)) {
                     gameplayFeaturesSelected.add(currentTopic);
                 }
             }
@@ -161,7 +163,7 @@ public class WindowAddGenrePage7 extends JFrame{
         //Converts ArrayList to int[]
         final int[] selectedIndices = new int[gameplayFeaturesSelected.size()];
         int index = 0;
-        for (final Integer value: gameplayFeaturesSelected) {
+        for (final Integer value : gameplayFeaturesSelected) {
             selectedIndices[index++] = value;
         }
 
@@ -171,14 +173,15 @@ public class WindowAddGenrePage7 extends JFrame{
         LIST_GAMEPLAY_FEATURES_BAD.setVisibleRowCount(-1);
         LIST_GAMEPLAY_FEATURES_BAD.setSelectedIndices(selectedIndices);
 
-        SCROLL_PANE_GAMEPLAY_FEATURES_BAD.setBounds(335,45, 315,140);
+        SCROLL_PANE_GAMEPLAY_FEATURES_BAD.setBounds(335, 45, 315, 140);
         contentPane.add(SCROLL_PANE_GAMEPLAY_FEATURES_BAD);
     }
 
     /**
      * Saves the inputs from the lists to the new genre map.
+     *
      * @param listGameplayFeaturesGood The list containing the gameplay features that work good together with the genre
-     * @param listGameplayFeaturesBad The list containing the gameplay features that work bad together with the genre
+     * @param listGameplayFeaturesBad  The list containing the gameplay features that work bad together with the genre
      * @return Returns true when the lists don't have mutual selected entries.
      */
     private static boolean saveInputs(JList<String> listGameplayFeaturesGood, JList<String> listGameplayFeaturesBad) throws ModProcessingException {
@@ -189,20 +192,20 @@ public class WindowAddGenrePage7 extends JFrame{
         LOGGER.info("Cleared map entries for good/bad gameplay features.");
         StringBuilder gameplayFeaturesGood = new StringBuilder();
         StringBuilder gameplayFeaturesBad = new StringBuilder();
-        for(Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()){
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
-                    if(entry.getKey().equals("NAME EN")){
-                        if(entry.getValue().equals(string)){
+        for (Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                for (String string : listGameplayFeaturesBad.getSelectedValuesList()) {
+                    if (entry.getKey().equals("NAME EN")) {
+                        if (entry.getValue().equals(string)) {
                             gameplayFeaturesBadIds.add(ModManager.gameplayFeatureMod.getContentIdByName(entry.getValue()));
                             gameplayFeaturesBad.append("<").append(string).append(">");
                             LOGGER.info("Gameplay feature bad: " + entry.getKey() + " | " + entry.getValue());
                         }
                     }
                 }
-                for(String string : listGameplayFeaturesGood.getSelectedValuesList()){
-                    if(entry.getKey().equals("NAME EN")){
-                        if(entry.getValue().equals(string)){
+                for (String string : listGameplayFeaturesGood.getSelectedValuesList()) {
+                    if (entry.getKey().equals("NAME EN")) {
+                        if (entry.getValue().equals(string)) {
                             gameplayFeaturesGoodIds.add(ModManager.gameplayFeatureMod.getContentIdByName(entry.getValue()));
                             gameplayFeaturesGood.append("<").append(string).append(">");
                             LOGGER.info("Gameplay feature good: " + entry.getKey() + " | " + entry.getValue());
@@ -214,8 +217,8 @@ public class WindowAddGenrePage7 extends JFrame{
         GenreMod.mapNewGenre.put("GAMEPLAYFEATURE BAD", gameplayFeaturesBad.toString());
         GenreMod.mapNewGenre.put("GAMEPLAYFEATURE GOOD", gameplayFeaturesGood.toString());
         boolean mutualEntries = false;
-        for(String string : listGameplayFeaturesBad.getSelectedValuesList()){
-            for(String string2 : listGameplayFeaturesGood.getSelectedValuesList()){
+        for (String string : listGameplayFeaturesBad.getSelectedValuesList()) {
+            for (String string2 : listGameplayFeaturesGood.getSelectedValuesList()) {
                 if (string.equals(string2)) {
                     mutualEntries = true;
                     break;

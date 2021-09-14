@@ -18,6 +18,7 @@ import java.util.Map;
 public class I18n {
     private static final Logger LOGGER = LoggerFactory.getLogger(I18n.class);
     public static I18n INSTANCE = new I18n();
+
     static {
         try {
             INSTANCE.parseLocale("en", ClassLoader.getSystemResourceAsStream("locale/en.txt"));
@@ -33,8 +34,9 @@ public class I18n {
 
     /**
      * Reads a locale formatted like `key|value`
+     *
      * @param language the language ID to save the locale is (for example "en")
-     * @param in the stream to read from
+     * @param in       the stream to read from
      * @throws IOException if an error occurred reading the stream
      */
     public void parseLocale(String language, InputStream in) throws IOException {
@@ -55,6 +57,7 @@ public class I18n {
 
     /**
      * Sets the locale that will be used to localize keys
+     *
      * @param currentLocale the locale to use
      */
     public void setCurrentLocale(String currentLocale) {
@@ -64,6 +67,7 @@ public class I18n {
 
     /**
      * Sets the locale that will be used to localize keys if currentLocale doesn't have them
+     *
      * @param fallbackLocale the locale to use
      */
     public void setFallbackLocale(String fallbackLocale) {
@@ -73,12 +77,13 @@ public class I18n {
 
     /**
      * Localizes the given localization key
+     *
      * @param key the key by which the localization should be looked up
      * @return the localized value
      */
     public String get(String key) {
         Map<String, String> loc = locale.getOrDefault(currentLocale, locale.get(fallbackLocale));
-        if (loc.containsKey(key)){
+        if (loc.containsKey(key)) {
             String localisation = loc.get(key);
             DebugHelper.debug(LOGGER, "Returned localisation: " + key + " | " + localisation);
             return localisation;

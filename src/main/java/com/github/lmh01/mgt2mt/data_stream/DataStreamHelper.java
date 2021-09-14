@@ -1,15 +1,15 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -29,10 +29,11 @@ public class DataStreamHelper {
 
     /**
      * Downloads the specified file to the destination
+     *
      * @throws IOException when download failed
      */
     public static void downloadFile(String URL, File destination) throws IOException {
-        if(destination.exists()){
+        if (destination.exists()) {
             destination.delete();
         }
         destination.getParentFile().mkdirs();
@@ -54,7 +55,7 @@ public class DataStreamHelper {
      */
     public static void downloadZip(String URL, Path destination) throws IOException {
         File destinationFile = destination.toFile();
-        if(destinationFile.exists()){
+        if (destinationFile.exists()) {
             destinationFile.delete();
         }
         destinationFile.getParentFile().mkdirs();
@@ -67,17 +68,17 @@ public class DataStreamHelper {
      * @param file The input file
      * @return Returns a list containing map entries for every data package in the input text file.
      */
-    public static List<Map<String,String>> parseDataFile(File file) throws IOException{
+    public static List<Map<String, String>> parseDataFile(File file) throws IOException {
         List<Map<String, String>> fileParts = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         String currentLine;
         boolean firstLine = true;
         boolean firstList = true;
         Map<String, String> mapCurrent = new HashMap<>();
-        while((currentLine = reader.readLine()) != null){
-            if(firstLine){
+        while ((currentLine = reader.readLine()) != null) {
+            if (firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);
-                if(currentLine.contains("EOF")){
+                if (currentLine.contains("EOF")) {
                     //This is being put into the list when the file is empty except for the [EOF]
                     //A dummy id and name are inserted
                     mapCurrent.put("ID", "-1");
@@ -89,27 +90,27 @@ public class DataStreamHelper {
                 }
                 firstLine = false;
             }
-            if(currentLine.equals("////////////////////////////////////////////////////////////////////")){
+            if (currentLine.equals("////////////////////////////////////////////////////////////////////")) {
                 reader.readLine();//This if/else is included so that the analyzing of the hardware.txt file works properly
-            }else{
-                if(currentLine.isEmpty()){
+            } else {
+                if (currentLine.isEmpty()) {
                     fileParts.add(mapCurrent);
                     mapCurrent = new HashMap<>();
                     firstList = false;
-                }else{
+                } else {
                     boolean keyComplete = false;
                     StringBuilder mapKey = new StringBuilder();
                     StringBuilder mapValue = new StringBuilder();
-                    for(int i=1; i<currentLine.length(); i++){
-                        if(!keyComplete){
-                            if(String.valueOf(currentLine.charAt(i)).equals("]")){
+                    for (int i = 1; i < currentLine.length(); i++) {
+                        if (!keyComplete) {
+                            if (String.valueOf(currentLine.charAt(i)).equals("]")) {
                                 keyComplete = true;
                                 continue;
                             }
                         }
-                        if(keyComplete){
+                        if (keyComplete) {
                             mapValue.append(currentLine.charAt(i));
-                        }else{
+                        } else {
                             mapKey.append(currentLine.charAt(i));
                         }
                     }
@@ -117,7 +118,7 @@ public class DataStreamHelper {
                 }
             }
         }
-        if(firstList){
+        if (firstList) {
             fileParts.add(mapCurrent);
         }
         reader.close();
@@ -125,45 +126,45 @@ public class DataStreamHelper {
     }
 
     /**
-     * @param path The folder that should be tested if contains the file.
+     * @param path    The folder that should be tested if contains the file.
      * @param content The content that should be found.
      * @return Returns true when the input file is the MGT2 folder.
      */
-    public static boolean doesFolderContainFile(Path path, String content){
+    public static boolean doesFolderContainFile(Path path, String content) {
         File file = path.toFile();
-        if(file.exists()){
+        if (file.exists()) {
             File[] filesInFolder = file.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(filesInFolder[i].getName().equals(content)){
+                if (filesInFolder[i].getName().equals(content)) {
                     return true;
                 }
             }
-        }else{
+        } else {
             LOGGER.info("File \"" + content + "\"does not exist in folder \"" + path + "\"");
         }
         return false;
     }
 
     /**
-     * @param file The input file
+     * @param file        The input file
      * @param charsetType Defines what charset the source file uses. Possible UTF_8BOM UTF_16LE
      * @return Returns a map. The key is the line number and the value is the content for that line number.
      */
-    public static Map<Integer, String> getContentFromFile(File file, String charsetType) throws IOException{//TODO Umschreiben, dass charset nicht mehr als String rein gegeben wird
+    public static Map<Integer, String> getContentFromFile(File file, String charsetType) throws IOException {//TODO Umschreiben, dass charset nicht mehr als String rein gegeben wird
         BufferedReader br;
-        if(charsetType.equals("UTF_8BOM")){
+        if (charsetType.equals("UTF_8BOM")) {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-        }else if(charsetType.equals("UTF_16LE")){
+        } else if (charsetType.equals("UTF_16LE")) {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_16LE));
-        }else{
+        } else {
             return null;
         }
         String currentLine;
         boolean firstLine = true;
         Map<Integer, String> mapCurrent = new HashMap<>();
         int currentLineNumber = 1;
-        while((currentLine = br.readLine()) != null){
-            if(firstLine){
+        while ((currentLine = br.readLine()) != null) {
+            if (firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);
                 firstLine = false;
             }
@@ -178,22 +179,22 @@ public class DataStreamHelper {
      * @param path The folder that should be searched for files.
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolder(Path path){
+    public static ArrayList<File> getFilesInFolder(Path path) {
         return getFilesInFolderBlackList(path, "EMPTY");
     }
 
     /**
-     * @param path The folder that should be searched for files.
+     * @param path      The folder that should be searched for files.
      * @param blackList When the string entered here is found in the filename the file wont be added to the arrayListFiles.
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolderBlackList(Path path, String blackList){
+    public static ArrayList<File> getFilesInFolderBlackList(Path path, String blackList) {
         File file = path.toFile();
         ArrayList<File> arrayListFiles = new ArrayList<>();
-        if(file.exists()){
+        if (file.exists()) {
             File[] filesInFolder = file.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(!filesInFolder[i].getName().contains(blackList) || blackList.equals("EMPTY")){
+                if (!filesInFolder[i].getName().contains(blackList) || blackList.equals("EMPTY")) {
                     arrayListFiles.add(filesInFolder[i]);
                 }
             }
@@ -202,17 +203,17 @@ public class DataStreamHelper {
     }
 
     /**
-     * @param path The folder that should be searched for files.
+     * @param path      The folder that should be searched for files.
      * @param whiteList When the string entered here is found/equals the filename the file will be added to the arrayListFiles. All other files wont be added
      * @return Returns an array list containing all files inside the input folder
      */
-    public static ArrayList<File> getFilesInFolderWhiteList(Path path, String whiteList){
+    public static ArrayList<File> getFilesInFolderWhiteList(Path path, String whiteList) {
         File file = path.toFile();
         ArrayList<File> arrayListFiles = new ArrayList<>();
-        if(file.exists()){
+        if (file.exists()) {
             File[] filesInFolder = file.listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(filesInFolder[i].getName().contains(whiteList)){
+                if (filesInFolder[i].getName().contains(whiteList)) {
                     arrayListFiles.add(filesInFolder[i]);
                 }
             }
@@ -222,10 +223,11 @@ public class DataStreamHelper {
 
     /**
      * Unzips the zipFile to the destination directory.
-     * @param zipFile The input zip file
+     *
+     * @param zipFile     The input zip file
      * @param destination The destination where the file should be unzipped to.
      */
-    public static void unzip(Path zipFile, Path destination) throws IOException, IllegalArgumentException{
+    public static void unzip(Path zipFile, Path destination) throws IOException, IllegalArgumentException {
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
         timeHelper.measureTime();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
@@ -237,7 +239,7 @@ public class DataStreamHelper {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile.toFile()));
         ZipEntry zipEntry = zis.getNextEntry();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + (int)timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + (int) timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
             File newFile = newFile(destination.toFile(), zipEntry);
             DebugHelper.debug(LOGGER, "Unzipped file: " + newFile.getPath());
@@ -285,7 +287,7 @@ public class DataStreamHelper {
     /**
      * Returns the amount of files in the input stream
      */
-    private static int getZipInputStreamSize(File zipFile) throws IOException, IllegalArgumentException{
+    private static int getZipInputStreamSize(File zipFile) throws IOException, IllegalArgumentException {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
         ZipEntry zipEntry = zis.getNextEntry();
         int zipEntryAmount = 0;
@@ -300,7 +302,7 @@ public class DataStreamHelper {
 
     /**
      * @param rootDirectory The directory where the file search is started
-     * @param fileName The file name that should be searched
+     * @param fileName      The file name that should be searched
      * @return Returns an array list containing all files that match the file to search
      */
     public static ArrayList<File> getFiles(File rootDirectory, String fileName) throws IOException {
@@ -313,7 +315,7 @@ public class DataStreamHelper {
                     .collect(Collectors.toList());
 
             collect.forEach((string) -> {
-                if(string.contains(fileName)){
+                if (string.contains(fileName)) {
                     LOGGER.info(fileName + ": " + string);
                     arrayList.add(new File(string));
                 }
@@ -325,7 +327,8 @@ public class DataStreamHelper {
     /**
      * Copied from https://www.baeldung.com/java-copy-directory.
      * Will use the progress bar.
-     * @param sourceDirectory The source
+     *
+     * @param sourceDirectory      The source
      * @param destinationDirectory The destination
      */
     public static void copyDirectory(Path sourceDirectory, Path destinationDirectory)
@@ -333,7 +336,7 @@ public class DataStreamHelper {
         ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.copyDirectory.title"));
         Files.createDirectories(destinationDirectory);
         TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.copyDirectory.title") + ": " + sourceDirectory + " -> " + destinationDirectory);
-        ProgressBarHelper.increaseMaxValue((int)getFileCount(sourceDirectory));
+        ProgressBarHelper.increaseMaxValue((int) getFileCount(sourceDirectory));
         Files.walk(sourceDirectory)
                 .forEach(source -> {
                     Path destination = Paths.get(destinationDirectory.toString(), source.toString()
@@ -358,13 +361,14 @@ public class DataStreamHelper {
 
     /**
      * Deletes a directory with its contents
+     *
      * @param useProgressBar True when the progress bar should be used.
      */
     public static void deleteDirectory(Path directoryToBeDeleted, boolean useProgressBar) throws IOException {
         if (useProgressBar) {
-            try{
+            try {
                 ProgressBarHelper.initializeProgressBar(0, Objects.requireNonNull(directoryToBeDeleted.toFile().listFiles()).length, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted.toFile().getName());
-            }catch (NullPointerException ignored){
+            } catch (NullPointerException ignored) {
                 ProgressBarHelper.initializeProgressBar(0, 0, I18n.INSTANCE.get("progressBar.delete") + " " + directoryToBeDeleted);
             }
             ProgressBarHelper.increaseMaxValue((int) getFileCount(directoryToBeDeleted));

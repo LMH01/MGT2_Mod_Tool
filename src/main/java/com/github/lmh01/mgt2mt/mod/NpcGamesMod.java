@@ -13,6 +13,7 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -64,46 +65,46 @@ public class NpcGamesMod extends AbstractSimpleMod {
         JScrollPane scrollPaneAvailableGenres = WindowHelper.getScrollPane(listAvailableThemes);
 
         Object[] params = {labelModName, textFieldName, labelExplainList, scrollPaneAvailableGenres};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 String newModName = textFieldName.getText();
-                if(!newModName.isEmpty()){
-                    if(listAvailableThemes.getSelectedValuesList().size() != 0){
+                if (!newModName.isEmpty()) {
+                    if (listAvailableThemes.getSelectedValuesList().size() != 0) {
                         boolean modAlreadyExists = false;
-                        for(String string : getContentByAlphabet()){
+                        for (String string : getContentByAlphabet()) {
                             if (newModName.equals(string)) {
                                 modAlreadyExists = true;
                                 break;
                             }
                         }
-                        if(!modAlreadyExists){
+                        if (!modAlreadyExists) {
                             StringBuilder newModLine = new StringBuilder();
                             newModLine.append(newModName).append(" ");
                             ArrayList<Integer> genreIds = new ArrayList<>();
-                            for(String string : listAvailableThemes.getSelectedValuesList()){
+                            for (String string : listAvailableThemes.getSelectedValuesList()) {
                                 genreIds.add(ModManager.genreMod.getContentIdByName(string));
                             }
                             Collections.sort(genreIds);
-                            for(Integer integer : genreIds){
+                            for (Integer integer : genreIds) {
                                 newModLine.append("<").append(integer).append(">");
                             }
-                            if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(newModLine.toString()), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 createBackup();
                                 addModToFile(newModLine.toString());
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getType() + " - " + newModName);
                                 JOptionPane.showMessageDialog(null, getType() + " [" + newModName + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"));
                                 break;
                             }
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.unableToAdd") + " " + getType() + " - " + I18n.INSTANCE.get("commonText.modAlreadyExists"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.chooseGenreFirst"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.INFORMATION_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -114,20 +115,20 @@ public class NpcGamesMod extends AbstractSimpleMod {
         String line = (String) t;
         ArrayList<String> genreIdsString = Utils.getEntriesFromString(line);
         ArrayList<Integer> genreIds = new ArrayList<>();
-        for(String string : genreIdsString){
+        for (String string : genreIdsString) {
             LOGGER.info("String: " + string);
             genreIds.add(Integer.parseInt(string));
         }
         String name = Utils.getFirstPart(line);
         StringBuilder output = new StringBuilder();
         output.append(name).append(" ");
-        for(Integer integer : genreIds){
-            try{
+        for (Integer integer : genreIds) {
+            try {
                 String genreName = ModManager.genreMod.getContentNameById(integer);
-                if(!genreName.equals("null")){
+                if (!genreName.equals("null")) {
                     output.append("<").append(genreName).append(">");
                 }
-            }catch(ArrayIndexOutOfBoundsException ignored) {
+            } catch (ArrayIndexOutOfBoundsException ignored) {
 
             }
         }
@@ -150,11 +151,11 @@ public class NpcGamesMod extends AbstractSimpleMod {
     public String getReplacedLine(String inputString) {
         StringBuilder outputString = new StringBuilder();
         boolean nameComplete = false;
-        for(Character character : inputString.toCharArray()){
-            if(character.toString().equals("<")){
+        for (Character character : inputString.toCharArray()) {
+            if (character.toString().equals("<")) {
                 nameComplete = true;
             }
-            if(!nameComplete){
+            if (!nameComplete) {
                 outputString.append(character);
             }
         }
@@ -168,9 +169,10 @@ public class NpcGamesMod extends AbstractSimpleMod {
 
     /**
      * Modifies the NpcGames.txt file to include/remove a specified genre id
-     * @param genreID The genre id that should be added/removed.
+     *
+     * @param genreID    The genre id that should be added/removed.
      * @param addGenreID If true the genre will be added to the list. If false the genre will be removed from the list.
-     * @param chance The chance with which the genre should be added to the npc game list 100 = 100%
+     * @param chance     The chance with which the genre should be added to the npc game list 100 = 100%
      */
     public static void editNPCGames(int genreID, boolean addGenreID, int chance) throws ModProcessingException {
         try {
@@ -180,15 +182,15 @@ public class NpcGamesMod extends AbstractSimpleMod {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.npcGamesMod.getGameFile()), StandardCharsets.UTF_16LE));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileNpcGamesTemp), StandardCharsets.UTF_16LE));
             String currentLine;
-            while((currentLine = br.readLine()) != null){
-                if(addGenreID){
+            while ((currentLine = br.readLine()) != null) {
+                if (addGenreID) {
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 100);
-                    if(randomNum>(100-chance)){
+                    if (randomNum > (100 - chance)) {
                         bw.write(currentLine + "<" + genreID + ">" + "\r\n");
-                    }else{
+                    } else {
                         bw.write(currentLine + "\r\n");
                     }
-                }else{
+                } else {
                     bw.write(currentLine.replace("<" + genreID + ">", "") + "\r\n");
                 }
             }

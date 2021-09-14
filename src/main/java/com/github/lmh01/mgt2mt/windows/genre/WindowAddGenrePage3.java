@@ -6,11 +6,12 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class WindowAddGenrePage3 extends JFrame{
+public class WindowAddGenrePage3 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage3.class);
     static final WindowAddGenrePage3 FRAME = new WindowAddGenrePage3();
     JPanel contentPane = new JPanel();
@@ -21,13 +22,13 @@ public class WindowAddGenrePage3 extends JFrame{
     JSpinner spinnerDevelopmentCost = new JSpinner();
     JSpinner spinnerGenrePrice = new JSpinner();
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -45,12 +46,13 @@ public class WindowAddGenrePage3 extends JFrame{
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
-    private void setGuiComponents(){
+
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
@@ -66,20 +68,20 @@ public class WindowAddGenrePage3 extends JFrame{
         spinnerResearchPoints.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 10.000; " + I18n.INSTANCE.get("commonText.default") + ": 1.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchPointCost.spinner.toolTip"));
         spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 100.000; " + I18n.INSTANCE.get("commonText.default") + ": 3.000]" + "<br>" + I18n.INSTANCE.get("commonText.developmentCost.spinner.toolTip"));
         spinnerGenrePrice.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 150.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchCost.spinner.toolTip"));
-        if(Settings.disableSafetyFeatures){
+        if (Settings.disableSafetyFeatures) {
             spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("RES POINTS")), 0, Integer.MAX_VALUE, 1));
             spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("DEV COSTS")), 0, Integer.MAX_VALUE, 1));
             spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("PRICE")), 0, Integer.MAX_VALUE, 1));
-            ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
-            ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(true);
-        }else{
+            ((JSpinner.DefaultEditor) spinnerResearchPoints.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerDevelopmentCost.getEditor()).getTextField().setEditable(true);
+            ((JSpinner.DefaultEditor) spinnerGenrePrice.getEditor()).getTextField().setEditable(true);
+        } else {
             spinnerResearchPoints.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("RES POINTS")), 0, 10000, 100));
             spinnerDevelopmentCost.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("DEV COSTS")), 0, 100000, 1000));
             spinnerGenrePrice.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("PRICE")), 0, 1000000, 1000));
-            ((JSpinner.DefaultEditor)spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
-            ((JSpinner.DefaultEditor)spinnerGenrePrice.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerResearchPoints.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerDevelopmentCost.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerGenrePrice.getEditor()).getTextField().setEditable(false);
         }
         contentPane.add(spinnerResearchPoints);
         contentPane.add(spinnerDevelopmentCost);
@@ -109,7 +111,8 @@ public class WindowAddGenrePage3 extends JFrame{
         buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
-    private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice){
+
+    private static void saveInputs(JSpinner spinnerResearchPoints, JSpinner spinnerDevelopmentCost, JSpinner spinnerGenrePrice) {
         GenreMod.mapNewGenre.remove("RES POINTS");
         GenreMod.mapNewGenre.remove("DEV COSTS");
         GenreMod.mapNewGenre.remove("PRICE");

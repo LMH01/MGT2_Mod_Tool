@@ -14,12 +14,13 @@ public class TextAreaHelper {
     /**
      * Will append the input text to the text area. A line break is written
      */
-    public static void appendText(String text){
+    public static void appendText(String text) {
         writeText(text);
     }
 
     /**
      * Prints the stacktrace of the exception into the text area and into the console
+     *
      * @param e Exception for which the exception should be printed
      */
     public static void printStackTrace(Exception e) {
@@ -29,7 +30,7 @@ public class TextAreaHelper {
         TextAreaHelper.appendText(sw.toString());
     }
 
-    private static void writeText(String text){
+    private static void writeText(String text) {
         WindowMain.TEXT_AREA.append(text);
         WindowMain.TEXT_AREA.append(System.getProperty("line.separator"));
         LogFile.write(text);

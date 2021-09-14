@@ -100,16 +100,16 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
         JSpinner spinnerTech = WindowHelper.getPointSpinner();
 
         Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerResearchCost, 5), WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), WindowHelper.getSpinnerPanel(spinnerGameplay, 0), WindowHelper.getSpinnerPanel(spinnerGraphic, 1), WindowHelper.getSpinnerPanel(spinnerSound, 2), WindowHelper.getSpinnerPanel(spinnerTech, 3)};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                if(!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
                     boolean modAlreadyExists = false;
-                    for(String string : getContentByAlphabet()){
-                        if(textFieldName.getText().equals(string)){
+                    for (String string : getContentByAlphabet()) {
+                        if (textFieldName.getText().equals(string)) {
                             modAlreadyExists = true;
                         }
                     }
-                    if(!modAlreadyExists) {
+                    if (!modAlreadyExists) {
                         Map<String, String> newEngineFeature = new HashMap<>();
                         if (!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
                             newEngineFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
@@ -146,13 +146,13 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.engineFeature.upperCase") + ": [" + newEngineFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -194,30 +194,40 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
 
     /**
      * Converts the input string into the respective type number
+     *
      * @param featureType The feature type string
      * @return Returns the type number
      */
-    public int getEngineFeatureTypeByName(String featureType){//TODO rewrite to use enum
-        switch (featureType){
-            case "Graphic": return 0;
-            case "Sound": return 1;
-            case "Artificial Intelligence": return 2;
-            case "Physics": return 3;
+    public int getEngineFeatureTypeByName(String featureType) {//TODO rewrite to use enum
+        switch (featureType) {
+            case "Graphic":
+                return 0;
+            case "Sound":
+                return 1;
+            case "Artificial Intelligence":
+                return 2;
+            case "Physics":
+                return 3;
         }
         return 10;
     }
 
     /**
      * Converts the input id into the respective type name
+     *
      * @param typeId The feature type id
      * @return Returns the type name
      */
-    public String getEngineFeatureNameByTypeId(int typeId){
-        switch (typeId){
-            case 0: return "Graphic";
-            case 1: return "Sound";
-            case 2: return "Artificial Intelligence";
-            case 3: return "Physics";
+    public String getEngineFeatureNameByTypeId(int typeId) {
+        switch (typeId) {
+            case 0:
+                return "Graphic";
+            case 1:
+                return "Sound";
+            case 2:
+                return "Artificial Intelligence";
+            case 3:
+                return "Physics";
         }
         return "";
     }

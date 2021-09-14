@@ -7,6 +7,7 @@ public class DebugHelper {
 
     /**
      * Sends a log message with the logger if debug logging is enabled
+     *
      * @param string The message that should be sent
      */
     public static void debug(Logger logger, String string) {

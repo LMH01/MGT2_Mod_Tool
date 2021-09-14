@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+
 import javax.swing.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,26 +23,26 @@ public class ContentEditor {
         JScrollPane scrollPaneGenres = WindowHelper.getScrollPane(genreList);
         JComboBox<String> comboBoxOperation = WindowHelper.getTypeComboBox(3);
         Object[] params = {labelExplanation, labelThemes, scrollPaneThemes, labelGenres, scrollPaneGenres, comboBoxOperation};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.message.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                if(themeList.getSelectedValuesList().isEmpty() || genreList.getSelectedValuesList().isEmpty()){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.message.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (themeList.getSelectedValuesList().isEmpty() || genreList.getSelectedValuesList().isEmpty()) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.selectThemeGenre"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                }else{
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.confirmMessage"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                } else {
+                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.confirmMessage"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         boolean addGenre = !Objects.requireNonNull(comboBoxOperation.getSelectedItem()).toString().equals(I18n.INSTANCE.get("commonText.remove.upperCase"));
                         HashSet<Integer> themeIds = new HashSet<>();
-                        for(String string : themeList.getSelectedValuesList()){
+                        for (String string : themeList.getSelectedValuesList()) {
                             themeIds.add(ModManager.themeMod.getPositionOfThemeInFile(string));
                         }
                         StringBuilder errors = new StringBuilder();
-                        for(String string : genreList.getSelectedValuesList()){
+                        for (String string : genreList.getSelectedValuesList()) {
                             ModManager.themeMod.editGenreAllocationAdvanced(ModManager.genreMod.getContentIdByName(string), addGenre, themeIds, false);
                         }
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.success"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
                 }
-            }else{
+            } else {
                 break;
             }
         }

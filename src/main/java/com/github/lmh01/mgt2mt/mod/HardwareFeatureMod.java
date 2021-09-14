@@ -12,6 +12,7 @@ import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -36,11 +37,11 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
         EditHelper.printLine("PRICE", map, bw);
         EditHelper.printLine("DEV COSTS", map, bw);
         EditHelper.printLine("QUALITY", map, bw);
-        if(map.containsKey("ONLY_STATIONARY")){
+        if (map.containsKey("ONLY_STATIONARY")) {
             bw.write("[ONLY_STATIONARY]");
             bw.write("\r\n");
         }
-        if(map.containsKey("NEEDINTERNET")){
+        if (map.containsKey("NEEDINTERNET")) {
             bw.write("[NEEDINTERNET]");
             bw.write("\r\n");
         }
@@ -98,27 +99,27 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
         checkBoxOnlyStationary.setToolTipText(I18n.INSTANCE.get("mod.hardwareFeature.addMod.components.checkBoxOnlyStationary.toolTip"));
 
         Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getNamePanel(this, textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerCost, 8), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerQuality, "commonText.quality"), checkBoxNeedsInternet, checkBoxOnlyStationary};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardwareFeature.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardwareFeature.addMod.components.textFieldDescription.initialValue"))){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardwareFeature.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardwareFeature.addMod.components.textFieldDescription.initialValue"))) {
                     boolean modAlreadyExists = false;
-                    for(String string : getContentByAlphabet()){
-                        if(textFieldName.getText().equals(string)){
+                    for (String string : getContentByAlphabet()) {
+                        if (textFieldName.getText().equals(string)) {
                             modAlreadyExists = true;
                         }
                     }
-                    if(!modAlreadyExists){
+                    if (!modAlreadyExists) {
                         Map<String, String> hardwareFeatureMap = new HashMap<>();
                         hardwareFeatureMap.put("ID", Integer.toString(getFreeId()));
-                        if(!nameTranslationsAdded.get()){
+                        if (!nameTranslationsAdded.get()) {
                             hardwareFeatureMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                        }else{
+                        } else {
                             hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                             hardwareFeatureMap.put("NAME EN", textFieldName.getText());
                         }
-                        if(!descriptionTranslationsAdded.get()){
+                        if (!descriptionTranslationsAdded.get()) {
                             hardwareFeatureMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                        }else{
+                        } else {
                             hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslation[0], "DESC"));
                             hardwareFeatureMap.put("DESC EN", textFieldDescription.getText());
                         }
@@ -127,26 +128,26 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
                         hardwareFeatureMap.put("PRICE", spinnerCost.getValue().toString());
                         hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                         hardwareFeatureMap.put("QUALITY", spinnerQuality.getValue().toString());
-                        if(checkBoxNeedsInternet.isSelected()){
+                        if (checkBoxNeedsInternet.isSelected()) {
                             hardwareFeatureMap.put("NEEDINTERNET", "");
                         }
-                        if(checkBoxOnlyStationary.isSelected()){
+                        if (checkBoxOnlyStationary.isSelected()) {
                             hardwareFeatureMap.put("ONLY_STATIONARY", "");
                         }
-                        if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             createBackup();
                             addModToFile(hardwareFeatureMap);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardwareFeature.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -157,15 +158,15 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
         Map<String, String> map = transformGenericToMap(t);
         StringBuilder lastPart = new StringBuilder();
         lastPart.append(I18n.INSTANCE.get("commonText.needInternet")).append(": ");
-        if(map.containsKey("NEEDINTERNET")){
+        if (map.containsKey("NEEDINTERNET")) {
             lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
+        } else {
             lastPart.append(I18n.INSTANCE.get("commonText.no"));
         }
         lastPart.append("<br>").append(I18n.INSTANCE.get("commonText.stationary")).append(": ");
-        if(map.containsKey("ONLY_STATIONARY")){
+        if (map.containsKey("ONLY_STATIONARY")) {
             lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
+        } else {
             lastPart.append(I18n.INSTANCE.get("commonText.no"));
         }
         return "<html>" +

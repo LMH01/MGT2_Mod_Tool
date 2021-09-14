@@ -29,7 +29,7 @@ public class CopyProtectMod extends AbstractAdvancedMod {
 
     @Override
     protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID",map, bw);
+        EditHelper.printLine("ID", map, bw);
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);
         EditHelper.printLine("PRICE", map, bw);
@@ -78,41 +78,41 @@ public class CopyProtectMod extends AbstractAdvancedMod {
         JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
 
         Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerCost, 8), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7)};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.copyProtect.addMod.components.textFieldName.initialValue"))){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.copyProtect.addMod.components.textFieldName.initialValue"))) {
                     boolean modAlreadyExists = false;
-                    for(String string : getContentByAlphabet()){
-                        if(textFieldName.getText().equals(string)){
+                    for (String string : getContentByAlphabet()) {
+                        if (textFieldName.getText().equals(string)) {
                             modAlreadyExists = true;
                         }
                     }
-                    if(!modAlreadyExists){
+                    if (!modAlreadyExists) {
                         Map<String, String> copyProtectMap = new HashMap<>();
                         copyProtectMap.put("ID", Integer.toString(getFreeId()));
-                        if(!nameTranslationsAdded.get()){
+                        if (!nameTranslationsAdded.get()) {
                             copyProtectMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                        }else{
+                        } else {
                             copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                             copyProtectMap.put("NAME EN", textFieldName.getText());
                         }
                         copyProtectMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                         copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
                         copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                        if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             createBackup();
                             addModToFile(copyProtectMap);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.copyProtect.upperCase") + " - " + copyProtectMap.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.copyProtect.upperCase") + ": [" + copyProtectMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }

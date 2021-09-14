@@ -31,7 +31,8 @@ public abstract class AbstractComplexMod extends AbstractAdvancedMod {
 
     /**
      * Exports all image files that belong to the mod and returns a map that contains the names of the image files
-     * @param name The mod name for which the image files should be exported
+     *
+     * @param name         The mod name for which the image files should be exported
      * @param assetsFolder The folder where the image files should be copied to
      * @return A map that contains the names of the image files.
      * These entries will be searched by {@link AbstractComplexMod#importImages(Map <String, String>)} when the mod is imported again.
@@ -40,6 +41,7 @@ public abstract class AbstractComplexMod extends AbstractAdvancedMod {
 
     /**
      * Imports all image files that belong to the mod.
+     *
      * @param map The map that contains the entries on where the image files can be found, the mod name and mod id.
      * @return A map that can contain additional entries that are needed in order to import the mod. E.g. picture ids.
      */
@@ -47,8 +49,9 @@ public abstract class AbstractComplexMod extends AbstractAdvancedMod {
 
     /**
      * Copies the specific image that is located in the assets folder to the target file.
-     * @param map The map where the assets folder and import file name are located
-     * @param key The map key under which the import file name is found
+     *
+     * @param map    The map where the assets folder and import file name are located
+     * @param key    The map key under which the import file name is found
      * @param target The target where the image should be copied to
      * @throws IOException When something goes wrong while the images are copied
      */
@@ -65,6 +68,7 @@ public abstract class AbstractComplexMod extends AbstractAdvancedMod {
 
     /**
      * Removes the image files of the specified mod
+     *
      * @param name The mod for which the image files should be removed
      */
     public abstract void removeImageFiles(String name) throws ModProcessingException;

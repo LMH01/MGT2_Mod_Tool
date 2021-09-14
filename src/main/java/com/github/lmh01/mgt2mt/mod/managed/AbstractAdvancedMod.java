@@ -3,9 +3,7 @@ package com.github.lmh01.mgt2mt.mod.managed;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +12,6 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -25,9 +20,9 @@ import java.util.*;
  * If image files should be processed create a new mod using {@link AbstractComplexMod}
  */
 public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See what functions should be final (Also do that for each of the oder abstract mod classes)
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
-    
+
     List<Map<String, String>> fileContent;
 
     @SuppressWarnings("unchecked")
@@ -40,15 +35,15 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             LOGGER.info("Adding new " + getType() + ": " + map.get("NAME EN"));
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
+            if (fileToEdit.exists()) {
                 fileToEdit.delete();
             }
             fileToEdit.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
+            if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
-            for(Map<String, String> fileContent : getFileContent()){
+            for (Map<String, String> fileContent : getFileContent()) {
                 printValues(fileContent, bw);
                 bw.write("\r\n");
             }
@@ -71,15 +66,15 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             LOGGER.info("Removing " + getType() + ": " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
+            if (fileToEdit.exists()) {
                 fileToEdit.delete();
             }
             fileToEdit.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
+            if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
-            for(Map<String, String> fileContent : getFileContent()){
+            for (Map<String, String> fileContent : getFileContent()) {
                 if (Integer.parseInt(fileContent.get("ID")) != modId) {
                     printValues(fileContent, bw);
                     bw.write("\r\n");
@@ -101,12 +96,12 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             for (Map<String, String> map : fileContent) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     if (entry.getKey().equals("ID")) {
-                        try{
+                        try {
                             int currentId = Integer.parseInt(entry.getValue());
                             if (currentMaxId < currentId) {
                                 currentMaxId = currentId;
                             }
-                        }catch(NumberFormatException e){
+                        } catch (NumberFormatException e) {
                             throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
                         }
                     }
@@ -121,7 +116,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     /**
      * @return The analyzed file content: {@literal List<Map<String, String>>}
      */
-    public final List<Map<String, String>> getFileContent(){
+    public final List<Map<String, String>> getFileContent() {
         return fileContent;
     }
 
@@ -170,9 +165,9 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     public String[] getContentByAlphabet() throws ModProcessingException {
         try {
             ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
-            for(Map<String, String> map : getFileContent()){
-                for(Map.Entry<String, String> entry : map.entrySet()){
-                    if(entry.getKey().equals("NAME EN")){
+            for (Map<String, String> map : getFileContent()) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    if (entry.getKey().equals("NAME EN")) {
                         arrayListAvailableThingsSorted.add(entry.getValue());
                     }
                 }
@@ -192,11 +187,11 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     }
 
     @Override
-    public final int getContentIdByName(String name) throws ModProcessingException{
+    public final int getContentIdByName(String name) throws ModProcessingException {
         analyzeFile();
         try {
-            for(Map<String, String> map : getFileContent()){
-                if(map.get("NAME EN").equals(name)){
+            for (Map<String, String> map : getFileContent()) {
+                if (map.get("NAME EN").equals(name)) {
                     return Integer.parseInt(map.get("ID"));
                 }
             }
@@ -211,11 +206,11 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
      * @return Returns the specified content name by id.
      * @throws ModProcessingException Is thrown when the requested content id does not exist in the map.
      */
-    public final String getContentNameById(int id) throws ModProcessingException{
+    public final String getContentNameById(int id) throws ModProcessingException {
         try {
             if (id >= 0) {
                 Map<Integer, String> idNameMap = new HashMap<>();
-                for(Map<String, String> map : getFileContent()){
+                for (Map<String, String> map : getFileContent()) {
                     idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
                 }
                 return idNameMap.get(id);
@@ -235,8 +230,8 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
         List<Map<String, String>> list = getFileContent();
         String idToSearch = Integer.toString(getContentIdByName(contentNameEn));
         Map<String, String> mapSingleContent = null;
-        for(Map<String, String> map : list){
-            if(map.get("ID").equals(idToSearch)){
+        for (Map<String, String> map : list) {
+            if (map.get("ID").equals(idToSearch)) {
                 mapSingleContent = map;
             }
         }
@@ -248,8 +243,8 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
      * @return The position in the fileContent list where the input id is stored in.
      */
     public int getPositionInFileContentListById(int genreId) throws ModProcessingException {
-        for(int i=0; i<getFileContent().size(); i++){
-            if(getFileContent().get(i).get("ID").equals(Integer.toString(genreId))){
+        for (int i = 0; i < getFileContent().size(); i++) {
+            if (getFileContent().get(i).get("ID").equals(Integer.toString(genreId))) {
                 return i;
             }
         }
@@ -261,10 +256,10 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
      */
     public ArrayList<Integer> getActiveIds() {
         ArrayList<Integer> activeIds = new ArrayList<>();
-        for(Map<String, String> map : getFileContent()){
-            try{
+        for (Map<String, String> map : getFileContent()) {
+            try {
                 activeIds.add(Integer.parseInt(map.get("ID")));
-            } catch (NumberFormatException ignored){
+            } catch (NumberFormatException ignored) {
 
             }
         }
@@ -273,7 +268,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
 
     @Override
     public String[] getDefaultContent() {
-        if(defaultContent.length == 0){
+        if (defaultContent.length == 0) {
             try {
                 defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName());
             } catch (IOException e) {
@@ -286,6 +281,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
 
     /**
      * This function is called by {@link AbstractAdvancedMod#addModToFile(Object)}. The values that are stored in the map will be written to the file by the buffered writer.
+     *
      * @throws IOException Is thrown if something went wrong when the file is being written
      */
     protected abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
@@ -300,9 +296,9 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     }
 
     /**
-     * @return The map that contains the export values.
      * @param name The name of the mod for which the export map should be changed
-     * Can be overwritten to adjust specific map values. Useful if mod id should be replaced with mod name.
+     *             Can be overwritten to adjust specific map values. Useful if mod id should be replaced with mod name.
+     * @return The map that contains the export values.
      */
     public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         return map;
@@ -310,10 +306,11 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
 
     /**
      * Transforms the generic to an {@literal Map<String, String>}.
+     *
      * @throws ModProcessingException If transformation fails
      */
     @SuppressWarnings("unchecked")
-    public <T> Map<String, String> transformGenericToMap(T t) throws ModProcessingException{
+    public <T> Map<String, String> transformGenericToMap(T t) throws ModProcessingException {
         try {
             return (Map<String, String>) t;
         } catch (ClassCastException e) {
@@ -325,9 +322,10 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
      * Use this function to simply transform the map entry from the mod name to the mod id.
      * This function uses {@link AbstractBaseMod#getModIdByNameFromImportHelperMap(String)} to retrieve the mod id.
      * If the entry is not found a warning message is printed into the text area
-     * @param map The map that contains the value that should be replaced
+     *
+     * @param map    The map that contains the value that should be replaced
      * @param mapKey The map key for which the value should be replaced
-     * @param mod The mod for which the name should be replaced with the id
+     * @param mod    The mod for which the name should be replaced with the id
      */
     protected void replaceImportMapEntry(Map<String, String> map, String mapKey, AbstractBaseMod mod) {
         try {
@@ -342,7 +340,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     @Override
     public void initializeImportHelperMap() throws ModProcessingException {
         Map<String, Integer> helperMap = new HashMap<>();
-        for(Map<String, String> map : getFileContent()){
+        for (Map<String, String> map : getFileContent()) {
             try {
                 helperMap.put(map.get("NAME EN"), Integer.parseInt(map.get("ID")));
             } catch (NullPointerException e) {

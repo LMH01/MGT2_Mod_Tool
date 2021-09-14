@@ -4,11 +4,10 @@ import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,14 +26,15 @@ public class ImageFileHandler {
 
     /**
      * Adds all image and meta files that are required for your genre to function
-     * @param genreID The genre id
-     * @param genreName The genre name
-     * @param genreImage The genre icon file
+     *
+     * @param genreID          The genre id
+     * @param genreName        The genre name
+     * @param genreImage       The genre icon file
      * @param genreScreenshots Array list containing all screenshot files
      */
     public static void addGenreImageFiles(int genreID, String genreName, File genreImage, ArrayList<File> genreScreenshots) throws IOException {
         ImageFileHandler.copyScreenshotFiles(genreID, genreScreenshots);//This copies the custom screenshots into the correct folder
-        if(!genreImage.getPath().equals(defaultGenreIcon)){
+        if (!genreImage.getPath().equals(defaultGenreIcon)) {
             //This copies the .png file to the Icon_Genres directory
             copyGenreImages(genreImage, MGT2Paths.GENRE_ICONS.getPath().resolve(GenreMod.getImageFileName(genreName) + ".png").toFile());
             //This creates the meta file in the Icon_Genres directory
@@ -46,7 +46,8 @@ public class ImageFileHandler {
 
     /**
      * Moves the given file to the target location
-     * @param imageFile This is the file that should be moved
+     *
+     * @param imageFile  This is the file that should be moved
      * @param outputFile This is the file that should be created
      */
     private static void copyGenreImages(File imageFile, File outputFile) throws IOException {
@@ -54,7 +55,7 @@ public class ImageFileHandler {
             DebugHelper.debug(LOGGER, "The default image file is in use. No need to copy a new one.");
         } else {
             DebugHelper.debug(LOGGER, "Copying " + imageFile + " to " + outputFile);
-            if(outputFile.exists()){
+            if (outputFile.exists()) {
                 outputFile.delete();
             }
             Files.copy(Paths.get(imageFile.getPath()), Paths.get(outputFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
@@ -64,17 +65,18 @@ public class ImageFileHandler {
 
     /**
      * Moves all files that have been selected into the designated folder
+     *
      * @param genreID The genre id
      */
     private static void copyScreenshotFiles(int genreID, ArrayList<File> screenshotFiles) throws IOException {
         boolean directoryCreated = false;
         File fileScreenshotForGenreID = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(genreID)).toFile();
-        if(!directoryCreated){
+        if (!directoryCreated) {
             fileScreenshotForGenreID.mkdirs();
             directoryCreated = true;
         }
         if (screenshotFiles.size() != 0) {//Things in this loop are only done if at least one custom screenshot file has been set. Otherwise the default files will be used.
-            for (int i = 0; i< screenshotFiles.size(); i++) {
+            for (int i = 0; i < screenshotFiles.size(); i++) {
                 createMetaFile(3, MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(genreID + "/" + i + ".png.meta"));
                 copyGenreImages(screenshotFiles.get(i), MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(genreID + "/" + i + ".png").toFile());
             }
@@ -98,14 +100,14 @@ public class ImageFileHandler {
     /**
      * Removes all custom publisher icons
      */
-    public static void removePublisherIcons(){
+    public static void removePublisherIcons() {
         ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(MGT2Paths.GENRE_SCREENSHOTS.getPath(), ".png");
-        for(File file : files){
-            try{
-                if(Integer.parseInt(file.getName().replace(".png", "")) > 164){
+        for (File file : files) {
+            try {
+                if (Integer.parseInt(file.getName().replace(".png", "")) > 164) {
                     file.delete();
                 }
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
 
             }
         }
@@ -113,8 +115,9 @@ public class ImageFileHandler {
 
     /**
      * Removes the image(.png) and meta-file(.png.meta) files for the specified genre from each directory that contains them
+     *
      * @param genreName The genre id
-     * @param genreId The genre id
+     * @param genreId   The genre id
      */
     public static void removeImageFiles(String genreName) throws ModProcessingException {
         int genreId = ModManager.genreMod.getContentIdByName(genreName);
@@ -122,15 +125,15 @@ public class ImageFileHandler {
         File imageFileMeta = MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + genreName.replace(" ", "") + ".png.meta").toFile();
         File screenshotFolder = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(genreId)).toFile();
         File screenshotMetaFile = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(genreId + ".meta").toFile();
-        if(imageFile.exists()){
+        if (imageFile.exists()) {
             imageFile.delete();
             DebugHelper.debug(LOGGER, "removed file: " + imageFile.getPath());
         }
-        if(imageFileMeta.exists()){
+        if (imageFileMeta.exists()) {
             imageFileMeta.delete();
             DebugHelper.debug(LOGGER, "removed file: " + imageFileMeta.getPath());
         }
-        if(screenshotFolder.exists()){
+        if (screenshotFolder.exists()) {
             screenshotFolder.delete();
             try {
                 Files.walk(Paths.get(screenshotFolder.getPath()))
@@ -142,7 +145,7 @@ public class ImageFileHandler {
             }
             DebugHelper.debug(LOGGER, "removed file: " + screenshotFolder.getPath());
         }
-        if(screenshotMetaFile.exists()){
+        if (screenshotMetaFile.exists()) {
             screenshotMetaFile.delete();
             DebugHelper.debug(LOGGER, "removed file: " + screenshotMetaFile.getPath());
         }
@@ -151,18 +154,19 @@ public class ImageFileHandler {
 
     /**
      * Creates creates a .meta file
-     * @param type What type of .meta file should be created; 1 = iconGenre.png.meta; 2 = GenreId.meta file in the screenshots main folder; 3 = genreId.png.meta in the screenshots/genreId folder
+     *
+     * @param type        What type of .meta file should be created; 1 = iconGenre.png.meta; 2 = GenreId.meta file in the screenshots main folder; 3 = genreId.png.meta in the screenshots/genreId folder
      * @param pngMetaFile
      * @throws IOException
      */
     private static void createMetaFile(int type, Path pngMetaFile) throws IOException {
-        if(pngMetaFile.toFile().exists()){
+        if (pngMetaFile.toFile().exists()) {
             pngMetaFile.toFile().delete();
         }
         DebugHelper.debug(LOGGER, "Creating png.meta file: " + pngMetaFile);
         Files.createFile(pngMetaFile);
         PrintWriter pw = new PrintWriter(pngMetaFile.toFile());
-        if(type == 1){
+        if (type == 1) {
             pw.print("fileFormatVersion: 2\n" +
                     "guid: 14dee014499280641aceb957b082a0c5\n" +
                     "TextureImporter:\n" +
@@ -275,7 +279,7 @@ public class ImageFileHandler {
                     "  userData: \n" +
                     "  assetBundleName: \n" +
                     "  assetBundleVariant: \n");
-        }else if(type == 2){
+        } else if (type == 2) {
             pw.print("fileFormatVersion: 2\n" +
                     "guid: 9d07848f8729232459a20d3f2c3f8e14\n" +
                     "folderAsset: yes\n" +
@@ -284,7 +288,7 @@ public class ImageFileHandler {
                     "  userData: \n" +
                     "  assetBundleName: \n" +
                     "  assetBundleVariant: \n");
-        }else if(type == 3){
+        } else if (type == 3) {
             pw.print("fileFormatVersion: 2\n" +
                     "guid: 35c72980c47b1aa49ac4bdd556d76877\n" +
                     "TextureImporter:\n" +

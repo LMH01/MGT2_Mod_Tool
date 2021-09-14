@@ -5,12 +5,13 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class WindowAddGenrePage4 extends JFrame{
+public class WindowAddGenrePage4 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage4.class);
     static final WindowAddGenrePage4 FRAME = new WindowAddGenrePage4();
     JPanel contentPane = new JPanel();
@@ -20,14 +21,14 @@ public class WindowAddGenrePage4 extends JFrame{
     final JList<String> LIST_TARGET_GROUPS = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_GENRES = new JScrollPane(LIST_TARGET_GROUPS);
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
                 FRAME.setList();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -35,10 +36,10 @@ public class WindowAddGenrePage4 extends JFrame{
 
     public WindowAddGenrePage4() {
         buttonNext.addActionListener(actionEvent -> {
-            if(saveInputs(LIST_TARGET_GROUPS)){
+            if (saveInputs(LIST_TARGET_GROUPS)) {
                 GenreMod.openStepWindow(5);
                 FRAME.dispose();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.selectAtLeastOneTargetGroup"));
             }
         });
@@ -48,12 +49,13 @@ public class WindowAddGenrePage4 extends JFrame{
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
-    private void setGuiComponents(){
+
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 175);
         setResizable(false);
@@ -64,7 +66,7 @@ public class WindowAddGenrePage4 extends JFrame{
         setContentPane(contentPane);
 
         JLabel labelTargetGroup = new JLabel(I18n.INSTANCE.get("commonText.targetGroup") + ":");
-        labelTargetGroup.setBounds(70,5, 200, 23);
+        labelTargetGroup.setBounds(70, 5, 200, 23);
         contentPane.add(labelTargetGroup);
 
         JLabel labelTipPart1 = new JLabel(I18n.INSTANCE.get("mod.genre.tipPart1"));
@@ -87,26 +89,27 @@ public class WindowAddGenrePage4 extends JFrame{
         buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
-    private void setList(){
+
+    private void setList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> arrayListInt = new ArrayList<>();
-        if(GenreMod.mapNewGenre.get("TGROUP").contains("KID")){
+        if (GenreMod.mapNewGenre.get("TGROUP").contains("KID")) {
             arrayListInt.add(0);
         }
-        if(GenreMod.mapNewGenre.get("TGROUP").contains("TEEN")){
+        if (GenreMod.mapNewGenre.get("TGROUP").contains("TEEN")) {
             arrayListInt.add(1);
         }
-        if(GenreMod.mapNewGenre.get("TGROUP").contains("ADULT")){
+        if (GenreMod.mapNewGenre.get("TGROUP").contains("ADULT")) {
             arrayListInt.add(2);
         }
-        if(GenreMod.mapNewGenre.get("TGROUP").contains("OLD")){
+        if (GenreMod.mapNewGenre.get("TGROUP").contains("OLD")) {
             arrayListInt.add(3);
         }
 
         //Converts ArrayList to int[]
         final int[] selectedIndices = new int[arrayListInt.size()];
         int index = 0;
-        for (final Integer value: arrayListInt) {
+        for (final Integer value : arrayListInt) {
             selectedIndices[index++] = value;
         }
 
@@ -120,14 +123,15 @@ public class WindowAddGenrePage4 extends JFrame{
         LIST_TARGET_GROUPS.setLayoutOrientation(JList.VERTICAL);
         LIST_TARGET_GROUPS.setVisibleRowCount(-1);
         LIST_TARGET_GROUPS.setSelectedIndices(selectedIndices);
-        SCROLL_PANE_AVAILABLE_GENRES.setBounds(150,30, 100,75);
+        SCROLL_PANE_AVAILABLE_GENRES.setBounds(150, 30, 100, 75);
         contentPane.add(SCROLL_PANE_AVAILABLE_GENRES);
     }
-    private static boolean saveInputs(JList<String> listTargetGroups){
+
+    private static boolean saveInputs(JList<String> listTargetGroups) {
         GenreMod.mapNewGenre.remove("TGROUP");
         StringBuilder targetGroups = new StringBuilder();
-        if(listTargetGroups.getSelectedValuesList().size() != 0){
-            for(int i=0; i<listTargetGroups.getSelectedValuesList().size(); i++) {
+        if (listTargetGroups.getSelectedValuesList().size() != 0) {
+            for (int i = 0; i < listTargetGroups.getSelectedValuesList().size(); i++) {
                 LOGGER.info("Current target group " + listTargetGroups.getSelectedValuesList().get(i));
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Kid")) {
                     targetGroups.append("<KID>");
@@ -144,7 +148,7 @@ public class WindowAddGenrePage4 extends JFrame{
             }
             GenreMod.mapNewGenre.put("TGROUP", targetGroups.toString());
             return true;
-        }else{
+        } else {
             return false;
         }
     }

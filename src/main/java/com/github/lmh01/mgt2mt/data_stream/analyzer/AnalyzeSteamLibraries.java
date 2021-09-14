@@ -3,7 +3,10 @@ package com.github.lmh01.mgt2mt.data_stream.analyzer;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -34,13 +37,13 @@ public class AnalyzeSteamLibraries {
         BufferedReader bf = new BufferedReader(new FileReader(STEAM_LIBRARY_FOLDERS_PATH.toFile()));
         arrayListSteamLibraries.add(STEAM_LIBRARY_DEFAULT_FOLDER.toString());
         String currentLine;
-        while((currentLine = bf.readLine()) != null){
+        while ((currentLine = bf.readLine()) != null) {
             if (currentLine.contains("\"path\"")) {
                 final String trim = currentLine.replace("\"path\"", "").replaceAll("\"+", "").trim();
                 arrayListSteamLibraries.add(trim);
                 LOGGER.info("Added entry to Steam Libraries Array: " + trim);
             }
         }
-        return  arrayListSteamLibraries;
+        return arrayListSteamLibraries;
     }
 }

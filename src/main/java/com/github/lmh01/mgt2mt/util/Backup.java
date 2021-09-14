@@ -12,9 +12,11 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,15 +39,18 @@ public class Backup {
 
     /**
      * Creates a backup of a given file.
+     *
      * @param fileToBackup This is the file from which a backup should be created.
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup) throws IOException {
         createBackup(fileToBackup, false, false);
     }
+
     /**
      * Creates a backup of a given file. And sets it was initial backup
-     * @param fileToBackup This is the file from which a backup should be created.
+     *
+     * @param fileToBackup  This is the file from which a backup should be created.
      * @param initialBackup Set true when this is the initial backup.
      * @throws IOException Throws IOException when backup was not successful.
      */
@@ -56,27 +61,27 @@ public class Backup {
         latestBackupFolderName = currentTimeAndDay;
         Path backupStorageFolder = ModManagerPaths.BACKUP.getPath().resolve(currentTimeAndDay);
         File directoryBackup = ModManagerPaths.BACKUP.getPath().toFile();
-        if(!directoryBackup.exists()){
+        if (!directoryBackup.exists()) {
             directoryBackup.mkdirs();
         }
         File fileLatestBackupOfInputFile;
-        if(initialBackup){
+        if (initialBackup) {
             fileLatestBackupOfInputFile = ModManagerPaths.BACKUP.getPath().resolve(fileToBackup.getName() + ".initialBackup").toFile();
-            if(fileLatestBackupOfInputFile.exists()){
+            if (fileLatestBackupOfInputFile.exists()) {
                 DebugHelper.debug(LOGGER, "Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
                 initialBackupAlreadyExists = true;
             }
-        }else{
+        } else {
             fileLatestBackupOfInputFile = ModManagerPaths.BACKUP.getPath().resolve(fileToBackup.getName() + ".latestBackup").toFile();
         }
-        if(!initialBackupAlreadyExists){
-            if(fileLatestBackupOfInputFile.exists()){
-                if(!backupStorageFolder.toFile().exists()){//Creates directory if backup directory for specified time does not exist
+        if (!initialBackupAlreadyExists) {
+            if (fileLatestBackupOfInputFile.exists()) {
+                if (!backupStorageFolder.toFile().exists()) {//Creates directory if backup directory for specified time does not exist
                     backupStorageFolder.toFile().mkdirs();
                 }
-                DebugHelper.debug(LOGGER, fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
+                DebugHelper.debug(LOGGER, fileToBackup.getName() + " backup already exists. Moving old backup into storage folder");
                 File fileBackupSaved = backupStorageFolder.resolve(fileToBackup.getName()).toFile();
-                if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
+                if (fileBackupSaved.exists()) {//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
                     DebugHelper.debug(LOGGER, "The file inside the storage folder does already exist. deleting...");
                     fileBackupSaved.delete();
                 }
@@ -84,7 +89,7 @@ public class Backup {
             }
             File fileBackupFile = new File(fileToBackup.getPath());
             Files.copy(Paths.get(fileBackupFile.getPath()), Paths.get(fileLatestBackupOfInputFile.getPath()));
-            if(showTextAreaMessages){
+            if (showTextAreaMessages) {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.backup.createBackup.success") + " " + fileToBackup.getPath());
             }
         }
@@ -92,9 +97,10 @@ public class Backup {
 
     /**
      * Creates a specified backup.
+     *
      * @param type The backup type
      */
-    public static void createBackup(String type){//TODO Rewrite to use enum
+    public static void createBackup(String type) {//TODO Rewrite to use enum
         switch (type) {
             case "full":
                 try {
@@ -119,21 +125,23 @@ public class Backup {
 
     /**
      * Restores either a complete initial backup or a complete latest backup
+     *
      * @param initialBackup If true the initial backup will be restored. If false the latest backup will be restored.
-     * @param showMessages Set true when messages should be displayed to the user
+     * @param showMessages  Set true when messages should be displayed to the user
      */
-    public static void restoreBackup(boolean initialBackup, boolean showMessages){
+    public static void restoreBackup(boolean initialBackup, boolean showMessages) {
         ProgressBarHelper.initializeProgressBar(0, getBackupFiles().size() + TranslationManager.TRANSLATION_KEYS.length, I18n.INSTANCE.get("textArea.backup.restoringBackup"), true);
         try {
             LOGGER.info("Restoring backup.");
-            for(File file : getBackupFiles()){
+            for (File file : getBackupFiles()) {
                 Path backupFile;
-                if(initialBackup){
+                if (initialBackup) {
                     backupFile = ModManagerPaths.BACKUP.getPath().resolve(file.getName() + ".initialBackup");
-                }else{
+                } else {
                     backupFile = ModManagerPaths.BACKUP.getPath().resolve(latestBackupFolderName + "/" + file.getName());
                 }
-                Files.copy(backupFile, Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
+                Files.copy(backupFile, Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);
+                ProgressBarHelper.increment();
             }
             restoreThemeFileBackups(initialBackup);
             if (initialBackup) {
@@ -151,13 +159,13 @@ public class Backup {
             LOGGER.info("Backup has been restored");
         } catch (IOException exception) {
             exception.printStackTrace();
-            if(initialBackup){
-                if(showMessages){
+            if (initialBackup) {
+                if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
-                if(showMessages){
+            } else {
+                if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored") + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + "\n" + exception.getMessage(), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
@@ -168,11 +176,11 @@ public class Backup {
     /**
      * Opens a gui where the user can select which save game backup should be restored
      */
-    public static void restoreSaveGameBackup(){
+    public static void restoreSaveGameBackup() {
         try {
             ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(ModManagerPaths.BACKUP.getPath(), "savegame");
             Set<String> saveGameSlots = new HashSet<>();
-            for(File file : files){
+            for (File file : files) {
                 saveGameSlots.add(file.getName().replaceAll("[^0-9]", ""));
             }
             JLabel label = new JLabel(I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.label"));
@@ -182,12 +190,12 @@ public class Backup {
             listAvailableThemes.setLayoutOrientation(JList.VERTICAL);
             listAvailableThemes.setVisibleRowCount(-1);
             JScrollPane scrollPaneAvailableSaveGames = new JScrollPane(listAvailableThemes);
-            scrollPaneAvailableSaveGames.setPreferredSize(new Dimension(30,60));
+            scrollPaneAvailableSaveGames.setPreferredSize(new Dimension(30, 60));
 
             Object[] params = {label, scrollPaneAvailableSaveGames};
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 int saveGameSlotToRestore = Integer.parseInt(listAvailableThemes.getSelectedValue());
-                if(JOptionPane.showConfirmDialog(null,  I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.confirmMessage.firstPart") + " " + saveGameSlotToRestore + "\n\n" + I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.confirmMessage.secondPart"), I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.confirmMessage.firstPart") + " " + saveGameSlotToRestore + "\n\n" + I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.confirmMessage.secondPart"), I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                     Backup.backupSaveGames(false);
                     Backup.restoreSaveGameBackup(saveGameSlotToRestore);
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.saveGameBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
@@ -200,6 +208,7 @@ public class Backup {
 
     /**
      * Restores the save game backup for the input save game slot
+     *
      * @param saveGameSlot The slot where the save game is saved that should be restored
      */
     public static void restoreSaveGameBackup(int saveGameSlot) throws IOException {
@@ -214,11 +223,11 @@ public class Backup {
      * Restores all theme file backups
      */
     private static void restoreThemeFileBackups(boolean initialBackup) throws IOException {
-        for(int i = 0; i< TranslationManager.TRANSLATION_KEYS.length; i++){
+        for (int i = 0; i < TranslationManager.TRANSLATION_KEYS.length; i++) {
             Path currentBackupFile;
-            if(initialBackup){
+            if (initialBackup) {
                 currentBackupFile = ModManagerPaths.BACKUP.getPath().resolve("Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");
-            }else{
+            } else {
                 currentBackupFile = ModManagerPaths.BACKUP.getPath().resolve(latestBackupFolderName + "/Themes_" + TranslationManager.TRANSLATION_KEYS[i] + ".txt.initialBackup");
             }
             Files.copy(currentBackupFile, Paths.get(Utils.getThemeFile(i).getPath()), StandardCopyOption.REPLACE_EXISTING);
@@ -230,25 +239,25 @@ public class Backup {
     /**
      * Deletes all backups after confirmed by the user
      */
-    public static void deleteAllBackups(){
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage.title"), JOptionPane.YES_NO_OPTION) == 0){
+    public static void deleteAllBackups() {
+        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.mainMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
             try {
                 File backupFolder = ModManagerPaths.BACKUP.getPath().toFile();
-                if(backupFolder.exists()){
+                if (backupFolder.exists()) {
                     Files.walk(Paths.get(backupFolder.getPath()))
                             .sorted(Comparator.reverseOrder())
                             .map(Path::toFile)
                             .forEach(File::delete);
                 }
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title"), JOptionPane.YES_NO_OPTION) == 0){
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion"), I18n.INSTANCE.get("dialog.backup.deleteAllBackups.createNewInitialBackupQuestion.title"), JOptionPane.YES_NO_OPTION) == 0) {
                     String returnValue = Backup.createInitialBackup();
-                    if(returnValue.equals("")) {
+                    if (returnValue.equals("")) {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupCreated"), I18n.INSTANCE.get("dialog.backup.initialBackupCreated.title"), JOptionPane.INFORMATION_MESSAGE);
-                    }else {
+                    } else {
                         System.exit(0);
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated") + returnValue, I18n.INSTANCE.get("dialog.backup.initialBackupNotCreated.title"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     System.exit(0);
                 }
             } catch (IOException e) {
@@ -260,10 +269,11 @@ public class Backup {
 
     /**
      * Creates a backup of each file that can be edited with this tool.
+     *
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createFullBackup() throws IOException {
-        for(File file : getBackupFiles()){
+        for (File file : getBackupFiles()) {
             Backup.createBackup(file, false, true);
         }
         backupSaveGames(false);
@@ -275,7 +285,7 @@ public class Backup {
      * Does not include save games
      * Does not include themes
      */
-    private static ArrayList<File> getBackupFiles(){
+    private static ArrayList<File> getBackupFiles() {
         ArrayList<File> backupFiles = new ArrayList<>();
         for (AbstractBaseMod mod : ModManager.mods) {
             backupFiles.add(mod.getGameFile());
@@ -285,26 +295,28 @@ public class Backup {
 
     /**
      * Creates an initial backup when initial backup does not exist already.
+     *
      * @return Returns e.getMessage();
      */
-    public static String createInitialBackup(){
+    public static String createInitialBackup() {
         return createInitialBackup(false);
     }
 
     /**
      * Creates an initial backup when initial backup does not exist already.
+     *
      * @param showTextAreaMessages True if text area messages should be printed
      * @return Returns e.getMessage();
      */
-    public static String createInitialBackup(boolean showTextAreaMessages){
-        try{
-            for(File file : getBackupFiles()){
+    public static String createInitialBackup(boolean showTextAreaMessages) {
+        try {
+            for (File file : getBackupFiles()) {
                 Backup.createBackup(file, true, showTextAreaMessages);
             }
             backupSaveGames(true);
             createThemeFilesBackup(true, showTextAreaMessages);
             return "";
-        }catch(IOException e) {
+        } catch (IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
             e.printStackTrace();
             return e.getMessage();
@@ -315,14 +327,14 @@ public class Backup {
      * Create a backup of each save game.
      */
     public static void backupSaveGames(boolean initialBackup) throws IOException {
-        if(Backup.FILE_SAVE_GAME_FOLDER.toFile().exists()){
+        if (Backup.FILE_SAVE_GAME_FOLDER.toFile().exists()) {
             File[] filesInFolder = Backup.FILE_SAVE_GAME_FOLDER.toFile().listFiles();
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
-                if(filesInFolder[i].getName().contains("savegame")){
+                if (filesInFolder[i].getName().contains("savegame")) {
                     File backupFile = new File(filesInFolder[i].getPath());
-                    if(initialBackup){
+                    if (initialBackup) {
                         createBackup(backupFile, true, false);
-                    }else{
+                    } else {
                         createBackup(backupFile, false, true);
                     }
                 }
@@ -332,10 +344,11 @@ public class Backup {
 
     /**
      * Creates a backup of each Theme file.
+     *
      * @param initialBackup True if this is the initial backup.
      */
     public static void createThemeFilesBackup(boolean initialBackup, boolean showTextAreaMessages) throws IOException {
-        for(int i=0; i<TranslationManager.TRANSLATION_KEYS.length; i++){
+        for (int i = 0; i < TranslationManager.TRANSLATION_KEYS.length; i++) {
             Backup.createBackup(Utils.getThemeFile(i), initialBackup, showTextAreaMessages);
         }
     }
@@ -343,8 +356,8 @@ public class Backup {
     /**
      * Moves the current initial backup files into a storage folder and creates a new initial backup. Displayes a message to the user beforehand
      */
-    public static void createNewInitialBackup(){
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.message"), I18n.INSTANCE.get("frame.title.information"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+    public static void createNewInitialBackup() {
+        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.message"), I18n.INSTANCE.get("frame.title.information"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             boolean uninstallFailed = false;
             StringBuilder uninstallFailedExplanation = new StringBuilder();
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
@@ -356,23 +369,23 @@ public class Backup {
                         ProgressBarHelper.increment();
                     }
                 }
-            }catch (ModProcessingException e){
+            } catch (ModProcessingException e) {
                 uninstallFailed = true;
                 uninstallFailedExplanation.append(e.getMessage());
             }
-            if(uninstallFailed){
+            if (uninstallFailed) {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
-            }else{
+            } else {
                 ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(ModManagerPaths.BACKUP.getPath(), ".initialBackup");
                 File oldInitialBackupFolder = ModManagerPaths.BACKUP.getPath().resolve("InitialBackups/" + Utils.getCurrentDateTime()).toFile();
                 oldInitialBackupFolder.mkdirs();
                 ProgressBarHelper.initializeProgressBar(0, files.size(), I18n.INSTANCE.get("progressBar.moveOldInitialBackupFiles"), true);
-                for(File file : files){
+                for (File file : files) {
                     File oldInitialBackup = new File(oldInitialBackupFolder.getPath() + "/" + file.getName());
-                    try{
+                    try {
                         Files.move(Paths.get(file.getPath()), Paths.get(oldInitialBackup.getPath()));
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.movingFile") + file.getPath() + " -> " + oldInitialBackup.getPath());
-                    }catch(IOException ignored){
+                    } catch (IOException ignored) {
 
                     }
                     ProgressBarHelper.increment();
@@ -380,9 +393,9 @@ public class Backup {
                 ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.creatingInitialBackup"));
                 String returnValue = Backup.createInitialBackup(true);
                 ProgressBarHelper.increment();
-                if(returnValue.equals("")){
+                if (returnValue.equals("")) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -390,38 +403,38 @@ public class Backup {
     }
 
     public static void restoreInitialBackup() {
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
+        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0) {
             try {
                 LOGGER.info("Creating backup before restoring initial backup");
                 Backup.createFullBackup();
                 StringBuilder stringBuilder = new StringBuilder();
                 Uninstaller.uninstallAllMods(stringBuilder);
-                if(!stringBuilder.toString().isEmpty()){
+                if (!stringBuilder.toString().isEmpty()) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
                 }
                 Backup.restoreBackup(true, true);
             } catch (IOException | ModProcessingException e) {
                 e.printStackTrace();
-                if(Utils.showConfirmDialog(1, e)){
+                if (Utils.showConfirmDialog(1, e)) {
                     Backup.restoreBackup(true, true);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
-    public static void restoreLatestBackup(){
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
+    public static void restoreLatestBackup() {
+        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0) {
             try {
                 LOGGER.info("Creating backup beforehand.");
                 Backup.createFullBackup();
                 Backup.restoreBackup(false, true);
             } catch (IOException e) {
                 e.printStackTrace();
-                if(Utils.showConfirmDialog(1, e)){
+                if (Utils.showConfirmDialog(1, e)) {
                     Backup.restoreBackup(false, true);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }

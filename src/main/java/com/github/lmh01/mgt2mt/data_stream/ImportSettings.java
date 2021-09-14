@@ -4,10 +4,11 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.moandjiezana.toml.Toml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
+
+import java.io.File;
 import java.nio.file.Paths;
 
-public class ImportSettings{//TODO Rewrite to use .toml file
+public class ImportSettings {//TODO Rewrite to use .toml file
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
 
     /**

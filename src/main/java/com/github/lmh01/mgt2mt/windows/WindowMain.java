@@ -1,23 +1,28 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.*;
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
 import com.github.lmh01.mgt2mt.util.handler.NewModsHandler;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
-import com.github.lmh01.mgt2mt.util.helper.*;
+import com.github.lmh01.mgt2mt.util.helper.ImportFromURLHelper;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.RestorePointHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.*;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 public class WindowMain {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowMain.class);
@@ -48,7 +53,8 @@ public class WindowMain {
     public static final JTextArea TEXT_AREA = new JTextArea();
     public static final JScrollPane SCROLL_PANE = new JScrollPane(TEXT_AREA, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     private static boolean modMenusInitialized = false;
-    public static void createFrame(){
+
+    public static void createFrame() {
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(680, 500);
@@ -93,7 +99,9 @@ public class WindowMain {
         m213GetMoreMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.getMoreMods.toolTip"));
         m213GetMoreMods.addActionListener(actionEvent -> openMoreModsPage());
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
-        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {SharingManager.importAll(ImportType.MANUEL);}, "ImportAll"));
+        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            SharingManager.importAll(ImportType.MANUEL);
+        }, "ImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
         M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startModThread(ImportFromURLHelper::importFromURL, "ImportFromURL"));
         M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
@@ -180,11 +188,11 @@ public class WindowMain {
         JLabel labelVersion = new JLabel("v" + MadGamesTycoon2ModTool.VERSION);
         JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.quit"));
         buttonQuit.addActionListener(actionEvent -> {
-            if(ThreadHandler.getThreadsRunning() > 0){
-                if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.button.quit.taskPerformed"), I18n.INSTANCE.get("window.main.button.quit.taskPerformed.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            if (ThreadHandler.getThreadsRunning() > 0) {
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.button.quit.taskPerformed"), I18n.INSTANCE.get("window.main.button.quit.taskPerformed.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     disposeFrame();
                 }
-            }else{
+            } else {
                 disposeFrame();
             }
         });
@@ -209,58 +217,60 @@ public class WindowMain {
         frame.getContentPane().add(BorderLayout.CENTER, panelMiddle);
         frame.setVisible(true);
     }
-    public static void disposeFrame(){
+
+    public static void disposeFrame() {
         frame.dispose();
         System.exit(0);
     }
+
     /**
      * Checks if specific actions are available. If they are the buttons will be enabled
      * The following things are also done: Progress bar is reset, auto scrolling gets disabled and menu items are unlocked.
      */
-    public static void checkActionAvailability(){
-        if(Settings.mgt2FolderIsCorrect){
-            try{
+    public static void checkActionAvailability() {
+        if (Settings.mgt2FolderIsCorrect) {
+            try {
                 boolean noModsAvailable = true;
                 ModManager.analyzeMods();
                 boolean noModRestorePointSet = true;
-                if(!Settings.disableSafetyFeatures) {
-                    if(ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()){
+                if (!Settings.disableSafetyFeatures) {
+                    if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
                         noModRestorePointSet = false;
                     }
                 }
                 for (AbstractBaseMod mod : ModManager.mods) {//TODO schauen, ob das noch funktioniert, insbesondere im Bezug auf Themen
                     mod.setMainMenuButtonAvailability();
-                    if(mod.getCustomContentString(true).length > 0) {
+                    if (mod.getCustomContentString(true).length > 0) {
                         noModsAvailable = false;
                     }
                 }
-                if(ModManager.genreMod.getCustomContentString(true).length > 0){
+                if (ModManager.genreMod.getCustomContentString(true).length > 0) {
                     M_22_NPC_GAMES_LIST.setEnabled(true);
                     M_22_NPC_GAMES_LIST.setToolTipText("");
-                }else{
+                } else {
                     M_22_NPC_GAMES_LIST.setEnabled(false);
                     M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("modManager.genre.windowMain.modButton.removeMod.toolTip"));
                 }
                 M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
-                if(noModsAvailable){
+                if (noModsAvailable) {
                     M_317_EXPORT_ALL.setEnabled(false);
                     M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
                     M_431_CREATE_MOD_RESTORE_POINT.setEnabled(false);
                     M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.notAvailableToCreateRestorePoint"));
-                }else{
+                } else {
                     M_317_EXPORT_ALL.setEnabled(true);
                     M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
                     M_431_CREATE_MOD_RESTORE_POINT.setEnabled(true);
                     M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
                 }
-                if(noModRestorePointSet){
+                if (noModRestorePointSet) {
                     M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip"));
-                }else{
+                } else {
                     M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText("");
                 }
-                if(Settings.enableDisclaimerMessage){
+                if (Settings.enableDisclaimerMessage) {
                     M_21_IMPORT.setEnabled(false);
-                    for(JMenu menu : MOD_MENUS){
+                    for (JMenu menu : MOD_MENUS) {
                         menu.setEnabled(false);
                         menu.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     }
@@ -273,9 +283,9 @@ public class WindowMain {
                     M_23_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                }else{
+                } else {
                     M_21_IMPORT.setEnabled(true);
-                    for(JMenu menu : MOD_MENUS){
+                    for (JMenu menu : MOD_MENUS) {
                         menu.setEnabled(true);
                         menu.setToolTipText("");
                     }
@@ -301,21 +311,22 @@ public class WindowMain {
 
     /**
      * Disables all menu items so they can no longer be klicked. Used when a thread is started.
+     *
      * @param lock True when the items should be locked. False when the items should be unlocked
      */
-    public static void lockMenuItems(boolean lock){
+    public static void lockMenuItems(boolean lock) {
         M_1_FILE.setEnabled(!lock);
         M_2_MODS.setEnabled(!lock);
         M_3_SHARE.setEnabled(!lock);
         M_4_BACKUP.setEnabled(!lock);
         M_5_UTIL.setEnabled(!lock);
-        if(lock){
+        if (lock) {
             M_1_FILE.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
             M_2_MODS.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
             M_3_SHARE.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
             M_4_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
             M_5_UTIL.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
-        }else{
+        } else {
             M_1_FILE.setToolTipText("");
             M_2_MODS.setToolTipText("");
             M_3_SHARE.setToolTipText("");
@@ -327,21 +338,21 @@ public class WindowMain {
     /**
      * Will disable all menus except File -> CheckForUpdates, About and settings
      */
-    public static void setMGT2FolderAvailability(boolean folderAvailable){
+    public static void setMGT2FolderAvailability(boolean folderAvailable) {
         M_12_UPDATE_CHECK.setEnabled(folderAvailable);
         M_13_UNINSTALL.setEnabled(folderAvailable);
         M_2_MODS.setEnabled(folderAvailable);
         M_3_SHARE.setEnabled(folderAvailable);
         M_4_BACKUP.setEnabled(folderAvailable);
         M_5_UTIL.setEnabled(folderAvailable);
-        if(folderAvailable){
+        if (folderAvailable) {
             M_12_UPDATE_CHECK.setToolTipText("");
             M_13_UNINSTALL.setToolTipText("");
             M_2_MODS.setToolTipText("");
             M_3_SHARE.setToolTipText("");
             M_4_BACKUP.setToolTipText("");
             M_5_UTIL.setToolTipText("");
-        }else{
+        } else {
             M_12_UPDATE_CHECK.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
             M_13_UNINSTALL.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
             M_2_MODS.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
@@ -354,11 +365,11 @@ public class WindowMain {
     /**
      * This will cause some menu items to be reloaded, for the safety feature setting to be applied.
      */
-    public static void setSafetyFeatureComponents(){
-        if(Settings.disableSafetyFeatures){
+    public static void setSafetyFeatureComponents() {
+        if (Settings.disableSafetyFeatures) {
             M_4_BACKUP.add(M_44_DELETE_ALL_BACKUPS);
             M_42_RESTORE_BACKUP.add(M_422_RESTORE_LATEST_BACKUP);
-        }else{
+        } else {
             M_4_BACKUP.remove(M_44_DELETE_ALL_BACKUPS);
             M_42_RESTORE_BACKUP.remove(M_422_RESTORE_LATEST_BACKUP);
         }
@@ -366,24 +377,24 @@ public class WindowMain {
 
     private static final ArrayList<JMenu> MOD_MENUS = new ArrayList<>();
 
-    public static void initializeModMenus(){
-        if(!modMenusInitialized){
+    public static void initializeModMenus() {
+        if (!modMenusInitialized) {
             for (AbstractBaseMod mod : ModManager.mods) {
                 JMenu menu = new JMenu(mod.getTypePlural());
-                for(JMenuItem menuItem : mod.getModMenuItems()){
+                for (JMenuItem menuItem : mod.getModMenuItems()) {
                     menu.add(menuItem);
                 }
                 MOD_MENUS.add(menu);
                 M_31_EXPORT.add(mod.getExportMenuItem());
             }
-            for(JMenu menu : MOD_MENUS){
+            for (JMenu menu : MOD_MENUS) {
                 M_2_MODS.add(menu);
             }
             modMenusInitialized = true;
         }
     }
 
-    private static void openGithubPage(){
+    private static void openGithubPage() {
         if (MadGamesTycoon2ModTool.VERSION.contains("dev")) {
             Debug.test();
         } else {
@@ -397,8 +408,9 @@ public class WindowMain {
             }
         }
     }
-    private static void openMoreModsPage(){
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.mods.import.getMoreMods.confirmDialog"), I18n.INSTANCE.get("window.main.mods.import.getMoreMods.confirmDialog.title"), JOptionPane.YES_NO_OPTION) == 0){
+
+    private static void openMoreModsPage() {
+        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.mods.import.getMoreMods.confirmDialog"), I18n.INSTANCE.get("window.main.mods.import.getMoreMods.confirmDialog.title"), JOptionPane.YES_NO_OPTION) == 0) {
             try {
                 Utils.openMoreModsPage();
             } catch (Exception e) {

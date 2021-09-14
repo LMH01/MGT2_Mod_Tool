@@ -1,8 +1,10 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractComplexMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -38,41 +40,41 @@ public class PlatformMod extends AbstractComplexMod {
 
     @Override
     protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID",map, bw);
+        EditHelper.printLine("ID", map, bw);
         TranslationManager.printLanguages(bw, map);
-        for(String string : TranslationManager.TRANSLATION_KEYS){
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().equals("MANUFACTURER " + string)){
+        for (String string : TranslationManager.TRANSLATION_KEYS) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getKey().equals("MANUFACTURER " + string)) {
                     bw.write("[MANUFACTURER " + string + "]" + entry.getValue() + "\r\n");
                 }
             }
         }
-        EditHelper.printLine("DATE",map, bw);
-        if(map.containsKey("DATE END")){
-            EditHelper.printLine("DATE END",map, bw);
+        EditHelper.printLine("DATE", map, bw);
+        if (map.containsKey("DATE END")) {
+            EditHelper.printLine("DATE END", map, bw);
         }
-        EditHelper.printLine("PRICE",map, bw);
-        EditHelper.printLine("DEV COSTS",map, bw);
-        EditHelper.printLine("TECHLEVEL",map, bw);
-        EditHelper.printLine("UNITS",map, bw);
+        EditHelper.printLine("PRICE", map, bw);
+        EditHelper.printLine("DEV COSTS", map, bw);
+        EditHelper.printLine("TECHLEVEL", map, bw);
+        EditHelper.printLine("UNITS", map, bw);
         Map<Integer, String> pictures = new HashMap<>();
         ArrayList<String> pictureChangeYears = new ArrayList<>();
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")){
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")) {
                 pictures.put(Integer.parseInt(entry.getKey().replaceAll("[^0-9]", "")), entry.getValue());
             }
-            if(entry.getKey().contains("YEAR")){
+            if (entry.getKey().contains("YEAR")) {
                 pictureChangeYears.add("[" + entry.getKey() + "]" + entry.getValue());
             }
         }
-        if(map.containsKey("PIC-1")){
-            for(Map.Entry<Integer, String> entry : pictures.entrySet()){
+        if (map.containsKey("PIC-1")) {
+            for (Map.Entry<Integer, String> entry : pictures.entrySet()) {
                 bw.write("[PIC-" + entry.getKey() + "]" + entry.getValue());
                 bw.write("\r\n");
             }
-        }else{
-            for(int i=1; i<=pictureChangeYears.size()+1; i++){
-                bw.write("[PIC-" + i + "]" + map.get("NAME EN").replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + i + ".png");
+        } else {
+            for (int i = 1; i <= pictureChangeYears.size() + 1; i++) {
+                bw.write("[PIC-" + i + "]" + map.get("NAME EN").replaceAll("[0-9]", "").replaceAll("\\s+", "") + "-" + i + ".png");
                 bw.write("\r\n");
             }
         }
@@ -83,34 +85,34 @@ public class PlatformMod extends AbstractComplexMod {
         }
         try {
             ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().contains("NEED")){
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getKey().contains("NEED")) {
                     gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
                 }
             }
             int numberOfRunsB = 1;
-            for(Integer integer : gameplayFeatureIds){
+            for (Integer integer : gameplayFeatureIds) {
                 bw.write("[NEED-" + numberOfRunsB + "]" + integer);
                 bw.write("\r\n");
                 numberOfRunsB++;
             }
         } catch (NumberFormatException e) {
             ArrayList<String> gameplayFeatureNames = new ArrayList<>();
-            for(Map.Entry<String, String> entry : map.entrySet()){
-                if(entry.getKey().contains("NEED")){
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getKey().contains("NEED")) {
                     gameplayFeatureNames.add(entry.getValue());
                 }
             }
             int numberOfRunsB = 1;
-            for(String string : gameplayFeatureNames){
+            for (String string : gameplayFeatureNames) {
                 bw.write("[NEED-" + numberOfRunsB + "]" + string);
                 bw.write("\r\n");
                 numberOfRunsB++;
             }
         }
-        EditHelper.printLine("COMPLEX",map, bw);
-        EditHelper.printLine("INTERNET",map, bw);
-        EditHelper.printLine("TYP",map, bw);
+        EditHelper.printLine("COMPLEX", map, bw);
+        EditHelper.printLine("INTERNET", map, bw);
+        EditHelper.printLine("TYP", map, bw);
     }
 
     @Override
@@ -145,7 +147,7 @@ public class PlatformMod extends AbstractComplexMod {
 
     @Override
     protected void openAddModGui() throws ModProcessingException {
-        try{
+        try {
             analyzeFile();
             ModManager.genreMod.analyzeFile();
             ModManager.gameplayFeatureMod.analyzeFile();
@@ -180,10 +182,10 @@ public class PlatformMod extends AbstractComplexMod {
             JCheckBox checkBoxEnableEndDate = new JCheckBox(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.enableEndDate"));
             checkBoxEnableEndDate.setSelected(false);
             checkBoxEnableEndDate.addChangeListener(changeListener -> {
-                if(checkBoxEnableEndDate.isSelected()){
+                if (checkBoxEnableEndDate.isSelected()) {
                     comboBoxEndDateMonth.setEnabled(true);
                     spinnerEndYear.setEnabled(true);
-                }else{
+                } else {
                     comboBoxEndDateMonth.setEnabled(false);
                     spinnerEndYear.setEnabled(false);
                 }
@@ -217,16 +219,16 @@ public class PlatformMod extends AbstractComplexMod {
             buttonAddPictures.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.toolTip"));
             buttonAddPictures.addActionListener(actionEvent -> {
                 boolean continueWithMessage = false;
-                if(picturesAdded.get()){
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded"), I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                if (picturesAdded.get()) {
+                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded"), I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         continueWithMessage = true;
                         picturesAdded.set(false);
                         pictureMap.clear();
                     }
-                }else{
+                } else {
                     continueWithMessage = true;
                 }
-                if(continueWithMessage){
+                if (continueWithMessage) {
                     JTextArea textAreaAddedImages = new JTextArea();
                     textAreaAddedImages.setPreferredSize(new Dimension(315, 140));
                     JLabel labelTextAreaExplanation = new JLabel(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.label.textAreaExplanation"));
@@ -236,12 +238,12 @@ public class PlatformMod extends AbstractComplexMod {
                     final boolean[] firstImage = {true};
                     buttonAddPicture.addActionListener(actionEvent2 -> {
                         boolean continueWithPictures = false;
-                        if(pictureMap.size() < 2 || Settings.disableSafetyFeatures){
+                        if (pictureMap.size() < 2 || Settings.disableSafetyFeatures) {
                             continueWithPictures = true;
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("frame.title.unableToContinue") + ":<br><br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.maxPicturesSelectedMessage"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                         }
-                        if(continueWithPictures){
+                        if (continueWithPictures) {
                             JButton buttonSelectImage = new JButton(I18n.INSTANCE.get("commonText.selectImage"));
                             AtomicReference<File> imageFile = new AtomicReference<>();
                             JPanel panelChangeDate = new JPanel();
@@ -252,14 +254,14 @@ public class PlatformMod extends AbstractComplexMod {
                             comboBoxChangeMonth.setSelectedItem("JAN");
                             JSpinner spinnerChangeYear = new JSpinner();
                             spinnerChangeYear.setEnabled(false);
-                            if(Settings.disableSafetyFeatures){
+                            if (Settings.disableSafetyFeatures) {
                                 spinnerChangeYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip"));
                                 spinnerChangeYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
-                                ((JSpinner.DefaultEditor)spinnerEndYear.getEditor()).getTextField().setEditable(true);
-                            }else{
-                                spinnerChangeYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": " + lastYear.get() +1 + " - 2050]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip"));
-                                spinnerChangeYear.setModel(new SpinnerNumberModel(lastYear.get() +1, lastYear.get() +1, 2050, 1));
-                                ((JSpinner.DefaultEditor)spinnerEndYear.getEditor()).getTextField().setEditable(false);
+                                ((JSpinner.DefaultEditor) spinnerEndYear.getEditor()).getTextField().setEditable(true);
+                            } else {
+                                spinnerChangeYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": " + lastYear.get() + 1 + " - 2050]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip"));
+                                spinnerChangeYear.setModel(new SpinnerNumberModel(lastYear.get() + 1, lastYear.get() + 1, 2050, 1));
+                                ((JSpinner.DefaultEditor) spinnerEndYear.getEditor()).getTextField().setEditable(false);
                             }
                             panelChangeDate.add(labelChangeDate);
                             panelChangeDate.add(comboBoxChangeMonth);
@@ -268,26 +270,26 @@ public class PlatformMod extends AbstractComplexMod {
                                 try {
                                     File newImageFile = Utils.getImagePath().toFile();
                                     imageFile.set(newImageFile);
-                                    if(newImageFile.exists()){
+                                    if (newImageFile.exists()) {
                                         buttonSelectImage.setText(I18n.INSTANCE.get("commonText.imageSelected"));
-                                    }else{
+                                    } else {
                                         buttonSelectImage.setText(I18n.INSTANCE.get("commonText.selectImage"));
                                     }
                                 } catch (ModProcessingException ignored) {
 
                                 }
                             });
-                            if(!firstImage[0]){
+                            if (!firstImage[0]) {
                                 comboBoxChangeMonth.setEnabled(true);
                                 spinnerChangeYear.setEnabled(true);
                             }
                             Object[] params = {buttonSelectImage, panelChangeDate};
-                            while(true){
-                                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                                    if(imageFile.get() != null){
-                                        if(firstImage[0]){
+                            while (true) {
+                                if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                                    if (imageFile.get() != null) {
+                                        if (firstImage[0]) {
                                             firstImage[0] = false;
-                                        }else{
+                                        } else {
                                             comboBoxChangeMonth.setEnabled(true);
                                             spinnerChangeYear.setEnabled(true);
                                             textAreaAddedImages.append("\r\n");
@@ -296,21 +298,21 @@ public class PlatformMod extends AbstractComplexMod {
                                         pictureMap.put(Integer.parseInt(spinnerChangeYear.getValue().toString()), imageFile.get());
                                         lastYear.set(Integer.parseInt(spinnerChangeYear.getValue().toString()));
                                         break;
-                                    }else{
+                                    } else {
                                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.noPictureSelected"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                     }
-                                }else{
+                                } else {
                                     break;
                                 }
                             }
                         }
                     });
                     Object[] params = {labelTextAreaExplanation, scrollPane, buttonAddPicture};
-                    if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION && pictureMap.size() > 0){
+                    if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION && pictureMap.size() > 0) {
                         picturesAdded.set(true);
                         buttonAddPictures.setText(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.picturesSelected"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.picturesSet"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
-                    }else{
+                    } else {
                         picturesAdded.set(false);
                         buttonAddPictures.setText(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture"));
                         pictureMap.clear();
@@ -319,105 +321,105 @@ public class PlatformMod extends AbstractComplexMod {
             });
 
             Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), WindowHelper.getSpinnerPanel(spinnerComplexity, 10), WindowHelper.getSpinnerPanel(spinnerUnits, 11), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerDevKitCost, 8), checkBoxInternet, labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures};
-            while(true){
-                if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                    if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))){
-                        if(!textFieldManufacturer.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldManufacturer.initialValue"))){
+            while (true) {
+                if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                    if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))) {
+                        if (!textFieldManufacturer.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldManufacturer.initialValue"))) {
                             boolean modAlreadyExists = false;
-                            for(String string : getContentByAlphabet()){
-                                if(textFieldName.getText().equals(string)){
+                            for (String string : getContentByAlphabet()) {
+                                if (textFieldName.getText().equals(string)) {
                                     modAlreadyExists = true;
                                 }
                             }
-                            if(!modAlreadyExists) {
+                            if (!modAlreadyExists) {
                                 Map<String, String> platformMap = new HashMap<>();
                                 Map<Integer, File> finalPictureMap = new HashMap<>();
                                 platformMap.put("ID", Integer.toString(getFreeId()));
-                                if(!nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
+                                if (!nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()) {
                                     platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                                     platformMap.putAll(TranslationManager.getDefaultManufacturerTranslations(textFieldManufacturer.getText()));
-                                }else if(!nameTranslationsAdded.get() && manufacturerTranslationsAdded.get()){
+                                } else if (!nameTranslationsAdded.get() && manufacturerTranslationsAdded.get()) {
                                     platformMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                                     platformMap.putAll(TranslationManager.transformTranslationMap(mapManufacturerTranslations[0], "MANUFACTURER"));
-                                }else if(nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()){
+                                } else if (nameTranslationsAdded.get() && !manufacturerTranslationsAdded.get()) {
                                     platformMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                     platformMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldManufacturer.getText()));
-                                }else{
+                                } else {
                                     platformMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                                     platformMap.putAll(TranslationManager.transformTranslationMap(mapManufacturerTranslations[0], "MANUFACTURER"));
                                     platformMap.put("NAME EN", textFieldName.getText());
                                     platformMap.put("MANUFACTURER EN", textFieldManufacturer.getText());
                                 }
                                 platformMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
-                                if(checkBoxEnableEndDate.isSelected()){
+                                if (checkBoxEnableEndDate.isSelected()) {
                                     platformMap.put("DATE END", Objects.requireNonNull(comboBoxEndDateMonth.getSelectedItem()) + " " + spinnerEndYear.getValue().toString());
                                 }
                                 platformMap.put("PRICE", spinnerDevKitCost.getValue().toString());
                                 platformMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                                 platformMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
                                 platformMap.put("UNITS", spinnerUnits.getValue().toString());
-                                if(pictureMap.isEmpty()){
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
+                                if (pictureMap.isEmpty()) {
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))) {
                                         platformMap.put("PIC-1", "AmstradCPC.png");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))) {
                                         platformMap.put("PIC-1", "N64.png");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))) {
                                         platformMap.put("PIC-1", "Nintendo3DS.png");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))) {
                                         platformMap.put("PIC-1", "iPhone4.png");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))) {
                                         platformMap.put("PIC-1", "ASB6.png");
                                     }
-                                }else{
+                                } else {
                                     ArrayList<Integer> pictureYears = new ArrayList<>();
-                                    for(Map.Entry<Integer, File> entry : pictureMap.entrySet()){
+                                    for (Map.Entry<Integer, File> entry : pictureMap.entrySet()) {
                                         pictureYears.add(entry.getKey());
                                     }
                                     int pictureNumber = 1;
-                                    for(Integer integer : pictureYears){
+                                    for (Integer integer : pictureYears) {
                                         finalPictureMap.put(pictureNumber, pictureMap.get(integer));
-                                        if(pictureNumber>1){
+                                        if (pictureNumber > 1) {
                                             platformMap.put("PIC-" + pictureNumber + " YEAR", Integer.toString(integer));
                                         }
                                         pictureNumber++;
                                     }
                                 }
-                                if(listAvailableGameplayFeatures.getSelectedValuesList().isEmpty()){
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
+                                if (listAvailableGameplayFeatures.getSelectedValuesList().isEmpty()) {
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))) {
                                         platformMap.put("NEED-1", "44");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))) {
                                         platformMap.put("NEED-1", "45");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))) {
                                         platformMap.put("NEED-1", "45");
                                         platformMap.put("NEED-2", "56");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))) {
                                         platformMap.put("NEED-1", "56");
                                     }
-                                    if(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))) {
                                         platformMap.put("NEED-1", "59");
                                     }
-                                }else{
+                                } else {
                                     int currentNeededGameplayFeatureNumber = 1;
-                                    for(String string : listAvailableGameplayFeatures.getSelectedValuesList()){
+                                    for (String string : listAvailableGameplayFeatures.getSelectedValuesList()) {
                                         platformMap.put("NEED-" + currentNeededGameplayFeatureNumber, Integer.toString(ModManager.gameplayFeatureMod.getContentIdByName(string)));
                                         currentNeededGameplayFeatureNumber++;
                                     }
                                 }
                                 platformMap.put("COMPLEX", spinnerComplexity.getValue().toString());
-                                if(checkBoxInternet.isSelected()){
+                                if (checkBoxInternet.isSelected()) {
                                     platformMap.put("INTERNET", "1");
-                                }else{
+                                } else {
                                     platformMap.put("INTERNET", "0");
                                 }
                                 platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
-                                if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                     createBackup();
                                     addModToFile(platformMap);
                                     addImageFiles(platformMap.get("NAME EN"), finalPictureMap);
@@ -425,21 +427,21 @@ public class PlatformMod extends AbstractComplexMod {
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.platform.upperCase") + ": [" + platformMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.platform.upperCase"), JOptionPane.INFORMATION_MESSAGE);
                                     break;
                                 }
-                            }else{
+                            } else {
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                             }
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.platform.addPlatform.manufacturer.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     break;
                 }
             }
-        }catch(IOException e){
-            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - "  + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
+        } catch (IOException e) {
+            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
         }
     }
 
@@ -452,7 +454,7 @@ public class PlatformMod extends AbstractComplexMod {
         message.append(I18n.INSTANCE.get("commonText.name")).append(": ").append(map.get("NAME EN")).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.manufacturer")).append(": ").append(map.get("MANUFACTURER EN")).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.releaseDate")).append(": ").append(map.get("DATE")).append("<br>");
-        if(map.containsKey("DATE END")){
+        if (map.containsKey("DATE END")) {
             message.append(I18n.INSTANCE.get("commonText.productionEnd")).append(": ").append(map.get("DATE END")).append("<br>");
         }
         message.append(I18n.INSTANCE.get("commonText.devKitCost")).append(": ").append(map.get("PRICE")).append("<br>");
@@ -460,21 +462,21 @@ public class PlatformMod extends AbstractComplexMod {
         message.append(I18n.INSTANCE.get("commonText.techLevel")).append(": ").append(map.get("TECHLEVEL")).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.units")).append(": ").append(map.get("UNITS")).append("<br>");
         ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
-        for(Map.Entry<String, String> entry : map.entrySet()){
-            if(entry.getKey().contains("NEED")){
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
                 gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
             }
         }
         StringBuilder neededGameplayFeatures = new StringBuilder();
         int currentGameplayFeature = 0;
         boolean firstGameplayFeature = true;
-        for(Integer integer : gameplayFeatureIds){
-            if(firstGameplayFeature){
+        for (Integer integer : gameplayFeatureIds) {
+            if (firstGameplayFeature) {
                 firstGameplayFeature = false;
-            }else{
+            } else {
                 neededGameplayFeatures.append(", ");
             }
-            if(currentGameplayFeature == 8){
+            if (currentGameplayFeature == 8) {
                 neededGameplayFeatures.append("<br>");
                 currentGameplayFeature = 0;
             }
@@ -484,9 +486,9 @@ public class PlatformMod extends AbstractComplexMod {
         message.append(I18n.INSTANCE.get("commonText.neededGameplayFeatures")).append(": ").append(neededGameplayFeatures).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.complexity")).append(": ").append(map.get("COMPLEX")).append("<br>");
         String internetMessageToPrint;
-        if(map.get("INTERNET").equals("0")){
+        if (map.get("INTERNET").equals("0")) {
             internetMessageToPrint = Utils.getTranslatedValueFromBoolean(false);
-        }else{
+        } else {
             internetMessageToPrint = Utils.getTranslatedValueFromBoolean(true);
         }
         message.append(I18n.INSTANCE.get("commonText.internet")).append(": ").append(internetMessageToPrint).append("<br>");
@@ -537,8 +539,8 @@ public class PlatformMod extends AbstractComplexMod {
             if (entry.getKey().contains("pic_")) {
                 try {
                     importImage(map, entry.getKey(), MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()));
-                    imageMap.remove("PIC-" + entry.getKey().replaceAll("[^0-9]",""));
-                    imageMap.put("PIC-" + entry.getKey().replaceAll("[^0-9]",""), entry.getValue());
+                    imageMap.remove("PIC-" + entry.getKey().replaceAll("[^0-9]", ""));
+                    imageMap.put("PIC-" + entry.getKey().replaceAll("[^0-9]", ""), entry.getValue());
                 } catch (IOException e) {//TODO Think about this mod processing exception throw: Maybe it should be better to just print a warning message to the text area that the image file will not be copied, if it already exists
                     throw new ModProcessingException("Platform image files could not be copied", e);
                 }
@@ -549,8 +551,8 @@ public class PlatformMod extends AbstractComplexMod {
 
     @Override
     public void removeImageFiles(String name) throws ModProcessingException {
-        for(Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()){
-            if(entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")){
+        for (Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()) {
+            if (entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")) {
                 Path path = MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue());
                 try {
                     Files.delete(path);
@@ -564,10 +566,10 @@ public class PlatformMod extends AbstractComplexMod {
     @Override
     public Map<String, String> exportImages(String name, Path assetsFolder) throws ModProcessingException {
         Map<String, String> map = new HashMap<>();
-        for(Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()){
-            if(entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")){
-                String imageName = Utils.convertName(getType()) + "_" + Utils.convertName(name) + "_icon_" + entry.getKey().replaceAll("[^0-9]","") + ".png";
-                map.put("pic_" + entry.getKey().replaceAll("[^0-9]",""), imageName);
+        for (Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()) {
+            if (entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")) {
+                String imageName = Utils.convertName(getType()) + "_" + Utils.convertName(name) + "_icon_" + entry.getKey().replaceAll("[^0-9]", "") + ".png";
+                map.put("pic_" + entry.getKey().replaceAll("[^0-9]", ""), imageName);
                 File outputFile = assetsFolder.resolve(imageName).toFile();
                 if (!outputFile.exists()) {
                     try {
@@ -597,20 +599,20 @@ public class PlatformMod extends AbstractComplexMod {
     /**
      * @return Returns the platform type for the input id. Returns -1 if the string is not correct
      */
-    public int getPlatformTypeIdByString(String type){//TODO Rewrite to use enum
-        if(type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))){
+    public int getPlatformTypeIdByString(String type) {//TODO Rewrite to use enum
+        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))) {
             return 0;
         }
-        if(type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))){
+        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))) {
             return 1;
         }
-        if(type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))){
+        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))) {
             return 2;
         }
-        if(type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))){
+        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))) {
             return 3;
         }
-        if(type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))){
+        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))) {
             return 4;
         }
         return -1;
@@ -619,39 +621,46 @@ public class PlatformMod extends AbstractComplexMod {
     /**
      * @return Returns the type string for the input id.
      */
-    public String getPlatformTypeStringById(int id){//TODO Rewrite to use enum and to throw ModProcessingException
-        switch(id){
-            case 0: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer");
-            case 1: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console");
-            case 2: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld");
-            case 3: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone");
-            case 4: return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard");
-            default: throw new IllegalArgumentException("The input string is invalid!");
+    public String getPlatformTypeStringById(int id) {//TODO Rewrite to use enum and to throw ModProcessingException
+        switch (id) {
+            case 0:
+                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer");
+            case 1:
+                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console");
+            case 2:
+                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld");
+            case 3:
+                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone");
+            case 4:
+                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard");
+            default:
+                throw new IllegalArgumentException("The input string is invalid!");
         }
     }
 
-    private void setEndYearSpinner(JSpinner spinnerUnlockYear, JSpinner spinnerEndYear){
-        if(Settings.disableSafetyFeatures){
+    private void setEndYearSpinner(JSpinner spinnerUnlockYear, JSpinner spinnerEndYear) {
+        if (Settings.disableSafetyFeatures) {
             spinnerEndYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.endYear.toolTip"));
             spinnerEndYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
-            ((JSpinner.DefaultEditor)spinnerEndYear.getEditor()).getTextField().setEditable(true);
-        }else{
-            spinnerEndYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": " + Integer.parseInt(spinnerUnlockYear.getValue().toString())+1 + " - 2050]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.endYear.toolTip"));
-            spinnerEndYear.setModel(new SpinnerNumberModel(Integer.parseInt(spinnerUnlockYear.getValue().toString())+1, Integer.parseInt(spinnerUnlockYear.getValue().toString())+1, 2050, 1));
-            ((JSpinner.DefaultEditor)spinnerEndYear.getEditor()).getTextField().setEditable(false);
+            ((JSpinner.DefaultEditor) spinnerEndYear.getEditor()).getTextField().setEditable(true);
+        } else {
+            spinnerEndYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": " + Integer.parseInt(spinnerUnlockYear.getValue().toString()) + 1 + " - 2050]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.endYear.toolTip"));
+            spinnerEndYear.setModel(new SpinnerNumberModel(Integer.parseInt(spinnerUnlockYear.getValue().toString()) + 1, Integer.parseInt(spinnerUnlockYear.getValue().toString()) + 1, 2050, 1));
+            ((JSpinner.DefaultEditor) spinnerEndYear.getEditor()).getTextField().setEditable(false);
         }
     }
 
     /**
      * Adds the image files for the new platform
+     *
      * @param platformName The name of the new platform
-     * @param imageFiles The map contains the image files in the following formatting:
-     *            Integer - The position of the image file
-     *            File - The source file that should be added
+     * @param imageFiles   The map contains the image files in the following formatting:
+     *                     Integer - The position of the image file
+     *                     File - The source file that should be added
      */
     public void addImageFiles(String platformName, Map<Integer, File> imageFiles) throws IOException {
-        for(Map.Entry<Integer, File> entry : imageFiles.entrySet()){
-            File destinationFile = MGT2Paths.PLATFORM_ICONS.getPath().resolve(platformName.replaceAll("[0-9]", "").replaceAll("\\s+","") + "-" + entry.getKey() + ".png").toFile();
+        for (Map.Entry<Integer, File> entry : imageFiles.entrySet()) {
+            File destinationFile = MGT2Paths.PLATFORM_ICONS.getPath().resolve(platformName.replaceAll("[0-9]", "").replaceAll("\\s+", "") + "-" + entry.getKey() + ".png").toFile();
             Files.copy(Paths.get(entry.getValue().getPath()), Paths.get(destinationFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
         }
     }

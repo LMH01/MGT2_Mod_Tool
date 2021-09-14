@@ -1,14 +1,21 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.*;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Summaries;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -38,11 +45,13 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         map.putIfAbsent("BAD", "");
         EditHelper.printLine("GOOD", map, bw);
         EditHelper.printLine("BAD", map, bw);
-        if(map.get("NO_ARCADE") != null){
-            bw.write("[NO_ARCADE]");bw.write("\r\n");
+        if (map.get("NO_ARCADE") != null) {
+            bw.write("[NO_ARCADE]");
+            bw.write("\r\n");
         }
-        if(map.get("NO_MOBILE") != null){
-            bw.write("[NO_MOBILE]");bw.write("\r\n");
+        if (map.get("NO_MOBILE") != null) {
+            bw.write("[NO_MOBILE]");
+            bw.write("\r\n");
         }
     }
 
@@ -105,20 +114,20 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             try {
                 ArrayList<Integer> goodGenrePositions = Utils.getSelectedEntriesOld("Select the genre(s) that don't work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
                 ArrayList<Integer> badGenreIdsOut = new ArrayList<>();
-                for(Integer integer : goodGenrePositions){
+                for (Integer integer : goodGenrePositions) {
                     badGenreIdsOut.add(ModManager.genreMod.getContentIdByName(ModManager.genreMod.getContentByAlphabet()[integer]));
                 }
                 badGenreIds[0] = badGenreIdsOut;
-                if(badGenreIds[0].size() != 0){
+                if (badGenreIds[0].size() != 0) {
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
-                    if(Settings.disableSafetyFeatures || !mutualEntries){
+                    if (Settings.disableSafetyFeatures || !mutualEntries) {
                         buttonBadGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.selected"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.selected"));
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.unableToSave"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         badGenreIds[0].clear();
                     }
-                }else{
+                } else {
                     buttonBadGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres"));
                 }
             } catch (ModProcessingException e) {
@@ -129,9 +138,9 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         buttonGoodGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip"));
         buttonGoodGenres.addActionListener(actionEvent -> {
             try {
-                ArrayList<Integer> goodGenrePositions =  Utils.getSelectedEntriesOld("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
+                ArrayList<Integer> goodGenrePositions = Utils.getSelectedEntriesOld("Select the genre(s) that work with your gameplay feature", I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.genres.title"), ModManager.genreMod.getContentByAlphabet(), ModManager.genreMod.getContentByAlphabet(), true);
                 ArrayList<Integer> goodGenreIdsOut = new ArrayList<>();
-                for(Integer integer : goodGenrePositions){
+                for (Integer integer : goodGenrePositions) {
                     try {
                         goodGenreIdsOut.add(ModManager.genreMod.getContentIdByName(ModManager.genreMod.getContentByAlphabet()[integer]));
                     } catch (ModProcessingException e) {
@@ -139,16 +148,16 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                     }
                 }
                 goodGenreIds[0] = goodGenreIdsOut;
-                if(goodGenreIds[0].size() != 0){
+                if (goodGenreIds[0].size() != 0) {
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
-                    if(Settings.disableSafetyFeatures || !mutualEntries){
+                    if (Settings.disableSafetyFeatures || !mutualEntries) {
                         buttonGoodGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.selected"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.selected"));
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.unableToSave"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                         goodGenreIds[0].clear();
                     }
-                }else{
+                } else {
                     buttonGoodGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres"));
                 }
             } catch (ModProcessingException e) {
@@ -165,27 +174,27 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         checkBoxCompatibleWithMobile.setSelected(true);
 
         Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerResearchCost, 5), WindowHelper.getSpinnerPanel(spinnerGameplay, 0), WindowHelper.getSpinnerPanel(spinnerGraphic, 1), WindowHelper.getSpinnerPanel(spinnerSound, 2), WindowHelper.getSpinnerPanel(spinnerTech, 3), buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
                     boolean modAlreadyExists = false;
-                    for(String string : getContentByAlphabet()){
-                        if(textFieldName.getText().equals(string)){
+                    for (String string : getContentByAlphabet()) {
+                        if (textFieldName.getText().equals(string)) {
                             modAlreadyExists = true;
                         }
                     }
-                    if(!modAlreadyExists) {
+                    if (!modAlreadyExists) {
                         Map<String, String> newGameplayFeature = new HashMap<>();
-                        if(!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
+                        if (!nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
                             newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                             newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                        }else if(!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()){
+                        } else if (!nameTranslationsAdded.get() && descriptionTranslationsAdded.get()) {
                             newGameplayFeature.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
                             newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
-                        }else if(nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()){
+                        } else if (nameTranslationsAdded.get() && !descriptionTranslationsAdded.get()) {
                             newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                             newGameplayFeature.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                        }else{
+                        } else {
                             newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                             newGameplayFeature.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslations[0], "DESC"));
                             newGameplayFeature.put("NAME EN", textFieldName.getText());
@@ -204,27 +213,27 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                         newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
                         newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
                         newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
-                        if(!checkBoxCompatibleWithArcadeCabinets.isSelected()){
+                        if (!checkBoxCompatibleWithArcadeCabinets.isSelected()) {
                             newGameplayFeature.put("NO_ARCADE", "");
                         }
-                        if(!checkBoxCompatibleWithMobile.isSelected()){
+                        if (!checkBoxCompatibleWithMobile.isSelected()) {
                             newGameplayFeature.put("NO_MOBILE", "");
                         }
                         boolean addFeature = Summaries.showSummary(getOptionPaneMessage(newGameplayFeature), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
-                        if(addFeature) {
+                        if (addFeature) {
                             createBackup();
                             addModToFile(newGameplayFeature);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + " - " + newGameplayFeature.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.gameplayFeature.upperCase") + ": [" + newGameplayFeature.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -234,27 +243,27 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
         Map<String, String> map = transformGenericToMap(t);
         Map<String, String> workingMap = new HashMap<>(map);
-        if(!workingMap.get("BAD").matches(".*\\d.*")){
+        if (!workingMap.get("BAD").matches(".*\\d.*")) {
             ArrayList<String> badGenreNames = Utils.getEntriesFromString(workingMap.get("BAD"));
             ArrayList<String> goodGenreNames = Utils.getEntriesFromString(workingMap.get("GOOD"));
             ArrayList<Integer> badGenreIds = new ArrayList<>();
             ArrayList<Integer> goodGenreIds = new ArrayList<>();
-            for(String string : badGenreNames){
-                try{
+            for (String string : badGenreNames) {
+                try {
                     badGenreIds.add(Integer.parseInt(string));
-                }catch(NumberFormatException e){
+                } catch (NumberFormatException e) {
                     int numberToAdd = ModManager.genreMod.getContentIdByName(string);
-                    if(numberToAdd != -1){
+                    if (numberToAdd != -1) {
                         badGenreIds.add(numberToAdd);
                     }
                 }
             }
-            for(String string : goodGenreNames){
-                try{
+            for (String string : goodGenreNames) {
+                try {
                     goodGenreIds.add(Integer.parseInt(string));
-                }catch(NumberFormatException e){
+                } catch (NumberFormatException e) {
                     int numberToAdd = ModManager.genreMod.getContentIdByName(string);
-                    if(numberToAdd != -1){
+                    if (numberToAdd != -1) {
                         goodGenreIds.add(numberToAdd);
                     }
                 }
@@ -266,13 +275,13 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         }
         StringBuilder badGenresFeatures = new StringBuilder();
         boolean firstBadFeature = true;
-        if(workingMap.get("BAD").equals("")){
+        if (workingMap.get("BAD").equals("")) {
             badGenresFeatures.append(I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.none"));
-        }else{
-            for(String string : Utils.getEntriesFromString(workingMap.get("BAD"))){
-                if(!firstBadFeature){
+        } else {
+            for (String string : Utils.getEntriesFromString(workingMap.get("BAD"))) {
+                if (!firstBadFeature) {
                     badGenresFeatures.append(", ");
-                }else{
+                } else {
                     firstBadFeature = false;
                 }
                 badGenresFeatures.append(ModManager.genreMod.getContentNameById(Integer.parseInt(string)));
@@ -280,13 +289,13 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         }
         StringBuilder goodGenresFeatures = new StringBuilder();
         boolean firstGoodFeature = true;
-        if(workingMap.get("GOOD").equals("")){
+        if (workingMap.get("GOOD").equals("")) {
             goodGenresFeatures.append(I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.none"));
-        }else{
-            for(String string : Utils.getEntriesFromString(workingMap.get("GOOD"))){
-                if(!firstGoodFeature){
+        } else {
+            for (String string : Utils.getEntriesFromString(workingMap.get("GOOD"))) {
+                if (!firstGoodFeature) {
                     goodGenresFeatures.append(", ");
-                }else{
+                } else {
                     firstGoodFeature = false;
                 }
                 goodGenresFeatures.append(ModManager.genreMod.getContentNameById(Integer.parseInt(string)));
@@ -294,10 +303,10 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         }
         String arcadeCompatibility = I18n.INSTANCE.get("commonText.yes");
         String mobileCompatibility = I18n.INSTANCE.get("commonText.yes");
-        if(workingMap.get("NO_ARCADE") != null){
+        if (workingMap.get("NO_ARCADE") != null) {
             arcadeCompatibility = I18n.INSTANCE.get("commonText.no");
         }
-        if(workingMap.get("NO_MOBILE") != null){
+        if (workingMap.get("NO_MOBILE") != null) {
             mobileCompatibility = I18n.INSTANCE.get("commonText.no");
         }
         return I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.firstPart") + "\n\n" +
@@ -367,43 +376,60 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     /**
      * Converts the input string into the respective type number
+     *
      * @param featureType The feature type string
      * @return Returns the type number
      */
     public int getGameplayFeatureTypeByName(String featureType) {//TODO rewrite to use enum
-        switch (featureType){
-            case "Graphic": return 0;
-            case "Sound": return 1;
-            case "Physics": return 3;
-            case "Gameplay": return 4;
-            case "Control": return 5;
-            case "Multiplayer": return 6;
-            default : return 0;
+        switch (featureType) {
+            case "Graphic":
+                return 0;
+            case "Sound":
+                return 1;
+            case "Physics":
+                return 3;
+            case "Gameplay":
+                return 4;
+            case "Control":
+                return 5;
+            case "Multiplayer":
+                return 6;
+            default:
+                return 0;
         }
     }
 
     /**
      * Converts the input in into the respective type name
+     *
      * @param typeId The feature type id
      * @return Returns the type name
      */
     public String getGameplayFeatureNameByTypeId(int typeId) {//TODO rewrite to use enum
-        switch (typeId){
-            case 0 : return "Graphic";
-            case 1 : return "Sound";
-            case 3 : return "Physics";
-            case 4 : return "Gameplay";
-            case 5 : return "Control";
-            case 6 : return "Multiplayer";
-            default : return "Graphic";
+        switch (typeId) {
+            case 0:
+                return "Graphic";
+            case 1:
+                return "Sound";
+            case 3:
+                return "Physics";
+            case 4:
+                return "Gameplay";
+            case 5:
+                return "Control";
+            case 6:
+                return "Multiplayer";
+            default:
+                return "Graphic";
         }
     }
 
     /**
      * Edits the GameplayFeatures.txt file to add genre id to the input gameplay feature
+     *
      * @param gameplayFeaturesIdsToEdit The map containing the gameplay features where the operation should be executed
-     * @param genreId The genre id that should be used
-     * @param goodFeature True when the id should be added as good to the feature. False when it should be added as bad.
+     * @param genreId                   The genre id that should be used
+     * @param goodFeature               True when the id should be added as good to the feature. False when it should be added as bad.
      */
     public void addGenreId(Set<Integer> gameplayFeaturesIdsToEdit, int genreId, boolean goodFeature) throws ModProcessingException {
         editGenreIdAllocation(gameplayFeaturesIdsToEdit, genreId, true, goodFeature);
@@ -411,6 +437,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     /**
      * Edits the GameplayFeatures.txt file to remove genre id from the input gameplay feature
+     *
      * @param genreId The genre id that should be used
      */
     public void removeGenreId(int genreId) throws ModProcessingException {
@@ -420,25 +447,26 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
 
     /**
      * Edits the GameplayFeatures.txt file to add/remove genre ids to/from the input gameplay feature
+     *
      * @param gameplayFeaturesIdsToEdit The map containing the gameplay features where the operation should be executed
-     * @param genreId The genre id that should be used
-     * @param addGenreId True when the genre id should be added. False when the genre id should be removed.
-     * @param goodFeature True when the id should be added as good to the feature. False when it should be added as bad.
+     * @param genreId                   The genre id that should be used
+     * @param addGenreId                True when the genre id should be added. False when the genre id should be removed.
+     * @param goodFeature               True when the id should be added as good to the feature. False when it should be added as bad.
      */
     private void editGenreIdAllocation(Set<Integer> gameplayFeaturesIdsToEdit, int genreId, boolean addGenreId, boolean goodFeature) throws ModProcessingException {
         analyzeFile();
         try {
             File gameplayFeaturesFile = getGameFile();
-            if(gameplayFeaturesFile.exists()){
+            if (gameplayFeaturesFile.exists()) {
                 gameplayFeaturesFile.delete();
             }
             gameplayFeaturesFile.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameplayFeaturesFile), StandardCharsets.UTF_8));
             bw.write("\ufeff");
-            for(Map<String, String> map : getFileContent()) {
+            for (Map<String, String> map : getFileContent()) {
                 boolean activeGameplayFeature = false;
-                for(Integer integer : gameplayFeaturesIdsToEdit){
-                    if(map.get("ID").equals(Integer.toString(integer))){
+                for (Integer integer : gameplayFeaturesIdsToEdit) {
+                    if (map.get("ID").equals(Integer.toString(integer))) {
                         activeGameplayFeature = true;
                     }
                 }
@@ -456,34 +484,46 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
                 EditHelper.printLine("TECH", map, bw);
                 String mapValueBad = "";
                 String mapValueGood = "";
-                if(map.get("BAD") != null){
+                if (map.get("BAD") != null) {
                     mapValueBad = map.get("BAD");
                 }
-                if(map.get("GOOD") != null){
+                if (map.get("GOOD") != null) {
                     mapValueGood = map.get("GOOD");
                 }
-                if(activeGameplayFeature || !addGenreId){
-                    if(addGenreId){
-                        if(goodFeature){
-                            bw.write("[GOOD]" + mapValueGood);bw.write("<" + genreId + ">");bw.write("\r\n");
-                            bw.write("[BAD]" + mapValueBad);bw.write("\r\n");
-                        }else{
-                            bw.write("[GOOD]" + mapValueGood);bw.write("\r\n");
-                            bw.write("[BAD]" + mapValueBad);bw.write("<" + genreId + ">");bw.write("\r\n");
+                if (activeGameplayFeature || !addGenreId) {
+                    if (addGenreId) {
+                        if (goodFeature) {
+                            bw.write("[GOOD]" + mapValueGood);
+                            bw.write("<" + genreId + ">");
+                            bw.write("\r\n");
+                            bw.write("[BAD]" + mapValueBad);
+                            bw.write("\r\n");
+                        } else {
+                            bw.write("[GOOD]" + mapValueGood);
+                            bw.write("\r\n");
+                            bw.write("[BAD]" + mapValueBad);
+                            bw.write("<" + genreId + ">");
+                            bw.write("\r\n");
                         }
-                    }else{
-                        bw.write("[GOOD]" + mapValueGood.replace("<" + genreId + ">", ""));bw.write("\r\n");
-                        bw.write("[BAD]" + mapValueBad.replace("<" + genreId + ">", ""));bw.write("\r\n");
+                    } else {
+                        bw.write("[GOOD]" + mapValueGood.replace("<" + genreId + ">", ""));
+                        bw.write("\r\n");
+                        bw.write("[BAD]" + mapValueBad.replace("<" + genreId + ">", ""));
+                        bw.write("\r\n");
                     }
-                }else{
-                    bw.write("[GOOD]" + mapValueGood);bw.write("\r\n");
-                    bw.write("[BAD]" + mapValueBad);bw.write("\r\n");
+                } else {
+                    bw.write("[GOOD]" + mapValueGood);
+                    bw.write("\r\n");
+                    bw.write("[BAD]" + mapValueBad);
+                    bw.write("\r\n");
                 }
-                if(map.get("NO_ARCADE") != null){
-                    bw.write("[NO_ARCADE]");bw.write("\r\n");
+                if (map.get("NO_ARCADE") != null) {
+                    bw.write("[NO_ARCADE]");
+                    bw.write("\r\n");
                 }
-                if(map.get("NO_MOBILE") != null){
-                    bw.write("[NO_MOBILE]");bw.write("\r\n");
+                if (map.get("NO_MOBILE") != null) {
+                    bw.write("[NO_MOBILE]");
+                    bw.write("\r\n");
                 }
                 bw.write("\r\n");
             }
@@ -503,13 +543,14 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
         StringBuilder genreNames = new StringBuilder();
         int charPosition = 0;
         StringBuilder currentString = new StringBuilder();
-        for(int i = 0; i<genreNamesRaw.length(); i++){
-            if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
+        for (int i = 0; i < genreNamesRaw.length(); i++) {
+            if (String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")) {
                 //Nothing happens
-            }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
-                genreNames.append("<").append(ModManager.genreMod.getModIdByNameFromImportHelperMap(currentString.toString()));genreNames.append(">");
+            } else if (String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")) {
+                genreNames.append("<").append(ModManager.genreMod.getModIdByNameFromImportHelperMap(currentString.toString()));
+                genreNames.append(">");
                 currentString = new StringBuilder();
-            }else{
+            } else {
                 currentString.append(genreNamesRaw.charAt(charPosition));
             }
             charPosition++;

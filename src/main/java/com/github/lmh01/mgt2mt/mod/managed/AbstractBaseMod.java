@@ -9,8 +9,10 @@ import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public abstract class AbstractBaseMod {
     /**
      * @return Returns a new JMenuItem that is used to be added to the export menu.
      */
-    private JMenuItem getInitialExportMenuItem(){
+    private JMenuItem getInitialExportMenuItem() {
         JMenuItem menuItem = new JMenuItem(getTypePlural());
         menuItem.addActionListener(e -> exportMenuItemAction());
         return menuItem;
@@ -74,7 +76,7 @@ public abstract class AbstractBaseMod {
         ThreadHandler.startModThread(() -> {
             analyzeFile();
             openAddModGui();
-        }, "runnableAdd" + getType().replaceAll("\\s+",""));
+        }, "runnableAdd" + getType().replaceAll("\\s+", ""));
     }
 
     /**
@@ -85,7 +87,7 @@ public abstract class AbstractBaseMod {
         ThreadHandler.startModThread(() -> {
             analyzeFile();
             OperationHelper.process(this::removeMod, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
-        }, "runnableRemove" + getType().replaceAll("\\s+",""));
+        }, "runnableRemove" + getType().replaceAll("\\s+", ""));
     }
 
     /**
@@ -102,13 +104,13 @@ public abstract class AbstractBaseMod {
                 path = ModManagerPaths.EXPORT.getPath().resolve("single");
             }
             OperationHelper.process((string) -> SharingManager.exportSingleMod(this, string, path), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
-        }, "runnableExport" + getType().replaceAll("\\s+",""));
+        }, "runnableExport" + getType().replaceAll("\\s+", ""));
     }
 
     /**
      * @return Returns an array that contains all custom contents
      */
-    public final String[] getCustomContentString() throws ModProcessingException{
+    public final String[] getCustomContentString() throws ModProcessingException {
         return getCustomContentString(true);
     }
 
@@ -130,19 +132,19 @@ public abstract class AbstractBaseMod {
             }
             if (!isDefaultContent) {
                 arrayListCustomContent.add(s);
-                if(!disableTextAreaMessage){
+                if (!disableTextAreaMessage) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.customEngineFeatureFound") + " " + s);
                 }
             }
             ProgressBarHelper.increment();
         }
-        if(!disableTextAreaMessage){
+        if (!disableTextAreaMessage) {
             TextAreaHelper.appendText(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.customEngineFeatureComplete"));
         }
         ProgressBarHelper.resetProgressBar();
-        try{
+        try {
             Collections.sort(arrayListCustomContent);
-        }catch(NullPointerException ignored){//TODO schauen, ob hier vielleicht auch noch ein throw für ModProcessingException hinzugefügt werden sollte
+        } catch (NullPointerException ignored) {//TODO schauen, ob hier vielleicht auch noch ein throw für ModProcessingException hinzugefügt werden sollte
 
         }
         String[] string = new String[arrayListCustomContent.size()];
@@ -178,6 +180,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * If the id should be returned for mods that will be imported and that have not been added to the game use {@link AbstractBaseMod#getContentIdByName(String)}.
+     *
      * @param name The name
      * @return The id for the specified name.
      * @throws ModProcessingException When the name does not exist
@@ -214,7 +217,8 @@ public abstract class AbstractBaseMod {
 
     /**
      * Adds a new mod to the file.
-     * @param t This map/string contains the values that should be printed to the file
+     *
+     * @param t   This map/string contains the values that should be printed to the file
      * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
      * @throws ModProcessingException when {@literal <T>} is not valid
      */
@@ -222,6 +226,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * Removes the input mod from the text file
+     *
      * @param name The mod name that should be removed
      */
     protected abstract void removeModFromFile(String name) throws ModProcessingException;
@@ -229,6 +234,7 @@ public abstract class AbstractBaseMod {
     /**
      * Removes the mod from the game.
      * This includes image files
+     *
      * @param name The mod name that should be removed
      */
     public void removeMod(String name) throws ModProcessingException {
@@ -243,6 +249,7 @@ public abstract class AbstractBaseMod {
     /**
      * The type indicates what is written in the log, textArea, progress bar, windows and JOptionPanes.
      * E.g. gameplay feature
+     *
      * @return Returns the mod name
      */
     public final String getType() {
@@ -252,10 +259,11 @@ public abstract class AbstractBaseMod {
     /**
      * The type indicates what is written in the log, textArea, progress bar, windows and JOptionPanes.
      * E.g. Gameplay feature
+     *
      * @return Returns the mod name with a capital letter
      */
     public final String getType(boolean capitalLetters) {
-        if(capitalLetters) {
+        if (capitalLetters) {
             return I18n.INSTANCE.get("commonText." + getMainTranslationKey() + ".upperCase");
         } else {
             return I18n.INSTANCE.get("commonText." + getMainTranslationKey());
@@ -269,6 +277,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * Eg. Genres, Engine features
+     *
      * @return Returns the mod name in plural
      */
     public final String getTypePlural() {
@@ -277,6 +286,7 @@ public abstract class AbstractBaseMod {
 
     /**
      * Creates a backup of the mod files specific to this mod
+     *
      * @throws ModProcessingException If something went wrong while doing the backup
      */
     public void createBackup() throws ModProcessingException {
@@ -289,25 +299,26 @@ public abstract class AbstractBaseMod {
 
     /**
      * Sets the main menu buttons to active/disabled depending on if active mods are found
+     *
      * @throws ModProcessingException If custom content string could not be returned
      */
     public final void setMainMenuButtonAvailability() throws ModProcessingException {
         String[] customContentString = getCustomContentString(true);
-        for(JMenuItem menuItem : getModMenuItems()){
-            if(menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))){
-                if(customContentString.length > 0){
+        for (JMenuItem menuItem : getModMenuItems()) {
+            if (menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))) {
+                if (customContentString.length > 0) {
                     menuItem.setEnabled(true);
                     menuItem.setToolTipText("");
-                }else{
+                } else {
                     menuItem.setEnabled(false);
                     menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
                 }
             }
         }
-        if(customContentString.length > 0){
+        if (customContentString.length > 0) {
             getExportMenuItem().setEnabled(true);
             getExportMenuItem().setToolTipText("");
-        }else{
+        } else {
             getExportMenuItem().setEnabled(false);
             getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
         }
@@ -348,8 +359,8 @@ public abstract class AbstractBaseMod {
     /**
      * @return The next free id.
      */
-    public final int getFreeId(){
-        return getMaxId()+1;
+    public final int getFreeId() {
+        return getMaxId() + 1;
     }
 
     /**
@@ -365,16 +376,18 @@ public abstract class AbstractBaseMod {
     /**
      * Opens a gui where the user can add the new mod.
      * This function will then add the mod and call {@link AbstractBaseMod#addModToFile(Object)}.
+     *
      * @throws ModProcessingException If something went wrong
      */
     protected abstract void openAddModGui() throws ModProcessingException;//TODO Diese Funktion wird später umgeschrieben, sodass eingaben auch in die Felder geladen werden können
 
     /**
      * This is called inside of {@link AbstractBaseMod#openAddModGui()}
-     * @param t This map/string contains the values that are used to create the option pane message
+     *
+     * @param t   This map/string contains the values that are used to create the option pane message
      * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
-     * @throws ModProcessingException when {@literal <T>} is not valid
      * @return The objects that should be displayed in the option pane
+     * @throws ModProcessingException when {@literal <T>} is not valid
      */
     protected abstract <T> String getOptionPaneMessage(T t) throws ModProcessingException;
 
@@ -388,6 +401,7 @@ public abstract class AbstractBaseMod {
      * To export an advanced mod this method should be called together with {@link AbstractComplexMod#exportImages(String, Path)}.
      * If the export map should be changed use {@link AbstractAdvancedMod#getChangedExportMap(Map, String)}.
      * To change what line is written in the map when a simple mod is exported use {@link AbstractSimpleMod#getReplacedLine(String)}.
+     *
      * @param name The name for the mod that should be exported
      * @return Map containing the content that should be written to the export toml file
      * @throws ModProcessingException When something went wrong while copying the image files or creating the map
@@ -398,7 +412,8 @@ public abstract class AbstractBaseMod {
      * Returns a map that contains the dependencies of the mod. This map is printed into the export file.
      * This function should be overwritten by each mod that needs dependencies.
      * Map coding: key = modName | value = hash set of the required mods that belong to the modName
-     * @param t This map/string contains the values that will be used to create the dependency map
+     *
+     * @param t   This map/string contains the values that will be used to create the dependency map
      * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
      * @return A map that contains the dependencies for the mod that should be exported
      * @throws ModProcessingException When something went wrong while creating the dependency map or when {@literal <T>} is not valid.
@@ -409,6 +424,7 @@ public abstract class AbstractBaseMod {
      * Imports the mod to the game.
      * Will edit the game files and import pictures, if needed.
      * {@link AbstractBaseMod#addModToFile(Object)} is used to edit the game file(s).
+     *
      * @param map The map that contains the values that are required to import the mod.
      * @throws ModProcessingException If something went wrong while importing the mod
      */
@@ -421,9 +437,10 @@ public abstract class AbstractBaseMod {
 
     /**
      * Analyses all dependencies of this mod
+     *
      * @throws ModProcessingException If analysis of a mod fails
      */
-    public final void analyzeDependencies() throws ModProcessingException{
+    public final void analyzeDependencies() throws ModProcessingException {
         for (AbstractBaseMod mod : getDependencies()) {
             mod.analyzeFile();
         }
@@ -437,6 +454,7 @@ public abstract class AbstractBaseMod {
     /**
      * Adds a new entry to the import helper map.
      * The mod id will be selected automatically.
+     *
      * @param name The mod name that should be added to the map.
      */
     public final void addEntryToImportHelperMap(String name) {
@@ -448,6 +466,7 @@ public abstract class AbstractBaseMod {
      * Returns the mod id for the mod name that is stored in the {@link AbstractBaseMod#importHelperMap}.
      * This includes mods that are not yet added to the game and that have been added to this map prior by using {@link AbstractBaseMod#addEntryToImportHelperMap(String)}.
      * This function should not be confused with {@link AbstractBaseMod#getContentIdByName(String)}.
+     *
      * @param name The name of the mod.
      * @return The mod id for the mod name.
      * @throws ModProcessingException If import helper map is empty or the mod name does not exist in the map.
@@ -468,6 +487,7 @@ public abstract class AbstractBaseMod {
      * Returns the mod name for the mod id that is stored in the {@link AbstractBaseMod#importHelperMap}.
      * This includes mods that are not yet added to the game and that have been added to this map prior by using {@link AbstractBaseMod#addEntryToImportHelperMap(String)}.
      * This function should not be confused with {@link AbstractBaseMod#getContentIdByName(String)}.
+     *
      * @param id The id of the mod.
      * @return The mod id for the mod name.
      * @throws ModProcessingException If import helper map is empty or the mod name does not exist in the map.

@@ -2,19 +2,18 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.mod.GenreMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 
-public class WindowAddGenrePage11 extends JFrame{
+public class WindowAddGenrePage11 extends JFrame {
     static final WindowAddGenrePage11 FRAME = new WindowAddGenrePage11();
     JPanel contentPane = new JPanel();
     JButton buttonBrowse = new JButton("Browse");
@@ -24,13 +23,13 @@ public class WindowAddGenrePage11 extends JFrame{
     JTextField textFieldImagePath = new JTextField();
     File genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
 
-    public static void createFrame(){
+    public static void createFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 FRAME.setGuiComponents();
                 FRAME.setVisible(true);
                 FRAME.setLocationRelativeTo(null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -39,32 +38,32 @@ public class WindowAddGenrePage11 extends JFrame{
     public WindowAddGenrePage11() {
         buttonBrowse.addActionListener(actionEvent -> {
             String imageFilePath = ModManager.genreMod.getGenreImageFilePath(false, true, textFieldImagePath);
-            if(!imageFilePath.equals("error") && !imageFilePath.isEmpty()){
+            if (!imageFilePath.equals("error") && !imageFilePath.isEmpty()) {
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
-            }else{
+            } else {
                 textFieldImagePath.setText(ImageFileHandler.defaultGenreIcon.toString());
             }
         });
         buttonNext.addActionListener(actionEvent -> {
             ThreadHandler.startModThread(() -> {
-                if(textFieldImagePath.getText().isEmpty()){
-                    if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                if (textFieldImagePath.getText().isEmpty()) {
+                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                         genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
                         FRAME.dispose();
                         GenreMod.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
                         ModManager.genreMod.addGenre(GenreMod.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                         WindowMain.checkActionAvailability();
                     }
-                }else{
+                } else {
                     String imageFilePath = ModManager.genreMod.getGenreImageFilePath(true, false, textFieldImagePath);
-                    if(!imageFilePath.equals("error")){
+                    if (!imageFilePath.equals("error")) {
                         genreIcon = new File(imageFilePath);
                         FRAME.dispose();
                         GenreMod.mapNewGenre.putAll(WindowAddGenrePage1.getMapGenreTranslations());
                         ModManager.genreMod.addGenre(GenreMod.mapNewGenre, WindowAddGenrePage6.compatibleThemeIds, WindowAddGenrePage7.gameplayFeaturesBadIds, WindowAddGenrePage7.gameplayFeaturesGoodIds, WindowAddGenrePage10.screenshotFiles.get(), false, genreIcon, true);
                         WindowMain.checkActionAvailability();
-                    }else if(textFieldImagePath.getText().isEmpty()){
+                    } else if (textFieldImagePath.getText().isEmpty()) {
 
                     }
                 }
@@ -75,13 +74,13 @@ public class WindowAddGenrePage11 extends JFrame{
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
-            if(Utils.showConfirmDialog(1)){
+            if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();
             }
         });
     }
 
-    private void setGuiComponents(){
+    private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 335, 160);
         setResizable(false);
@@ -107,11 +106,11 @@ public class WindowAddGenrePage11 extends JFrame{
         contentPane.add(buttonBrowse);
 
         JLabel labelYouCanSkipThisStep = new JLabel(I18n.INSTANCE.get("mod.genre.picture.hint.1"));
-        labelYouCanSkipThisStep.setBounds(15, 55,300, 23);
+        labelYouCanSkipThisStep.setBounds(15, 55, 300, 23);
         contentPane.add(labelYouCanSkipThisStep);
 
         JLabel labelAddYourOwnGenre = new JLabel(I18n.INSTANCE.get("mod.genre.picture.hint.2"));
-        labelAddYourOwnGenre.setBounds(15,75, 300, 23);
+        labelAddYourOwnGenre.setBounds(15, 75, 300, 23);
         contentPane.add(labelAddYourOwnGenre);
 
         buttonNext.setBounds(220, 100, 100, 23);

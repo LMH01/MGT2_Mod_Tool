@@ -14,6 +14,7 @@ public class ModProcessingException extends Exception {
 
     /**
      * Constructs a new ModProcessingException with the specified detail message.
+     *
      * @param s the detail message.
      */
     public ModProcessingException(String s) {
@@ -24,6 +25,7 @@ public class ModProcessingException extends Exception {
 
     /**
      * Constructs a new ModProcessingException with the specified detail message.
+     *
      * @param s The detail message
      * @param e What caused this exception
      */
@@ -35,7 +37,8 @@ public class ModProcessingException extends Exception {
 
     /**
      * Constructs a new ModProcessingException with the specified detail message.
-     * @param s The detail message
+     *
+     * @param s             The detail message
      * @param internalIssue If true the message will indicate that the issue is internal and not caused by faulty files
      */
     public ModProcessingException(String s, boolean internalIssue) {
@@ -46,8 +49,9 @@ public class ModProcessingException extends Exception {
 
     /**
      * Constructs a new ModProcessingException with the specified detail message.
-     * @param s The detail message
-     * @param e What caused this exception
+     *
+     * @param s             The detail message
+     * @param e             What caused this exception
      * @param internalIssue If true the message will indicate that the issue is internal and not caused by faulty files
      */
     public ModProcessingException(String s, Exception e, boolean internalIssue) {

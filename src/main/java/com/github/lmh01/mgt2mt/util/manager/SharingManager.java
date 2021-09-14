@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.data_stream.*;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
@@ -10,11 +10,16 @@ import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.io.*;
-import java.nio.file.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +33,7 @@ public class SharingManager {
 
     /**
      * Opens a window where the user can select folders that should be searched for mods.
+     *
      * @see SharingManager#importAll(ImportType, Set)
      */
     public static void importAll(ImportType importType) throws ModProcessingException {
@@ -41,8 +47,9 @@ public class SharingManager {
      * Searches the path for mods in .toml files.
      * When the search is completed a message is displayed to the user where it can be selected which mod should be imported.
      * When mods are searched it is analyzed if they depend on any other mods and if these mod do exist.
+     *
      * @param importType The type of the import.
-     * @param path The root folder where the search for mods should be started at. Use {@link SharingManager#importAll(ImportType, Set)} if multiple root folders should be searched.
+     * @param path       The root folder where the search for mods should be started at. Use {@link SharingManager#importAll(ImportType, Set)} if multiple root folders should be searched.
      */
     public static void importAll(ImportType importType, Path path) throws ModProcessingException {
         Set<Path> paths = new HashSet<>();
@@ -54,8 +61,9 @@ public class SharingManager {
      * Searches the path for mods in .toml files.
      * When the search is completed a message is displayed to the user where it can be selected which mod should be imported.
      * When mods are searched it is analyzed if they depend on any other mods and if these mod do exist.
+     *
      * @param importType The type of the import.
-     * @param paths The root folders where the search for mods should be started at.
+     * @param paths      The root folders where the search for mods should be started at.
      */
     public static void importAll(ImportType importType, Set<Path> paths) throws ModProcessingException {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.start"));
@@ -99,10 +107,10 @@ public class SharingManager {
                             if (modsChecked != null) {
                                 setImportHelperMaps(modsChecked);
                                 importAllMods(modsChecked);
-                                if(importType.equals(ImportType.RESTORE_POINT)){
+                                if (importType.equals(ImportType.RESTORE_POINT)) {
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"));
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
-                                }else{
+                                } else {
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                                 }
@@ -110,9 +118,9 @@ public class SharingManager {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                             }
                         } else {
-                            if(importType.equals(ImportType.RESTORE_POINT)){
+                            if (importType.equals(ImportType.RESTORE_POINT)) {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
-                            }else{
+                            } else {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                             }
                         }
@@ -131,7 +139,7 @@ public class SharingManager {
             ThreadHandler.startModThread(() -> JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.importAll.noTomlFilesFound"), I18n.INSTANCE.get("frame.title.information"), JOptionPane.INFORMATION_MESSAGE), "showNoTomlFoundInformation");
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.noTomlFilesFound"));
         }
-        if(ModManagerPaths.TEMP.toFile().exists()){
+        if (ModManagerPaths.TEMP.toFile().exists()) {
             ThreadHandler.startThread(ThreadHandler.runnableDeleteTempFolder, "runnableDeleteTempFolder");
         }
     }
@@ -139,6 +147,7 @@ public class SharingManager {
     /**
      * Opens a gui to the user where they can select what mods should be added to the game.
      * The mods that can be chosen are placed in the set.
+     *
      * @param set The set where the mods are placed in
      * @return A new set that contains only the mods that have been selected by the user
      */
@@ -162,10 +171,10 @@ public class SharingManager {
         }
         String labelStartText;
         String labelEndText;
-        if(importType.equals(ImportType.RESTORE_POINT)){
+        if (importType.equals(ImportType.RESTORE_POINT)) {
             labelStartText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.startText.var1");
             labelEndText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.endText.var1");
-        }else{
+        } else {
             labelStartText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.startText.var2");
             labelEndText = I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.endText.var2");
         }
@@ -173,12 +182,12 @@ public class SharingManager {
         JLabel labelEnd = new JLabel(labelEndText);
         Object[] params;
         ArrayList<JPanel> panels = new ArrayList<>();
-        for(Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()){
+        for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
             panels.add(entry.getValue());
         }
         Object[] modPanels = panels.toArray(new Object[0]);
         params = new Object[]{labelStart, modPanels, labelEnd};
-        if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+        if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             Set<Map<String, Object>> modMap = new HashSet<>();
             for (AbstractBaseMod mod : ModManager.mods) {
                 for (Map<String, Object> map : set) {
@@ -197,6 +206,7 @@ public class SharingManager {
 
     /**
      * This function will prompt the user to choose a folder where the files to import are located
+     *
      * @return Selected folders
      */
     private static Set<Path> getImportFolders() throws ModProcessingException {
@@ -207,7 +217,7 @@ public class SharingManager {
             FileFilter fileFilter = new FileFilter() {//File filter to only show .zip files.
                 @Override
                 public boolean accept(File f) {
-                    if(f.getName().contains(".zip")){
+                    if (f.getName().contains(".zip")) {
                         return true;
                     }
                     return f.isDirectory();
@@ -218,14 +228,14 @@ public class SharingManager {
                     return I18n.INSTANCE.get("dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription");
                 }
             };
-            fileChooser.setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES);
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             fileChooser.setMultiSelectionEnabled(true);
             fileChooser.setFileFilter(fileFilter);
             int return_value = fileChooser.showOpenDialog(null);
-            if(return_value == JFileChooser.APPROVE_OPTION){
+            if (return_value == JFileChooser.APPROVE_OPTION) {
                 File[] files = fileChooser.getSelectedFiles();
                 Set<Path> importFolders = new HashSet<>();
-                for(int i=0; i<fileChooser.getSelectedFiles().length; i++){
+                for (int i = 0; i < fileChooser.getSelectedFiles().length; i++) {
                     File importFolder = files[i];
                     importFolders.add(importFolder.toPath());
                 }
@@ -244,15 +254,16 @@ public class SharingManager {
      * Searches all folders in the path for toml files.
      * Uses the text area and the progress bar to display progress.
      * If a .zip folder is found it can be unzipped and searched for mods.
+     *
      * @return An array list containing the toml files that have been found.
-     *          If the import has been canceled the array map will be empty.
+     * If the import has been canceled the array map will be empty.
      */
     private static ArrayList<File> getTomlFiles(Set<Path> paths) throws ModProcessingException {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingForTomlFiles"));
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
         timeHelper.measureTime();
         ArrayList<File> tomlFiles = new ArrayList<>();
-        ProgressBarHelper.initializeProgressBar(0 , 1, I18n.INSTANCE.get("progressBar.scanningDirectories"), false, false);
+        ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.scanningDirectories"), false, false);
         JCheckBox checkBoxPreventZipMessage = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.saveOption"));
         checkBoxPreventZipMessage.setSelected(false);
         AtomicBoolean unzipAutomatic = new AtomicBoolean(false);
@@ -284,21 +295,21 @@ public class SharingManager {
                             } else if (file.toFile().getName().endsWith(".zip")) {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + " " + file);
                                 boolean unzipFile = false;
-                                if(!checkBoxPreventZipMessage.isSelected()){
+                                if (!checkBoxPreventZipMessage.isSelected()) {
                                     JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.firstPart") + "<br><br>" + file + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.secondPart"));
                                     Object[] obj = {label, checkBoxPreventZipMessage};
-                                    if(JOptionPane.showConfirmDialog(null, obj, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                                    if (JOptionPane.showConfirmDialog(null, obj, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                         unzipFile = true;
-                                        if(checkBoxPreventZipMessage.isSelected()){
+                                        if (checkBoxPreventZipMessage.isSelected()) {
                                             unzipAutomatic.set(true);
                                         }
                                     }
-                                }else{
-                                    if(unzipAutomatic.get()){
+                                } else {
+                                    if (unzipAutomatic.get()) {
                                         unzipFile = true;
                                     }
                                 }
-                                if(unzipFile){
+                                if (unzipFile) {
                                     try {
                                         Path extractedFolder = ModManagerPaths.TEMP.getPath().resolve(Integer.toString(currentZipArchiveNumber.get()));
                                         DataStreamHelper.unzip(file, extractedFolder);
@@ -307,7 +318,7 @@ public class SharingManager {
                                         tomlFiles.addAll(getTomlFiles(extractedFolder, abortImport, checkBoxPreventZipMessage, unzipAutomatic, currentZipArchiveNumber));
                                     } catch (IOException | ModProcessingException | IllegalArgumentException e) {
                                         TextAreaHelper.printStackTrace(e);
-                                        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart") + "\n\n" + file + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage() + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION){
+                                        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.firstPart") + "\n\n" + file + "\n\n" + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage() + "\n\n" + I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.message.secondPart"), I18n.INSTANCE.get("dialog.sharingManager.importAll.zipArchiveFound.error.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
                                             abortImport.set(true);
                                         }
                                     }
@@ -338,6 +349,7 @@ public class SharingManager {
      * Analyzes the input toml files to determine if they are files that contain mods.
      * If the toml file is valid it is transformed into a map, which then is put into the array list.
      * This array list is returned by this function.
+     *
      * @param files The array list that should be searched for compatible toml files
      * @return An array list that contains maps, which contain mods
      */
@@ -365,6 +377,7 @@ public class SharingManager {
 
     /**
      * Filters the input array list to return eiter an array that contains only single mods or only bundled mods.
+     *
      * @param modList The array list that contains the mods
      * @param bundled If true the function returns an array that contains only compact mods
      *                If false the function returns an array that contains only single mods
@@ -393,8 +406,9 @@ public class SharingManager {
      * If duplicate mods are found they will not be added to the list again.
      * If a mod is found that is already installed it will not be added to the import list.
      * The progress bar and text area are utilized
-     * @param singleMods An array list that contains all toml instances that are verified to contain a single mod.
-     *                   This map can be returned by {@link SharingManager#getFilteredModMaps(ArrayList, boolean)}.
+     *
+     * @param singleMods  An array list that contains all toml instances that are verified to contain a single mod.
+     *                    This map can be returned by {@link SharingManager#getFilteredModMaps(ArrayList, boolean)}.
      * @param bundledMods An array list that contains all toml instances that are verified to contain bundled mods
      *                    This map can be returned by {@link SharingManager#getFilteredModMaps(ArrayList, boolean)}
      * @return A set of maps that contain the mod data.
@@ -423,7 +437,7 @@ public class SharingManager {
             }
             if (isModToolVersionSupported(map)) {
                 if (map.get("base_mod_type").equals("simple") || map.get("base_mod_type").equals("advanced")) {
-                    if (doesMapContainMod(mods, map.get("mod_name").toString(), map.get("mod_type").toString())){
+                    if (doesMapContainMod(mods, map.get("mod_name").toString(), map.get("mod_type").toString())) {
                         modsDuplicated++;
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + map.get("mod_type") + " - " + map.get("mod_name"));
                     } else if (doesModExist((String) map.get("mod_name"), (String) map.get("mod_type"))) {
@@ -473,7 +487,7 @@ public class SharingManager {
                             }
                             singleModMap.put("mod_type", mod.getExportType());
                             singleModMap.put("assets_folder", map.get("assets_folder"));
-                            if (doesMapContainMod(mods, singleModMap.get("mod_name").toString(), mod.getExportType())){
+                            if (doesMapContainMod(mods, singleModMap.get("mod_name").toString(), mod.getExportType())) {
                                 modsDuplicated++;
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name"));
                             } else if (doesModExist((String) singleModMap.get("mod_name"), mod.getExportType())) {
@@ -519,6 +533,7 @@ public class SharingManager {
 
     /**
      * Removes the quote symbol from the maps keys.
+     *
      * @param map The map where the keys should be modified
      * @return A map where the quote symbol is no longer part of the key
      */
@@ -534,6 +549,7 @@ public class SharingManager {
      * Checks the mods contained in the set for dependencies and returns a set that is ready to be imported.
      * If a dependency is not found the user is prompted to select a replacement. If no replacement is selected a random replacement will be chosen.
      * The function that replaces the dependency is {@link SharingManager#replaceDependency(AbstractBaseMod, String, Map)}.
+     *
      * @param mods The map where the mods are stored in
      * @return A set of maps that contain the mod data. The data is checked for dependencies. Returns null if dependency check has been canceled by the user
      */
@@ -552,7 +568,7 @@ public class SharingManager {
                             for (String string : arrayList) {
                                 if (!doesModExist(string, mod.getExportType()) && !doesMapContainMod(mods, string, mod.getExportType())) {
                                     JPanel panel = new JPanel();
-                                    JLabel label1 = new JLabel("<html>" +  I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + mod.getType() + " - " + string + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
+                                    JLabel label1 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + mod.getType() + " - " + string + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
                                     JList<String> list = WindowHelper.getList(mod.getContentByAlphabet(), false);
                                     JScrollPane scrollPane = WindowHelper.getScrollPane(list);
                                     JLabel label2 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part3"));
@@ -561,7 +577,7 @@ public class SharingManager {
                                     panel.add(label2);
                                     JComponent[] components = {label1, scrollPane, label2};
                                     /*TODO Add check box that can be checked to always select a random dependency if one is missing
-                                    *  this will then hold the message dialog back*/
+                                     *  this will then hold the message dialog back*/
                                     if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("frame.title.missingDependency"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                                         if (list.isSelectionEmpty()) {
                                             replaceDependency(mod, string, map2);
@@ -585,9 +601,10 @@ public class SharingManager {
 
     /**
      * Replaces the dependency in the map with a random one
-     * @param mod The mod the dependency belongs to that should be replaced
+     *
+     * @param mod  The mod the dependency belongs to that should be replaced
      * @param name The dependency name that should be replaced
-     * @param map The mod map where the dependency should be replaced in
+     * @param map  The mod map where the dependency should be replaced in
      */
     @SuppressWarnings("unchecked")
     private static void replaceDependency(AbstractBaseMod mod, String name, Map<String, Object> map) throws ModProcessingException {
@@ -596,9 +613,10 @@ public class SharingManager {
 
     /**
      * Replaces the dependency in the map with the selected replacement
-     * @param mod The mod the dependency belongs to that should be replaced
-     * @param name The dependency name that should be replaced
-     * @param map The mod map where the dependency should be replaced in
+     *
+     * @param mod         The mod the dependency belongs to that should be replaced
+     * @param name        The dependency name that should be replaced
+     * @param map         The mod map where the dependency should be replaced in
      * @param replacement The name with which the missing dependency should be replaced
      */
     @SuppressWarnings("unchecked")
@@ -634,8 +652,9 @@ public class SharingManager {
 
     /**
      * Checks if the import map contains the mod name under the mod_type
-     * @param mods The map that contains the values
-     * @param name The name that should be searched
+     *
+     * @param mods     The map that contains the values
+     * @param name     The name that should be searched
      * @param mod_type The mod type in which the name should be searched
      * @return True if map contains mod under the specified type, false if mod is not found
      */
@@ -650,16 +669,18 @@ public class SharingManager {
 
     /**
      * Checks if the map is compatible with the current mod tool version
+     *
      * @param map The map that contains the mod_type and mod_tool_version values
      * @return True if map is compatible, false if map is not compatible
      */
-    private static boolean isModToolVersionSupported(Map<String, Object> map){
+    private static boolean isModToolVersionSupported(Map<String, Object> map) {
         return isModToolVersionSupported((String) map.get("mod_type"), (String) map.get("mod_tool_version"));
     }
 
     /**
      * Checks if the map is compatible with the current mod tool version
-     * @param modType The type of the mod
+     *
+     * @param modType        The type of the mod
      * @param modToolVersion The version that should be checked
      * @return True if map is compatible, false if map is not compatible
      */
@@ -678,6 +699,7 @@ public class SharingManager {
 
     /**
      * Checks if the input mod already exists in the game.
+     *
      * @param modName The name of the mod for which it should be checked if it already exists
      * @param modType The mod type of which the mod is that should be checked
      * @return True if mod is already added, false if mod is not added
@@ -697,6 +719,7 @@ public class SharingManager {
     /**
      * Returns a string that contains the required mod tool versions for the mod type.
      * Should be used together with {@link SharingManager#isModToolVersionSupported(Map)}.
+     *
      * @param modType The type of the mod
      * @return A string that contains the required mod tool versions
      */
@@ -713,6 +736,7 @@ public class SharingManager {
      * Sets all import helper maps for each mod.
      * First the base map is initialized and then the mods that stand in the map are added.
      * When this function has run the import helper map will contain the mod ids for the new mods.
+     *
      * @param mods Contains all the mods that will be imported
      */
     private static void setImportHelperMaps(Set<Map<String, Object>> mods) throws ModProcessingException {
@@ -734,6 +758,7 @@ public class SharingManager {
      * Imports all mods that are stored in the mods set.
      * The progress bar and text area are used to display progress.
      * This function should only be called by {@link SharingManager#importAll(ImportType, Set)}.
+     *
      * @param mods A set of maps that contain the values for the mods that should be imported.
      * @throws ModProcessingException If something went wrong while importing a mod
      */
@@ -757,23 +782,24 @@ public class SharingManager {
 
     /**
      * Adds gui components to be displayed in the summary.
-     * @param labelText The label text
-     * @param set The set that contains the mod names of the specific mod
-     * @param panel The panel where the components should be added
+     *
+     * @param labelText       The label text
+     * @param set             The set that contains the mod names of the specific mod
+     * @param panel           The panel where the components should be added
      * @param selectedEntries An atomic reference where the return values should be saved
      */
-    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport){
+    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport) {
         JLabel label = new JLabel(labelText);
         JButton button = new JButton(set.size() + "/" + set.size());
         disableImport.set(false);
         button.addActionListener(actionEvent -> {
-            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)),false);
+            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)), false);
             if (selectedMods != null) {
                 selectedEntries.set(selectedMods);
-                if(selectedMods.isEmpty()){
+                if (selectedMods.isEmpty()) {
                     LOGGER.info("Import disabled for: " + labelText.replaceAll(":", ""));
                     disableImport.set(true);
-                }else{
+                } else {
                     LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
                     disableImport.set(false);
                 }
@@ -787,8 +813,9 @@ public class SharingManager {
     /**
      * Exports the specified mod to the export folder.
      * Writes a message to the text area if mod export was successful or if mod was already exported
-     * @param mod The mod_type the mod belongs to
-     * @param name The name of the mod that should be exported
+     *
+     * @param mod    The mod_type the mod belongs to
+     * @param name   The name of the mod that should be exported
      * @param folder The root folder where the mods should be exported to
      */
     public static void exportSingleMod(AbstractBaseMod mod, String name, Path folder) throws ModProcessingException {
@@ -812,7 +839,7 @@ public class SharingManager {
                     Path singleMod = path.resolve(Utils.convertName(name));
                     Path assets = singleMod.resolve("assets");
                     Files.createDirectories(assets);
-                    map.putAll(((AbstractComplexMod)mod).exportImages(name, assets));
+                    map.putAll(((AbstractComplexMod) mod).exportImages(name, assets));
                     tomlWriter.write(map, singleMod.resolve(fileName).toFile());
                 } else {
                     tomlWriter.write(map, path.resolve(fileName).toFile());
@@ -829,8 +856,9 @@ public class SharingManager {
     /**
      * Exports all currently installed mods. It is recommended to start this function inside a thread.
      * The text area and the progress bar are used to display progress.
-     * @throws ModProcessingException If something went wrong while exporting mods
+     *
      * @param exportType Determines how and to where the mods should be exported
+     * @throws ModProcessingException If something went wrong while exporting mods
      */
     public static void exportAll(ExportType exportType) throws ModProcessingException {
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
@@ -884,7 +912,7 @@ public class SharingManager {
                     for (String string : mod.getCustomContentString()) {
                         Map<String, Object> singleModMap = mod.getExportMap(string);
                         if (mod instanceof AbstractComplexMod) {//This will add the image name(s) to the map if required and copy the image files
-                            singleModMap.putAll(((AbstractComplexMod)mod).exportImages(string, path.resolve("assets")));
+                            singleModMap.putAll(((AbstractComplexMod) mod).exportImages(string, path.resolve("assets")));
                         }
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
                         modMap.put(Utils.convertName(string), singleModMap);
@@ -928,13 +956,13 @@ public class SharingManager {
         JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport"));
         checkBox.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport.toolTip"));
         JComponent[] components = {label, checkBox};
-        if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+        if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             if (checkBox.isSelected()) {
                 exportAll(ExportType.ALL_SINGLE);
             } else {
                 exportAll(ExportType.ALL_BUNDLED);
             }
-            if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 try {
                     Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
                 } catch (IOException e) {

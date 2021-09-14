@@ -2,14 +2,14 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class ModManager{
+public class ModManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModManager.class);
     public static ArrayList<AbstractBaseMod> mods = new ArrayList<>();
     public static AntiCheatMod antiCheatMod = new AntiCheatMod();
@@ -30,7 +30,7 @@ public class ModManager{
      * Initializes all mods
      * Calls this method for every mod: initialize
      */
-    public static void initializeMods(){
+    public static void initializeMods() {
         genreMod.initializeMod();
         themeMod.initializeMod();
         publisherMod.initializeMod();
@@ -68,6 +68,7 @@ public class ModManager{
 
     /**
      * Shows the following message to the user:
+     *
      * @param e The ModProcessingException for wich the message should be displayed
      */
     public static void showException(ModProcessingException e) {

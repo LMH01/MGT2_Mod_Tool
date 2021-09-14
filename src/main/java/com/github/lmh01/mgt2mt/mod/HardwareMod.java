@@ -32,22 +32,22 @@ public class HardwareMod extends AbstractAdvancedMod {
             LOGGER.info("Adding new " + getType() + ": " + map.get("NAME EN"));
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
+            if (fileToEdit.exists()) {
                 fileToEdit.delete();
             }
             fileToEdit.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
+            if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
             int currentType = 0;
             boolean firstMap = true;
-            for(Map<String, String> fileContent : getFileContent()){
-                if(firstMap){
+            for (Map<String, String> fileContent : getFileContent()) {
+                if (firstMap) {
                     currentType = Integer.parseInt(fileContent.get("TYP"));
                     firstMap = false;
                 }
-                if(currentType != Integer.parseInt(fileContent.get("TYP"))){
+                if (currentType != Integer.parseInt(fileContent.get("TYP"))) {
                     currentType = Integer.parseInt(fileContent.get("TYP"));
                     bw.write("////////////////////////////////////////////////////////////////////");
                     bw.write("\r\n");
@@ -56,7 +56,7 @@ public class HardwareMod extends AbstractAdvancedMod {
                 printValues(fileContent, bw);
                 bw.write("\r\n");
             }
-            if(currentType != Integer.parseInt(map.get("TYP"))){
+            if (currentType != Integer.parseInt(map.get("TYP"))) {
                 bw.write("////////////////////////////////////////////////////////////////////");
                 bw.write("\r\n");
                 bw.write("\r\n");
@@ -78,23 +78,23 @@ public class HardwareMod extends AbstractAdvancedMod {
             LOGGER.info("Removing " + getType() + ": " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
+            if (fileToEdit.exists()) {
                 fileToEdit.delete();
             }
             fileToEdit.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
+            if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
             int currentType = 0;
             boolean firstMap = true;
-            for(Map<String, String> fileContent : getFileContent()){
+            for (Map<String, String> fileContent : getFileContent()) {
                 if (Integer.parseInt(fileContent.get("ID")) != modId) {
-                    if(firstMap){
+                    if (firstMap) {
                         currentType = Integer.parseInt(fileContent.get("TYP"));
                         firstMap = false;
                     }
-                    if(currentType != Integer.parseInt(fileContent.get("TYP"))){
+                    if (currentType != Integer.parseInt(fileContent.get("TYP"))) {
                         currentType = Integer.parseInt(fileContent.get("TYP"));
                         bw.write("////////////////////////////////////////////////////////////////////");
                         bw.write("\r\n");
@@ -114,22 +114,22 @@ public class HardwareMod extends AbstractAdvancedMod {
 
     @Override
     protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID",map, bw);
-        EditHelper.printLine("TYP",map, bw);
+        EditHelper.printLine("ID", map, bw);
+        EditHelper.printLine("TYP", map, bw);
         TranslationManager.printLanguages(bw, map);
         EditHelper.printLine("DATE", map, bw);
         EditHelper.printLine("RES POINTS", map, bw);
         EditHelper.printLine("PRICE", map, bw);
         EditHelper.printLine("DEV COSTS", map, bw);
         EditHelper.printLine("TECHLEVEL", map, bw);
-        if(map.containsKey("ONLY_HANDHELD")){
+        if (map.containsKey("ONLY_HANDHELD")) {
             EditHelper.printLine("ONLY_HANDHELD", map, bw);
         }
-        if(map.containsKey("ONLY_STATIONARY")){
+        if (map.containsKey("ONLY_STATIONARY")) {
             EditHelper.printLine("ONLY_STATIONARY", map, bw);
         }
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (entry.getKey().contains("NEED")){
+            if (entry.getKey().contains("NEED")) {
                 bw.write("[" + entry.getKey() + "]" + entry.getValue() + "\r\n");
             }
         }
@@ -192,34 +192,34 @@ public class HardwareMod extends AbstractAdvancedMod {
         JCheckBox checkBoxEnableExclusivity = new JCheckBox(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole"));
         checkBoxEnableExclusivity.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip"));
         checkBoxEnableExclusivity.addChangeListener(changeListener -> {
-            if(checkBoxEnableExclusivity.isSelected() != lastValue.get()){
+            if (checkBoxEnableExclusivity.isSelected() != lastValue.get()) {
                 comboBoxExclusivity.setEnabled(checkBoxEnableExclusivity.isSelected());
                 lastValue.set(checkBoxEnableExclusivity.isSelected());
             }
         });
 
         Object[] params = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, 6), WindowHelper.getSpinnerPanel(spinnerCost, 8), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, 7), WindowHelper.getSpinnerPanel(spinnerTechLevel, 4), checkBoxEnableExclusivity, comboBoxExclusivity};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                if(!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))) {
                     boolean modAlreadyExists = false;
-                    for(String string : getContentByAlphabet()){
-                        if(textFieldName.getText().equals(string)){
+                    for (String string : getContentByAlphabet()) {
+                        if (textFieldName.getText().equals(string)) {
                             modAlreadyExists = true;
                         }
                     }
-                    if(!modAlreadyExists){
+                    if (!modAlreadyExists) {
                         Map<String, String> hardwareFeatureMap = new HashMap<>();
                         hardwareFeatureMap.put("ID", Integer.toString(getFreeId()));
-                        if(!nameTranslationsAdded.get()){
+                        if (!nameTranslationsAdded.get()) {
                             hardwareFeatureMap.putAll(TranslationManager.getDefaultNameTranslations(textFieldName.getText()));
-                        }else{
+                        } else {
                             hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                             hardwareFeatureMap.put("NAME EN", textFieldName.getText());
                         }
-                        if(!descriptionTranslationsAdded.get()){
+                        if (!descriptionTranslationsAdded.get()) {
                             hardwareFeatureMap.putAll(TranslationManager.getDefaultDescriptionTranslations(textFieldDescription.getText()));
-                        }else{
+                        } else {
                             hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslation[0], "DESC"));
                             hardwareFeatureMap.put("DESC EN", textFieldDescription.getText());
                         }
@@ -242,27 +242,27 @@ public class HardwareMod extends AbstractAdvancedMod {
                                 hardwareFeatureMap.put("NEED-2", "56");
                             }
                         }
-                        if(checkBoxEnableExclusivity.isSelected()){
-                            if(Objects.requireNonNull(comboBoxExclusivity.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"))){
+                        if (checkBoxEnableExclusivity.isSelected()) {
+                            if (Objects.requireNonNull(comboBoxExclusivity.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"))) {
                                 hardwareFeatureMap.put("ONLY_STATIONARY", "");
-                            }else{
+                            } else {
                                 hardwareFeatureMap.put("ONLY_HANDHELD", "");
                             }
                         }
-                        if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(hardwareFeatureMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             createBackup();
                             this.addModToFile(hardwareFeatureMap);
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.hardware.upperCase") + " - " + hardwareFeatureMap.get("NAME EN"));
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.hardware.upperCase") + ": [" + hardwareFeatureMap.get("NAME EN") + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameDescriptionFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -273,20 +273,20 @@ public class HardwareMod extends AbstractAdvancedMod {
         Map<String, String> map = transformGenericToMap(t);
         boolean allowStationaryConsole = true;
         boolean allowPortableConsole = !map.containsKey("ONLY_STATIONARY");
-        if(map.containsKey("ONLY_HANDHELD")){
+        if (map.containsKey("ONLY_HANDHELD")) {
             allowStationaryConsole = false;
         }
         StringBuilder lastPart = new StringBuilder();
         lastPart.append(I18n.INSTANCE.get("commonText.stationaryConsole")).append(": ");
-        if(allowStationaryConsole){
+        if (allowStationaryConsole) {
             lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
+        } else {
             lastPart.append(I18n.INSTANCE.get("commonText.no"));
         }
         lastPart.append("<br>").append(I18n.INSTANCE.get("commonText.portableConsole")).append(": ");
-        if(allowPortableConsole){
+        if (allowPortableConsole) {
             lastPart.append(I18n.INSTANCE.get("commonText.yes"));
-        }else{
+        } else {
             lastPart.append(I18n.INSTANCE.get("commonText.no"));
         }
         return "<html>" +
@@ -354,53 +354,66 @@ public class HardwareMod extends AbstractAdvancedMod {
 
     /**
      * Converts the input id into the respective type name
+     *
      * @param typeName The feature type id
      * @return Returns the type name
      */
-    public int getHardwareTypeIdByName(String typeName){//TODO Rewrite to use enums
-        if(typeName.equals(I18n.INSTANCE.get("commonText.cpu"))){
+    public int getHardwareTypeIdByName(String typeName) {//TODO Rewrite to use enums
+        if (typeName.equals(I18n.INSTANCE.get("commonText.cpu"))) {
             return 0;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.gpu"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.gpu"))) {
             return 1;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.ram"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.ram"))) {
             return 2;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.storage"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.storage"))) {
             return 3;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.audio"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.audio"))) {
             return 4;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.cooling"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.cooling"))) {
             return 5;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.gameStorageDevice"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.gameStorageDevice"))) {
             return 6;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.controller"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.controller"))) {
             return 7;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.case"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.case"))) {
             return 8;
-        }else if(typeName.equals(I18n.INSTANCE.get("commonText.screen"))){
+        } else if (typeName.equals(I18n.INSTANCE.get("commonText.screen"))) {
             return 9;
-        }else{
+        } else {
             throw new IllegalArgumentException("The input for the function typeName is invalid! For valid inputs see function; Was: " + typeName);
         }
     }
 
     /**
      * Converts the input id into the respective type name
+     *
      * @param typeId The feature type id
      * @return Returns the type name
      */
-    public String getHardwareTypeNameById(int typeId){//TODO Rewrite to use enums
+    public String getHardwareTypeNameById(int typeId) {//TODO Rewrite to use enums
         switch (typeId) {
-            case 0: return I18n.INSTANCE.get("commonText.cpu");
-            case 1: return I18n.INSTANCE.get("commonText.gpu");
-            case 2: return I18n.INSTANCE.get("commonText.ram");
-            case 3: return I18n.INSTANCE.get("commonText.storage");
-            case 4: return I18n.INSTANCE.get("commonText.audio");
-            case 5: return I18n.INSTANCE.get("commonText.cooling");
-            case 6: return I18n.INSTANCE.get("commonText.gameStorageDevice");
-            case 7: return I18n.INSTANCE.get("commonText.controller");
-            case 8: return I18n.INSTANCE.get("commonText.case");
-            case 9: return I18n.INSTANCE.get("commonText.screen");
-            default: throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-9; Was: " + typeId);
+            case 0:
+                return I18n.INSTANCE.get("commonText.cpu");
+            case 1:
+                return I18n.INSTANCE.get("commonText.gpu");
+            case 2:
+                return I18n.INSTANCE.get("commonText.ram");
+            case 3:
+                return I18n.INSTANCE.get("commonText.storage");
+            case 4:
+                return I18n.INSTANCE.get("commonText.audio");
+            case 5:
+                return I18n.INSTANCE.get("commonText.cooling");
+            case 6:
+                return I18n.INSTANCE.get("commonText.gameStorageDevice");
+            case 7:
+                return I18n.INSTANCE.get("commonText.controller");
+            case 8:
+                return I18n.INSTANCE.get("commonText.case");
+            case 9:
+                return I18n.INSTANCE.get("commonText.screen");
+            default:
+                throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-9; Was: " + typeId);
         }
     }
 }

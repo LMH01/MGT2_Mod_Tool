@@ -3,8 +3,6 @@ package com.github.lmh01.mgt2mt.mod.managed;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,6 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -87,46 +84,47 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
 
     /**
      * Edits the mod file
+     *
      * @param addMod If true the mod will be added. If false the mod fill be removed
-     * @param mod If add mod is true: This string will be printed into the text file. If add mod is false: The string is the mod name which mod should be removed
+     * @param mod    If add mod is true: This string will be printed into the text file. If add mod is false: The string is the mod name which mod should be removed
      */
     private void editFile(boolean addMod, String mod) throws ModProcessingException {
         try {
             analyzeFile();
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if(fileToEdit.exists()){
+            if (fileToEdit.exists()) {
                 fileToEdit.delete();
             }
             fileToEdit.createNewFile();
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
-            if(charset.equals(StandardCharsets.UTF_8)){
+            if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
             boolean firstLine = true;
-            for(int i=1; i<=getFileContent().size(); i++){
-                if(addMod){
-                    if(!firstLine){
+            for (int i = 1; i <= getFileContent().size(); i++) {
+                if (addMod) {
+                    if (!firstLine) {
                         bw.write("\r\n");
-                    }else{
+                    } else {
                         firstLine = false;
                     }
                     bw.write(getFileContent().get(i));
-                }else{
-                    if(!getReplacedLine(getFileContent().get(i)).equals(mod)){
-                        if(!firstLine){
+                } else {
+                    if (!getReplacedLine(getFileContent().get(i)).equals(mod)) {
+                        if (!firstLine) {
                             bw.write("\r\n");
-                        }else{
+                        } else {
                             firstLine = false;
                         }
                         bw.write(getFileContent().get(i));
                     }
                 }
             }
-            if(addMod){
+            if (addMod) {
                 bw.write("\r\n");
                 bw.write(mod);
-            }else{
+            } else {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + mod);
             }
             bw.close();
@@ -149,7 +147,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     public final String[] getContentByAlphabet() throws ModProcessingException {
         try {
             ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();
-            for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
+            for (Map.Entry<Integer, String> entry : getFileContent().entrySet()) {
                 arrayListAvailableThingsSorted.add(getReplacedLine(entry.getValue()));
             }
             Collections.sort(arrayListAvailableThingsSorted);
@@ -184,9 +182,9 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
      * @param name The content name for which the position should be returned
      * @return The position in the fileContent list where the input id is stored in.
      */
-    public final int getPositionInFileContentListByName(String name) throws ModProcessingException{
-        for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
-            if(getReplacedLine(entry.getValue()).equals(name)){
+    public final int getPositionInFileContentListByName(String name) throws ModProcessingException {
+        for (Map.Entry<Integer, String> entry : getFileContent().entrySet()) {
+            if (getReplacedLine(entry.getValue()).equals(name)) {
                 return entry.getKey();
             }
         }
@@ -216,7 +214,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
 
     @Override
     public String[] getDefaultContent() {
-        if(defaultContent.length == 0){
+        if (defaultContent.length == 0) {
             try {
                 defaultContent = ReadDefaultContent.getDefault(getDefaultContentFileName(), this::getReplacedLine);
             } catch (IOException e) {
@@ -234,12 +232,13 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
 
     /**
      * Transforms the generic to an {@literal String}.
+     *
      * @throws ModProcessingException If transformation fails
      */
     @SuppressWarnings("unchecked")
-    public <T> String transformGenericToString(T t) throws ModProcessingException{
+    public <T> String transformGenericToString(T t) throws ModProcessingException {
         if (t instanceof String) {
-            return (String)t;
+            return (String) t;
         } else {
             throw new ModProcessingException("T is invalid: Should be String", true);
         }

@@ -10,6 +10,7 @@ import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -64,45 +65,45 @@ public class LicenceMod extends AbstractSimpleMod {
         panelType.add(comboBoxType);
 
         Object[] params = {labelAddLicence, textFieldName, panelType};
-        while(true){
-            if(JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-                if(!textFieldName.getText().isEmpty()){
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (!textFieldName.getText().isEmpty()) {
                     StringBuilder newLicence = new StringBuilder();
                     newLicence.append(textFieldName.getText()).append(" ");
                     String selectedType = Objects.requireNonNull(comboBoxType.getSelectedItem()).toString();
-                    if(selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"))){
+                    if (selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"))) {
                         newLicence.append("[MOVIE]");
-                    }else if(selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"))){
+                    } else if (selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"))) {
                         newLicence.append("[BOOK]");
-                    }else if(selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport"))){
+                    } else if (selectedType.equals(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport"))) {
                         newLicence.append("[SPORT]");
                     }
                     boolean licenceAlreadyExists = false;
-                    for(Map.Entry<Integer, String> entry : getFileContent().entrySet()){
-                        if(entry.getValue().equals(newLicence.toString())){
+                    for (Map.Entry<Integer, String> entry : getFileContent().entrySet()) {
+                        if (entry.getValue().equals(newLicence.toString())) {
                             LOGGER.info("Licence already exists");
                             licenceAlreadyExists = true;
                         }
                     }
-                    if(!licenceAlreadyExists){
+                    if (!licenceAlreadyExists) {
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.append(I18n.INSTANCE.get("mod.licence.addMod.confirm")).append(":").append("\r\n")
                                 .append(textFieldName.getText()).append("\r\n")
                                 .append("Type: ").append(comboBoxType.getSelectedItem());
-                        if(JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        if (JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             createBackup();
                             addModToFile(newLicence.toString());
                             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("commonText.licence.upperCase") + " - " + textFieldName.getText());
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.licence.upperCase") + ": [" + textFieldName.getText() + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -112,11 +113,11 @@ public class LicenceMod extends AbstractSimpleMod {
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
         String line = transformGenericToString(t);
         String type = I18n.INSTANCE.get("settings.notFound");
-        if(line.contains("[BOOK]")){
+        if (line.contains("[BOOK]")) {
             type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book");
-        }else if(line.contains("MOVIE")){
+        } else if (line.contains("MOVIE")) {
             type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie");
-        }else if(line.contains("SPORT")){
+        } else if (line.contains("SPORT")) {
             type = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport");
         }
         return I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + getReplacedLine(line) + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + type;
@@ -157,20 +158,20 @@ public class LicenceMod extends AbstractSimpleMod {
                     defaultGenre = true;
                     break;
                 }
-                if(s.equals("Chronicles of Nornio [5]")){
+                if (s.equals("Chronicles of Nornio [5]")) {
                     defaultGenre = true;
                 }
             }
             if (!defaultGenre) {
                 arrayListCustomLicences.add(s);
-                if(!disableTextAreaMessage){
+                if (!disableTextAreaMessage) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicenceFound") + " " + s);
                 }
             }
             currentProgressBarValue++;
             ProgressBarHelper.setValue(currentProgressBarValue);
         }
-        if(!disableTextAreaMessage){
+        if (!disableTextAreaMessage) {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.moddedLicencesComplete"));
         }
         ProgressBarHelper.resetProgressBar();

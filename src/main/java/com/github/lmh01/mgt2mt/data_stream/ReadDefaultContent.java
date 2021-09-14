@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
 import com.moandjiezana.toml.Toml;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class ReadDefaultContent {
 
     /**
      * Searches "appdata/roaming/LMH01/MGT2_Mod_Tool/default_content.toml" for the default content name. If found returns the content of that array.
+     *
      * @param defaultContentName The name that should be searched in the file.
      * @return Returns an array containing the content of the input file.
      */
@@ -25,17 +27,18 @@ public class ReadDefaultContent {
 
     /**
      * Searches "appdata/roaming/LMH01/MGT2_Mod_Tool/default_content.toml" for the default content name. If found returns the content of that array.
+     *
      * @param defaultContentName The name that should be searched in the file.
-     * @param replacer The function that is used to replace specific parts of the input.
+     * @param replacer           The function that is used to replace specific parts of the input.
      * @return Returns an array containing the content of the input file.
      */
     public static String[] getDefault(String defaultContentName, Replacer replacer) throws IOException {
         ArrayList<Object> arrayList = new ArrayList<>();
         List<Object> list = toml.getList(defaultContentName.replace(".txt", ""));
-        for(Object obj: list) {
-            if(replacer != null){
+        for (Object obj : list) {
+            if (replacer != null) {
                 arrayList.add(replacer.replace(obj.toString()));
-            }else{
+            } else {
                 arrayList.add(obj);
             }
         }

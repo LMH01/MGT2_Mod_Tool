@@ -2,18 +2,22 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -53,7 +57,7 @@ public class DefaultContentManager {
             break;
             case FILE_MISSING: {
                 LogFile.write("The default content file has not yet been generated or is corrupted. A new file will be generated.");
-                if(DEFAULT_CONTENT_FILE.exists()){
+                if (DEFAULT_CONTENT_FILE.exists()) {
                     DEFAULT_CONTENT_FILE.delete();
                 }
                 writeNewDefaultContentFile();
@@ -69,6 +73,7 @@ public class DefaultContentManager {
 
     /**
      * Analyzes if the default content files are up-to-date.
+     *
      * @return Returns {@link DefaultContentStatus#FILE_MISSING} if the default content file has not been created yet.
      * Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
      * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
@@ -76,7 +81,7 @@ public class DefaultContentManager {
      */
     private static DefaultContentStatus analyzeCurrentContentVersion() {
         try {
-            if(DEFAULT_CONTENT_FILE.exists()){
+            if (DEFAULT_CONTENT_FILE.exists()) {
                 Toml toml = new Toml().read(DefaultContentManager.DEFAULT_CONTENT_FILE);
                 String currentVersion = toml.getString("version");
                 DebugHelper.debug(LOGGER, "default content version: " + currentVersion);
@@ -99,11 +104,9 @@ public class DefaultContentManager {
     }
 
     /**
-     *
      * @param currentVersion The version of the default content file
-     * @param newestVersion The version that has been downloaded from the internet
-     * @return
-     * Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
+     * @param newestVersion  The version that has been downloaded from the internet
+     * @return Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
      * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
      */
     private static DefaultContentStatus isVersionNewer(String currentVersion, String newestVersion) {
@@ -139,7 +142,7 @@ public class DefaultContentManager {
             }
             tomlWriter.write(map, DEFAULT_CONTENT_FILE);
             LOGGER.info("A new default content toml file has been created successfully!");
-        } catch(IOException e) {
+        } catch (IOException e) {
             LOGGER.info("A problem occurred while writing a new default content toml file: " + e.getMessage());
             e.printStackTrace();
         }
@@ -185,7 +188,7 @@ public class DefaultContentManager {
     /**
      * @return Returns an array list containing the filename of the default content files that should be read
      */
-    private static ArrayList<String> getDefaultContentNames(){
+    private static ArrayList<String> getDefaultContentNames() {
         ArrayList<String> strings = new ArrayList<>();
         for (AbstractBaseMod mod : ModManager.mods) {
             strings.add(mod.getDefaultContentFileName());
