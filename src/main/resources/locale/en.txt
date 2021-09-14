@@ -514,9 +514,11 @@ dialog.backup.restoreBackup.initialBackup.notRestored|The initial backup was not
 dialog.backup.restoreBackup.latestBackup.message|<html>Are you sure that you want to restore the latest backup?<br>The savegame backups will not be restored.<br>A backup of the current files will be created.
 dialog.backup.restoreBackup.latestBackup.notRestored|The latest backup was not restored.
 dialog.backup.restoreBackup.initialBackup.notRestored.mods|There was a problem removing the mods:
-dialog.backup.createNewInitialBackup.message|<html>Do you want to create a new initial backup?<br><br>This action should always be carried out when the game has been updated.<br>This is because the game update could possibly be lost, when the old backup is restored.<br><br>Warning: Proceeding will remove all currently installed mods to ensure that the new backup files are created without any modifications.
+dialog.backup.createNewInitialBackup.message|<html>Do you want to create a new initial backup?<br><br>This action should always be carried out when the game has been updated.<br>This is because the game update could possibly be lost, when the old backup is restored.<br><br>Warning: Proceeding will remove all currently installed mods to ensure that the new backup files are created without any modifications.<br><br>A restore point can be set beforehand so that you do not lose the currently installed mods.
 dialog.backup.createNewInitialBackup.backupSuccessful|A new initial backup has been created successfully!
 dialog.backup.createNewInitialBackup.backupError|The following error occurred while the new initial backup was created,<br>the backup was not successful:
+dialog.backup.createNewInitialBackup.verifyGameFilesNow|<html>Please go into Steam and verify the game<br>files, to make sure that they are up to date.<br><br>Click on ok when the game files have been verified.
+dialog.backup.createNewInitialBackup.verifyGameFilesNow.title|Please verify the game files
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|A .zip archive has been found:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Would you like to extract it and search it for mods?

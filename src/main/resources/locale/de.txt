@@ -513,9 +513,11 @@ dialog.backup.restoreBackup.initialBackup.notRestored|Das Initiale-Backup wurde 
 dialog.backup.restoreBackup.latestBackup.message|<html>Bist du sicher, dass du das neueste Backup wiederherstellen möchtest?<br>Die Sicherungen der Spielstände werden nicht wiederhergestellt.<br>Ein Backup der aktuellen Dateien wird erstellt.
 dialog.backup.restoreBackup.latestBackup.notRestored|Das letzte Backup wurde nicht wiederhergestellt.
 dialog.backup.restoreBackup.initialBackup.notRestored.mods|Beim entfernen der Mods ist ein Problem aufgetreten:
-dialog.backup.createNewInitialBackup.message|<html>Soll ein neues Initial-Backup erstellt werden?<br><br>Diese Aktion sollte immer dann ausgeführt werden, wenn das Spiel aktualisiert wurde.<br>Dies lieg daran, dass das Spiel-Update ggf. verloren gehen könnte, wenn das alte Backup wiederhergestellt wird.<br><br>Achtung: Beim fortfahren werden alle aktuell installierten Mods entfernt, um sicher zu gehen,<br>dass die neuen Backup-Dateien ohne Modifizierungen erstellt werden.
+dialog.backup.createNewInitialBackup.message|<html>Soll ein neues Initial-Backup erstellt werden?<br><br>Diese Aktion sollte immer dann ausgeführt werden, wenn das Spiel aktualisiert wurde.<br>Dies lieg daran, dass das Spiel-Update ggf. verloren gehen könnte, wenn das alte Backup wiederhergestellt wird.<br><br>Achtung: Beim fortfahren werden alle aktuell installierten Mods entfernt, um sicher zu gehen,<br>dass die neuen Backup-Dateien ohne Modifizierungen erstellt werden.<br><br>Damit du die aktuell installierten Mods nicht verlierst, kannst du vorher einen Wiederherstellungspunkt setzen.
 dialog.backup.createNewInitialBackup.backupSuccessful|Das neue Initial-Backup wurde erfolgreich erstellt!
 dialog.backup.createNewInitialBackup.backupError|Der folgende Fehler ist beim erstellen des neuen Initial-Backups aufgetreten,<br>das Backup wurde nicht vollständig erstellt:
+dialog.backup.createNewInitialBackup.verifyGameFilesNow|<html>Gehe bitte nun in Steam und verifiziere die Spieldateien,<br>um sicher zu gehen, dass sie auf dem neuesten Stand sind.<br><br>Klicke auf ok, wenn die Spieldateien verifiziert wurden.
+dialog.backup.createNewInitialBackup.verifyGameFilesNow.title|Bitte verifiziere die Spieldateien
 
 dialog.sharingManager.importAll.zipArchiveFound.firstPart|Ein .zip Archiv wurde gefunden:
 dialog.sharingManager.importAll.zipArchiveFound.secondPart|Soll es extrahiert und nach Mods durchsucht werden?

@@ -354,7 +354,7 @@ public class Backup {
     }
 
     /**
-     * Moves the current initial backup files into a storage folder and creates a new initial backup. Displayes a message to the user beforehand
+     * Moves the current initial backup files into a storage folder and creates a new initial backup. Displays a message to the user beforehand
      */
     public static void createNewInitialBackup() {
         if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.message"), I18n.INSTANCE.get("frame.title.information"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -391,12 +391,14 @@ public class Backup {
                     ProgressBarHelper.increment();
                 }
                 ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.creatingInitialBackup"));
-                String returnValue = Backup.createInitialBackup(true);
-                ProgressBarHelper.increment();
-                if (returnValue.equals("")) {
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.verifyGameFilesNow"), I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.verifyGameFilesNow.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                    String returnValue = Backup.createInitialBackup(true);
+                    ProgressBarHelper.increment();
+                    if (returnValue.equals("")) {
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }
