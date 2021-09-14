@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -49,7 +50,7 @@ public class Backup {
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup, boolean initialBackup, boolean showTextAreaMessages) throws IOException {
-        LOGGER.info("Creating backup of file: " + fileToBackup.getPath());
+        DebugHelper.debug(LOGGER, "Creating backup of file: " + fileToBackup.getPath());
         String currentTimeAndDay = Utils.getCurrentDateTime();
         boolean initialBackupAlreadyExists = false;
         latestBackupFolderName = currentTimeAndDay;
@@ -62,9 +63,7 @@ public class Backup {
         if(initialBackup){
             fileLatestBackupOfInputFile = ModManagerPaths.BACKUP.getPath().resolve(fileToBackup.getName() + ".initialBackup").toFile();
             if(fileLatestBackupOfInputFile.exists()){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
-                }
+                DebugHelper.debug(LOGGER, "Initial backup of file already exists: " + fileLatestBackupOfInputFile.getPath());
                 initialBackupAlreadyExists = true;
             }
         }else{
@@ -75,10 +74,10 @@ public class Backup {
                 if(!backupStorageFolder.toFile().exists()){//Creates directory if backup directory for specified time does not exist
                     backupStorageFolder.toFile().mkdirs();
                 }
-                LOGGER.info(fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
+                DebugHelper.debug(LOGGER, fileToBackup.getName() +  " backup already exists. Moving old backup into storage folder");
                 File fileBackupSaved = backupStorageFolder.resolve(fileToBackup.getName()).toFile();
                 if(fileBackupSaved.exists()){//If the backup file already exists it will be deleted. (The backup file in the backup folder with timestamp) Maybe change the formatting of currentTimeAndDay to a format where seconds are also used to prevent this deletion.
-                    LOGGER.info("The file inside the storage folder does already exist. deleting...");
+                    DebugHelper.debug(LOGGER, "The file inside the storage folder does already exist. deleting...");
                     fileBackupSaved.delete();
                 }
                 fileLatestBackupOfInputFile.renameTo(fileBackupSaved);
@@ -137,18 +136,19 @@ public class Backup {
                 Files.copy(backupFile, Paths.get(file.getPath()), StandardCopyOption.REPLACE_EXISTING);ProgressBarHelper.increment();
             }
             restoreThemeFileBackups(initialBackup);
-            if(initialBackup){
+            if (initialBackup) {
                 ImageFileHandler.removePublisherIcons();
-                if(showMessages){
+                if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
-            }else{
-                if(showMessages){
+            } else {
+                if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+            LOGGER.info("Backup has been restored");
         } catch (IOException exception) {
             exception.printStackTrace();
             if(initialBackup){
@@ -320,17 +320,11 @@ public class Backup {
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(filesInFolder[i].getName().contains("savegame")){
                     File backupFile = new File(filesInFolder[i].getPath());
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("Savefile to backup found: " + backupFile);
-                    }
                     if(initialBackup){
                         createBackup(backupFile, true, false);
                     }else{
                         createBackup(backupFile, false, true);
                     }
-                }
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("File [" + i + "] in folder: " + filesInFolder[i].getName());
                 }
             }
         }
@@ -398,7 +392,7 @@ public class Backup {
     public static void restoreInitialBackup() {
         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
             try {
-                LOGGER.info("Creating backup beforehand.");
+                LOGGER.info("Creating backup before restoring initial backup");
                 Backup.createFullBackup();
                 StringBuilder stringBuilder = new StringBuilder();
                 Uninstaller.uninstallAllMods(stringBuilder);

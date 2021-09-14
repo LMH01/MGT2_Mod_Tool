@@ -8,10 +8,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,7 +99,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                     if(listAvailableGenres.getSelectedValuesList().size() > 1){
                                         npcEngine.put("GENRE", "MULTIPLE SELECTED");
                                         npcEngine.put("NAME EN", textFieldName.getText());
-                                        sendLogMessage("Multiple genres have been selected. Displaying multiple engines dialog.");
+                                        LOGGER.info("Multiple genres have been selected. Displaying multiple engines dialog.");
                                         if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.npcEngine.addMod.optionPaneMessage.multipleGenres") + "<br><br>" + getOptionPaneMessage(npcEngine) + "<br><br>" + I18n.INSTANCE.get("commonText.isThisCorrect"), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                             npcEngine.remove("NAME EN");
                                             npcEngine.remove("GENRE");
@@ -142,7 +139,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
                                             npcEngine.put("NAME EN", textFieldName.getText());
                                         }
                                         npcEngine.put("GENRE", Integer.toString(ModManager.genreMod.getContentIdByName(listAvailableGenres.getSelectedValue())));
-                                        sendLogMessage("Only a single genre has been selected. Displaying single engine dialog");
+                                        LOGGER.info("Only a single genre has been selected. Displaying single engine dialog");
                                         if(JOptionPane.showConfirmDialog(null, getOptionPaneMessage(npcEngine), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                                             createBackup();
                                             addModToFile(npcEngine);
@@ -187,11 +184,9 @@ public class NpcEngineMod extends AbstractAdvancedMod {
         Map<String, Object> map = new HashMap<>();
         Set<String> genres = new HashSet<>();
         genres.add(modMap.get("GENRE"));
-        LOGGER.info("genre: " + modMap.get("GENRE"));
         map.put(ModManager.genreMod.getExportType(), genres);
         Set<String> platforms = new HashSet<>();
         platforms.add(modMap.get("PLATFORM"));
-        LOGGER.info("platform: " + modMap.get("PLATFORM"));
         map.put(ModManager.platformMod.getExportType(), platforms);
         return map;
     }
@@ -220,11 +215,6 @@ public class NpcEngineMod extends AbstractAdvancedMod {
         message.append(I18n.INSTANCE.get("commonText.price")).append(": ").append(map.get("PRICE")).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.profitShare")).append(": ").append(map.get("SHARE")).append("<br>");
         return message.toString();
-    }
-
-    @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
     }
 
     @Override
@@ -263,7 +253,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
         try {
             int genreId = ModManager.genreMod.getContentIdByName(name);
             analyzeFile();
-            sendLogMessage("Replacing genre id in npc engine file: " + name);
+            DebugHelper.debug(LOGGER, "Replacing genre id in npc engine file: " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
             if(fileToEdit.exists()){

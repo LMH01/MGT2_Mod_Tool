@@ -72,8 +72,8 @@ public class ThreadHandler {
         thread.setName(threadName);
         thread.start();
         threadsRunning++;
-        LOGGER.info("Thread started: " + threadName);
-        LOGGER.info("Threads running: " + threadsRunning);
+        DebugHelper.debug(LOGGER, "Thread started: " + threadName);
+        DebugHelper.debug(LOGGER, "Threads running: " + threadsRunning);
         WindowMain.lockMenuItems(true);
         boolean startControlThread = true;
         for(String string : controlThreadBlacklist){
@@ -132,14 +132,14 @@ public class ThreadHandler {
      */
     public static void startControlThread(Thread threadToWaitFor){
         Thread thread = new Thread(() -> {
-            LOGGER.info("Started control thread for thread: " + threadToWaitFor.getName());
+            DebugHelper.debug(LOGGER, "Started control thread for thread: " + threadToWaitFor.getName());
             while(threadToWaitFor.isAlive()){
             }
             if(threadsRunning<2){
-                LOGGER.info("Thread died : " + threadToWaitFor.getName());
+                DebugHelper.debug(LOGGER, "Thread died : " + threadToWaitFor.getName());
                 WindowMain.checkActionAvailability();
             }else{
-                LOGGER.info("Thread died : " + threadToWaitFor.getName() + ". Another threat is still running, exit tasks are not executed");
+                DebugHelper.debug(LOGGER, "Thread died : " + threadToWaitFor.getName() + ". Another threat is still running, exit tasks are not executed");
             }
             threadsRunning--;
         });

@@ -6,6 +6,8 @@ import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
@@ -77,12 +79,12 @@ public class DefaultContentManager {
             if(DEFAULT_CONTENT_FILE.exists()){
                 Toml toml = new Toml().read(DefaultContentManager.DEFAULT_CONTENT_FILE);
                 String currentVersion = toml.getString("version");
-                LOGGER.info("default content version: " + currentVersion);
+                DebugHelper.debug(LOGGER, "default content version: " + currentVersion);
                 try {
                     URL url = new URL(NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL);
                     Scanner scanner = new Scanner(url.openStream());
                     final String NEWEST_VERSION = scanner.nextLine();
-                    LOGGER.info("Newest default content version: " + NEWEST_VERSION);
+                    DebugHelper.debug(LOGGER, "Newest default content version: " + NEWEST_VERSION);
                     return isVersionNewer(currentVersion, NEWEST_VERSION);
                 } catch (IOException e) {
                     return DefaultContentStatus.UPDATE_CHECK_FAILED;
@@ -148,7 +150,7 @@ public class DefaultContentManager {
      * Use {@link ReadDefaultContent#getDefault(String)} instead, if you would like to get the custom content that is saved in appdata.
      */
     private static String[] getDefaultFromSystemResource(String fileName) throws IOException {
-        LOGGER.info("file name: " + fileName);
+        DebugHelper.debug(LOGGER, "file name: " + fileName);
         ArrayList<String> arrayList = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/" + fileName)), StandardCharsets.UTF_8));
         String currentLine;

@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,9 +80,7 @@ public class I18n {
         Map<String, String> loc = locale.getOrDefault(currentLocale, locale.get(fallbackLocale));
         if (loc.containsKey(key)){
             String localisation = loc.get(key);
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Returned localisation: " + key + " | " + localisation);
-            }
+            DebugHelper.debug(LOGGER, "Returned localisation: " + key + " | " + localisation);
             return localisation;
         }
         String fallbackLocalisation = locale.get(fallbackLocale).getOrDefault(key, key);

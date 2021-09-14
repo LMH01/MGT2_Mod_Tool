@@ -2,6 +2,8 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
@@ -42,7 +44,7 @@ public class ModManager{
         copyProtectMod.initializeMod();
         hardwareMod.initializeMod();
         hardwareFeatureMod.initializeMod();
-        LOGGER.info("Total mods active: " + mods.size());
+        DebugHelper.debug(LOGGER, "Total mods active: " + mods.size());
     }
 
     /**

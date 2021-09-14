@@ -29,7 +29,7 @@ public class HardwareMod extends AbstractAdvancedMod {
         try {
             Map<String, String> map = transformGenericToMap(t);
             analyzeFile();
-            sendLogMessage("Adding new " + getType() + ": " + map.get("NAME EN"));
+            LOGGER.info("Adding new " + getType() + ": " + map.get("NAME EN"));
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
             if(fileToEdit.exists()){
@@ -75,7 +75,7 @@ public class HardwareMod extends AbstractAdvancedMod {
         try {
             analyzeFile();
             int modId = getContentIdByName(name);
-            sendLogMessage("Removing " + getType() + ": " + name);
+            LOGGER.info("Removing " + getType() + ": " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
             if(fileToEdit.exists()){
@@ -299,11 +299,6 @@ public class HardwareMod extends AbstractAdvancedMod {
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
                 I18n.INSTANCE.get("commonText.type") + ": " + getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
                 lastPart;
-    }
-
-    @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
     }
 
     @Override

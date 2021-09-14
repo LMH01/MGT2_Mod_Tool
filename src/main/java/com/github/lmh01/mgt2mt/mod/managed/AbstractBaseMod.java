@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -207,7 +208,7 @@ public abstract class AbstractBaseMod {
      * Initializes the mod: Adds it to the main window and all the actions
      */
     public final void initializeMod() {
-        LOGGER.info("Initializing mod: " + getType());
+        DebugHelper.debug(LOGGER, "Initializing mod: " + getType());
         ModManager.mods.add(getMod());
     }
 
@@ -376,12 +377,6 @@ public abstract class AbstractBaseMod {
      * @return The objects that should be displayed in the option pane
      */
     protected abstract <T> String getOptionPaneMessage(T t) throws ModProcessingException;
-
-    /**
-     * Writes a log message to the console using the (logger) of the abstract mod class
-     * @param log The message that should be written
-     */
-    protected abstract void sendLogMessage(String log);
 
     /**
      * @return The charset in which the {@link AbstractBaseMod#getGameFile()} is written.

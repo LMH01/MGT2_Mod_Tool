@@ -7,10 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -253,11 +250,6 @@ public class PublisherMod extends AbstractComplexMod {
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
-    }
-
-    @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
     }
@@ -313,10 +305,10 @@ public class PublisherMod extends AbstractComplexMod {
         int iconId = getPublisherIconIdByName(name);
         if (iconId > 164) {
             File publisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve(Paths.get(iconId + ".png")).toFile();
-            LOGGER.info("publisherIcon: " + publisherIcon.getPath());
+            DebugHelper.debug(LOGGER, "publisherIcon: " + publisherIcon.getPath());
             if (publisherIcon.exists()) {
                 publisherIcon.delete();
-                LOGGER.info("Image file for publisher " + name + " has been removed.");
+                DebugHelper.debug(LOGGER, "Image file for publisher " + name + " has been removed.");
             }
         }
     }
@@ -388,7 +380,7 @@ public class PublisherMod extends AbstractComplexMod {
         try {
             int genreId = ModManager.genreMod.getContentIdByName(name);
             analyzeFile();
-            sendLogMessage("Replacing genre id in publisher file: " + name);
+            DebugHelper.debug(LOGGER, "Replacing genre id in publisher file: " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
             if(fileToEdit.exists()){

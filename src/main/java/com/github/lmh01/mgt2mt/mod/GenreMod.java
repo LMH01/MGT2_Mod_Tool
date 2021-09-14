@@ -5,10 +5,7 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
-import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.windows.genre.*;
 import org.slf4j.Logger;
@@ -113,11 +110,6 @@ public class GenreMod extends AbstractComplexMod {
     @Override
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
         throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for genre mod", true);
-    }
-
-    @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
     }
 
     @Override
@@ -552,16 +544,10 @@ public class GenreMod extends AbstractComplexMod {
                 //Nothing happens
             }else if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals(">")){
                 int genreNumber = Integer.parseInt(currentNumber.toString());
-                if(Settings.enableDebugLogging){
-                    sendLogMessage("genreNumber: " + genreNumber);
-                }
                 genreNames.append("<").append(getContentNameById(genreNumber)).append(">");
                 currentNumber = new StringBuilder();
             }else{
                 currentNumber.append(genreNumbersRaw.charAt(charPosition));
-                if(Settings.enableDebugLogging){
-                    sendLogMessage("currentNumber: " + currentNumber);
-                }
             }
             charPosition++;
         }
@@ -575,7 +561,7 @@ public class GenreMod extends AbstractComplexMod {
      * @throws ModProcessingException If {@link GenreMod#getContentNameById(int)} fails.
      */
     public String getGenreNames(String genreNumbersRaw) throws ModProcessingException {
-        LOGGER.info("genreNumbersRaw: " + genreNumbersRaw);
+        DebugHelper.debug(LOGGER, "genreNumbersRaw: " + genreNumbersRaw);
         StringBuilder genreNames = new StringBuilder();
         int charPosition = 0;
         StringBuilder currentNumber = new StringBuilder();
@@ -584,16 +570,10 @@ public class GenreMod extends AbstractComplexMod {
                 //Nothing happens
             }else if(String.valueOf(genreNumbersRaw.charAt(charPosition)).equals(">")){
                 int genreNumber = Integer.parseInt(currentNumber.toString().replaceAll("[^0-9]", ""));
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("genreNumber: " + genreNumber);
-                }
                 genreNames.append("<").append(ModManager.genreMod.getContentNameById(genreNumber)).append(">");
                 currentNumber = new StringBuilder();
             }else{
                 currentNumber.append(genreNumbersRaw.charAt(charPosition));
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("currentNumber: " + currentNumber);
-                }
             }
             charPosition++;
         }
@@ -794,9 +774,6 @@ public class GenreMod extends AbstractComplexMod {
                 if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
                     //Nothing happens
                 }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("genreName: " + currentName);
-                    }
                     int genreId;
                     if (useImportHelperMap) {
                         genreId = ModManager.genreMod.getModIdByNameFromImportHelperMap(currentName.toString());
@@ -809,16 +786,10 @@ public class GenreMod extends AbstractComplexMod {
                     currentName = new StringBuilder();
                 }else{
                     currentName.append(genreNamesRaw.charAt(charPosition));
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("currentNumber: " + currentName);
-                    }
                 }
                 charPosition++;
             }
             String.valueOf(genreNamesRaw.charAt(1));
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Genre ids: " + genreIds);
-            }
             return genreIds.toString();
         }else{
             return "";

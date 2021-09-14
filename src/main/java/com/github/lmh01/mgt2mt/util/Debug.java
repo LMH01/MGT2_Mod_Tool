@@ -125,13 +125,13 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
     public static void test(){
         //writeHelpFile();
-        ThreadHandler.startModThread(() -> {
+        /*ThreadHandler.startModThread(() -> {
             //SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp"));
             Set<Path> set = new HashSet<>();
             //set.add(Paths.get("C:/Games"));
             set.add(Paths.get("D:/Temp/MGT2/toml/import"));
             SharingManager.importAll(ImportType.MANUEL, set);
-        }, "importAll");
+        }, "importAll");*/
 
 
         /*ThreadHandler.startModThread(() -> {

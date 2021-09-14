@@ -135,11 +135,6 @@ public class NpcGamesMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
-    }
-
-    @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_16LE;
     }
@@ -182,7 +177,6 @@ public class NpcGamesMod extends AbstractSimpleMod {
             File fileNpcGamesTemp = MGT2Paths.TEXT_DATA.getPath().resolve("NpcGames.txt.temp").toFile();
             fileNpcGamesTemp.createNewFile();
             Backup.createBackup(ModManager.npcGamesMod.getGameFile());
-            LOGGER.info("NpcGames.txt.temp has been created");
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.npcGamesMod.getGameFile()), StandardCharsets.UTF_16LE));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileNpcGamesTemp), StandardCharsets.UTF_16LE));
             String currentLine;

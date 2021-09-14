@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
@@ -33,11 +34,7 @@ public class ImageFileHandler {
      */
     public static void addGenreImageFiles(int genreID, String genreName, File genreImage, ArrayList<File> genreScreenshots) throws IOException {
         ImageFileHandler.copyScreenshotFiles(genreID, genreScreenshots);//This copies the custom screenshots into the correct folder
-        if(genreImage.getPath().equals(defaultGenreIcon)){//TODO Test if this still works
-            if(Settings.enableDebugLogging){
-                LOGGER.info("The default image file is in use. No need to copy a new one.");
-            }
-        }else{
+        if(!genreImage.getPath().equals(defaultGenreIcon)){
             //This copies the .png file to the Icon_Genres directory
             copyGenreImages(genreImage, MGT2Paths.GENRE_ICONS.getPath().resolve(GenreMod.getImageFileName(genreName) + ".png").toFile());
             //This creates the meta file in the Icon_Genres directory
@@ -53,15 +50,15 @@ public class ImageFileHandler {
      * @param outputFile This is the file that should be created
      */
     private static void copyGenreImages(File imageFile, File outputFile) throws IOException {
-        if (imageFile.getPath().equals(defaultGenreIcon)) {//TODO Test if this still works
-            LOGGER.info("The default image file is in use. No need to copy a new one.");
+        if (imageFile.getPath().equals(defaultGenreIcon)) {
+            DebugHelper.debug(LOGGER, "The default image file is in use. No need to copy a new one.");
         } else {
-            LOGGER.info("Copying " + imageFile + " to " + outputFile);
+            DebugHelper.debug(LOGGER, "Copying " + imageFile + " to " + outputFile);
             if(outputFile.exists()){
                 outputFile.delete();
             }
             Files.copy(Paths.get(imageFile.getPath()), Paths.get(outputFile.getPath()), StandardCopyOption.REPLACE_EXISTING);
-            LOGGER.info("File copied.");
+            DebugHelper.debug(LOGGER, "File copied.");
         }
     }
 
@@ -69,7 +66,7 @@ public class ImageFileHandler {
      * Moves all files that have been selected into the designated folder
      * @param genreID The genre id
      */
-    private static void copyScreenshotFiles(int genreID, ArrayList<File> screenshotFiles) throws IOException { //TODO Check if function is working
+    private static void copyScreenshotFiles(int genreID, ArrayList<File> screenshotFiles) throws IOException {
         boolean directoryCreated = false;
         File fileScreenshotForGenreID = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(genreID)).toFile();
         if(!directoryCreated){
@@ -125,22 +122,13 @@ public class ImageFileHandler {
         File imageFileMeta = MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + genreName.replace(" ", "") + ".png.meta").toFile();
         File screenshotFolder = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(Integer.toString(genreId)).toFile();
         File screenshotMetaFile = MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(genreId + ".meta").toFile();
-        if(Settings.enableDebugLogging){
-            LOGGER.info("Removing genreIcon image files...");
-            LOGGER.info("imageFile: " + imageFile.getPath());
-            LOGGER.info("imageFile name: " + imageFile.getName());
-            LOGGER.info("imageFileMeta: " + imageFileMeta.getPath());
-            LOGGER.info("imageFileMeta name: " + imageFileMeta.getName());
-            LOGGER.info("imageFileScreenshotFolder: " + screenshotFolder.getPath());
-            LOGGER.info("imageFileScreenshotMeta: " + screenshotMetaFile.getName());
-        }
         if(imageFile.exists()){
             imageFile.delete();
-            LOGGER.info("removed file: " + imageFile.getPath());
+            DebugHelper.debug(LOGGER, "removed file: " + imageFile.getPath());
         }
         if(imageFileMeta.exists()){
             imageFileMeta.delete();
-            LOGGER.info("removed file: " + imageFileMeta.getPath());
+            DebugHelper.debug(LOGGER, "removed file: " + imageFileMeta.getPath());
         }
         if(screenshotFolder.exists()){
             screenshotFolder.delete();
@@ -152,13 +140,13 @@ public class ImageFileHandler {
             } catch (IOException e) {
                 throw new ModProcessingException("Something went wrong while deleting the screenshot files for genre " + genreName + ": " + e.getMessage());
             }
-            LOGGER.info("removed file: " + screenshotFolder.getPath());
+            DebugHelper.debug(LOGGER, "removed file: " + screenshotFolder.getPath());
         }
         if(screenshotMetaFile.exists()){
             screenshotMetaFile.delete();
-            LOGGER.info("removed file: " + screenshotMetaFile.getPath());
+            DebugHelper.debug(LOGGER, "removed file: " + screenshotMetaFile.getPath());
         }
-        LOGGER.info("All existing image files for genre [" + genreName + "] have been removed successfuly.");
+        DebugHelper.debug(LOGGER, "All existing image files for genre [" + genreName + "] have been removed successfuly.");
     }
 
     /**
@@ -171,7 +159,7 @@ public class ImageFileHandler {
         if(pngMetaFile.toFile().exists()){
             pngMetaFile.toFile().delete();
         }
-        LOGGER.info("Creating png.meta file: " + pngMetaFile);
+        DebugHelper.debug(LOGGER, "Creating png.meta file: " + pngMetaFile);
         Files.createFile(pngMetaFile);
         PrintWriter pw = new PrintWriter(pngMetaFile.toFile());
         if(type == 1){
@@ -389,6 +377,6 @@ public class ImageFileHandler {
                     "  assetBundleVariant: \n");
         }
         pw.close();
-        LOGGER.info("png.meta file has been created.");
+        DebugHelper.debug(LOGGER, "png.meta file has been created.");
     }
 }

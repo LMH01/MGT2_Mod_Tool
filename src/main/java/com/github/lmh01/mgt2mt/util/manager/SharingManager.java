@@ -417,9 +417,9 @@ public class SharingManager {
         int modsIncompatible = 0;
         for (Map<String, Object> map : singleMods) {
             if (map.containsKey("\"NAME EN\"")) {
-                LOGGER.info("single mod instance found!: " + map.get("\"NAME EN\""));
+                DebugHelper.debug(LOGGER, "single mod instance found!: " + map.get("\"NAME EN\""));
             } else {
-                LOGGER.info("single mod instance found!: " + map.get("line"));
+                DebugHelper.debug(LOGGER, "single mod instance found!: " + map.get("line"));
             }
             if (isModToolVersionSupported(map)) {
                 if (map.get("base_mod_type").equals("simple") || map.get("base_mod_type").equals("advanced")) {
@@ -445,7 +445,7 @@ public class SharingManager {
             ProgressBarHelper.increment();
         }
         for (Map<String, Object> map : bundledMods) {
-            LOGGER.info("bundled mod instance found!");
+            DebugHelper.debug(LOGGER, "bundled mod instance found!");
             try {
                 Map<String, Object> simple = (Map<String, Object>) map.get("simple_mods");
                 Map<String, Object> advanced = (Map<String, Object>) map.get("advanced_mods");
@@ -454,12 +454,12 @@ public class SharingManager {
                     try {
                         modMap.putAll((Map<String, Object>) simple.get(mod.getExportType()));
                     } catch (NullPointerException e) {
-                        LOGGER.info("simpleModMap is null; Export type: " + mod.getExportType());
+                        DebugHelper.debug(LOGGER, "simpleModMap is null; Export type: " + mod.getExportType());
                     }
                     try {
                         modMap.putAll((Map<String, Object>) advanced.get(mod.getExportType()));
                     } catch (NullPointerException e) {
-                        LOGGER.info("advancedModMap is null; Export type: " + mod.getExportType());
+                        DebugHelper.debug(LOGGER, "advancedModMap is null; Export type: " + mod.getExportType());
                     }
                     ProgressBarHelper.increaseMaxValue(modMap.entrySet().size());
                     for (Map.Entry<String, Object> entry : modMap.entrySet()) {

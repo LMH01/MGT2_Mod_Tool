@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -136,9 +137,6 @@ public class DataStreamHelper {
                 if(filesInFolder[i].getName().equals(content)){
                     return true;
                 }
-                if(Settings.enableDebugLogging){
-                    LOGGER.info(filesInFolder[i].getName());
-                }
             }
         }else{
             LOGGER.info("File \"" + content + "\"does not exist in folder \"" + path + "\"");
@@ -197,9 +195,6 @@ public class DataStreamHelper {
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(!filesInFolder[i].getName().contains(blackList) || blackList.equals("EMPTY")){
                     arrayListFiles.add(filesInFolder[i]);
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info(filesInFolder[i].getName());
-                    }
                 }
             }
         }
@@ -219,9 +214,6 @@ public class DataStreamHelper {
             for (int i = 0; i < Objects.requireNonNull(filesInFolder).length; i++) {
                 if(filesInFolder[i].getName().contains(whiteList)){
                     arrayListFiles.add(filesInFolder[i]);
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info(filesInFolder[i].getName());
-                    }
                 }
             }
         }
@@ -248,9 +240,7 @@ public class DataStreamHelper {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + (int)timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
             File newFile = newFile(destination.toFile(), zipEntry);
-            if(Settings.enableDebugLogging){
-                LOGGER.info("Unzipped file: " + newFile.getPath());
-            }
+            DebugHelper.debug(LOGGER, "Unzipped file: " + newFile.getPath());
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.unzippedFile") + " " + newFile.getPath());
             if (zipEntry.isDirectory()) {
                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
@@ -327,9 +317,6 @@ public class DataStreamHelper {
                     LOGGER.info(fileName + ": " + string);
                     arrayList.add(new File(string));
                 }
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("current file: " + string);
-                }
             });
         }
         return arrayList;
@@ -386,7 +373,7 @@ public class DataStreamHelper {
         Files.walkFileTree(directoryToBeDeleted, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                LOGGER.info("Deleting file: " + file);
+                DebugHelper.debug(LOGGER, "Deleting file: " + file);
                 Files.delete(file);
                 if (useProgressBar) {
                     ProgressBarHelper.increment();

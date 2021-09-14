@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
+import com.github.lmh01.mgt2mt.util.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +31,7 @@ public class TimeHelper {//TODO This time helper should also be used when mods a
      */
     public void measureTime(){
         Thread thread = new Thread(() -> {
-            LOGGER.info("Starting to measure time in " + timeUnit);
+            DebugHelper.debug(LOGGER, "Starting to measure time in " + timeUnit);
             measureTime = true;
             while(measureTime){
                 try {

@@ -7,6 +7,8 @@ import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.*;
@@ -23,7 +25,9 @@ import java.util.*;
  * If image files should be processed create a new mod using {@link AbstractComplexMod}
  */
 public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See what functions should be final (Also do that for each of the oder abstract mod classes)
-
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
+    
     List<Map<String, String>> fileContent;
 
     @SuppressWarnings("unchecked")
@@ -33,7 +37,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             //This map contains the contents of the mod that should be added
             Map<String, String> map = (Map<String, String>) t;
             analyzeFile();
-            sendLogMessage("Adding new " + getType() + ": " + map.get("NAME EN"));
+            LOGGER.info("Adding new " + getType() + ": " + map.get("NAME EN"));
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
             if(fileToEdit.exists()){
@@ -64,7 +68,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
         try {
             analyzeFile();
             int modId = getContentIdByName(name);
-            sendLogMessage("Removing " + getType() + ": " + name);
+            LOGGER.info("Removing " + getType() + ": " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
             if(fileToEdit.exists()){
@@ -157,8 +161,6 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
         analyzeFile();
         analyzeDependencies();
         Map<String, String> importMap = getChangedImportMap(Utils.transformObjectMapToStringMap(map));
-        sendLogMessage("mod id in map: " + map.get("ID"));
-        sendLogMessage("mod id returned from helper map: " + map.get("mod_name") + " - " + getModIdByNameFromImportHelperMap(map.get("mod_name").toString()));
         importMap.put("ID", Integer.toString(getModIdByNameFromImportHelperMap(map.get("mod_name").toString())));
         addModToFile(importMap);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));

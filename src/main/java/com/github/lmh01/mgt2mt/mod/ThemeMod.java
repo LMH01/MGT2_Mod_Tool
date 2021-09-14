@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -184,11 +185,6 @@ public class ThemeMod extends AbstractSimpleMod {
     @Override
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {//TODO write this function
         throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for theme mod", true);
-    }
-
-    @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
     }
 
     @Override
@@ -413,9 +409,6 @@ public class ThemeMod extends AbstractSimpleMod {
                             genreIdsToPrint.append(" ");
                             bw.write(line);
                         } else {
-                            if(Settings.enableDebugLogging){
-                                LOGGER.info("current string: " + string);
-                            }
                             bw.write(map.get("NAME " + string));
                         }
                     }
@@ -462,9 +455,6 @@ public class ThemeMod extends AbstractSimpleMod {
             for(Integer i : map.keySet()){
                 if(addGenreID){
                     if(themeIds.contains(i)){
-                        if (Settings.enableDebugLogging) {
-                            LOGGER.info(i + " - Y: " + map.get(i));
-                        }
                         if(!firstLine){
                             bw.write("\r\n");
                         }
@@ -477,9 +467,6 @@ public class ThemeMod extends AbstractSimpleMod {
                         if (!firstLine) {
                             bw.write("\r\n");
                         }
-                        if (Settings.enableDebugLogging) {
-                            LOGGER.info(i + " - N: " + mapGer.get(i));
-                        }
                         bw.write(mapGer.get(i));
                     }
                 }else{
@@ -490,9 +477,6 @@ public class ThemeMod extends AbstractSimpleMod {
                         bw.write(mapGer.get(i).replace("<" + genreID + ">", ""));
                     }else{
                         if(themeIds.contains(i)){
-                            if (Settings.enableDebugLogging) {
-                                LOGGER.info(i + " - Y: " + map.get(i));
-                            }
                             if(!firstLine){
                                 bw.write("\r\n");
                             }
@@ -500,9 +484,6 @@ public class ThemeMod extends AbstractSimpleMod {
                         }else{
                             if (!firstLine) {
                                 bw.write("\r\n");
-                            }
-                            if (Settings.enableDebugLogging) {
-                                LOGGER.info(i + " - N: " + mapGer.get(i));
                             }
                             bw.write(mapGer.get(i));
                         }
@@ -525,7 +506,7 @@ public class ThemeMod extends AbstractSimpleMod {
             Map<String, String> map = new HashMap<>();
             int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn);
             for(String string : TranslationManager.TRANSLATION_KEYS){
-                LOGGER.info("Current Translation Key: " + string);
+                DebugHelper.debug(LOGGER, "Current Translation Key: " + string);
                 BufferedReader reader;
                 if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
                     reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
@@ -541,9 +522,6 @@ public class ThemeMod extends AbstractSimpleMod {
                     if(firstLine){
                         currentLine = Utils.removeUTF8BOM(currentLine);
                         firstLine = false;
-                    }
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("Reading file: " + string);
                     }
                     if(currentLineNumber == positionOfThemeInFiles){
                         if(string.equals("GE")){
@@ -565,14 +543,8 @@ public class ThemeMod extends AbstractSimpleMod {
                                 map.put("VIOLENCE LEVEL", "0");
                             }
                             map.put("GENRE COMB", replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim());
-                            if(Settings.enableDebugLogging){
-                                LOGGER.info("GENRE COMB: [" + replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim() + "]");
-                            }
                         }else{
                             map.put("NAME " + string, currentLine);
-                            if(Settings.enableDebugLogging){
-                                LOGGER.info("NAME " + string + " | " + currentLine);
-                            }
                         }
                     }
                     currentLineNumber++;
@@ -640,7 +612,7 @@ public class ThemeMod extends AbstractSimpleMod {
             Map<String, String> map = new HashMap<>();
             int positionOfThemeInFiles = getPositionOfThemeInFile(name);
             for(String string : TranslationManager.TRANSLATION_KEYS){
-                LOGGER.info("Current Translation Key: " + string);
+                DebugHelper.debug(LOGGER, "Current Translation Key: " + string);
                 BufferedReader reader;
                 if(Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)){
                     reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
@@ -656,9 +628,6 @@ public class ThemeMod extends AbstractSimpleMod {
                     if(firstLine){
                         currentLine = Utils.removeUTF8BOM(currentLine);
                         firstLine = false;
-                    }
-                    if(Settings.enableDebugLogging){
-                        LOGGER.info("Reading file: " + string);
                     }
                     if(currentLineNumber == positionOfThemeInFiles){
                         if(string.equals("GE")){

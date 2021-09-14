@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class MadGamesTycoon2ModTool {
     public static final OSType OS_TYPE;
-    private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);//TODO add output that writes the os version in console (when i do the linux port)
+    private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
     public static final String VERSION = "2.3.0-dev";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
     public static final String CURRENT_RELEASE_VERSION = "2.2.1";//When this version number has been detected as the newest release version the update available message is held back
 

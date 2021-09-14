@@ -123,11 +123,6 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
-    }
-
-    @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
     }

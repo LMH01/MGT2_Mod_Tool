@@ -87,7 +87,9 @@ public class LogFile {
             String logOut = Utils.getCurrentDateTime() + ": " + string;
             bw.write(logOut);
             bw.write(System.getProperty("line.separator"));
-            LOGGER.info("LogOut: " + logOut);
+            if (Settings.enableDebugLogging || string.contains("Exception")) {
+                LOGGER.info("LogOut: " + logOut);
+            }
         } catch (IOException ignored) {
 
         }

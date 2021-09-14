@@ -181,11 +181,6 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
-    }
-
-    @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
     }

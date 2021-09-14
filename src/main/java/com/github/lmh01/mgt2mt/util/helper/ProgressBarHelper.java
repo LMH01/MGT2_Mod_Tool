@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -166,7 +167,7 @@ public class ProgressBarHelper {//TODO Rewrite in a way like TimeHelper (so that
      */
     public static void startProgressBarTimeThread(){
         Thread thread = new Thread(() -> {
-            LOGGER.info("Starting to measure time");
+            DebugHelper.debug(LOGGER, "Starting to measure time");
             timeEnabled = true;
             progressBarRunning = true;
             secondsElapsed = 0;
@@ -182,7 +183,7 @@ public class ProgressBarHelper {//TODO Rewrite in a way like TimeHelper (so that
                     break;
                 }
             }
-            LOGGER.info("Stopped to measure time");
+            DebugHelper.debug(LOGGER, "Stopped to measure time");
         });
         if(!progressBarRunning){
             thread.setName("ProgressBarTimeMeasurer");

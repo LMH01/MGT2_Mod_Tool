@@ -320,11 +320,6 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected void sendLogMessage(String log) {
-        LOGGER.info(log);
-    }
-
-    @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
     }
@@ -433,7 +428,6 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     private void editGenreIdAllocation(Set<Integer> gameplayFeaturesIdsToEdit, int genreId, boolean addGenreId, boolean goodFeature) throws ModProcessingException {
         analyzeFile();
         try {
-            LOGGER.info("Editing GameplayFeatures.txt file");
             File gameplayFeaturesFile = getGameFile();
             if(gameplayFeaturesFile.exists()){
                 gameplayFeaturesFile.delete();
@@ -513,16 +507,10 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
             if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals("<")){
                 //Nothing happens
             }else if(String.valueOf(genreNamesRaw.charAt(charPosition)).equals(">")){
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("genreNumber: " + currentString);
-                }
                 genreNames.append("<").append(ModManager.genreMod.getModIdByNameFromImportHelperMap(currentString.toString()));genreNames.append(">");
                 currentString = new StringBuilder();
             }else{
                 currentString.append(genreNamesRaw.charAt(charPosition));
-                if(Settings.enableDebugLogging){
-                    LOGGER.info("currentNumber: " + currentString);
-                }
             }
             charPosition++;
         }

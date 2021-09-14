@@ -32,7 +32,6 @@ public class ImportSettings{//TODO Rewrite to use .toml file
             Settings.updateBranch = toml.getString("updateBranch");
             Settings.saveLogs = toml.getBoolean("saveLogs");
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
-            LOGGER.info("Settings have been imported.");
             return true;
         } catch (IllegalStateException | NullPointerException e) {
             LOGGER.info("Unable to import settings!");
