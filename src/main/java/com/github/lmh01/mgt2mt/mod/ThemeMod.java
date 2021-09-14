@@ -144,7 +144,11 @@ public class ThemeMod extends AbstractSimpleMod {
                                         ageNumber = 1;
                                     }
                                     StringBuilder line = new StringBuilder();
-                                    line.append(textFieldThemeName.getText()).append(" ");
+                                    if (themeTranslations.containsKey("NAME GE")) {
+                                        line.append(themeTranslations.get("NAME GE")).append(" ");
+                                    } else {
+                                        line.append(textFieldThemeName.getText()).append(" ");
+                                    }
                                     for (Integer integer : arrayListCompatibleGenreIds) {
                                         line.append("<").append(integer).append(">");
                                     }
@@ -227,7 +231,7 @@ public class ThemeMod extends AbstractSimpleMod {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getExportMap(String name) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        String line = getModifiedExportLine(getLine(name));
+        String line = getModifiedExportLine(getLine(name)).replace(name, getThemeTranslations(name).get("NAME GE"));
         Map<String, Object> dependencyMap = getDependencyMap(line);
         for (AbstractBaseMod mod : ModManager.mods) {
             try {
@@ -497,66 +501,6 @@ public class ThemeMod extends AbstractSimpleMod {
             bw.close();
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while analyzing the german theme file: " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * @param themeNameEn Theme name for which the map should be returned
-     * @return A single theme map. This map is used to export the theme.
-     */
-    public Map<String, String> getSingleThemeByNameMap(String themeNameEn) throws ModProcessingException {
-        try {
-            Map<String, String> map = new HashMap<>();
-            int positionOfThemeInFiles = getPositionOfThemeInFile(themeNameEn);
-            for (String string : TranslationManager.TRANSLATION_KEYS) {
-                DebugHelper.debug(LOGGER, "Current Translation Key: " + string);
-                BufferedReader reader;
-                if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)) {
-                    reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_8));
-                } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
-                    reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
-                } else {
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
-                }
-                String currentLine;
-                int currentLineNumber = 1;
-                boolean firstLine = true;
-                while ((currentLine = reader.readLine()) != null) {
-                    if (firstLine) {
-                        currentLine = Utils.removeUTF8BOM(currentLine);
-                        firstLine = false;
-                    }
-                    if (currentLineNumber == positionOfThemeInFiles) {
-                        if (string.equals("GE")) {
-                            String replaceViolenceLevel = currentLine.replace("<M1>", "").replace("<M2>", "").replace("<M3>", "").replace("<M4>", "").replace("<M5>", "");
-                            String nameGe = replaceViolenceLevel.replaceAll("[0-9]", "").replaceAll("<", "").replaceAll(">", "");
-                            nameGe = nameGe.trim();
-                            map.put("NAME " + string, nameGe);
-                            if (currentLine.contains("M1")) {
-                                map.put("VIOLENCE LEVEL", "1");
-                            } else if (currentLine.contains("M2")) {
-                                map.put("VIOLENCE LEVEL", "2");
-                            } else if (currentLine.contains("M3")) {
-                                map.put("VIOLENCE LEVEL", "3");
-                            } else if (currentLine.contains("M4")) {
-                                map.put("VIOLENCE LEVEL", "4");
-                            } else if (currentLine.contains("M5")) {
-                                map.put("VIOLENCE LEVEL", "5");
-                            } else {
-                                map.put("VIOLENCE LEVEL", "0");
-                            }
-                            map.put("GENRE COMB", replaceViolenceLevel.replaceAll("[a-z,A-Z]", "").trim());
-                        } else {
-                            map.put("NAME " + string, currentLine);
-                        }
-                    }
-                    currentLineNumber++;
-                }
-                reader.close();
-            }
-            return map;
-        } catch (IOException e) {
-            throw new ModProcessingException("Unable to return single theme map", e);
         }
     }
 
