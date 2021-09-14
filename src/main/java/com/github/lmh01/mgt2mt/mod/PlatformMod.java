@@ -1,10 +1,7 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractComplexMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -359,20 +356,10 @@ public class PlatformMod extends AbstractComplexMod {
                                 platformMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
                                 platformMap.put("UNITS", spinnerUnits.getValue().toString());
                                 if (pictureMap.isEmpty()) {
-                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))) {
-                                        platformMap.put("PIC-1", "AmstradCPC.png");
-                                    }
-                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))) {
-                                        platformMap.put("PIC-1", "N64.png");
-                                    }
-                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))) {
-                                        platformMap.put("PIC-1", "Nintendo3DS.png");
-                                    }
-                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))) {
-                                        platformMap.put("PIC-1", "iPhone4.png");
-                                    }
-                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))) {
-                                        platformMap.put("PIC-1", "ASB6.png");
+                                    for (PlatformType platformType : PlatformType.values()) {
+                                        if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(platformType.getTypeName())) {
+                                            platformMap.put("PIC-1", platformType.getDefaultImage());
+                                        }
                                     }
                                 } else {
                                     ArrayList<Integer> pictureYears = new ArrayList<>();
@@ -553,11 +540,19 @@ public class PlatformMod extends AbstractComplexMod {
     public void removeImageFiles(String name) throws ModProcessingException {
         for (Map.Entry<String, String> entry : getSingleContentMapByName(name).entrySet()) {
             if (entry.getKey().contains("PIC") && !entry.getKey().contains("YEAR")) {
-                Path path = MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue());
-                try {
-                    Files.delete(path);
-                } catch (IOException e) {
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("frame.title.warning") + ": " + I18n.INSTANCE.get("mod.platform.removeImageFiles.failed"));
+                boolean deleteImage = true;
+                for (PlatformType platformType : PlatformType.values()) {
+                    if (entry.getValue().equals(platformType.getDefaultImage())) {
+                        deleteImage = false;
+                    }
+                }
+                if (deleteImage) {
+                    Path path = MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue());
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("frame.title.warning") + ": " + I18n.INSTANCE.get("mod.platform.removeImageFiles.failed"));
+                    }
                 }
             }
         }

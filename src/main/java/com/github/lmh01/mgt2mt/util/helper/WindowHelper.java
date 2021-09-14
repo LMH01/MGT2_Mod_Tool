@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.PlatformType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -296,7 +297,7 @@ public class WindowHelper {
                 break;
             case 2:
                 comboBox.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"), I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard")}));
+                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{PlatformType.COMPUTER.getTypeName(), PlatformType.CONSOLE.getTypeName(), PlatformType.HANDHELD.getTypeName(), PlatformType.CELL_PHONE.getTypeName(), PlatformType.ARCADE_SYSTEM_BOARD.getTypeName()}));
                 comboBox.setSelectedItem(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"));
                 break;
             case 3:
