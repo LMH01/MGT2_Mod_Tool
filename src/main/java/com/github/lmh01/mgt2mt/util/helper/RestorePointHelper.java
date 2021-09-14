@@ -35,6 +35,7 @@ public class RestorePointHelper {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
                         SharingManager.exportAll(ExportType.RESTORE_POINT);
                         TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
                     } catch (IOException e) {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.errorWhileMoving"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.restorePoint.moveRestorePointFailed"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
@@ -47,6 +48,7 @@ public class RestorePointHelper {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
                 SharingManager.exportAll(ExportType.RESTORE_POINT);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
             }
         }
     }
