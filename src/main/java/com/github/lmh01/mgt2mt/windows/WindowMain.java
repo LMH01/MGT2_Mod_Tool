@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.data_stream.*;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
+import com.github.lmh01.mgt2mt.util.handler.NewModsHandler;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.ImportType;
@@ -92,14 +93,14 @@ public class WindowMain {
         m213GetMoreMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.getMoreMods.toolTip"));
         m213GetMoreMods.addActionListener(actionEvent -> openMoreModsPage());
         M_211_IMPORT_FROM_FILE_SYSTEM.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem.toolTip"));
-        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {SharingManager.importAll(ImportType.MANUEL);}, "runnableImportAll"));
+        M_211_IMPORT_FROM_FILE_SYSTEM.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {SharingManager.importAll(ImportType.MANUEL);}, "ImportAll"));
         M_212_IMPORT_FROM_URL.setToolTipText(I18n.INSTANCE.get("window.main.mods.import.importFromURL.toolTip"));
-        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startModThread(ImportFromURLHelper::importFromURL, "runnableImportFromURL"));
+        M_212_IMPORT_FROM_URL.addActionListener(actionEvent -> ThreadHandler.startModThread(ImportFromURLHelper::importFromURL, "ImportFromURL"));
         M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.mods.npcGamesList.toolTip"));
-        M_22_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startModThread(NPCGameListHandler::modifyNPCGameList, "runnableNPCGamesList"));
-        M_23_ADD_COMPANY_ICON.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableAddCompanyIcon, "runnableAddCompanyIcon"));
+        M_22_NPC_GAMES_LIST.addActionListener(actionEvent -> ThreadHandler.startModThread(NPCGameListHandler::modifyNPCGameList, "NPCGamesList"));
+        M_23_ADD_COMPANY_ICON.addActionListener(actionEvent -> ThreadHandler.startModThread(NewModsHandler::addCompanyIcon, "AddCompanyIcon"));
         m210ShowActiveMods.setToolTipText(I18n.INSTANCE.get("window.main.mods.showActiveMods.toolTip"));
-        m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startModThread(ActiveMods::showActiveMods, "runnableShowActiveMods"));
+        m210ShowActiveMods.addActionListener(actionEvent -> ThreadHandler.startModThread(ActiveMods::showActiveMods, "ShowActiveMods"));
         MB.add(M_2_MODS);
         M_2_MODS.add(M_21_IMPORT);
         initializeModMenus();
@@ -112,7 +113,7 @@ public class WindowMain {
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> Utils.open(ModManagerPaths.EXPORT.getPath()));
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
-        m36.addActionListener(actionEvent -> ThreadHandler.startModThread(Uninstaller::deleteAllExports, "runnableDeleteExports"));
+        m36.addActionListener(actionEvent -> ThreadHandler.startModThread(Uninstaller::deleteAllExports, "DeleteExports"));
         M_3_SHARE.add(M_31_EXPORT);
         M_3_SHARE.add(m35);
         M_3_SHARE.add(m36);
@@ -121,23 +122,23 @@ public class WindowMain {
         JMenu m43RestorePoint = new JMenu(I18n.INSTANCE.get("window.main.backup.modRestorePoint"));
         JMenuItem m411CreateNewInitialBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createNewInitialBackup"));
         m411CreateNewInitialBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createNewInitialBackup.toolTip"));
-        m411CreateNewInitialBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableCreateNewInitialBackup, "CreateNewInitialBackup"));
+        m411CreateNewInitialBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(Backup::createNewInitialBackup, "CreateNewInitialBackup"));
         JMenuItem m412CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
         m412CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
-        m412CreateFullBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableCreateFullBackup, "CreateFullBackup"));
+        m412CreateFullBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> Backup.createBackup("full"), "CreateFullBackup"));
         JMenuItem m413BackupSaveGames = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createSaveGameBackup"));
-        m413BackupSaveGames.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableCreateSaveGameBackup, "CreateSaveGameBackup"));
+        m413BackupSaveGames.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> Backup.createBackup("save_game"), "CreateSaveGameBackup"));
         m41.add(m411CreateNewInitialBackup);
         m41.add(m412CreateFullBackup);
         m41.add(m413BackupSaveGames);
         JMenuItem m421RestoreInitialBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup"));
         m421RestoreInitialBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreInitialBackup.toolTip"));
-        m421RestoreInitialBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreInitialBackup, "RestoreInitialBackup"));
+        m421RestoreInitialBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(Backup::restoreInitialBackup, "RestoreInitialBackup"));
         M_422_RESTORE_LATEST_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup.toolTip"));
-        M_422_RESTORE_LATEST_BACKUP.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreLatestBackup, "RestoreLatestBackup"));
+        M_422_RESTORE_LATEST_BACKUP.addActionListener(actionEvent -> ThreadHandler.startModThread(Backup::restoreLatestBackup, "RestoreLatestBackup"));
         JMenuItem m423RestoreSaveGameBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup"));
         m423RestoreSaveGameBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreSaveGameBackup.toolTip"));
-        m423RestoreSaveGameBackup.addActionListener(actionEvent -> ThreadHandler.startThread(ThreadHandler.runnableRestoreSaveGameBackup, "RestoreSaveGameBackup"));
+        m423RestoreSaveGameBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(Backup::restoreSaveGameBackup, "RestoreSaveGameBackup"));
         M_42_RESTORE_BACKUP.add(m421RestoreInitialBackup);
         M_42_RESTORE_BACKUP.add(m423RestoreSaveGameBackup);
         M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
@@ -382,44 +383,6 @@ public class WindowMain {
         }
     }
 
-    public static void restoreInitialBackup(){
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
-            try {
-                LOGGER.info("Creating backup beforehand.");
-                Backup.createFullBackup();
-                StringBuilder stringBuilder = new StringBuilder();
-                Uninstaller.uninstallAllMods(stringBuilder);
-                if(!stringBuilder.toString().isEmpty()){
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
-                }
-                Backup.restoreBackup(true, true);
-            } catch (IOException | ModProcessingException e) {//TODO schauen, ob es richtig ist hier die ModProcessingException zu catchen
-                e.printStackTrace();
-                if(Utils.showConfirmDialog(1, e)){
-                    Backup.restoreBackup(true, true);
-                }else{
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-        checkActionAvailability();
-    }
-    public static void restoreLatestBackup(){
-        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
-            try {
-                LOGGER.info("Creating backup beforehand.");
-                Backup.createFullBackup();
-                Backup.restoreBackup(false, true);
-            } catch (IOException e) {
-                e.printStackTrace();
-                if(Utils.showConfirmDialog(1, e)){
-                    Backup.restoreBackup(false, true);
-                }else{
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    }
     private static void openGithubPage(){
         if (MadGamesTycoon2ModTool.VERSION.contains("dev")) {
             Debug.test();

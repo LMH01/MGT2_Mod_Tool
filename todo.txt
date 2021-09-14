@@ -23,7 +23,7 @@ Not Shure:
     - Aus diesem Menü kann man sich dann eine Sache heraussuchen. Klickt man weiter passiert folgendes:
         - Die aktuellen Werte werden geladen und in einem Fenster angezeigt, welches so aussieht, wie das, mit welchem man einen neuen Mod hinzufügen kann.
             -> Die Funktion, welche das Fenster öffnet sollte dann die Map als Rückgabewert haben, damit man damit dann den Mod hinzufügen kann
-        - Wenn man dann weiter klickt wird eine bestätigungsnachricht angezeigt. Wird diese aktzeptiert, wird der vorherige Mod entfernt und mit dem modifizierten ersetzt.
+        - Wenn man dann weiter klickt wird eine bestätigungsnachricht angezeigt. Wird diese akzeptiert, wird der vorherige Mod entfernt und mit dem modifizierten ersetzt.
             Zusätzlich wird der modifizierte mod noch hierhin exportiert: "Appdata\Roaming\LMH01\MGT2_Mod_Manager\Edits\KATEGORIE\NAME"
             Dieser export wird mit .toml dateien geschehen, in dieser Datei steht dann auch drin, dass dieser Mod einen anderen ersetzt.
             Beim Import wird dann der alte Mod entfernt und mit dem neuen ersetzt.
@@ -54,3 +54,5 @@ Not Shure:
     Check if it works to import 5 of each mod together -> This will test if mods that depend on each other can be imported correctly
 
 /TODO Change that when the initial backup is restored and mods are removed the initial backup is not restored two times
+
+/TODO Rewrite changelog.txt to changelog.md -> Changelog should be written in mark down

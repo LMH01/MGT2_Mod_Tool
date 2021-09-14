@@ -95,7 +95,7 @@ public class Backup {
      * Creates a specified backup.
      * @param type The backup type
      */
-    public static void createBackup(String type){
+    public static void createBackup(String type){//TODO Rewrite to use enum
         switch (type) {
             case "full":
                 try {
@@ -355,7 +355,7 @@ public class Backup {
             StringBuilder uninstallFailedExplanation = new StringBuilder();
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
             try {
-                for (AbstractBaseMod mod : ModManager.mods) {//TODO schauen, ob das so funktioniert, insbesondere mit blick auf die Themen
+                for (AbstractBaseMod mod : ModManager.mods) {//-TODO schauen, ob das so funktioniert, insbesondere mit blick auf die Themen
                     String[] content = mod.getCustomContentString();
                     for (String string : content) {
                         mod.removeMod(string);
@@ -390,6 +390,45 @@ public class Backup {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+    public static void restoreInitialBackup() {
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
+            try {
+                LOGGER.info("Creating backup beforehand.");
+                Backup.createFullBackup();
+                StringBuilder stringBuilder = new StringBuilder();
+                Uninstaller.uninstallAllMods(stringBuilder);
+                if(!stringBuilder.toString().isEmpty()){
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
+                }
+                Backup.restoreBackup(true, true);
+            } catch (IOException | ModProcessingException e) {
+                e.printStackTrace();
+                if(Utils.showConfirmDialog(1, e)){
+                    Backup.restoreBackup(true, true);
+                }else{
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+    public static void restoreLatestBackup(){
+        if(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.message"), I18n.INSTANCE.get("dialog.backup.restoreBackup.title"), JOptionPane.YES_NO_OPTION) == 0){
+            try {
+                LOGGER.info("Creating backup beforehand.");
+                Backup.createFullBackup();
+                Backup.restoreBackup(false, true);
+            } catch (IOException e) {
+                e.printStackTrace();
+                if(Utils.showConfirmDialog(1, e)){
+                    Backup.restoreBackup(false, true);
+                }else{
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

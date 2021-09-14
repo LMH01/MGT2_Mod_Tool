@@ -335,7 +335,7 @@ public class GenreMod extends AbstractComplexMod {
      * @param calledFromImport True when called from genre import
      * @param genreIcon The genre icon file
      * @param showMessages True when the messages should be shown. False if not.
-     * @return Returns true when the user clicked yes on the confirm popup
+     * @return Returns true when the user clicked yes on the confirmation popup
      * @throws ModProcessingException When something went wrong while adding the genre
      */
     public boolean addGenre(Map<String, String> map, Set<Integer> compatibleThemeIds, Set<Integer> gameplayFeaturesBadIds, Set<Integer> gameplayFeaturesGoodIds, ArrayList<File> genreScreenshots, boolean calledFromImport, File genreIcon, boolean showMessages) throws ModProcessingException {

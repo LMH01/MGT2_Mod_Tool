@@ -13,18 +13,14 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
-    public static Runnable runnableAddCompanyIcon = NewModsHandler::addCompanyIcon;
-    public static Runnable runnableCreateFullBackup = () -> Backup.createBackup("full");
-    public static Runnable runnableCreateSaveGameBackup = () -> Backup.createBackup("save_game");
-    public static Runnable runnableRestoreInitialBackup = WindowMain::restoreInitialBackup;
-    public static Runnable runnableRestoreLatestBackup = WindowMain::restoreLatestBackup;
-    public static Runnable runnableRestoreSaveGameBackup = Backup::restoreSaveGameBackup;
-    public static Runnable runnableCreateNewInitialBackup = Backup::createNewInitialBackup;
+    private static Map<String, Integer> threadsRan = new HashMap<>();
     public static Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
@@ -94,6 +90,7 @@ public class ThreadHandler {
     /**
      * Starts a thread that can catch a {@link ModProcessingException}.
      * If that exception is caught an error message displayed and printed into the text area. The thread will terminate.
+     * The thread name will get a unique id for each run of the same thread.
      */
     public static void startModThread(ModAction action, String threadName) {
         Thread thread = new Thread(() -> {
@@ -108,7 +105,12 @@ public class ThreadHandler {
                 LOGGER.info("Error in thread: " + threadName + "; Reason: " + e.getMessage());
             }
         });
-        startThread(thread, threadName);
+        if (threadsRan.containsKey(threadName)) {
+            threadsRan.replace(threadName, threadsRan.get(threadName) + 1);
+        } else {
+            threadsRan.put(threadName, 1);
+        }
+        startThread(thread, threadName + threadsRan.get(threadName));
     }
 
     /**
@@ -141,7 +143,7 @@ public class ThreadHandler {
             }
             threadsRunning--;
         });
-        thread.setName("ThreadController" + "For" + threadToWaitFor.getName().replace("runnable", "Runnable"));
+        thread.setName("Controller" + "For" + threadToWaitFor.getName().replace("runnable", "Runnable"));
         thread.start();
     }
 
