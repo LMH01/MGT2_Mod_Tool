@@ -47,12 +47,5 @@ Not Shure:
 
 /TODO Remove unneeded localisation
 
-/TODO Add function to utils menu called "Update Files" This will create a restore point, remove all mods, prompt the user to verify the game files, create a new initial backup and restore the restore point
-    -> maybe another function name would be more appropriate but i can't think of one now
-
 /TODO Check that each mod works properly and check if export/import works with translations
     Check if it works to import 5 of each mod together -> This will test if mods that depend on each other can be imported correctly
-
-/TODO Change that when the initial backup is restored and mods are removed the initial backup is not restored two times
-
-/TODO Rewrite changelog.txt to changelog.md -> Changelog should be written in mark down
