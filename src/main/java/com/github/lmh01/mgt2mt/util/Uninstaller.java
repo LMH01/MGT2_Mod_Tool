@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import jdk.nashorn.internal.scripts.JO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,8 +202,8 @@ public class Uninstaller {
         if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.exports.message"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == 0) {
             try {
                 DataStreamHelper.deleteDirectory(ModManagerPaths.EXPORT.getPath());
-            } catch (IOException e) {
-                throw new ModProcessingException("Unable to delete export folder", e);
+            } catch (IOException ignored) {
+
             }
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.exports.success"));
         }

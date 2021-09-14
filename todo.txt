@@ -51,5 +51,3 @@ Not Shure:
     Check if it works to import 5 of each mod together -> This will test if mods that depend on each other can be imported correctly
 
 /TODO Edit OptionPaneMessage of npc game mod (Line currently can be very long)
-
-/TODO Fix nosuchfileexception when deleting export folder without it existing
