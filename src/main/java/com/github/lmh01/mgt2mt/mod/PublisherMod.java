@@ -115,8 +115,8 @@ public class PublisherMod extends AbstractComplexMod {
             checkBoxIsPublisher.setSelected(true);
             checkBoxIsPublisher.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher.toolTip"));
 
-            JSpinner spinnerMarketShare = WindowHelper.getMarketShareSpinner();
-            JSpinner spinnerShare = WindowHelper.getProfitShareSpinner();
+            JSpinner spinnerMarketShare = WindowHelper.getBaseSpinner("mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip", 50, 1, 100, 1);
+            JSpinner spinnerShare = WindowHelper.getBaseSpinner("mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip", 10, 0, 10, 1);
 
             AtomicInteger genreID = new AtomicInteger();
             JPanel panelGenre = new JPanel();

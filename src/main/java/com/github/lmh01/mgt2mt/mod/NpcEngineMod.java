@@ -73,8 +73,9 @@ public class NpcEngineMod extends AbstractAdvancedMod {
             JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
             JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
             JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
+            spinnerUnlockYear.setToolTipText(spinnerUnlockYear.getToolTipText() + "<br>" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.unlockYear.additionalToolTip"));
             JSpinner spinnerShare = WindowHelper.getProfitShareSpinner();
-            JSpinner spinnerCost = WindowHelper.getCostSpinner();
+            JSpinner spinnerCost = WindowHelper.getBaseSpinner("mod.npcEngine.addMod.components.spinner.cost.toolTip", 30000, 0, 1000000, 5000);
 
             JLabel labelExplainGenreList = new JLabel("<html>" + I18n.INSTANCE.get("mod.npcEngine.addMod.components.selectGenre") + "<br>" + I18n.INSTANCE.get("commonText.scrollExplanation"));
             JList<String> listAvailableGenres = WindowHelper.getList(ModManager.genreMod.getContentByAlphabet(), true);

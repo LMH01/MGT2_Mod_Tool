@@ -377,7 +377,7 @@ mod.npcEngine.addMod.components.unlockYear.additionalToolTip|This determines the
 mod.npcEngine.addMod.components.selectGenre|Select the genre which should be the special genre for the engine:<br>If several genres are selected, several engines will be created, one for each selected genre.<br>The name of the genre will then be written after the name of the engine.
 mod.npcEngine.addMod.components.selectPlatform|Select the platform which should be the special platform for the engine:
 mod.npcEngine.addMod.components.spinner.share.toolTip|Set the profit share for the engine.<br>When a game is created with this engine the amount (in %) will be paid to the engine developer.
-mod.npcEngine.addMod.components.spinner.cost.toolTip|<br>Set the cost for the engine.<br>In order to use the engine in game you will have to pay this price to unlock it.
+mod.npcEngine.addMod.components.spinner.cost.toolTip|Set the cost for the engine.<br>In order to use the engine in game you will have to pay this price to unlock it.
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres|<html>Several genres have been selected.<br>A separate engine is created for each genre.<br><br>The following values are used for the engine:
 mod.npcEngine.addMod.optionPaneMessage.multipleGenres.finished|engines have been added successfully!
 mod.npcEngine.addMod.noPlatformSelected|Please select a platform first!
@@ -622,16 +622,6 @@ dialog.genreManager.addGenre.npcGamesList.added|<html>has successfully<br>been a
 dialog.genreManager.addGenre.npcGamesList.error.1|Error while adding genre with id
 dialog.genreManager.addGenre.npcGamesList.error.2|to NpcGames.txt.<br>Please try again with administrator rights.<br>Exception:
 
-dialog.genreHelper.addRandomizedGenre.title|Add Random Genre
-dialog.genreHelper.addRandomizedGenre.enterGenreName|ENTER GENRE NAME
-dialog.genreHelper.addRandomizedGenre.enterGenreDescription|ENTER GENRE DESCRIPTION
-dialog.genreHelper.addRandomizedGenre.button.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
-dialog.genreHelper.addRandomizedGenre.button.addDescriptionTranslations.toolTip|<html>Click to add description translations<br>The value entered in the main text field will be used as the english translation
-dialog.genreHelper.addRandomizedGenre.button.addGenreIcon.toolTip|Click to select a .png file that should be the genre icon
-dialog.genreHelper.addRandomizedGenre.button.addGenreScreenshots.toolTip|Click to select .png images that should be used as game screenshots
-dialog.genreHelper.addRandomizedGenre.checkBox.showSummary|Show Genre Summary
-dialog.genreHelper.addRandomizedGenre.checkBox.showSummary.toolTip|Check to show the genre summary
-dialog.genreHelper.addRandomizedGenre.addGenreIcon.iconSet|Genre Icon set
 dialog.genreHelper.getGenreScreenshots.message|<html>Click browse or enter enter the image path manually.<br>When the image path is set click okay.<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page.<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3
 dialog.genreHelper.getGenreScreenshots.imageFileAdded|Image file has been added.
 dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Image files have been added.
@@ -888,8 +878,6 @@ window.main.mods.import.getMoreMods.confirmDialog|Open the page where you can ge
 window.main.mods.import.getMoreMods.confirmDialog.title|Open page?
 window.main.mods.genres|Genres
 window.main.mods.genres.addGenre|Add genre
-window.main.mods.genres.addRandomGenre|Add randomized genre
-window.main.mods.genres.addRandomGenre.toolTip|<html>Click to add a randomized genre<br>You will just have to enter a name and description<br>Optionally you can also add a icon and screenshots
 window.main.mods.genres.removeGenre|Remove genre
 window.main.mods.themes|Themes
 window.main.mods.themes.addTheme|Add theme

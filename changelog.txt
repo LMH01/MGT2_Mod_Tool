@@ -17,6 +17,7 @@ Mods can now be exported in a bundle, this means that all mod data is stored in 
 Other:
 
 Settings file now uses the .toml file format
+It is no longer possible to add randomized genres
 It is no longer possible to enable the debug logging in the settings window, instead the storage of exports can now be enabled. If debug logging can still be enabled by editing the settings.toml file
 Improved performance when handling files
 Improved text area outputs when importing, exporting, adding or removing mods
