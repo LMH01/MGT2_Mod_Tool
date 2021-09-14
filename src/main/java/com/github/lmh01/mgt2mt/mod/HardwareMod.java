@@ -319,10 +319,25 @@ public class HardwareMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                map.replace(entry.getKey(), Integer.toString(ModManager.gameplayFeatureMod.getModIdByNameFromImportHelperMap(entry.getValue())));
+            }
+        }
+        return map;
+    }
+
+    @Override
     public Map<String, String> getChangedExportMap(Map<String, String> map, String name) throws ModProcessingException, NullPointerException, NumberFormatException {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED")) {
-                map.replace(entry.getKey(), ModManager.gameplayFeatureMod.getContentNameById(Integer.parseInt(entry.getValue())));
+                try {
+                    map.replace(entry.getKey(), ModManager.gameplayFeatureMod.getContentNameById(Integer.parseInt(entry.getValue())));
+                } catch (NumberFormatException e) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.warningExportMapNotChangedProperly") + ":");
+                    TextAreaHelper.printStackTrace(e);
+                }
             }
         }
         return map;

@@ -124,7 +124,14 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     @Override
     @SuppressWarnings("unchecked")
     public final Map<String, Object> getExportMap(String name) throws ModProcessingException {
-        Map<String, String> modMap = getChangedExportMap(getSingleContentMapByName(name), name);
+        Map<String, String> modMap;
+        try {
+            modMap = getChangedExportMap(getSingleContentMapByName(name), name);
+        } catch (NumberFormatException e) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.warningExportMapNotChangedProperly") + ":");
+            TextAreaHelper.printStackTrace(e);
+            modMap = getSingleContentMapByName(name);
+        }
         Map<String, Object> map = new HashMap<>(modMap);
         Map<String, Object> dependencyMap = getDependencyMap(modMap);
         for (AbstractBaseMod mod : ModManager.mods) {
