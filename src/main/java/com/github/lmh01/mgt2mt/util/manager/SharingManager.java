@@ -260,8 +260,7 @@ public class SharingManager {
      */
     private static ArrayList<File> getTomlFiles(Set<Path> paths) throws ModProcessingException {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingForTomlFiles"));
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
-        timeHelper.measureTime();
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         ArrayList<File> tomlFiles = new ArrayList<>();
         ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.scanningDirectories"), false, false);
         JCheckBox checkBoxPreventZipMessage = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.saveOption"));
@@ -422,8 +421,7 @@ public class SharingManager {
     private static Set<Map<String, Object>> getImportMaps(ArrayList<Map<String, Object>> singleMods, ArrayList<Map<String, Object>> bundledMods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, singleMods.size() + bundledMods.size(), I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
-        timeHelper.measureTime();
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         /*
          * ModType = Simple or advanced
          * Map<String, Object> = The map that contains the values for the specific mod.
@@ -770,7 +768,7 @@ public class SharingManager {
      */
     private static void importAllMods(Set<Map<String, Object>> mods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         timeHelper.measureTime();
         for (AbstractBaseMod mod : ModManager.mods) {
             for (Map<String, Object> map : mods) {
@@ -870,7 +868,7 @@ public class SharingManager {
      * @throws ModProcessingException If something went wrong while exporting mods
      */
     public static void exportAll(ExportType exportType) throws ModProcessingException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         timeHelper.measureTime();
         if (exportType.equals(ExportType.ALL_SINGLE)) {
             Path exportFolder;

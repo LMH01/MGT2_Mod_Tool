@@ -228,8 +228,7 @@ public class DataStreamHelper {
      * @param destination The destination where the file should be unzipped to.
      */
     public static void unzip(Path zipFile, Path destination) throws IOException, IllegalArgumentException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS);
-        timeHelper.measureTime();
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.secondPart"));
