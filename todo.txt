@@ -43,9 +43,4 @@ Not Shure:
 
 //TODO Write tests
 
-/TODO Fix that the program will not crash if the steam library folders are not found: Reason: path is null or something like that
-
 /TODO Remove unneeded localisation
-
-/TODO Check that each mod works properly and check if export/import works with translations
-    Check if it works to import 5 of each mod together -> This will test if mods that depend on each other can be imported correctly

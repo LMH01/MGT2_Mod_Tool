@@ -120,7 +120,7 @@ public class Settings {
             }
             ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
         } else {
-            Settings.mgt2Path = null;
+            Settings.mgt2Path = Paths.get("");
             mgt2FolderIsCorrect = false;
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("settings.mgt2FolderNotFound"));
         }
@@ -140,13 +140,7 @@ public class Settings {
                 if (validateMGT2Folder(currentPath, false, true)) {
                     LOGGER.info("Found MGT2 folder: " + currentPath);
                     return currentPath;
-                }//TODO Check if this still works under windows if yes delete commented out part
-                /*
-                LOGGER.info("Current Path: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                if (validateMGT2Folder(arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\", false, true)) {
-                    LOGGER.info("Found MGT2 folder: " + arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\");
-                    return arrayListSteamLibrary + "\\steamapps\\common\\Mad Games Tycoon 2\\";
-                }*/
+                }
             }
             LOGGER.info("MGT2 folder not found");
         } catch (IOException e) {
