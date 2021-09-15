@@ -94,7 +94,8 @@ public class ThreadHandler {
     }
 
     /**
-     * Starts a thread that can catch a {@link ModProcessingException}.
+     * Starts a thread that can catch an exception.
+     * Primary use case should be to catch an {@link ModProcessingException}.
      * If that exception is caught an error message displayed and printed into the text area. The thread will terminate.
      * The thread name will get a unique id for each run of the same thread.
      */
@@ -102,7 +103,7 @@ public class ThreadHandler {
         Thread thread = new Thread(() -> {
             try {
                 action.run();
-            } catch (ModProcessingException e) {
+            } catch (Exception e) {//TODO Add catch for:  null pointer exception, class cast exception
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.firstPart") + " " + threadName);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.secondPart"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
