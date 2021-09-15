@@ -8,6 +8,8 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
+import com.github.lmh01.mgt2mt.util.manager.ImportType;
+import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
@@ -17,9 +19,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This file contains functions that are used for debug purposes only
@@ -127,6 +127,12 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
     public static void test() {
         //writeHelpFile();
+        showModTypes();
+
+        ThreadHandler.startModThread(() -> {
+            SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp/MGT2/toml/test"));
+        }, "importAll");
+
         /*ThreadHandler.startModThread(() -> {
             //SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp"));
             Set<Path> set = new HashSet<>();
@@ -322,6 +328,59 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
                 throw new ModProcessingException("Unable to export mods", e);
             }
         }, "test");
+    }
+
+    /**
+     * Writes a list of current mod types to the console
+     */
+    public static void showModTypes() {
+        int mods = ModManager.mods.size();
+        Set<AbstractBaseMod> simpleMods = new HashSet<>();
+        Set<AbstractBaseMod> simpleDependentMods = new HashSet();
+        Set<AbstractBaseMod> advancedMods = new HashSet();
+        Set<AbstractBaseMod> advancedDependentMods = new HashSet();
+        Set<AbstractBaseMod> complexMods = new HashSet();
+        for (AbstractBaseMod mod : ModManager.mods) {
+            if (mod instanceof AbstractSimpleMod) {
+                simpleMods.add(mod);
+                if (mod instanceof AbstractSimpleDependentMod) {
+                    simpleDependentMods.add(mod);
+                }
+            }
+            if (mod instanceof AbstractAdvancedMod) {
+                advancedMods.add(mod);
+                if (mod instanceof AbstractAdvancedDependentMod) {
+                    advancedDependentMods.add(mod);
+                    if (mod instanceof AbstractComplexMod) {
+                        complexMods.add(mod);
+                    }
+                }
+            }
+        }
+        LOGGER.info("mods total: " + mods);
+        LOGGER.info("simpleMods (" + simpleMods.size() + "): " + simpleMods);
+        LOGGER.info("simpleDependentMods (" + simpleDependentMods.size() + "): " + simpleDependentMods);
+        LOGGER.info("advancedMods (" + advancedMods.size() + "): " + advancedMods);
+        LOGGER.info("advancedDependentMods (" + advancedDependentMods.size() + "): " + advancedDependentMods);
+        LOGGER.info("complexMods (" + complexMods.size() + "): " + complexMods);
+    }
+
+    private static int timesRan = 0;
+
+    /**
+     * This function can be caled by {@literal SharingManager#replaceDependencies(AbstractBaseMod, Map, AbstractBaseMod, String)}
+     * @param parent
+     * @param parentMap
+     * @param <T>
+     */
+    public static <T extends AbstractBaseMod & DependentMod> void writeReplaceDependenciesMap(T parent, Map<String, Object> parentMap) {
+        try {
+            TomlWriter tomlWriter = new TomlWriter();
+            tomlWriter.write(parentMap, Paths.get("D:/Temp/MGT2MTLH/replaced_map_" + timesRan + "_" + parent.getType() + ".toml").toFile());
+            timesRan++;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

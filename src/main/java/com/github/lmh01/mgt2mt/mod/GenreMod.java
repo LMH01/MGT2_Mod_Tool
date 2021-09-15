@@ -129,6 +129,14 @@ public class GenreMod extends AbstractComplexMod {
     }
 
     @Override
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+        replaceMapEntry(map, missingDependency, replacement, "GENRE COMB");
+        replaceMapEntry(map, missingDependency, replacement, "THEME COMB");
+        replaceMapEntry(map, missingDependency, replacement, "GAMEPLAYFEATURE BAD");
+        replaceMapEntry(map, missingDependency, replacement, "GAMEPLAYFEATURE GOOD");
+    }
+
+    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.themeMod);
@@ -164,7 +172,7 @@ public class GenreMod extends AbstractComplexMod {
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+    public <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, String> modMap = transformGenericToMap(t);
         Map<String, Object> map = new HashMap<>();
         map.put(getExportType(), new HashSet<>(Utils.getEntriesFromString(modMap.get("GENRE COMB"))));

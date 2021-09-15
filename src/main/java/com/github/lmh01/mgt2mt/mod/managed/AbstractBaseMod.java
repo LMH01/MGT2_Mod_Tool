@@ -15,14 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class is used to create new mods.
- * Should be used with {@link AbstractAdvancedMod} or {@link AbstractSimpleMod}.
+ * Should be used with {@link AbstractAdvancedMod}, {@link AbstractAdvancedDependentMod}, {@link AbstractComplexMod} {@link AbstractSimpleMod} or {@link AbstractSimpleDependentMod}.
  */
 public abstract class AbstractBaseMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBaseMod.class);
@@ -409,18 +406,6 @@ public abstract class AbstractBaseMod {
     public abstract Map<String, Object> getExportMap(String name) throws ModProcessingException;
 
     /**
-     * Returns a map that contains the dependencies of the mod. This map is printed into the export file.
-     * This function should be overwritten by each mod that needs dependencies.
-     * Map coding: key = modName | value = hash set of the required mods that belong to the modName
-     *
-     * @param t   This map/string contains the values that will be used to create the dependency map
-     * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
-     * @return A map that contains the dependencies for the mod that should be exported
-     * @throws ModProcessingException When something went wrong while creating the dependency map or when {@literal <T>} is not valid.
-     */
-    protected abstract <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException;
-
-    /**
      * Imports the mod to the game.
      * Will edit the game files and import pictures, if needed.
      * {@link AbstractBaseMod#addModToFile(Object)} is used to edit the game file(s).
@@ -429,22 +414,6 @@ public abstract class AbstractBaseMod {
      * @throws ModProcessingException If something went wrong while importing the mod
      */
     public abstract void importMod(Map<String, Object> map) throws ModProcessingException;
-
-    /**
-     * @return An array list that contains all the dependencies of the mod
-     */
-    public abstract ArrayList<AbstractBaseMod> getDependencies();
-
-    /**
-     * Analyses all dependencies of this mod
-     *
-     * @throws ModProcessingException If analysis of a mod fails
-     */
-    public final void analyzeDependencies() throws ModProcessingException {
-        for (AbstractBaseMod mod : getDependencies()) {
-            mod.analyzeFile();
-        }
-    }
 
     /**
      * Initializes the import helper map for this mod with all currently installed mods.
@@ -476,7 +445,7 @@ public abstract class AbstractBaseMod {
             try {
                 return importHelperMap.get(name);
             } catch (NullPointerException e) {
-                throw new ModProcessingException("The mod name " + name + " does not exist in the import map", e);
+                throw new ModProcessingException("The mod name " + name + " of type " + getType() + " does not exist in the import map. This is likely caused because the import file is corrupted.", e);
             }
         } else {
             throw new ModProcessingException("Import helper map is not initialized.", true);
@@ -506,6 +475,25 @@ public abstract class AbstractBaseMod {
             }
         } else {
             throw new ModProcessingException("Import helper map is not initialized.", true);
+        }
+    }
+
+    /**
+     * If the map key contains the missing dependency in its value it is replaced with the replacement.
+     * If the replacement already exists in the map the missing dependency is removed and not replaced.
+     * Value formatting: {@literal <DATA> (DATA = missingDependency}
+     * Note: Also works if {@literal <> is missing}
+     *
+     * @param mapKey The map key for which the values should be replaced
+     * @see DependentMod#replaceMissingDependency(Map, String, String) Parameters
+     */
+    protected void replaceMapEntry(Map<String, Object> map, String missingDependency, String replacement, String mapKey) {
+        if (map.containsKey(mapKey)) {
+            if (map.get(mapKey).toString().contains(missingDependency) && !map.get(mapKey).toString().contains(replacement)) {
+                map.replace(mapKey, map.get(mapKey).toString().replaceAll(missingDependency, replacement));
+            } else {
+                map.replace(mapKey, map.get(mapKey).toString().replaceAll(missingDependency, "").replaceAll("<>", ""));
+            }
         }
     }
 }

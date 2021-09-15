@@ -15,8 +15,7 @@ import java.util.Map;
  * Use this class if the mod uses files with the system "[Key]Value".
  * This class allows the processing of image files
  */
-public abstract class AbstractComplexMod extends AbstractAdvancedMod {
-
+public abstract class AbstractComplexMod extends AbstractAdvancedDependentMod {
 
     @Override
     public void importMod(Map<String, Object> map) throws ModProcessingException {

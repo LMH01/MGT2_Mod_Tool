@@ -16,6 +16,7 @@ import java.util.*;
 /**
  * This class is used to create new mods.
  * Use this class if the mod uses files where each mod is written in one line.
+ * If the mod needs dependencies use {@link AbstractSimpleDependentMod}
  */
 public abstract class AbstractSimpleMod extends AbstractBaseMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSimpleMod.class);
@@ -52,32 +53,13 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     public Map<String, Object> getExportMap(String name) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
         String line = getModifiedExportLine(getLine(name));
-        Map<String, Object> dependencyMap = getDependencyMap(line);
-        for (AbstractBaseMod mod : ModManager.mods) {
-            try {
-                Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());
-                if (set != null) {
-                    if (!set.isEmpty()) {
-                        map.put("dependencies", dependencyMap);
-                    }
-                }
-            } catch (ClassCastException e) {
-                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
-            }
-        }
         map.put("line", line);
         map.put("mod_name", name);
         return map;
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
-        return new HashMap<>();
-    }
-
-    @Override
     public void importMod(Map<String, Object> map) throws ModProcessingException {
-        analyzeDependencies();
         addModToFile(getChangedImportLine((String) map.get("line")));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
     }

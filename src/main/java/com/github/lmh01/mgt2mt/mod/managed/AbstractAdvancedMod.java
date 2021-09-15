@@ -17,6 +17,7 @@ import java.util.*;
 /**
  * This class is used to create new mods.
  * Use this class if the mod uses files with the system "[Key]Value".
+ * If the mod needs dependencies use {@link AbstractAdvancedDependentMod}
  * If image files should be processed create a new mod using {@link AbstractComplexMod}
  */
 public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See what functions should be final (Also do that for each of the oder abstract mod classes)
@@ -122,7 +123,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
 
     @Override
     @SuppressWarnings("unchecked")
-    public final Map<String, Object> getExportMap(String name) throws ModProcessingException {
+    public Map<String, Object> getExportMap(String name) throws ModProcessingException {
         Map<String, String> modMap;
         try {
             modMap = getChangedExportMap(getSingleContentMapByName(name), name);
@@ -132,19 +133,6 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             modMap = getSingleContentMapByName(name);
         }
         Map<String, Object> map = new HashMap<>(modMap);
-        Map<String, Object> dependencyMap = getDependencyMap(modMap);
-        for (AbstractBaseMod mod : ModManager.mods) {
-            try {
-                Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());
-                if (set != null) {
-                    if (!set.isEmpty()) {
-                        map.put("dependencies", getDependencyMap(modMap));
-                    }
-                }
-            } catch (ClassCastException e) {
-                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
-            }
-        }
         map.remove("ID");
         map.remove("PIC");
         map.put("mod_name", name);
@@ -154,7 +142,6 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
     @Override
     public void importMod(Map<String, Object> map) throws ModProcessingException {
         analyzeFile();
-        analyzeDependencies();
         Map<String, String> importMap = getChangedImportMap(Utils.transformObjectMapToStringMap(map));
         importMap.put("ID", Integer.toString(getModIdByNameFromImportHelperMap(map.get("mod_name").toString())));
         addModToFile(importMap);

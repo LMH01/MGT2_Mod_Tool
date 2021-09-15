@@ -2,10 +2,7 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -21,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class ThemeMod extends AbstractSimpleMod {
+public class ThemeMod extends AbstractSimpleDependentMod {
 
     /*
      * Theme mod works differently then the other mods:
@@ -195,6 +192,11 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+        replaceMapEntry(map, missingDependency, replacement, "line");
+    }
+
+    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);
@@ -268,7 +270,7 @@ public class ThemeMod extends AbstractSimpleMod {
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+    public <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
         Set<String> genres = new HashSet<>();
         for (String string : Utils.getEntriesFromString(transformGenericToString(t))) {

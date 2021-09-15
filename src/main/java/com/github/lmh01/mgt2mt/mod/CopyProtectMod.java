@@ -133,14 +133,4 @@ public class CopyProtectMod extends AbstractAdvancedMod {
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
     }
-
-    @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
-        return new HashMap<>();
-    }
-
-    @Override
-    public ArrayList<AbstractBaseMod> getDependencies() {
-        return new ArrayList<>();
-    }
 }

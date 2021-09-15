@@ -130,18 +130,8 @@ public class AntiCheatMod extends AbstractAdvancedMod {
     }
 
     @Override
-    public ArrayList<AbstractBaseMod> getDependencies() {
-        return new ArrayList<>();
-    }
-
-    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
-    }
-
-    @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
-        return new HashMap<>();
     }
 
     @Override

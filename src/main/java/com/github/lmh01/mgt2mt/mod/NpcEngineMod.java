@@ -1,10 +1,7 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -20,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class NpcEngineMod extends AbstractAdvancedMod {
+public class NpcEngineMod extends AbstractAdvancedDependentMod {
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcEngineMod.class);
 
     @Override
@@ -181,7 +178,7 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+    public <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, String> modMap = transformGenericToMap(t);
         Map<String, Object> map = new HashMap<>();
         Set<String> genres = new HashSet<>();
@@ -222,6 +219,12 @@ public class NpcEngineMod extends AbstractAdvancedMod {
     @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
+    }
+
+    @Override
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+        replaceMapEntry(map, missingDependency, replacement, "GENRE");
+        replaceMapEntry(map, missingDependency, replacement, "PLATFORM");
     }
 
     @Override

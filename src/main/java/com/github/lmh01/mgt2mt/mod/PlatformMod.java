@@ -489,6 +489,15 @@ public class PlatformMod extends AbstractComplexMod {
     }
 
     @Override
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED")) {
+                replaceMapEntry(map, missingDependency, replacement, entry.getKey());
+            }
+        }
+    }
+
+    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.gameplayFeatureMod);
@@ -506,7 +515,7 @@ public class PlatformMod extends AbstractComplexMod {
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+    public <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, String> modMap = transformGenericToMap(t);
         Map<String, Object> map = new HashMap<>();
         Set<String> set = new HashSet<>();

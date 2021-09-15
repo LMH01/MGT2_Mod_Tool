@@ -182,16 +182,6 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
         return StandardCharsets.UTF_8;
     }
 
-    @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
-        return new HashMap<>();
-    }
-
-    @Override
-    public ArrayList<AbstractBaseMod> getDependencies() {
-        return new ArrayList<>();
-    }
-
     /**
      * Converts the input string into the respective type number
      *

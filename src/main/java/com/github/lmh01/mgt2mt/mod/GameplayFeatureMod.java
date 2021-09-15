@@ -1,10 +1,7 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Summaries;
@@ -23,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GameplayFeatureMod extends AbstractAdvancedMod {
+public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameplayFeatureMod.class);
 
@@ -334,6 +331,12 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+        replaceMapEntry(map, missingDependency, replacement, "GOOD");
+        replaceMapEntry(map, missingDependency, replacement, "BAD");
+    }
+
+    @Override
     public ArrayList<AbstractBaseMod> getDependencies() {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);
@@ -352,7 +355,7 @@ public class GameplayFeatureMod extends AbstractAdvancedMod {
     }
 
     @Override
-    protected <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+    public <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, String> modMap = transformGenericToMap(t);
         Map<String, Object> map = new HashMap<>();
         Set<String> set = new HashSet<>();

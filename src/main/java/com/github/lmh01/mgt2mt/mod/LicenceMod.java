@@ -129,11 +129,6 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    public ArrayList<AbstractBaseMod> getDependencies() {
-        return new ArrayList<>();
-    }
-
-    @Override
     public String getReplacedLine(String inputString) {
         return inputString.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim();
     }
