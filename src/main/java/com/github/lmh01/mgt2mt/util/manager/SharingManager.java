@@ -562,49 +562,55 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         Map<AbstractBaseMod, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
+        boolean showMissingDependencyDialog = true;
         for (Map<String, Object> parentMap : mods) {
             for (AbstractBaseMod parent : ModManager.mods) {
                 if (parent.getExportType().equals(parentMap.get("mod_type").toString())) {
                     if (parent instanceof DependentMod) {//The parent is the mod the map belongs to
                         Map<String, Object> dependencies = (Map<String, Object>) parentMap.get("dependencies");
-                        for (Map.Entry<String, Object> entry : dependencies.entrySet()) {
-                            for (AbstractBaseMod child : ModManager.mods) {//The child is the mod that should be replaced in the parent map
-                                if (entry.getKey().equals(child.getExportType()) && ((DependentMod) parent).getDependencies().contains(child)) {
-                                    DebugHelper.debug(LOGGER, I18n.INSTANCE.get("textArea.importAll.requiresDependencies") + ": " + parentMap.get("mod_type") + " - " + parentMap.get("mod_name") + " - " + parentMap.get("dependencies"));
-                                    ArrayList<String> arrayList = (ArrayList<String>) entry.getValue();
-                                    for (String childName : arrayList) {
-                                        LOGGER.info(parent.getExportType() + " | " + child.getExportType() + " - " + childName);
-                                        if (!doesModExist(childName, child.getExportType()) && !doesMapContainMod(mods, childName, child.getExportType())) {
-                                            String replacement = getReplacedDependency(alreadyReplacedDependencies, childName, child);
-                                            if (replacement != null) {
-                                                replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName, replacement);
-                                            } else {
-                                                JPanel panel = new JPanel();
-                                                JLabel label1 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + child.getType(true) + " - " + childName + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
-                                                JList<String> list = WindowHelper.getList(child.getContentByAlphabet(), false);
-                                                JScrollPane scrollPane = WindowHelper.getScrollPane(list);
-                                                JLabel label2 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part3"));
-                                                panel.add(label1);
-                                                panel.add(scrollPane);
-                                                panel.add(label2);
-                                                JComponent[] components = {label1, scrollPane, label2};
-                                                /*TODO Add check box that can be checked to always select a random dependency if one is missing
-                                                 *  this will then hold the message dialog back*/
-                                                if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("frame.title.missingDependency"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                                                    if (list.isSelectionEmpty()) {
-                                                        setReplacedDependency(alreadyReplacedDependencies, child, childName, replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName));
-                                                    } else {
-                                                        replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName, list.getSelectedValue());
-                                                        setReplacedDependency(alreadyReplacedDependencies, child, childName, list.getSelectedValue());
-                                                    }
+                        if (dependencies != null) {
+                            for (Map.Entry<String, Object> entry : dependencies.entrySet()) {
+                                for (AbstractBaseMod child : ModManager.mods) {//The child is the mod that should be replaced in the parent map
+                                    if (entry.getKey().equals(child.getExportType()) && ((DependentMod) parent).getDependencies().contains(child)) {
+                                        DebugHelper.debug(LOGGER, I18n.INSTANCE.get("textArea.importAll.requiresDependencies") + ": " + parentMap.get("mod_type") + " - " + parentMap.get("mod_name") + " - " + parentMap.get("dependencies"));
+                                        ArrayList<String> arrayList = (ArrayList<String>) entry.getValue();
+                                        for (String childName : arrayList) {
+                                            LOGGER.info(parent.getExportType() + " | " + child.getExportType() + " - " + childName);
+                                            if (!doesModExist(childName, child.getExportType()) && !doesMapContainMod(mods, childName, child.getExportType())) {
+                                                String replacement = getReplacedDependency(alreadyReplacedDependencies, childName, child);
+                                                if (replacement != null) {
+                                                    replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName, replacement);
                                                 } else {
-                                                    return null;
+                                                    JLabel label1 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + child.getType(true) + " - " + childName + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
+                                                    JList<String> list = WindowHelper.getList(child.getContentByAlphabet(), false);
+                                                    JScrollPane scrollPane = WindowHelper.getScrollPane(list);
+                                                    JLabel label2 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part3"));
+                                                    JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.checkBox"));
+                                                    checkBox.setToolTipText(I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.checkBox.toolTip"));
+                                                    JComponent[] components = {label1, scrollPane, label2, checkBox};
+                                                    int returnValue = JOptionPane.OK_OPTION;
+                                                    if (showMissingDependencyDialog) {
+                                                        returnValue = JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("frame.title.missingDependency"), JOptionPane.OK_CANCEL_OPTION);
+                                                        showMissingDependencyDialog = !checkBox.isSelected();
+                                                    }
+                                                    if (returnValue == JOptionPane.OK_OPTION) {
+                                                        if (list.isSelectionEmpty()) {
+                                                            setReplacedDependency(alreadyReplacedDependencies, child, childName, replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName));
+                                                        } else {
+                                                            replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName, list.getSelectedValue());
+                                                            setReplacedDependency(alreadyReplacedDependencies, child, childName, list.getSelectedValue());
+                                                        }
+                                                    } else {
+                                                        return null;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                        } else {
+                            DebugHelper.warn(LOGGER, "Warning: dependency map of " + parent.getType() + " - " + parentMap.get("mod_name") + " does not exist");
                         }
                     }
                 }

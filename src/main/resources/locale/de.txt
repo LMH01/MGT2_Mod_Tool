@@ -800,6 +800,8 @@ textArea.importAll.dependencyCheckComplete|Abhängigkeitsprüfung abgeschlossen
 textArea.importAll.dependencyCheck.optionPane.part1|Achtung, es wurde eine fehlende Abhängigkeit gefunden
 textArea.importAll.dependencyCheck.optionPane.part2|Wähle bitte einen Ersatz aus der Liste aus
 textArea.importAll.dependencyCheck.optionPane.part3|Wenn kein Eintrag aus der Liste ausgewählt wurde, wird ein Ersatz zufällig bestimmt.<br>Klicke auf abbrechen, um den Importier-Prozess abzubrechen.
+textArea.importAll.dependencyCheck.optionPane.checkBox|Nicht mehr fragen
+textArea.importAll.dependencyCheck.optionPane.checkBox.toolTip|<html>Wenn ausgewählt, wird diese Nachricht nicht mehr angezeigt<br>Stattdessen wird die fehlende Abhängigkeit immer durch eine zufällige ersetzt
 textArea.importAll.modsFound.part1|Suche nach Mods abgeschlossen, gefunden
 textArea.importAll.modsFound.part2|Sollen die Mods zum Spiel hinzugefügt werden?
 textArea.importAll.restorePointReady|Wiederherstellungspunkt bereit<br>Klicke auf OK, um den Wiederherstellungspunkt wiederherzustellen

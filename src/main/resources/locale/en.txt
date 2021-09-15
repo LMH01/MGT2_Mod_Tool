@@ -802,6 +802,8 @@ textArea.importAll.dependencyCheckComplete|Dependency check complete
 textArea.importAll.dependencyCheck.optionPane.part1|Warning dependency not found
 textArea.importAll.dependencyCheck.optionPane.part2|Please choose a replacement from the list
 textArea.importAll.dependencyCheck.optionPane.part3|If no entry is selected, the replacement will be random.<br>Click cancel to cancel the import process.
+textArea.importAll.dependencyCheck.optionPane.checkBox|Don't ask again
+textArea.importAll.dependencyCheck.optionPane.checkBox.toolTip|<html>If selected this message will not appear again<br>Instead the missing dependency will always be replaced with a random one
 textArea.importAll.modsFound.part1|Search for mods completed, found
 textArea.importAll.modsFound.part2|Do you want to add the mods to the game?
 textArea.importAll.restorePointReady|Restore point ready<br>Click ok to restore the restore point
