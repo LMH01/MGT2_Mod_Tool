@@ -296,9 +296,12 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         } else if (Settings.language.equals("Deutsch")) {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
         }
-        if (Settings.updateBranch.equals("Release") && !Utils.isAlpha()) {//TODO Replace with enum
+        if (Settings.updateBranch.equals("Release")) {//TODO Replace with enum
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Release", "Alpha"}));
         } else {
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
+        }
+        if (Utils.isAlpha()) {
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
             comboBoxUpdateChannel.setEnabled(false);
             comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.disabled"));
