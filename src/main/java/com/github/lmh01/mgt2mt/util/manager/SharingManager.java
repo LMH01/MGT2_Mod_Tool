@@ -1032,8 +1032,6 @@ public class SharingManager {
             }
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.starting"));
             try {
-                Files.createDirectories(path.resolve("assets"));
-                Files.createDirectories(path);
                 TomlWriter tomlWriter = new TomlWriter();
                 Map<String, Object> simpleMods = new HashMap<>();
                 Map<String, Object> advancedMods = new HashMap<>();
@@ -1044,6 +1042,10 @@ public class SharingManager {
                     for (String string : mod.getCustomContentString()) {
                         Map<String, Object> singleModMap = mod.getExportMap(string);
                         if (mod instanceof AbstractComplexMod) {//This will add the image name(s) to the map if required and copy the image files
+                            if (!Files.exists(path.resolve("assets"))) {
+                                Files.createDirectories(path.resolve("assets"));
+                                Files.createDirectories(path);
+                            }
                             singleModMap.putAll(((AbstractComplexMod) mod).exportImages(string, path.resolve("assets")));
                         }
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
