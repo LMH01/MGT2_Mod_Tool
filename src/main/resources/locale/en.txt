@@ -1037,7 +1037,7 @@ window.settings.windowTitle|Settings
 window.settings.checkBox.saveLogs|Save logs
 window.settings.checkBox.saveLogs.toolTip|<html>Check this box to save all logs.<br>If disabled only the last log is saved.
 window.settings.exportStorage.checkBoxText|Store exports
-window.settings.exportStorage.checkBoxText.toolTip|If activated, exports are no longer overwritten, but a new folder is created for each export
+window.settings.exportStorage.checkBoxText.toolTip|If deactivated, exports are no longer saved but overwritten
 
 window.npcGamesList.title|Modify NPC games list
 window.npcGamesList.label|<html>Select what genre should be added/removed from the npc games list.<br>When your genre is listed on the npc games list, npc companies will be able to create games with the selected genre.

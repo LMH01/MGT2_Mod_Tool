@@ -201,6 +201,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
                     Settings.setMGT2Folder(true);
                     outputFolder = Settings.mgt2Path;
                     Settings.enableCustomFolder = false;
+                    Settings.enableExportStorage = true;
                     doNotPerformComboBoxActionListener.set(true);
                     automaticWasLastSelectedOption.set(true);
                     manualWasLastSelectedOption.set(false);
@@ -324,7 +325,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
     private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
         StringBuilder unsavedChanges = new StringBuilder();
         if (Settings.enableExportStorage != checkBoxExportStorage.isSelected()) {
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableDebugLogging).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableExportStorage).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
         }
         if (Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.disableSafetyFeatures")).append(" ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));

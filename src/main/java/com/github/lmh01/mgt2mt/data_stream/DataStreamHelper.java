@@ -372,7 +372,6 @@ public class DataStreamHelper {
             }
             ProgressBarHelper.increaseMaxValue((int) getFileCount(directoryToBeDeleted));
         }
-        LOGGER.info("current progress: " + WindowMain.PROGRESS_BAR.getValue() + "/" + WindowMain.PROGRESS_BAR.getMaximum());
         Files.walkFileTree(directoryToBeDeleted, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -391,7 +390,6 @@ public class DataStreamHelper {
                 return FileVisitResult.CONTINUE;
             }
         });
-        LOGGER.info("current progress: " + WindowMain.PROGRESS_BAR.getValue() + "/" + WindowMain.PROGRESS_BAR.getMaximum());
         if (useProgressBar) {
             ProgressBarHelper.resetProgressBar();
         }

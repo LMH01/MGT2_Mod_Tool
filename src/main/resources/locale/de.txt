@@ -1035,7 +1035,7 @@ window.settings.windowTitle|Einstellungen
 window.settings.checkBox.saveLogs|Logs speichern
 window.settings.checkBox.saveLogs.toolTip|<html>Aktiviere diese box, damit alle Logs abgespeichert werden.<br>Wenn deaktiviert, wird nur der letzte Log abgespeichert.
 window.settings.exportStorage.checkBoxText|Exports lagern
-window.settings.exportStorage.checkBoxText.toolTip|Wenn aktiviert, werden Exports nicht mehr überschrieben, sondern für jeden Export wird ein neuer Ordner erstellt
+window.settings.exportStorage.checkBoxText.toolTip|Wenn deaktiviert, werden Exports nicht länger gespeichert, sondern überschrieben
 
 window.npcGamesList.title|Ändere die Liste der NPC-Spiele
 window.npcGamesList.label|<html>Wähle aus, welches Genre zur Liste der NPC-Spiele hinzugefügt / daraus entfernt werden soll.<br>Wenn das Genre in der Liste der NPC-Spiele aufgeführt ist, können NPC-Unternehmen Spiele mit dem ausgewählten Genre erstellen.

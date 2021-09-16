@@ -29,13 +29,13 @@ public class Settings {
     public static boolean enableDisclaimerMessage = true;
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
-    public static boolean enableExportStorage = false; //If true each new export will be saved in a new folder.
+    public static boolean enableExportStorage = true; //If true each new export will be saved in a new folder.
     public static String language = "English";
     public static String updateBranch = "Release";
 
     public static void resetSettings() {
         setMGT2Folder(false);
-        setSettings(false, false, false, false, mgt2Path, true, true, true, "English", "Release", true);
+        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", "Release", true);
         LOGGER.info("Settings have been reset.");
     }
 

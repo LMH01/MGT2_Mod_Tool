@@ -923,7 +923,7 @@ public class SharingManager {
         JButton button = new JButton(set.size() + "/" + set.size());
         disableImport.set(false);
         button.addActionListener(actionEvent -> {
-            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)), false);
+            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)));
             if (selectedMods != null) {
                 selectedEntries.set(selectedMods);
                 if (selectedMods.isEmpty()) {
@@ -1001,6 +1001,13 @@ public class SharingManager {
                 exportFolder = ModManagerPaths.EXPORT.getPath().resolve("single/" + Utils.getCurrentDateTime());
             } else {
                 exportFolder = ModManagerPaths.EXPORT.getPath().resolve("single/");
+                if (Files.exists(exportFolder)) {
+                    try {
+                        DataStreamHelper.deleteDirectory(exportFolder);
+                    } catch (IOException e) {
+                        throw new ModProcessingException("Unable to delete export folder", e);
+                    }
+                }
             }
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.all_single.started"));
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("commonText.exporting"));
@@ -1026,6 +1033,13 @@ public class SharingManager {
                     path = ModManagerPaths.EXPORT.getPath().resolve("bundled/" + Utils.getCurrentDateTime());
                 } else {
                     path = ModManagerPaths.EXPORT.getPath().resolve("bundled/");
+                    if (Files.exists(path)) {
+                        try {
+                            DataStreamHelper.deleteDirectory(path);
+                        } catch (IOException e) {
+                            throw new ModProcessingException("Unable to delete export folder", e);
+                        }
+                    }
                 }
                 map.put("type", exportType.getTypeName());
                 tomlName = "export";
@@ -1081,6 +1095,9 @@ public class SharingManager {
      * Opens a JOptionPane where the user can decide how the mods should be exported: Single or bundled
      */
     public static void displayExportModsWindow() throws ModProcessingException {
+        /*TODO Add another check box that reads: Customize export
+        *   if selected the user can select which mods should be exported
+        *   kinda the same way as its done when importing mods*/
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage.part1"));
         if (!Settings.enableExportStorage) {

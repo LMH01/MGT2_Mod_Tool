@@ -308,10 +308,9 @@ public class Utils {
      * @param windowTile                        The window title that the window should get
      * @param stringArraySafetyFeaturesOn       An array containing the list items when the safety features are on
      * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
-     * @param showNoSelectionMessage            If true the message that something should be selected, when selection is empty is not shown.
      * @return Returns the selected entry names. If cancel is pressed null is returned.
      */
-    public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean showNoSelectionMessage) {
+    public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled) {
         Set<String> returnValues = new HashSet<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
