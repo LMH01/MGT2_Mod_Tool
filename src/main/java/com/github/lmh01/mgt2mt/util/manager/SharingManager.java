@@ -16,12 +16,10 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -103,19 +101,26 @@ public class SharingManager {
                             importMap = modMaps;
                         }
                         if (!importMap.isEmpty()) {
-                            Set<Map<String, Object>> modsChecked = checkDependencies(importMap);
-                            if (modsChecked != null) {
-                                setImportHelperMaps(modsChecked);
-                                importAllMods(modsChecked);
-                                if (importType.equals(ImportType.RESTORE_POINT)) {
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"));
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
+                            if (checkAssetsFolders(importMap)) {
+                                Set<Map<String, Object>> modsChecked = checkDependencies(importMap);
+                                if (modsChecked != null) {
+                                    setImportHelperMaps(modsChecked);
+                                    if (importAllMods(modsChecked)) {
+                                        if (importType.equals(ImportType.RESTORE_POINT)) {
+                                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"));
+                                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
+                                        } else {
+                                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
+                                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
+                                        }
+                                    } else {
+                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                                    }
                                 } else {
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.completed"));
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                                 }
                             } else {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.assetFoldersMissing"));
                             }
                         } else {
                             if (importType.equals(ImportType.RESTORE_POINT)) {
@@ -128,11 +133,11 @@ public class SharingManager {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                     }
                 } else {
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.importCanceled") + ": " + I18n.INSTANCE.get("textArea.importAll.noUniqueModsFound"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.noUniqueModsFound"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var2"), I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2"), JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.importCanceled") + ": " + I18n.INSTANCE.get("textArea.importAll.noCompatibleTomlFilesFound"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.noCompatibleTomlFilesFound"));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var2"), I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2"), JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
@@ -440,7 +445,7 @@ public class SharingManager {
                 DebugHelper.debug(LOGGER, "single mod instance found!: " + map.get("line"));
             }
             if (isModToolVersionSupported(map)) {
-                if (map.get("base_mod_type").equals("simple") || map.get("base_mod_type").equals("advanced")) {
+                if (map.get("base_mod_type").equals("simple") || map.get("base_mod_type").equals("advanced") || map.get("base_mod_type").equals("complex")) {
                     if (doesMapContainMod(mods, map.get("mod_name").toString(), map.get("mod_type").toString())) {
                         modsDuplicated++;
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + map.get("mod_type") + " - " + map.get("mod_name"));
@@ -483,7 +488,9 @@ public class SharingManager {
                     for (Map.Entry<String, Object> entry : modMap.entrySet()) {
                         Map<String, Object> singleModMap = (Map<String, Object>) entry.getValue();
                         if (isModToolVersionSupported(mod.getExportType(), (String) map.get("mod_tool_version"))) {
-                            if (mod instanceof AbstractAdvancedMod) {
+                            if (mod instanceof  AbstractComplexMod) {
+                                singleModMap.put("base_mod_type", "complex");
+                            } else if (mod instanceof AbstractAdvancedMod) {
                                 singleModMap.put("base_mod_type", "advanced");
                             }
                             if (mod instanceof AbstractSimpleMod) {
@@ -524,11 +531,6 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.duplicated") + ": " + modsDuplicated);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.unique") + ": " + uniqueMods);
         LOGGER.info("Search for mods complete. Found " + modsTotal + " mods after " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
-        if (Settings.enableDebugLogging) {
-            for (Map<String, Object> map : mods) {
-                LOGGER.info("Name: " + map.get("mod_name") + " | type: " + map.get("base_mod_type"));
-            }
-        }
         if (uniqueMods > 0) {
             return mods;
         }
@@ -547,6 +549,43 @@ public class SharingManager {
             modMap.put(entry.getKey().replaceAll("\"", ""), entry.getValue());
         }
         return modMap;
+    }
+
+    /**
+     * Checks that all the assets folders of the mods exist.
+     * If a folder is missing a message is displayed where the missing folders are listed and where the user is notified that the import
+     * can not be continued.
+     * When the safety features are off the assets' folder check is skipped
+     *
+     * @param mods The map that contains the mods
+     * @return True if all folders exist or when the safety features are disabled.
+     *         False if a folder is missing and the safety features are enabled.
+     */
+    private static boolean checkAssetsFolders(Set<Map<String, Object>> mods) {
+        List<String> invalidAssetFolders = new ArrayList<>();
+        for (Map<String, Object> map : mods) {
+            Path path = Paths.get(map.get("assets_folder").toString());
+            if (!Files.exists(path) && map.get("base_mod_type").equals("complex")) {
+                if (!invalidAssetFolders.contains(path.toString())) {
+                    invalidAssetFolders.add(path.toString());
+                }
+            }
+        }
+        if (!invalidAssetFolders.isEmpty() && !Settings.disableSafetyFeatures) {
+            JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.firstPart") + "<br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.assetsFoldersMissing"));
+            String[] string = new String[invalidAssetFolders.size()];
+            invalidAssetFolders.toArray(string);
+            JList<String> list = WindowHelper.getList(string, false);
+            JScrollPane scrollPane = WindowHelper.getScrollPane(list);
+            JComponent[] components = {label, scrollPane};
+            JOptionPane.showMessageDialog(null, components, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else {
+            if (Settings.disableSafetyFeatures) {
+                DebugHelper.warn(LOGGER, "Check for asset folders is disabled");
+            }
+            return true;
+        }
     }
 
     /**
@@ -575,7 +614,6 @@ public class SharingManager {
                                         DebugHelper.debug(LOGGER, I18n.INSTANCE.get("textArea.importAll.requiresDependencies") + ": " + parentMap.get("mod_type") + " - " + parentMap.get("mod_name") + " - " + parentMap.get("dependencies"));
                                         ArrayList<String> arrayList = (ArrayList<String>) entry.getValue();
                                         for (String childName : arrayList) {
-                                            LOGGER.info(parent.getExportType() + " | " + child.getExportType() + " - " + childName);
                                             if (!doesModExist(childName, child.getExportType()) && !doesMapContainMod(mods, childName, child.getExportType())) {
                                                 String replacement = getReplacedDependency(alreadyReplacedDependencies, childName, child);
                                                 if (replacement != null) {
@@ -610,7 +648,7 @@ public class SharingManager {
                                 }
                             }
                         } else {
-                            DebugHelper.warn(LOGGER, "Warning: dependency map of " + parent.getType() + " - " + parentMap.get("mod_name") + " does not exist");
+                            DebugHelper.warn(LOGGER, "dependency map of " + parent.getType() + " - " + parentMap.get("mod_name") + " does not exist");
                         }
                     }
                 }
@@ -844,9 +882,10 @@ public class SharingManager {
      * This function should only be called by {@link SharingManager#importAll(ImportType, Set)}.
      *
      * @param mods A set of maps that contain the values for the mods that should be imported.
+     * @return True if import was successful. False if import was canceled.
      * @throws ModProcessingException If something went wrong while importing a mod
      */
-    private static void importAllMods(Set<Map<String, Object>> mods) throws ModProcessingException {
+    private static boolean importAllMods(Set<Map<String, Object>> mods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         timeHelper.measureTime();
@@ -857,14 +896,18 @@ public class SharingManager {
                         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + mod.getType());
                         mod.importMod(map);
                         ProgressBarHelper.increment();
-                    } catch (NullPointerException e) {
-                        throw new ModProcessingException("Critical error while importing mod: " + mod.getType() + " - " + map.get("mod_name"), e);
+                    } catch (ModProcessingException e) {
+                        TextAreaHelper.printStackTrace(e);
+                        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.firstPart") + ": " + mod.getType(true) + " - " + map.get("mod_name") + "<br>" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage() + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                            return false;
+                        }
                     }
                 }
             }
         }
         ProgressBarHelper.resetProgressBar();
         LOGGER.info("Import completed after " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
+        return true;
     }
 
     /**
@@ -918,6 +961,8 @@ public class SharingManager {
                 map.put("mod_type", mod.getExportType());
                 if (mod instanceof AbstractSimpleMod) {
                     map.put("base_mod_type", "simple");
+                } else if (mod instanceof AbstractComplexMod) {
+                    map.put("base_mod_type", "complex");
                 } else if (mod instanceof AbstractAdvancedMod) {
                     map.put("base_mod_type", "advanced");
                 }

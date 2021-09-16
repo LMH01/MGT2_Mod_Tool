@@ -41,3 +41,5 @@ Not Shure:
 //TODO Write tests
 
 /TODO Remove unneeded localisation
+
+TODO Rewrite disable safety features message -> it should be listed what it will disable

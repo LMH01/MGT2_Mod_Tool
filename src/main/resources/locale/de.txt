@@ -561,6 +561,9 @@ dialog.sharingManager.importAll.error.general|<html>Beim scannen der Ordner ist 
 dialog.sharingManager.importAll.noModsAvailable|Keine
 dialog.sharingManager.importAll.manyImportFilesFound|<html>Es wurde eine so große Menge an zu durchsuchenden Dateien und Verzeichnissen gefunden,<br>dass es einige Zeit dauern könnte, bis alles nach Mods zu durchsucht wurde.<br><br>Wenn du auf "Ja" klickst werden alle weiteren Verzeichnisse durchsucht und diese Nachricht wird kein weiteres mal angezeigt.<br>Wenn du auf "Nein" klickst wird der import prozess abgebrochen.<br><br>Bist du dir sicher, dass du den richtigen Ordner ausgewählt hast und soll der Import-prozess fortgesetzt werden?
 dialog.sharingManager.importAll.manyImportFilesFound.title|Import fortsetzen?
+dialog.sharingManager.importAll.errorWhileImportingMod.firstPart|<html>Fehler beim importieren des Mods
+dialog.sharingManager.importAll.errorWhileImportingMod.secondPart|Soll mit dem Import der anderen Mods fortgefahren werden?<br>Warnung: Dies kann zu Problemen führen, da Abhängigkeiten fehlen könnten.
+dialog.sharingManager.importAll.assetsFoldersMissing|Die folgenden Assets-Ordner wurden nicht gefunden:
 dialog.sharingManager.analyzeReturnValue.alreadyExists|existiert bereits
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Unterstützte Versionen:
 dialog.sharingManager.importThings.error.firstPart|Import unmöglich:
@@ -754,9 +757,9 @@ textArea.import.alreadyExists|Der folgende Mod wurde nicht importiert, da er ber
 textArea.import.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod Tool Version kompatibel ist:
 textArea.import.notCompatible.2|Genre wurde exportiert in version:
 textArea.import.specialPublisherNotExisting|Der folgende Publisher wurde nicht importiert, da das Spezial Genre von ihm nicht existiert:
-textArea.importAll.start|Starte importier Prozess
-textArea.importAll.cancel|Importier Prozess wurde abgebrochen
-textArea.importAll.completed|Importier Prozess wurde abgeschlossen
+textArea.importAll.start|Importvorgang starten
+textArea.importAll.cancel|Importvorgang wurde abgebrochen
+textArea.importAll.completed|Importvorgang wurde abgeschlossen
 textArea.importAll.scanningDirectories|Durchsuche Ordner nach kompatiblen mods
 textArea.importAll.currentPath|Aktueller Dateipfad:
 textArea.importAll.indexingFolder|Indizierung des Ordners:
@@ -807,10 +810,10 @@ textArea.importAll.modsFound.part2|Sollen die Mods zum Spiel hinzugefügt werden
 textArea.importAll.restorePointReady|Wiederherstellungspunkt bereit<br>Klicke auf OK, um den Wiederherstellungspunkt wiederherzustellen
 textArea.importAll.checkBox.customizeImport|Import anpassen
 textArea.importAll.checkBox.customizeImport.toolTip|Aktiviere diese Option, damit beim fortfahren ein Fenster geöffnet wird, in welchem die Mods angepasst werden können
-textArea.importAll.importCanceled|Import abgebrochen
 textArea.importAll.replacingOfMapEntryFailed|WARNUNG: Import-Map Eintrag konnte nicht mit der richtigen Mod-Id ersetzt werden, stattdessen wird die id durch eine zufällige id ersetzt. Grund
 textArea.importAll.settingNewModIds|Setze Neue Mod-IDs
 textArea.importAll.noTomlFilesFound|Importieren nicht möglich: Keine .toml-Dateien gefunden
+textArea.importAll.assetFoldersMissing|es gibt fehlende Assets-Ordner
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach

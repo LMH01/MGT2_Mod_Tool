@@ -562,6 +562,9 @@ dialog.sharingManager.importAll.error.general|<html>A critical error occurred wh
 dialog.sharingManager.importAll.noModsAvailable|None
 dialog.sharingManager.importAll.manyImportFilesFound|<html>So many files and directories to search were found<br>that it could take some time to search everything for mods.<br><br>If you click "Yes", all further directories will be searched for mods and this message is not displayed again.<br>If you click "No", the import process will be canceled.<br><br>Are you sure that you have selected the correct folder and do you want to continue the import process?
 dialog.sharingManager.importAll.manyImportFilesFound.title|Continue import?
+dialog.sharingManager.importAll.errorWhileImportingMod.firstPart|<html>Error while importing mod
+dialog.sharingManager.importAll.errorWhileImportingMod.secondPart|Would you like to continue to import the other mods?<br>Warning: This can lead to problems because dependencies could be missing.
+dialog.sharingManager.importAll.assetsFoldersMissing|The following assets folders were not found:
 dialog.sharingManager.analyzeReturnValue.alreadyExists|already exists
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Supported versions:
 dialog.sharingManager.importThings.error.firstPart|Unable to import:
@@ -809,10 +812,10 @@ textArea.importAll.modsFound.part2|Do you want to add the mods to the game?
 textArea.importAll.restorePointReady|Restore point ready<br>Click ok to restore the restore point
 textArea.importAll.checkBox.customizeImport|Customize import
 textArea.importAll.checkBox.customizeImport.toolTip|Check this box so that when you continue a window is opened in which you can customize which mods should be imported
-textArea.importAll.importCanceled|Import canceled
 textArea.importAll.replacingOfMapEntryFailed|WARNING: Import-Map entry could not be replaced with the correct mod id, instead the id will be replaced by a random id. Reason
 textArea.importAll.settingNewModIds|Setting new mod ids
 textArea.importAll.noTomlFilesFound|Unable to import: No .toml files found
+textArea.importAll.assetFoldersMissing|asset folder(s) is/are missing
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to

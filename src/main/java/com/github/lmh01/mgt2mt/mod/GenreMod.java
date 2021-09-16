@@ -423,36 +423,25 @@ public class GenreMod extends AbstractComplexMod {
         }
         if (returnValue == JOptionPane.YES_OPTION) {
             //click yes
-            boolean continueAnyway = false;
-            boolean imageFileAccessedSuccess = false;
             try {
                 ImageFileHandler.addGenreImageFiles(Integer.parseInt(map.get("ID")), map.get("NAME EN"), genreIcon, genreScreenshots);
-                imageFileAccessedSuccess = true;
             } catch (IOException e) {
-                e.printStackTrace();
-                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var1"), I18n.INSTANCE.get("frame.title.continueAnyway"), JOptionPane.YES_NO_OPTION) == 0) {
-                    //click yes
-                    continueAnyway = true;
-                }
+                throw new ModProcessingException("Unable to process genre image files", e);
             }
-            if (continueAnyway | imageFileAccessedSuccess) {
-                try {
-                    addModToFile(map);
-                    ModManager.themeMod.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
-                    ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
-                    ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
-                    genreAdded(map, genreIcon, showMessages);
-                    if (calledFromImport) {
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
-                    } else {
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + mapNewGenre.get("NAME EN"));
-                    }
-                } catch (ModProcessingException e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var2"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+            try {
+                addModToFile(map);
+                ModManager.themeMod.editGenreAllocation(Integer.parseInt(map.get("ID")), true, compatibleThemeIds);
+                ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesGoodIds, Integer.parseInt(map.get("ID")), true);
+                ModManager.gameplayFeatureMod.addGenreId(gameplayFeaturesBadIds, Integer.parseInt(map.get("ID")), false);
+                genreAdded(map, genreIcon, showMessages);
+                if (calledFromImport) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
+                } else {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + I18n.INSTANCE.get("window.main.share.export.genre") + " - " + mapNewGenre.get("NAME EN"));
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var3"));
+            } catch (ModProcessingException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.genreManager.addGenre.error.var2"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         } else if (returnValue == JOptionPane.NO_OPTION || returnValue == JOptionPane.CLOSED_OPTION) {
             //Click no or close window

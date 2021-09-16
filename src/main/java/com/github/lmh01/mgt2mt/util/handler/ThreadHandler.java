@@ -103,7 +103,7 @@ public class ThreadHandler {
         Thread thread = new Thread(() -> {
             try {
                 action.run();
-            } catch (Exception e) {//TODO Add catch for:  null pointer exception, class cast exception
+            } catch (Exception e) {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.firstPart") + " " + threadName);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.secondPart"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));

@@ -23,7 +23,7 @@ public class DebugHelper {
      * @param string The message that should be sent
      */
     public static void warn(Logger logger, String string) {
-        logger.warn(string);
+        logger.warn("Warning: "+ string);
         LogFile.write("Warning: " + string);
     }
 }
