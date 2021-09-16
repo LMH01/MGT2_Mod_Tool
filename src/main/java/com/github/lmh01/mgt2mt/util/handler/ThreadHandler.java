@@ -1,13 +1,11 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.mod.managed.ModAction;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.LogFile;
-import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -41,6 +39,12 @@ public class ThreadHandler {
     public static Thread threadPerformStartTasks() {
         Thread thread = new Thread(() -> {
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.initializingTool"), false, true, false);
+            if (Utils.isAlpha()) {
+                Settings.updateBranch = "Alpha";
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.1"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.2"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.3") + ": " + ModManagerPaths.MAIN.getPath());
+            }
             if (Settings.mgt2FolderIsCorrect) {
                 WindowMain.lockMenuItems(true);
             }

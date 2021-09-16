@@ -846,6 +846,9 @@ textArea.export.addingEntry|Füge eintrag zur map hinzu
 textArea.export.exportingImage|Exportiere Bild
 textArea.export.imageNotExported|WARNUNG: Das folgende Bild wurde nicht kopiert, da es im export Ordner bereits existiert
 textArea.export.warningExportMapNotChangedProperly|WARNUNG: Die Export-Map wurde nicht erfolgreich verändert, der Export ist möglicherweise fehlerhaft. Grund
+textArea.runningAlphaVersion.1|Vielen Dank für das Testen dieser Alpha-Version
+textArea.runningAlphaVersion.2|Bitte melde Probleme, die auftreten auf der Github-Seite (Nützliches -> Github Seite öffnen)
+textArea.runningAlphaVersion.3|Die Konfigurationsdateien für diese Version werden hier gespeichert
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
@@ -1031,6 +1034,7 @@ window.settings.safetyFeatures.warning|<html>Bist du dir sicher, dass du die Sic
 window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
 window.settings.updateChannel.label|Update Kanal:
 window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
+window.settings.updateChannel.disabled|<html>Deaktiviert: Kann nicht zum Release-Kanal wechseln, da die derzeit laufende Mod-Tool-Version Alpha ist
 window.settings.windowTitle|Einstellungen
 window.settings.checkBox.saveLogs|Logs speichern
 window.settings.checkBox.saveLogs.toolTip|<html>Aktiviere diese box, damit alle Logs abgespeichert werden.<br>Wenn deaktiviert, wird nur der letzte Log abgespeichert.

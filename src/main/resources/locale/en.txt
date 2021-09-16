@@ -848,6 +848,9 @@ textArea.export.addingEntry|Adding entry to map
 textArea.export.exportingImage|Exporting image
 textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
 textArea.export.warningExportMapNotChangedProperly|WARNING: The export map was not changed successfully, the export may be faulty. Reason
+textArea.runningAlphaVersion.1|Thank you for testing this alpha version
+textArea.runningAlphaVersion.2|Please report problems that occur on the Github page (Utilities -> Open Github page)
+textArea.runningAlphaVersion.3|The configuration files for this version will be saved in
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?
@@ -1033,6 +1036,7 @@ window.settings.safetyFeatures.warning|<html>Are you sure that you want to disab
 window.settings.safetyFeatures.warning.title|Disable safety features?
 window.settings.updateChannel.label|Update channel:
 window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
+window.settings.updateChannel.disabled|<html>Disabled: Can not change to release channel because the current running mod tool version is alpha
 window.settings.windowTitle|Settings
 window.settings.checkBox.saveLogs|Save logs
 window.settings.checkBox.saveLogs.toolTip|<html>Check this box to save all logs.<br>If disabled only the last log is saved.

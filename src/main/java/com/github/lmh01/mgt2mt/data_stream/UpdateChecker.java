@@ -46,7 +46,7 @@ public class UpdateChecker {
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver1") + " ";
                 } else {
                     url = new URL(ALPHA_UPDATE_URL);
-                    versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver2" + " ");
+                    versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver2") + " ";
                 }
                 Scanner scanner = new Scanner(url.openStream());
                 String currentLine = scanner.nextLine();
@@ -115,7 +115,7 @@ public class UpdateChecker {
                     latestGameVersionCompatible = false;
                     LOGGER.info("Latest mod tool version is not compatible with mgt2");
                 }
-                if (!latestGameVersionCompatible) {
+                if (!latestGameVersionCompatible && !Utils.isAlpha()) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
                 }
             } catch (IOException e) {

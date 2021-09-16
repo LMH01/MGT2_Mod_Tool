@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -619,5 +620,17 @@ public class Utils {
             }
         }
         return returnMap;
+    }
+
+    /**
+     * Checks if the current running mod tool version is an alpha version.
+     * @return True if the version is alpha. False otherwise.
+     */
+    public static boolean isAlpha() {
+        if (MadGamesTycoon2ModTool.VERSION.contains("alpha")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.github.lmh01.mgt2mt.windows;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -279,6 +281,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         contentPane.add(btnSave);
     }
 
+    @SuppressWarnings("unchecked")
     private void loadCurrentSelections() {
         inputFolder = Settings.mgt2Path;
         outputFolder = Settings.mgt2Path;
@@ -293,10 +296,12 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         } else if (Settings.language.equals("Deutsch")) {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
         }
-        if (Settings.updateBranch.equals("Release")) {
+        if (Settings.updateBranch.equals("Release") && !Utils.isAlpha()) {//TODO Replace with enum
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Release", "Alpha"}));
         } else {
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
+            comboBoxUpdateChannel.setEnabled(false);
+            comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.disabled"));
         }
         checkBoxExportStorage.setSelected(Settings.enableExportStorage);
         checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
