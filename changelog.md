@@ -15,7 +15,7 @@
 ### Other
 - Settings file now uses the .toml file format
 - It is no longer possible to add randomized genres
-- It is no longer possible to enable the debug logging in the settings window, instead the storage of exports can now be enabled. If debug logging can still be enabled by editing the settings.toml file
+- It is no longer possible to enable the debug logging in the settings window, instead the storage of exports can now be enabled. Debug logging can still be enabled by editing the settings.toml file
 - Improved performance when handling files
 - Improved text area outputs when importing, exporting, adding or removing mods
 - Improved the error handling massively
@@ -23,6 +23,7 @@
 - Internal code has been massively improved
 - Internal handling of paths and files has been improved
   - Renamed some folders to be more consistent
+- When an initial backup is created the user is now prompted to verify the game files
 
 ### Bug fixes
 - When the hardware file was modified a specific data entry was not written to the file. This caused the controllers and screens to lose the requirements needed to implement them into a console.

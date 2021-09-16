@@ -45,11 +45,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
         EditHelper.printLine("TECH", map, bw);
     }
 
-    @Override
+     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "2.3.0"};
+        return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }
-
+    
     @Override
     public String getMainTranslationKey() {
         return "engineFeature";
