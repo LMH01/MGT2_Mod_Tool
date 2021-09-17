@@ -1110,7 +1110,7 @@ public class SharingManager {
                     if (Files.exists(tomlFile)) {
                         Files.delete(tomlFile);
                     }
-                    Files.createFile(tomlFile);
+                    Files.createDirectories(tomlFile.getParent());
                     tomlWriter.write(map, path.resolve(tomlName + ".toml").toFile());
                 } catch (NullPointerException e) {
                     throw new ModProcessingException("Unable to write .toml file", e);
