@@ -583,6 +583,9 @@ dialog.sharingManager.exportAll.mainMessage.part1|<html>Bist du dir sicher, dass
 dialog.sharingManager.exportAll.mainMessage.part2|<br>Wenn einzel Export an ist, werden mods, die bereits exportiert wurden, nicht noch einmal exportiert.<br>Wenn einzel Export aus ist, werden Bilder von Mods, die bereits exportiert wurden, nicht noch einmal exportiert.
 dialog.sharingManager.exportAll.singleExport|Einzel Export
 dialog.sharingManager.exportAll.singleExport.toolTip|<html>Wenn aktiviert: Die Mods werden in einzelne Ordner exportiert und nicht in einen Datei- und einen Assets-Ordner.<br>Dies führt zu einer längeren Exportzeit.<br>Wenn du einzelne Mods teilen möchtest, sollte diese Option aktiviert werden.
+dialog.sharingManager.exportAll.summary.startText|Die folgenden Mods können exportiert werden:
+dialog.sharingManager.exportAll.summary.endText|<html>Die Zahlen geben an, wie viele Einträge von den verfügbaren Einträgen exportiert werden.<br><br>Tipp:<br>Wenn du nicht alles exportieren möchtest,<br>kannst du auf die Schaltfläche(n) klicken, um auszuwählen, welche Einträge exportiert werden sollen.<br><br>Soll der Exportprozess gestartet werden?
+dialog.sharingManager.exportAll.exportReady.message.title|Export bereit
 dialog.sharingManager.selectImports|Wähle aus, was importiert werden soll:
 
 dialog.updateChecker.noUpdateAvailable|<html>Du benutzt die neueste Version. Kein Update verfügbar.
@@ -662,6 +665,7 @@ frame.title.unableToContinue|Fortsetzen nicht möglich
 frame.title.reset|Zurücksetzen?
 frame.title.information|Information
 frame.title.import|Importieren
+frame.title.export|Exportieren
 frame.title.areYouSure|Bist du dir sicher?
 frame.title.missingDependency|Fehlende Abhängigkeit
 frame.title.restorePointReady|Wiederherstellungspunkt bereit
@@ -920,7 +924,9 @@ window.main.share.export.engineFeature|Engine Feature
 window.main.share.export.gameplayFeature|Gameplay Feature
 window.main.share.export.licence|Lizenz
 window.main.share.export.exportAll|Alles exportieren
-window.main.share.export.exportAll.toolTip|Klicke hier, um alles zu exportieren, was mit diesem Tool erstellt wurde
+window.main.share.export.exportAll.toolTip|Klicke hier, um alle aktuell installierten Mods zu exportieren
+window.main.share.export.exportSelected|Ausgewähltes exportieren
+window.main.share.export.exportSelected.toolTip|Klicke hier, damit du auswählen kannst, was exportiert werden soll
 window.main.share.openExportFolder|Export Ordner öffnen
 window.main.share.deleteAllExport|All Exports löschen
 window.main.backup|Backup

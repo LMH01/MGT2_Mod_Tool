@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class RestorePointHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestorePointHelper.class);
@@ -35,7 +33,7 @@ public class RestorePointHelper {
                         DataStreamHelper.deleteDirectory(ModManagerPaths.CURRENT_RESTORE_POINT.getPath(), true);
                         LOGGER.info("Old restore point has been deleted from folder: " + ModManagerPaths.CURRENT_RESTORE_POINT.getPath());
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
-                        SharingManager.exportAll(ExportType.RESTORE_POINT);
+                        SharingManager.export(ExportType.RESTORE_POINT);
                         TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
                     } catch (IOException e) {
@@ -48,7 +46,7 @@ public class RestorePointHelper {
                 }
             } else {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.startingRestorePoint"));
-                SharingManager.exportAll(ExportType.RESTORE_POINT);
+                SharingManager.export(ExportType.RESTORE_POINT);
                 TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.export.restorePointSuccessful"));
             }

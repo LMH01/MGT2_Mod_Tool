@@ -5,6 +5,8 @@
 - No longer is each mod type listed in the import summary instead only mods for which a new mod is found are displayed
 - It is now checked if the initial backup is up-to-date when the tool is started. (currently vip to enable set "enableInitialBackupCheck" in the "settings.toml" file to true)
 - Improved disclaimer message text
+- Added new entry to the export menu
+  - Export selected -> with this function only selected mods can be exported. Either single or together in a bundle.
 
 ## [v3.0.0-alpha-1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
 

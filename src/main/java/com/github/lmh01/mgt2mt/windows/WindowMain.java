@@ -43,6 +43,7 @@ public class WindowMain {
     private static final JMenuItem M_23_ADD_COMPANY_ICON = new JMenuItem(I18n.INSTANCE.get("window.main.mods.addCompanyIcon"));
     private static final JMenu M_31_EXPORT = new JMenu(I18n.INSTANCE.get("window.main.share.export"));
     private static final JMenuItem M_317_EXPORT_ALL = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportAll"));
+    private static final JMenuItem M_318_EXPORT_SELECTED = new JMenuItem(I18n.INSTANCE.get("window.main.share.export.exportSelected"));
     private static final JMenu M_42_RESTORE_BACKUP = new JMenu(I18n.INSTANCE.get("window.main.backup.restoreBackup"));
     private static final JMenuItem M_422_RESTORE_LATEST_BACKUP = new JMenuItem(I18n.INSTANCE.get("window.main.backup.restoreBackup.restoreLatestBackup"));
     private static final JMenuItem M_431_CREATE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
@@ -117,7 +118,9 @@ public class WindowMain {
         M_2_MODS.add(m210ShowActiveMods);
         M_233_CHANGE_GENRE_THEME_FIT.addActionListener(actionEvent -> ThreadHandler.startModThread(ContentEditor::editGenreThemeFit, "EditGenreThemeFit"));
         M_31_EXPORT.add(M_317_EXPORT_ALL);
+        M_31_EXPORT.add(M_318_EXPORT_SELECTED);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startModThread(SharingManager::displayExportModsWindow, "ExportAll"));
+        M_318_EXPORT_SELECTED.addActionListener(actionEvent -> ThreadHandler.startModThread(SharingManager::exportSelected, "ExportSelected"));
         JMenuItem m35 = new JMenuItem(I18n.INSTANCE.get("window.main.share.openExportFolder"));
         m35.addActionListener(actionEvent -> Utils.open(ModManagerPaths.EXPORT.getPath()));
         JMenuItem m36 = new JMenuItem(I18n.INSTANCE.get("window.main.share.deleteAllExport"));
@@ -255,11 +258,15 @@ public class WindowMain {
                 if (noModsAvailable) {
                     M_317_EXPORT_ALL.setEnabled(false);
                     M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
+                    M_318_EXPORT_SELECTED.setEnabled(false);
+                    M_318_EXPORT_SELECTED.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.noToExportAvailable"));
                     M_431_CREATE_MOD_RESTORE_POINT.setEnabled(false);
                     M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.notAvailableToCreateRestorePoint"));
                 } else {
                     M_317_EXPORT_ALL.setEnabled(true);
-                    M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.exportAvailable"));
+                    M_317_EXPORT_ALL.setToolTipText(I18n.INSTANCE.get("window.main.share.export.exportAll.toolTip"));
+                    M_318_EXPORT_SELECTED.setEnabled(true);
+                    M_318_EXPORT_SELECTED.setToolTipText(I18n.INSTANCE.get("window.main.share.export.exportSelected.toolTip"));
                     M_431_CREATE_MOD_RESTORE_POINT.setEnabled(true);
                     M_431_CREATE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint.toolTip"));
                 }

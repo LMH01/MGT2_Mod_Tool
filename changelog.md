@@ -26,6 +26,8 @@
 - When an initial backup is created the user is now prompted to verify the game files
 - It is now checked if the initial backup is up-to-date when the tool is started. (currently vip to enable set "enableInitialBackupCheck" in the "settings.toml" file to true)
 - Improved disclaimer message text
+- Added new entry to the export menu
+  - Export selected -> with this function only selected mods can be exported. Either single or together in a bundle.
 
 ### Bug fixes
 - When the hardware file was modified a specific data entry was not written to the file. This caused the controllers and screens to lose the requirements needed to implement them into a console.

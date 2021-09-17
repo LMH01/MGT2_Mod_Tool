@@ -173,7 +173,7 @@ public class SharingManager {
         }
         for (AbstractBaseMod mod : ModManager.mods) {
             if (!selectedMods.get(mod).get().isEmpty()) {
-                setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod));
+                setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod), I18n.INSTANCE.get("frame.title.import"));
             }
         }
         String labelStartText;
@@ -919,20 +919,21 @@ public class SharingManager {
      * @param set             The set that contains the mod names of the specific mod
      * @param panel           The panel where the components should be added
      * @param selectedEntries An atomic reference where the return values should be saved
+     * @param frameTitle      The title that should be displayed when the button is pressed
      */
-    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport) {
+    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport, String frameTitle) {
         JLabel label = new JLabel(labelText);
         JButton button = new JButton(set.size() + "/" + set.size());
         disableImport.set(false);
         button.addActionListener(actionEvent -> {
-            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), I18n.INSTANCE.get("frame.title.import"), Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)));
+            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), frameTitle, Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)));
             if (selectedMods != null) {
                 selectedEntries.set(selectedMods);
                 if (selectedMods.isEmpty()) {
-                    LOGGER.info("Import disabled for: " + labelText.replaceAll(":", ""));
+                    LOGGER.info("Import/export disabled for: " + labelText.replaceAll(":", ""));
                     disableImport.set(true);
                 } else {
-                    LOGGER.info("Import enabled for: " + labelText.replaceAll(":", ""));
+                    LOGGER.info("Import/export enabled for: " + labelText.replaceAll(":", ""));
                     disableImport.set(false);
                 }
                 button.setText(selectedEntries.get().size() + "/" + set.size());
@@ -951,7 +952,7 @@ public class SharingManager {
      * @param folder The root folder where the mods should be exported to
      */
     public static void exportSingleMod(AbstractBaseMod mod, String name, Path folder) throws ModProcessingException {
-        LOGGER.info("exporting mod: " + name);//TODO Fix that an assets folder is only generated if pictures exist
+        LOGGER.info("exporting mod: " + name);
         Path path = folder.resolve(mod.getExportType());
         String fileName = mod.getExportType() + "_" + Utils.convertName(name) + ".toml";
         if (!Files.exists(path.resolve(fileName)) && !Files.exists(path.resolve(Utils.convertName(name) + "/" + fileName))) {
@@ -994,7 +995,19 @@ public class SharingManager {
      * @param exportType Determines how and to where the mods should be exported
      * @throws ModProcessingException If something went wrong while exporting mods
      */
-    public static void exportAll(ExportType exportType) throws ModProcessingException {
+    public static void export(ExportType exportType) throws ModProcessingException {
+        export(exportType, null);
+    }
+
+    /**
+     * If mods map is not null only the mods that are stored within that map are exported.
+     * If export type is anything else all mods will be exported.
+     * The text area and the progress bar are used to display progress.
+     *
+     * @param exportType Determines how and to where the mods should be exported
+     * @throws ModProcessingException If something went wrong while exporting mods
+     */
+    public static void export(ExportType exportType, Map<AbstractBaseMod, Set<String>> mods) throws ModProcessingException {
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         timeHelper.measureTime();
         if (exportType.equals(ExportType.ALL_SINGLE)) {
@@ -1014,11 +1027,19 @@ public class SharingManager {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.all_single.started"));
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("commonText.exporting"));
             for (AbstractBaseMod mod : ModManager.mods) {
-                ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
                 ProgressBarHelper.setText(I18n.INSTANCE.get("commonText.exporting") + " " + mod.getType());
-                for (String string : mod.getCustomContentString()) {
-                    exportSingleMod(mod, string, exportFolder);
-                    ProgressBarHelper.increment();
+                if (mods != null) {
+                    ProgressBarHelper.increaseMaxValue(mods.get(mod).size());
+                    for (String string : mods.get(mod)) {
+                        exportSingleMod(mod, string, exportFolder);
+                        ProgressBarHelper.increment();
+                    }
+                } else {
+                    ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
+                    for (String string : mod.getCustomContentString()) {
+                        exportSingleMod(mod, string, exportFolder);
+                        ProgressBarHelper.increment();
+                    }
                 }
             }
         } else {//TODO check that getContentByAlphabet is replaced with getCustomContentString in release version
@@ -1054,7 +1075,13 @@ public class SharingManager {
                 for (AbstractBaseMod mod : ModManager.mods) {
                     Map<String, Object> modMap = new HashMap<>();
                     ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
-                    for (String string : mod.getCustomContentString()) {
+                    String[] strings;
+                    if (mods != null) {
+                        strings = mods.get(mod).toArray(new String[0]);
+                    } else {
+                        strings = mod.getCustomContentString();
+                    }
+                    for (String string : strings) {
                         Map<String, Object> singleModMap = mod.getExportMap(string);
                         if (mod instanceof AbstractComplexMod) {//This will add the image name(s) to the map if required and copy the image files
                             if (!Files.exists(path.resolve("assets"))) {
@@ -1079,6 +1106,11 @@ public class SharingManager {
                 ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.export_compact.writing_toml"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export_compact.writing_toml") + ": " + path.resolve(tomlName + ".toml"));
                 try {
+                    Path tomlFile = path.resolve(tomlName + ".toml");
+                    if (Files.exists(tomlFile)) {
+                        Files.delete(tomlFile);
+                    }
+                    Files.createFile(tomlFile);
                     tomlWriter.write(map, path.resolve(tomlName + ".toml").toFile());
                 } catch (NullPointerException e) {
                     throw new ModProcessingException("Unable to write .toml file", e);
@@ -1090,6 +1122,53 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.exportComplete"));
         LOGGER.info("Exporting mods as " + exportType.getTypeName() + " took " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " milliseconds!");
         ProgressBarHelper.resetProgressBar();
+    }
+
+    /**
+     * Opens a window where the user can select what mods should be exported.
+     * The selected mods are then exported
+     *
+     * @see SharingManager#export(ExportType, Map) will be used to write the export files.
+     */
+    public static void exportSelected() throws ModProcessingException {
+        Map<AbstractBaseMod, JPanel> importModPanels = new HashMap<>();
+        Map<AbstractBaseMod, AtomicBoolean> enabledMods = new HashMap<>();
+        Map<AbstractBaseMod, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
+        for (AbstractBaseMod mod : ModManager.mods) {
+            Set<String> modNames = new HashSet<>(Arrays.asList(mod.getCustomContentString()));
+            selectedMods.put(mod, new AtomicReference<>(modNames));
+            enabledMods.put(mod, new AtomicBoolean(true));
+            importModPanels.put(mod, new JPanel());
+        }
+        for (AbstractBaseMod mod : ModManager.mods) {
+            if (!selectedMods.get(mod).get().isEmpty()) {
+                setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod), I18n.INSTANCE.get("frame.title.export"));
+            }
+        }
+        JLabel labelStart = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.startText"));
+        JLabel labelEnd = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.endText"));
+        Object[] params;
+        ArrayList<JPanel> panels = new ArrayList<>();
+        for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
+            panels.add(entry.getValue());
+        }
+        JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport"));
+        checkBox.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport.toolTip"));
+        Object[] modPanels = panels.toArray(new Object[0]);
+        params = new Object[]{labelStart, modPanels, labelEnd, checkBox};
+        if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.exportAll.exportReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            Map<AbstractBaseMod, Set<String>> map = new HashMap<>();
+            for (AbstractBaseMod mod : ModManager.mods) {
+                Set<String> set = new HashSet<>(selectedMods.get(mod).get());
+                map.put(mod, set);
+            }
+            if (checkBox.isSelected()) {
+                export(ExportType.ALL_SINGLE, map);
+            } else {
+                export(ExportType.ALL_BUNDLED, map);
+            }
+            displayExportSuccessDialog();
+        }
     }
 
     /**
@@ -1110,16 +1189,20 @@ public class SharingManager {
         JComponent[] components = {label, checkBox};
         if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("commonText.export"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             if (checkBox.isSelected()) {
-                exportAll(ExportType.ALL_SINGLE);
+                export(ExportType.ALL_SINGLE);
             } else {
-                exportAll(ExportType.ALL_BUNDLED);
+                export(ExportType.ALL_BUNDLED);
             }
-            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                try {
-                    Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
-                } catch (IOException e) {
-                    throw new ModProcessingException("Unable to open export folder", e);
-                }
+            displayExportSuccessDialog();
+        }
+    }
+
+    private static void displayExportSuccessDialog() throws ModProcessingException{
+        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+            try {
+                Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
+            } catch (IOException e) {
+                throw new ModProcessingException("Unable to open export folder", e);
             }
         }
     }
