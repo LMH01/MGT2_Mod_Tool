@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.mod.managed.ModAction;
@@ -64,7 +63,7 @@ public class ThreadHandler {
                 }
             }
             try {
-                if (Settings.enableInitialBackupReminder) {
+                if (Settings.enableInitialBackupCheck) {
                     if (!InitialBackupChecker.checkIfUpToDate()) {
                         LOGGER.warn("Initial backup is not up-to-date");
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.startTasks.initialBackupOutdated"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);

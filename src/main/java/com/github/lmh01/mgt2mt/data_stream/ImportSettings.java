@@ -33,7 +33,7 @@ public class ImportSettings {
             Settings.updateBranch = toml.getString("updateBranch");
             Settings.saveLogs = toml.getBoolean("saveLogs");
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
-            Settings.enableInitialBackupReminder = toml.getBoolean("enableInitialBackupReminder");
+            Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");
             return true;
         } catch (IllegalStateException | NullPointerException e) {
             LOGGER.info("Unable to import settings!");

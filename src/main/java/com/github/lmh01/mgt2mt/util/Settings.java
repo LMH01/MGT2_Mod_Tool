@@ -30,13 +30,13 @@ public class Settings {
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
     public static boolean enableExportStorage = true; //If true each new export will be saved in a new folder.
-    public static boolean enableInitialBackupReminder = true; //If true the user will be notified if the initial backup is outdated
+    public static boolean enableInitialBackupCheck = false; //If true the user will be notified if the initial backup is outdated
     public static String language = "English";
     public static String updateBranch = "Release";
 
     public static void resetSettings() {
         setMGT2Folder(false);
-        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", "Release", true, true);
+        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", "Release", true, false);
         LOGGER.info("Settings have been reset.");
     }
 
@@ -64,7 +64,7 @@ public class Settings {
      * @param mgt2FilePath          The custom folder path
      * @param enableCustomFolder    True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs, boolean enableInitialBackupReminder) {
+    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs, boolean enableInitialBackupCheck) {
         Settings.enableExportStorage = enableExportStorage;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;
@@ -74,7 +74,7 @@ public class Settings {
         Settings.updateBranch = updateBranch;
         Settings.mgt2Path = mgt2FilePath;
         Settings.saveLogs = saveLogs;
-        Settings.enableInitialBackupReminder = enableInitialBackupReminder;
+        Settings.enableInitialBackupCheck = enableInitialBackupCheck;
         setLanguage(language);
         validateMGT2Folder(mgt2FilePath, false, true);
         ExportSettings.export(ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile());
