@@ -395,6 +395,7 @@ public class Backup {
                     String returnValue = Backup.createInitialBackup(true);
                     ProgressBarHelper.increment();
                     if (returnValue.equals("")) {
+                        InitialBackupChecker.updateInitialBackupVersion();
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);

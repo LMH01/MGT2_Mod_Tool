@@ -8,8 +8,6 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
-import com.github.lmh01.mgt2mt.util.manager.ImportType;
-import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
@@ -19,6 +17,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -129,8 +128,17 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
         //writeHelpFile();
         showModTypes();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        long test = 1631220229;
+        LOGGER.info(sdf.format(test));
+        long test2 = 1631017451;
+        if (test > test2) {
+
+        }
+
         ThreadHandler.startModThread(() -> {
-            SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp/MGT2/toml/test"));
+            LOGGER.info(InitialBackupChecker.checkIfUpToDate() + "");
+            //SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp/MGT2/toml/test"));
         }, "importAll");
 
         /*ThreadHandler.startModThread(() -> {
@@ -258,20 +266,6 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
         }, "write test mods.toml file");
     }
 
-    private static void test2() {
-        BClass obj = new BClass();
-        obj.aMap.put("item", 1);
-
-        TomlWriter tomlWriter = new TomlWriter.Builder()
-                .indentValuesBy(2)
-                .indentTablesBy(4)
-                .padArrayDelimitersBy(3)
-                .build();
-
-        String tomlString = tomlWriter.write(obj);
-        LOGGER.info(tomlString);
-    }
-
     private static void test3() {
         ThreadHandler.startModThread(() -> {
             ExportType exportType = ExportType.ALL_BUNDLED;
@@ -382,8 +376,4 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             e.printStackTrace();
         }
     }
-}
-
-class BClass {
-    Map<String, Integer> aMap = new HashMap<>();
 }

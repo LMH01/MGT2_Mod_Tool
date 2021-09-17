@@ -1026,9 +1026,9 @@ public class SharingManager {
             Path path;
             Map<String, Object> map = new HashMap<>();
             String tomlName;
+            map.put("type", exportType.getTypeName());
             if (exportType.equals(ExportType.RESTORE_POINT)) {
                 path = ModManagerPaths.CURRENT_RESTORE_POINT.getPath();
-                map.put("type", exportType.getTypeName());
                 tomlName = "restore_point";
             } else {
                 if (Settings.enableExportStorage) {
@@ -1043,7 +1043,6 @@ public class SharingManager {
                         }
                     }
                 }
-                map.put("type", exportType.getTypeName());
                 tomlName = "export";
             }
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.starting"));

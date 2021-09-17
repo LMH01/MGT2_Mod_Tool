@@ -3,6 +3,7 @@
 
 ### Other
 - No longer is each mod type listed in the import summary instead only mods for which a new mod is found are displayed
+- It is now checked if the initial backup is up-to-date when the tool is started.
 
 ## [v3.0.0-alpha-1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
 

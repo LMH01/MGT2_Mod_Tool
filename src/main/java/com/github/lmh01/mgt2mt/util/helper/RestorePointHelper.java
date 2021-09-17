@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class RestorePointHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestorePointHelper.class);

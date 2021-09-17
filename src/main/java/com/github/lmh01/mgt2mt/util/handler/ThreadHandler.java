@@ -63,6 +63,19 @@ public class ThreadHandler {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("errorMessages.gameFileCorrupted.textArea.secondPart"));
                 }
             }
+            try {
+                if (Settings.enableInitialBackupReminder) {
+                    if (!InitialBackupChecker.checkIfUpToDate()) {
+                        LOGGER.warn("Initial backup is not up-to-date");
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.startTasks.initialBackupOutdated"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        DebugHelper.debug(LOGGER, "Initial backup is up-to-date");
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.error("Unable to check if initial backup is up-to-date");
+                e.printStackTrace();
+            }
             ProgressBarHelper.resetProgressBar();
         });
         thread.setName("PerformStartTasks");

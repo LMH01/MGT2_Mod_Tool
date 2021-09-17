@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class AnalyzeSteamLibraries {
     private static final Path STEAM_LIBRARY_FOLDERS_PATH;
-    private static final Path STEAM_LIBRARY_DEFAULT_FOLDER;
+    public static final Path STEAM_LIBRARY_DEFAULT_FOLDER;
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalyzeSteamLibraries.class);
 
     static {

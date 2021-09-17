@@ -45,6 +45,7 @@ public class ExportSettings {
             map.put("updateBranch", Settings.updateBranch);
             map.put("saveLogs", Settings.saveLogs);
             map.put("enableExportStorage", Settings.enableExportStorage);
+            map.put("enableInitialBackupReminder", Settings.enableInitialBackupReminder);
             tomlWriter.write(map, file);
             LOGGER.info("Settings have been saved.");
             LogFile.write("Settings have been saved to file: " + file);

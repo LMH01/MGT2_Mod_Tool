@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.nio.file.Paths;
 
-public class ImportSettings {//TODO Rewrite to use .toml file
+public class ImportSettings {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
 
     /**
@@ -33,6 +33,7 @@ public class ImportSettings {//TODO Rewrite to use .toml file
             Settings.updateBranch = toml.getString("updateBranch");
             Settings.saveLogs = toml.getBoolean("saveLogs");
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
+            Settings.enableInitialBackupReminder = toml.getBoolean("enableInitialBackupReminder");
             return true;
         } catch (IllegalStateException | NullPointerException e) {
             LOGGER.info("Unable to import settings!");
