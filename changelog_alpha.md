@@ -1,4 +1,9 @@
 # Changelog (Alpha versions)
+## Coming in [v3.0.0-alpha-2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
+
+### Other
+- No longer is each mod type listed in the import summary instead only mods for which a new mod is found are displayed
+
 ## [v3.0.0-alpha-1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
 
 ### Important

@@ -171,8 +171,10 @@ public class SharingManager {
             enabledMods.put(mod, new AtomicBoolean(true));
             importModPanels.put(mod, new JPanel());
         }
-        for (AbstractBaseMod mod : ModManager.mods) {//TODO only mods for which mods have been found should be added to the gui
-            setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod));
+        for (AbstractBaseMod mod : ModManager.mods) {
+            if (!selectedMods.get(mod).get().isEmpty()) {
+                setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod));
+            }
         }
         String labelStartText;
         String labelEndText;
