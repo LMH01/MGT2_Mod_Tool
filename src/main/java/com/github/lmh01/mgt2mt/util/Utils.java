@@ -633,4 +633,20 @@ public class Utils {
             return false;
         }
     }
+
+    /**
+     * Sorts the panels that are listed in the array list and returns the array list sorted.
+     * The panels are sorted by retrieving their names.
+     * @param panels The array list that contains the JPanels
+     * @return An objects array that contains the panels in a sorted way.
+     * @throws IllegalArgumentException If the panels that are stored in the array list do not contain names
+     */
+    public static Object[] getSortedModPanels(ArrayList<JPanel> panels) throws IllegalArgumentException {
+        JPanel[] modPanels = panels.toArray(new JPanel[0]);
+        try {
+            return Arrays.stream(modPanels).sorted(Comparator.comparing(Component::getName)).toArray();
+        } catch (NullPointerException e){
+            throw new IllegalArgumentException("The panels array list is invalid: panel.getName returns null! Please set the name for the panels before calling this function.", e);
+        }
+    }
 }

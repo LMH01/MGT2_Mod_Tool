@@ -8,6 +8,8 @@ import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
+import com.github.lmh01.mgt2mt.util.manager.ImportType;
+import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
@@ -17,7 +19,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -130,15 +135,16 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         long test = 1631220229;
-        LOGGER.info(sdf.format(test));
+        LOGGER.info(sdf.format(1629107058));
+        LOGGER.info(sdf.format(1631572048));
+        LOGGER.info(sdf.format(1631220229));
         long test2 = 1631017451;
         if (test > test2) {
 
         }
 
         ThreadHandler.startModThread(() -> {
-            LOGGER.info(InitialBackupChecker.checkIfUpToDate() + "");
-            //SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp/MGT2/toml/test"));
+            SharingManager.importAll(ImportType.MANUEL, Paths.get("D:/Temp/MGT2/toml/test"));
         }, "importAll");
 
         /*ThreadHandler.startModThread(() -> {
@@ -374,6 +380,32 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             timesRan++;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param path The file that should be checked
+     * @return The date the file was last modified
+     */
+    public static String getLastModifiedDateFromFile(Path path) throws IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        BasicFileAttributes basicFileAttributes = Files.readAttributes(path, BasicFileAttributes.class);
+        return sdf.format(basicFileAttributes.lastModifiedTime().toMillis());
+    }
+
+    /**
+     * Checks if the new date is after the old date.
+     * Input string formatting: dd/MM/yyyy HH:mm:ss
+     * @return True if new date is after old date. False otherwise
+     */
+    public static boolean isDateNewer(String oldDate, String newDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDate currentDate = LocalDate.parse(oldDate, formatter);
+        LocalDate newestDate = LocalDate.parse(newDate, formatter);
+        if (newestDate.isAfter(currentDate)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

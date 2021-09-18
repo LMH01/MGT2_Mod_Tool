@@ -192,8 +192,8 @@ public class SharingManager {
         for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
             panels.add(entry.getValue());
         }
-        Object[] modPanels = panels.toArray(new Object[0]);
-        params = new Object[]{labelStart, modPanels, labelEnd};
+        JPanel[] modPanels = panels.toArray(new JPanel[0]);
+        params = new Object[]{labelStart, Utils.getSortedModPanels(panels), labelEnd};
         if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             Set<Map<String, Object>> modMap = new HashSet<>();
             for (AbstractBaseMod mod : ModManager.mods) {
@@ -941,6 +941,7 @@ public class SharingManager {
         });
         panel.add(label);
         panel.add(button);
+        panel.setName(labelText);
     }
 
     /**
@@ -1147,15 +1148,13 @@ public class SharingManager {
         }
         JLabel labelStart = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.startText"));
         JLabel labelEnd = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.endText"));
-        Object[] params;
         ArrayList<JPanel> panels = new ArrayList<>();
         for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
             panels.add(entry.getValue());
         }
         JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport"));
         checkBox.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport.toolTip"));
-        Object[] modPanels = panels.toArray(new Object[0]);
-        params = new Object[]{labelStart, modPanels, labelEnd, checkBox};
+        Object[] params = new Object[]{labelStart, Utils.getSortedModPanels(panels), labelEnd, checkBox};
         if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.exportAll.exportReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             Map<AbstractBaseMod, Set<String>> map = new HashMap<>();
             for (AbstractBaseMod mod : ModManager.mods) {

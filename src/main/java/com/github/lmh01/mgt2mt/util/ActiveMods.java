@@ -17,7 +17,7 @@ public class ActiveMods {
      */
     public static void showActiveMods() throws ModProcessingException {
         boolean noModsActive = true;
-        ArrayList<Object> objects = new ArrayList<>();
+        ArrayList<JPanel> objects = new ArrayList<>();
         for (AbstractBaseMod mod : ModManager.mods) {
             String[] customContent = mod.getCustomContentString();
             if (customContent.length > 0) {
@@ -40,6 +40,7 @@ public class ActiveMods {
                 });
                 panel.add(label);
                 panel.add(button);
+                panel.setName(mod.getType());
                 objects.add(panel);
                 noModsActive = false;
             }
@@ -47,7 +48,7 @@ public class ActiveMods {
         if (noModsActive) {
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.showActiveMods.message.firstPart") + System.getProperty("line.separator") + System.getProperty("line.separator") + I18n.INSTANCE.get("dialog.sharingManager.importAll.noModsAvailable"));
         } else {
-            JOptionPane.showMessageDialog(null, objects.toArray());
+            JOptionPane.showMessageDialog(null, Utils.getSortedModPanels(objects));
         }
     }
 }

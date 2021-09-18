@@ -7,6 +7,11 @@
 - Improved disclaimer message text
 - Added new entry to the export menu
   - Export selected -> with this function only selected mods can be exported. Either single or together in a bundle.
+- Mods are now sorted by alphabet when they are displayed in panels
+  - e.g. When the user can choose which mods should be imported
+
+### Bug fixes
+- Export will fail if no mod is exported that requires pictures
 
 ## [v3.0.0-alpha-1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
 
