@@ -533,7 +533,7 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
             bw.write("[EOF]");
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
         }
     }
 

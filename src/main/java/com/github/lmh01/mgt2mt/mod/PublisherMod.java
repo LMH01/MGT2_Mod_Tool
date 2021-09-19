@@ -419,7 +419,7 @@ public class PublisherMod extends AbstractComplexMod {
             bw.write("[EOF]");
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing the game file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing the game file for mod " + getType(), e);
         }
     }
 

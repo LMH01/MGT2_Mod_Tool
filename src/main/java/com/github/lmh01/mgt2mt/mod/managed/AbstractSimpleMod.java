@@ -29,7 +29,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         try {
             fileContent = DataStreamHelper.getContentFromFile(getGameFile(), getCharset());
         } catch (IOException e) {
-            throw new ModProcessingException("Unable to analyze mod-files for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Unable to analyze mod-files for mod " + getType(), e);
         }
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             String string = (String) t;
             editFile(true, string);
         } else {
-            throw new ModProcessingException("T is invalid: Should be String", true);
+            throw new ModProcessingException("T is invalid: Should be String");
         }
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             }
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("Unable to edit mod file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Unable to edit mod file for mod " + getType(), e);
         }
     }
 
@@ -137,7 +137,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
             arrayListAvailableThingsSorted.toArray(string);
             return string;
         } catch (NullPointerException e) {
-            throw new ModProcessingException("Could not return the file content: This is caused because " + getType() + " mod was not analyzed.", true);
+            throw new ModProcessingException("Could not return the file content: This is caused because " + getType() + " mod was not analyzed.", e);
         }
     }
 
@@ -180,7 +180,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         try {
             return getFileContent().get(getPositionInFileContentListByName(name));
         } catch (ModProcessingException e) {
-            throw new ModProcessingException("Line content could not be returned. The name " + name + "' was not found in the file content list!");
+            throw new ModProcessingException("Line content could not be returned. The name " + name + "' was not found in the file content list!", e);
         }
     }
 
@@ -217,7 +217,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         if (t instanceof String) {
             return (String) t;
         } else {
-            throw new ModProcessingException("T is invalid: Should be String", true);
+            throw new ModProcessingException("T is invalid: Should be String");
         }
     }
 

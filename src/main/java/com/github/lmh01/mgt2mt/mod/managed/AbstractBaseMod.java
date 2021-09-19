@@ -32,7 +32,7 @@ public abstract class AbstractBaseMod {
     Map<String, Integer> importHelperMap = new HashMap<>();
 
     {
-        modMenuItems = getInitialModMenuItems();//TODO See if it works to initialize the default content string in this initializer so that the default content is not always recomputed
+        modMenuItems = getInitialModMenuItems();
         exportMenuItem = getInitialExportMenuItem();
     }
 
@@ -141,7 +141,7 @@ public abstract class AbstractBaseMod {
         ProgressBarHelper.resetProgressBar();
         try {
             Collections.sort(arrayListCustomContent);
-        } catch (NullPointerException ignored) {//TODO schauen, ob hier vielleicht auch noch ein throw für ModProcessingException hinzugefügt werden sollte
+        } catch (NullPointerException ignored) {
 
         }
         String[] string = new String[arrayListCustomContent.size()];
@@ -214,15 +214,17 @@ public abstract class AbstractBaseMod {
 
     /**
      * Adds a new mod to the file.
+     * This method should only be overwritten if deemed absolutely necessary.
      *
      * @param t   This map/string contains the values that should be printed to the file
      * @param <T> Should be either {@literal Map<String, String>} or {@literal String}
      * @throws ModProcessingException when {@literal <T>} is not valid
      */
-    public abstract <T> void addModToFile(T t) throws ModProcessingException;
+    protected abstract <T> void addModToFile(T t) throws ModProcessingException;
 
     /**
      * Removes the input mod from the text file
+     * This method should only be overwritten if deemed absolutely necessary.
      *
      * @param name The mod name that should be removed
      */
@@ -290,7 +292,7 @@ public abstract class AbstractBaseMod {
         try {
             Backup.createBackup(getGameFile());
         } catch (IOException e) {
-            throw new ModProcessingException("Error while creating backup for " + getType() + " mod files: " + e.getMessage());
+            throw new ModProcessingException("Error while creating backup for " + getType() + " mod files", e);
         }
     }
 
@@ -376,7 +378,7 @@ public abstract class AbstractBaseMod {
      *
      * @throws ModProcessingException If something went wrong
      */
-    protected abstract void openAddModGui() throws ModProcessingException;//TODO Diese Funktion wird später umgeschrieben, sodass eingaben auch in die Felder geladen werden können
+    protected abstract void openAddModGui() throws ModProcessingException;//TODO This function will be rewritten later so that entries can also be loaded into the fields
 
     /**
      * This is called inside of {@link AbstractBaseMod#openAddModGui()}
@@ -448,7 +450,7 @@ public abstract class AbstractBaseMod {
                 throw new ModProcessingException("The mod name " + name + " of type " + getType() + " does not exist in the import map. This is likely caused because the import file is corrupted.", e);
             }
         } else {
-            throw new ModProcessingException("Import helper map is not initialized.", true);
+            throw new ModProcessingException("Import helper map is not initialized");
         }
     }
 
@@ -474,7 +476,7 @@ public abstract class AbstractBaseMod {
                 throw new ModProcessingException("The mod id " + id + " does not exist in the import map", e);
             }
         } else {
-            throw new ModProcessingException("Import helper map is not initialized.", true);
+            throw new ModProcessingException("Import helper map is not initialized");
         }
     }
 

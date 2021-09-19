@@ -120,7 +120,7 @@ public class GenreMod extends AbstractComplexMod {
     @Deprecated
     @Override
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
-        throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for genre mod", true);
+        throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for genre mod");
     }
 
     @Override

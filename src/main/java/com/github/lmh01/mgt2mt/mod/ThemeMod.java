@@ -172,7 +172,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 }
             }
         } catch (IOException e) {
-            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage(), e);
+            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType(), e);
         }
     }
 
@@ -183,7 +183,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     @Deprecated
     @Override
     protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {//TODO write this function
-        throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for theme mod", true);
+        throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for theme mod");
     }
 
     @Override
@@ -221,7 +221,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     @Deprecated
     @Override
     public <T> void addModToFile(T t) throws ModProcessingException {
-        throw new ModProcessingException("Call to addMod(T t) is invalid. This function is not implemented for theme mod", true);
+        throw new ModProcessingException("Call to addMod(T t) is invalid. This function is not implemented for theme mod");
     }
 
     @Override
@@ -239,7 +239,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                     }
                 }
             } catch (ClassCastException e) {
-                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
+                throw new ModProcessingException("Unable to cast map entry to Set<String>", e);
             }
         }
         map.put("line", line);
@@ -348,7 +348,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
             }
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("The custom theme file could not be generated: " + e.getMessage(), e);
+            throw new ModProcessingException("The custom theme file could not be generated", e);
         }
     }
 
@@ -369,7 +369,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
                     currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_16LE);
                 } else {
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
+                    throw new ModProcessingException("Unable to determine what charset to use");
                 }
                 if (themeFile.exists()) {
                     themeFile.delete();
@@ -382,7 +382,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
                     bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_16LE));
                 } else {
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
+                    throw new ModProcessingException("Unable to determine what charset to use");
                 }
                 int currentLine = 1;
                 boolean firstLine = true;
@@ -420,7 +420,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 bw.close();
             }
         } catch (IOException e) {
-            throw new ModProcessingException("Error while editing the theme files: " + e.getMessage(), e);
+            throw new ModProcessingException("Error while editing the theme files", e);
         }
     }
 
@@ -497,7 +497,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
             }
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while analyzing the german theme file: " + e.getMessage(), e);
+            throw new ModProcessingException("Something went wrong while analyzing the german theme file", e);
         }
     }
 
@@ -532,7 +532,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
                     currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
                 } else {
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
+                    throw new ModProcessingException("Unable to determine what charset to use");
                 }
                 for (Map.Entry<Integer, String> entry : currentThemeFileContent.entrySet()) {
                     if (getReplacedLine(entry.getValue()).equals(inputString)) {
@@ -541,7 +541,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 }
                 return false;
             } catch (IOException e) {
-                throw new ModProcessingException("Error while analyzing file '" + themeFile.getName() + "':" + e.getMessage(), e);
+                throw new ModProcessingException("Error while analyzing file '" + themeFile.getName(), e);
             }
         }
         return false;
@@ -563,7 +563,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
                     reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getThemeFile(string)), StandardCharsets.UTF_16LE));
                 } else {
-                    throw new ModProcessingException("Unable to determine what charset to use", true);
+                    throw new ModProcessingException("Unable to determine what charset to use");
                 }
                 String currentLine;
                 int currentLineNumber = 1;

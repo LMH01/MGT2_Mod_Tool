@@ -164,7 +164,7 @@ public class NpcEngineMod extends AbstractAdvancedDependentMod {
                 }
             }
         } catch (IOException e) {
-            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType() + " - " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
+            throw new ModProcessingException(I18n.INSTANCE.get("commonText.unableToAdd") + getType(), e);
         }
     }
 
@@ -281,7 +281,7 @@ public class NpcEngineMod extends AbstractAdvancedDependentMod {
             bw.write("[EOF]");
             bw.close();
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
         }
     }
 }

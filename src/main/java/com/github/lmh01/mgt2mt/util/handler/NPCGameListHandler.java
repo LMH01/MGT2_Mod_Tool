@@ -77,7 +77,7 @@ public class NPCGameListHandler {
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.removed.upperCase") + " " + string + " " + I18n.INSTANCE.get("window.npcGamesList.from") + " " + I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2").replace(".", ""));
                                 }
                             } catch (ModProcessingException e) {
-                                throw new ModProcessingException(I18n.INSTANCE.get("window.npcGamesList.errorOccurred") + ": " + e.getMessage(), e);
+                                throw new ModProcessingException(I18n.INSTANCE.get("window.npcGamesList.errorOccurred"), e);
                             }
                             ProgressBarHelper.increment();
                         }

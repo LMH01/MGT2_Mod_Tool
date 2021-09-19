@@ -20,7 +20,7 @@ import java.util.*;
  * If the mod needs dependencies use {@link AbstractAdvancedDependentMod}
  * If image files should be processed create a new mod using {@link AbstractComplexMod}
  */
-public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See what functions should be final (Also do that for each of the oder abstract mod classes)
+public abstract class AbstractAdvancedMod extends AbstractBaseMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedMod.class);
 
@@ -53,9 +53,9 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             bw.write("[EOF]");
             bw.close();
         } catch (ClassCastException e) {
-            throw new ModProcessingException("T is invalid: Should be Map<String, String>", e, true);
+            throw new ModProcessingException("T is invalid: Should be Map<String, String>", e);
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage(), e);
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
         }
     }
 
@@ -85,7 +85,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + name);
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType() + ": " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
         }
     }
 
@@ -164,7 +164,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
             arrayListAvailableThingsSorted.toArray(string);
             return string;
         } catch (NullPointerException e) {
-            throw new ModProcessingException("Could not return the file content: This is caused because " + getType() + " mod was not analyzed.", true);
+            throw new ModProcessingException("Could not return the file content: This is caused because " + getType() + " mod was not analyzed.", e);
         }
     }
 
@@ -205,7 +205,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
                 throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.", e, true);
+            throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.", e);
         }
     }
 
@@ -301,7 +301,7 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {//TODO See wh
         try {
             return (Map<String, String>) t;
         } catch (ClassCastException e) {
-            throw new ModProcessingException("T is invalid: Should be Map<String, String>", true);
+            throw new ModProcessingException("T is invalid: Should be Map<String, String>", e);
         }
     }
 

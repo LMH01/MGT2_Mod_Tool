@@ -196,7 +196,7 @@ public class NpcGamesMod extends AbstractSimpleDependentMod {
             ModManager.npcGamesMod.getGameFile().delete();
             fileNpcGamesTemp.renameTo(ModManager.npcGamesMod.getGameFile());
         } catch (IOException e) {
-            throw new ModProcessingException("Something went wrong while editing npcGames.txt file: " + e.getMessage());
+            throw new ModProcessingException("Something went wrong while editing npcGames.txt file", e);
         }
     }
 

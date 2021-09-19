@@ -141,7 +141,7 @@ public class ImageFileHandler {
                         .map(Path::toFile)
                         .forEach(File::delete);
             } catch (IOException e) {
-                throw new ModProcessingException("Something went wrong while deleting the screenshot files for genre " + genreName + ": " + e.getMessage());
+                throw new ModProcessingException("Something went wrong while deleting the screenshot files for genre " + genreName, e);
             }
             DebugHelper.debug(LOGGER, "removed file: " + screenshotFolder.getPath());
         }

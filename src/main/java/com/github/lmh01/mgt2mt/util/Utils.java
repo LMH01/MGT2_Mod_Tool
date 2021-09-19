@@ -200,7 +200,7 @@ public class Utils {
             }
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
-            throw new ModProcessingException("Image file could not be selected: " + e.getMessage(), e);
+            throw new ModProcessingException("Image file could not be selected", e);
         }
     }
 

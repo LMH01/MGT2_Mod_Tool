@@ -104,7 +104,7 @@ public class OperationHelper {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.error.unableTo") + " " + operation + exportType + ":\n" + I18n.INSTANCE.get("processor.error.noCustom") + " " + exportType + " " + I18n.INSTANCE.get("processor.error.part.1") + " " + exportType + " " + I18n.INSTANCE.get("processor.nothingSelected.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
-            throw new ModProcessingException(I18n.INSTANCE.get("processor.error.part.2") + " " + operation + exportType + ": " + e.getMessage(), e);
+            throw new ModProcessingException(I18n.INSTANCE.get("processor.error.part.2") + " " + operation + exportType, e);
         }
     }
 }

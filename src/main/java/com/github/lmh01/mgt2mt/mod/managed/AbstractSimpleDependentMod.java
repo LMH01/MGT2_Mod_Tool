@@ -48,7 +48,7 @@ public abstract class AbstractSimpleDependentMod extends AbstractSimpleMod imple
                     }
                 }
             } catch (ClassCastException e) {
-                throw new ModProcessingException("Unable to cast map entry to Set<String>", e, true);
+                throw new ModProcessingException("Unable to cast map entry to Set<String>", e);
             }
         }
         map.put("line", line);
