@@ -166,7 +166,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                 I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + TypeEnum.getTypeNameById(Integer.parseInt(map.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + EngineFeatureType.getTypeNameById(Integer.parseInt(map.get("TYP"))) + "\n" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +

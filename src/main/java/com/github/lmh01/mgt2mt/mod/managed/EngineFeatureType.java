@@ -23,6 +23,7 @@ public enum EngineFeatureType implements TypeEnum {
     /**
      * @return The translated name of the platform type
      */
+    @Override
     public String getTypeName() {
         return name;
     }
@@ -30,7 +31,21 @@ public enum EngineFeatureType implements TypeEnum {
     /**
      * @return The id for the type
      */
+    @Override
     public int getId() {
         return id;
+    }
+
+    /**
+     * @param id The id for which the name should be returned
+     * @return The name for the id
+     */
+    public static String getTypeNameById(int id) {
+        for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
+            if (engineFeatureType.getId() == id) {
+                return engineFeatureType.getTypeName();
+            }
+        }
+        throw new IllegalArgumentException("Id is invalid. Should be 0-3 was " + id);
     }
 }

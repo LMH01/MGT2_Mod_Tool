@@ -405,7 +405,11 @@ public class PlatformMod extends AbstractComplexMod {
                                 } else {
                                     platformMap.put("INTERNET", "0");
                                 }
-                                platformMap.put("TYP", Integer.toString(getPlatformTypeIdByString(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
+                                for (PlatformType platformType : PlatformType.values()) {
+                                    if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(platformType.getTypeName())) {
+                                        platformMap.put("TYP", Integer.toString(platformType.getId()));
+                                    }
+                                }
                                 if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                     createBackup();
                                     addModToFile(platformMap);
@@ -479,7 +483,7 @@ public class PlatformMod extends AbstractComplexMod {
             internetMessageToPrint = Utils.getTranslatedValueFromBoolean(true);
         }
         message.append(I18n.INSTANCE.get("commonText.internet")).append(": ").append(internetMessageToPrint).append("<br>");
-        message.append(I18n.INSTANCE.get("commonText.type")).append(": ").append(getPlatformTypeStringById(Integer.parseInt(map.get("TYP")))).append("<br>");
+        message.append(I18n.INSTANCE.get("commonText.type")).append(": ").append(PlatformType.getTypeNameById(Integer.parseInt(map.get("TYP")))).append("<br>");
         return message.toString();
     }
 
@@ -598,48 +602,6 @@ public class PlatformMod extends AbstractComplexMod {
             }
         }
         return map;
-    }
-
-    /**
-     * @return Returns the platform type for the input id. Returns -1 if the string is not correct
-     */
-    public int getPlatformTypeIdByString(String type) {//TODO Rewrite to use enum PlatformType
-        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))) {
-            return 0;
-        }
-        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console"))) {
-            return 1;
-        }
-        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld"))) {
-            return 2;
-        }
-        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone"))) {
-            return 3;
-        }
-        if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard"))) {
-            return 4;
-        }
-        return -1;
-    }
-
-    /**
-     * @return Returns the type string for the input id.
-     */
-    public String getPlatformTypeStringById(int id) {//TODO Rewrite to use enum and to throw ModProcessingException
-        switch (id) {
-            case 0:
-                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer");
-            case 1:
-                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.console");
-            case 2:
-                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.handheld");
-            case 3:
-                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.cellPhone");
-            case 4:
-                return I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard");
-            default:
-                throw new IllegalArgumentException("The input string is invalid!");
-        }
     }
 
     private void setEndYearSpinner(JSpinner spinnerUnlockYear, JSpinner spinnerEndYear) {
