@@ -15,6 +15,7 @@
 
 ### Bug fixes
 - Export will fail if no mod is exported that requires pictures
+- Required mod version was not displayed if a mod contained within a bundled mod was incompatible
 
 ## [v3.0.0-alpha-1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
 
