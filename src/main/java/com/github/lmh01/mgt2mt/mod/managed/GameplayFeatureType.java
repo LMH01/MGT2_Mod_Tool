@@ -26,12 +26,12 @@ public enum GameplayFeatureType implements TypeEnum{
 
     @Override
     public String getTypeName() {
-        return null;
+        return name;
     }
 
     @Override
     public int getId() {
-        return 0;
+        return id;
     }
 
     /**

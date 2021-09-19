@@ -156,7 +156,7 @@ public class PlatformMod extends AbstractComplexMod {
             JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
             JTextField textFieldManufacturer = new JTextField(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldManufacturer.initialValue"));
             JButton buttonAddManufacturerTranslation = WindowHelper.getAddTranslationsButton(mapManufacturerTranslations, manufacturerTranslationsAdded, 2);
-            JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(2);
+            JComboBox<String> comboBoxFeatureType = WindowHelper.getComboBox(PlatformType.class, "mod.platform.addPlatform.components.comboBox.type.toolTip", PlatformType.COMPUTER.getTypeName());
 
             JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
 
@@ -164,7 +164,7 @@ public class PlatformMod extends AbstractComplexMod {
             JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
             spinnerUnlockYear.addChangeListener(e -> setEndYearSpinner(spinnerUnlockYear, spinnerEndYear));
 
-            JComboBox comboBoxEndDateMonth = WindowHelper.getUnlockMonthComboBox();
+            JComboBox<String> comboBoxEndDateMonth = WindowHelper.getUnlockMonthComboBox();
             comboBoxEndDateMonth.setToolTipText(null);
             comboBoxEndDateMonth.setEnabled(false);
 

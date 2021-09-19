@@ -21,7 +21,10 @@ public class ContentEditor {
         JLabel labelGenres = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.genreLabel"));
         JList<String> genreList = WindowHelper.getList(ModManager.genreMod.getContentByAlphabet(), true);
         JScrollPane scrollPaneGenres = WindowHelper.getScrollPane(genreList);
-        JComboBox<String> comboBoxOperation = WindowHelper.getTypeComboBox(3);
+        JComboBox<String> comboBoxOperation = new JComboBox<>();
+        comboBoxOperation.setToolTipText(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.comboBox.toolTip"));
+        comboBoxOperation.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("commonText.add.upperCase"), I18n.INSTANCE.get("commonText.remove.upperCase")}));
+        comboBoxOperation.setSelectedItem(I18n.INSTANCE.get("commonText.add.upperCase"));
         Object[] params = {labelExplanation, labelThemes, scrollPaneThemes, labelGenres, scrollPaneGenres, comboBoxOperation};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.message.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {

@@ -1,9 +1,6 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.EngineFeatureType;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.PlatformType;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -280,46 +277,23 @@ public class WindowHelper {
     }
 
     /**
-     * @param type Determines what values will be used for the initialized items. 0 = Engine feature types; 1 = Gameplay feature types; 2 = Console types
-     * @return Returns a new combo box with tooltip, label, model and selected item already initialized.
+     * @param c The enum class that contains the values
+     * @param toolTipTranslationKey The translation key for the tool tip of the combo box
+     * @param selectedItem The item that should be selected
+     * @param <E> An enum that implements the interface {@link TypeEnum}
+     * @return A new {@link JComboBox}.
      */
-    public static JComboBox<String> getTypeComboBox(int type) {
+    public static <E extends Enum<?> & TypeEnum> JComboBox<String> getComboBox(Class<E> c, String toolTipTranslationKey, String selectedItem) {
         JComboBox<String> comboBox = new JComboBox<>();
-        switch (type) {
-            case 0:
-                comboBox.setToolTipText(I18n.INSTANCE.get("mod.engineFeature.addMod.components.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{EngineFeatureType.GRAPHIC.getTypeName(), EngineFeatureType.SOUND.getTypeName(), EngineFeatureType.AI.getTypeName(), EngineFeatureType.PHYSICS.getTypeName()}));
-                comboBox.setSelectedItem("Graphic");
-                break;
-            case 1:
-                comboBox.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Physics", "Gameplay", "Control", "Multiplayer"}));
-                comboBox.setSelectedItem("Graphic");
-                break;
-            case 2:
-                comboBox.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{PlatformType.COMPUTER.getTypeName(), PlatformType.CONSOLE.getTypeName(), PlatformType.HANDHELD.getTypeName(), PlatformType.CELL_PHONE.getTypeName(), PlatformType.ARCADE_SYSTEM_BOARD.getTypeName()}));
-                comboBox.setSelectedItem(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"));
-                break;
-            case 3:
-                comboBox.setToolTipText(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.comboBox.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("commonText.add.upperCase"), I18n.INSTANCE.get("commonText.remove.upperCase")}));
-                comboBox.setSelectedItem(I18n.INSTANCE.get("commonText.add.upperCase"));
-                break;
-            case 4:
-                comboBox.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.type.toolTip"));
-                ArrayList<String> modelContent = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
-                    modelContent.add(ModManager.hardwareMod.getHardwareTypeNameById(i));
-                }
-                String[] model = new String[modelContent.size()];
-                modelContent.toArray(model);
-                comboBox.setModel(new DefaultComboBoxModel<>(model));
-                comboBox.setSelectedItem(ModManager.hardwareMod.getHardwareTypeNameById(0));
-                break;
-            default:
-                throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-4; Was: " + type);
+        comboBox.setToolTipText(I18n.INSTANCE.get(toolTipTranslationKey));
+        ArrayList<String> modelContent = new ArrayList<>();
+        for (E o : c.getEnumConstants()) {
+            modelContent.add(o.getTypeName());
         }
+        String[] model = new String[modelContent.size()];
+        modelContent.toArray(model);
+        comboBox.setModel(new DefaultComboBoxModel<>(model));
+        comboBox.setSelectedItem(selectedItem);
         return comboBox;
     }
 

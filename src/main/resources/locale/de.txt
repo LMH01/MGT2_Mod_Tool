@@ -125,6 +125,7 @@ commonText.control|Technik
 commonText.tech|Technik
 commonText.artificialIntelligence|Künstliche Intelligenz
 commonText.physics|Physik
+commonText.multiplayer|Mehrspieler
 commonText.kid|Kinder
 commonText.teen|Teenager
 commonText.adult|Erwachsene

@@ -62,8 +62,8 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
             bw.write("\r\n");
             bw.write("[EOF]");
             bw.close();
-        } catch (IOException e) {//TODO catch block schreiben
-
+        } catch (IOException e) {
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
         }
     }
 
@@ -104,8 +104,8 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
             bw.write("[EOF]");
             bw.close();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getType() + " - " + name);
-        } catch (IOException e) {//TODO catch block schreiben
-
+        } catch (IOException e) {
+            throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
         }
     }
 
@@ -174,7 +174,7 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
         JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslation, descriptionTranslationsAdded, 0);
         JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
-        JComboBox<String> comboBoxType = WindowHelper.getTypeComboBox(4);
+        JComboBox<String> comboBoxType = WindowHelper.getComboBox(HardwareType.class, "mod.hardware.addMod.components.comboBox.type.toolTip", HardwareType.CPU.getTypeName());
         JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
         JSpinner spinnerCost = WindowHelper.getBaseSpinner("commonText.cost.spinner.toolTip", 500000, 0, 10000000, 10000);
         JSpinner spinnerDevelopmentCost = WindowHelper.getBaseSpinner("commonText.developmentCost.spinner", 1000000, 0, 100000000, 10000);
@@ -224,8 +224,12 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
                         hardwareFeatureMap.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         hardwareFeatureMap.put("PRICE", spinnerCost.getValue().toString());
                         hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
-                        hardwareFeatureMap.put("TYP", Integer.toString(getHardwareTypeIdByName(Objects.requireNonNull(comboBoxType.getSelectedItem()).toString())));
                         hardwareFeatureMap.put("TECHLEVEL", spinnerTechLevel.getValue().toString());
+                        for (HardwareType hardwareType : HardwareType.values()) {
+                            if (Objects.requireNonNull(comboBoxType.getSelectedItem()).toString().equals(hardwareType.getTypeName())) {
+                                hardwareFeatureMap.put("TYP", Integer.toString(hardwareType.getId()));
+                            }
+                        }
                         if (comboBoxType.getSelectedItem().equals(I18n.INSTANCE.get("commonText.controller"))) {
                             if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) < 1992) {
                                 hardwareFeatureMap.put("NEED-1", "45");
@@ -294,7 +298,7 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "<br>" +
                 I18n.INSTANCE.get("commonText.price") + ": " + map.get("PRICE") + "<br>" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "<br>" +
-                I18n.INSTANCE.get("commonText.type") + ": " + getHardwareTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
+                I18n.INSTANCE.get("commonText.type") + ": " + HardwareType.getTypeNameById(Integer.parseInt(map.get("TYP"))) + "<br>" +
                 lastPart;
     }
 
@@ -353,70 +357,5 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
         }
         map.put(ModManager.gameplayFeatureMod.getExportType(), set);
         return map;
-    }
-
-    /**
-     * Converts the input id into the respective type name
-     *
-     * @param typeName The feature type id
-     * @return Returns the type name
-     */
-    public int getHardwareTypeIdByName(String typeName) {//TODO Rewrite to use enums
-        if (typeName.equals(I18n.INSTANCE.get("commonText.cpu"))) {
-            return 0;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.gpu"))) {
-            return 1;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.ram"))) {
-            return 2;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.storage"))) {
-            return 3;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.audio"))) {
-            return 4;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.cooling"))) {
-            return 5;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.gameStorageDevice"))) {
-            return 6;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.controller"))) {
-            return 7;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.case"))) {
-            return 8;
-        } else if (typeName.equals(I18n.INSTANCE.get("commonText.screen"))) {
-            return 9;
-        } else {
-            throw new IllegalArgumentException("The input for the function typeName is invalid! For valid inputs see function; Was: " + typeName);
-        }
-    }
-
-    /**
-     * Converts the input id into the respective type name
-     *
-     * @param typeId The feature type id
-     * @return Returns the type name
-     */
-    public String getHardwareTypeNameById(int typeId) {//TODO Rewrite to use enums
-        switch (typeId) {
-            case 0:
-                return I18n.INSTANCE.get("commonText.cpu");
-            case 1:
-                return I18n.INSTANCE.get("commonText.gpu");
-            case 2:
-                return I18n.INSTANCE.get("commonText.ram");
-            case 3:
-                return I18n.INSTANCE.get("commonText.storage");
-            case 4:
-                return I18n.INSTANCE.get("commonText.audio");
-            case 5:
-                return I18n.INSTANCE.get("commonText.cooling");
-            case 6:
-                return I18n.INSTANCE.get("commonText.gameStorageDevice");
-            case 7:
-                return I18n.INSTANCE.get("commonText.controller");
-            case 8:
-                return I18n.INSTANCE.get("commonText.case");
-            case 9:
-                return I18n.INSTANCE.get("commonText.screen");
-            default:
-                throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-9; Was: " + typeId);
-        }
     }
 }

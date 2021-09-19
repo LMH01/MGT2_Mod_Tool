@@ -94,7 +94,7 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
         final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
         AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
         JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslations, descriptionTranslationsAdded, 1);
-        JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(1);
+        JComboBox<String> comboBoxFeatureType = WindowHelper.getComboBox(GameplayFeatureType.class, "mod.gameplayFeature.addMod.components.type.toolTip", GameplayFeatureType.GAMEPLAY.getTypeName());
         JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
         JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
@@ -198,11 +198,6 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
                             newGameplayFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newGameplayFeature.put("ID", Integer.toString(getFreeId()));
-                        for (GameplayFeatureType gameplayFeatureType : GameplayFeatureType.values()) {
-                            if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(gameplayFeatureType.getTypeName())) {
-                                newGameplayFeature.put("TYP", Integer.toString(gameplayFeatureType.getId()));
-                            }
-                        }
                         newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                         newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newGameplayFeature.put("PRICE", spinnerResearchCost.getValue().toString());
@@ -214,6 +209,11 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
                         newGameplayFeature.put("TECH", spinnerTech.getValue().toString());
                         newGameplayFeature.put("GOOD", Utils.transformArrayListToString(goodGenreIds[0]));
                         newGameplayFeature.put("BAD", Utils.transformArrayListToString(badGenreIds[0]));
+                        for (GameplayFeatureType gameplayFeatureType : GameplayFeatureType.values()) {
+                            if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(gameplayFeatureType.getTypeName())) {
+                                newGameplayFeature.put("TYP", Integer.toString(gameplayFeatureType.getId()));
+                            }
+                        }
                         if (!checkBoxCompatibleWithArcadeCabinets.isSelected()) {
                             newGameplayFeature.put("NO_ARCADE", "");
                         }

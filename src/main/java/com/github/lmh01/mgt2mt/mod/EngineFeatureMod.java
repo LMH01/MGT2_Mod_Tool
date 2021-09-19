@@ -83,7 +83,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
         final Map<String, String>[] mapDescriptionTranslations = new Map[]{new HashMap<>()};
         AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
         JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslations, descriptionTranslationsAdded, 1);
-        JComboBox<String> comboBoxFeatureType = WindowHelper.getTypeComboBox(0);
+        JComboBox<String> comboBoxFeatureType = WindowHelper.getComboBox(EngineFeatureType.class, "mod.engineFeature.addMod.components.type.toolTip", EngineFeatureType.GRAPHIC.getTypeName());
         JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
         JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
@@ -123,11 +123,6 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             newEngineFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newEngineFeature.put("ID", Integer.toString(getFreeId()));
-                        for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
-                            if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(engineFeatureType.getTypeName())) {
-                                newEngineFeature.put("TYP", Integer.toString(engineFeatureType.getId()));
-                            }
-                        }
                         newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                         newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newEngineFeature.put("PRICE", spinnerResearchCost.getValue().toString());
@@ -138,6 +133,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                         newEngineFeature.put("GRAPHIC", spinnerGraphic.getValue().toString());
                         newEngineFeature.put("SOUND", spinnerSound.getValue().toString());
                         newEngineFeature.put("TECH", spinnerTech.getValue().toString());
+                        for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
+                            if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(engineFeatureType.getTypeName())) {
+                                newEngineFeature.put("TYP", Integer.toString(engineFeatureType.getId()));
+                            }
+                        }
                         boolean addFeature = Summaries.showSummary(getOptionPaneMessage(newEngineFeature), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                         if (addFeature) {
                             createBackup();
