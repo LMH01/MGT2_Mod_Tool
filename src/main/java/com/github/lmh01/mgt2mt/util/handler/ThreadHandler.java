@@ -39,7 +39,7 @@ public class ThreadHandler {
         Thread thread = new Thread(() -> {
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.initializingTool"), false, true, false);
             if (Utils.isAlpha()) {
-                Settings.updateBranch = "Alpha";
+                Settings.updateBranch = UpdateBranch.ALPHA;
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.1"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.2"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.3") + ": " + ModManagerPaths.MAIN.getPath());

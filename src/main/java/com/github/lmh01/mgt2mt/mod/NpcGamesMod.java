@@ -164,11 +164,6 @@ public class NpcGamesMod extends AbstractSimpleDependentMod {
         return outputString.toString().trim();
     }
 
-    @Override
-    public String getModFileCharset() {
-        return "UTF_16LE";
-    }
-
     /**
      * Modifies the NpcGames.txt file to include/remove a specified genre id
      *

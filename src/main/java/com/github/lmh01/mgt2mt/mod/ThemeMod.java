@@ -209,11 +209,6 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     }
 
     @Override
-    public String getModFileCharset() {
-        return "UTF_16LE";
-    }
-
-    @Override
     public void analyzeFile() throws ModProcessingException {
         writeCustomThemeFile();
         super.analyzeFile();
@@ -337,8 +332,8 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 getGameFile().delete();
             }
             getGameFile().createNewFile();
-            Map<Integer, String> ger = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("GE", "Themes_GE.txt")).toFile(), "UTF_16LE");
-            Map<Integer, String> eng = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("EN", "Themes_EN.txt")).toFile(), "UTF_16LE");
+            Map<Integer, String> ger = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("GE", "Themes_GE.txt")).toFile(), StandardCharsets.UTF_16LE);
+            Map<Integer, String> eng = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("EN", "Themes_EN.txt")).toFile(), StandardCharsets.UTF_16LE);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(getGameFile()), getCharset()));
             boolean firstLine = true;
             for (int i = 1; i <= ger.size(); i++) {
@@ -370,9 +365,9 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 File themeFile = Utils.getThemeFile(string);
                 Map<Integer, String> currentThemeFileContent;
                 if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)) {
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_8BOM");
+                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
                 } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_16LE");
+                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_16LE);
                 } else {
                     throw new ModProcessingException("Unable to determine what charset to use", true);
                 }
@@ -453,7 +448,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
         analyzeFile();
         try {
             File file = MGT2Paths.TEXT.getPath().resolve("GE/Themes_GE.txt").toFile();
-            Map<Integer, String> mapGer = DataStreamHelper.getContentFromFile(file, "UTF_16LE");
+            Map<Integer, String> mapGer = DataStreamHelper.getContentFromFile(file, StandardCharsets.UTF_16LE);
             if (file.exists()) {
                 file.delete();
             }
@@ -533,9 +528,9 @@ public class ThemeMod extends AbstractSimpleDependentMod {
             Map<Integer, String> currentThemeFileContent;
             try {
                 if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)) {
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_8BOM");
+                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
                 } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, "UTF_16LE");
+                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
                 } else {
                     throw new ModProcessingException("Unable to determine what charset to use", true);
                 }

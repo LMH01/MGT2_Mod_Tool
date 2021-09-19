@@ -98,7 +98,7 @@ public class WindowAddGenrePage6 extends JFrame {
         contentPane.add(buttonQuit);
     }
 
-    private void setThemesList() throws ModProcessingException {//TODO Testen, ob Funktion noch funktioniert
+    private void setThemesList() throws ModProcessingException {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> genresSelected = new ArrayList<>();
         LIST_AVAILABLE_THEMES.removeAll();

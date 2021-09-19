@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -146,18 +147,11 @@ public class DataStreamHelper {
 
     /**
      * @param file        The input file
-     * @param charsetType Defines what charset the source file uses. Possible UTF_8BOM UTF_16LE
+     * @param charSet     Defines what charset the source file uses
      * @return Returns a map. The key is the line number and the value is the content for that line number.
      */
-    public static Map<Integer, String> getContentFromFile(File file, String charsetType) throws IOException {//TODO Umschreiben, dass charset nicht mehr als String rein gegeben wird
-        BufferedReader br;
-        if (charsetType.equals("UTF_8BOM")) {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-        } else if (charsetType.equals("UTF_16LE")) {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_16LE));
-        } else {
-            return null;
-        }
+    public static Map<Integer, String> getContentFromFile(File file, Charset charSet) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
         String currentLine;
         boolean firstLine = true;
         Map<Integer, String> mapCurrent = new HashMap<>();

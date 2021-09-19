@@ -1,9 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.util.Backup;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +11,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class WindowSettings extends JFrame {//TODO test if this window is still working
+public class WindowSettings extends JFrame {
 
     static final WindowSettings FRAME = new WindowSettings();
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowSettings.class);
@@ -191,7 +188,7 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
             LOGGER.info("output folder: " + outputFolder);
             if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 boolean performTasks = false;
-                if ((Settings.getMGT2FilePath() == null) && customFolderSetAndValid) {//TODO check if this still works
+                if ((Settings.getMGT2FilePath() == null) && customFolderSetAndValid) {
                     if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.noAutomaticFolderFound"), I18n.INSTANCE.get("window.settings.mgt2location.resetFolder.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         performTasks = true;
                     }
@@ -295,10 +292,10 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         } else if (Settings.language.equals("Deutsch")) {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
         }
-        if (Settings.updateBranch.equals("Release")) {//TODO Replace with enum
-            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Release", "Alpha"}));
+        if (Settings.updateBranch.equals(UpdateBranch.RELEASE)) {
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.RELEASE.getName(), UpdateBranch.ALPHA.getName()}));
         } else {
-            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.ALPHA.getName(), UpdateBranch.RELEASE.getName()}));
         }
         if (Utils.isAlpha()) {
             comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
@@ -321,12 +318,12 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
      * Applies the local changes in the settings to the global settings by calling Settings.setSettings(...)
      */
     private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
-        Settings.setSettings(true, checkBoxExportStorage.isSelected(), checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString(), checkBoxSaveLogs.isSelected(), Settings.enableInitialBackupCheck);
+        Settings.setSettings(true, checkBoxExportStorage.isSelected(), checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), UpdateBranch.getUpdateBranch(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString()), checkBoxSaveLogs.isSelected(), Settings.enableInitialBackupCheck);
     }
 
     /**
      * @param checkBoxExportStorage The debug mode checkbox
-     * @param checkBoxDisableSafety The disable safety features checkbox
+     * @param checkBoxDisableSafety The "disable safety features" checkbox
      * @return Returns the changes that have been made to the settings
      */
     private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
@@ -343,8 +340,8 @@ public class WindowSettings extends JFrame {//TODO test if this window is still 
         if (!Settings.language.equals(Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString())) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.language")).append(" ").append(Settings.language).append(" -> ").append(comboBoxLanguage.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
-        if (!Settings.updateBranch.equals(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString())) {
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.updateChannel")).append(" ").append(Settings.updateBranch).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
+        if (!Settings.updateBranch.equals(UpdateBranch.getUpdateBranch(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString()))) {
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.updateChannel")).append(" ").append(Settings.updateBranch.getName()).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
         if (Settings.saveLogs != checkBoxSaveLogs.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.saveLogs")).append(" ").append(Settings.saveLogs).append(" -> ").append(checkBoxSaveLogs.isSelected()).append(System.getProperty("line.separator"));

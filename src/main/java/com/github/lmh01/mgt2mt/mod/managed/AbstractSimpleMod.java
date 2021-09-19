@@ -27,7 +27,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     @Override
     public void analyzeFile() throws ModProcessingException {
         try {
-            fileContent = DataStreamHelper.getContentFromFile(getGameFile(), getModFileCharset());
+            fileContent = DataStreamHelper.getContentFromFile(getGameFile(), getCharset());
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze mod-files for mod " + getType() + ": " + e.getMessage());
         }
@@ -206,11 +206,6 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         }
         return defaultContent;
     }
-
-    /**
-     * @return The charset in which the mod file is written
-     */
-    public abstract String getModFileCharset();//TODO Remove and replace with AbstractBaseMod.getCharset(); -> Enum
 
     /**
      * Transforms the generic to an {@literal String}.

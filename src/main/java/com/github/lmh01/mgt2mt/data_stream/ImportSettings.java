@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.UpdateBranch;
 import com.moandjiezana.toml.Toml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class ImportSettings {
             Settings.enableGenreNameTranslationInfo = toml.getBoolean("enableGenreNameTranslationInfo");
             Settings.enableGenreDescriptionTranslationInfo = toml.getBoolean("enableGenreDescriptionTranslationInfo");
             Settings.language = toml.getString("language");
-            Settings.updateBranch = toml.getString("updateBranch");
+            Settings.updateBranch = UpdateBranch.getUpdateBranch(toml.getString("updateBranch"));
             Settings.saveLogs = toml.getBoolean("saveLogs");
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
             Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");

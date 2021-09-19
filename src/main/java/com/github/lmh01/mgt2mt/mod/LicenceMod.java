@@ -134,11 +134,6 @@ public class LicenceMod extends AbstractSimpleMod {
     }
 
     @Override
-    public String getModFileCharset() {
-        return "UTF_8BOM";
-    }
-
-    @Override
     public String[] getCustomContentString(boolean disableTextAreaMessage) throws ModProcessingException {
         String[] allLicenceNamesByAlphabet = getContentByAlphabet();
 

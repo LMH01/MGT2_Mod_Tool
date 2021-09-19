@@ -241,7 +241,7 @@ public class WindowMain {
                         noModRestorePointSet = false;
                     }
                 }
-                for (AbstractBaseMod mod : ModManager.mods) {//TODO schauen, ob das noch funktioniert, insbesondere im Bezug auf Themen
+                for (AbstractBaseMod mod : ModManager.mods) {
                     mod.setMainMenuButtonAvailability();
                     if (mod.getCustomContentString(true).length > 0) {
                         noModsAvailable = false;
@@ -304,7 +304,7 @@ public class WindowMain {
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit.toolTip"));
                     M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
-            } catch (IndexOutOfBoundsException | ModProcessingException e) {//TODO schauen, ob ich hier vielleicht die menuItems sperren sollte, falls eine exception auftritt
+            } catch (IndexOutOfBoundsException | ModProcessingException e) {
                 TextAreaHelper.printStackTrace(e);
                 LOGGER.info("Error: " + e.getMessage());
             }

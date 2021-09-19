@@ -42,7 +42,7 @@ public class ExportSettings {
             map.put("enableGenreNameTranslationInfo", Settings.enableGenreNameTranslationInfo);
             map.put("enableGenreDescriptionTranslationInfo", Settings.enableGenreDescriptionTranslationInfo);
             map.put("language", Settings.language);
-            map.put("updateBranch", Settings.updateBranch);
+            map.put("updateBranch", Settings.updateBranch.getName());
             map.put("saveLogs", Settings.saveLogs);
             map.put("enableExportStorage", Settings.enableExportStorage);
             map.put("enableInitialBackupCheck", Settings.enableInitialBackupCheck);

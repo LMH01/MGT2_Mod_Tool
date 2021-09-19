@@ -32,11 +32,11 @@ public class Settings {
     public static boolean enableExportStorage = true; //If true each new export will be saved in a new folder.
     public static boolean enableInitialBackupCheck = false; //If true the user will be notified if the initial backup is outdated
     public static String language = "English";
-    public static String updateBranch = "Release";
+    public static UpdateBranch updateBranch = UpdateBranch.RELEASE;
 
     public static void resetSettings() {
         setMGT2Folder(false);
-        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", "Release", true, false);
+        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", UpdateBranch.RELEASE, true, false);
         LOGGER.info("Settings have been reset.");
     }
 
@@ -64,7 +64,7 @@ public class Settings {
      * @param mgt2FilePath          The custom folder path
      * @param enableCustomFolder    True when the custom folder is enabled.
      */
-    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, String updateBranch, boolean saveLogs, boolean enableInitialBackupCheck) {
+    public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean disableSafetyFeatures, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, UpdateBranch updateBranch, boolean saveLogs, boolean enableInitialBackupCheck) {
         Settings.enableExportStorage = enableExportStorage;
         Settings.disableSafetyFeatures = disableSafetyFeatures;
         Settings.enableCustomFolder = enableCustomFolder;

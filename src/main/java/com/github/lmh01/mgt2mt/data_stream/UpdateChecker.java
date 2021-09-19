@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.UpdateBranch;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -41,7 +42,7 @@ public class UpdateChecker {
                 updateAvailable = false;
                 java.net.URL url;
                 String versionType;
-                if (Settings.updateBranch.equals("Release")) {
+                if (Settings.updateBranch.equals(UpdateBranch.RELEASE)) {
                     url = new URL(RELEASE_UPDATE_URL);
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver1") + " ";
                 } else {

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,7 +42,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
             file.createNewFile();
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             BufferedReader br = new BufferedReader(new FileReader(Paths.get("D:/Temp/MGT2/toml/exported_licence.txt").toFile()));
-            Map<Integer, String> map = DataStreamHelper.getContentFromFile(new File(MGT2Paths.TEXT_DATA.getPath() + "//NpcGames.txt"), "UTF_16LE");
+            Map<Integer, String> map = DataStreamHelper.getContentFromFile(new File(MGT2Paths.TEXT_DATA.getPath() + "//NpcGames.txt"), StandardCharsets.UTF_16LE);
 
             ArrayList<String> game_npcGames = new ArrayList<>();
             ModManager.npcGamesMod.analyzeFile();
