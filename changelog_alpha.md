@@ -9,7 +9,9 @@
   - Export selected -> with this function only selected mods can be exported. Either single or together in a bundle.
 - Mods are now sorted by alphabet when they are displayed in panels
   - e.g. When the user can choose which mods should be imported
-- Added some missing translations
+- Translations
+  - Fixed some translations
+  - Added some missing translations
 
 ### Bug fixes
 - Export will fail if no mod is exported that requires pictures

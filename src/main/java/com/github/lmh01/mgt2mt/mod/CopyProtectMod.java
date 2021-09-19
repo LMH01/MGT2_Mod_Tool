@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.mod;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -93,7 +94,7 @@ public class CopyProtectMod extends AbstractAdvancedMod {
                             copyProtectMap.putAll(TranslationManager.transformTranslationMap(mapNameTranslations[0], "NAME"));
                             copyProtectMap.put("NAME EN", textFieldName.getText());
                         }
-                        copyProtectMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                        copyProtectMap.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                         copyProtectMap.put("PRICE", spinnerCost.getValue().toString());
                         copyProtectMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());
                         if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(copyProtectMap), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {

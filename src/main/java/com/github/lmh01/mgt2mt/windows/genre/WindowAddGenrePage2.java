@@ -2,8 +2,10 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.mod.GenreMod;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +22,7 @@ public class WindowAddGenrePage2 extends JFrame {
     JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
     JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JSpinner spinnerUnlockYear = new JSpinner();
-    JComboBox<String> comboBoxGenreUnlockMonth = new JComboBox<>();
+    JComboBox<String> comboBoxGenreUnlockMonth = WindowHelper.getUnlockMonthComboBox();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {
@@ -81,9 +83,6 @@ public class WindowAddGenrePage2 extends JFrame {
         contentPane.add(labelGenreUnlockMonth);
 
         comboBoxGenreUnlockMonth.setBounds(120, 35, 100, 23);
-        comboBoxGenreUnlockMonth.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
-        comboBoxGenreUnlockMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-        comboBoxGenreUnlockMonth.setSelectedItem(GenreMod.mapNewGenre.get("UNLOCK MONTH"));
         contentPane.add(comboBoxGenreUnlockMonth);
 
         JLabel labelGenreID = new JLabel(I18n.INSTANCE.get("commonText.unlockYear") + ":");
@@ -107,10 +106,10 @@ public class WindowAddGenrePage2 extends JFrame {
     }
 
     private static void saveInputs(JSpinner spinnerUnlockYear, JComboBox<String> comboBoxGenreUnlockMonth) {
-        GenreMod.mapNewGenre.put("DATE", Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
-        GenreMod.mapNewGenre.put("UNLOCK MONTH", comboBoxGenreUnlockMonth.getSelectedItem().toString());
+        GenreMod.mapNewGenre.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
+        GenreMod.mapNewGenre.put("UNLOCK MONTH", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()).toString()));
         GenreMod.mapNewGenre.put("UNLOCK YEAR", spinnerUnlockYear.getValue().toString());
         LOGGER.info("genre unlock year: " + Integer.parseInt(spinnerUnlockYear.getValue().toString()));
-        LOGGER.info("Genre unlock month: " + comboBoxGenreUnlockMonth.getSelectedItem().toString());
+        LOGGER.info("Genre unlock month: " + Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxGenreUnlockMonth.getSelectedItem()).toString()));
     }
 }

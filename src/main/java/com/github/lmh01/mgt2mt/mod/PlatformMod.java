@@ -2,10 +2,7 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.*;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.MGT2Paths;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -347,9 +344,9 @@ public class PlatformMod extends AbstractComplexMod {
                                     platformMap.put("NAME EN", textFieldName.getText());
                                     platformMap.put("MANUFACTURER EN", textFieldManufacturer.getText());
                                 }
-                                platformMap.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                                platformMap.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                                 if (checkBoxEnableEndDate.isSelected()) {
-                                    platformMap.put("DATE END", Objects.requireNonNull(comboBoxEndDateMonth.getSelectedItem()) + " " + spinnerEndYear.getValue().toString());
+                                    platformMap.put("DATE END", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxEndDateMonth.getSelectedItem()).toString()) + " " + spinnerEndYear.getValue().toString());
                                 }
                                 platformMap.put("PRICE", spinnerDevKitCost.getValue().toString());
                                 platformMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

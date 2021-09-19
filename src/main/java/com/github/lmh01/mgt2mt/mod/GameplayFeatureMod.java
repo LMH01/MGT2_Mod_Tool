@@ -2,10 +2,7 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.*;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.Settings;
-import com.github.lmh01.mgt2mt.util.Summaries;
-import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -198,7 +195,7 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
                             newGameplayFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newGameplayFeature.put("ID", Integer.toString(getFreeId()));
-                        newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                        newGameplayFeature.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                         newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newGameplayFeature.put("PRICE", spinnerResearchCost.getValue().toString());
                         newGameplayFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

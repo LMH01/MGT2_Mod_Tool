@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.mod;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -220,7 +221,7 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
                             hardwareFeatureMap.putAll(TranslationManager.transformTranslationMap(mapDescriptionTranslation[0], "DESC"));
                             hardwareFeatureMap.put("DESC EN", textFieldDescription.getText());
                         }
-                        hardwareFeatureMap.put("DATE", Objects.requireNonNull(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem())) + " " + spinnerUnlockYear.getValue().toString());
+                        hardwareFeatureMap.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                         hardwareFeatureMap.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         hardwareFeatureMap.put("PRICE", spinnerCost.getValue().toString());
                         hardwareFeatureMap.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

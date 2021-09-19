@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.mod;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Summaries;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -123,7 +124,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             newEngineFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newEngineFeature.put("ID", Integer.toString(getFreeId()));
-                        newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                        newEngineFeature.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                         newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newEngineFeature.put("PRICE", spinnerResearchCost.getValue().toString());
                         newEngineFeature.put("DEV COSTS", spinnerDevelopmentCost.getValue().toString());

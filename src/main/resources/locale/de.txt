@@ -292,7 +292,7 @@ modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und 
 
 mod.publisher.addMod.optionPaneMessage.firstPart|Diesen Publisher hinzufügen?
 mod.publisher.addMod.optionPaneMessage.developer|Entwickler
-mod.publisher.addMod.optionPaneMessage.developer.toolTip|Wenn ausgewählt: Der Firma kann ihre eigenen Spiele veröffentlichen
+mod.publisher.addMod.optionPaneMessage.developer.toolTip|Wenn ausgewählt: Die Firma kann ihre eigenen Spiele veröffentlichen
 mod.publisher.addMod.optionPaneMessage.publisher|Publisher
 mod.publisher.addMod.optionPaneMessage.publisher.toolTip|Wenn ausgewählt: Die Firma kann Spiele für dich veröffentlichen (=Sie publishen)
 mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip|Dies gibt an, wie hoch der Marktanteil des Publishers ist
@@ -1073,3 +1073,16 @@ window.npcGamesList.success|Die NPC-Spieleliste wurde erfolgreich geändert.
 window.npcGamesList.noGenreSelected|<html>Fortsetzung nicht möglich:<br>Bitte wähle mindestens ein Genre aus.
 
 window.showActiveMods.message.firstPart|Diese Mods sind derzeit aktiv:
+
+month.january|Januar
+month.february|Februar
+month.march|März
+month.april|April
+month.may|Mai
+month.june|Juni
+month.july|July
+month.august|August
+month.september|September
+month.october|October
+month.november|November
+month.december|Dezember

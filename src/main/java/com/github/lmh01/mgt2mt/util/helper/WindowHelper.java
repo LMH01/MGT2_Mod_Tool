@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -157,11 +158,7 @@ public class WindowHelper {
      * @return Returns a new combo box set with the values for the unlock month. The following is already initialized: Model, selected item and tooltip.
      */
     public static JComboBox<String> getUnlockMonthComboBox() {
-        JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
-        comboBox.setSelectedItem("JAN");
-        comboBox.setToolTipText(I18n.INSTANCE.get("commonText.unlockMonth.toolTip"));
-        return comboBox;
+        return getComboBox(Months.class, "commonText.unlockMonth.toolTip", Months.JAN.getTypeName());
     }
 
     /**

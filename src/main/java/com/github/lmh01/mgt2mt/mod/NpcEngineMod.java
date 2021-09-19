@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.*;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -91,7 +92,7 @@ public class NpcEngineMod extends AbstractAdvancedDependentMod {
                                 if (!listAvailableGenres.getSelectedValuesList().isEmpty()) {
                                     //Filling base map (Without genre, id and names)
                                     Map<String, String> npcEngine = new HashMap<>();
-                                    npcEngine.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
+                                    npcEngine.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                                     npcEngine.put("PLATFORM", Integer.toString(ModManager.platformMod.getContentIdByName(listAvailablePlatforms.getSelectedValue())));
                                     npcEngine.put("PRICE", spinnerCost.getValue().toString());
                                     npcEngine.put("SHARE", spinnerShare.getValue().toString());

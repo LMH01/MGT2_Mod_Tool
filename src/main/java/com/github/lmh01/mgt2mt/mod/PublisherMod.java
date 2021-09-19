@@ -133,7 +133,7 @@ public class PublisherMod extends AbstractComplexMod {
                         if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) > genreDate) {
                             availableGenres.add(string1);
                         } else if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) == genreDate) {
-                            if (Utils.getNumberForMonth(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Utils.getNumberForMonth(genreMap.get("DATE"))) {
+                            if (Months.getIdByName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Months.getIdByName(genreMap.get("DATE"))) {
                                 availableGenres.add(string1);
                             }
                         }
@@ -210,7 +210,7 @@ public class PublisherMod extends AbstractComplexMod {
                                 map.put("NAME GE", textFieldName.getText());
                                 map.put("NAME TU", textFieldName.getText());
                                 map.put("NAME FR", textFieldName.getText());
-                                map.put("DATE", comboBoxUnlockMonth.getSelectedItem().toString() + " " + spinnerUnlockYear.getValue().toString());
+                                map.put("DATE", Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString());
                                 map.put("PIC", Integer.toString(logoId));
                                 map.put("DEVELOPER", Boolean.toString(checkBoxIsDeveloper.isSelected()));
                                 map.put("PUBLISHER", Boolean.toString(checkBoxIsPublisher.isSelected()));
