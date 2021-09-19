@@ -198,7 +198,11 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
                             newGameplayFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newGameplayFeature.put("ID", Integer.toString(getFreeId()));
-                        newGameplayFeature.put("TYP", Integer.toString(getGameplayFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
+                        for (GameplayFeatureType gameplayFeatureType : GameplayFeatureType.values()) {
+                            if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(gameplayFeatureType.getTypeName())) {
+                                newGameplayFeature.put("TYP", Integer.toString(gameplayFeatureType.getId()));
+                            }
+                        }
                         newGameplayFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                         newGameplayFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newGameplayFeature.put("PRICE", spinnerResearchCost.getValue().toString());
@@ -310,7 +314,7 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
                 I18n.INSTANCE.get("commonText.name") + ": " + workingMap.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + workingMap.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + workingMap.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + getGameplayFeatureNameByTypeId(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + GameplayFeatureType.getTypeNameById(Integer.parseInt(workingMap.get("TYP"))) + "\n" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + workingMap.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + workingMap.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + workingMap.get("DEV COSTS") + "\n" +
@@ -375,56 +379,6 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
         map.replace("BAD", getGenreIds(map.get("BAD")));
         map.put("PIC", "");
         return map;
-    }
-
-    /**
-     * Converts the input string into the respective type number
-     *
-     * @param featureType The feature type string
-     * @return Returns the type number
-     */
-    public int getGameplayFeatureTypeByName(String featureType) {//TODO rewrite to use enum
-        switch (featureType) {
-            case "Graphic":
-                return 0;
-            case "Sound":
-                return 1;
-            case "Physics":
-                return 3;
-            case "Gameplay":
-                return 4;
-            case "Control":
-                return 5;
-            case "Multiplayer":
-                return 6;
-            default:
-                return 0;
-        }
-    }
-
-    /**
-     * Converts the input in into the respective type name
-     *
-     * @param typeId The feature type id
-     * @return Returns the type name
-     */
-    public String getGameplayFeatureNameByTypeId(int typeId) {//TODO rewrite to use enum
-        switch (typeId) {
-            case 0:
-                return "Graphic";
-            case 1:
-                return "Sound";
-            case 3:
-                return "Physics";
-            case 4:
-                return "Gameplay";
-            case 5:
-                return "Control";
-            case 6:
-                return "Multiplayer";
-            default:
-                return "Graphic";
-        }
     }
 
     /**
