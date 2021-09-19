@@ -136,9 +136,9 @@ public class WindowMain {
         m411CreateNewInitialBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(Backup::createNewInitialBackup, "CreateNewInitialBackup"));
         JMenuItem m412CreateFullBackup = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup"));
         m412CreateFullBackup.setToolTipText(I18n.INSTANCE.get("window.main.backup.createBackup.createFullBackup.toolTip"));
-        m412CreateFullBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> Backup.createBackup("full"), "CreateFullBackup"));
+        m412CreateFullBackup.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> Backup.createBackup(BackupType.FULL), "CreateFullBackup"));
         JMenuItem m413BackupSaveGames = new JMenuItem(I18n.INSTANCE.get("window.main.backup.createBackup.createSaveGameBackup"));
-        m413BackupSaveGames.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> Backup.createBackup("save_game"), "CreateSaveGameBackup"));
+        m413BackupSaveGames.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> Backup.createBackup(BackupType.SAVE_GAME), "CreateSaveGameBackup"));
         m41.add(m411CreateNewInitialBackup);
         m41.add(m412CreateFullBackup);
         m41.add(m413BackupSaveGames);

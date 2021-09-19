@@ -1174,9 +1174,6 @@ public class SharingManager {
      * Opens a JOptionPane where the user can decide how the mods should be exported: Single or bundled
      */
     public static void displayExportModsWindow() throws ModProcessingException {
-        /*TODO Add another check box that reads: Customize export
-        *   if selected the user can select which mods should be exported
-        *   kinda the same way as its done when importing mods*/
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(I18n.INSTANCE.get("dialog.sharingManager.exportAll.mainMessage.part1"));
         if (!Settings.enableExportStorage) {
