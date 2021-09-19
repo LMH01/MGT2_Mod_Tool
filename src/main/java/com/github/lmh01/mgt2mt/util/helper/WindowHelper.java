@@ -82,69 +82,12 @@ public class WindowHelper {
 
     /**
      * @param spinner The spinner that should be added to the panel
-     * @param type    Declares what string should be used for the label. For further information look into the function
+     * @param spinnerType The spinner type. Indicates what is written in the name
      * @return Returns a new panel containing the components of the type
      */
-    public static JPanel getSpinnerPanel(JSpinner spinner, int type) {//TODO Rewrite to throw ModProcessingException and to use enum
+    public static JPanel getSpinnerPanel(JSpinner spinner, SpinnerType spinnerType) {
         JPanel panel = new JPanel();
-        JLabel label;
-        switch (type) {
-            case 0:
-                label = new JLabel(I18n.INSTANCE.get("commonText.gameplay") + ":");
-                break;
-            case 1:
-                label = new JLabel(I18n.INSTANCE.get("commonText.graphic") + ":");
-                break;
-            case 2:
-                label = new JLabel(I18n.INSTANCE.get("commonText.sound") + ":");
-                break;
-            case 3:
-                label = new JLabel(I18n.INSTANCE.get("commonText.tech") + ":");
-                break;
-            case 4:
-                label = new JLabel(I18n.INSTANCE.get("commonText.techLevel") + ":");
-                break;
-            case 5:
-                label = new JLabel(I18n.INSTANCE.get("commonText.researchCost") + ":");
-                break;
-            case 6:
-                label = new JLabel(I18n.INSTANCE.get("commonText.researchPointCost") + ":");
-                break;
-            case 7:
-                label = new JLabel(I18n.INSTANCE.get("commonText.developmentCost") + ":");
-                break;
-            case 8:
-                label = new JLabel(I18n.INSTANCE.get("commonText.price") + ":");
-                break;
-            case 9:
-                label = new JLabel(I18n.INSTANCE.get("commonText.profitShare") + " (in %):");
-                break;
-            case 10:
-                label = new JLabel(I18n.INSTANCE.get("commonText.complexity") + ":");
-                break;
-            case 11:
-                label = new JLabel(I18n.INSTANCE.get("commonText.units") + ":");
-                break;
-            case 12:
-                label = new JLabel(I18n.INSTANCE.get("commonText.marketShare") + ":");
-                break;
-            default:
-                throw new IllegalArgumentException("The input for the function type is invalid! Valid: 0-8; Was: " + type);
-        }
-        panel.add(label);
-        panel.add(spinner);
-        return panel;
-    }
-
-    /**
-     * @param spinner             The spinner that should be used
-     * @param labelTranslationKey The translation key for the label that should be added
-     * @return Returns a new panel containing the label and the translation key
-     */
-    public static JPanel getSpinnerPanel(JSpinner spinner, String labelTranslationKey) {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel(I18n.INSTANCE.get(labelTranslationKey));
-        panel.add(label);
+        panel.add(new JLabel(spinnerType.getTypeName()));
         panel.add(spinner);
         return panel;
     }
