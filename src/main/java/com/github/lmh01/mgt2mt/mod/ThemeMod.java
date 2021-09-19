@@ -104,7 +104,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
                 if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.theme.addTheme.main.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     if (listAvailableThemes.getSelectedValuesList().size() != 0) {
                         if (!textFieldThemeName.getText().isEmpty()) {
-                            if (!doThemeFilesContain(textFieldThemeName.getText())) {
+                            if (!doesThemeExist(textFieldThemeName.getText())) {
                                 arrayListCompatibleGenreNames.addAll(listAvailableThemes.getSelectedValuesList());
                                 for (Map<String, String> map : ModManager.genreMod.getFileContent()) {
                                     for (String name : arrayListCompatibleGenreNames) {
@@ -182,7 +182,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
      */
     @Deprecated
     @Override
-    protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {//TODO write this function
+    protected <T> String getOptionPaneMessage(T t) throws ModProcessingException {
         throw new ModProcessingException("Call to getOptionPaneMessage(T t) is invalid. This function is not implemented for theme mod");
     }
 
@@ -518,33 +518,18 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     }
 
     /**
-     * @param inputString The string that should be checked if it is contained within a theme file
-     * @return True if a theme file contains string as theme name
+     * @param name The string that should be checked if it is contained within the engine theme file
+     * @return True if the theme already exists
+     *
      * @throws ModProcessingException If something went wrong
      */
-    public boolean doThemeFilesContain(String inputString) throws ModProcessingException {//TODO schauen, ob die Funktion hier funktioniert
-        for (String string : TranslationManager.TRANSLATION_KEYS) {
-            File themeFile = Utils.getThemeFile(string);
-            Map<Integer, String> currentThemeFileContent;
-            try {
-                if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)) {
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
-                } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
-                    currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
-                } else {
-                    throw new ModProcessingException("Unable to determine what charset to use");
-                }
-                for (Map.Entry<Integer, String> entry : currentThemeFileContent.entrySet()) {
-                    if (getReplacedLine(entry.getValue()).equals(inputString)) {
-                        return true;
-                    }
-                }
-                return false;
-            } catch (IOException e) {
-                throw new ModProcessingException("Error while analyzing file '" + themeFile.getName(), e);
-            }
+    public boolean doesThemeExist(String name) throws ModProcessingException {
+        ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(getContentByAlphabet()));
+        if (arrayList.contains(name)) {
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**

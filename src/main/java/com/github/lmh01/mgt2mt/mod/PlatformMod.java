@@ -541,7 +541,7 @@ public class PlatformMod extends AbstractComplexMod {
                     importImage(map, entry.getKey(), MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()));
                     imageMap.remove("PIC-" + entry.getKey().replaceAll("[^0-9]", ""));
                     imageMap.put("PIC-" + entry.getKey().replaceAll("[^0-9]", ""), entry.getValue());
-                } catch (IOException e) {//TODO Think about this mod processing exception throw: Maybe it should be better to just print a warning message to the text area that the image file will not be copied, if it already exists
+                } catch (IOException e) {
                     throw new ModProcessingException("Platform image files could not be copied", e);
                 }
             }
