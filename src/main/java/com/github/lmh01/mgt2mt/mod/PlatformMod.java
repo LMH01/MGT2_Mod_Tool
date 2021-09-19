@@ -245,7 +245,7 @@ public class PlatformMod extends AbstractComplexMod {
                             AtomicReference<File> imageFile = new AtomicReference<>();
                             JPanel panelChangeDate = new JPanel();
                             JLabel labelChangeDate = new JLabel(I18n.INSTANCE.get(""));
-                            JComboBox comboBoxChangeMonth = new JComboBox();
+                            JComboBox<String> comboBoxChangeMonth = new JComboBox<>();
                             comboBoxChangeMonth.setEnabled(false);
                             comboBoxChangeMonth.setModel(new DefaultComboBoxModel<>(new String[]{"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}));
                             comboBoxChangeMonth.setSelectedItem("JAN");
@@ -603,7 +603,7 @@ public class PlatformMod extends AbstractComplexMod {
     /**
      * @return Returns the platform type for the input id. Returns -1 if the string is not correct
      */
-    public int getPlatformTypeIdByString(String type) {//TODO Rewrite to use enum
+    public int getPlatformTypeIdByString(String type) {//TODO Rewrite to use enum PlatformType
         if (type.equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.comboBox.type.computer"))) {
             return 0;
         }

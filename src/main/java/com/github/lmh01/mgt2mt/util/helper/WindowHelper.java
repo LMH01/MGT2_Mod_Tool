@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.EngineFeatureType;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.PlatformType;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -287,7 +288,7 @@ public class WindowHelper {
         switch (type) {
             case 0:
                 comboBox.setToolTipText(I18n.INSTANCE.get("mod.engineFeature.addMod.components.type.toolTip"));
-                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Graphic", "Sound", "Artificial Intelligence", "Physics"}));//TODO Replace with translations
+                comboBox.setModel(new DefaultComboBoxModel<>(new String[]{EngineFeatureType.GRAPHIC.getTypeName(), EngineFeatureType.SOUND.getTypeName(), EngineFeatureType.AI.getTypeName(), EngineFeatureType.PHYSICS.getTypeName()}));
                 comboBox.setSelectedItem("Graphic");
                 break;
             case 1:

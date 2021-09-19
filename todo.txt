@@ -42,4 +42,4 @@ Not Shure:
 
 /TODO Remove unneeded localisation
 
-TODO Rewrite disable safety features message -> it should be listed what it will disable
+TODO Check why file already exists exception gets thrown, when a restore point is created, when a restore point already exists

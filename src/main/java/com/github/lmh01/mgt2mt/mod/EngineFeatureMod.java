@@ -1,10 +1,7 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractAdvancedMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Summaries;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
@@ -127,7 +124,11 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                             newEngineFeature.put("DESC EN", textFieldDescription.getText());
                         }
                         newEngineFeature.put("ID", Integer.toString(getFreeId()));
-                        newEngineFeature.put("TYP", Integer.toString(getEngineFeatureTypeByName(Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString())));
+                        for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
+                            if (Objects.requireNonNull(comboBoxFeatureType.getSelectedItem()).toString().equals(engineFeatureType.getTypeName())) {
+                                newEngineFeature.put("TYP", Integer.toString(engineFeatureType.getId()));
+                            }
+                        }
                         newEngineFeature.put("DATE", Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()) + " " + spinnerUnlockYear.getValue().toString());
                         newEngineFeature.put("RES POINTS", spinnerResearchPoints.getValue().toString());
                         newEngineFeature.put("PRICE", spinnerResearchCost.getValue().toString());
@@ -165,7 +166,7 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
                 I18n.INSTANCE.get("commonText.name") + ": " + map.get("NAME EN") + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + map.get("DESC EN") + "\n" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + map.get("DATE") + "\n" +
-                I18n.INSTANCE.get("commonText.type") + ": " + ModManager.engineFeatureMod.getEngineFeatureNameByTypeId(Integer.parseInt(map.get("TYP"))) + "\n" +
+                I18n.INSTANCE.get("commonText.type") + ": " + TypeEnum.getTypeNameById(Integer.parseInt(map.get("TYP"))) + "\n" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + map.get("RES POINTS") + "\n" +
                 I18n.INSTANCE.get("commonText.researchCost") + ": " + map.get("PRICE") + "\n" +
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + map.get("DEV COSTS") + "\n" +
@@ -180,45 +181,5 @@ public class EngineFeatureMod extends AbstractAdvancedMod {
     @Override
     protected Charset getCharset() {
         return StandardCharsets.UTF_8;
-    }
-
-    /**
-     * Converts the input string into the respective type number
-     *
-     * @param featureType The feature type string
-     * @return Returns the type number
-     */
-    public int getEngineFeatureTypeByName(String featureType) {//TODO rewrite to use enum
-        switch (featureType) {
-            case "Graphic":
-                return 0;
-            case "Sound":
-                return 1;
-            case "Artificial Intelligence":
-                return 2;
-            case "Physics":
-                return 3;
-        }
-        return 10;
-    }
-
-    /**
-     * Converts the input id into the respective type name
-     *
-     * @param typeId The feature type id
-     * @return Returns the type name
-     */
-    public String getEngineFeatureNameByTypeId(int typeId) {
-        switch (typeId) {
-            case 0:
-                return "Graphic";
-            case 1:
-                return "Sound";
-            case 2:
-                return "Artificial Intelligence";
-            case 3:
-                return "Physics";
-        }
-        return "";
     }
 }

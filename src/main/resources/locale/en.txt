@@ -123,6 +123,8 @@ commonText.graphic|Graphic
 commonText.sound|Sound
 commonText.control|Control
 commonText.tech|Tech
+commonText.artificialIntelligence|Artificial intelligence
+commonText.physics|Physics
 commonText.kid|Kid
 commonText.teen|Teen
 commonText.adult|Adult
