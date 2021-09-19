@@ -1,0 +1,336 @@
+[ID]1
+[NAME CH]超安力量  v1.0
+[NAME CT]安全力量 v1.0
+[NAME EN]SafeForce v1.0
+[NAME FR]SafeForce v1.0
+[NAME GE]SafeForce v1.0
+[NAME IT]SafeForce v1.0
+[NAME JA]セーフフォース v1.0
+[NAME RU]SafeForce v1.0
+[NAME TU]SafeForce v1.0
+[DATE]AUG 1980
+[PRICE]15000
+[DEV COSTS]2000
+
+[ID]2
+[NAME CH]超安力量  v2.0
+[NAME CT]安全力量 v2.0
+[NAME EN]SafeForce v2.0
+[NAME FR]SafeForce v2.0
+[NAME GE]SafeForce v2.0
+[NAME IT]SafeForce v2.0
+[NAME JA]セーフフォース v2.0
+[NAME RU]SafeForce v2.0
+[NAME TU]SafeForce v2.0
+[DATE]AUG 1982
+[PRICE]20000
+[DEV COSTS]3000
+
+[ID]3
+[NAME CH]超安力量  v3.0
+[NAME CT]安全力量 v3.0
+[NAME EN]SafeForce v3.0
+[NAME FR]SafeForce v3.0
+[NAME GE]SafeForce v3.0
+[NAME IT]SafeForce v3.0
+[NAME JA]セーフフォース v3.0
+[NAME RU]SafeForce v3.0
+[NAME TU]SafeForce v3.0
+[DATE]AUG 1984
+[PRICE]25000
+[DEV COSTS]4000
+
+[ID]4
+[NAME CH]A级保护     v1.0
+[NAME CT]ATC保護 v1.0
+[NAME EN]ATC Protect v1.0
+[NAME FR]ATC Protect v1.0
+[NAME GE]ATC Protect v1.0
+[NAME IT]ATC Protect v1.0
+[NAME JA]ATCプロテクト v1.0
+[NAME RU]ATC Protect v1.0
+[NAME TU]ATC Protect v1.0
+[DATE]AUG 1986
+[PRICE]30000
+[DEV COSTS]5000
+
+[ID]5
+[NAME CH]A级保护     v2.0
+[NAME CT]ATC保護 v2.0
+[NAME EN]ATC Protect v2.0
+[NAME FR]ATC Protect v2.0
+[NAME GE]ATC Protect v2.0
+[NAME IT]ATC Protect v2.0
+[NAME JA]ATCプロテクト v2.0
+[NAME RU]ATC Protect v2.0
+[NAME TU]ATC Protect v2.0
+[DATE]AUG 1988
+[PRICE]35000
+[DEV COSTS]6000
+
+[ID]6
+[NAME CH]A级保护     v3.0
+[NAME CT]ATC保護 v3.0
+[NAME EN]ATC Protect v3.0
+[NAME FR]ATC Protect v3.0
+[NAME GE]ATC Protect v3.0
+[NAME IT]ATC Protect v3.0
+[NAME JA]ATCプロテクト v3.0
+[NAME RU]ATC Protect v3.0
+[NAME TU]ATC Protect v3.0
+[DATE]AUG 1990
+[PRICE]40000
+[DEV COSTS]7000
+
+[ID]7
+[NAME CH]密探     v1.0
+[NAME CT]安全碟 v1.0
+[NAME EN]SecuDisc v1.0
+[NAME FR]SecuDisc v1.0
+[NAME GE]SecuDisc v1.0
+[NAME IT]SecuDisc v1.0
+[NAME JA]セキュディスク v1.0
+[NAME RU]SecuDisc v1.0
+[NAME TU]SecuDisc v1.0
+[DATE]AUG 1992
+[PRICE]45000
+[DEV COSTS]8000
+
+[ID]8
+[NAME CT]安全碟 v2.0
+[NAME EN]SecuDisc v2.0
+[NAME FR]SecuDisc v2.0
+[NAME GE]SecuDisc v2.0
+[NAME IT]SecuDisc v2.0
+[NAME JA]セキュディスク v2.0
+[NAME RU]SecuDisc v2.0
+[NAME TU]SecuDisc v2.0
+[DATE]AUG 1994
+[PRICE]50000
+[DEV COSTS]9000
+
+[ID]9
+[NAME CH]密探     v3.0
+[NAME CT]安全碟 v3.0
+[NAME EN]SecuDisc v3.0
+[NAME FR]SecuDisc v3.0
+[NAME GE]SecuDisc v3.0
+[NAME IT]SecuDisc v3.0
+[NAME JA]セキュディスク v3.0
+[NAME RU]SecuDisc v3.0
+[NAME TU]SecuDisc v3.0
+[DATE]AUG 1996
+[PRICE]55000
+[DEV COSTS]10000
+
+[ID]10
+[NAME CH]破晓           v1.0
+[NAME CT]HHV保護 v1.0
+[NAME EN]HHV Protection v1.0
+[NAME FR]HHV Protection v1.0
+[NAME GE]HHV Protection v1.0
+[NAME IT]HHV Protection v1.0
+[NAME JA]HHVプロテクション v1.0
+[NAME RU]HHV Protection v1.0
+[NAME TU]HHV Protection v1.0
+[DATE]AUG 1998
+[PRICE]60000
+[DEV COSTS]11000
+
+[ID]11
+[NAME CH]破晓           v2.0
+[NAME CT]HHV保護 v2.0
+[NAME EN]HHV Protection v2.0
+[NAME FR]HHV Protection v2.0
+[NAME GE]HHV Protection v2.0
+[NAME IT]HHV Protection v2.0
+[NAME JA]HHVプロテクション v2.0
+[NAME RU]HHV Protection v2.0
+[NAME TU]HHV Protection v2.0
+[DATE]AUG 2000
+[PRICE]65000
+[DEV COSTS]12000
+
+[ID]12
+[NAME CH]破晓           v3.0
+[NAME CT]HHV保護 v3.0
+[NAME EN]HHV Protection v3.0
+[NAME FR]HHV Protection v3.0
+[NAME GE]HHV Protection v3.0
+[NAME IT]HHV Protection v3.0
+[NAME JA]HHVプロテクション v3.0
+[NAME RU]HHV Protection v3.0
+[NAME TU]HHV Protection v3.0
+[DATE]AUG 2002
+[PRICE]70000
+[DEV COSTS]13000
+
+[ID]13
+[NAME CH]数字盾牌    v1.0
+[NAME CT]數據盾 v1.0
+[NAME EN]DATA Shield v1.0
+[NAME FR]DATA Shield v1.0
+[NAME GE]DATA Shield v1.0
+[NAME IT]Scudo dati v1.0
+[NAME JA]データシールド v1.0
+[NAME RU]DATA Shield v1.0
+[NAME TU]DATA Shield v1.0
+[DATE]AUG 2004
+[PRICE]75000
+[DEV COSTS]14000
+
+[ID]14
+[NAME CH]数字盾牌    v2.0
+[NAME CT]數據盾 v2.0
+[NAME EN]DATA Shield v2.0
+[NAME FR]DATA Shield v2.0
+[NAME GE]DATA Shield v2.0
+[NAME IT]Scudo dati v2.0
+[NAME JA]データシールド v2.0
+[NAME RU]DATA Shield v2.0
+[NAME TU]DATA Shield v2.0
+[DATE]AUG 2006
+[PRICE]80000
+[DEV COSTS]15000
+
+[ID]15
+[NAME CH]数字盾牌    v3.0
+[NAME CT]數據盾 v3.0
+[NAME EN]DATA Shield v3.0
+[NAME FR]DATA Shield v3.0
+[NAME GE]DATA Shield v3.0
+[NAME IT]Scudo dati v3.0
+[NAME JA]データシールド v3.0
+[NAME RU]DATA Shield v3.0
+[NAME TU]DATA Shield v3.0
+[DATE]AUG 2008
+[PRICE]85000
+[DEV COSTS]16000
+
+[ID]16
+[NAME CH]虚空            v1.0
+[NAME CT]AR 複製防護 v1.0
+[NAME EN]AR Copy Protect v1.0
+[NAME FR]AR Copy Protect v1.0
+[NAME GE]AR Copy Protect v1.0
+[NAME IT]AR Copia Protetta v1.0
+[NAME JA]ARコピープロテクト v1.0
+[NAME RU]AR Copy Protect v1.0
+[NAME TU]AR Copy Protect v1.0
+[DATE]AUG 2010
+[PRICE]90000
+[DEV COSTS]17000
+
+[ID]17
+[NAME CH]虚空            v2.0
+[NAME CT]AR 複製防護 v2.0
+[NAME EN]AR Copy Protect v2.0
+[NAME FR]AR Copy Protect v2.0
+[NAME GE]AR Copy Protect v2.0
+[NAME IT]AR Copia Protetta v2.0
+[NAME JA]ARコピープロテクト v2.0
+[NAME RU]AR Copy Protect v2.0
+[NAME TU]AR Copy Protect v2.0
+[DATE]AUG 2012
+[PRICE]95000
+[DEV COSTS]18000
+
+[ID]18
+[NAME CH]虚空            v3.0
+[NAME CT]AR 複製防護 v3.0
+[NAME EN]AR Copy Protect v3.0
+[NAME FR]AR Copy Protect v3.0
+[NAME GE]AR Copy Protect v3.0
+[NAME IT]AR Copia Protetta v3.0
+[NAME JA]ARコピープロテクト v3.0
+[NAME RU]AR Copy Protect v3.0
+[NAME TU]AR Copy Protect v3.0
+[DATE]AUG 2014
+[PRICE]100000
+[DEV COSTS]19000
+
+[ID]19
+[NAME CH]灭迹         v1.0
+[NAME CT]巨集防護 v1.0
+[NAME EN]MacroProtect v1.0
+[NAME FR]MacroProtect v1.0
+[NAME GE]MacroProtect v1.0
+[NAME IT]MacroProtect v1.0
+[NAME JA]マクロプロテクト v1.0
+[NAME RU]MacroProtect v1.0
+[NAME TU]MacroProtect v1.0
+[DATE]AUG 2016
+[PRICE]105000
+[DEV COSTS]20000
+
+[ID]20
+[NAME CH]灭迹         v2.0
+[NAME CT]巨集防護 v2.0
+[NAME EN]MacroProtect v2.0
+[NAME FR]MacroProtect v2.0
+[NAME GE]MacroProtect v2.0
+[NAME IT]MacroProtect v2.0
+[NAME JA]マクロプロテクト v2.0
+[NAME RU]MacroProtect v2.0
+[NAME TU]MacroProtect v2.0
+[DATE]AUG 2018
+[PRICE]110000
+[DEV COSTS]21000
+
+[ID]21
+[NAME CH]灭迹         v3.0
+[NAME CT]巨集防護 v3.0
+[NAME EN]MacroProtect v3.0
+[NAME FR]MacroProtect v3.0
+[NAME GE]MacroProtect v3.0
+[NAME IT]MacroProtect v3.0
+[NAME JA]マクロプロテクト v3.0
+[NAME RU]MacroProtect v3.0
+[NAME TU]MacroProtect v3.0
+[DATE]AUG 2020
+[PRICE]115000
+[DEV COSTS]22000
+
+[ID]22
+[NAME CH]量子盾         v1.0
+[NAME CT]量子盾 v1.0
+[NAME EN]Quantum Shield v1.0
+[NAME FR]Quantum Shield v1.0
+[NAME GE]Quantum Shield v1.0
+[NAME IT]Quantum Scudo v1.0
+[NAME JA]クォンタムシールド v1.0
+[NAME RU]Quantum Shield v1.0
+[NAME TU]Quantum Shield v1.0
+[DATE]AUG 2022
+[PRICE]120000
+[DEV COSTS]23000
+
+[ID]23
+[NAME CH]量子盾         v2.0
+[NAME CT]量子盾 v2.0
+[NAME EN]Quantum Shield v2.0
+[NAME FR]Quantum Shield v2.0
+[NAME GE]Quantum Shield v2.0
+[NAME IT]Quantum Scudo v2.0
+[NAME JA]クォンタムシールド v1.0
+[NAME RU]Quantum Shield v2.0
+[NAME TU]Quantum Shield v2.0
+[DATE]AUG 2024
+[PRICE]125000
+[DEV COSTS]24000
+
+[ID]24
+[NAME CH]量子盾         v3.0
+[NAME CT]量子盾 v3.0
+[NAME EN]Quantum Shield v3.0
+[NAME FR]Quantum Shield v3.0
+[NAME GE]Quantum Shield v3.0
+[NAME IT]Quantum Scudo v3.0
+[NAME JA]クォンタムシールド v1.0
+[NAME RU]Quantum Shield v3.0
+[NAME TU]Quantum Shield v3.0
+[DATE]AUG 2026
+[PRICE]130000
+[DEV COSTS]25000
+
+[EOF]
