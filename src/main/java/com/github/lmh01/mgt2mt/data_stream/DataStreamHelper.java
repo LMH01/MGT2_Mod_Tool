@@ -146,8 +146,8 @@ public class DataStreamHelper {
     }
 
     /**
-     * @param file        The input file
-     * @param charSet     Defines what charset the source file uses
+     * @param file    The input file
+     * @param charSet Defines what charset the source file uses
      * @return Returns a map. The key is the line number and the value is the content for that line number.
      */
     public static Map<Integer, String> getContentFromFile(File file, Charset charSet) throws IOException {

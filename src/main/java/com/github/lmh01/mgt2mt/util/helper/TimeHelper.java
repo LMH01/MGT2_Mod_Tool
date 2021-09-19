@@ -20,7 +20,7 @@ public class TimeHelper {
      * Create a new time helper
      *
      * @param startTimer If true the timer will be started
-     * @param unit Indicates how accurate the measured time should be
+     * @param unit       Indicates how accurate the measured time should be
      */
     public TimeHelper(TimeUnit unit, boolean startTimer) {
         timeUnit = unit;

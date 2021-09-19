@@ -76,7 +76,7 @@ public class GenreMod extends AbstractComplexMod {
         EditHelper.printLine("ALIGN2", map, bw);
     }
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }

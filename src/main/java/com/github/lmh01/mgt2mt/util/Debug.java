@@ -371,6 +371,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
 
     /**
      * This function can be caled by {@literal SharingManager#replaceDependencies(AbstractBaseMod, Map, AbstractBaseMod, String)}
+     *
      * @param parent
      * @param parentMap
      * @param <T>
@@ -398,6 +399,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
     /**
      * Checks if the new date is after the old date.
      * Input string formatting: dd/MM/yyyy HH:mm:ss
+     *
      * @return True if new date is after old date. False otherwise
      */
     public static boolean isDateNewer(String oldDate, String newDate) {

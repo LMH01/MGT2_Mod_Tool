@@ -133,7 +133,7 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
         }
     }
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }
@@ -347,7 +347,7 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
     }
 
     @Override
-    public  <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
+    public <T> Map<String, Object> getDependencyMap(T t) throws ModProcessingException {
         Map<String, String> modMap = transformGenericToMap(t);
         Map<String, Object> map = new HashMap<>();
         Set<String> set = new HashSet<>();

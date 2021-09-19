@@ -22,7 +22,7 @@ public class LicenceMod extends AbstractSimpleMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LicenceMod.class);
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }

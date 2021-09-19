@@ -16,7 +16,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,7 +44,7 @@ public class HardwareFeatureMod extends AbstractAdvancedMod {
         }
     }
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }

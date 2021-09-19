@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.util.I18n;
 
-public enum HardwareType implements TypeEnum{
+public enum HardwareType implements TypeEnum {
 
     CPU("cpu", 0),
 

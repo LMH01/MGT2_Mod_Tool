@@ -1,7 +1,5 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
-import java.util.Enumeration;
-
 /**
  * Contains functions that can be used to implement the usage of enums for mod type combo boxes
  */

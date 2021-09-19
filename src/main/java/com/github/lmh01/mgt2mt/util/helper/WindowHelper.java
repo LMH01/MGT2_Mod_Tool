@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.SpinnerType;
+import com.github.lmh01.mgt2mt.mod.managed.TypeEnum;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -82,7 +84,7 @@ public class WindowHelper {
     }
 
     /**
-     * @param spinner The spinner that should be added to the panel
+     * @param spinner     The spinner that should be added to the panel
      * @param spinnerType The spinner type. Indicates what is written in the name
      * @return Returns a new panel containing the components of the type
      */
@@ -217,10 +219,10 @@ public class WindowHelper {
     }
 
     /**
-     * @param c The enum class that contains the values
+     * @param c                     The enum class that contains the values
      * @param toolTipTranslationKey The translation key for the tool tip of the combo box
-     * @param selectedItem The item that should be selected
-     * @param <E> An enum that implements the interface {@link TypeEnum}
+     * @param selectedItem          The item that should be selected
+     * @param <E>                   An enum that implements the interface {@link TypeEnum}
      * @return A new {@link JComboBox}.
      */
     public static <E extends Enum<?> & TypeEnum> JComboBox<String> getComboBox(Class<E> c, String toolTipTranslationKey, String selectedItem) {

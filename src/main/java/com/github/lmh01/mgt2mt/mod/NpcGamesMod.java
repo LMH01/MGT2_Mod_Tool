@@ -1,7 +1,10 @@
 package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleDependentMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
@@ -22,7 +25,7 @@ public class NpcGamesMod extends AbstractSimpleDependentMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NpcGamesMod.class);
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }

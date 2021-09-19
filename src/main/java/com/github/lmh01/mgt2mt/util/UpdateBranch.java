@@ -5,7 +5,7 @@ public enum UpdateBranch {
 
     String name;
 
-    UpdateBranch(String name){
+    UpdateBranch(String name) {
         this.name = name;
     }
 
@@ -16,6 +16,7 @@ public enum UpdateBranch {
     /**
      * Transforms the name to an update branch.
      * If the name is not found {@link UpdateBranch#RELEASE} is returned.
+     *
      * @return The update branch for the name
      */
     public static UpdateBranch getUpdateBranch(String name) {

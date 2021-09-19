@@ -2,7 +2,10 @@ package com.github.lmh01.mgt2mt.mod;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.*;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
+import com.github.lmh01.mgt2mt.mod.managed.AbstractSimpleDependentMod;
+import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -27,7 +30,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
      * */
     private static final Logger LOGGER = LoggerFactory.getLogger(ThemeMod.class);
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }
@@ -520,7 +523,6 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     /**
      * @param name The string that should be checked if it is contained within the engine theme file
      * @return True if the theme already exists
-     *
      * @throws ModProcessingException If something went wrong
      */
     public boolean doesThemeExist(String name) throws ModProcessingException {

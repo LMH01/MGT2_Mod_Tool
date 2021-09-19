@@ -109,7 +109,7 @@ public class PlatformMod extends AbstractComplexMod {
         EditHelper.printLine("TYP", map, bw);
     }
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }

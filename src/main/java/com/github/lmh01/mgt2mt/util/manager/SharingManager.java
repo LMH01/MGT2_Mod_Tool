@@ -18,8 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -490,7 +490,7 @@ public class SharingManager {
                     for (Map.Entry<String, Object> entry : modMap.entrySet()) {
                         Map<String, Object> singleModMap = (Map<String, Object>) entry.getValue();
                         if (isModToolVersionSupported(mod.getExportType(), (String) map.get("mod_tool_version"))) {
-                            if (mod instanceof  AbstractComplexMod) {
+                            if (mod instanceof AbstractComplexMod) {
                                 singleModMap.put("base_mod_type", "complex");
                             } else if (mod instanceof AbstractAdvancedMod) {
                                 singleModMap.put("base_mod_type", "advanced");
@@ -561,7 +561,7 @@ public class SharingManager {
      *
      * @param mods The map that contains the mods
      * @return True if all folders exist or when the safety features are disabled.
-     *         False if a folder is missing and the safety features are enabled.
+     * False if a folder is missing and the safety features are enabled.
      */
     private static boolean checkAssetsFolders(Set<Map<String, Object>> mods) {
         List<String> invalidAssetFolders = new ArrayList<>();
@@ -1193,7 +1193,7 @@ public class SharingManager {
         }
     }
 
-    private static void displayExportSuccessDialog() throws ModProcessingException{
+    private static void displayExportSuccessDialog() throws ModProcessingException {
         if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.export.exportSuccessful"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
             try {
                 Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());

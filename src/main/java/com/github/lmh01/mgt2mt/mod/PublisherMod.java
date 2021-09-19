@@ -48,7 +48,7 @@ public class PublisherMod extends AbstractComplexMod {
         }
     }
 
-     @Override
+    @Override
     public String[] getCompatibleModToolVersions() {
         return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
     }

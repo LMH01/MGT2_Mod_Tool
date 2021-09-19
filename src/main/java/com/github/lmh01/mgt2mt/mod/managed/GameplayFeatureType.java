@@ -2,7 +2,7 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.util.I18n;
 
-public enum GameplayFeatureType implements TypeEnum{
+public enum GameplayFeatureType implements TypeEnum {
 
     GRAPHIC("graphic", 0),
 
