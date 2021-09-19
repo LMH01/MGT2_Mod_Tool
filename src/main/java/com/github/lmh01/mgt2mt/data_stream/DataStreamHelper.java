@@ -334,7 +334,7 @@ public class DataStreamHelper {
                     Path destination = Paths.get(destinationDirectory.toString(), source.toString()
                             .substring(sourceDirectory.toString().length()));
                     try {
-                        Files.copy(source, destination);
+                        Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

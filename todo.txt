@@ -32,14 +32,6 @@ Not Shure:
     Bei diesen Modpacks sollte man dann auch auswählen können, dass spezifische mods beim importieren dieses Modpacks entfernt werden sollen.
     Das soll mit .toml Dateien realisiert werden
 
-//TODO Thread namen anschauen und gucken, ob ich die besser/einheitlicher machen kann
-    z.B.:
-    if you have several threads of the same nature, enumerate them with IDs that are unique to one execution of the application or one log file, whichever fits your logging habits.
-
-//TODO Alle Progress bar operations noch einmal überprüfen und ggf. progressbar anpassen und konsistenter machen (auf jeden Fall für Import und Export)
-
 //TODO Write tests
 
 /TODO Remove unneeded localisation
-
-TODO Check why file already exists exception gets thrown, when a restore point is created, when a restore point already exists

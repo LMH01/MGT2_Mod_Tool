@@ -60,9 +60,7 @@ commonText.unknownError|Unbekannter Fehler
 commonText.noInternet|Keine Verbindung zum Internet
 commonText.id|Id
 commonText.name|Name
-commonText.name.var1|Namen
 commonText.description|Beschreibung
-commonText.description.var1|Beschreibungs
 commonText.manufacturer|Hersteller
 commonText.unlockDate|Freischaltdatum
 commonText.unlockMonth|Freischaltemonat
@@ -137,11 +135,10 @@ commonText.addDescriptionTranslations|Übersetzungen für Beschreibungen hinzuf�
 commonText.addDescriptionTranslations.toolTip|<html>Klicke, um Übersetzungen für die Beschreibung hinzuzufügen<br>Der wert, der in das Textfeld geschrieben wird, wird für die englische Übersetzung benutzt
 commonText.addDescriptionTranslations.added|Übersetzungen hinzugefügt
 commonText.addScreenshots|Screenshots hinzufügen
-commonText.addGenreIcon|Genre Icon hinzufügen
 commonText.translationsAlreadyAdded|Übersetzungen wurden bereits hinzugefügt.<br>Sollen die Übersetzungen gelöscht werden und möchtest du neue hinzufügen?
 commonText.successfullyAdded|wurde erfolgreich hinzugefügt!
 commonText.imageFileSet|Bilddatei eingestellt
-commonText.screenshots.added|Screenhots eingestellt
+commonText.screenshots.added|Screenshots eingestellt
 commonText.imageFile.doesNotExist|<html>Die eingegebene Bilddatei existiert nicht.<br>Wähle bitte eine gültige Datei aus.
 commonText.imageFile.selectPngFile|Wähle bitte eine .png Datei aus.
 commonText.imageFile.selectOnlyPngFile|Wähle bitte nur .png Dateien aus.
@@ -156,7 +153,6 @@ commonText.add|hinzufügen
 commonText.add.upperCase|Hinzufügen
 commonText.remove|entfernen
 commonText.remove.upperCase|Entfernen
-commonText.addMod|Mod hinzufügen?
 commonText.unableToAdd|Hinzufügen unmöglich:
 commonText.modAlreadyExists|Der Mod existiert bereits!
 commonText.chooseGenreFirst|Bitte wähle zu erst mindestens ein Genre aus!
@@ -168,7 +164,6 @@ commonText.imageSelected|Bild ausgewählt
 commonText.selectImage|Bild auswählen
 commonText.nameAlreadyInUse|Der eingegebene Name wird schon benutzt.
 commonText.developmentCost.spinner|Der eingestellte Preis muss bezahlt werden, wenn ein Spiel mit diesem Feature erstellt wird.
-commonText.notAvailable|nicht verfügbar
 commonText.enterName|ENTER NAME
 commonText.enterFeatureName|GIB DEN NAMEN DES FEATURES EIN
 commonText.enterDescription|GIB DIE BESCHREIBUNG EIN
@@ -193,7 +188,6 @@ commonText.stationaryConsole|Stationäre Konsole
 commonText.portableConsole|Portable Konsole
 commonText.reason|Grund:
 commonText.alreadyExported|Der Mod wurde bereits exportiert
-commonText.after|nach
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -296,11 +290,10 @@ mod.publisher.addMod.optionPaneMessage.developer.toolTip|Wenn ausgewählt: Die F
 mod.publisher.addMod.optionPaneMessage.publisher|Publisher
 mod.publisher.addMod.optionPaneMessage.publisher.toolTip|Wenn ausgewählt: Die Firma kann Spiele für dich veröffentlichen (=Sie publishen)
 mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip|Dies gibt an, wie hoch der Marktanteil des Publishers ist
-mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Dies gibt an, wie viel Geld pro verkaufer Einheit verdient werden soll
+mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Dies gibt an, wie viel Geld pro verkaufter Einheit verdient werden soll
 mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip|Klicke hier, um einzustellen, bei welchem Genre die Fanbase von diesem Publisher/Entwickler liegt
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select|Wähle das Fan-Base-Genre aus:
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure|Wähle bitte zuerst ein Genre aus.
-mod.publisher.addMod.optionPaneMessage.button.fanBase.select.error|Beim auswählen des Genres ist ein Fehler aufgetreten:
 mod.publisher.icon|Publisher Bild
 mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Dein Gameplay Feature ist bereit:
 mod.licence.addMod.optionPaneMessage.book|Buch
@@ -338,7 +331,6 @@ mod.theme.addTheme.components.comboBox.violenceLevel|<html>Dies gibt an, welche 
 mod.theme.addTheme.components.label.explainList|<html>Wähle aus, welche Genres gut zu dem Thema passen sollen.<br>(Tipp: Halte STRG gedrückt und klicke mit der Maus)
 mod.npcGames.addMod.selectGenres|Wähle die Genres aus, die mit dem neuen Npc Spiel kompatibel sein sollen:
 mod.npcGames.addMod.components.labelName|Gib den Namen für das Npc Spiel ein:
-mod.npcGames.addMod.optionPaneMessage.firstPart|Dieses Npc Spiel hinzufügen?
 mod.platform.addPlatform.optionPaneMessage.firstPart|Diese Plattform hinzufügen?
 mod.platform.addPlatform.components.textFieldName.initialValue|GIB EINEN PLATFORMNAMEN EIN
 mod.platform.addPlatform.components.textFieldManufacturer.initialValue|GIB DEN NAMEN DES HERSTELLERS EIN
@@ -454,10 +446,7 @@ mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationäre Kons
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable Konsole
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|<html>Wähle hier aus, für welche Konsolenart diese Hardware exclusiv sein soll
 
-sharer.exportFailed.generalError.firstPart|Export nicht möglich:
-sharer.exportFailed.generalError.secondPart|Der folgende Fehler ist aufgetreten:
 sharer.engineFeature.optionPaneMessage.main|Dein Engine Feature ist bereit:
-sharer.theme.optionPaneMessage.main|Dein Thema is bereit:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
 sharer.importMod.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
 sharer.importMod.alreadyExists.short|bereits vorhanden ist
@@ -467,7 +456,6 @@ sharer.importMod.couldNotBeImported.secondPart|nicht mit der aktuellen Mod Tool 
 sharer.importMod.couldNotBeImported.thirdPart|wurde exportiert in Version:
 sharer.exported|Exportiert:
 sharer.notExported|Nicht exportiert:
-sharer.modAlreadyExported|Dieser Mod wurde bereits exportiert
 
 dialog.restorePoint.createRestorePoint|<html>Möchtest du einen Mod-Wiederherstellungspunkt erstellen?<br><br>Ein Mod-Wiederherstellungspunkt kann verwendet werden, um alle derzeit<br>installierten Mods später wiederherzustellen, falls diese durch ein update verloren gegangen sind.<br>Dafür werden alle derzeit installierte Mods in einen bestimmten Ordner exportiert.<br>Achtung: Entwickler-Logos werden nicht mit gesichert!
 dialog.restorePoint.createRestorePoint.title|Wiederhrestellungspunkt erstellen?
@@ -479,9 +467,6 @@ dialog.restorePoint.restore.mainDialog.title|Mods wiederherstellen
 
 dialog.export.exportSuccessful|<html>Alle Einträge wurden erfolgreich exportiert!<br><br>Soll der Ordner geöffnet werden, in welchem sie gespeichert wurden?
 dialog.export.restorePointSuccessful|Wiederherstellungspunkt wurde erfolgreich erstellt!
-dialog.export.error|Fehler beim Exportieren
-dialog.export.alreadyExported1|Die folgenden Einträge wurden nicht exportiert, da sie bereits exportiert wurden
-dialog.export.alreadyExported2|Soll der Exportordner geöffnet werden?
 
 dialog.backup.deleteAllBackups.mainMessage|<html>Bis du dir sicher, dass du alle backups löschen möchtest?<br>Dies könnte zu Problemen führen.<br>Das Programm wird nach löschen der Backups geschlossen<br>und beim nächsten Start wird ein neues Initiales backup erstellt.
 dialog.backup.deleteAllBackups.mainMessage.title|Backups löschen?
@@ -578,10 +563,6 @@ dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip Dat
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|Der ausgewählte Ordner enthält keinen gültigen
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|Der ausgewählte Ordner enthält nicht die
 dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>Datei.<br>Bitte wähle den richtigen Ordner.
-dialog.sharingManager.couldNotBeImported|konnte nicht importiert werden
-dialog.sharingManager.couldNotBeImported.2|ist nicht mit der aktuellen Mod-Tool Version kompatibel
-dialog.sharingManager.couldNotBeImported.3|wurde dieser Version exportiert:
-dialog.sharingManager.nameTaken|Name ist schon vergeben
 dialog.sharingManager.exportAll.mainMessage.part1|<html>Bist du dir sicher, dass alle Mods exportiert werden sollen?
 dialog.sharingManager.exportAll.mainMessage.part2|<br>Wenn einzel Export an ist, werden mods, die bereits exportiert wurden, nicht noch einmal exportiert.<br>Wenn einzel Export aus ist, werden Bilder von Mods, die bereits exportiert wurden, nicht noch einmal exportiert.
 dialog.sharingManager.exportAll.singleExport|Einzel Export
@@ -613,8 +594,6 @@ dialog.sharingHandler.theme.addTheme|Dieses Thema hinzufügen?
 dialog.sharingHandler.theme.addTheme.title|Thema hinzufügen?
 dialog.sharingHandler.type|Typ:
 dialog.sharingHandler.hasBeenAdded|wurde erfolgreich hinzugefügt
-dialog.sharingHandler.unableToAddPublisher|Publisher kann nicht hinzugefügt werden
-dialog.sharingHandler.unableToAddPublisher.2|Das spezielle Genre für den Publisher existiert nicht!
 dialog.sharingHandler.unableToAddTheme|Thema kann nicht hinzugefügt werden
 
 dialog.genreManager.addGenre.bodyButtonExplanation.var1|<html>Klicke auf Ja, um dieses Genre hinzuzufügen.<br>Klicke auf Nein, um diesen Vorgang abzubrechen.
@@ -644,7 +623,6 @@ dialog.contentEditor.editGenreThemeFit.comboBox.toolTip|<html>Wähle aus, was ge
 dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Bist du dir sicher, dass die ausgewählten Genres/Themen<br>miteinander kombiniert/von einander entfernt werden sollen?
 dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Bitte wähle mindestens ein Thema/Genre aus, um fortzufahren!
 dialog.contentEditor.editGenreThemeFit.success|Die Genre/Themen Kombination wurde erfolgreich bearbeitet!
-dialog.contentEditor.editGenreThemeFit.error|Beim bearbeiten der Themendatei ist ein Fehler aufgetreten:
 
 dialog.startTasks.initialBackupOutdated|<html>Warnung:<br><br>Das Initial-Backup ist nicht mehr aktuell.<br>Dies kann zu Problemen führen.<br><br>Erstelle bitte ein neues!<br>(Backup -> Backup erstellen -> Neues Initial-Backup erstellen)
 
@@ -690,16 +668,8 @@ processor.error.unableTo|Unfähig zu
 processor.error.noCustom|Es gibt keine benutzerdefinierten
 processor.error.part.1|<html>die bearbeitet werden könnten.<br>Bitte füge ein
 processor.error.part.2|Fehler beim
-processor.error.part.3|Ein Fehler ist aufgetreten:
 
 progressBar.idle|Leerlauf
-progressBar.moddedEngineFeatures|Scannen nach modifizierten Engine Features
-progressBar.moddedGameplayFeatures|Scannen nach modifizierten Gameplay Features
-progressBar.moddedGenre|Scannen nach modifizierten Genres
-progressBar.moddedLicences|Scannen nach modifizierten Lizenzen
-progressBar.moddedPublishers|Scannen nach modifizierten Publishern
-progressBar.moddedThemes|Scannen nach modifizierten Themen
-progressBar.moddedPlatforms|Scannen nach modifizierten Plattformen
 progressBar.startingExport|Exportiere
 progressBar.delete|Lösche:
 progressBar.scanningDirectories|Durchsuche Ordner
@@ -720,36 +690,7 @@ progressBar.initializingTool|Initialisiere Tool
 progressBar.downloadingDefaultContentUpdate|Lade Update für die "default_content" Datei herunter
 progressBar.export.creatingExportMap|Erstelle export map
 
-textArea.moddedEngineFeatureFound|Modifiziertes Engine Feature gefunden:
-textArea.moddedEngineFeaturesComplete|Scannen nach modifizierten Engine Features abgeschlossen
-textArea.moddedGameplayFeatureFound|Modifiziertes Gameplay Feature gefunden:
-textArea.moddedGameplayFeaturesComplete|Scannen nach modifizierten Gameplay Features abgeschlossen
-textArea.moddedGenreFound|Modifiziertes Genre gefunden:
-textArea.moddedGenresComplete|Scannen nach modifizierten Genres abgeschlossen
-textArea.moddedPublisherFound|Modifizierten Publisher gefunden:
-textArea.moddedPublishersComplete|Scannen nach modifizierten Publishern abgeschlossen
-textArea.moddedLicenceFound|Modifizierte Lizenz gefunden:
-textArea.moddedLicencesComplete|Scannen nach modifizierten Lizenzen abgeschlossen
-textArea.moddedPlatformFound|Modifizierte Platform gefunden:
-textArea.moddedPlatformsComplete|Scannen nach modifizierten Plattformen abgeschlossen
-textArea.moddedThemeFound|Modifiziertes Thema gefunden:
-textArea.moddedThemesComplete|Scannen nach modifizierten Themen abgeschlossen
 textArea.exportComplete|Export abgeschlossen
-textArea.engineFeatureExportFailed.alreadyExported|Das folgende Engine Feature wurde nicht exportiert, da es bereits exportiert wurde:
-textArea.engineFeatureExportFailed.generalError.fistPart|Beim exportieren des Engine Features
-textArea.engineFeatureExportSuccessful|Das folgende Engine Feature wurde exportiert:
-textArea.gameplayFeatureExportFailed.alreadyExported|Das folgende Gameplay Feature wurde nicht exportiert, da es bereits exportiert wurde:
-textArea.gameplayFeatureExportFailed.generalError.fistPart|Beim exportieren des Gameplay Features
-textArea.gameplayFeatureExportSuccessful|Das folgende Gameplay Feature wurde exportiert:
-textArea.genreExportFailed.alreadyExported|Das folgende Genre wurde nicht exportiert, da es bereits exportiert wurde:
-textArea.genreExportSuccessful|Das folgende Genre wurde exportiert:
-textArea.publisherExportFailed.alreadyExported|Der folgende Publisher wurde nicht exportiert, da er bereits exportiert wurde:
-textArea.publisherExportSuccessful|Der folgende Publisher wurde exportiert:
-textArea.licenceExportFailed.alreadyExported|Die folgende Lizenz wurde nicht exportiert, da sie bereits exportiert wurde:
-textArea.licenceExportSuccessful|Die folgende Lizenz wurde exportiert:
-textArea.themeExportFailed.alreadyExported|Das folgende Thema wurde nicht exportiert, da es bereits exportiert wurde:
-textArea.themeExportSuccessful|Das folgende Thema wurde exportiert:
-textArea.ExportFailed.generalError.secondPart|ist folgender Fehler aufgetreten:
 textArea.uninstalling|Deinstalliere
 textArea.uninstalling.uninstallingAllMods|Deinstalliere alle Mods
 textArea.uninstalling.uninstallingAllMods.mod.failed|Fehlgeschlagen:
@@ -893,26 +834,8 @@ window.main.mods.import.getMoreMods|Mehr Mods
 window.main.mods.import.getMoreMods.toolTip|Klicke hier, um eine Website zu öffnen, auf der du weitere Mods erhalten kannst.
 window.main.mods.import.getMoreMods.confirmDialog|Soll die Webseite geöffnet werden, wo es mehr mods gibt?
 window.main.mods.import.getMoreMods.confirmDialog.title|Seite öffnen?
-window.main.mods.genres|Genres
-window.main.mods.genres.addGenre|Genre hinzufügen
-window.main.mods.genres.removeGenre|Genre entfernen
-window.main.mods.themes|Themen
-window.main.mods.themes.addTheme|Thema hinzufügen
-window.main.mods.themes.removeTheme|Thema entfernen
 window.main.mods.themes.changeGenreThemeFit|Genre/Thema Kombination bearbeiten
 window.main.mods.themes.changeGenreThemeFit.toolTip|Klicke hier, um die Genre/Thema Kombinationen zu bearbeiten
-window.main.mods.publisher|Publisher
-window.main.mods.publisher.addPublisher|Publisher hinzufügen
-window.main.mods.publisher.removePublisher|Publisher entfernen
-window.main.mods.engineFeatures|Engine Features
-window.main.mods.engineFeatures.addEngineFeature|Engine Feature hinzufügen
-window.main.mods.engineFeatures.removeEngineFeature|Engine Feature entfernen
-window.main.mods.gameplayFeatures|Gameplay Features
-window.main.mods.gameplayFeatures.addGameplayFeature|Gameplay Feature hinzufügen
-window.main.mods.gameplayFeatures.removeGameplayFeature|Gameplay Feature entfernen
-window.main.mods.licences|Lizenzen
-window.main.mods.licences.addLicence|Lizenz hinzufügen
-window.main.mods.licences.removeLicence|Lizenz entfernen
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click, um eine genre id zu der NPC_Games_list hinzuzufügen.
 window.main.mods.addCompanyIcon|Firmenbild hinzufügen
@@ -923,9 +846,6 @@ window.main.share.export|Exportieren
 window.main.share.export.genre|Genre
 window.main.share.export.publisher|Publisher
 window.main.share.export.theme|Thema
-window.main.share.export.engineFeature|Engine Feature
-window.main.share.export.gameplayFeature|Gameplay Feature
-window.main.share.export.licence|Lizenz
 window.main.share.export.exportAll|Alles exportieren
 window.main.share.export.exportAll.toolTip|Klicke hier, um alle aktuell installierten Mods zu exportieren
 window.main.share.export.exportSelected|Ausgewähltes exportieren

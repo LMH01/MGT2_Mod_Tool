@@ -60,9 +60,7 @@ commonText.unknownError|Unknown error
 commonText.noInternet|No internet connection
 commonText.id|Id
 commonText.name|Name
-commonText.name.var1|Name
 commonText.description|Description
-commonText.description.var1|Description
 commonText.manufacturer|Manufacturer
 commonText.unlockDate|Unlock date
 commonText.unlockMonth|Unlock month
@@ -137,7 +135,6 @@ commonText.addDescriptionTranslations|Add description translations
 commonText.addDescriptionTranslations.toolTip|<html>Click to add description translations<br>The value entered in the main text field will be used as the english translation
 commonText.addDescriptionTranslations.added|Description translations added
 commonText.addScreenshots|Add screenshots
-commonText.addGenreIcon|Add genre icon
 commonText.translationsAlreadyAdded|translations have already been added.<br>Do you want to clear the translations and add new ones?
 commonText.successfullyAdded|has been added successfully!
 commonText.imageFileSet|Image file set
@@ -156,7 +153,6 @@ commonText.add|add
 commonText.add.upperCase|Add
 commonText.remove|remove
 commonText.remove.upperCase|Remove
-commonText.addMod|Add mod?
 commonText.unableToAdd|Unable to add:
 commonText.modAlreadyExists|The mod already exists!
 commonText.chooseGenreFirst|Please select at least one genre first!
@@ -168,7 +164,6 @@ commonText.imageSelected|Image selected
 commonText.selectImage|Select image
 commonText.nameAlreadyInUse|The selected name is already in use.
 commonText.developmentCost.spinner|This price must be paid when creating a game with this feature.
-commonText.notAvailable|not available
 commonText.enterName|ENTER NAME
 commonText.enterFeatureName|ENTER FEATURE NAME
 commonText.enterDescription|ENTER DESCRIPTION
@@ -193,7 +188,6 @@ commonText.stationaryConsole|Stationary console
 commonText.portableConsole|Portable console
 commonText.reason|Reason:
 commonText.alreadyExported|Mod has already been exported
-commonText.after|after
 textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
@@ -301,7 +295,6 @@ mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Set how much money 
 mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip|Click to select what genre the fan base of your publisher likes the most
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select|Select what main genre your publisher should have:
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure|Please select a genre first.
-mod.publisher.addMod.optionPaneMessage.button.fanBase.select.error|Error while selecting genre:
 mod.publisher.icon|Publisher Icon
 mod.licence.addMod.optionPaneMessage.book|Book
 mod.licence.addMod.optionPaneMessage.movie|Movie
@@ -338,7 +331,6 @@ mod.theme.addTheme.components.comboBox.violenceLevel|<html>This indicates the mi
 mod.theme.addTheme.components.label.explainList|<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold CTRL and click with your mouse)
 mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
 mod.npcGames.addMod.components.labelName|Enter the name for the npc game:
-mod.npcGames.addMod.optionPaneMessage.firstPart|Add this npc game?
 mod.platform.addPlatform.optionPaneMessage.firstPart|Add this platform?
 mod.platform.addPlatform.components.textFieldName.initialValue|ENTER PLATFORM NAME
 mod.platform.addPlatform.components.textFieldManufacturer.initialValue|ENTER MANUFACTURER NAME
@@ -455,10 +447,7 @@ mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationary conso
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|Select here for which console type this hardware should be exclusive
 
-sharer.exportFailed.generalError.firstPart|Unable to export:
-sharer.exportFailed.generalError.secondPart|The following error occurred:
 sharer.engineFeature.optionPaneMessage.main|Your engine feature is ready:
-sharer.theme.optionPaneMessage.main|Your theme is ready:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
 sharer.importMod.alreadyExists|The following mod has not been imported because it already exists:
 sharer.importMod.alreadyExists.short|already exists
@@ -468,7 +457,6 @@ sharer.importMod.couldNotBeImported.secondPart|is not with the current mod tool 
 sharer.importMod.couldNotBeImported.thirdPart|was exported in version:
 sharer.exported|Exported:
 sharer.notExported|Not exported:
-sharer.modAlreadyExported|This mod has already been exported
 
 dialog.restorePoint.createRestorePoint|<html>Would you like to create a mod restore point?<br><br>A mod restore point can be used to restore all<br>currently installed mods later when the game has been updated.<br>For that all currently installed mods will be exported into a specific folder.<br>Warning: Developer logos will not be saved!
 dialog.restorePoint.createRestorePoint.title|Create restore point?
@@ -480,9 +468,6 @@ dialog.restorePoint.restore.mainDialog.title|Restore mods
 
 dialog.export.exportSuccessful|<html>All entries have been exported successfully!<br><br>Do you want to open the folder where they have been saved?
 dialog.export.restorePointSuccessful|Restore point has been created successfully!
-dialog.export.error|Error while exporting
-dialog.export.alreadyExported1|The following entries have not been exported because they were already exported
-dialog.export.alreadyExported2|Do you want to open the export folder?
 
 dialog.backup.deleteAllBackups.mainMessage|<html>Are you sure that you would like to delete all backups?<br>This could lead to problems.<br>When all backups have been deleted the program is exited<br>and on the next startup a new initial backup will be created.
 dialog.backup.deleteAllBackups.mainMessage.title|Delete backups?
@@ -579,10 +564,6 @@ dialog.sharingManager.getImportFolderPath.fileChooser.filterDescription|.zip fil
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var1|The selected folder does not contain a valid
 dialog.sharingManager.getImportFolderPath.noValidFile.firstPart.var2|The selected folder does not contain the
 dialog.sharingManager.getImportFolderPath.noValidFile.secondPart|<html>file.<br>Please select the correct folder.
-dialog.sharingManager.couldNotBeImported|could not be imported
-dialog.sharingManager.couldNotBeImported.2|is not with the current mod tool version compatible
-dialog.sharingManager.couldNotBeImported.3|was exported in version:
-dialog.sharingManager.nameTaken|name is already taken
 dialog.sharingManager.exportAll.mainMessage.part1|<html>Are you sure that all mods should be exported?
 dialog.sharingManager.exportAll.mainMessage.part2|<br>If single export is on: Previously exported mods will not be exported again.<br>If single export is off: Pictures of mods that have been exported already, will not be exported again.
 dialog.sharingManager.exportAll.singleExport|Single export
@@ -602,10 +583,6 @@ dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is ava
 dialog.updateChecker.updateFailed|Update check failed: No internet connection
 dialog.updateChecker.latestGameVersionNotCompatible|<html>Warning:<br><br>This tool is not compatible with the current game version!<br>You can choose to use the tool anyway but some things might not work properly.<br><br>I will do my best to make this tool compatible again as quickly as possible.
 
-dialog.analyzeExistingLicences.errorWhileScanningLicences|Error wile scanning licences:
-dialog.analyzeExistingLicences.errorWhileScanningPublishers|Error wile scanning publishers:
-dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Error wile scanning platforms:
-
 dialog.dataStreamHelper.newFile.entryOutOfTarget|Entry is outside of the target dir:
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Failed to create directory
 
@@ -614,8 +591,6 @@ dialog.sharingHandler.theme.addTheme|Add this theme?
 dialog.sharingHandler.theme.addTheme.title|Add theme?
 dialog.sharingHandler.type|Type:
 dialog.sharingHandler.hasBeenAdded|has been added successfully
-dialog.sharingHandler.unableToAddPublisher|Unable to add publisher
-dialog.sharingHandler.unableToAddPublisher.2|The special genre for for the requested publisher does not exist!
 dialog.sharingHandler.unableToAddTheme|Unable to add theme
 
 dialog.genreManager.addGenre.bodyButtonExplanation.var1|<html>Click yes to add this genre.<br>Click no cancel this operation.
@@ -645,7 +620,6 @@ dialog.contentEditor.editGenreThemeFit.comboBox.toolTip|<html>Choose what should
 dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Are you sure that the selected genres/themes<br>should be combined/removed from each other?
 dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Please select at least one genre/theme to continue!
 dialog.contentEditor.editGenreThemeFit.success|The genre/theme fit has been edited successfully!
-dialog.contentEditor.editGenreThemeFit.error|Something went wrong while editing the theme file:
 
 dialog.startTasks.initialBackupOutdated|<html>Warning:<br><br>The initial backup is no longer up-to-date.<br>This can result in problems.<br>d<br>Please create a new one!<br>(Backup -> Create backup -> Create new initial backup)
 
@@ -691,16 +665,8 @@ processor.error.unableTo|Unable to
 processor.error.noCustom|There is no custom
 processor.error.part.1|<html>that could be processed.<br>Please add a
 processor.error.part.2|Error while
-processor.error.part.3|An Error has occurred:
 
 progressBar.idle|Idle
-progressBar.moddedEngineFeatures|Scanning for modded engine features
-progressBar.moddedGameplayFeatures|Scanning for modded gameplay features
-progressBar.moddedGenre|Scanning for modded genres
-progressBar.moddedLicences|Scanning for modded licences
-progressBar.moddedPublishers|Scanning for modded publishers
-progressBar.moddedThemes|Scanning for modded themes
-progressBar.moddedPlatforms|Scanning for modded platforms
 progressBar.startingExport|Exporting
 progressBar.delete|Deleting:
 progressBar.scanningDirectories|Scanning directories
@@ -721,36 +687,7 @@ progressBar.initializingTool|Initializing tool
 progressBar.downloadingDefaultContentUpdate|Downloading default content update
 progressBar.export.creatingExportMap|Creating export map
 
-textArea.moddedEngineFeatureFound|Modded engine feature found:
-textArea.moddedEngineFeaturesComplete|Scanning for modded engine features complete
-textArea.moddedGameplayFeatureFound|Modded gameplay feature found:
-textArea.moddedGameplayFeaturesComplete|Scanning for modded gameplay features complete
-textArea.moddedGenreFound|Modded genre found:
-textArea.moddedGenresComplete|Scanning for modded genres complete
-textArea.moddedPublisherFound|Modded publisher found:
-textArea.moddedPublishersComplete|Scanning for modded publishers complete
-textArea.moddedLicenceFound|Modded licence found:
-textArea.moddedLicencesComplete|Scanning for modded licences complete
-textArea.moddedThemeFound|Modded theme found:
-textArea.moddedThemesComplete|Scanning for modded themes complete
-textArea.moddedPlatformFound|Modded platform found:
-textArea.moddedPlatformsComplete|Scanning for modded platforms complete
 textArea.exportComplete|Export complete
-textArea.engineFeatureExportFailed.alreadyExported|The following engine feature was not exported because it has already been exported:
-textArea.engineFeatureExportFailed.generalError.fistPart|While exporting engine feature
-textArea.engineFeatureExportSuccessful|The following engine feature has been exported:
-textArea.gameplayFeatureExportFailed.alreadyExported|The following gameplay feature was not exported because it has already been exported:
-textArea.gameplayFeatureExportFailed.generalError.fistPart|While exporting gameplay feature
-textArea.gameplayFeatureExportSuccessful|The following gameplay feature has been exported:
-textArea.genreExportFailed.alreadyExported|The following genre was not exported because it has already been exported:
-textArea.genreExportSuccessful|The following genre has been exported:
-textArea.publisherExportFailed.alreadyExported|The following publisher was not exported because it has already been exported:
-textArea.publisherExportSuccessful|The following publisher has been exported:
-textArea.licenceExportFailed.alreadyExported|The following licence was not exported because it has already been exported:
-textArea.licenceExportSuccessful|The following licence has been exported:
-textArea.themeExportFailed.alreadyExported|The following theme was not exported because it has already been exported:
-textArea.themeExportSuccessful|The following theme has been exported:
-textArea.ExportFailed.generalError.secondPart|the following error occurred:
 textArea.uninstalling|Uninstalling
 textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
 textArea.uninstalling.uninstallingAllMods.mod.failed|Failed:
@@ -895,26 +832,8 @@ window.main.mods.import.getMoreMods|Get more mods
 window.main.mods.import.getMoreMods.toolTip|Click here to open a website where you can get more mods.
 window.main.mods.import.getMoreMods.confirmDialog|Open the page where you can get more mods?
 window.main.mods.import.getMoreMods.confirmDialog.title|Open page?
-window.main.mods.genres|Genres
-window.main.mods.genres.addGenre|Add genre
-window.main.mods.genres.removeGenre|Remove genre
-window.main.mods.themes|Themes
-window.main.mods.themes.addTheme|Add theme
-window.main.mods.themes.removeTheme|Remove theme
 window.main.mods.themes.changeGenreThemeFit|Edit genre/theme fit
 window.main.mods.themes.changeGenreThemeFit.toolTip|Click here to edit the genre/theme fit
-window.main.mods.publisher|Publisher
-window.main.mods.publisher.addPublisher|Add publisher
-window.main.mods.publisher.removePublisher|Remove publisher
-window.main.mods.engineFeatures|Engine features
-window.main.mods.engineFeatures.addEngineFeature|Add engine feature
-window.main.mods.engineFeatures.removeEngineFeature|Remove engine feature
-window.main.mods.gameplayFeatures|Gameplay features
-window.main.mods.gameplayFeatures.addGameplayFeature|Add gameplay feature
-window.main.mods.gameplayFeatures.removeGameplayFeature|Remove gameplay feature
-window.main.mods.licences|Licences
-window.main.mods.licences.addLicence|Add licence
-window.main.mods.licences.removeLicence|Remove licence
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click to add a genre id to the NPC_Games_list.
 window.main.mods.addCompanyIcon|Add company icon
@@ -925,9 +844,6 @@ window.main.share.export|Export
 window.main.share.export.genre|Genre
 window.main.share.export.publisher|Publisher
 window.main.share.export.theme|Theme
-window.main.share.export.engineFeature|Engine feature
-window.main.share.export.gameplayFeature|Gameplay feature
-window.main.share.export.licence|Licence
 window.main.share.export.exportAll|Export all
 window.main.share.export.exportAll.toolTip|Click to export all mods that have been added to the game
 window.main.share.export.exportSelected|Export selected
