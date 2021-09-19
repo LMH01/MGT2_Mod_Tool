@@ -10,6 +10,7 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ImportFromURLHelper {
@@ -30,8 +31,12 @@ public class ImportFromURLHelper {
                 Path downloadZip = ModManagerPaths.DOWNLOAD.getPath().resolve(currentDateTime + "download.zip");
                 Path downloadUnzipped = ModManagerPaths.DOWNLOAD.getPath().resolve(currentDateTime + "download");
                 DataStreamHelper.downloadZip(textFieldUrl.getText(), downloadZip);
-                DataStreamHelper.unzip(downloadZip, downloadUnzipped);//TODO FIX
-                SharingManager.importAll(ImportType.DOWNLOAD, downloadUnzipped);
+                DataStreamHelper.unzip(downloadZip, downloadUnzipped);
+                if (Files.exists(downloadUnzipped)) {
+                    SharingManager.importAll(ImportType.DOWNLOAD, downloadUnzipped);
+                } else {
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.importAll.noTomlFilesFound"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 String errorMessageToDisplay;

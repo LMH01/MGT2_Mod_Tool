@@ -30,6 +30,7 @@
   - Export selected -> with this function only selected mods can be exported. Either single or together in a bundle.
 - Mods are now sorted by alphabet when they are displayed in panels
   - e.g. When the user can choose which mods should be imported
+- Added some missing translations
 
 ### Bug fixes
 - When the hardware file was modified a specific data entry was not written to the file. This caused the controllers and screens to lose the requirements needed to implement them into a console.
