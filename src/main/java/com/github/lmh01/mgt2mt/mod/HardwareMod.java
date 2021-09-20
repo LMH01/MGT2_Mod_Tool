@@ -135,7 +135,7 @@ public class HardwareMod extends AbstractAdvancedDependentMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{"3.0.0-alpha-1", MadGamesTycoon2ModTool.VERSION};
+        return new String[]{"3.0.0-alpha-1", "3.0.0", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override
