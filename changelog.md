@@ -1,5 +1,5 @@
 # Changelog
-## Coming in [v2.3.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v2.3.0)
+## [v3.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0) (Latest Version)
 
 ### Important
 - **Previously saved settings will not work together with this release**
@@ -15,16 +15,18 @@
 ### Other
 - Settings file now uses the .toml file format
 - It is no longer possible to add randomized genres
-- It is no longer possible to enable the debug logging in the settings window, instead the storage of exports can now be enabled. Debug logging can still be enabled by editing the settings.toml file
+- It is no longer possible to enable the debug logging in the settings window, instead the storage of exports can now be enabled.
+  - Debug logging can still be enabled by editing the settings.toml file
 - Improved performance when handling files
-- Improved text area outputs when importing, exporting, adding or removing mods
+- Improved text area outputs when importing, exporting, adding and removing mods
 - Improved the error handling massively
   - Whenever something goes wrong the stacktrace is now written to the text area and an explanation of what went wrong is displayed
 - Internal code has been massively improved
 - Internal handling of paths and files has been improved
   - Renamed some folders to be more consistent
 - When an initial backup is created the user is now prompted to verify the game files
-- It is now checked if the initial backup is up-to-date when the tool is started. (currently vip to enable set "enableInitialBackupCheck" in the "settings.toml" file to true)
+- It is now checked if the initial backup is up-to-date when the tool is started
+  - This feature is currently wip, to enable it set "enableInitialBackupCheck" to true in the "settings.toml" file
 - Improved disclaimer message text
 - Added new entry to the export menu
   - Export selected -> with this function only selected mods can be exported. Either single or together in a bundle.
@@ -37,7 +39,7 @@
 ### Bug fixes
 - When the hardware file was modified a specific data entry was not written to the file. This caused the controllers and screens to lose the requirements needed to implement them into a console.
 
-## [v2.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v2.2.1) (Latest Version)
+## [v2.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v2.2.1)
 
 ### Bug fixes
 - Fixed bug #68

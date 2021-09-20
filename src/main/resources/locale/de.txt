@@ -705,7 +705,7 @@ textArea.import.importSuccess|Import erfolgreich:
 textArea.import.imported|Importiert:
 textArea.import.alreadyExists|Der folgende Mod wurde nicht importiert, da er bereits existiert:
 textArea.import.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod Tool Version kompatibel ist:
-textArea.import.notCompatible.2|Genre wurde exportiert in version:
+textArea.import.notCompatible.2|Genre wurde exportiert in version
 textArea.import.specialPublisherNotExisting|Der folgende Publisher wurde nicht importiert, da das Spezial Genre von ihm nicht existiert:
 textArea.importAll.start|Importvorgang starten
 textArea.importAll.cancel|Importvorgang wurde abgebrochen
@@ -735,8 +735,8 @@ textArea.importAll.searchingFilesForMods|Durchsuche Dateien nach mods
 textArea.importAll.noCompatibleTomlFilesFound|Es wurden keine Dateien gefunden, die mods enthalten.
 textArea.importAll.modCompatible|Mod gefunden
 textArea.importAll.modNotCompatible.firstPart|Nicht kompatiblen Mod gefunden
-textArea.importAll.modNotCompatible.secondPart|Exportiert in Version:
-textArea.importAll.modNotCompatible.thirdPart|Benötigte Version:
+textArea.importAll.modNotCompatible.secondPart|Exportiert in Version
+textArea.importAll.modNotCompatible.thirdPart|Benötigte Version
 textArea.importAll.totalModsFound|Gesamtzahl der gefundenen Mods
 textArea.importAll.duplicated|Dupliziert
 textArea.importAll.unique|Einzigartig

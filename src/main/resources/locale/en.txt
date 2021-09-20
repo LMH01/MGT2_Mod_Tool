@@ -702,7 +702,7 @@ textArea.import.importSuccess|Import successful:
 textArea.import.imported|Imported:
 textArea.import.alreadyExists|The following mod has not been imported because it already exists:
 textArea.import.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
-textArea.import.notCompatible.2|Genre was exported in version:
+textArea.import.notCompatible.2|Genre was exported in version
 textArea.import.specialPublisherNotExisting|The following publisher was not imported because the special genre does not exist:
 textArea.importAll.start|Starting import process
 textArea.importAll.cancel|Import process has been canceled

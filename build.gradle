@@ -38,7 +38,7 @@ dependencies {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-project.version = "3.0.0-alpha-1" //remember to change version in main class
+project.version = "3.0.0" //remember to change version in main class
 archivesBaseName = "MGT2_Mod_Tool"
 
 group = "com.github.lmh01"
@@ -67,7 +67,7 @@ task createZip(type: Zip, group: 'build') {
     archiveFileName = "MGT2_Mod_Tool_${project.version}.zip"
 }
 
-task integrationTest(type: Test) {
+task integrationTest(type: Test, group: 'verification') {
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }

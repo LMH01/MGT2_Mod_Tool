@@ -78,7 +78,7 @@ public class GenreMod extends AbstractComplexMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{MadGamesTycoon2ModTool.VERSION, "3.0.0-alpha-1"};
+        return new String[]{"3.0.0-alpha-1", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override

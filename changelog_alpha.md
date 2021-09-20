@@ -1,5 +1,5 @@
 # Changelog (Alpha versions)
-## Coming in [v3.0.0-alpha-2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0-alpha-1)
+## Changes between v3.0.0-alpha-1 and v3.0.0
 
 ### Other
 - No longer is each mod type listed in the import summary instead only mods for which a new mod is found are displayed
@@ -12,6 +12,7 @@
 - Translations
   - Fixed some translations
   - Added some missing translations
+- Edit Genre/Theme fit button is now visible again
 
 ### Bug fixes
 - Export will fail if no mod is exported that requires pictures
