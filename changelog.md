@@ -1,5 +1,5 @@
 # Changelog
-## Coming in [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1)
+## [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1) (Latest Version)
 ### Other
 - Import
   - When an image file already exists it is now replaced and the import of the mod is not canceled
@@ -9,7 +9,7 @@
 - "Import selected" button now works properly and the action will no longer fail.
 - One translation key was not found
 
-## [v3.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1) (Latest Version)
+## [v3.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1)
 ### Bug fixes
 - Fixed: "Export selected" button now works properly and the action will no longer fail.
 
