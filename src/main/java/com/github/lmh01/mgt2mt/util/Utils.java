@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -606,12 +607,13 @@ public class Utils {
      * @return An objects array that contains the panels in a sorted way.
      * @throws IllegalArgumentException If the panels that are stored in the array list do not contain names
      */
-    public static Object[] getSortedModPanels(ArrayList<JPanel> panels) throws IllegalArgumentException {
+    public static Object[] getSortedModPanels(ArrayList<JPanel> panels) {
         JPanel[] modPanels = panels.toArray(new JPanel[0]);
         try {
             return Arrays.stream(modPanels).sorted(Comparator.comparing(Component::getName)).toArray();
         } catch (NullPointerException e) {
-            throw new IllegalArgumentException("The panels array list is invalid: panel.getName returns null! Please set the name for the panels before calling this function.", e);
+            DebugHelper.warn(LOGGER, "The panels array list is invalid: panel.getName returns null! The list will not be returned sorted!");
+            return panels.toArray();
         }
     }
 }

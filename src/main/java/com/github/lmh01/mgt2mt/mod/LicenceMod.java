@@ -138,8 +138,6 @@ public class LicenceMod extends AbstractSimpleMod {
         String[] allLicenceNamesByAlphabet = getContentByAlphabet();
 
         ArrayList<String> arrayListCustomLicences = new ArrayList<>();
-
-        ProgressBarHelper.initializeProgressBar(0, allLicenceNamesByAlphabet.length, I18n.INSTANCE.get("progressBar.moddedLicences"), !disableTextAreaMessage);
         int currentProgressBarValue = 0;
         for (String s : allLicenceNamesByAlphabet) {
             boolean defaultGenre = false;

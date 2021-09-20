@@ -190,9 +190,10 @@ public class SharingManager {
         Object[] params;
         ArrayList<JPanel> panels = new ArrayList<>();
         for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
-            panels.add(entry.getValue());
+            if (!selectedMods.get(entry.getKey()).get().isEmpty()) {
+                panels.add(entry.getValue());
+            }
         }
-        JPanel[] modPanels = panels.toArray(new JPanel[0]);
         params = new Object[]{labelStart, Utils.getSortedModPanels(panels), labelEnd};
         if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             Set<Map<String, Object>> modMap = new HashSet<>();
