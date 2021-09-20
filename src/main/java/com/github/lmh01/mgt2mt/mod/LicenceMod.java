@@ -59,7 +59,7 @@ public class LicenceMod extends AbstractSimpleMod {
 
         JPanel panelType = new JPanel();
         JLabel labelType = new JLabel(I18n.INSTANCE.get("commonText.type") + ":");
-        JComboBox comboBoxType = new JComboBox();
+        JComboBox<String> comboBoxType = new JComboBox<>();
         comboBoxType.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport")}));
         panelType.add(labelType);
         panelType.add(comboBoxType);

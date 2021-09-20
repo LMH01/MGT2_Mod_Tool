@@ -91,7 +91,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
             });
             JPanel panelChooseViolenceLevel = new JPanel();
             JLabel labelViolenceLevel = new JLabel(I18n.INSTANCE.get("mod.theme.addTheme.components.label.violenceLevel"));
-            JComboBox comboBoxViolenceLevel = new JComboBox();
+            JComboBox<String> comboBoxViolenceLevel = new JComboBox<>();
             comboBoxViolenceLevel.setToolTipText(I18n.INSTANCE.get("mod.theme.addTheme.components.comboBox.violenceLevel"));
             comboBoxViolenceLevel.setModel(new DefaultComboBoxModel<>(new String[]{"0", "6", "12", "16", "18", "Index"}));
             panelChooseViolenceLevel.add(labelViolenceLevel);
@@ -328,7 +328,6 @@ public class ThemeMod extends AbstractSimpleDependentMod {
      * This function writes the theme file that is being analyzed by the theme mod.
      * The file is being written in a way that the theme name is english but that the data is still preserved.
      */
-    @SuppressWarnings("ConstantConditions")
     public void writeCustomThemeFile() throws ModProcessingException {
         try {
             if (getGameFile().exists()) {

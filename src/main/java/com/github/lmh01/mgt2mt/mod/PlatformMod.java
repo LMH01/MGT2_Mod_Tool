@@ -554,6 +554,7 @@ public class PlatformMod extends AbstractComplexMod {
                 for (PlatformType platformType : PlatformType.values()) {
                     if (entry.getValue().equals(platformType.getDefaultImage())) {
                         deleteImage = false;
+                        break;
                     }
                 }
                 if (deleteImage) {
