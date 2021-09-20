@@ -466,7 +466,7 @@ public class SharingManager {
             } else {
                 modsTotal++;
                 modsIncompatible++;
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + map.get("mod_type") + " - " + map.get("mod_name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersion((String) map.get("mod_type"))));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + map.get("mod_type") + " - " + map.get("mod_name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersions((String) map.get("mod_type"))));
             }
             ProgressBarHelper.increment();
         }
@@ -515,7 +515,7 @@ public class SharingManager {
                         } else {
                             modsTotal++;
                             modsIncompatible++;
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersion(mod.getExportType())));
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersions(mod.getExportType())));
                         }
                         ProgressBarHelper.increment();
                     }
@@ -848,10 +848,11 @@ public class SharingManager {
      * @param modType The type of the mod
      * @return A string that contains the required mod tool versions
      */
-    private static String[] getRequiredModToolVersion(String modType) {
+    private static String[] getRequiredModToolVersions(String modType) {
         for (AbstractBaseMod mod : ModManager.mods) {
             if (mod.getExportType().equals(modType)) {
-                return mod.getCompatibleModToolVersions();
+                Object[] objects =  Arrays.stream(mod.getCompatibleModToolVersions()).distinct().toArray();
+                return Arrays.asList(objects).toArray(new String[objects.length]);
             }
         }
         return new String[]{};
