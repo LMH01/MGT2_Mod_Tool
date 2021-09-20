@@ -348,6 +348,13 @@ public class SharingManager {
                         }
                         return super.preVisitDirectory(dir, attrs);
                     }
+
+                    @Override
+                    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.accessDeniedError") + ": " + file);
+                        DebugHelper.warn(LOGGER, "Unable to search folder for .toml files, access denied: " + file);
+                        return FileVisitResult.SKIP_SUBTREE;
+                    }
                 });
             } catch (IOException e) {
                 throw new ModProcessingException("Error while searching for .toml files", e);

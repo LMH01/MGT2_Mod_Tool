@@ -764,6 +764,7 @@ textArea.importAll.replacingOfMapEntryFailed|WARNUNG: Import-Map Eintrag konnte 
 textArea.importAll.settingNewModIds|Setze Neue Mod-IDs
 textArea.importAll.noTomlFilesFound|Importieren nicht möglich: Keine .toml-Dateien gefunden
 textArea.importAll.assetFoldersMissing|es gibt fehlende Assets-Ordner
+textArea.importAll.accessDeniedError|Ordner kann nicht nach .toml-Dateien durchsucht werden, Zugriff verweigert
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach

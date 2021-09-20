@@ -762,6 +762,7 @@ textArea.importAll.replacingOfMapEntryFailed|WARNING: Import-Map entry could not
 textArea.importAll.settingNewModIds|Setting new mod ids
 textArea.importAll.noTomlFilesFound|Unable to import: No .toml files found
 textArea.importAll.assetFoldersMissing|asset folder(s) is/are missing
+textArea.importAll.accessDeniedError|Unable to search folder for .toml files, access denied
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to
