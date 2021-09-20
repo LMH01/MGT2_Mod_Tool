@@ -2,12 +2,16 @@ package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
 /**
@@ -16,6 +20,8 @@ import java.util.Map;
  * This class allows the processing of image files
  */
 public abstract class AbstractComplexMod extends AbstractAdvancedDependentMod {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractComplexMod.class);
 
     @Override
     public void importMod(Map<String, Object> map) throws ModProcessingException {
@@ -48,6 +54,7 @@ public abstract class AbstractComplexMod extends AbstractAdvancedDependentMod {
 
     /**
      * Copies the specific image that is located in the assets folder to the target file.
+     * If the fail already exists it is replaced
      *
      * @param map    The map where the assets folder and import file name are located
      * @param key    The map key under which the import file name is found
@@ -56,7 +63,10 @@ public abstract class AbstractComplexMod extends AbstractAdvancedDependentMod {
      */
     protected final void importImage(Map<String, String> map, String key, Path target) throws IOException {
         Path source = Paths.get(map.get("assets_folder")).resolve(map.get(key));
-        Files.copy(source, target);
+        if (Files.exists(target)) {
+            DebugHelper.warn(LOGGER, "Replacing already existing image file: " + target);
+        }
+        Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Override
