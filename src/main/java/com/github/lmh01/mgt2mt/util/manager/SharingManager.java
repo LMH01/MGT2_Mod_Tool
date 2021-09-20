@@ -1150,7 +1150,9 @@ public class SharingManager {
         JLabel labelEnd = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.endText"));
         ArrayList<JPanel> panels = new ArrayList<>();
         for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
-            panels.add(entry.getValue());
+            if (!selectedMods.get(entry.getKey()).get().isEmpty()) {
+                panels.add(entry.getValue());
+            }
         }
         JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport"));
         checkBox.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport.toolTip"));

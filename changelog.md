@@ -1,5 +1,9 @@
 # Changelog
-## [v3.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0) (Latest Version)
+## [v3.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1) (Latest Version)
+### Bug fixes
+- Fixed: "Export selected" button now works properly and the action will no longer fail.
+
+## [v3.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.0)
 
 ### Important
 - **Previously saved settings will not work together with this release**
