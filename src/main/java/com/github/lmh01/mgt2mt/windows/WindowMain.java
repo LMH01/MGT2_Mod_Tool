@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
+import com.github.lmh01.mgt2mt.mod.ThemeMod;
 import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
@@ -390,6 +391,9 @@ public class WindowMain {
                 JMenu menu = new JMenu(mod.getTypePlural());
                 for (JMenuItem menuItem : mod.getModMenuItems()) {
                     menu.add(menuItem);
+                }
+                if (mod instanceof ThemeMod) {
+                    menu.add(M_233_CHANGE_GENRE_THEME_FIT);
                 }
                 MOD_MENUS.add(menu);
                 M_31_EXPORT.add(mod.getExportMenuItem());
