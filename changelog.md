@@ -1,4 +1,13 @@
 # Changelog
+
+
+## Coming in v3.0.3
+### Other
+- Updated default content files
+
+### Bug fixes
+- Button `Restore mod restore point` is no longer disabled when the safety feature are off
+
 ## [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1) (Latest Version)
 ### Other
 - Import

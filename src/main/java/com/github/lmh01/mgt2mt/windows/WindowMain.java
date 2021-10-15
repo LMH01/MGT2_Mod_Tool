@@ -237,10 +237,8 @@ public class WindowMain {
                 boolean noModsAvailable = true;
                 ModManager.analyzeMods();
                 boolean noModRestorePointSet = true;
-                if (!Settings.disableSafetyFeatures) {
-                    if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
-                        noModRestorePointSet = false;
-                    }
+                if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
+                    noModRestorePointSet = false;
                 }
                 for (AbstractBaseMod mod : ModManager.mods) {
                     mod.setMainMenuButtonAvailability();
