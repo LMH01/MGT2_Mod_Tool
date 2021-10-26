@@ -3,6 +3,7 @@
 
 ## Coming in v3.0.3
 ### Other
+- Added button to utilities menu with which the settings.toml file can be opened
 - Updated default content files
 - It is now checked if the initial backup is up-to-date when the tool is started
   -  This feature can be disabled in the settings.toml file
