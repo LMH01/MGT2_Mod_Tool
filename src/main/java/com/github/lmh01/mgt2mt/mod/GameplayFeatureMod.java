@@ -372,9 +372,12 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
 
     @Override
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
-        map.replace("GOOD", getGenreIds(map.get("GOOD")));
-        map.replace("BAD", getGenreIds(map.get("BAD")));
-        map.put("PIC", "");
+        if (map.containsKey("GOOD")) {
+            map.replace("GOOD", getGenreIds(map.get("GOOD")));
+        }
+        if (map.containsKey("BAD")) {
+            map.replace("BAD", getGenreIds(map.get("BAD")));
+        }
         return map;
     }
 
@@ -489,6 +492,8 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
     }
 
     /**
+     * This function uses {@link AbstractAdvancedMod#getModIdByNameFromImportHelperMap(String)} so the import map
+     * has to be initialized when thin function is called. This means that the genre ids will be set correctly.
      * @param genreNamesRaw The string containing the genre ids that should be transformed.
      * @return A list of genre names
      * @throws ModProcessingException If import helper throws an exception

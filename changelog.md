@@ -7,6 +7,8 @@
 
 ### Bug fixes
 - Button `Restore mod restore point` is no longer disabled when the safety feature are off
+- Import no longer fails when gameplay features are imported that are missing bad / good genres
+- Theme export no longer replaces genre names falsely
 
 ## [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1) (Latest Version)
 ### Other
