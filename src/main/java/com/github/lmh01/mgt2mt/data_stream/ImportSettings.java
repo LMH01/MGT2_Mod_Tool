@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
+import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.UpdateBranch;
 import com.moandjiezana.toml.Toml;
@@ -7,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ImportSettings {
@@ -36,8 +38,8 @@ public class ImportSettings {
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
             Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");
             return true;
-        } catch (IllegalStateException | NullPointerException e) {
-            LOGGER.info("Unable to import settings!");
+        } catch (RuntimeException e) {
+            LOGGER.info("Unable to import settings!:");
             e.printStackTrace();
             return false;
         }
