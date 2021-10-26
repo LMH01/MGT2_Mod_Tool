@@ -450,7 +450,7 @@ Last Quest <5><12><14><16>
 Last Samurai <10>
 Last Shinobi <5><12><14><16>
 Law of the Nord <5><12><14><16>
-LeBucks Revenge <2><3><15>
+LeBuck's Revenge <2><3><15>
 Lemmerlings <1>
 Leopard Commander <7>
 Life At The Dungeons <2><3><15>
@@ -733,7 +733,7 @@ Soldiers <4><13>
 Soldiers Of The Sun <5><12><14><16>
 Solomons Secret <1>
 Soul in the Nobody <2><3><15>
-Soul of Star <2><3><15>
+Star Soul <2><3><15>
 Souls of Dark <2><3><15>
 Souls of Rose <5><12><14><16>
 Space Civilizations <4><13>
