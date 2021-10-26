@@ -306,14 +306,18 @@ public abstract class AbstractAdvancedMod extends AbstractBaseMod {
     }
 
     /**
-     * Use this function to simply transform the map entry from the mod name to the mod id.
-     * This function uses {@link AbstractBaseMod#getModIdByNameFromImportHelperMap(String)} to retrieve the mod id.
-     * If the entry is not found a warning message is printed into the text area
+     * Use this function to replace the value behind the key with the id specific for that mod-name.
+     * If the key does not exist or the id is not found a warning message is printed into the text area
+     * and a random replacement id will be chosen.
+     * Does only work if the value is a single name for which an id has been set.
+     * Example replacement: Horror -> 18
      *
      * @param map    The map that contains the value that should be replaced
      * @param mapKey The map key for which the value should be replaced
      * @param mod    The mod for which the name should be replaced with the id
-     */
+     * @see AbstractBaseMod#getModIdByNameFromImportHelperMap(String) Function that is used to get the id by the name
+     * @see AbstractBaseMod#addEntryToImportHelperMap(String) Function that adds an entry to the import helper map
+     * */
     protected void replaceImportMapEntry(Map<String, String> map, String mapKey, AbstractBaseMod mod) {
         try {
             map.replace(mapKey, Integer.toString(mod.getModIdByNameFromImportHelperMap(map.get(mapKey))));

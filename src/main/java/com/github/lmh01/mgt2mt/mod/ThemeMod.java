@@ -526,11 +526,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
      */
     public boolean doesThemeExist(String name) throws ModProcessingException {
         ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(getContentByAlphabet()));
-        if (arrayList.contains(name)) {
-            return true;
-        } else {
-            return false;
-        }
+        return arrayList.contains(name);
     }
 
     /**
