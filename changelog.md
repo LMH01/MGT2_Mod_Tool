@@ -4,6 +4,8 @@
 ## Coming in v3.0.3
 ### Other
 - Updated default content files
+- It is now checked if the initial backup is up-to-date when the tool is started
+  -  This feature can be disabled in the settings.toml file
 
 ### Bug fixes
 - Button `Restore mod restore point` is no longer disabled when the safety feature are off

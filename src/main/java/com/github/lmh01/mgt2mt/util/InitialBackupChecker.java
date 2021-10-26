@@ -24,14 +24,11 @@ public class InitialBackupChecker {
     public static boolean checkIfUpToDate() throws IOException {
         if (Files.exists(initialBackupVersion)) {
             Toml toml = new Toml().read(initialBackupVersion.toFile());
-            if (toml.getLong("initialBackupVersion") < (long) getLastUpdatedInt()) {
-                return false;
-            }
+            return toml.getLong("initialBackupVersion") == (long) getLastUpdatedInt();
         } else {
             setInitialBackupVersion(getLastUpdatedInt());
             return true;
         }
-        return true;
     }
 
     /**
