@@ -1,7 +1,6 @@
 # Changelog
 
-
-## Coming in v3.0.3
+## [v3.0.3](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.3) (Latest Version)
 ### Other
 - Added button to utilities menu with which the settings.toml file can be opened
 - Updated default content files
@@ -14,7 +13,7 @@
 - Theme export no longer replaces genre names falsely
 - Program will no longer fail to load when the settings.toml file does not contain valid toml
 
-## [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.1) (Latest Version)
+## [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.2)
 ### Other
 - Import
   - When an image file already exists it is now replaced and the import of the mod is not canceled
