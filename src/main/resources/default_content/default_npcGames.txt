@@ -1,43 +1,75 @@
 1492 <9><11>
 1914 <4><13>
 360 Degrees <8>
+3D Virtual Pool <8>
+4x4 Racer <17>
+4x4: World Tour <17>
 9th Legion <4><13>
 Academy of Darkness <2><3><15>
+Accelerated <17>
+Act of Danger <4><5><13><14><16>
+Acts of Anarchy <4><5><13><14><16>
 Adrum Conflict <4><13>
 Afouriu <0><6>
 Age of Knights <10>
 Age of Wars <4><13>
 Agent 1000 <5><12><14><16>
 Agents And Hunters <5><12><14><16>
+Agriculture Company <9><11>
 Air War <7>
 Airport Empire <9><11>
 Airport Manager <9><11>
 Alexy Girl <0><6>
+Alien Legions <4><13>
 Alien Quest <2><3><15>
+Alien Seed <5>
 Alien Warrior <10>
 Alienattack <5><12><14><16>
+Alliances and Space <4><13>
+Alpha Xenomorph <14>
+Alphashot <5><14><16>
+Alterium Beast <6>
+Amberdoom <3>
+Anarchy and Alliances <4><5><13>
+Anarchy and Wonder <4><5><13>
 Anataris <4><13>
+Ancient Domination <4><5><13>
+Android Master <0><5>
 Andying <5><12><14><16>
+Angelrise <4><5><13><14><16>
 Angle Dice <1>
 Anna Kurnikowa Tennis <8>
 Anno 1283 <9><11>
 AnReal <5><12><14><16>
+Ant War <5>
+Antitale <4><5><13><14><16>
 Apees Exodus <1>
 Apollo <5><12><14><16>
 Aquinoxis <1>
+Arcade Racer 3000 <17>
+Arcanemaster <4><13>
+Arcanetech <3><4>
 Arcania Conflict <7>
+Archery Masters <8>
 Arena 2172 <10>
 Arena of Death <10>
+Armageddon Predator <5><14><16>
+Armalites <5>
 Armalitis <5><12><14><16>
 Armies And Cats <5><12><14><16>
 Armies Of The Forest <5><12><14><16>
+Armored Destruction <4><5><13><14><16>
 Army Of A Shadow <5><12><14><16>
+Army of Corruption <4><5><13><14><16>
 Ashes <2><3><15>
 Ask and Answer <1>
-ASS Pro Evo <8>
+PEZ Pro Evo <8>
 Assassins And Soldiers <5><12><14><16>
 Asteroid Boy <0><6>
+Astrofight <4><5><13><14><16>
 Astrois <5><12><14><16>
+Astrostorm <5>
+Astroworks <0><1>
 Athen Games <8>
 Atominus <0><6>
 Automobile <9><11>
@@ -47,19 +79,36 @@ B-Train <9><11>
 Back to Earth <2><3><15>
 Back To Water <2><3><15>
 Bad Doctors <0><6>
+Bad Machine <0><1>
+Bad Treasure <0><1>
+Balance of Havoc <4><5><13><14><16>
 Banana Bros <5><12><14><16>
 Bank Manager <9><11>
 Baseball Fever <8>
 Baseball Super Stars <8>
+Baseballlife <8>
+Basketballlife <8>
+Basketslam <8>
+Battle Race <17>
+Battle Universe <4><13>
 Battle Warriors <10>
+Battlefield Strategy <4><5><13>
+Battlerain <4><13>
+Beach Buggy <17>
+Beach Super Stars <8>
+Beach Taxi <17>
 Beach Tycoon <9><11>
 Beach Volleyball <8>
 Beam <1>
 Beasts And Aliens <10>
 Beasts In The Elevator <2><3><15>
+Beasts of Twilight <4><5><13><14><16>
 Beer Tycoon <9><11>
+Beneath a Iron Sky <2>
 Bermuda <2><3><15>
+Berzerk Quest <3>
 Best of the Best <10>
+Beta Centauri <4>
 Big Airline Manager <9><11>
 Big Business Tycoon <9><11>
 Big City <9><11>
@@ -74,19 +123,27 @@ Big Questions <1>
 Big Samson <2><3><15>
 Big World <9><11>
 Big Worms <0><6>
+Bionite <5><14><16>
+Biopath <4><5><13><14><16>
 BioRock <5><12><14><16>
 Black Gates <10>
 Black Hole <4><13>
 Black Knight <2><3><15>
 Black Moon <2><3><15>
-Black Sun <2><3><15>
 Black Ninja <10>
+Black Sun <2><3><15>
 Black Way <1>
 Blacksmith Of The Caves <2><3><15>
 Blacksmiths And Robots <2><3><15>
 Blade Fighter <10>
+Bladeblaze <5><6>
+Bladeguard <4><5><13><14><16>
+Bladeshock <5><6>
 Blitzkrieg <4><13>
+Blocklight <0><1>
 Blood Kombat <10>
+Blood of Ruins <4><5><13><14><16>
+Bloodage <4><5><13><14><16>
 Bloody Doors <5><12><14><16>
 Bloody Effect <10>
 Blue Abyss <5><12><14><16>
@@ -94,8 +151,10 @@ Blue Boyfriend <0><6>
 Blue Fantasies <1>
 Blue Maxim <5><12><14><16>
 Blue Spiders <0><6>
+Bluemind <0><1>
 Bomb Raider <5><12><14><16>
 Bombs <0><6>
+Bombs and Cannons <4><5><13><14><16>
 Botal <10>
 Boulder <1>
 Bowling Master <8>
@@ -112,22 +171,42 @@ Broken Edge <5><12><14><16>
 Bronco <0><6>
 Bruce Ley Fighting <10>
 Brutal Barbarians <10>
+Brutalcraft <10>
+Brutalfire <5>
+Brutalspace <5>
 Bubbles <0><6>
 Bucks Dream <2><3><15>
 Buddies <5><12><14><16>
 Buggy Racing <7>
+Bullet Curse <5><14><16>
+Bulletborne <4><5><13><14><16>
+Bulletborne <5><14><16>
+Bulletfight <4><5><13>
+Bulletreign <4><5><13><14><16>
 Burning Serpent <2><3><15>
+Cannon Champion <5>
 Captain Of Moondust <2><3><15>
 Car Dealer <9><11>
 Castle Master <2><3><15>
 Castle of Blood <10>
+Castlegear <4><13>
+Castlemania <6>
+Castlemaster <3><4>
+Castlemaster <4><5><13>
+Castleplan <11>
+Castles and Crowns <4><5><13>
+Cayleth Adventure <2>
 CC75 - Cyber Cop <5><12><14><16>
 Celda <2><3><15>
 Cell <1>
+Cell Theory <14>
 Censaiden <5><12><14><16>
 Center <1>
 Center Of The Earth <2><3><15>
 Champ Manager <9><11>
+Champs of Fame <8>
+Chaos Lords <3>
+Chemicals and Stars <0><1>
 Chess 2000 <1>
 Chickens In My Town <0><6>
 Child Of Joy <2><3><15>
@@ -136,6 +215,8 @@ Chip N' Dave <2><3><15>
 Chopter <7>
 Chrono <2><3><15>
 City Bus Driver <7>
+Clanlife <4><5><13>
+Clans and History <4><13>
 Claxxor <0><6>
 Cloud Lord <2><3><15>
 Clown Of Stunts <2><3><15>
@@ -143,101 +224,169 @@ Coal - The Black Gold <9><11>
 Cobra Quad <5><12><14><16>
 Code 451 <5><12><14><16>
 Code Dreamland <4><13>
+Codename Raiders <5>
 Coffee Tycoon <9><11>
 Cold East <4><13>
+Colonies of Androids <11>
 Colony Crisis <7>
 Colors <1>
 Colors Of Outer Space <7>
 Columbus <4><13>
 Columnuss <0><6>
 Comanche Action <7>
+Combatcorp <5><14><16>
+Combatland <4><5><13><14><16>
 Comic Girl <5><12><14><16>
+Comic Kart <17>
 Command <4><13>
 Commander Red <5><12><14><16>
 Computer Giant <9><11>
 Constantino <4><13>
 Contact <5><12><14><16>
 Cool Dissy <0><6>
+Cool Kart Racer <17>
 Cool Puzzle <1>
 Cool Simon <2><3><15>
 Cool Trains <9><11>
 Core <4><13>
 Corsair <7>
+Cosmic Freedom <4><13>
 Countdown <10>
 Cradias Gaiden <5><12><14><16>
 Crazy Bingo <0><6>
 Crazy Colors <1>
+Crazy Drift <17>
 Crazy Frog <0><6>
 Crazy Rabbit <0><6>
 Crazy Tiger <10>
+Crazy Truckers <17>
 Creators Of The Shield <10>
 Creators Of Wood <2><3><15>
+Cricket Super Stars <8>
+Cricketpro <8>
+Cricketsim <8>
 Crocos World <2><3><15>
+Crossbow Tales <3><4>
+Crown Offensive <4><5><13>
+Crowns and Gladiators <4><5><13>
+Crowns and Machines <4><5><13>
+Crystalcast <3>
+Crystalcry <3>
+Cyber Driver <17>
 Cyberbots <10>
+Cyberdroids <5>
+Cyberforce <4><5><13><14><16>
 Cyberforce <5><12><14><16>
+Cyberrise <4><5><13><14><16>
+Cyberstar <5>
+Cyborg Warrior <5>
 D-Force <5><12><14><16>
 Dangerous Morning <5><12><14><16>
 Daniels Hotel <2><3><15>
 Dark Cave <2><3><15>
 Dark Cloud <2><3><15>
 Dark Kiss <2><3><15>
+Dark Metro <14>
 Dark SIN <5><12><14><16>
 Dark Species <10>
 Dark Spellcaster <2><3><15>
 Dark Streets <10>
+Dark Wasteland <3>
 Dark X-Dungeons <2><3><15>
+Dark Zools <3>
+Darkage <3>
 Darkcraft <4><13>
+Darkhunt <5>
 Darkness <5><12><14><16>
 Darkness of the Sky <2><3><15>
+Darknite <5>
+Darkside <3>
 Darkwing Pig <2><3><15>
 Dart Champion <8>
+Dart Unleashed <8>
+Datamania <0><1>
 Day Of The Moon <2><3><15>
 Dayfall <5><12><14><16>
 Dazzmania <2><3><15>
 Dead In The Dungeons <2><3><15>
 Dead World <4><13>
+Deadfight <10>
 Deadly Cannons <5><12><14><16>
+Deadly Comanche <7>
 Deadly Dogfights <7>
+Deadly Fallout <3>
 Death of Elves <2><3><15>
 Deep Sea <5><12><14><16>
+Defcore <5><14><16>
 Defenders Of The Sun <2><3><15>
+Deflektor Puzzle <1>
+Demon Wars <5>
+Demonheart <3>
 Demonhunter <5><12><14><16>
 Demons <5><12><14><16>
 Denchu <5><12><14><16>
+Destroy of Logic <1>
+Destruction Control <5>
 Destruction Driver <7>
+Destruction Initiative <4><14><16>
 Destruction's Men <5><12><14><16>
 Detective <1>
 Detective Cooper <2><3><15>
+Deuz Exit <14>
 Die Fuger <9><11>
+Digital Enigma <2>
 Dino Tycoon <9><11>
 Dirty Track <7>
 Disruptator <5><12><14><16>
 DNS - Project <4><13>
 Do you know? <1>
+Dodgeballart <8>
 Dog and Cat <2><3><15>
 Dogcat <2><3><15>
+Domination and Corruption <4><5><13>
 Donkey World <2><3><15>
 Double <1>
 Double Bobble <0><6>
+Double Snakes <10>
 Dr.Bads Labor <0><6>
+Drag Racing: Evolution <17>
 Dragon Brothers <10>
+Dragon Chronicles <3>
+Dragon Crisis <4><5><13>
+Dragon Liberation <4><5><13><14><16>
+Dragonbot <5>
 Dragonhunt <2><3><15>
+Dragonpro <4><5><13>
 Dragons And Mice <2><3><15>
+Dragons of Conjury <3>
 Dragons of Lioma <2><3><15>
+Dragonsky <3>
+Dreadrage <5><14><16>
+Dreadshock <5><14><16>
+Dreadtide <4><5><13><14><16>
 Dreamer of Sword <2><3><15>
 Dreamland Story <2><3><15>
+Dreammist <2>
+Dreampath <0><1>
 Dreamtiger <10>
+Drift Champions <17>
+Driver & Car <17>
 Droid Of Sunshine <2><3><15>
 Droids Of Eternity <2><3><15>
 Druids And Werewolves <2><3><15>
 Dunan - The Fighter <5><12><14><16>
 Dungeonhearth <2><3><15>
+Dungeons and Lords <3>
 Dungeons of Lor <2><3><15>
 Durimy Fantasy <2><3><15>
 Duum <5><12><14><16>
+Dynablade <5><14><16>
+Dynamind <0><1>
 Dynamite Joe <5><12><14><16>
 Dynamityman <0><6>
+Dynaphaser <0>
 Eagles Nest <5><12><14><16>
+Ear Of The Beholder <3>
 Earth Control <4><13>
 Earthworm Jimmy <2><3><15>
 East City <5><12><14><16>
@@ -246,18 +395,32 @@ Eden <9><11>
 Edge of Danger <5><12><14><16>
 Electricity Of Gags <1>
 Elemental Healer <2><3><15>
+Elements of Destruction <4><5><13>
 Eleven <8>
 Elite Ranger <5><12><14><16>
+Elves of Triraldia <3>
+Embercrest <3>
+Emergency Conflict <4><5><13>
 Emperor's Storm <4><13>
 Emperors Of Darkness <4><13>
 Empire: Rome <4><13>
 Eons <5><12><14><16>
+Epic Destiny <3>
 Escape <0><6>
 Escape from the Moon <2><3><15>
+Eternal Signs <3>
+Eurofighter Action <7>
 Europe 2034 <4><13>
+Evil Dragon <3>
+Evomania <4><5><13><14><16>
 Exdoomed <5><12><14><16>
+Exolonia <5>
 Experiences Of Time <1>
 Extreme Contact <10>
+Extreme Curves <17>
+Extreme Decathlon <8>
+Extreme Motors <17>
+Extreme Sports Ultra <8>
 F-16: Flight Simulator <7>
 F/A-18: Crisis <7>
 F1 Unlimited <7>
@@ -270,48 +433,78 @@ Falcon Commander <7>
 Falcon Simulation <7>
 Falconeye <5><12><14><16>
 Fallen Academy <2><3><15>
+Fame and Misery <4><5><13>
+Familymaster <0><1>
 Fanatsy Warriors <10>
 Fantasy Battlefield <4><13>
+Fantasy Sports <8>
+Fantasy Sports Super Challenge <8>
 Fantasy Tactics <4><13>
 Fantasy World <2><3><15>
+Farmhero <9>
 Fast Cars <7>
 Fast Cars <7>
 Fat Frog <0><6>
+Faxana <6>
 Felizium <4><13>
 Fields <1>
+Fields of Siege <4><5><13>
+Fight Spirit <10>
 Fighter Squad <10>
 Fighters And Elves <10>
 Fighting <10>
+Fightinglife <10>
 Fights on Street <10>
+Fightstyle <10>
 Film Producer <9><11>
 Fire <5><12><14><16>
 Fire N' Water <2><3><15>
 Fire of the Worlds <2><3><15>
 Fireaxe <5><12><14><16>
+Fires of Fortune <4><5><13><14><16>
 First Ninja <5><12><14><16>
 Fleet of Britain <4><13>
+Fleetnight <4><5><13>
 Flight Sim <7>
+Flightbots <5><7>
+Flightcommand <7>
+Flightstrike <7>
 Flip and Flop <0><6>
 Flying Fortress <7>
 Flying Hero <5><12><14><16>
 Flying Isles <4><13>
 Flying Taxi <7>
+Force of Chaos <4><5><13><14><16>
+Force of Pain <4><5><13><14><16>
 Force Of The Slaves <5><12><14><16>
+Force of Wrath <4><5><13>
+Forgotten Blade <3><4><5>
 Forgotten Lands <5><12><14><16>
+Formula One Master Challenge <17>
+Forsaken Curse <3>
 Fortress of Doom <5><12><14><16>
+Freescape Driller <7>
 Freggy and Froggy <0><6>
 Frog In My House <0><6>
 Frogs And Bunnies <2><3><15>
+Frontblade <4><5><13><14><16>
+Frozen Call <2>
 Frozen Princess <2><3><15>
 Frozen Sword <2><3><15>
 Full Control <1>
 Full Fire <10>
+Full On Magic <0><1>
 Fussball Manager <9><11>
+Future Alert <4><5><13>
 Future Mega Cop <5><12><14><16>
+FX Race Stars <17>
+G-Zero: Legends <17>
 Galactic Trans <9><11>
 Galactica <7>
 Galax Forty <2><3><15>
 Galax Invaders <5><12><14><16>
+Galaxis Civlizations <4>
+Galaxy Ace <12>
 Galaxy Crusade <5><12><14><16>
 Galaxy Harrier <5><12><14><16>
 Galaxy Hulk <2><3><15>
@@ -329,14 +522,20 @@ General <4><13>
 Genion <7>
 Genius <0><6>
 Gexxi <5><12><14><16>
+Ghost Castle <6>
+Ghost Guardians <3>
+Ghostcry <15>
 Ghosthunter <2><3><15>
+Ghostpoint <5>
 Ghosts N' Zombies <2><3><15>
 Ghosts Who Smiles <0><6>
+Giants of Magic <4><13>
 Gigo Brothers <2><3><15>
 Girls And Frogs <2><3><15>
 Glob <0><6>
 Glob and Bob <0><6>
 Globalius <9><11>
+God of Retaliation <4><5><13>
 Gods Quest <5><12><14><16>
 Gold Quest <0><6>
 Golden King <2><3><15>
@@ -345,6 +544,8 @@ Golden Pole Position <7>
 Goldrunner <0><6>
 Golf 2000 <8>
 Golf World <8>
+Golflife <8>
+Golfstar <8>
 Goons Quest <1>
 Gownlet <5><12><14><16>
 GP Circuit <7>
@@ -353,21 +554,37 @@ Green Dragons <10>
 Green Slime <0><6>
 Green Snow <2><3><15>
 Grey Lord <2><3><15>
+Grimclad <4><5><13>
+GRIP Motorsport <17>
 Ground Zero <5><12><14><16>
 Grunts <2><3><15>
+GTI Autosport <17>
 Guardian <5><12><14><16>
 Guardian of the Dreams <2><3><15>
 Guardians And Boys <5><12><14><16>
+Gun Paradise <5><14><16
+Gunship Pilot <7>
+Gym Stars <8>
 Hard Future <5><12><14><16>
 Harry McGulgan Boxing <8>
 Heart of Europe <4><13>
 Hearth of Salion <2><3><15>
 Heaven <9><11>
+Heavenborne <4><5><13><14><16>
+Heavenmania <4><5><13><14><16>
 Heavy Robots <7>
 Helicopter <7>
+Helicopters: The Mission <7>
 Heliuminus <9><11>
+Hellbase <4><5><13>
+Hellguard <3>
+Helltale <5>
+HERO Operation <5>
+Heroes and Rulers <4>
 Heroes And Snakes <0><6>
 Heroes of Mandia <10>
+Heroes of Might & Spells <4>
+Heroes of Premierships <8><9>
 Hexagonion <1>
 Hidden By The Moon <2><3><15>
 Hiding The Maze <2><3><15>
@@ -376,39 +593,63 @@ Hightower <9><11>
 Hit the Head <0><6>
 Hobgoblin Of The Skull <2><3><15>
 Hockey League <8>
+Hockeyslam <8>
 Hokum Pilot <7>
 Hollywood <9><11>
 Hope Of Space <2><3><15>
+Hordes of Conquest <4><5><13>
 Horror Effect <5><12><14><16>
+Horse Race <8>
 Horses Of Hell <2><3><15>
 Hospital <9><11>
+Hospital Builder <11>
 Hot Brain <1>
 Hot Jungle <2><3><15>
+Hot: Turbo Racing <17>
 Hotball <8>
 House of Blood <5><12><14><16>
 Huguna: The Conflict <5><12><14><16>
+Human Freedom <4><13>
+Huntingace <5><14><16>
+Huntingmaster <5><14><16>
 Hurrican <5><12><14><16>
+Hyper Drive Rally <17>
 Hyperjump <7>
 Ice Hockey <8>
 Ice Hockey Action <8>
 Ice Hockey Manager <9><11>
 Ice in the Dream <2><3><15>
+Ikari Knight <3>
 Illusions Of The Lake <2><3><15>
+Immortal Universe <5><13>
 In the Future <5><12><14><16>
 Industrial <9><11>
 Industry <9><11>
+Infinite Revolution <4><5><13><14><16>
+Infinite Vendetta <4><5><13><14><16>
 Int. Karate <10>
 Inter War <4><13>
+Intergalactic Quest <2>
+Intergalactic Taxi <0>
+International Judo <10>
 Into the Light <2><3><15>
 IQ versus AI <1>
 Iron Marines <4><13>
+Iron Speedballs <8>
 Iron Thunder <7>
+Ironbot <4><5><13><14><16>
+Ironcraft <4><5><13>
+Ironcrest <3>
+Ironcry <5>
 Island of Monkeys <2><3><15>
 Isle of Death <10>
 It Came From The Sea <0><6>
 Jack in Wonderland <2><3><15>
 Jack the Monkey <2><3><15>
+Jetpac Action <5>
 Jets <7>
+Jim Dangerous <6>
+Jim Fandango <2>
 Jimmy Blacks Snooker <8>
 John Falcon <5><12><14><16>
 Johnes Basketball <8>
@@ -419,6 +660,7 @@ Jumping Rabbit <5><12><14><16>
 Junglejumper <0><6>
 K-Zero <7>
 Karate Masters <10>
+Karatestyle <10>
 Kart Freaks <8>
 Kickboxer <10>
 Kid Ucaris <0><6>
@@ -426,45 +668,65 @@ Killer Aliens <5><12><14><16>
 Killer Ninjas <10>
 Killers <5><12><14><16>
 King of Europe <4><13>
+King of Heaven <4><5><13>
+King of Persia <6>
+King of Route 99 <17>
+Kingdom Tycoon <4><5><13>
 Kingdoms <4><13>
 Kingpain <5><12><14><16>
+Kings and Champions <4><13>
+Kings of the Sky <7>
 Klonia <0><6>
 Knight Of Parody <0><6>
+Knightcry <3>
 Knights & Dragons <2><3><15>
 Knights Without Time <2><3><15>
+Knightscape <3>
+Knightslayer <4><5><13><14><16>
 Kolin McRay Rally <7>
 Kombat <10>
 Koroshu Final <1>
 Krillius <5><12><14><16>
+Kristalis <3>
 Kryzzor <1>
+L.A. Racers <17>
 Labyrinth <0><6>
 Land of Secrets <1>
 Lands of Shadow <10>
 Larry Lotter <2><3><15>
 Laser Crisis <5><12><14><16>
+Laser Hyperaction <6>
 Laser Lights <0><6>
 Lasertron <5><12><14><16>
 Last Day <5><12><14><16>
+Last Mirror <2>
 Last Pirate <2><3><15>
 Last Quest <5><12><14><16>
 Last Samurai <10>
 Last Shinobi <5><12><14><16>
 Law of the Nord <5><12><14><16>
+Leaders and Masters <4><5><13>
 LeBuck's Revenge <2><3><15>
+Legend of Fearhill <3>
+Legends of Orion <4>
 Lemmerlings <1>
 Leopard Commander <7>
 Life At The Dungeons <2><3><15>
+Lifepath <0><1>
 Light of Dreams <2><3><15>
+Lightmind <0><1>
 Lightstones <1>
 Limborious <1>
 Little Bugs <1>
 Little Dragonknight <2><3><15>
 Little Dragons <10>
 Little Heads <1>
+Little Icarus <6>
 Little Joe <2><3><15>
 Little Kingdom <4><13>
 Little Kung Fu Girl <10>
 Little Pieces <1>
+Little Settlers <4>
 Living Danger <5><12><14><16>
 Load Runner <0><6>
 Loco Emprie <9><11>
@@ -472,12 +734,16 @@ Lord of the Katana <5><12><14><16>
 Lord Of Wood <2><3><15>
 Lord Project <2><3><15>
 Lords of Combat <10>
+Lords of Mystery <4><13>
 Lords of the Slaves <2><3><15>
 Love For Magics <0><6>
 Lyrics Adventure <1>
 M.U.L.I. <9><11>
 M1A1: Tanks <7>
+Machines and Gods <4><13>
 Magazin <9><11>
+Magecraft <4><13>
+Magemind <4><5><13><14><16>
 Mages And Elves <2><3><15>
 Magic of Palonia <4><13>
 Magic of Pearls <1>
@@ -487,67 +753,99 @@ Maniac Fever <1>
 Maniac Simson <2><3><15>
 Mars Colony <9><11>
 Mars Secrets <2><3><15>
+Martial Arts: The Street <10>
+Martialtime <5>
+Martialworld <5>
+Massive Effect <3>
 Master of Arionis <4><13>
+Master of Dungeons <3>
 Master of Ring <10>
 Master of Universe <4><13>
 Masterix <1>
+Masters and Times <0><1>
+Masters of Swords <4><13>
 Max IQ <1>
+Maximum Speed <17>
 Maximum Speed <7><17>
 Maximus <1>
 MDDK <5><12><14><16>
 Mech Force <5><12><14><16>
+Mech: Steel Warriors <7>
 Mechanic Soldiers <4><13>
 Mega Boy <5><12><14><16>
 Mega Dodge Ball <8>
 Mega Fights <10>
 Mega Girl <2><3><15>
 Mega Gunship <7>
+Mega Machines <17>
 Mega Machines <7>
+Mega Off-Road Racing <17>
 Mega Render Ranger <5><12><14><16>
 Mega Tennis <8>
+Mega Trashman <0>
 Megablast <5><12><14><16>
 Megagirl <2><3><15>
+Mercenaries and Creatures <4><5><13><14><16>
 Mercenary With Spaceships <7>
 Merkantilismus <9><11>
 Merkur Action <5><12><14><16>
 Metropole <9><11>
 Mi-24 Hind <7>
 Mice In Space <2><3><15>
+Midnight Kart <17>
+Midnight Resistance <4><5><13>
+Might & Spells <3>
 Might of Magic <2><3><15>
 Mikey Dison's Punch Out <8>
 Mine Defender <0><6>
 Miniature Golf <8>
+Mining Tycoon <9><11>
+MiniRace <17>
+Miracle Knights <3>
 Mirage <5><12><14><16>
 Missing <1>
 Mission Force <7>
 Mission Invades <4><13>
 Mission Venus <7>
+Mission Vulcan <4>
+Mission Wolf <5>
+Mission: Rebelstar <4>
+Mission: Xecutor <5>
 Misson Live <4><13>
 Mister Think <1>
+Monaco Racer <17>
 Money <9><11>
-Monkey Song <0><6>
 Monkey Escape <5><12><14><16>
+Monkey Song <0><6>
 Monkeys World <2><3><15>
 Monks Without Eyes <10>
+Monster Commander <4><5><13>
+Monsters and Champions <4><5><13>
 Moon Jetman <5><12><14><16>
 Moon Rocks <1>
 Moonfighter <7>
 Moonrunner <0><6>
 Moonstones <2><3><15>
+Mortalblade <10>
 Mostertruck <7>
+Mountain Racers <17>
 Mr.Dooo! <0><6>
 MrPriller <0><6>
 Muddon NFL <8>
 Murder in London <2><3><15>
 Music Manager <9><11>
 Music World <9><11>
+Mutant Civilization  <4><5><13>
 My Cities <9><11>
 My Sins <1>
 My Space Journey <7>
 Mysteria - The Isle <2><3><15>
 Mysteria <2><3><15>
+Mysteries of Memories <2>
 NAB Basketball <8>
 Nabelius <0><6>
+Nations of Simalgri <4><13>
+Naval Twilight <4><5><13>
 Net <1>
 Network <9><11>
 Neuro <1>
@@ -559,7 +857,10 @@ New York Action <5><12><14><16>
 Newspaper Manager <9><11>
 NewYork Games <8>
 Newzealand <0><6>
+Nighthawk Pilot <7>
+Nightmare Offensive <4><5><13>
 Nine <5><12><14><16>
+Ninja Chaos <6>
 Ninja Fighter <10>
 NLF Football <8>
 Normal <1>
@@ -570,9 +871,12 @@ Nuclear Strike <4><13>
 Nuclear War <4><13>
 Nuclear Winter <4><13>
 Nuklear <4><13>
+Offroad Xtreme <17>
 Ogres Of Autumn <2><3><15>
 OID: Revenge of Moh <0><6>
 Oil Giant <9><11>
+Oil Manager <9><11>
+Oltima Quest <3>
 Oltimo <2><3><15>
 Olympic Games 2000 <8>
 One and Two <1>
@@ -582,16 +886,24 @@ Orbital Flight <7>
 Orks and Elves <4><13>
 Outer Space <7>
 Over the Top <0><6>
+Overdrive Karts <17>
 Oxelray <5><12><14><16>
 Pacific <4><13>
 Pacu Pacu Animals <0><6>
 Para-Droids <0><6>
 Paris <1>
+Performance <17>
+Peril and Tactics <4><5><13>
 Personis <2><3><15>
 Peters Day <0><6>
 Phalanx Crisis <5><12><14><16>
+Phantom: SpecOps <5>
+Phantombase <5><14><16>
+Phantomcry <5><14><16>
+Phantomcry <5><14><16>
 Phaser Ghost <5><12><14><16>
 Phaser Squad <5><12><14><16>
+Phaser Squads <5>
 Pigs <0><6>
 Pinball Island <0><6>
 Ping and Pong <0><6>
@@ -600,17 +912,23 @@ Pipelines <0><6>
 Planet Of Hope <2><3><15>
 Planet Of The Future <2><3><15>
 Planet Of The Invaders <5><12><14><16>
+Planet Tormen <3>
 Planet Utopia <9><11>
 Planet Venomia <4><13>
 Planets <7>
 Plantation <9><11>
+Plants Vs. Vampires <0>
 Platinum <5><12><14><16>
 Plukk <1>
 Pole Postion Manager <9><11>
 Police Story <2><3><15>
+Policespeed <17>
 Polybarium <1>
 Ports <9><11>
+Possible Mission <6>
 Potty <0><6>
+Power Rally <17>
+Price of Shadows <4><5><13><14><16>
 Primary <5><12><14><16>
 Prince of Darkness <2><3><15>
 Prince of Europe <4><13>
@@ -623,6 +941,8 @@ Prince Story <2><3><15>
 Prixx <0><6>
 Pro Buggy <7>
 Probotech <5><12><14><16>
+Project DRIVE <17>
+Project Stealth Warrior <7>
 Psycho Cat <0><6>
 Puk-Man <0><6>
 Putter <8>
@@ -634,16 +954,24 @@ Queen Program <2><3><15>
 Quest for Identity <2><3><15>
 Rabbit Crisis <5><12><14><16>
 Rabbit Quest <1>
+Racelife <17>
 Racing Team Tycoon <9><11>
 Radio Manager <9><11>
 Railroad <9><11>
+Railroad Extrem <9>
+Railroad Manager <9><11>
 Rain Seven <5><12><14><16>
 Rainbow World <0><6>
 Raised By The Champions <10>
+Rally Boy <17>
+Rally Superstars <17>
+Rallymania <17>
 Raven Adventure <2><3><15>
 Raven Scheme <2><3><15>
 RAX <5><12><14><16>
+Real Kart <17>
 Reality <1>
+Realms of Steel <4><5><13><14><16>
 Red Alert <4><13>
 Red Angel <5><12><14><16>
 Red Blood <5><12><14><16>
@@ -657,35 +985,52 @@ Red Scrolls <2><3><15>
 Red Spirit <2><3><15>
 Red Tunnel <5><12><14><16>
 Red Voyage <2><3><15>
+Renegade Warrior <10>
 Republic Knights <2><3><15>
 Return Super Fire <5><12><14><16>
 Return to Mars <2><3><15>
 Rickys Adventure <2><3><15>
+Rifle Combat <5>
+Rigar <5>
 Rising <4><13>
+Rising Stars of Zulur <3>
+River Action <5>
 River of Snake <2><3><15>
 Road Master <7>
+Roads of USA <17>
 Robodog vs. Catinator <SKLL>
+Robofish <6>
+Robotraid <4><14><16>
 Robots <10>
 Robots And Rebels <5><12><14><16>
 Rock Buck <0><6>
+Rock Climbing World Cup <8>
 Rockets <4><13>
 Roll not away <0><6>
 Rollercoaster Empire <9><11>
 Rollercoaster Giant <9><11>
 Rollergirl <2><3><15>
 Rom <9><11>
+Rome: The War <4>
 Rong <0><6>
+Royal Code <4>
 Rugby League <8>
 Rugby Manager <9><11>
+Rugby Masters <8>
+Rugbymax <8>
+Rune Quest <3>
 Runner <0><6>
 Running <5><12><14><16>
 Ruppelpa the Rapper <0><6>
 Rusty Axe <5><12><14><16>
 Rygor <2><3><15>
 S.D.F.T. <5><12><14><16>
+Sail Captain <0>
 Samurai <10>
 Sandsturm <4><13>
+Sanguine Investigation <2>
 Scared By The Dungeons <2><3><15>
+School Days <0>
 School Manager <9><11>
 School of Words <1>
 Scrolls of Skyrim <2><3><15>
@@ -705,13 +1050,18 @@ Seventh Future <5><12><14><16>
 Shadow Alliance <7>
 Shadow of the Monster <2><3><15>
 Shadow Star <2><3><15>
+Shadows of Love <15>
 Shanghai World <1>
 Shaolin Fights <10>
 Shock <0><6>
 Shock Rock <0><6>
+Shop Manager <9><11>
 Shuttlefighter <5><12><14><16>
 Silent Son <2><3><15>
+Silent U-Boat <7>
 Sillion <5><12><14><16>
+Silver Axe <10>
+Silver Axe Warrior <3>
 SimEco <9><11>
 SimTV <9><11>
 Six Kings <4><13>
@@ -719,23 +1069,39 @@ Skateboard <8>
 Skateboard Action <8>
 Skateboard Feaver <8>
 Skaterboy <0><6>
+Skycommand <4><5><13>
+Skyfighter <7>
+Skystar <5>
 Snakes and Apples <0><6>
 Snow Games <8>
+Snow Sports League <8>
+Snowart <8>
+Snowmaster <8>
 Soccer 2046 <8>
 Soccer Kids <8>
 Soccer Manager <9><11>
+Soccerstar <8>
 Soft'n'Heavy <5><12><14><16>
 Software Tycoon <9><11>
+Solar Apocalypse <4><5><13>
 Solar Clones <5><12><14><16>
 Solar Craft <4><13>
 Solar Flares <2><3><15>
+Solar Moon <3>
 Soldiers <4><13>
 Soldiers Of The Sun <5><12><14><16>
 Solomons Secret <1>
 Soul in the Nobody <2><3><15>
 Star Soul <2><3><15>
+Soul Signs <2>
+Soulcast <4><5><13><14><16>
+Soullife <3><5>
+Soulmaster <4><5><13><14><16>
 Souls of Dark <2><3><15>
+Souls of Nightmares <2>
 Souls of Rose <5><12><14><16>
+Soulstrike <4><5><13><14><16>
+Soultale <3>
 Space Civilizations <4><13>
 Space Colony Tycoon <9><11>
 Space Empire <4><13>
@@ -744,12 +1110,23 @@ Space Shuttle <7>
 Space Tactics <4><13>
 Space Transport <9><11>
 Space Trooper <5><12><14><16>
+Spacehunt <4><5><13><14><16>
 Spacestation 500 <4><13>
+Special Assault <5><14><16>
 Special Command <5><12><14><16>
 Special Killer <5><12><14><16>
 Special Team <4><13>
+Speedpro <17>
+Speedway 2050 <17>
+Spelllife <4><5><13>
+Spells of Ikuri <3>
+Spellspeed <4><5><13>
+Spelltale <3>
 Spider Armageddon <0><6>
+Spirits and Leaders <4><5><13>
+Spirits of Vengeance <2>
 Spiru the Chicken <0><6>
+Sportmaster <8>
 Spy Runner <5><12><14><16>
 Spyda-Man <5><12><14><16>
 Square <1>
@@ -763,10 +1140,13 @@ Star Puzzle <1>
 Star Soccer <8>
 Star-Up Tycoon <9><11>
 Starbase <9><11>
+Starbase Atlantis <11>
+Starblade <5><14><16>
 Stardriver <5><12><14><16>
 Starfighters <7>
 Starkid <2><3><15>
 Starrabbit <2><3><15>
+Stars of Dynasties <4><13>
 Stealth Fighter <7>
 Steel Fighters <10>
 Steel Gear Solid <5><12><14><16>
@@ -782,38 +1162,51 @@ Stranger Of Jokes <1>
 Stranger Of New Worlds <10>
 Street Basketball <8>
 Street Boxer <10>
+Street Boxing <10>
 Street Gangs: The Fight <10>
 Street Kart <7><17>
 Street Kombat <10>
 Streetfrog <0><6>
+Streetmania <17>
+Streetmaster <17>
 Streets of New York <5><12><14><16>
+Strengthstyle <8>
 Strike <7>
+Stunt Cars <17>
 Stunt Race <7><17>
 SUB <4><13>
 Submarine Torpedos <7>
 Submarine U88 <7>
 Subwar General <4><13>
+Summerworld <8>
 Summoners And Thieves <2><3><15>
 Sun Games <8>
 Sun Ocean <2><3><15>
 Super Bionic Force <5><12><14><16>
 Super Cars <7>
 Super Chess <1>
+Super Crash <17>
 Super Cyborg <5><12><14><16>
 Super Darios <2><3><15>
+Super Dive <0>
 Super Drive <7>
+Super G Racing <17>
 Super Giants <5><12><14><16>
 Super Gladiator <10>
 Super Grand Prix <7><17>
 Super Ice Hockey <8>
 Super Kicker <8>
+Super Match Point <8>
 Super Mega Blade <5><12><14><16>
 Super Mindgames <1>
+Super Motorsport <17>
 Super Motorsport <7><17>
+Super Nitro <17>
 Super Pang Buster <0><6>
 Super Pilotwings <7>
 Super Ping Pong <8>
 Super Pool <8>
+Super Rally <17>
 Super Rollerskate <8>
 Super Shoots <5><12><14><16>
 Super Shuttle <7>
@@ -826,6 +1219,7 @@ Super Train Sim <7>
 Super Wheel <7><17>
 Super Wings <7>
 Super Wrestling <10>
+Superbike 2000 <17>
 Superboy <2><3><15>
 Supernova <4><13>
 SWAT Missions <5><12><14><16>
@@ -834,8 +1228,11 @@ Sword of Antara <10>
 Swordfighter <10>
 Swordmage <10>
 Symphony <1>
+System Zok <14>
 Takatis <5><12><14><16>
+Tankfighter <5><7>
 Tatrus <0><6>
+Teams and Trophies <8>
 Tek-Blade <10>
 Television Manager <9><11>
 Ten Secounds <0><6>
@@ -843,8 +1240,11 @@ Tenguen <1>
 Tennis Gold <8>
 Tentris <0><6>
 Terra 14 <5><12><14><16>
+Terra Cestan <5>
+Terror and Command <4><5><13>
 Thaiboxer <10>
 The Adventure <2><3><15>
+The Ancient Scrolls <3>
 The Ants <9><11>
 The Bank <9><11>
 The Bards Adventure <2><3><15>
@@ -864,6 +1264,7 @@ The Crystal <2><3><15>
 The Dark Brain <1>
 The Dark Gate <2><3><15>
 The Darkness <5><12><14><16>
+The Darkness Ring <3>
 The Demonhunter Story <2><3><15>
 The Destiny <4><13>
 The Door <1>
@@ -894,6 +1295,7 @@ The Hot Eye <5><12><14><16>
 The Hunter's Sons <2><3><15>
 The Ice of the Moon <2><3><15>
 The Inca <2><3><15>
+The Kaos Engine <5>
 The Lands of Orks <4><13>
 The Last Elf <2><3><15>
 The Last Mission <5><12><14><16>
@@ -927,6 +1329,7 @@ The Railroad <9><11>
 The Red Hole <2><3><15>
 The Rising Prince <4><13>
 The School of the Truth <1>
+The Simulated People <4>
 The Slayer <5><12><14><16>
 The Soul's Wizards <2><3><15>
 The stolen Crown <4><13>
@@ -942,6 +1345,7 @@ The Third Lightning <5><12><14><16>
 The Time Project <0><6>
 The Tombs <2><3><15>
 The Tower's Man <2><3><15>
+The Trucks <17>
 The Truth's Thief <2><3><15>
 The Tycoon <9><11>
 The Underworld <2><3><15>
@@ -971,18 +1375,23 @@ Time's Healer <2><3><15>
 Time's Ships <2><3><15>
 Times <0><6>
 Timmy Kid <2><3><15>
+Tiny Wish <0><1>
+Titan Wrath <4><5><13><14><16>
 TOKA Touring Cars <7>
+Tokyo Racer <17>
 Tombolius <0><6>
 Toni Clarks Skateboarding <8>
 Tornado Pilot <7>
 Tornado X <10>
 Touch <0><6>
+Touchdown Super Stars <8>
 Tower <9><11>
 Tower Run <0><6>
 Towers of Heaven <1>
 Town <9><11>
 Town 2000 <9><11>
 Town 3000 <9><11>
+Tradefront <9>
 Trainer of Flames <0><6>
 Trak-Out <0><6>
 Transport Manager <9><11>
@@ -1001,9 +1410,15 @@ Tycoon <9><11>
 Typhoon <7>
 UFOs <4><13>
 Ulandru <2><3><15>
+Uldurs Gate <3>
 Ultimatum <1>
+Ultraside <5>
+Umbrella Zombies <2>
 UN Squads <4><13>
 Under Horizon <5><12><14><16>
+Undercover Hell <5>
+Urban Auto Club <17>
+V8 Street Racing <17>
 Vampires <5><12><14><16>
 Vanarkis <5><12><14><16>
 Vaxhanadu <5><12><14><16>
@@ -1017,45 +1432,71 @@ Village Builder <9><11>
 Vivanus <0><6>
 Voices At The Graveyard <2><3><15>
 Voices In The Tombs <0><6>
+Volleyballmaster <8>
+Volleyballpros <8>
 Wallstreet <9><11>
 War <4><13>
 War 2010 <4><13>
 War 2020 - The Xemos <4><13>
 War 2182 <4><13>
+War and Annihilation <4><5><13><14><16>
 War Tactics <4><13>
+Warfare and Violence <4><5><13>
+Warland <4><13>
 Warped <5><12><14><16>
+Warplan <4><5><13>
+Warpro <4><5><13><14><16>
 Warriors of the Crown <4><13>
+Waterchamp <8>
 Waterland <4><13>
+Watersim <7>
 Wave of the Shard <2><3><15>
+Ways of Thunder <17>
+Web of Dreams <2>
 Week Of Rainbows <2><3><15>
+Werewolf King <5><6>
+Werewolves of Agony <4><5><13>
 WFW Wrestling <10>
+Whispers of Vengeance <4><5><13><14><16>
 White Sport <8>
+Wildlife Simulator <7>
 Wimbel Tennis <8>
+Wing Captain <7>
 Wings of Flowers <2><3><15>
 Winter of Lords <4><13>
+Winterworld <2><3><4><5><6><11><13><14><16>
 Wizard of End <2><3><15>
 Wizard Of Mystery <2><3><15>
 WizzardBall <0><6>
 Wonder Rabbit <0><6>
 Wonderland <2><3><15>
 WorCroft <4><13>
-World of Rugby <8>
-World of Tennis <8>
-World of Snooker <8>
-World of Football <8>
-World of Soccer <8>
+World Boxing <10>
+World Class Master Series <8>
 World of Baseball <8>
+World of Football <8>
 World of Mana <2><3><15>
+World of Rugby <8>
+World of Snooker <8>
+World of Soccer <8>
+World of Tennis <8>
+World Race <17>
 World War <4><13>
+Wrestlinglife <8><10>
+Wrestlingtime <8><10>
 WW2: Wings <7>
+X-Drift <17>
 Xeno Breed <5><12><14><16>
 Xeno One <7>
+Xeno Sports <8>
+xRacing <17>
 Y-COM <4><13>
 Y-Out <5><12><14><16>
 Y-Plane <7>
 Y-Type <5><12><14><16>
 Yellow Alert <4><13>
 Yourney <1>
+Z-Type: Motorsport <17>
 Zack <0><6>
 Zam and Macks <2><3><15>
 Zelius <10>
@@ -1064,451 +1505,10 @@ Zetriss <0><6>
 Zigaia <5><12><14><16>
 Zolstize <0><6>
 Zombie World <5><12><14><16>
+Zombies of Rux <5>
 Zonik Chaos <2><3><15>
 Zoro the Alien <2><3><15>
 Zortium <1>
 Zuk MacCrack <2><3><15>
 Zweihanders <5><12><14><16>
-Oltima Quest <3>
-Wing Captain <7>
-Might & Spells <3>
-Master of Dungeons <3>
-Heroes of Might & Spells <4>
-The Simulated People <4>
-Massive Effect <3>
-Planet Tormen <3>
-Dark Zools <3>
-Deadly Comanche <7>
-Umbrella Zombies <2>
-Dark Metro <14>
-Deadly Fallout <3>
-Deuz Exit <14>
-Cell Theory <14>
-Rome: The War <4>
-Beta Centauri <4>
-System Zok <14>
-Galaxis Civlizations <4>
-Jim Fandango <2>
-The Ancient Scrolls <3>
-Uldurs Gate <3>
-Little Settlers <4>
-King of Persia <6>
-Ear Of The Beholder <3>
-Dark Wasteland <3>
-Plants Vs. Vampires <0>
-The Kaos Engine <5>
-Stunt Cars <17>
-Iron Speedballs <8>
-Intergalactic Quest <2>
-Silent U-Boat <7>
-Railroad Manager <9><11>
-Oil Manager <9><11>
-Shop Manager <9><11>
-Nighthawk Pilot <7>
-Eurofighter Action <7>
-Legend of Fearhill <3>
-Phaser Squads <5>
-Kings of the Sky <7>
-International Judo <10>
-Fight Spirit <10>
-Dynaphaser <0>
-Web of Dreams <2>
-Amberdoom <3>
-Alterium Beast <6>
-3D Virtual Pool <8>
-Jim Dangerous <6>
-Alien Seed <5>
-Beneath a Iron Sky <2>
-Possible Mission <6>
-Project Stealth Warrior <7>
-Gunship Pilot <7>
-Intergalactic Taxi <0>
-Armalites <5>
-HERO Operation <5>
-Street Boxing <10>
-World Boxing <10>
-Rigar <5>
-Castlemania <6>
-Ninja Chaos <6>
-Double Snakes <10>
-Little Icarus <6>
-Faxana <6>
-Kristalis <3>
-Cyborg Warrior <5>
-Ghost Castle <6>
-Miracle Knights <3>
-Robofish <6>
-Silver Axe <10>
-Mission Wolf <5>
-Silver Axe Warrior <3>
-Laser Hyperaction <6>
-Super Dive <0>
-Codename Raiders <5>
-The Darkness Ring <3>
-Exolonia <5>
-Super Match Point <8>
-Mega Trashman <0>
-Xeno Sports <8>
-Cayleth Adventure <2>
-Terra Cestan <5>
-Jetpac Action <5>
-Extreme Decathlon <8>
-Renegade Warrior <10>
-Mission: Rebelstar <4>
-Mission: Xecutor <5>
-Ikari Knight <3>
-Freescape Driller <7>
-Cyberdroids <5>
-Deflektor Puzzle <1>
-Ant War <5>
-Chaos Lords <3>
-Mission Vulcan <4>
-School Days <0>
-Berzerk Quest <3>
-River Action <5>
-Starbase Atlantis <11>
-Demon Wars <5>
-Galaxy Ace <12>
 Zybermorphing <5>
-Hyper Drive Rally <17>
-Mech: Steel Warriors <7>
-Alpha Xenomorph <14>
-Streetmania <17>
-Project DRIVE <17>
-Super Motorsport <17>
-xRacing <17>
-Super Rally <17>
-Offroad Xtreme <17>
-Mega Off-Road Racing <17>
-4x4 Racer <17>
-Superbike 2000 <17>
-Overdrive Karts <17>
-Urban Auto Club <17>
-Battle Race <17>
-Beach Buggy <17>
-Crazy Drift <17>
-Crazy Truckers <17>
-Mountain Racers <17>
-Comic Kart <17>
-Rally Boy <17>
-Driver & Car <17>
-Speedway 2050 <17>
-Rally Superstars <17>
-Cool Kart Racer <17>
-Super Crash <17>
-Beach Taxi <17>
-Rallymania <17>
-Extreme Curves <17>
-Ways of Thunder <17>
-Drift Champions <17>
-L.A. Racers <17>
-Z-Type: Motorsport <17>
-G-Zero: Legends <17>
-FX Race Stars <17>
-GRIP Motorsport <17>
-GTI Autosport <17>
-4x4: World Tour <17>
-Hot: Turbo Racing <17>
-Drag Racing: Evolution <17>
-Arcade Racer 3000 <17>
-King of Route 99 <17>
-V8 Street Racing <17>
-MiniRace <17>
-Mega Machines <17>
-Midnight Kart <17>
-Super Nitro <17>
-Monaco Racer <17>
-World Race <17>
-Performance <17>
-Power Rally <17>
-Real Kart <17>
-Accelerated <17>
-Super G Racing <17>
-The Trucks <17>
-Tokyo Racer <17>
-X-Drift <17>
-Extreme Motors <17>
-Maximum Speed <17>
-Fantasy Sports Super Challenge <8>
-Snow Sports League <8>
-Masters and Times <0><1>
-Fightstyle <10>
-Huntingace <5><14><16>
-Summerworld <8>
-Watersim <7>
-Rock Climbing World Cup <8>
-Gym Stars <8>
-Wrestlinglife <8><10>
-Huntingmaster <5><14><16>
-Fightinglife <10>
-Fantasy Sports <8>
-Teams and Trophies <8>
-Basketslam <8>
-Basketballlife <8>
-Martialworld <5>
-Martialtime <5>
-Gun Paradise <5><14><16
-Dart Unleashed <8>
-Champs of Fame <8>
-Karatestyle <10>
-Snowmaster <8>
-Sportmaster <8>
-World Class Master Series <8>
-Beach Super Stars <8>
-Golfstar <8>
-Baseballlife <8>
-Dodgeballart <8>
-Cricketsim <8>
-Formula One Master Challenge <17>
-Martial Arts: The Street <10>
-Wrestlingtime <8><10>
-Cricket Super Stars <8>
-Touchdown Super Stars <8>
-Heroes of Premierships <8><9>
-Archery Masters <8>
-Winterworld <2><3><4><5><6><11><13><14><16>
-Speedpro <17>
-Hockeyslam <8>
-Snowart <8>
-Extreme Sports Ultra <8>
-Masters of Swords <4><13>
-Rugbymax <8>
-Volleyballmaster <8>
-Soccerstar <8>
-Golflife <8>
-Rugby Masters <8>
-Rising Stars of Zulur <3>
-Volleyballpros <8>
-Streetmaster <17>
-Horse Race <8>
-Cricketpro <8>
-Strengthstyle <8>
-Waterchamp <8>
-Nightmare Offensive <4><5><13>
-Ancient Domination <4><5><13>
-Elements of Destruction <4><5><13>
-God of Retaliation <4><5><13>
-Crowns and Machines <4><5><13>
-Anarchy and Wonder <4><5><13>
-Tradefront <9>
-Grimclad <4><5><13>
-Bulletfight <4><5><13>
-Dragonpro <4><5><13>
-Future Alert <4><5><13>
-Dragon Crisis <4><5><13>
-Force of Pain <4><5><13><14><16>
-King of Heaven <4><5><13>
-Crowns and Gladiators <4><5><13>
-Domination and Corruption <4><5><13>
-Clanlife <4><5><13>
-Dreadtide <4><5><13><14><16>
-Angelrise <4><5><13><14><16>
-Ironbot <4><5><13><14><16>
-Emergency Conflict <4><5><13>
-Infinite Vendetta <4><5><13><14><16>
-Force of Chaos <4><5><13><14><16>
-Balance of Havoc <4><5><13><14><16>
-Mercenaries and Creatures <4><5><13><14><16>
-War and Annihilation <4><5><13><14><16>
-Knightslayer <4><5><13><14><16>
-Heavenmania <4><5><13><14><16>
-Soulcast <4><5><13><14><16>
-Astrofight <4><5><13><14><16>
-Mutant Civilization  <4><5><13>
-Solar Apocalypse <4><5><13>
-Werewolves of Agony <4><5><13>
-Fields of Siege <4><5><13>
-Spirits and Leaders <4><5><13>
-Terror and Command <4><5><13>
-Ironcraft <4><5><13>
-Spacehunt <4><5><13><14><16>
-Warplan <4><5><13>
-Kingdom Tycoon <4><5><13>
-Naval Twilight <4><5><13>
-Force of Wrath <4><5><13>
-Acts of Anarchy <4><5><13><14><16>
-Leaders and Masters <4><5><13>
-Fame and Misery <4><5><13>
-Evomania <4><5><13><14><16>
-Biopath <4><5><13><14><16>
-Spellspeed <4><5><13>
-Soulmaster <4><5><13><14><16>
-Crown Offensive <4><5><13>
-Battlefield Strategy <4><5><13>
-Whispers of Vengeance <4><5><13><14><16>
-Beasts of Twilight <4><5><13><14><16>
-Monsters and Champions <4><5><13>
-Warfare and Violence <4><5><13>
-Antitale <4><5><13><14><16>
-Bulletreign <4><5><13><14><16>
-Combatland <4><5><13><14><16>
-Warpro <4><5><13><14><16>
-Titan Wrath <4><5><13><14><16>
-Dragon Liberation <4><5><13><14><16>
-Hordes of Conquest <4><5><13>
-Army of Corruption <4><5><13><14><16>
-Bombs and Cannons <4><5><13><14><16>
-Anarchy and Alliances <4><5><13>
-Cyberforce <4><5><13><14><16>
-Spelllife <4><5><13>
-Soulstrike <4><5><13><14><16>
-Heavenborne <4><5><13><14><16>
-Monster Commander <4><5><13>
-Midnight Resistance <4><5><13>
-Price of Shadows <4><5><13><14><16>
-Blood of Ruins <4><5><13><14><16>
-Castles and Crowns <4><5><13>
-Peril and Tactics <4><5><13>
-Bulletborne <4><5><13><14><16>
-Bloodage <4><5><13><14><16>
-Hellbase <4><5><13>
-Skycommand <4><5><13>
-Infinite Revolution <4><5><13><14><16>
-Armored Destruction <4><5><13><14><16>
-Realms of Steel <4><5><13><14><16>
-Fires of Fortune <4><5><13><14><16>
-Dungeons and Lords <3>
-Frontblade <4><5><13><14><16>
-Fleetnight <4><5><13>
-Cyberrise <4><5><13><14><16>
-Magemind <4><5><13><14><16>
-Act of Danger <4><5><13><14><16>
-Castlemaster <4><5><13>
-Bladeguard <4><5><13><14><16>
-Crossbow Tales <3><4>
-Helicopters: The Mission <7>
-Heroes and Rulers <4>
-Skyfighter <7>
-Castlegear <4><13>
-Alliances and Space <4><13>
-Combatcorp <5><14><16>
-Starblade <5><14><16>
-Castlemaster <3><4>
-Arcanetech <3><4>
-Railroad Extrem <9>
-Agriculture Company <9><11>
-Nations of Simalgri <4><13>
-Tankfighter <5><7>
-Soullife <3><5>
-Robotraid <4><14><16>
-Destruction Initiative <4><14><16>
-Machines and Gods <4><13>
-Policespeed <17>
-Wildlife Simulator <7>
-Clans and History <4><13>
-Phantombase <5><14><16>
-Flightbots <5><7>
-Battle Universe <4><13>
-Rifle Combat <5>
-Zombies of Rux <5>
-Chemicals and Stars <0><1>
-Magecraft <4><13>
-Racelife <17>
-Cannon Champion <5>
-Colonies of Androids <11>
-Farmhero <9>
-Lifepath <0><1>
-Destruction Control <5>
-Stars of Dynasties <4><13>
-Kings and Champions <4><13>
-Roads of USA <17>
-Mining Tycoon <9><11>
-Familymaster <0><1>
-Phantom: SpecOps <5>
-Hospital Builder <11>
-Flightcommand <7>
-Flightstrike <7>
-Sail Captain <0>
-Undercover Hell <5>
-Spells of Ikuri <3>
-Brutalspace <5>
-Darkhunt <5>
-Lightmind <0><1>
-Forsaken Curse <3>
-Giants of Magic <4><13>
-Brutalfire <5>
-Dreampath <0><1>
-Arcanemaster <4><13>
-Skystar <5>
-Ironcrest <3>
-Shadows of Love <15>
-Mortalblade <10>
-Werewolf King <5><6>
-Spelltale <3>
-Darkside <3>
-Dragons of Conjury <3>
-Ironcry <5>
-Phantomcry <5><14><16>
-Epic Destiny <3>
-Souls of Nightmares <2>
-Embercrest <3>
-Deadfight <10>
-Alien Legions <4><13>
-Rune Quest <3>
-Darkage <3>
-Hellguard <3>
-Phantomcry <5><14><16>
-Knightcry <3>
-Dreadrage <5><14><16>
-Royal Code <4>
-Sanguine Investigation <2>
-Legends of Orion <4>
-Cyber Driver <17>
-Ghostcry <15>
-Crystalcast <3>
-Soultale <3>
-Darknite <5>
-Evil Dragon <3>
-Digital Enigma <2>
-Knightscape <3>
-Astrostorm <5>
-Spirits of Vengeance <2>
-Cyberstar <5>
-Ghostpoint <5>
-Dreammist <2>
-Bad Treasure <0><1>
-Lords of Mystery <4><13>
-Warland <4><13>
-Full On Magic <0><1>
-Tiny Wish <0><1>
-Elves of Triraldia <3>
-Brutalcraft <10>
-Dynamind <0><1>
-Helltale <5>
-Bionite <5><14><16>
-Solar Moon <3>
-Last Mirror <2>
-Mysteries of Memories <2>
-Soul Signs <2>
-Defcore <5><14><16>
-Dynablade <5><14><16>
-Dragonsky <3>
-Bulletborne <5><14><16>
-Cosmic Freedom <4><13>
-Special Assault <5><14><16>
-Dreadshock <5><14><16>
-Bad Machine <0><1>
-Bladeblaze <5><6>
-Astroworks <0><1>
-Battlerain <4><13>
-Eternal Signs <3>
-Human Freedom <4><13>
-Alphashot <5><14><16>
-Demonheart <3>
-Castleplan <11>
-Android Master <0><5>
-Ghost Guardians <3>
-Dragon Chronicles <3>
-Bladeshock <5><6>
-Crystalcry <3>
-Bullet Curse <5><14><16>
-Armageddon Predator <5><14><16>
-Dragonbot <5>
-Forgotten Blade <3><4><5>
-Bluemind <0><1>
-Immortal Universe <5><13>
-Frozen Call <2>
-Destroy of Logic <1>
-Ultraside <5>
-Blocklight <0><1>
-Datamania <0><1>
