@@ -21,18 +21,6 @@ public abstract class AbstractSimpleDependentMod extends AbstractSimpleMod imple
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
     }
 
-    /**
-     * Analyses all dependencies of this mod
-     *
-     * @throws ModProcessingException If analysis of a mod fails
-     */
-    @Override
-    public final void analyzeDependencies() throws ModProcessingException {
-        for (AbstractBaseMod mod : getDependencies()) {
-            mod.analyzeFile();
-        }
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public Map<String, Object> getExportMap(String name) throws ModProcessingException {

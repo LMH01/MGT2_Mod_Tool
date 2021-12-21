@@ -29,7 +29,12 @@ public interface DependentMod {
      *
      * @throws ModProcessingException If analysis of a mod fails
      */
-    void analyzeDependencies() throws ModProcessingException;
+    default void analyzeDependencies() throws ModProcessingException {
+        for (AbstractBaseMod mod : getDependencies()) {
+            mod.analyzeFile();
+        }
+        System.out.println("ANALYZING DEPENDENCIES IN CODE");
+    }
 
     /**
      * Returns a map that contains the dependencies of the mod. This map is printed into the export file.
