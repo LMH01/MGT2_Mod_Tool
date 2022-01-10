@@ -122,7 +122,7 @@ Big People <9><11>
 Big Questions <1>
 Big Samson <2><3><15>
 Big World <9><11>
-Big Worms <0><6>
+Big Superworm <0><6>
 Bionite <5><14><16>
 Biopath <4><5><13><14><16>
 BioRock <5><12><14><16>
@@ -152,7 +152,7 @@ Blue Fantasies <1>
 Blue Maxim <5><12><14><16>
 Blue Spiders <0><6>
 Bluemind <0><1>
-Bomb Raider <5><12><14><16>
+Bomb Runner <5><12><14><16>
 Bombs <0><6>
 Bombs and Cannons <4><5><13><14><16>
 Botal <10>
@@ -190,9 +190,9 @@ Car Dealer <9><11>
 Castle Master <2><3><15>
 Castle of Blood <10>
 Castlegear <4><13>
-Castlemania <6>
+Castle Action <6>
 Castlemaster <3><4>
-Castlemaster <4><5><13>
+Castle Hero <4><5><13>
 Castleplan <11>
 Castles and Crowns <4><5><13>
 Cayleth Adventure <2>
@@ -314,7 +314,7 @@ Deadfight <10>
 Deadly Cannons <5><12><14><16>
 Deadly Comanche <7>
 Deadly Dogfights <7>
-Deadly Fallout <3>
+Deadly Adventure <3>
 Death of Elves <2><3><15>
 Deep Sea <5><12><14><16>
 Defcore <5><14><16>
@@ -386,7 +386,7 @@ Dynamite Joe <5><12><14><16>
 Dynamityman <0><6>
 Dynaphaser <0>
 Eagles Nest <5><12><14><16>
-Ear Of The Beholder <3>
+Magic Dungeon <3>
 Earth Control <4><13>
 Earthworm Jimmy <2><3><15>
 East City <5><12><14><16>
@@ -428,7 +428,7 @@ F16 Fighter <7>
 F22 Retal <7>
 F29: The Mission <7>
 FAFI Manager <9><11>
-FAFI Soccer <8>
+Fantasy Soccer <8>
 Falcon Commander <7>
 Falcon Simulation <7>
 Falconeye <5><12><14><16>
@@ -454,7 +454,7 @@ Fighter Squad <10>
 Fighters And Elves <10>
 Fighting <10>
 Fightinglife <10>
-Fights on Street <10>
+Fights of Blood <10>
 Fightstyle <10>
 Film Producer <9><11>
 Fire <5><12><14><16>
@@ -462,7 +462,7 @@ Fire N' Water <2><3><15>
 Fire of the Worlds <2><3><15>
 Fireaxe <5><12><14><16>
 Fires of Fortune <4><5><13><14><16>
-First Ninja <5><12><14><16>
+First Super Monk <5><12><14><16>
 Fleet of Britain <4><13>
 Fleetnight <4><5><13>
 Flight Sim <7>
@@ -502,7 +502,7 @@ G-Zero: Legends <17>
 Galactic Trans <9><11>
 Galactica <7>
 Galax Forty <2><3><15>
-Galax Invaders <5><12><14><16>
+Galaxy Action <5><12><14><16>
 Galaxis Civlizations <4>
 Galaxy Ace <12>
 Galaxy Crusade <5><12><14><16>
@@ -527,7 +527,7 @@ Ghost Guardians <3>
 Ghostcry <15>
 Ghosthunter <2><3><15>
 Ghostpoint <5>
-Ghosts N' Zombies <2><3><15>
+Ghosts Adventure <2><3><15>
 Ghosts Who Smiles <0><6>
 Giants of Magic <4><13>
 Gigo Brothers <2><3><15>
@@ -583,7 +583,7 @@ HERO Operation <5>
 Heroes and Rulers <4>
 Heroes And Snakes <0><6>
 Heroes of Mandia <10>
-Heroes of Might & Spells <4>
+Heroes of Magic <4>
 Heroes of Premierships <8><9>
 Hexagonion <1>
 Hidden By The Moon <2><3><15>
@@ -612,7 +612,7 @@ Huguna: The Conflict <5><12><14><16>
 Human Freedom <4><13>
 Huntingace <5><14><16>
 Huntingmaster <5><14><16>
-Hurrican <5><12><14><16>
+Hurtron <5><12><14><16>
 Hyper Drive Rally <17>
 Hyperjump <7>
 Ice Hockey <8>
@@ -683,7 +683,7 @@ Knights & Dragons <2><3><15>
 Knights Without Time <2><3><15>
 Knightscape <3>
 Knightslayer <4><5><13><14><16>
-Kolin McRay Rally <7>
+Kings of Rally <7>
 Kombat <10>
 Koroshu Final <1>
 Krillius <5><12><14><16>
@@ -708,8 +708,8 @@ Law of the Nord <5><12><14><16>
 Leaders and Masters <4><5><13>
 LeBuck's Revenge <2><3><15>
 Legend of Fearhill <3>
-Legends of Orion <4>
-Lemmerlings <1>
+Legends of Saturn <4>
+Lions Puzzle <1>
 Leopard Commander <7>
 Life At The Dungeons <2><3><15>
 Lifepath <0><1>
@@ -726,7 +726,7 @@ Little Joe <2><3><15>
 Little Kingdom <4><13>
 Little Kung Fu Girl <10>
 Little Pieces <1>
-Little Settlers <4>
+Little Builders <4>
 Living Danger <5><12><14><16>
 Load Runner <0><6>
 Loco Emprie <9><11>
@@ -758,7 +758,7 @@ Martialtime <5>
 Martialworld <5>
 Massive Effect <3>
 Master of Arionis <4><13>
-Master of Dungeons <3>
+Hero of Dungeons <3>
 Master of Ring <10>
 Master of Universe <4><13>
 Masterix <1>
@@ -766,7 +766,7 @@ Masters and Times <0><1>
 Masters of Swords <4><13>
 Max IQ <1>
 Maximum Speed <17>
-Maximum Speed <7><17>
+Maximum Velocity <7><17>
 Maximus <1>
 MDDK <5><12><14><16>
 Mech Force <5><12><14><16>
@@ -794,8 +794,8 @@ Mi-24 Hind <7>
 Mice In Space <2><3><15>
 Midnight Kart <17>
 Midnight Resistance <4><5><13>
-Might & Spells <3>
-Might of Magic <2><3><15>
+Dungeons & Spells <3>
+Song of Magic <2><3><15>
 Mikey Dison's Punch Out <8>
 Mine Defender <0><6>
 Miniature Golf <8>
@@ -876,8 +876,8 @@ Ogres Of Autumn <2><3><15>
 OID: Revenge of Moh <0><6>
 Oil Giant <9><11>
 Oil Manager <9><11>
-Oltima Quest <3>
-Oltimo <2><3><15>
+Ultimate Quest <3>
+Oltimoon <2><3><15>
 Olympic Games 2000 <8>
 One and Two <1>
 Onexgears <2><3><15>
@@ -932,11 +932,11 @@ Price of Shadows <4><5><13><14><16>
 Primary <5><12><14><16>
 Prince of Darkness <2><3><15>
 Prince of Europe <4><13>
-Prince of India <2><3><15>
+Prince of Magic <2><3><15>
 Prince of Light <2><3><15>
 Prince of Moon <2><3><15>
 Prince of Sun <2><3><15>
-Prince Quest <2><3><15>
+Princess Adventure <2><3><15>
 Prince Story <2><3><15>
 Prixx <0><6>
 Pro Buggy <7>
@@ -944,7 +944,7 @@ Probotech <5><12><14><16>
 Project DRIVE <17>
 Project Stealth Warrior <7>
 Psycho Cat <0><6>
-Puk-Man <0><6>
+Puccelsious <0><6>
 Putter <8>
 Puzz Ballistic <0><6>
 Puzzelmania <1>
@@ -1033,7 +1033,7 @@ Scared By The Dungeons <2><3><15>
 School Days <0>
 School Manager <9><11>
 School of Words <1>
-Scrolls of Skyrim <2><3><15>
+Scrolls of Darkness <2><3><15>
 Sea Commander <7>
 Sea Strike <4><13>
 Search for Eden <2><3><15>
@@ -1097,7 +1097,7 @@ Soul Signs <2>
 Soulcast <4><5><13><14><16>
 Soullife <3><5>
 Soulmaster <4><5><13><14><16>
-Souls of Dark <2><3><15>
+Souls of Heaven <2><3><15>
 Souls of Nightmares <2>
 Souls of Rose <5><12><14><16>
 Soulstrike <4><5><13><14><16>
@@ -1149,7 +1149,7 @@ Starrabbit <2><3><15>
 Stars of Dynasties <4><13>
 Stealth Fighter <7>
 Steel Fighters <10>
-Steel Gear Solid <5><12><14><16>
+Steel Soldier <5><12><14><16>
 Steel Knights <2><3><15>
 Steel Machines <7>
 Stocks and Shares <9><11>
@@ -1228,7 +1228,7 @@ Sword of Antara <10>
 Swordfighter <10>
 Swordmage <10>
 Symphony <1>
-System Zok <14>
+System Cyprus <14>
 Takatis <5><12><14><16>
 Tankfighter <5><7>
 Tatrus <0><6>
@@ -1295,7 +1295,7 @@ The Hot Eye <5><12><14><16>
 The Hunter's Sons <2><3><15>
 The Ice of the Moon <2><3><15>
 The Inca <2><3><15>
-The Kaos Engine <5>
+The Kasos Incident <5>
 The Lands of Orks <4><13>
 The Last Elf <2><3><15>
 The Last Mission <5><12><14><16>
@@ -1318,7 +1318,7 @@ The Orbit <4><13>
 The Pacific <7>
 The Paper <1>
 The Patrol <5><12><14><16>
-The Pirates <4><13>
+The Pirates of Port Royal <4><13>
 The Pirates's Witches <2><3><15>
 The Planet <7>
 The President <4><13>

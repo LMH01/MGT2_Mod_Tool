@@ -228,3 +228,23 @@ Bogenschießen <0><5><6><7><8><14><16>
 Kickboxen <5><6><8><9><10>
 Kung Fu <5><6><8><9><10>
 Parkour <0><5><6><8><14><16>
+Romanzen <2><12><15>
+Mutanten <3><4><5><6><10><13><14><16>
+Natur <0><1><4><7><9><11>
+Ozeane <0><4><5><8><11><13><14><16>
+Meerjungfrauen <2><6><12><15>
+Musikinstrument <0>
+Würfelspiele <0><1><4>
+Handwerken <0><1><4><7><9><11>
+Showgeschäft <9><11><15>
+Magie <0><1><2><3><4><5><6><11><13><14><15><16>
+Geheimbund <2><3><14><15><16>
+Lernen <0><1><9><11>
+Sprachen <0><1>
+Igel <0><6>
+Gladiatoren <4><5><6><8><9><10><14><15>
+Pharaonen <0><1><2><4><6><9><11><13><14><16>
+Zeppeline <4><5><7><9><13>
+Antike <0><1><2><3><4><5><6><8><9><11><13><14><16>
+Maschinen <0><9>
+Rohstoffe <4><9><11><13>
