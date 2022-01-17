@@ -248,3 +248,8 @@ Zeppelins
 Ancient
 Machines
 Raw Materials
+Kart Racing
+Rallycross
+Stock Car
+Chess
+Asteroids

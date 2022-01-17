@@ -138,3 +138,10 @@ Commander Game System
 Commander Game System II
 Commander PETE
 Commander VEC-20
+Tapple I
+Tapple II
+iTapple
+iTapple 2
+iTapple 3
+iTapple 4
+iTapple 5

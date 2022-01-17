@@ -592,7 +592,7 @@ High IQ <1>
 Hightower <9><11>
 Hit the Head <0><6>
 Hobgoblin Of The Skull <2><3><15>
-Hockey League <8>
+Hockey Super League <8>
 Hockeyslam <8>
 Hokum Pilot <7>
 Hollywood <9><11>
@@ -641,7 +641,7 @@ Ironbot <4><5><13><14><16>
 Ironcraft <4><5><13>
 Ironcrest <3>
 Ironcry <5>
-Island of Monkeys <2><3><15>
+Island of Secrets <2><3><15>
 Isle of Death <10>
 It Came From The Sea <0><6>
 Jack in Wonderland <2><3><15>
@@ -1490,7 +1490,7 @@ Xeno Breed <5><12><14><16>
 Xeno One <7>
 Xeno Sports <8>
 xRacing <17>
-Y-COM <4><13>
+Y-Commander <4><13>
 Y-Out <5><12><14><16>
 Y-Plane <7>
 Y-Type <5><12><14><16>
