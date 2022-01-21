@@ -1512,3 +1512,4 @@ Zortium <1>
 Zuk MacCrack <2><3><15>
 Zweihanders <5><12><14><16>
 Zybermorphing <5>
+Optimoon <2><3><15>

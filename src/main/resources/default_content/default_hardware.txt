@@ -58,6 +58,8 @@ No storage option
 4 kilobyte on cartridge
 8 kilobyte on cartridge
 32 kilobyte on cartridge
+16 megabyte cartridge
+128 megabyte cartridge
 512 kilobyte memory card
 4 megabyte memory card
 32 megabyte memory card
