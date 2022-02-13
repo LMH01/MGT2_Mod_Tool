@@ -23,6 +23,7 @@ import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class WindowMain {
@@ -180,12 +181,16 @@ public class WindowMain {
         JMenuItem m54OpenSaveGameFolder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder"));
         m54OpenSaveGameFolder.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSaveGameFolder.toolTip"));
         m54OpenSaveGameFolder.addActionListener(actionEvent -> Utils.open(Backup.FILE_SAVE_GAME_FOLDER));
+        JMenuItem m55OpenSettingsTomlFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSettingsTomlFile"));
+        m55OpenSettingsTomlFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSettingsTomlFile.toolTip"));
+        m55OpenSettingsTomlFile.addActionListener(actionEvent -> Utils.open(ModManagerPaths.MAIN.getPath().resolve("settings.toml")));
         MB.add(M_5_UTIL);
         M_5_UTIL.add(m51ExperimentalFeatures);
         m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
         M_5_UTIL.add(m54OpenSaveGameFolder);
+        M_5_UTIL.add(m55OpenSettingsTomlFile);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -237,10 +242,8 @@ public class WindowMain {
                 boolean noModsAvailable = true;
                 ModManager.analyzeMods();
                 boolean noModRestorePointSet = true;
-                if (!Settings.disableSafetyFeatures) {
-                    if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
-                        noModRestorePointSet = false;
-                    }
+                if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
+                    noModRestorePointSet = false;
                 }
                 for (AbstractBaseMod mod : ModManager.mods) {
                     mod.setMainMenuButtonAvailability();

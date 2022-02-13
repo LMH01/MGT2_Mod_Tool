@@ -621,7 +621,7 @@ dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Are you sure that th
 dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Please select at least one genre/theme to continue!
 dialog.contentEditor.editGenreThemeFit.success|The genre/theme fit has been edited successfully!
 
-dialog.startTasks.initialBackupOutdated|<html>Warning:<br><br>The initial backup is no longer up-to-date.<br>This can result in problems.<br>d<br>Please create a new one!<br>(Backup -> Create backup -> Create new initial backup)
+dialog.startTasks.initialBackupOutdated|<html>Warning:<br><br>The initial backup is no longer up-to-date.<br>This can result in problems.<br><br>Please create a new one!<br>(Backup -> Create backup -> Create new initial backup)<br><br>This check can be disabled in the settings.toml file.
 
 disclaimer.disclaimerText|<html>Important information:<br><br>- Backups will get created automatically but please created your own safety<br>copy in case something went wrong with the backups that this tool creates.<br>- Please always create a new initial backup every time the game is updated to prevent problems<br>- Your save game files can be found by clicking "Open Save Game Location" located in the utilities menu.<br>- Mods that have been applied may only take effect when you start a new game.<br>- Removing mods later won't necessarily remove them from your save games.<br>- Most spinners are locked to prevent the input of values that might break the game balance.<br>This can be circumvented by disabling the safety features in the settings.<br>- In case you don't know what an input field does hover over it with your mouse.<br><br>If you need additional help visit the Github repository and read the README.md file.<br>The Github repository can be opened by clicking Utilities -> Open Github Page.<br>If you encounter a bug please report it so i can fix it.<br><br>By clicking ok you accept that you have read this information.
 
@@ -884,6 +884,8 @@ window.main.utilities.openGithubPage|Open Github page
 window.main.utilities.openMGT2Folder|Open MGT2 folder
 window.main.utilities.openSaveGameFolder|Open save game folder
 window.main.utilities.openSaveGameFolder.toolTip|Click to open the folder where the save games are stored
+window.main.utilities.openSettingsTomlFile|Open settings.toml file
+window.main.utilities.openSettingsTomlFile.toolTip|<html>Click here to open the Settings.toml file<br>This file contains all settings, including those<br>that cannot be changed via the settings window.<br>Please be careful when editing the file!
 window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added

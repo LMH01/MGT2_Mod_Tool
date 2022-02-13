@@ -411,7 +411,7 @@ public class Utils {
     }
 
     /**
-     * Opens the given folder
+     * Opens the given folder/file
      */
     public static void open(Path path) {
         try {

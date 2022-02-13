@@ -27,7 +27,7 @@ public class NpcGamesMod extends AbstractSimpleDependentMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", MadGamesTycoon2ModTool.VERSION};
+        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override

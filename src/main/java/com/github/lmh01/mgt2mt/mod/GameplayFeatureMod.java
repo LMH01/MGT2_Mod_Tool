@@ -51,7 +51,7 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", MadGamesTycoon2ModTool.VERSION};
+        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override
@@ -372,9 +372,12 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
 
     @Override
     public Map<String, String> getChangedImportMap(Map<String, String> map) throws ModProcessingException, NullPointerException, NumberFormatException {
-        map.replace("GOOD", getGenreIds(map.get("GOOD")));
-        map.replace("BAD", getGenreIds(map.get("BAD")));
-        map.put("PIC", "");
+        if (map.containsKey("GOOD")) {
+            map.replace("GOOD", getGenreIds(map.get("GOOD")));
+        }
+        if (map.containsKey("BAD")) {
+            map.replace("BAD", getGenreIds(map.get("BAD")));
+        }
         return map;
     }
 
@@ -489,6 +492,8 @@ public class GameplayFeatureMod extends AbstractAdvancedDependentMod {
     }
 
     /**
+     * This function uses {@link AbstractAdvancedMod#getModIdByNameFromImportHelperMap(String)} so the import map
+     * has to be initialized when thin function is called. This means that the genre ids will be set correctly.
      * @param genreNamesRaw The string containing the genre ids that should be transformed.
      * @return A list of genre names
      * @throws ModProcessingException If import helper throws an exception

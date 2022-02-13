@@ -32,7 +32,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", MadGamesTycoon2ModTool.VERSION};
+        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override
@@ -231,7 +231,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     @SuppressWarnings("unchecked")
     public Map<String, Object> getExportMap(String name) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        String line = getModifiedExportLine(getLine(name)).replace(name, getThemeTranslations(name).get("NAME GE"));
+        String line = getModifiedExportLine(getLine(name));
         Map<String, Object> dependencyMap = getDependencyMap(line);
         for (AbstractBaseMod mod : ModManager.mods) {
             try {
@@ -255,7 +255,7 @@ public class ThemeMod extends AbstractSimpleDependentMod {
     public String getModifiedExportLine(String exportLine) throws ModProcessingException {
         ArrayList<String> strings = Utils.getEntriesFromString(exportLine);
         StringBuilder output = new StringBuilder();
-        output.append(getReplacedLine(exportLine)).append(" ");
+        output.append(getThemeTranslation(getReplacedLine(exportLine), "GE")).append(" ");
         for (String string : strings) {
             output.append("<");
             try {
@@ -526,16 +526,28 @@ public class ThemeMod extends AbstractSimpleDependentMod {
      */
     public boolean doesThemeExist(String name) throws ModProcessingException {
         ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(getContentByAlphabet()));
-        if (arrayList.contains(name)) {
-            return true;
-        } else {
-            return false;
+        return arrayList.contains(name);
+    }
+
+    /**
+     * Translates the theme name.
+     * @param nameEn The theme name that should be translated
+     * @param translationKey The translation key for the translation
+     * @return The german translation for the english theme name.
+     */
+    public String getThemeTranslation(String nameEn, String translationKey) throws ModProcessingException {
+        String translation = getThemeTranslations(nameEn).get("NAME " + translationKey);
+        if (translation.equals("null")) {
+            throw new ModProcessingException("Unable to return translation for theme " + nameEn + ": Translation key " + translation + " is invalid.");
         }
+        return translation;
     }
 
     /**
      * @param name The english theme name for which the translations should be returned
      * @return A map that contains all translations for the theme
+     * @throws ModProcessingException If theme translation could not be returned.
+     *                                If file translation file charset can not be determined.
      */
     public Map<String, String> getThemeTranslations(String name) throws ModProcessingException {
         try {

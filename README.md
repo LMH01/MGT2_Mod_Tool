@@ -20,7 +20,7 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 #### WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST
 
 #### TO COUNTERACT THIS YOU CAN CREATE A MOD RESTORE POINT IN THE BACKUP MENU
-## Download: [v3.0.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v3.0.2/MGT2_Mod_Tool_3.0.2.zip)
+## Download: [v3.0.3](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v3.0.3/MGT2_Mod_Tool_3.0.3.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -83,7 +83,7 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 - Backups of your saved games will be created but not automatically restored. To restore a save game backup go into the **Backup** menu, click **Restore Backup** and then **Restore Save Game Backup**. 
 - **Create a mod restore point**: When a restore point is set you will be able to restore all your currently installed mods later.<br>Useful when the game has been updated and the mods are lost.
 - **Even though backups are created I will not take any responsibility if you loose or damage you saved games!**    
-### Uitilities
+### Utilities
 - **Update Checker**
     - When started the tool will look for updates. If an update is available the user will be notified.
 - **Tool tips**

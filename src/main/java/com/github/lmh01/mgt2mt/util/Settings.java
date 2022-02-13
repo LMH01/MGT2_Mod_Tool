@@ -30,13 +30,13 @@ public class Settings {
     public static boolean enableGenreNameTranslationInfo = true;
     public static boolean enableGenreDescriptionTranslationInfo = true;
     public static boolean enableExportStorage = true; //If true each new export will be saved in a new folder.
-    public static boolean enableInitialBackupCheck = false; //If true the user will be notified if the initial backup is outdated
+    public static boolean enableInitialBackupCheck = true; //If true the user will be notified if the initial backup is outdated
     public static String language = "English";
     public static UpdateBranch updateBranch = UpdateBranch.RELEASE;
 
     public static void resetSettings() {
         setMGT2Folder(false);
-        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", UpdateBranch.RELEASE, true, false);
+        setSettings(false, true, false, false, mgt2Path, true, true, true, "English", UpdateBranch.RELEASE, true, true);
         LOGGER.info("Settings have been reset.");
     }
 
