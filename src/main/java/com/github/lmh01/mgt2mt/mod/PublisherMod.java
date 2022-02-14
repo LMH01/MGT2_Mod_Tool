@@ -133,7 +133,7 @@ public class PublisherMod extends AbstractComplexMod {
                         if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) > genreDate) {
                             availableGenres.add(string1);
                         } else if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) == genreDate) {
-                            if (Months.getIdByName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Months.getIdByName(genreMap.get("DATE"))) {
+                            if (Months.getIdByName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString().replaceAll("[0-9]", "").trim()) >= Months.getIdByName(genreMap.get("DATE").replaceAll("[0-9]", "").trim())) {
                                 availableGenres.add(string1);
                             }
                         }
