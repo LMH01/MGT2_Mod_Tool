@@ -46,6 +46,9 @@ commonText.hardwareFeature.upperCase.plural|Hardware features
 commonText.hardware|hardware
 commonText.hardware.upperCase|Hardware
 commonText.hardware.upperCase.plural|Hardware
+commonText.npcIp|npc ip
+commonText.npcIp.upperCase|Npc IP
+commonText.npcIp.upperCase.plural|Npc IPs
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -128,6 +131,7 @@ commonText.kid|Kid
 commonText.teen|Teen
 commonText.adult|Adult
 commonText.senior|Senior
+commonText.all|All
 commonText.addNameTranslations|Add name translations
 commonText.addNameTranslations.toolTip|<html>Click to add name translations<br>The value entered in the main text field will be used as the english translation
 commonText.addNameTranslations.added|Name Translations Added
@@ -189,6 +193,7 @@ commonText.portableConsole|Portable console
 commonText.reason|Reason:
 commonText.alreadyExported|Mod has already been exported
 textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
+commonText.hasSuccessfullyBeenAddedToTheGame|has successfully been added to the game
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -242,6 +247,10 @@ analyzer.hardware.getCustomContentString.errorWhileScanningDefaultFiles|Error wi
 analyzer.hardware.getCustomContentString.customEngineFeatureFound|Modded hardware found:
 analyzer.hardware.getCustomContentString.customEngineFeatureComplete|Scanning for modded hardware complete
 analyzer.hardware.getCustomContentString.progressBar|Scanning for modded hardware
+analyzer.npcIp.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc ip:
+analyzer.npcIp.getCustomContentString.customEngineFeatureFound|Modded npc ip found:
+analyzer.npcIp.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc ips complete
+analyzer.npcIp.getCustomContentString.progressBar|Scanning for modded npc ips
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Add gameplay feature
 modManager.gameplayFeature.windowMain.modButton.removeMod|Remove gameplay feature
@@ -282,6 +291,9 @@ modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No
 modManager.hardware.windowMain.modButton.addMod|Add hardware
 modManager.hardware.windowMain.modButton.removeMod|Remove hardware
 modManager.hardware.windowMain.modButton.removeMod.toolTip|Disabled -> No hardware available
+modManager.npcIp.windowMain.modButton.addMod|Add npc ip
+modManager.npcIp.windowMain.modButton.removeMod|Remove npc ip
+modManager.npcIp.windowMain.modButton.removeMod.toolTip|Disabled -> No npc ip available
 modManager.general.enterNameFirst|Please enter a name first!
 modManager.general.enterNameDescriptionFirst|Please enter a name and description first!
 
@@ -446,6 +458,25 @@ mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Check thi
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationary console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|Select here for which console type this hardware should be exclusive
+mod.npcIp.addMod.optionPaneMessage.firstPart|Add this npc ip?
+mod.npcIp.addMod.components.textFieldName.initialValue|ENTER NPC IP NAME
+mod.npcIp.addMod.components.spinner.rating|IP rating in %
+mod.npcIp.addMod.components.label.releaseYear|Release year
+mod.npcIp.addMod.components.button.mainGenre|Main-genre
+mod.npcIp.addMod.components.button.mainGenre.initial|Select main-genre
+mod.npcIp.addMod.components.button.mainGenre.genreAlreadySelected|<html>This genre has already been selected as sub-genre<br>Please select another genre.
+mod.npcIp.addMod.components.button.subGenre|Sub-genre
+mod.npcIp.addMod.components.button.subGenre.initial|Select sub-genre
+mod.npcIp.addMod.components.button.subGenre.genreAlreadySelected|<html>This genre has already been selected as main-genre<br>Please select another genre.
+mod.npcIp.addMod.components.button.mainTheme|Main-theme
+mod.npcIp.addMod.components.button.mainTheme.initial|Select main-theme
+mod.npcIp.addMod.components.button.mainTheme.themeAlreadySelected|<html>This theme has already been selected as sub-theme<br>Please select another theme.
+mod.npcIp.addMod.components.button.subTheme|Sub-theme
+mod.npcIp.addMod.components.button.subTheme.initial|Select sub-theme
+mod.npcIp.addMod.components.button.subTheme.themeAlreadySelected|<html>This theme has already been selected as main-theme<br>Please select another theme.
+mod.npcIp.addMod.components.button.platform|Platform
+mod.npcIp.addMod.components.button.platform.initial|Select platform
+mod.npcIp.addMod.somethingNotSelected|<html>At least one of the following fields is empty:<br><br>Main-genre<br>Main-theme<br>Platform<br><br>Please make sure that you have selected each and try again.
 
 sharer.engineFeature.optionPaneMessage.main|Your engine feature is ready:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:

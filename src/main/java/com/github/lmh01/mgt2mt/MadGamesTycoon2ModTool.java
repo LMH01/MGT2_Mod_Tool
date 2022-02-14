@@ -18,7 +18,7 @@ import java.util.Locale;
 public class MadGamesTycoon2ModTool {
     public static final OSType OS_TYPE;
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
-    public static final String VERSION = "3.0.3";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
+    public static final String VERSION = "3.1.0-dev";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
     public static final String CURRENT_RELEASE_VERSION = "3.0.3";//When this version number has been detected as the newest release version the update available message is held back
 
     static {
@@ -30,6 +30,13 @@ public class MadGamesTycoon2ModTool {
         LOGGER.info("MGT2_Mod_Tool is running under " + System.getProperty("os.name"));
     }
 
+    /*
+    * TODO
+    *  When/during rework of abstract mod classes rework how export is handeled: When a corrupt mod has been found the
+    *  export should not crash, instead the mod that is corrupt should not be exported and a message should be printed to the user.
+    *   Maybe add function "modValid" or something to the the abstract mod classes (the classes similar to NpcIp).
+    *   Or check if mod is valid when it is constructed initially.
+    * */
     public static void main(String[] args) {
         Settings.importSettings();
         if (Settings.language.equals("English")) {
@@ -53,7 +60,7 @@ public class MadGamesTycoon2ModTool {
                 TextAreaHelper.printStackTrace(e);
                 e.printStackTrace();
             }
-            Backup.createInitialBackup();//Creates a initial backup when it does not already exist.
+            Backup.createInitialBackup();//Creates an initial backup when it does not already exist.
         } else {
             LOGGER.info("Initial backups where not created/completed because the mgt2 folder is invalid");
         }

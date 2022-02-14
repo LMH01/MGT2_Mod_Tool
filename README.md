@@ -13,6 +13,8 @@ Please create a new initial backup always when the game has been updated to prev
 
 To update the initial backup go to `Backup -> Create backup -> Create new initial backup` and follow the instructions
 
+### Most new mods will only take effect once a new game is started!
+
 ### WARNING:
 
 #### WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST

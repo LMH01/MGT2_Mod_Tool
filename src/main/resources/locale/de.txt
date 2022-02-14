@@ -46,6 +46,9 @@ commonText.hardwareFeature.upperCase.plural|Hardware Features
 commonText.hardware|Hardware
 commonText.hardware.upperCase|Hardware
 commonText.hardware.upperCase.plural|Hardware
+commonText.npcIp|npc ip
+commonText.npcIp.upperCase|Npc IP
+commonText.npcIp.upperCase.plural|Npc IPs
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -128,6 +131,7 @@ commonText.kid|Kinder
 commonText.teen|Teenager
 commonText.adult|Erwachsene
 commonText.senior|Senioren
+commonText.all|Alle
 commonText.addNameTranslations|Übersetzungen für Namen hinzufügen
 commonText.addNameTranslations.toolTip|<html>Klicke, um Übersetzungen für den Namen hinzuzufügen<br>Der wert, der in das Textfeld geschrieben wird, wird für die englische Übersetzung benutzt
 commonText.addNameTranslations.added|Übersetzungen hinzugefügt
@@ -188,6 +192,7 @@ commonText.stationaryConsole|Stationäre Konsole
 commonText.portableConsole|Portable Konsole
 commonText.reason|Grund:
 commonText.alreadyExported|Der Mod wurde bereits exportiert
+commonText.hasSuccessfullyBeenAddedToTheGame|wurde erfolgreich zum spiel hinzugefügt
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -241,6 +246,10 @@ analyzer.hardware.getCustomContentString.errorWhileScanningDefaultFiles|Fehler b
 analyzer.hardware.getCustomContentString.customEngineFeatureFound|Modifizierte Hardware gefunden:
 analyzer.hardware.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierter Hardware abgeschlossen
 analyzer.hardware.getCustomContentString.progressBar|Scannen nach modifizierter Hardware
+analyzer.npcIp.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc IP:
+analyzer.npcIp.getCustomContentString.customEngineFeatureFound|Modifizierte Npc IP gefunden:
+analyzer.npcIp.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc IPs abgeschlossen
+analyzer.npcIp.getCustomContentString.progressBar|Scannen nach modifizierten Npc IPs
 
 modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
 modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
@@ -281,6 +290,9 @@ modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert ->
 modManager.hardware.windowMain.modButton.addMod|Hardware hinzufügen
 modManager.hardware.windowMain.modButton.removeMod|Hardware entfernen
 modManager.hardware.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Hardware verfügbar
+modManager.npcIp.windowMain.modButton.addMod|Npc IP hinzufügen
+modManager.npcIp.windowMain.modButton.removeMod|Npc IP entfernen
+modManager.npcIp.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Npc IP verfügbar
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und eine Beschreibung ein!
 
@@ -445,6 +457,25 @@ mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Aktiviere
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationäre Konsole
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable Konsole
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|<html>Wähle hier aus, für welche Konsolenart diese Hardware exclusiv sein soll
+mod.npcIp.addMod.optionPaneMessage.firstPart|Diese Npc IP hinzufügen?
+mod.npcIp.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC IP EIN
+mod.npcIp.addMod.components.spinner.rating|IP Bewertung in %
+mod.npcIp.addMod.components.label.releaseYear|Erscheinungsjahr
+mod.npcIp.addMod.components.button.mainGenre|Hauptgenre
+mod.npcIp.addMod.components.button.mainGenre.initial|Hauptgenre auswählen
+mod.npcIp.addMod.components.button.mainGenre.genreAlreadySelected|<html>Dieses Genre wurde bereits als Untergenre ausgewählt.<br>Wähle bitte ein anderes Genre aus.
+mod.npcIp.addMod.components.button.subGenre|Untergenre
+mod.npcIp.addMod.components.button.subGenre.initial|Untergenre auswählen
+mod.npcIp.addMod.components.button.subGenre.genreAlreadySelected|<html>Dieses Genre wurde bereits als Hauptgenre ausgewählt.<br>Wähle bitte ein anderes Genre aus.
+mod.npcIp.addMod.components.button.mainTheme|Hauptthema
+mod.npcIp.addMod.components.button.mainTheme.initial|Hauptthema auswählen
+mod.npcIp.addMod.components.button.mainTheme.themeAlreadySelected|<html>Dieses Thema wurde bereits als Unterthema ausgewählt.<br>Wähle bitte ein anderes Thema aus.
+mod.npcIp.addMod.components.button.subTheme|Unterthema
+mod.npcIp.addMod.components.button.subTheme.initial|Unterthema auswählen
+mod.npcIp.addMod.components.button.subTheme.themeAlreadySelected|<html>Dieses Thema wurde bereits als Hauptthema ausgewählt.<br>Wähle bitte ein anderes Thema aus.
+mod.npcIp.addMod.components.button.platform|Plattform
+mod.npcIp.addMod.components.button.platform.initial|Plattform auswählen
+mod.npcIp.addMod.somethingNotSelected|<html>Mindestens eines der folgenden Felder ist leer:<br><br>Hauptgenre<br>Hauptthema<br>Plattform<br><br>Bitte vergewissere dich, dass du alle ausgewählt hast, und versuche es erneut.
 
 sharer.engineFeature.optionPaneMessage.main|Dein Engine Feature ist bereit:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:

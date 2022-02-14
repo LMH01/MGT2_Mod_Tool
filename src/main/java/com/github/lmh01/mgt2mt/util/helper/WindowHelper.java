@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,13 +22,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class WindowHelper {
 
     /**
-     * @param baseMod   The base mod
      * @param textField The name text area
      * @return Returns a new panel containing the components of the name
      */
-    public static JPanel getNamePanel(AbstractBaseMod baseMod, JTextField textField) {
+    public static JPanel getNamePanel(JTextField textField) {
         JPanel panel = new JPanel();
-        JLabel label = new JLabel(baseMod.getType() + " " + I18n.INSTANCE.get("commonText.name") + ":");
+        JLabel label = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
         panel.add(label);
         panel.add(textField);
         return panel;
@@ -341,5 +341,23 @@ public class WindowHelper {
             JOptionPane.showMessageDialog(null, params);
         });
         return button;
+    }
+
+    /**
+     * Adds the following action to the button:
+     * When the button is clicked a message is displayed where the user can select an entry for a list.
+     * @param labelText The label of the button and the message that is written above the list when the button is clicked
+     * @param list The list that should be displayed
+     * @param action The action that should be performed when the user clicks ok
+     */
+    public static void setListButtonAction(JButton button, String labelText, JList<String> list, ActionListener action) {
+        button.addActionListener(actionEvent -> {
+            JLabel label = new JLabel(labelText);
+            JScrollPane scrollPane = getScrollPane(list);
+            Object[] params = {label, scrollPane};
+            if (JOptionPane.showConfirmDialog(null, params, labelText, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                action.actionPerformed(actionEvent);
+            }
+        });
     }
 }

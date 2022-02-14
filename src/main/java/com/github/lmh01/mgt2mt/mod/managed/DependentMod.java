@@ -33,7 +33,6 @@ public interface DependentMod {
         for (AbstractBaseMod mod : getDependencies()) {
             mod.analyzeFile();
         }
-        System.out.println("ANALYZING DEPENDENCIES IN CODE");
     }
 
     /**

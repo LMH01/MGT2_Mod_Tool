@@ -169,7 +169,7 @@ public class PublisherMod extends AbstractComplexMod {
 
             spinnerUnlockYear.addChangeListener(e -> buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        "));
 
-            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, SpinnerType.MARKET_SHARE), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), panelGenre};
+            Object[] params = {WindowHelper.getNamePanel(textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, SpinnerType.MARKET_SHARE), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), panelGenre};
             boolean breakLoop = false;
             while (!breakLoop) {
                 if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {

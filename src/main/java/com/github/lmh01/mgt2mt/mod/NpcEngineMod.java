@@ -83,7 +83,7 @@ public class NpcEngineMod extends AbstractAdvancedDependentMod {
             JList<String> listAvailablePlatforms = WindowHelper.getList(ModManager.platformMod.getContentByAlphabet(), false);
             JScrollPane scrollPaneAvailablePlatforms = WindowHelper.getScrollPane(listAvailablePlatforms);
 
-            Object[] param = {WindowHelper.getNamePanel(this, textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), labelExplainGenreList, scrollPaneAvailableGenres, labelExplainPlatformList, scrollPaneAvailablePlatforms};
+            Object[] param = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), labelExplainGenreList, scrollPaneAvailableGenres, labelExplainPlatformList, scrollPaneAvailablePlatforms};
             while (true) {
                 if (JOptionPane.showConfirmDialog(null, param, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.YES_OPTION) {
                     if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.npcEngine.addMod.components.textFieldName.initialValue"))) {
