@@ -60,6 +60,8 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 #### Npc engines
   - You can add new npc engines
   - The release year decides how high the technology level is and what engine features will be included in the engine
+#### Npc IPs
+  - You can add custom npc ips
 #### Anti cheat
   - You can create custom anti cheat software that you can implement in your game
 #### Copy protection
