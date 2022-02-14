@@ -1,6 +1,17 @@
 # Changelog
 
-## [v3.0.3](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.3) (Latest Version)
+## [v3.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.1.0) (Latest Version)
+
+### New feature
+- NPC IPs can now be added to the game
+
+### Other
+- Updated default content files
+
+### Bug fixes
+- It now possible again to select the genre of a publisher
+
+## [v3.0.3](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.0.3)
 ### Other
 - Added button to utilities menu with which the settings.toml file can be opened
 - Updated default content files
