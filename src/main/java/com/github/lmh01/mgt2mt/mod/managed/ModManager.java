@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.mod.managed;
 import com.github.lmh01.mgt2mt.mod.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ public class ModManager {
     public static PlatformMod platformMod = new PlatformMod();
     public static PublisherMod publisherMod = new PublisherMod();
     public static ThemeMod themeMod = new ThemeMod();
+    public static NpcIpMod npcIpMod = new NpcIpMod();
 
     /**
      * Initializes all mods
@@ -44,6 +46,7 @@ public class ModManager {
         copyProtectMod.initializeMod();
         hardwareMod.initializeMod();
         hardwareFeatureMod.initializeMod();
+        npcIpMod.initializeMod();
         DebugHelper.debug(LOGGER, "Total mods active: " + mods.size());
     }
 
@@ -64,6 +67,7 @@ public class ModManager {
         publisherMod.analyzeFile();
         platformMod.analyzeFile();
         themeMod.analyzeFile();
+        npcIpMod.analyzeFile();
     }
 
     /**
@@ -73,5 +77,14 @@ public class ModManager {
      */
     public static void showException(ModProcessingException e) {
         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("frame.title.error") + ": " + e.getMessage().replace(" - ", "\n - "), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Shows a message that the mod has been added successfully.
+     * Also writes a message to the text area.
+     */
+    public static void modAdded(String modName, String modType) {
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + modType + " - " + modName);
+        JOptionPane.showMessageDialog(null, modName + " \"" + modType + "\" " + I18n.INSTANCE.get("commonText.hasSuccessfullyBeenAddedToTheGame"), "frame.title.success", JOptionPane.INFORMATION_MESSAGE);
     }
 }

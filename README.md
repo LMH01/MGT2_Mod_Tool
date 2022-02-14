@@ -20,7 +20,7 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 #### WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST
 
 #### TO COUNTERACT THIS YOU CAN CREATE A MOD RESTORE POINT IN THE BACKUP MENU
-## Download: [v3.0.3](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v3.0.3/MGT2_Mod_Tool_3.0.3.zip)
+## Download: [v3.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v3.1.0/MGT2_Mod_Tool_3.1.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
@@ -60,6 +60,8 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 #### Npc engines
   - You can add new npc engines
   - The release year decides how high the technology level is and what engine features will be included in the engine
+#### Npc IPs
+  - You can add custom npc ips
 #### Anti cheat
   - You can create custom anti cheat software that you can implement in your game
 #### Copy protection

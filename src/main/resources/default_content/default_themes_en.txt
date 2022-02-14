@@ -105,7 +105,7 @@ Fire Department
 Trains
 Special Forces
 Druids
-Fruits
+Fruit
 Chemistry
 Physics
 Puzzles
@@ -213,4 +213,43 @@ Skateboards
 Handball
 Table Tennis
 Sailing
-Fruit
+Skiing
+Deck Building
+Volleyball
+Darts
+Billiards
+Athletics
+Mountaineering
+Bowling
+Fencing
+Squash
+Hiking
+Archery
+Kickboxing
+Kung Fu
+Parkour
+Romances
+Mutants
+Nature
+Oceans
+Mermaids
+Musical Instrument
+Dice Games
+Crafting
+Showbiz
+Magic
+Secret Society
+Learning
+Languages
+Hedgehogs
+Gladiators
+Pharaohs
+Zeppelins
+Ancient
+Machines
+Raw Materials
+Kart Racing
+Rallycross
+Stock Car
+Chess
+Asteroids

@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
+import com.github.lmh01.mgt2mt.mod.NpcIpMod;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 
@@ -17,20 +18,15 @@ public abstract class AbstractSimpleDependentMod extends AbstractSimpleMod imple
     @Override
     public void importMod(Map<String, Object> map) throws ModProcessingException {
         analyzeDependencies();
-        addModToFile(getChangedImportLine((String) map.get("line")));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
-    }
-
-    /**
-     * Analyses all dependencies of this mod
-     *
-     * @throws ModProcessingException If analysis of a mod fails
-     */
-    @Override
-    public final void analyzeDependencies() throws ModProcessingException {
-        for (AbstractBaseMod mod : getDependencies()) {
-            mod.analyzeFile();
+        //TODO Remove this when the new abstract mod classes have been reworked
+        // This is a ugly workaround for now
+        if (this instanceof NpcIpMod) {
+            NpcIp npcIp = new NpcIp((String) map.get("line"), ModConstructionType.IMPORT);
+            addModToFile(npcIp.getLine());
+        } else {
+            addModToFile(getChangedImportLine((String) map.get("line")));
         }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.import.imported") + " " + getType() + " - " + map.get("mod_name"));
     }
 
     @Override
@@ -38,7 +34,14 @@ public abstract class AbstractSimpleDependentMod extends AbstractSimpleMod imple
     public Map<String, Object> getExportMap(String name) throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
         String line = getModifiedExportLine(getLine(name));
-        Map<String, Object> dependencyMap = getDependencyMap(line);
+        //TODO Remove this when the new abstract mod classes have been reworked
+        // This is a ugly workaround for now
+        Map<String, Object> dependencyMap;
+        if (this instanceof NpcIpMod) {
+            dependencyMap = getDependencyMap(getLine(name));
+        } else {
+            dependencyMap = getDependencyMap(line);
+        }
         for (AbstractBaseMod mod : ModManager.mods) {
             try {
                 Set<String> set = (Set<String>) dependencyMap.get(mod.getExportType());

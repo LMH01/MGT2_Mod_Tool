@@ -198,6 +198,11 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
     }
 
     @Override
+    public String getContentNameById(int id) throws ModProcessingException {
+        return getReplacedLine(getFileContent().get(id));
+    }
+
+    @Override
     public String[] getDefaultContent() {
         if (defaultContent.length == 0) {
             try {
@@ -233,6 +238,7 @@ public abstract class AbstractSimpleMod extends AbstractBaseMod {
         for (Map.Entry<Integer, String> entry : getFileContent().entrySet()) {
             helperMap.put(getReplacedLine(entry.getValue()), entry.getKey());
         }
+        setMaxId(helperMap.size());
         importHelperMap = helperMap;
     }
 }

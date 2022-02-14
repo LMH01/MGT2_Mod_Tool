@@ -37,7 +37,6 @@ public class ContentEditor {
                         for (String string : themeList.getSelectedValuesList()) {
                             themeIds.add(ModManager.themeMod.getPositionOfThemeInFile(string));
                         }
-                        StringBuilder errors = new StringBuilder();
                         for (String string : genreList.getSelectedValuesList()) {
                             ModManager.themeMod.editGenreAllocationAdvanced(ModManager.genreMod.getContentIdByName(string), addGenre, themeIds, false);
                         }

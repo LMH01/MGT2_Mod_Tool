@@ -50,7 +50,7 @@ public class PublisherMod extends AbstractComplexMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", MadGamesTycoon2ModTool.VERSION};
+        return new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override
@@ -133,7 +133,7 @@ public class PublisherMod extends AbstractComplexMod {
                         if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) > genreDate) {
                             availableGenres.add(string1);
                         } else if (Integer.parseInt(spinnerUnlockYear.getValue().toString()) == genreDate) {
-                            if (Months.getIdByName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) >= Months.getIdByName(genreMap.get("DATE"))) {
+                            if (Months.getIdByName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString().replaceAll("[0-9]", "").trim()) >= Months.getIdByName(genreMap.get("DATE").replaceAll("[0-9]", "").trim())) {
                                 availableGenres.add(string1);
                             }
                         }
@@ -169,7 +169,7 @@ public class PublisherMod extends AbstractComplexMod {
 
             spinnerUnlockYear.addChangeListener(e -> buttonSelectGenre.setText("        " + I18n.INSTANCE.get("commonText.selectGenre") + "        "));
 
-            Object[] params = {WindowHelper.getNamePanel(this, textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, SpinnerType.MARKET_SHARE), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), panelGenre};
+            Object[] params = {WindowHelper.getNamePanel(textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, SpinnerType.MARKET_SHARE), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), panelGenre};
             boolean breakLoop = false;
             while (!breakLoop) {
                 if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {

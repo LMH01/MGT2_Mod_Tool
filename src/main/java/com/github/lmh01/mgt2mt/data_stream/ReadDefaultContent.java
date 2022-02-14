@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
 import com.moandjiezana.toml.Toml;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class ReadDefaultContent {
     public static String[] getDefault(String defaultContentName, Replacer replacer) throws IOException {
         ArrayList<Object> arrayList = new ArrayList<>();
         List<Object> list = toml.getList(defaultContentName.replace(".txt", ""));
+        if (list == null) {
+            Files.delete(DefaultContentManager.DEFAULT_CONTENT_FILE.toPath());
+        }
         for (Object obj : list) {
             if (replacer != null) {
                 arrayList.add(replacer.replace(obj.toString()));
