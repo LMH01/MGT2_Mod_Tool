@@ -193,6 +193,7 @@ commonText.portableConsole|Portable Konsole
 commonText.reason|Grund:
 commonText.alreadyExported|Der Mod wurde bereits exportiert
 commonText.hasSuccessfullyBeenAddedToTheGame|wurde erfolgreich zum spiel hinzugefügt
+commonText.startplattform|Startplatform
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -360,6 +361,8 @@ mod.platform.addPlatform.components.spinner.techLevel.tooltip|<br>Das Technologi
 mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Setze die Entwicklungskosten für ein Spiel, welches diese Plattform benutzt.<br>Dieser Preis wird draufgerechnet, wenn ein Spiel mit dieser Plattform erstellt wird.
 mod.platform.addPlatform.components.spinner.researchCost.toolTip|Dies ist der Preis, der für das Dev Kit bezahlt werden muss.
 mod.platform.addPlatform.components.checkBox.internet.toolTip|Aktiviere diese Option, um zu kennzeichnen, dass diese Konsole das Internet benutzen kann
+mod.platform.addPlatform.components.checkBox.startplattform|Startplatform
+mod.platform.addPlatform.components.checkBox.startplattform.toolTip|Aktiviere diese Option, damit der Spieler diese Platform zum Spielstart besitzt
 mod.platform.addPlatform.components.spinner.complexity.toolTip|Gibt an, wie viel Arbeit es ist, für diese Plattform zu entwickeln
 mod.platform.addPlatform.components.spinner.units.toolTip|Gibt an, wie viele Plattformen dieser Art produziert wurden
 mod.platform.addPlatform.components.button.addPicture|Plattform-Bild(er) hinzufügen

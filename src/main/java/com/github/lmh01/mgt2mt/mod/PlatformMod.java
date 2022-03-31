@@ -107,6 +107,9 @@ public class PlatformMod extends AbstractComplexMod {
         EditHelper.printLine("COMPLEX", map, bw);
         EditHelper.printLine("INTERNET", map, bw);
         EditHelper.printLine("TYP", map, bw);
+        if (map.containsKey("STARTPLATFORM")) {
+            EditHelper.printLine("STARTPLATFORM", map, bw);
+        }
     }
 
     @Override
@@ -314,7 +317,10 @@ public class PlatformMod extends AbstractComplexMod {
                 }
             });
 
-            Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), WindowHelper.getSpinnerPanel(spinnerComplexity, SpinnerType.COMPLEXITY), WindowHelper.getSpinnerPanel(spinnerUnits, SpinnerType.UNITS), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerDevKitCost, SpinnerType.PRICE), checkBoxInternet, labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures};
+            JCheckBox checkBoxStartplattform = new JCheckBox(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.startplattform"));
+            checkBoxStartplattform.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.startplattform.toolTip"));
+
+            Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), WindowHelper.getSpinnerPanel(spinnerComplexity, SpinnerType.COMPLEXITY), WindowHelper.getSpinnerPanel(spinnerUnits, SpinnerType.UNITS), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerDevKitCost, SpinnerType.PRICE), checkBoxInternet, checkBoxStartplattform, labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures};
             while (true) {
                 if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))) {
@@ -407,6 +413,9 @@ public class PlatformMod extends AbstractComplexMod {
                                         platformMap.put("TYP", Integer.toString(platformType.getId()));
                                     }
                                 }
+                                if (checkBoxStartplattform.isSelected()) {
+                                    platformMap.put("STARTPLATFORM", "");
+                                }
                                 if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(platformMap), I18n.INSTANCE.get(""), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                     createBackup();
                                     addModToFile(platformMap);
@@ -481,6 +490,13 @@ public class PlatformMod extends AbstractComplexMod {
         }
         message.append(I18n.INSTANCE.get("commonText.internet")).append(": ").append(internetMessageToPrint).append("<br>");
         message.append(I18n.INSTANCE.get("commonText.type")).append(": ").append(PlatformType.getTypeNameById(Integer.parseInt(map.get("TYP")))).append("<br>");
+        String startplattformMessageToPrint;
+        if (map.containsKey("STARTPLATFORM")) {
+            startplattformMessageToPrint = Utils.getTranslatedValueFromBoolean(true);
+        } else {
+            startplattformMessageToPrint = Utils.getTranslatedValueFromBoolean(false);
+        }
+        message.append(I18n.INSTANCE.get("commonText.startplattform")).append(": ").append(startplattformMessageToPrint).append("<br>");
         return message.toString();
     }
 

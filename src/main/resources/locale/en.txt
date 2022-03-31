@@ -194,6 +194,7 @@ commonText.reason|Reason:
 commonText.alreadyExported|Mod has already been exported
 textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
 commonText.hasSuccessfullyBeenAddedToTheGame|has successfully been added to the game
+commonText.startplattform|Startplattform
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -361,6 +362,8 @@ mod.platform.addPlatform.components.spinner.researchCost.toolTip|This is the pri
 mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Set the development cost for a game with this platform.<br>This cost will be added when developing a game with this platform.
 mod.platform.addPlatform.components.spinner.price.toolTip|This is the price that is payed for the devkit.
 mod.platform.addPlatform.components.checkBox.internet.toolTip|Check this option to indicate that this console can use the internet
+mod.platform.addPlatform.components.checkBox.startplattform|Startplattform
+mod.platform.addPlatform.components.checkBox.startplattform.toolTip|Check this option to indicate that the player should own a devkit for this platform at the beginning of the game
 mod.platform.addPlatform.components.spinner.complexity.toolTip|Indicates how much work it is to develop for this platform
 mod.platform.addPlatform.components.spinner.units.toolTip|Indicates how many platforms of this type have been manufactured
 mod.platform.addPlatform.components.button.addPicture|Add platform picture(s)
