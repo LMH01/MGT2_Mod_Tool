@@ -15,7 +15,7 @@ public class NpcIp {
     public String name;
     public Integer genre;
     public Integer subGenre;
-    public Integer theme;
+    public Integer theme;// The id offset is misaligned by one, that's why theme_id-1 has to be printed in the game npcip file - Will probably be fixed after the backend has been rewritten again
     public Integer subTheme;
     public TargetGroup targetGroup;
     public Integer publisher;
@@ -141,14 +141,16 @@ public class NpcIp {
      */
     public String getLine() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" <G").append(genre).append("><T").append(theme)
+        // The theme-1 and subTheme-1 statements are required because the ids are misaligned by one.
+        //  This will probably be fixed when the backend has been rewritten again.
+        sb.append(name).append(" <G").append(genre).append("><T").append(theme-1)
                 .append("><TG").append(targetGroup.getId()).append("><P").append(publisher)
                 .append("><%").append(rating).append("><Y").append(releaseYear).append(">");
         if (subGenre != null) {
             sb.append("<SG").append(subGenre).append(">");
         }
         if (subTheme != null) {
-            sb.append("<ST").append(subTheme).append(">");
+            sb.append("<ST").append(subTheme-1).append(">");
         }
         return sb.toString();
     }
@@ -159,6 +161,8 @@ public class NpcIp {
      */
     public String getExportLine() throws ModProcessingException {
         StringBuilder sb = new StringBuilder();
+        System.out.println("Theme: " + theme);
+        System.out.println("Theme sub: " + subTheme);
         sb.append(name).append(" <G-").append(ModManager.genreMod.getContentNameById(genre)).append("><T-")
                 .append(ModManager.themeMod.getContentNameById(theme)).append("><TG-")
                 .append(targetGroup.getId()).append("><P-")

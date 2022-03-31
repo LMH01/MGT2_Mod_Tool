@@ -69,6 +69,7 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
         panelTargetGroup.add(comboBoxTargetGroup);
         JLabel labelRating = new JLabel(I18n.INSTANCE.get("mod.npcIp.addMod.components.spinner.rating") + ":");
         JSpinner spinnerRating = WindowHelper.getBaseSpinner("mod.npcIp.addMod.components.spinner.rating", 50, 0, 100, 5);
+        spinnerRating.setToolTipText(I18n.INSTANCE.get("mod.npcIp.addMod.components.spinner.rating.toolTip"));
         JPanel panelRating = new JPanel();
         panelRating.add(labelRating);
         panelRating.add(spinnerRating);
@@ -140,6 +141,7 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
                 // Setup to add mod
                 int mainGenre = ModManager.genreMod.getContentIdByName(listMainGenre.getSelectedValue());
                 int mainTheme = ModManager.themeMod.getContentIdByName(listMainTheme.getSelectedValue());
+                System.out.printf("Main theme id: %d\n", mainTheme);
                 int publisher = ModManager.publisherMod.getContentIdByName(listPublisher.getSelectedValue());
                 Integer subGenre = null;
                 if (!listSubGenre.isSelectionEmpty()) {

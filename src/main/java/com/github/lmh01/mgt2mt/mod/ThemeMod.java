@@ -587,4 +587,10 @@ public class ThemeMod extends AbstractSimpleDependentMod {
             throw new ModProcessingException("Unable to return theme translations", e);
         }
     }
+
+    @Override
+    public String getContentNameById(int id) throws ModProcessingException {
+        // I know that this is kinda ugly practice. It is a workaround until I rewrite the backend.
+        return getReplacedLine(getFileContent().get(id+1));
+    }
 }
