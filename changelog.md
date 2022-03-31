@@ -1,6 +1,19 @@
 # Changelog
 
-## [v3.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.1.0) (Latest Version)
+## [v3.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.2.0) (Latest Version)
+
+### New feature
+- Platforms can now be marked as available from the start of the game (fr #80)
+
+### Other
+- Updated some texts in the "add npcip" window
+
+### Bug fixes
+- Fixed bug #81 - Npcip requirements are now correct
+- Fixed bug #82 - Npcip topics are now set correctly
+- Fixed bug #83 - Startplatforms are now available again after a new platform has been added
+
+## [v3.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.1.0)
 
 ### New feature
 - NPC IPs can now be added to the game
