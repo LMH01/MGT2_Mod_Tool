@@ -194,7 +194,7 @@ commonText.reason|Reason:
 commonText.alreadyExported|Mod has already been exported
 textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
 commonText.hasSuccessfullyBeenAddedToTheGame|has successfully been added to the game
-commonText.startplattform|Startplattform
+commonText.startplatform|Startplatform
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -362,8 +362,8 @@ mod.platform.addPlatform.components.spinner.researchCost.toolTip|This is the pri
 mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Set the development cost for a game with this platform.<br>This cost will be added when developing a game with this platform.
 mod.platform.addPlatform.components.spinner.price.toolTip|This is the price that is payed for the devkit.
 mod.platform.addPlatform.components.checkBox.internet.toolTip|Check this option to indicate that this console can use the internet
-mod.platform.addPlatform.components.checkBox.startplattform|Startplattform
-mod.platform.addPlatform.components.checkBox.startplattform.toolTip|Check this option to indicate that the player should own a devkit for this platform at the beginning of the game
+mod.platform.addPlatform.components.checkBox.startplatform|Startplatform
+mod.platform.addPlatform.components.checkBox.startplatform.toolTip|Check this option to indicate that the player should own a devkit for this platform at the beginning of the game
 mod.platform.addPlatform.components.spinner.complexity.toolTip|Indicates how much work it is to develop for this platform
 mod.platform.addPlatform.components.spinner.units.toolTip|Indicates how many platforms of this type have been manufactured
 mod.platform.addPlatform.components.button.addPicture|Add platform picture(s)
@@ -477,9 +477,9 @@ mod.npcIp.addMod.components.button.mainTheme.themeAlreadySelected|<html>This the
 mod.npcIp.addMod.components.button.subTheme|Sub-theme
 mod.npcIp.addMod.components.button.subTheme.initial|Select sub-theme
 mod.npcIp.addMod.components.button.subTheme.themeAlreadySelected|<html>This theme has already been selected as main-theme<br>Please select another theme.
-mod.npcIp.addMod.components.button.platform|Platform
-mod.npcIp.addMod.components.button.platform.initial|Select platform
-mod.npcIp.addMod.somethingNotSelected|<html>At least one of the following fields is empty:<br><br>Main-genre<br>Main-theme<br>Platform<br><br>Please make sure that you have selected each and try again.
+mod.npcIp.addMod.components.button.publisher|Publisher
+mod.npcIp.addMod.components.button.publisher.initial|Select publisher
+mod.npcIp.addMod.somethingNotSelected|<html>At least one of the following fields is empty:<br><br>Main-genre<br>Main-theme<br>Publisher<br><br>Please make sure that you have selected each and try again.
 
 sharer.engineFeature.optionPaneMessage.main|Your engine feature is ready:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:

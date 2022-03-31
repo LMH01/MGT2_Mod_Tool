@@ -14,7 +14,7 @@ import java.util.*;
 public class NpcIpMod extends AbstractSimpleDependentMod {
     /*
     * Game file bracket meaning:
-    * P = Platform
+    * P = Publisher
     * G = Genre
     * SG = Sub-Genre
     * T = Topic
@@ -26,7 +26,7 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
 
     @Override
     public String[] getCompatibleModToolVersions() {
-        return new String[]{"3.1.0", MadGamesTycoon2ModTool.VERSION};
+        return new String[]{"3.2.0", MadGamesTycoon2ModTool.VERSION};
     }
 
     @Override
@@ -120,27 +120,27 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
                 buttonSubTheme.setToolTipText(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.subTheme") + ": " + listMainGenre.getSelectedValue());
             }
         });
-        JList<String> listPlatform = WindowHelper.getList(ModManager.platformMod.getContentByAlphabet(), false);
-        JButton buttonPlatform = new JButton(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.platform.initial"));
-        WindowHelper.setListButtonAction(buttonPlatform, I18n.INSTANCE.get("mod.npcIp.addMod.components.button.platform.initial") + ":", listPlatform, e -> {
-            buttonPlatform.setText(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.platform") + ": " + listPlatform.getSelectedValue());
-            buttonMainGenre.setToolTipText(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.platform") + ": " + listMainGenre.getSelectedValue());
+        JList<String> listPublisher = WindowHelper.getList(ModManager.publisherMod.getContentByAlphabet(), false);
+        JButton buttonPublisher = new JButton(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher.initial"));
+        WindowHelper.setListButtonAction(buttonPublisher, I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher.initial") + ":", listPublisher, e -> {
+            buttonPublisher.setText(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher") + ": " + listPublisher.getSelectedValue());
+            buttonMainGenre.setToolTipText(I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher") + ": " + listMainGenre.getSelectedValue());
         });
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), panelReleaseYear, panelTargetGroup, panelRating, buttonMainGenre, buttonSubGenre, buttonMainTheme, buttonSubTheme, buttonPlatform};
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), panelReleaseYear, panelTargetGroup, panelRating, buttonMainGenre, buttonSubGenre, buttonMainTheme, buttonSubTheme, buttonPublisher};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (textFieldName.getText().equals(I18n.INSTANCE.get("mod.npcIp.addMod.components.textFieldName.initialValue"))) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("modManager.general.enterNameFirst"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     continue;
                 }
-                if (listMainGenre.isSelectionEmpty() || listMainTheme.isSelectionEmpty() || listPlatform.isSelectionEmpty()) {
+                if (listMainGenre.isSelectionEmpty() || listMainTheme.isSelectionEmpty() || listPublisher.isSelectionEmpty()) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.npcIp.addMod.somethingNotSelected"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     continue;
                 }
                 // Setup to add mod
                 int mainGenre = ModManager.genreMod.getContentIdByName(listMainGenre.getSelectedValue());
                 int mainTheme = ModManager.themeMod.getContentIdByName(listMainTheme.getSelectedValue());
-                int platform = ModManager.platformMod.getContentIdByName(listPlatform.getSelectedValue());
+                int publisher = ModManager.publisherMod.getContentIdByName(listPublisher.getSelectedValue());
                 Integer subGenre = null;
                 if (!listSubGenre.isSelectionEmpty()) {
                     subGenre = ModManager.genreMod.getContentIdByName(listSubGenre.getSelectedValue());
@@ -149,7 +149,7 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
                 if (!listSubTheme.isSelectionEmpty()) {
                     subTheme = ModManager.themeMod.getContentIdByName(listSubTheme.getSelectedValue());
                 }
-                NpcIp npcIp = new NpcIp(textFieldName.getText(), mainGenre, subGenre, mainTheme, subTheme, TargetGroup.getTargetGroup((String) comboBoxTargetGroup.getSelectedItem()), platform, Integer.parseInt(spinnerReleaseYear.getValue().toString()), Integer.parseInt(spinnerRating.getValue().toString()));
+                NpcIp npcIp = new NpcIp(textFieldName.getText(), mainGenre, subGenre, mainTheme, subTheme, TargetGroup.getTargetGroup((String) comboBoxTargetGroup.getSelectedItem()), publisher, Integer.parseInt(spinnerReleaseYear.getValue().toString()), Integer.parseInt(spinnerRating.getValue().toString()));
                 if (JOptionPane.showConfirmDialog(null, getOptionPaneMessage(npcIp), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     addModToFile(npcIp.getLine());
                     ModManager.modAdded(textFieldName.getText(), I18n.INSTANCE.get("commonText.npcIp.upperCase"));
@@ -183,7 +183,7 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
                 I18n.INSTANCE.get("commonText.theme.upperCase") + ": " + ModManager.themeMod.getContentNameById(npcIp.theme) + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.button.subTheme") + ": " + subTheme + "<br>" +
                 I18n.INSTANCE.get("commonText.targetGroup") + ": " + npcIp.targetGroup.getTypeName() + "<br>" +
-                I18n.INSTANCE.get("mod.npcIp.addMod.components.button.platform") + ": " + ModManager.platformMod.getContentNameById(npcIp.platform) + "<br>" +
+                I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher") + ": " + ModManager.publisherMod.getContentNameById(npcIp.publisher) + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.label.releaseYear") + ": " + npcIp.releaseYear + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.spinner.rating") + ": " + npcIp.rating;
     }
@@ -224,7 +224,7 @@ public class NpcIpMod extends AbstractSimpleDependentMod {
         ArrayList<AbstractBaseMod> arrayList = new ArrayList<>();
         arrayList.add(ModManager.genreMod);
         arrayList.add(ModManager.themeMod);
-        arrayList.add(ModManager.platformMod);
+        arrayList.add(ModManager.publisherMod);
         return arrayList;
     }
 

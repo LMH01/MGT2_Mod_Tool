@@ -193,7 +193,7 @@ commonText.portableConsole|Portable Konsole
 commonText.reason|Grund:
 commonText.alreadyExported|Der Mod wurde bereits exportiert
 commonText.hasSuccessfullyBeenAddedToTheGame|wurde erfolgreich zum spiel hinzugefügt
-commonText.startplattform|Startplatform
+commonText.startplattform|Startplattform
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -361,8 +361,8 @@ mod.platform.addPlatform.components.spinner.techLevel.tooltip|<br>Das Technologi
 mod.platform.addPlatform.components.spinner.devCost.toolTip|<br>Setze die Entwicklungskosten für ein Spiel, welches diese Plattform benutzt.<br>Dieser Preis wird draufgerechnet, wenn ein Spiel mit dieser Plattform erstellt wird.
 mod.platform.addPlatform.components.spinner.researchCost.toolTip|Dies ist der Preis, der für das Dev Kit bezahlt werden muss.
 mod.platform.addPlatform.components.checkBox.internet.toolTip|Aktiviere diese Option, um zu kennzeichnen, dass diese Konsole das Internet benutzen kann
-mod.platform.addPlatform.components.checkBox.startplattform|Startplatform
-mod.platform.addPlatform.components.checkBox.startplattform.toolTip|Aktiviere diese Option, damit der Spieler diese Platform zum Spielstart besitzt
+mod.platform.addPlatform.components.checkBox.startplatform|Startplattform
+mod.platform.addPlatform.components.checkBox.startplatform.toolTip|Aktiviere diese Option, damit der Spieler diese Plattform zum Spielstart besitzt
 mod.platform.addPlatform.components.spinner.complexity.toolTip|Gibt an, wie viel Arbeit es ist, für diese Plattform zu entwickeln
 mod.platform.addPlatform.components.spinner.units.toolTip|Gibt an, wie viele Plattformen dieser Art produziert wurden
 mod.platform.addPlatform.components.button.addPicture|Plattform-Bild(er) hinzufügen
@@ -476,9 +476,9 @@ mod.npcIp.addMod.components.button.mainTheme.themeAlreadySelected|<html>Dieses T
 mod.npcIp.addMod.components.button.subTheme|Unterthema
 mod.npcIp.addMod.components.button.subTheme.initial|Unterthema auswählen
 mod.npcIp.addMod.components.button.subTheme.themeAlreadySelected|<html>Dieses Thema wurde bereits als Hauptthema ausgewählt.<br>Wähle bitte ein anderes Thema aus.
-mod.npcIp.addMod.components.button.platform|Plattform
-mod.npcIp.addMod.components.button.platform.initial|Plattform auswählen
-mod.npcIp.addMod.somethingNotSelected|<html>Mindestens eines der folgenden Felder ist leer:<br><br>Hauptgenre<br>Hauptthema<br>Plattform<br><br>Bitte vergewissere dich, dass du alle ausgewählt hast, und versuche es erneut.
+mod.npcIp.addMod.components.button.publisher|Publisher
+mod.npcIp.addMod.components.button.publisher.initial|Publisher auswählen
+mod.npcIp.addMod.somethingNotSelected|<html>Mindestens eines der folgenden Felder ist leer:<br><br>Hauptgenre<br>Hauptthema<br>Publisher<br><br>Bitte vergewissere dich, dass du alle ausgewählt hast, und versuche es erneut.
 
 sharer.engineFeature.optionPaneMessage.main|Dein Engine Feature ist bereit:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
@@ -618,7 +618,7 @@ dialog.updateChecker.latestGameVersionNotCompatible|<html>Warnung:<br><br>Dieses
 
 dialog.analyzeExistingLicences.errorWhileScanningLicences|Fehler beim scannen von Lizenzen:
 dialog.analyzeExistingLicences.errorWhileScanningPublishers|Fehler beim scannen von Publishern:
-dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Fehler beim scannen von Plattformen:
+dialog.analyzeExistingLicences.errorWhileScanningPlatforms|Fehler beim scannen von Platformen:
 
 dialog.dataStreamHelper.newFile.entryOutOfTarget|Der Eintrag befindet sich außerhalb des Zielverzeichnisses:
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Verzeichnis konnte nicht erstellt werden

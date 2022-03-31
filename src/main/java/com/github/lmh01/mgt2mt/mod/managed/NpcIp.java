@@ -11,14 +11,14 @@ public class NpcIp {
     //TODO This class will sometime extend a new base mod class.
     // Function getDependencyMap will be implemented here
 
-    // genre, subGenre, theme, subTheme and platform store the id of the corresponding mod
+    // genre, subGenre, theme, subTheme and publisher store the id of the corresponding mod
     public String name;
     public Integer genre;
     public Integer subGenre;
     public Integer theme;
     public Integer subTheme;
     public TargetGroup targetGroup;
-    public Integer platform;
+    public Integer publisher;
     public int releaseYear;
     public int rating;
 
@@ -34,7 +34,7 @@ public class NpcIp {
         String placeholder = getPlaceholder(constructionType);
         for (String d : data) {
             if (d.startsWith("P" + placeholder)) {
-                this.platform = getModId(ModManager.platformMod, d, "P" + placeholder, constructionType);
+                this.publisher = getModId(ModManager.publisherMod, d, "P" + placeholder, constructionType);
             } else if (d.startsWith("G" + placeholder)) {
                 this.genre = getModId(ModManager.genreMod, d, "G" + placeholder, constructionType);
             } else if (d.startsWith("SG" + placeholder)) {
@@ -66,11 +66,11 @@ public class NpcIp {
      * @param theme The id of the main theme
      * @param subTheme The id of the sub-theme
      * @param targetGroup The target group of the npcIp
-     * @param platform The main platform
+     * @param publisher The publisher
      * @param releaseYear The release year
      * @param rating The rating in percent 0-100%
      */
-    public NpcIp(String name, int genre, Integer subGenre, int theme, Integer subTheme, TargetGroup targetGroup, int platform, int releaseYear, int rating) throws IllegalArgumentException {
+    public NpcIp(String name, int genre, Integer subGenre, int theme, Integer subTheme, TargetGroup targetGroup, int publisher, int releaseYear, int rating) throws IllegalArgumentException {
         if (rating < 0 || rating > 100) {
             throw new IllegalArgumentException("Unable to construct new NpcIp: The rating entered is invalid!");
         }
@@ -80,7 +80,7 @@ public class NpcIp {
         this.theme = theme;
         this.subTheme = subTheme;
         this.targetGroup = targetGroup;
-        this.platform = platform;
+        this.publisher = publisher;
         this.releaseYear = releaseYear;
         this.rating = rating;
     }
@@ -130,9 +130,9 @@ public class NpcIp {
             themes.add(ModManager.themeMod.getContentNameById(subTheme));
         }
         map.put(ModManager.themeMod.getExportType(), themes);
-        Set<String> platforms = new HashSet<>();
-        platforms.add(ModManager.platformMod.getContentNameById(platform));
-        map.put(ModManager.platformMod.getExportType(), platforms);
+        Set<String> publisher = new HashSet<>();
+        publisher.add(ModManager.publisherMod.getContentNameById(this.publisher));
+        map.put(ModManager.publisherMod.getExportType(), publisher);
         return map;
     }
 
@@ -142,7 +142,7 @@ public class NpcIp {
     public String getLine() {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(" <G").append(genre).append("><T").append(theme)
-                .append("><TG").append(targetGroup.getId()).append("><P").append(platform)
+                .append("><TG").append(targetGroup.getId()).append("><P").append(publisher)
                 .append("><%").append(rating).append("><Y").append(releaseYear).append(">");
         if (subGenre != null) {
             sb.append("<SG").append(subGenre).append(">");
@@ -162,7 +162,7 @@ public class NpcIp {
         sb.append(name).append(" <G-").append(ModManager.genreMod.getContentNameById(genre)).append("><T-")
                 .append(ModManager.themeMod.getContentNameById(theme)).append("><TG-")
                 .append(targetGroup.getId()).append("><P-")
-                .append(ModManager.platformMod.getContentNameById(platform))
+                .append(ModManager.publisherMod.getContentNameById(publisher))
                 .append("><%-").append(rating).append("><Y-").append(releaseYear).append(">");
         if (subGenre != null) {
             sb.append("<SG-").append(ModManager.genreMod.getContentNameById(subGenre)).append(">");
