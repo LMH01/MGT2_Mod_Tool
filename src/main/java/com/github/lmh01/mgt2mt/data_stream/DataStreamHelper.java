@@ -94,9 +94,12 @@ public class DataStreamHelper {
                 reader.readLine();//This if/else is included so that the analyzing of the hardware.txt file works properly
             } else {
                 if (currentLine.isEmpty()) {
-                    fileParts.add(mapCurrent);
-                    mapCurrent = new HashMap<>();
-                    firstList = false;
+                    if (!mapCurrent.isEmpty()) {
+                        // Add new map only when the current map is not empty and if a new line is detected
+                        fileParts.add(mapCurrent);
+                        mapCurrent = new HashMap<>();
+                        firstList = false;
+                    }
                 } else {
                     boolean keyComplete = false;
                     StringBuilder mapKey = new StringBuilder();
