@@ -46,4 +46,23 @@ public enum GameplayFeatureType implements TypeEnum {
         }
         throw new IllegalArgumentException("Id is invalid. Should be 0-1 or 3-6 was " + id);
     }
+
+    /**
+     * Returns the engine feature type that corresponds to the id
+     */
+    public static GameplayFeatureType getFromId(int id) throws IllegalArgumentException {
+        for (GameplayFeatureType gameplayFeatureType : GameplayFeatureType.values()) {
+            if (gameplayFeatureType.getId() == id) {
+                switch (id) {
+                    case 0: return GameplayFeatureType.GRAPHIC;
+                    case 1: return GameplayFeatureType.SOUND;
+                    case 3: return GameplayFeatureType.PHYSICS;
+                    case 4: return GameplayFeatureType.GAMEPLAY;
+                    case 5: return GameplayFeatureType.CONTROL;
+                    case 6: return GameplayFeatureType.MULTIPLAYER;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Gameplay feature for id " + id + " does not exist!");
+    }
 }

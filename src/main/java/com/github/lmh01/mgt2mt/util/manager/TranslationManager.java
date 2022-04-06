@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TranslationManager {
+/**
+ * @deprecated Use {@link TranslationManagerNew} instead.
+ */
+@Deprecated
+public class TranslationManager {//TODO Delete class and rename TranslationManagerNew to TranslationManager
     private static final Logger LOGGER = LoggerFactory.getLogger(TranslationManager.class);
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "JA", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};

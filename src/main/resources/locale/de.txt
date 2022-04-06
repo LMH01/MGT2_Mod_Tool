@@ -194,6 +194,9 @@ commonText.reason|Grund:
 commonText.alreadyExported|Der Mod wurde bereits exportiert
 commonText.hasSuccessfullyBeenAddedToTheGame|wurde erfolgreich zum spiel hinzugefügt
 commonText.startplattform|Startplattform
+commonText.onlyMobile|Nur mobil
+commonText.speed|Geschwindigkeit
+commonText.comVal|Computergegner Wert
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -307,6 +310,14 @@ mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Dies gibt an, wie v
 mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip|Klicke hier, um einzustellen, bei welchem Genre die Fanbase von diesem Publisher/Entwickler liegt
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select|Wähle das Fan-Base-Genre aus:
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure|Wähle bitte zuerst ein Genre aus.
+mod.publisher.addMod.checkBox.notForSale|Nicht zum verkauf
+mod.publisher.addMod.checkBox.notForSale.toolTip|Aktivieren, damit der Publisher/Entwickler nicht gekauft werden kann
+mod.publisher.addMod.checkBox.onlyMobile|Nur Smartphone
+mod.publisher.addMod.checkBox.onlyMobile.toolTip|Aktivieren, damit der Publisher/Entwickler nur Spiele für das Smartphone entwickelt
+mod.publisher.addMod.spinner.speed|Geschwindigkeit
+mod.publisher.addMod.spinner.speed.toolTip|Die Geschwindigkeit, in welcher der Entwickler spiele entwickelt
+mod.publisher.addMod.spinner.comVal|Basiswert des Computergegners
+mod.publisher.addMod.spinner.comVal.toolTip|Stellt ein, was der Grundwert des Unternehmens ist.<br>Dies ist der minimale Preis, der bezahlt werden muss, um diese Firma zu übernehmen.<br>Der Wert wird mit verlauf des Spieles steigen.
 mod.publisher.icon|Publisher Bild
 mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Dein Gameplay Feature ist bereit:
 mod.licence.addMod.optionPaneMessage.book|Buch

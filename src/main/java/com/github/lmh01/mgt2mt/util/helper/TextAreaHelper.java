@@ -19,6 +19,14 @@ public class TextAreaHelper {
     }
 
     /**
+     * Will append the input text to the text area. Will also write a warning output in the console.
+     */
+    public static void appendWarning(String warning) {
+        LOGGER.warn("Warning: " + warning);
+        writeText(warning);
+    }
+
+    /**
      * Prints the stacktrace of the exception into the text area and into the console
      *
      * @param e Exception for which the exception should be printed

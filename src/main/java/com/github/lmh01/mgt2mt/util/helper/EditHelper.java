@@ -9,12 +9,15 @@ public class EditHelper {
      * Prints one line using the buffered writer.
      * They output fill be like this: [mapKey]mapValue
      * A line break is written.
+     * The line is only written if the key exists in the map.
      *
      * @param mapKey The key that should be printed to the file
      * @param map    The map where the values are stored
      */
     public static void printLine(String mapKey, Map<String, String> map, BufferedWriter bw) throws IOException {
-        bw.write("[" + mapKey + "]" + map.get(mapKey));
-        bw.write("\r\n");
+        if (map.containsKey(mapKey)) {
+            bw.write("[" + mapKey + "]" + map.get(mapKey));
+            bw.write("\r\n");
+        }
     }
 }

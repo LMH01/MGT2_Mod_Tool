@@ -195,6 +195,9 @@ commonText.alreadyExported|Mod has already been exported
 textArea.export.imageNotExported|WARNING: The following picture was not copied because it already exists in the export folder
 commonText.hasSuccessfullyBeenAddedToTheGame|has successfully been added to the game
 commonText.startplatform|Startplatform
+commonText.onlyMobile|Only mobile
+commonText.speed|Speed
+commonText.comVal|Computer value
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
@@ -308,6 +311,14 @@ mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip|Set how much money 
 mod.publisher.addMod.optionPaneMessage.button.fanBase.toolTip|Click to select what genre the fan base of your publisher likes the most
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select|Select what main genre your publisher should have:
 mod.publisher.addMod.optionPaneMessage.button.fanBase.select.genreFailure|Please select a genre first.
+mod.publisher.addMod.checkBox.notForSale|Not for sale
+mod.publisher.addMod.checkBox.notForSale.toolTip|Activate to mark the publisher as not for sale
+mod.publisher.addMod.checkBox.onlyMobile|Only mobile
+mod.publisher.addMod.checkBox.onlyMobile.toolTip|Enable to let the publisher/developer only develop games for mobile devices
+mod.publisher.addMod.spinner.speed|Speed
+mod.publisher.addMod.spinner.speed.toolTip|The speed with wich the developer develops games
+mod.publisher.addMod.spinner.comVal|Base value of the computer opponent
+mod.publisher.addMod.spinner.comVal.toolTip|Set what the company's core value is.<br>This is the minimum price that must be paid to take over this company.<br>The value will increase as the game progresses.
 mod.publisher.icon|Publisher Icon
 mod.licence.addMod.optionPaneMessage.book|Book
 mod.licence.addMod.optionPaneMessage.movie|Movie
@@ -457,7 +468,7 @@ mod.hardware.addMod.components.textFieldName.initialValue|ENTER HARDWARE NAME
 mod.hardware.addMod.components.textFieldDescription.initialValue|ENTER HARDWARE DESCRIPTION
 mod.hardware.addMod.components.comboBox.type.toolTip|Select what type the hardware should be
 mod.hardware.addMod.components.checkBox.exclusiveConsole|Enable console exclusivity
-mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Check this box to set that the hardware should only be allowed to be used by one console type.<br>You can select the allowed console type below
+mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Check this box to make the hardware exclusive for a specific hardware type.<br>You can select the allowed console type below
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationary console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|Select here for which console type this hardware should be exclusive

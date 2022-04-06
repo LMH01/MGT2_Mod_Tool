@@ -54,4 +54,27 @@ public enum HardwareType implements TypeEnum {
         }
         throw new IllegalArgumentException("Id is invalid. Should be 0-9 was " + id);
     }
+
+    /**
+     * Returns the engine feature type that corresponds to the id
+     */
+    public static HardwareType getFromId(int id) throws IllegalArgumentException {
+        for (HardwareType hardwareType : HardwareType.values()) {
+            if (hardwareType.getId() == id) {
+                switch (id) {
+                    case 0: return HardwareType.CPU;
+                    case 1: return HardwareType.GPU;
+                    case 2: return HardwareType.RAM;
+                    case 3: return HardwareType.STORAGE;
+                    case 4: return HardwareType.AUDIO;
+                    case 5: return HardwareType.COOLING;
+                    case 6: return HardwareType.GAME_STORAGE_DEVICE;
+                    case 7: return HardwareType.CONTROLLER;
+                    case 8: return HardwareType.CASE;
+                    case 9: return HardwareType.SCREEN;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Gameplay feature for id " + id + " does not exist!");
+    }
 }

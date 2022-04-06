@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.0.0
+
+### New feature
+- Added new possibilities to customize new publishers
+
 ## [v3.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.2.0) (Latest Version)
 
 ### New feature

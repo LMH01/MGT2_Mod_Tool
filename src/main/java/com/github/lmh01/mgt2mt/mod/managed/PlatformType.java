@@ -56,4 +56,15 @@ public enum PlatformType implements TypeEnum {
         }
         throw new IllegalArgumentException("Id is invalid. Should be 0-4 was " + id);
     }
+
+    public static PlatformType getFromId(int id) {
+        switch(id) {
+            case 0: return PlatformType.COMPUTER;
+            case 1: return PlatformType.CONSOLE;
+            case 2: return PlatformType.HANDHELD;
+            case 3: return PlatformType.CELL_PHONE;
+            case 4: return PlatformType.ARCADE_SYSTEM_BOARD;
+            default: throw new IllegalArgumentException("Unable to return platform type: Id is invalid");
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
@@ -232,6 +233,18 @@ public class Utils {
     }
 
     /**
+     * Transforms a string array to a integer array.
+     * @throws NumberFormatException When the strings can not be parsed to integer.
+     */
+    public static ArrayList<Integer> transformStringArrayToIntegerArray(ArrayList<String> strings) throws NumberFormatException {
+        ArrayList<Integer> integers = new ArrayList<>();
+        for (String s : strings) {
+            integers.add(Integer.parseInt(s));
+        }
+        return integers;
+    }
+
+    /**
      * Returns the part before the first <.
      * Trims the string to remove whitespaces.
      * See {@link Utils#getEntriesFromString(String)} for more information
@@ -249,9 +262,54 @@ public class Utils {
     }
 
     /**
+     * Converts the names in the string to the corresponding id.
+     * Example: Input: {@literal <hallo><tree>} Output: {@literal [0,1]}
+     */
+    public static ArrayList<Integer> getContentIdsFromString(BaseContentManager contentManager, String string) throws ModProcessingException {
+        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<String> content = Utils.getEntriesFromString(string);
+        for (String s : content) {
+            ids.add(contentManager.getContentIdByName(s));
+        }
+        return ids;
+    }
+
+    public static ArrayList<Integer> getCompatibleThemeIdsForGenreNew(int genreId) throws ModProcessingException {
+        ArrayList<Integer> themeIds = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
+            boolean firstLine = true;
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                if (firstLine) {
+                    currentLine = Utils.removeUTF8BOM(currentLine);
+                    firstLine = false;
+                }
+                ArrayList<String> entries = Utils.getEntriesFromString(currentLine);
+                for (String s : entries) {
+                    try {
+                        if (Integer.parseInt(s) == genreId) {
+                            themeIds.add(Integer.parseInt(s));
+                        }
+                    } catch (NumberFormatException ignored) {
+
+                    }
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            throw new ModProcessingException("Unable to retrieve theme ids for genre", e);
+        }
+        return themeIds;
+    }
+
+    /**
      * @param genreId The genre id for which the file should be searched
      * @return Returns a String containing theme ids
+     * //TODO Move to GenreManager or ThemeManager
+     * //TODO Delete
      */
+    @Deprecated
     public static String getCompatibleThemeIdsForGenre(int genreId) throws ModProcessingException {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
@@ -386,7 +444,7 @@ public class Utils {
 
     /**
      * @param arrayList The array list containing the values
-     * @return Returns the values in the respective formatting
+     * @return Returns the values in the following formatting {@literal <VALUE>}.
      */
     public static String transformArrayListToString(ArrayList<?> arrayList) {
         StringBuilder returnString = new StringBuilder();
@@ -614,6 +672,23 @@ public class Utils {
         } catch (NullPointerException e) {
             DebugHelper.warn(LOGGER, "The panels array list is invalid: panel.getName returns null! The list will not be returned sorted!");
             return panels.toArray();
+        }
+    }
+
+    /**
+     * Replaces all keys in the origin map with the values in the replacement map.
+     * For that the replacement map has to contain the same keys as the origin map.
+     * @param origin In this map the values will be replaced.
+     * @param replacements The map that contains the values that should be replaced.
+     * @throws IllegalArgumentException When the replacement map contains a key that does not exist in the origin map.
+     */
+    public static void replaceMapEntries(Map<String, String> origin, Map<String, String> replacements) throws IllegalArgumentException {
+        for (Map.Entry<String, String> entry : replacements.entrySet()) {
+            if (origin.containsKey(entry.getKey())) {
+                origin.replace(entry.getKey(), entry.getValue());
+            } else {
+                throw new IllegalArgumentException("Replacements map contains a key that the origin map does not contain");
+            }
         }
     }
 }

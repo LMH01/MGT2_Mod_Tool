@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.mod.managed;
 
 import com.github.lmh01.mgt2mt.util.I18n;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -9,18 +8,20 @@ import java.util.Objects;
  * Symbolizes the target group for something
  */
 public enum TargetGroup implements TypeEnum {
-    KID(0, "kid"),
-    TEEN(1, "teen"),
-    ADULT(2, "adult"),
-    OLD(3, "senior"),
-    ALL(4, "all");
+    KID(0, "kid", "KID"),
+    TEEN(1, "teen", "TEEN"),
+    ADULT(2, "adult", "ADULT"),
+    OLD(3, "senior", "OLD"),
+    ALL(4, "all", "ALL");
 
     private final int id;
     private final String name;
+    private final String dataType;
 
-    TargetGroup(int id, String translationKey) {
+    TargetGroup(int id, String translationKey, String dataType) {
         this.id = id;
         this.name = I18n.INSTANCE.get("commonText." + translationKey);
+        this.dataType = dataType;
     }
 
     @Override
@@ -31,6 +32,10 @@ public enum TargetGroup implements TypeEnum {
     @Override
     public int getId() {
         return id;
+    }
+
+    public String getDataType() {
+        return dataType;
     }
 
     /**

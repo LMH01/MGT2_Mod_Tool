@@ -48,4 +48,21 @@ public enum EngineFeatureType implements TypeEnum {
         }
         throw new IllegalArgumentException("Id is invalid. Should be 0-3 was " + id);
     }
+
+    /**
+     * Returns the engine feature type that corresponds to the id
+     */
+    public static EngineFeatureType getFromId(int id) throws IllegalArgumentException {
+        for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
+            if (engineFeatureType.getId() == id) {
+                switch (id) {
+                    case 0: return EngineFeatureType.GRAPHIC;
+                    case 1: return EngineFeatureType.SOUND;
+                    case 2: return EngineFeatureType.AI;
+                    case 3: return EngineFeatureType.PHYSICS;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Engine feature for id " + id + " does not exist!");
+    }
 }
