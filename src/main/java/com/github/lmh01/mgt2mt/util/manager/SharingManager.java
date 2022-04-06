@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.*;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
@@ -77,7 +77,7 @@ public class SharingManager {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.bundledMods") + ": " + bundledMods.size());
                 if (importType.equals(ImportType.RESTORE_POINT)) {
                     Uninstaller.uninstallAllMods();
-                    ModManager.analyzeMods();
+                    ContentAdministrator.analyzeContents();
                 }
                 Set<Map<String, Object>> modMaps = getImportMaps(singleMods, bundledMods);
                 if (!modMaps.isEmpty()) {
@@ -157,21 +157,21 @@ public class SharingManager {
      * @return A new set that contains only the mods that have been selected by the user
      */
     private static Set<Map<String, Object>> getCustomizedImportMap(ImportType importType, Set<Map<String, Object>> set) {
-        Map<AbstractBaseMod, JPanel> importModPanels = new HashMap<>();
-        Map<AbstractBaseMod, AtomicBoolean> enabledMods = new HashMap<>();
-        Map<AbstractBaseMod, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
-        for (AbstractBaseMod mod : ModManager.mods) {
+        Map<BaseContentManager, JPanel> importModPanels = new HashMap<>();
+        Map<BaseContentManager, AtomicBoolean> enabledMods = new HashMap<>();
+        Map<BaseContentManager, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
             Set<String> modNames = new HashSet<>();
             for (Map<String, Object> map : set) {
-                if (map.get("mod_type").equals(mod.getExportType())) {
+                if (map.get("mod_type").equals(manager.getExportType())) {
                     modNames.add(map.get("mod_name").toString());
                 }
             }
-            selectedMods.put(mod, new AtomicReference<>(modNames));
-            enabledMods.put(mod, new AtomicBoolean(true));
-            importModPanels.put(mod, new JPanel());
+            selectedMods.put(manager, new AtomicReference<>(modNames));
+            enabledMods.put(manager, new AtomicBoolean(true));
+            importModPanels.put(manager, new JPanel());
         }
-        for (AbstractBaseMod mod : ModManager.mods) {
+        for (BaseContentManager mod : ContentAdministrator.contentManagers) {
             if (!selectedMods.get(mod).get().isEmpty()) {
                 setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod), I18n.INSTANCE.get("frame.title.import"));
             }
@@ -189,7 +189,7 @@ public class SharingManager {
         JLabel labelEnd = new JLabel(labelEndText);
         Object[] params;
         ArrayList<JPanel> panels = new ArrayList<>();
-        for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
+        for (Map.Entry<BaseContentManager, JPanel> entry : importModPanels.entrySet()) {
             if (!selectedMods.get(entry.getKey()).get().isEmpty()) {
                 panels.add(entry.getValue());
             }
@@ -197,9 +197,9 @@ public class SharingManager {
         params = new Object[]{labelStart, Utils.getSortedModPanels(panels), labelEnd};
         if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.importAll.importReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             Set<Map<String, Object>> modMap = new HashSet<>();
-            for (AbstractBaseMod mod : ModManager.mods) {
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 for (Map<String, Object> map : set) {
-                    for (String string : selectedMods.get(mod).get()) {
+                    for (String string : selectedMods.get(manager).get()) {
                         if (map.get("mod_name").equals(string)) {
                             modMap.add(map);
                         }
@@ -482,47 +482,39 @@ public class SharingManager {
             try {
                 Map<String, Object> simple = (Map<String, Object>) map.get("simple_mods");
                 Map<String, Object> advanced = (Map<String, Object>) map.get("advanced_mods");
-                for (AbstractBaseMod mod : ModManager.mods) {
+                for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                     Map<String, Object> modMap = new HashMap<>();
                     try {
-                        modMap.putAll((Map<String, Object>) simple.get(mod.getExportType()));
+                        modMap.putAll((Map<String, Object>) simple.get(manager.getExportType()));
                     } catch (NullPointerException e) {
-                        DebugHelper.debug(LOGGER, "simpleModMap is null; Export type: " + mod.getExportType());
+                        DebugHelper.debug(LOGGER, "simpleModMap is null; Export type: " + manager.getExportType());
                     }
                     try {
-                        modMap.putAll((Map<String, Object>) advanced.get(mod.getExportType()));
+                        modMap.putAll((Map<String, Object>) advanced.get(manager.getExportType()));
                     } catch (NullPointerException e) {
-                        DebugHelper.debug(LOGGER, "advancedModMap is null; Export type: " + mod.getExportType());
+                        DebugHelper.debug(LOGGER, "advancedModMap is null; Export type: " + manager.getExportType());
                     }
                     ProgressBarHelper.increaseMaxValue(modMap.entrySet().size());
                     for (Map.Entry<String, Object> entry : modMap.entrySet()) {
                         Map<String, Object> singleModMap = (Map<String, Object>) entry.getValue();
-                        if (isModToolVersionSupported(mod.getExportType(), (String) map.get("mod_tool_version"))) {
-                            if (mod instanceof AbstractComplexMod) {
-                                singleModMap.put("base_mod_type", "complex");
-                            } else if (mod instanceof AbstractAdvancedMod) {
-                                singleModMap.put("base_mod_type", "advanced");
-                            }
-                            if (mod instanceof AbstractSimpleMod) {
-                                singleModMap.put("base_mod_type", "simple");
-                            }
-                            singleModMap.put("mod_type", mod.getExportType());
+                        if (isModToolVersionSupported(manager.getExportType(), (String) map.get("mod_tool_version"))) {
+                            singleModMap.put("mod_type", manager.getExportType());
                             singleModMap.put("assets_folder", map.get("assets_folder"));
-                            if (doesMapContainMod(mods, singleModMap.get("mod_name").toString(), mod.getExportType())) {
+                            if (doesMapContainMod(mods, singleModMap.get("mod_name").toString(), manager.getExportType())) {
                                 modsDuplicated++;
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name"));
-                            } else if (doesModExist((String) singleModMap.get("mod_name"), mod.getExportType())) {
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + manager.getExportType() + " - " + singleModMap.get("mod_name"));
+                            } else if (doesModExist((String) singleModMap.get("mod_name"), manager.getExportType())) {
                                 modsAlreadyAdded++;
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modAlreadyAdded") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name"));
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modAlreadyAdded") + ": " + manager.getExportType() + " - " + singleModMap.get("mod_name"));
                             } else {
                                 mods.add(removeQuoteSymbol(singleModMap));
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modCompatible") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name"));
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modCompatible") + ": " + manager.getExportType() + " - " + singleModMap.get("mod_name"));
                             }
                             modsTotal++;
                         } else {
                             modsTotal++;
                             modsIncompatible++;
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + mod.getExportType() + " - " + singleModMap.get("mod_name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersions(mod.getExportType())));
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + manager.getExportType() + " - " + singleModMap.get("mod_name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersions(manager.getExportType())));
                         }
                         ProgressBarHelper.increment();
                     }
@@ -601,7 +593,7 @@ public class SharingManager {
     /**
      * Checks the mods contained in the set for dependencies and returns a set that is ready to be imported.
      * If a dependency is not found the user is prompted to select a replacement. If no replacement is selected a random replacement will be chosen.
-     * The function that replaces the dependency is {@link SharingManager#replaceDependencies(AbstractBaseMod, Map, AbstractBaseMod, String)}
+     * The function that replaces the dependency is {@link SharingManager#replaceDependencies(BaseContentManager, Map, BaseContentManager, String)}
      *
      * @param mods The map where the mods are stored in
      * @return A set of maps that contain the mod data. The data is checked for dependencies. Returns null if dependency check has been canceled by the user
@@ -610,26 +602,26 @@ public class SharingManager {
     private static Set<Map<String, Object>> checkDependencies(Set<Map<String, Object>> mods) throws ModProcessingException {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
-        Map<AbstractBaseMod, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
+        Map<BaseContentManager, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
         boolean showMissingDependencyDialog = true;
         for (Map<String, Object> parentMap : mods) {
-            for (AbstractBaseMod parent : ModManager.mods) {
+            for (BaseContentManager parent : ContentAdministrator.contentManagers) {
                 if (parent.getExportType().equals(parentMap.get("mod_type").toString())) {
-                    if (parent instanceof DependentMod) {//The parent is the mod the map belongs to
+                    if (parent instanceof DependentContentManager) {//The parent is the mod the map belongs to
                         Map<String, Object> dependencies = (Map<String, Object>) parentMap.get("dependencies");
                         if (dependencies != null) {
                             for (Map.Entry<String, Object> entry : dependencies.entrySet()) {
-                                for (AbstractBaseMod child : ModManager.mods) {//The child is the mod that should be replaced in the parent map
-                                    if (entry.getKey().equals(child.getExportType()) && ((DependentMod) parent).getDependencies().contains(child)) {
+                                for (BaseContentManager child : ContentAdministrator.contentManagers) {//The child is the mod that should be replaced in the parent map
+                                    if (entry.getKey().equals(child.getExportType()) && ((DependentContentManager) parent).getDependencies().contains(child)) {
                                         DebugHelper.debug(LOGGER, I18n.INSTANCE.get("textArea.importAll.requiresDependencies") + ": " + parentMap.get("mod_type") + " - " + parentMap.get("mod_name") + " - " + parentMap.get("dependencies"));
                                         ArrayList<String> arrayList = (ArrayList<String>) entry.getValue();
                                         for (String childName : arrayList) {
                                             if (!doesModExist(childName, child.getExportType()) && !doesMapContainMod(mods, childName, child.getExportType())) {
                                                 String replacement = getReplacedDependency(alreadyReplacedDependencies, childName, child);
                                                 if (replacement != null) {
-                                                    replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName, replacement);
+                                                    replaceDependencies((BaseContentManager & DependentContentManager) parent, parentMap, child, childName, replacement);
                                                 } else {
-                                                    JLabel label1 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + child.getType(true) + " - " + childName + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
+                                                    JLabel label1 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + child.getTypeUpperCase() + " - " + childName + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
                                                     JList<String> list = WindowHelper.getList(child.getContentByAlphabet(), false);
                                                     JScrollPane scrollPane = WindowHelper.getScrollPane(list);
                                                     JLabel label2 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part3"));
@@ -643,9 +635,9 @@ public class SharingManager {
                                                     }
                                                     if (returnValue == JOptionPane.OK_OPTION) {
                                                         if (list.isSelectionEmpty()) {
-                                                            setReplacedDependency(alreadyReplacedDependencies, child, childName, replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName));
+                                                            setReplacedDependency(alreadyReplacedDependencies, child, childName, replaceDependencies((BaseContentManager & DependentContentManager) parent, parentMap, child, childName));
                                                         } else {
-                                                            replaceDependencies((AbstractBaseMod & DependentMod) parent, parentMap, child, childName, list.getSelectedValue());
+                                                            replaceDependencies((BaseContentManager & DependentContentManager) parent, parentMap, child, childName, list.getSelectedValue());
                                                             setReplacedDependency(alreadyReplacedDependencies, child, childName, list.getSelectedValue());
                                                         }
                                                     } else {
@@ -677,7 +669,7 @@ public class SharingManager {
      * @param childName      The dependency name for which an entry should be added to the map
      * @param replacement    The name with which the missing dependency should be replaced
      */
-    private static void setReplacedDependency(Map<AbstractBaseMod, Map<String, String>> replacementMap, AbstractBaseMod child, String childName, String replacement) {
+    private static void setReplacedDependency(Map<BaseContentManager, Map<String, String>> replacementMap, BaseContentManager child, String childName, String replacement) {
         if (replacementMap.containsKey(child)) {
             LOGGER.info("replacement map already contains mod: " + child.getType() + "; " + childName + " -> " + replacement);
             Map<String, String> map = replacementMap.get(child);
@@ -688,7 +680,7 @@ public class SharingManager {
             map.put(childName, replacement);
             replacementMap.put(child, map);
         }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.dependencyDoesNotExist.firstPart") + " " + child.getType(true) + " - " + childName + " " + I18n.INSTANCE.get("textArea.importAll.dependencyDoesNotExist.secondPart") + " " + replacement);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.dependencyDoesNotExist.firstPart") + " " + child.getTypeUpperCase() + " - " + childName + " " + I18n.INSTANCE.get("textArea.importAll.dependencyDoesNotExist.secondPart") + " " + replacement);
     }
 
     /**
@@ -696,10 +688,10 @@ public class SharingManager {
      * If the name is found the replacement is returned.
      *
      * @return If the name is found: the replacement. If the name is not found null.
-     * @see SharingManager#setReplacedDependency(Map, AbstractBaseMod, String, String)  Parameters
+     * @see SharingManager#setReplacedDependency(Map, BaseContentManager, String, String)  Parameters
      */
-    private static String getReplacedDependency(Map<AbstractBaseMod, Map<String, String>> replacementMap, String childName, AbstractBaseMod child) {
-        for (Map.Entry<AbstractBaseMod, Map<String, String>> entry : replacementMap.entrySet()) {
+    private static String getReplacedDependency(Map<BaseContentManager, Map<String, String>> replacementMap, String childName, BaseContentManager child) {
+        for (Map.Entry<BaseContentManager, Map<String, String>> entry : replacementMap.entrySet()) {
             if (entry.getKey().equals(child)) {
                 Map<String, String> map = entry.getValue();
                 LOGGER.info("returning replaced dependency for mod " + child.getType() + ": " + childName + " -> " + map.getOrDefault(childName, "not yet set"));
@@ -713,10 +705,10 @@ public class SharingManager {
      * Replaces the dependency in the map with a random one
      *
      * @return The replacement
-     * @see SharingManager#replaceDependencies(AbstractBaseMod, Map, AbstractBaseMod, String, String)  Parameters
+     * @see SharingManager#replaceDependencies(BaseContentManager, Map, BaseContentManager, String, String)  Parameters
      */
     @SuppressWarnings("unchecked")
-    private static <T extends AbstractBaseMod & DependentMod> String replaceDependencies(T parent, Map<String, Object> parentMap, AbstractBaseMod child, String childName) throws ModProcessingException {
+    private static <T extends BaseContentManager & DependentContentManager> String replaceDependencies(T parent, Map<String, Object> parentMap, BaseContentManager child, String childName) throws ModProcessingException {
         String replacement = child.getContentByAlphabet()[Utils.getRandomNumber(0, child.getContentByAlphabet().length)];
         replaceDependencies(parent, parentMap, child, childName, replacement);
         return replacement;
@@ -732,10 +724,10 @@ public class SharingManager {
      * @param replacement The name with which the missing dependency should be replaced
      * @param <T>         An abstract base mod that needs dependencies
      * @throws ModProcessingException
-     * @see SharingManager#replaceDependencyInMap(AbstractBaseMod, Map, String, String)
-     * @see SharingManager#replaceDependencyInDependencyMap(Map, AbstractBaseMod, String, String)
+     * @see SharingManager#replaceDependencyInMap(BaseContentManager, Map, String, String)
+     * @see SharingManager#replaceDependencyInDependencyMap(Map, BaseContentManager, String, String)
      */
-    private static <T extends AbstractBaseMod & DependentMod> void replaceDependencies(T parent, Map<String, Object> parentMap, AbstractBaseMod child, String childName, String replacement) throws ModProcessingException {
+    private static <T extends BaseContentManager & DependentContentManager> void replaceDependencies(T parent, Map<String, Object> parentMap, BaseContentManager child, String childName, String replacement) throws ModProcessingException {
         replaceDependencyInMap(parent, parentMap, childName, replacement);
         replaceDependencyInDependencyMap(parentMap, child, childName, replacement);
     }
@@ -745,10 +737,10 @@ public class SharingManager {
     /**
      * Replaces the dependency name in the map with the replacement
      *
-     * @see SharingManager#replaceDependencies(AbstractBaseMod, Map, AbstractBaseMod, String, String)  Parameters
-     * @see DependentMod#replaceMissingDependency(Map, String, String) How the enries are replaced
+     * @see SharingManager#replaceDependencies(BaseContentManager, Map, BaseContentManager, String, String) Parameters
+     * @see DependentContentManager#replaceMissingDependency(Map, String, String) How the enries are replaced
      */
-    private static <T extends AbstractBaseMod & DependentMod> void replaceDependencyInMap(T parent, Map<String, Object> parentMap, String childName, String replacement) throws ModProcessingException {
+    private static <T extends BaseContentManager & DependentContentManager> void replaceDependencyInMap(T parent, Map<String, Object> parentMap, String childName, String replacement) throws ModProcessingException {
         LOGGER.info("replacing missing dependencies for mod " + parent.getExportType());
         parent.replaceMissingDependency(parentMap, childName, replacement);
     }
@@ -756,10 +748,10 @@ public class SharingManager {
     /**
      * Replaces the dependency in the dependency map of the mod with the selected replacement
      *
-     * @see SharingManager#replaceDependencies(AbstractBaseMod, Map, AbstractBaseMod, String, String) Parameters
+     * @see SharingManager#replaceDependencies(BaseContentManager, Map, BaseContentManager, String, String) Parameters
      */
     @SuppressWarnings("unchecked")
-    private static void replaceDependencyInDependencyMap(Map<String, Object> parentMap, AbstractBaseMod child, String childName, String replacement) {
+    private static void replaceDependencyInDependencyMap(Map<String, Object> parentMap, BaseContentManager child, String childName, String replacement) {
         LOGGER.info("replacing dependency map");
         if (parentMap.containsKey("dependencies")) {
             Map<String, Object> dependencyMap = (Map<String, Object>) parentMap.get("dependencies");
@@ -817,9 +809,9 @@ public class SharingManager {
      * @return True if map is compatible, false if map is not compatible
      */
     private static boolean isModToolVersionSupported(String modType, String modToolVersion) {
-        for (AbstractBaseMod mod : ModManager.mods) {
-            if (mod.getExportType().equals(modType)) {
-                for (String string : mod.getCompatibleModToolVersions()) {
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            if (manager.getExportType().equals(modType)) {
+                for (String string : manager.getCompatibleModToolVersions()) {
                     if (modToolVersion.equals(string)) {
                         return true;
                     }
@@ -837,7 +829,7 @@ public class SharingManager {
      * @return True if mod is already added, false if mod is not added
      */
     private static boolean doesModExist(String modName, String modType) throws ModProcessingException {
-        for (AbstractBaseMod mod : ModManager.mods) {
+        for (BaseContentManager mod : ContentAdministrator.contentManagers) {
             if (mod.getExportType().equals(modType)) {
                 ArrayList<String> array = new ArrayList<>(Arrays.asList(mod.getContentByAlphabet()));
                 if (array.contains(modName)) {
@@ -856,7 +848,7 @@ public class SharingManager {
      * @return A string that contains the required mod tool versions
      */
     private static String[] getRequiredModToolVersions(String modType) {
-        for (AbstractBaseMod mod : ModManager.mods) {
+        for (BaseContentManager mod : ContentAdministrator.contentManagers) {
             if (mod.getExportType().equals(modType)) {
                 Object[] objects =  Arrays.stream(mod.getCompatibleModToolVersions()).distinct().toArray();
                 return Arrays.asList(objects).toArray(new String[objects.length]);
@@ -874,12 +866,12 @@ public class SharingManager {
      */
     private static void setImportHelperMaps(Set<Map<String, Object>> mods) throws ModProcessingException {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.settingNewModIds"));
-        ProgressBarHelper.initializeProgressBar(0, ModManager.mods.size(), I18n.INSTANCE.get("textArea.importAll.settingNewModIds"));
-        for (AbstractBaseMod mod : ModManager.mods) {
-            mod.initializeImportHelperMap();
+        ProgressBarHelper.initializeProgressBar(0, ContentAdministrator.contentManagers.size(), I18n.INSTANCE.get("textArea.importAll.settingNewModIds"));
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            manager.initializeImportHelperMap();
             for (Map<String, Object> map : mods) {
-                if (map.get("mod_type").equals(mod.getExportType())) {
-                    mod.addEntryToImportHelperMap(map.get("mod_name").toString());
+                if (map.get("mod_type").equals(manager.getExportType())) {
+                    manager.getImportHelperMap().addEntry(map.get("mod_name").toString());
                 }
             }
             ProgressBarHelper.increment();
@@ -900,16 +892,16 @@ public class SharingManager {
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         timeHelper.measureTime();
-        for (AbstractBaseMod mod : ModManager.mods) {
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
             for (Map<String, Object> map : mods) {
-                if (map.get("mod_type").equals(mod.getExportType())) {
+                if (map.get("mod_type").equals(manager.getExportType())) {
                     try {
-                        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + mod.getType());
-                        mod.importMod(map);
+                        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + manager.getType());
+                        manager.addContent(manager.constructContentFromImportMap(map, Paths.get("")));//TODO Somehow determine what the assets folder is and parse it
                         ProgressBarHelper.increment();
                     } catch (ModProcessingException e) {
                         TextAreaHelper.printStackTrace(e);
-                        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.firstPart") + ": " + mod.getType(true) + " - " + map.get("mod_name") + "<br>" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage() + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.firstPart") + ": " + manager.getTypeUpperCase() + " - " + map.get("mod_name") + "<br>" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage() + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                             return false;
                         }
                     }
@@ -957,44 +949,33 @@ public class SharingManager {
      * Exports the specified mod to the export folder.
      * Writes a message to the text area if mod export was successful or if mod was already exported
      *
-     * @param mod    The mod_type the mod belongs to
-     * @param name   The name of the mod that should be exported
+     * @param content    The content that should be exported
      * @param folder The root folder where the mods should be exported to
      */
-    public static void exportSingleMod(AbstractBaseMod mod, String name, Path folder) throws ModProcessingException {
-        LOGGER.info("exporting mod: " + name);
-        Path path = folder.resolve(mod.getExportType());
-        String fileName = mod.getExportType() + "_" + Utils.convertName(name) + ".toml";
-        if (!Files.exists(path.resolve(fileName)) && !Files.exists(path.resolve(Utils.convertName(name) + "/" + fileName))) {
+    public static void exportSingleMod(AbstractBaseContent content, Path folder) throws ModProcessingException {
+        LOGGER.info("exporting mod: " + content.name);
+        Path path = folder.resolve(content.contentType.getExportType());
+        String fileName = content.contentType.getExportType() + "_" + Utils.convertName(content.name) + ".toml";
+        if (!Files.exists(path.resolve(fileName)) && !Files.exists(path.resolve(Utils.convertName(content.name) + "/" + fileName))) {
             try {
                 Files.createDirectories(path);
-                Map<String, Object> map = mod.getExportMap(name);
+                Map<String, Object> map = content.getExportMap();
                 map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
                 map.put("type", ExportType.ALL_SINGLE.getTypeName());
-                map.put("mod_type", mod.getExportType());
-                if (mod instanceof AbstractSimpleMod) {
-                    map.put("base_mod_type", "simple");
-                } else if (mod instanceof AbstractComplexMod) {
-                    map.put("base_mod_type", "complex");
-                } else if (mod instanceof AbstractAdvancedMod) {
-                    map.put("base_mod_type", "advanced");
-                }
+                map.put("mod_type", content.contentType.getExportType());
                 TomlWriter tomlWriter = new TomlWriter();
-                if (mod instanceof AbstractComplexMod) {
-                    Path singleMod = path.resolve(Utils.convertName(name));
+                if (content instanceof RequiresPictures) {
+                    Path singleMod = path.resolve(Utils.convertName(content.name));
                     Path assets = singleMod.resolve("assets");
-                    Files.createDirectories(assets);
-                    map.putAll(((AbstractComplexMod) mod).exportImages(name, assets));
-                    tomlWriter.write(map, singleMod.resolve(fileName).toFile());
-                } else {
-                    tomlWriter.write(map, path.resolve(fileName).toFile());
+                    ((RequiresPictures) content).exportPictures(assets);
                 }
+                tomlWriter.write(map, path.resolve(fileName).toFile());
             } catch (IOException e) {
                 throw new ModProcessingException("Unable to export mod", e);
             }
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + mod.getMainTranslationKey() + " - " + name);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.exported") + " " + content.contentType.getType() + " - " + content.name);
         } else {
-            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + mod.getMainTranslationKey() + " - " + name + ": " + I18n.INSTANCE.get("commonText.alreadyExported"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("sharer.notExported") + " " + content.contentType.getType() + " - " + content.name + ": " + I18n.INSTANCE.get("commonText.alreadyExported"));
         }
     }
 
@@ -1006,7 +987,21 @@ public class SharingManager {
      * @throws ModProcessingException If something went wrong while exporting mods
      */
     public static void export(ExportType exportType) throws ModProcessingException {
-        export(exportType, null);
+        ArrayList<AbstractBaseContent> contents = new ArrayList<>();
+        int modsToExport = 0;
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            modsToExport += manager.getCustomContentString().length;
+        }
+        ProgressBarHelper.initializeProgressBar(0, modsToExport, I18n.INSTANCE.get("progressBar.constructingContent"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.constructingContent"));
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            for (String string : manager.getCustomContentString()) {
+                contents.add(manager.constructContentFromName(string));
+                ProgressBarHelper.increment();
+            }
+        }
+        ProgressBarHelper.resetProgressBar();
+        export(exportType, contents);
     }
 
     /**
@@ -1017,7 +1012,7 @@ public class SharingManager {
      * @param exportType Determines how and to where the mods should be exported
      * @throws ModProcessingException If something went wrong while exporting mods
      */
-    public static void export(ExportType exportType, Map<AbstractBaseMod, Set<String>> mods) throws ModProcessingException {
+    public static void export(ExportType exportType, ArrayList<AbstractBaseContent> contents) throws ModProcessingException {
         TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         timeHelper.measureTime();
         if (exportType.equals(ExportType.ALL_SINGLE)) {
@@ -1035,24 +1030,13 @@ public class SharingManager {
                 }
             }
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.all_single.started"));
-            ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("commonText.exporting"));
-            for (AbstractBaseMod mod : ModManager.mods) {
-                ProgressBarHelper.setText(I18n.INSTANCE.get("commonText.exporting") + " " + mod.getType());
-                if (mods != null) {
-                    ProgressBarHelper.increaseMaxValue(mods.get(mod).size());
-                    for (String string : mods.get(mod)) {
-                        exportSingleMod(mod, string, exportFolder);
-                        ProgressBarHelper.increment();
-                    }
-                } else {
-                    ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
-                    for (String string : mod.getCustomContentString()) {
-                        exportSingleMod(mod, string, exportFolder);
-                        ProgressBarHelper.increment();
-                    }
-                }
+            ProgressBarHelper.initializeProgressBar(0, contents.size(), I18n.INSTANCE.get("commonText.exporting"));
+            for (AbstractBaseContent content : contents) {
+                ProgressBarHelper.setText(I18n.INSTANCE.get("commonText.exporting") + " " + content.contentType.getType() + " - " + content.name);
+                exportSingleMod(content, exportFolder);
+                ProgressBarHelper.increment();
             }
-        } else {//TODO check that getContentByAlphabet is replaced with getCustomContentString in release version
+        } else {
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.export.creatingExportMap"));
             Path path;
             Map<String, Object> map = new HashMap<>();
@@ -1079,39 +1063,20 @@ public class SharingManager {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.starting"));
             try {
                 TomlWriter tomlWriter = new TomlWriter();
-                Map<String, Object> simpleMods = new HashMap<>();
-                Map<String, Object> advancedMods = new HashMap<>();
+                Map<String, Object> mods = new HashMap<>();
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.creatingExportMap"));
-                for (AbstractBaseMod mod : ModManager.mods) {
-                    Map<String, Object> modMap = new HashMap<>();
-                    ProgressBarHelper.increaseMaxValue(mod.getCustomContentString().length);
-                    String[] strings;
-                    if (mods != null) {
-                        strings = mods.get(mod).toArray(new String[0]);
-                    } else {
-                        strings = mod.getCustomContentString();
-                    }
-                    for (String string : strings) {
-                        Map<String, Object> singleModMap = mod.getExportMap(string);
-                        if (mod instanceof AbstractComplexMod) {//This will add the image name(s) to the map if required and copy the image files
-                            if (!Files.exists(path.resolve("assets"))) {
-                                Files.createDirectories(path.resolve("assets"));
-                                Files.createDirectories(path);
-                            }
-                            singleModMap.putAll(((AbstractComplexMod) mod).exportImages(string, path.resolve("assets")));
+                for (AbstractBaseContent content : contents) {
+                    Map<String, Object> singleModMap = content.getExportMap();
+                    if (content instanceof RequiresPictures) {
+                        if (!Files.exists(path.resolve("assets"))) {
+                            Files.createDirectories(path.resolve("assets"));
+                            Files.createDirectories(path);
                         }
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export.addingEntry") + ": " + mod.getType() + " - " + string);
-                        modMap.put(Utils.convertName(string), singleModMap);
-                        ProgressBarHelper.increment();
+                        ((RequiresPictures) content).exportPictures(path.resolve("assets"));
                     }
-                    if (mod instanceof AbstractSimpleMod) {
-                        simpleMods.put(mod.getExportType(), modMap);
-                    } else {
-                        advancedMods.put(mod.getExportType(), modMap);
-                    }
+                    mods.put(content.contentType.getExportType(), singleModMap);
                 }
-                map.put("simple_mods", simpleMods);
-                map.put("advanced_mods", advancedMods);
+                map.put("mods", mods);
                 map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
                 ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.export_compact.writing_toml"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export_compact.writing_toml") + ": " + path.resolve(tomlName + ".toml"));
@@ -1138,19 +1103,19 @@ public class SharingManager {
      * Opens a window where the user can select what mods should be exported.
      * The selected mods are then exported
      *
-     * @see SharingManager#export(ExportType, Map) will be used to write the export files.
+     * @see SharingManager#export(ExportType, ArrayList) will be used to write the export files.
      */
     public static void exportSelected() throws ModProcessingException {
-        Map<AbstractBaseMod, JPanel> importModPanels = new HashMap<>();
-        Map<AbstractBaseMod, AtomicBoolean> enabledMods = new HashMap<>();
-        Map<AbstractBaseMod, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
-        for (AbstractBaseMod mod : ModManager.mods) {
+        Map<BaseContentManager, JPanel> importModPanels = new HashMap<>();
+        Map<BaseContentManager, AtomicBoolean> enabledMods = new HashMap<>();
+        Map<BaseContentManager, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
+        for (BaseContentManager mod : ContentAdministrator.contentManagers) {
             Set<String> modNames = new HashSet<>(Arrays.asList(mod.getCustomContentString()));
             selectedMods.put(mod, new AtomicReference<>(modNames));
             enabledMods.put(mod, new AtomicBoolean(true));
             importModPanels.put(mod, new JPanel());
         }
-        for (AbstractBaseMod mod : ModManager.mods) {
+        for (BaseContentManager mod : ContentAdministrator.contentManagers) {
             if (!selectedMods.get(mod).get().isEmpty()) {
                 setFeatureAvailableGuiComponents(mod.getType(), selectedMods.get(mod).get(), importModPanels.get(mod), selectedMods.get(mod), enabledMods.get(mod), I18n.INSTANCE.get("frame.title.export"));
             }
@@ -1158,7 +1123,7 @@ public class SharingManager {
         JLabel labelStart = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.startText"));
         JLabel labelEnd = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.exportAll.summary.endText"));
         ArrayList<JPanel> panels = new ArrayList<>();
-        for (Map.Entry<AbstractBaseMod, JPanel> entry : importModPanels.entrySet()) {
+        for (Map.Entry<BaseContentManager, JPanel> entry : importModPanels.entrySet()) {
             if (!selectedMods.get(entry.getKey()).get().isEmpty()) {
                 panels.add(entry.getValue());
             }
@@ -1167,15 +1132,25 @@ public class SharingManager {
         checkBox.setToolTipText(I18n.INSTANCE.get("dialog.sharingManager.exportAll.singleExport.toolTip"));
         Object[] params = new Object[]{labelStart, Utils.getSortedModPanels(panels), labelEnd, checkBox};
         if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.exportAll.exportReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            Map<AbstractBaseMod, Set<String>> map = new HashMap<>();
-            for (AbstractBaseMod mod : ModManager.mods) {
-                Set<String> set = new HashSet<>(selectedMods.get(mod).get());
-                map.put(mod, set);
+            // Construct content
+            ArrayList<AbstractBaseContent> contents = new ArrayList<>();
+            int contentToConstruct = 0;
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                contentToConstruct += selectedMods.get(manager).get().size();
             }
+            ProgressBarHelper.initializeProgressBar(0, contentToConstruct, I18n.INSTANCE.get("progressBar.constructingContent"));
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                for (String name : selectedMods.get(manager).get()) {
+                    contents.add(manager.constructContentFromName(name));
+                    ProgressBarHelper.increment();
+                }
+            }
+            ProgressBarHelper.resetProgressBar();
+
             if (checkBox.isSelected()) {
-                export(ExportType.ALL_SINGLE, map);
+                export(ExportType.ALL_SINGLE, contents);
             } else {
-                export(ExportType.ALL_BUNDLED, map);
+                export(ExportType.ALL_BUNDLED, contents);
             }
             displayExportSuccessDialog();
         }

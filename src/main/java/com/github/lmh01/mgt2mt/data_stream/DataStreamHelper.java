@@ -151,34 +151,9 @@ public class DataStreamHelper {
     /**
      * @param file    The input file
      * @param charSet Defines what charset the source file uses
-     * @return Returns a map. The key is the line number and the value is the content for that line number.
-     */
-    @Deprecated
-    public static Map<Integer, String> getContentFromFile(File file, Charset charSet) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
-        String currentLine;
-        boolean firstLine = true;
-        Map<Integer, String> mapCurrent = new HashMap<>();
-        int currentLineNumber = 1;
-        while ((currentLine = br.readLine()) != null) {
-            if (firstLine) {
-                currentLine = Utils.removeUTF8BOM(currentLine);
-                firstLine = false;
-            }
-            mapCurrent.put(currentLineNumber, currentLine);
-            currentLineNumber++;
-        }
-        br.close();
-        return mapCurrent;
-    }
-
-    /**
-     * @param file    The input file
-     * @param charSet Defines what charset the source file uses
      * @return Returns a map. The key is the line number(=id) and the value is the content for that line number. Note: line number is reduced by 1, so line 1 becomes line 0.
      */
-    public static Map<Integer, String> getContentFromFileNew(File file, Charset charSet) throws IOException {
-        //TODO Rename to getContentFromFile after the old function has been removed
+    public static Map<Integer, String> getContentFromFile(File file, Charset charSet) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
         String currentLine;
         boolean firstLine = true;

@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 /**
  * Used to create a new content.
@@ -9,9 +9,9 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
  */
 public abstract class AbstractAdvancedContent extends AbstractBaseContent {
 
-    protected TranslationManagerNew translationManager;
+    protected TranslationManager translationManager;
 
-    public AbstractAdvancedContent(AbstractBaseContentManager contentType, String name, Integer id, TranslationManagerNew translationManager) {
+    public AbstractAdvancedContent(AbstractBaseContentManager contentType, String name, Integer id, TranslationManager translationManager) {
         super(contentType, name, id);
         this.translationManager = translationManager;
     }

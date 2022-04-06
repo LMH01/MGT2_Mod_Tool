@@ -1,8 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.mod.GenreMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
@@ -41,12 +40,12 @@ public class WindowAddGenrePage5 extends JFrame {
         buttonNext.addActionListener(actionEvent -> {
             ThreadHandler.startModThread(() -> {
                 if (saveInputs(LIST_AVAILABLE_GENRES)) {
-                    GenreMod.openStepWindow(6);
+                    GenreManager.openStepWindow(6);
                     FRAME.dispose();
                 } else {
                     if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
                         LOGGER.info("Cleared array list with compatible genres.");
-                        GenreMod.openStepWindow(6);
+                        GenreManager.openStepWindow(6);
                         FRAME.dispose();
                     }
                 }
@@ -55,7 +54,7 @@ public class WindowAddGenrePage5 extends JFrame {
         buttonPrevious.addActionListener(actionEvent -> {
             ThreadHandler.startModThread(() -> {
                 saveInputs(LIST_AVAILABLE_GENRES);
-                GenreMod.openStepWindow(4);
+                GenreManager.openStepWindow(4);
                 FRAME.dispose();
             }, "WindowAddGenrePage5ButtonPrevious");
         });
@@ -103,10 +102,10 @@ public class WindowAddGenrePage5 extends JFrame {
         LIST_AVAILABLE_GENRES.removeAll();
         listModel.clear();
         int currentGenre = 0;
-        for (String string : ModManager.genreMod.getContentByAlphabet()) {
+        for (String string : GenreManager.INSTANCE.getContentByAlphabet()) {
             listModel.addElement(string);
-            if (GenreMod.mapNewGenre.containsKey("GENRE COMB")) {
-                if (GenreMod.mapNewGenre.get("GENRE COMB").contains(Integer.toString(ModManager.genreMod.getContentIdByName(string)))) {
+            if (GenreManager.currentGenreHelper.compatibleGenres != null) {
+                if (GenreManager.currentGenreHelper.compatibleGenres.contains(GenreManager.INSTANCE.getContentIdByName(string))) {
                     genresSelected.add(currentGenre);
                 }
             }
@@ -137,11 +136,11 @@ public class WindowAddGenrePage5 extends JFrame {
     private static boolean saveInputs(JList<String> listAvailableGenres) throws ModProcessingException {
         if (listAvailableGenres.getSelectedValuesList().size() > 0) {
             LOGGER.info("Cleared array list with compatible genres.");
-            StringBuilder compatibleGenres = new StringBuilder();
+            ArrayList<Integer> compatibleGenres = new ArrayList<>();
             for (String string : listAvailableGenres.getSelectedValuesList()) {
-                compatibleGenres.append("<").append(string).append(">");
+                compatibleGenres.add(GenreManager.INSTANCE.getContentIdByName(string));
             }
-            GenreMod.mapNewGenre.put("GENRE COMB", GenreMod.convertGenreNamesToId(compatibleGenres.toString(), false));
+            GenreManager.currentGenreHelper.compatibleGenres = compatibleGenres;
             return true;
         } else {
             return false;

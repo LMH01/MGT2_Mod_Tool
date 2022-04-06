@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
+import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
@@ -196,8 +196,8 @@ public class DefaultContentManager {
      */
     private static ArrayList<String> getDefaultContentNames() {
         ArrayList<String> strings = new ArrayList<>();
-        for (AbstractBaseMod mod : ModManager.mods) {
-            strings.add(mod.getDefaultContentFileName());
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            strings.add(manager.getDefaultContentFileName());
         }
         return strings;
     }

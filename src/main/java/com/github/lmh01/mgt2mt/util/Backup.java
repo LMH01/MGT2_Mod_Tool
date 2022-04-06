@@ -1,11 +1,11 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
+import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -284,8 +284,8 @@ public class Backup {
      */
     private static ArrayList<File> getBackupFiles() {
         ArrayList<File> backupFiles = new ArrayList<>();
-        for (AbstractBaseMod mod : ModManager.mods) {
-            backupFiles.add(mod.getGameFile());
+        for (BaseContentManager content : ContentAdministrator.contentManagers) {
+            backupFiles.add(content.getGameFile());
         }
         return backupFiles;
     }
@@ -359,10 +359,10 @@ public class Backup {
             StringBuilder uninstallFailedExplanation = new StringBuilder();
             ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("textArea.uninstalling"));
             try {
-                for (AbstractBaseMod mod : ModManager.mods) {
-                    String[] content = mod.getCustomContentString();
+                for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                    String[] content = manager.getCustomContentString();
                     for (String string : content) {
-                        mod.removeMod(string);
+                        manager.removeContent(string);
                         ProgressBarHelper.increment();
                     }
                 }

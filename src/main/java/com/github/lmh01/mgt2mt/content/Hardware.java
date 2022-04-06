@@ -3,10 +3,12 @@ package com.github.lmh01.mgt2mt.content;
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
 import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
-import com.github.lmh01.mgt2mt.mod.managed.HardwareType;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
+import com.github.lmh01.mgt2mt.content.manager.HardwareManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.*;
 
@@ -14,7 +16,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
 
     String description;
     String date;
-    HardwareType hardwareType;
+    public HardwareType hardwareType;
     int researchPoints;
     int price;
     int devCosts;
@@ -25,7 +27,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
 
     public Hardware(String name,
                     Integer id,
-                    TranslationManagerNew translationManager,
+                    TranslationManager translationManager,
                     String description,
                     String date,
                     HardwareType hardwareType,

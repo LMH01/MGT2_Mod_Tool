@@ -1,11 +1,13 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
+import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
-import com.github.lmh01.mgt2mt.mod.ThemeMod;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
 import com.github.lmh01.mgt2mt.util.handler.NewModsHandler;
@@ -23,7 +25,6 @@ import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.*;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class WindowMain {
@@ -51,7 +52,6 @@ public class WindowMain {
     private static final JMenuItem M_431_CREATE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.createModRestorePoint"));
     private static final JMenuItem M_432_RESTORE_MOD_RESTORE_POINT = new JMenuItem(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint"));
     private static final JMenuItem M_44_DELETE_ALL_BACKUPS = new JMenuItem(I18n.INSTANCE.get("window.main.backup.deleteAllBackups"));
-    private static final JMenuItem M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher"));
     public static final JProgressBar PROGRESS_BAR = new JProgressBar();
     public static final JTextArea TEXT_AREA = new JTextArea();
     public static final JScrollPane SCROLL_PANE = new JScrollPane(TEXT_AREA, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -171,9 +171,6 @@ public class WindowMain {
         M_4_BACKUP.add(m43RestorePoint);
         M_4_BACKUP.add(m45penBackupFolder);
         setSafetyFeatureComponents();
-        JMenu m51ExperimentalFeatures = new JMenu(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures"));
-        m51ExperimentalFeatures.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.toolTip"));
-        M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.addActionListener(actionEvent -> ModManager.publisherMod.realPublishers());
         JMenuItem m52OpenGitHubPage = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openGithubPage"));
         m52OpenGitHubPage.addActionListener(actionEvent -> openGithubPage());
         JMenuItem m53OpenMGT2Folder = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openMGT2Folder"));
@@ -185,8 +182,6 @@ public class WindowMain {
         m55OpenSettingsTomlFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSettingsTomlFile.toolTip"));
         m55OpenSettingsTomlFile.addActionListener(actionEvent -> Utils.open(ModManagerPaths.MAIN.getPath().resolve("settings.toml")));
         MB.add(M_5_UTIL);
-        M_5_UTIL.add(m51ExperimentalFeatures);
-        m51ExperimentalFeatures.add(M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
         M_5_UTIL.add(m54OpenSaveGameFolder);
@@ -240,18 +235,18 @@ public class WindowMain {
         if (Settings.mgt2FolderIsCorrect) {
             try {
                 boolean noModsAvailable = true;
-                ModManager.analyzeMods();
+                ContentAdministrator.analyzeContents();
                 boolean noModRestorePointSet = true;
                 if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
                     noModRestorePointSet = false;
                 }
-                for (AbstractBaseMod mod : ModManager.mods) {
-                    mod.setMainMenuButtonAvailability();
-                    if (mod.getCustomContentString(true).length > 0) {
+                for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                    manager.setMainMenuButtonAvailability();
+                    if (manager.getCustomContentString().length > 0) {
                         noModsAvailable = false;
                     }
                 }
-                if (ModManager.genreMod.getCustomContentString(true).length > 0) {
+                if (GenreManager.INSTANCE.getCustomContentString().length > 0) {
                     M_22_NPC_GAMES_LIST.setEnabled(true);
                     M_22_NPC_GAMES_LIST.setToolTipText("");
                 } else {
@@ -288,12 +283,10 @@ public class WindowMain {
                     M_22_NPC_GAMES_LIST.setEnabled(false);
                     M_23_ADD_COMPANY_ICON.setEnabled(false);
                     M_233_CHANGE_GENRE_THEME_FIT.setEnabled(false);
-                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(false);
                     M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_23_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
-                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                 } else {
                     M_21_IMPORT.setEnabled(true);
                     for (JMenu menu : MOD_MENUS) {
@@ -302,11 +295,9 @@ public class WindowMain {
                     }
                     M_23_ADD_COMPANY_ICON.setEnabled(true);
                     M_233_CHANGE_GENRE_THEME_FIT.setEnabled(true);
-                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setEnabled(true);
                     M_21_IMPORT.setToolTipText("");
                     M_23_ADD_COMPANY_ICON.setToolTipText("");
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit.toolTip"));
-                    M_511_REPLACE_PUBLISHERS_WITH_REAL_PUBLISHERS.setToolTipText(I18n.INSTANCE.get("window.main.utilities.experimentalFeatures.replacePublisher.toolTip"));
                 }
             } catch (IndexOutOfBoundsException | ModProcessingException e) {
                 TextAreaHelper.printStackTrace(e);
@@ -390,16 +381,16 @@ public class WindowMain {
 
     public static void initializeModMenus() {
         if (!modMenusInitialized) {
-            for (AbstractBaseMod mod : ModManager.mods) {
-                JMenu menu = new JMenu(mod.getTypePlural());
-                for (JMenuItem menuItem : mod.getModMenuItems()) {
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                JMenu menu = new JMenu(manager.getTypePlural());
+                for (JMenuItem menuItem : manager.getModMenuItems()) {
                     menu.add(menuItem);
                 }
-                if (mod instanceof ThemeMod) {
+                if (manager instanceof ThemeManager) {
                     menu.add(M_233_CHANGE_GENRE_THEME_FIT);
                 }
                 MOD_MENUS.add(menu);
-                M_31_EXPORT.add(mod.getExportMenuItem());
+                M_31_EXPORT.add(manager.getExportMenuItem());
             }
             for (JMenu menu : MOD_MENUS) {
                 M_2_MODS.add(menu);

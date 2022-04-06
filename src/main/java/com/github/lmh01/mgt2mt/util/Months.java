@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.mod.managed.TypeEnum;
+import com.github.lmh01.mgt2mt.content.managed.types.TypeEnum;
 
 public enum Months implements TypeEnum {
     JAN("january", "JAN", 0),

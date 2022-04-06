@@ -4,7 +4,9 @@ import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
 import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
 import com.github.lmh01.mgt2mt.content.managed.SimpleContent;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.NpcGameManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 

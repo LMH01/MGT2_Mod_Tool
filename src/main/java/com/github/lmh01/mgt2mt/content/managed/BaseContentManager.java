@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import javax.swing.*;
+import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -89,6 +89,11 @@ public interface BaseContentManager {
     void analyzeFile() throws ModProcessingException;
 
     /**
+     * Returns the default content file name
+     */
+    String getDefaultContentFileName();
+
+    /**
      * @return The default content for this content type represented as string array
      */
     String[] getDefaultContent();
@@ -137,7 +142,12 @@ public interface BaseContentManager {
      * Creates a backup of the text file for this content
      * @throws ModProcessingException When the backup failed
      */
-    void createBackup() throws ModProcessingException;
+    void createBackup(boolean initialBackup) throws ModProcessingException;
+
+    /**
+     * @return The game file
+     */
+    File getGameFile();
 
     /**
      * @return The charset in which the game file is written.
@@ -153,6 +163,13 @@ public interface BaseContentManager {
      * @return A free content id. Increases the maximum id by one.
      */
     int getFreeId();
+
+
+
+    /**
+     * @return An array list containing all active ids for this mod
+     */
+    ArrayList<Integer> getActiveIds();
 
     /**
      * Initializes a fresh import helper map.

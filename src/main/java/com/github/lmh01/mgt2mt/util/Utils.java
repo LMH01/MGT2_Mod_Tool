@@ -2,8 +2,9 @@ package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
@@ -20,7 +21,10 @@ import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Utils {
 
@@ -277,7 +281,7 @@ public class Utils {
     public static ArrayList<Integer> getCompatibleThemeIdsForGenreNew(int genreId) throws ModProcessingException {
         ArrayList<Integer> themeIds = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ThemeManager.INSTANCE.getGameFile()), StandardCharsets.UTF_16LE));
             boolean firstLine = true;
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
@@ -304,37 +308,6 @@ public class Utils {
     }
 
     /**
-     * @param genreId The genre id for which the file should be searched
-     * @return Returns a String containing theme ids
-     * //TODO Move to GenreManager or ThemeManager
-     * //TODO Delete
-     */
-    @Deprecated
-    public static String getCompatibleThemeIdsForGenre(int genreId) throws ModProcessingException {
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(ModManager.themeMod.getGameFile()), StandardCharsets.UTF_16LE));
-            boolean firstLine = true;
-            StringBuilder compatibleThemes = new StringBuilder();
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                if (firstLine) {
-                    currentLine = Utils.removeUTF8BOM(currentLine);
-                    firstLine = false;
-                }
-                if (currentLine.contains(Integer.toString(genreId))) {
-                    compatibleThemes.append("<");
-                    compatibleThemes.append(ModManager.themeMod.getReplacedLine(currentLine));
-                    compatibleThemes.append(">");
-                }
-            }
-            br.close();
-            return compatibleThemes.toString();
-        } catch (IOException e) {
-            throw new ModProcessingException("Unable to retrieve theme ids for genre", e);
-        }
-    }
-
-    /**
      * @param genreId     The genre id for which the file should be searched
      * @param goodFeature True when the file should be searched for good features. False when it should be searched for bad features.
      * @return Returns a String containing gameplay feature names
@@ -342,7 +315,7 @@ public class Utils {
     public static String getCompatibleGameplayFeatureIdsForGenre(int genreId, boolean goodFeature) {
         StringBuilder gameplayFeaturesIds = new StringBuilder();
         if (goodFeature) {
-            for (Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()) {
+            for (Map<String, String> map : GameplayFeatureManager.INSTANCE.fileContent) {
                 if (map.get("GOOD") != null) {
                     if (map.get("GOOD").contains("<" + genreId + ">")) {
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -350,7 +323,7 @@ public class Utils {
                 }
             }
         } else {
-            for (Map<String, String> map : ModManager.gameplayFeatureMod.getFileContent()) {
+            for (Map<String, String> map : GameplayFeatureManager.INSTANCE.fileContent) {
                 if (map.get("BAD") != null) {
                     if (map.get("BAD").contains("<" + genreId + ">")) {
                         gameplayFeaturesIds.append("<").append(map.get("NAME EN")).append(">");
@@ -690,5 +663,15 @@ public class Utils {
                 throw new IllegalArgumentException("Replacements map contains a key that the origin map does not contain");
             }
         }
+    }
+
+
+    /**
+     * Transforms the input array list to a normal array
+     */
+    public static String[] transformListToArray(List<String> list) {
+        String[] out = new String[list.size()];
+        list.toArray(out);
+        return out;
     }
 }

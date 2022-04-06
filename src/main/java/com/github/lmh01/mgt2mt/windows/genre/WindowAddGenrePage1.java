@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
+import com.github.lmh01.mgt2mt.content.managed.GenreHelper;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
-import com.github.lmh01.mgt2mt.mod.GenreMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
@@ -36,7 +36,6 @@ public class WindowAddGenrePage1 extends JFrame {
     JButton buttonClearTranslations = new JButton(I18n.INSTANCE.get("mod.genre.clearTranslations"));
     JTextField textFieldGenreName = new JTextField();
     JTextField textFieldGenreDescription = new JTextField();
-    final JSpinner spinnerId = new JSpinner();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {
@@ -53,8 +52,8 @@ public class WindowAddGenrePage1 extends JFrame {
     public WindowAddGenrePage1() {
         buttonNext.addActionListener(actionEvent -> {
             ThreadHandler.startModThread(() -> {
-                if (saveInputs(spinnerId, textFieldGenreName, textFieldGenreDescription)) {
-                    GenreMod.openStepWindow(2);
+                if (saveInputs(textFieldGenreName, textFieldGenreDescription)) {
+                    GenreManager.openStepWindow(2);
                     FRAME.dispose();
                 }
             }, "WindowAddGenrePage1ButtonNext");
@@ -91,8 +90,8 @@ public class WindowAddGenrePage1 extends JFrame {
         });
         buttonClearTranslations.addActionListener(actionEvent -> {
             if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.clearTranslations.question"), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == 0) {
-                GenreMod.mapNameTranslations.clear();
-                GenreMod.mapDescriptionTranslations.clear();
+                GenreManager.currentGenreHelper.nameTranslations = null;
+                GenreManager.currentGenreHelper.descriptionTranslations = null;
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.clearTranslations.success"));
             }
         });
@@ -109,12 +108,6 @@ public class WindowAddGenrePage1 extends JFrame {
 
         if (Settings.disableSafetyFeatures) {
             setBounds(100, 100, 335, 190);
-            spinnerId.setModel(new SpinnerNumberModel(0, 0, 999, 1));
-            spinnerId.setToolTipText("<html>[Range: 0-999]<br>This is the unique id for your genre.<br>Do not change it unless you have your own genre id system.");
-            spinnerId.setEnabled(true);
-            spinnerId.setVisible(true);
-            spinnerId.setBounds(120, 95, 100, 23);
-            contentPane.add(spinnerId);
             labelGenreID.setVisible(true);
             buttonExplainGenreID.setVisible(true);
             buttonNext.setBounds(220, 130, 100, 23);
@@ -125,10 +118,6 @@ public class WindowAddGenrePage1 extends JFrame {
             contentPane.add(buttonExplainGenreID);
         } else {
             setBounds(100, 100, 335, 160);
-            spinnerId.setModel(new SpinnerNumberModel(ModManager.genreMod.getFreeId(), ModManager.genreMod.getFreeId(), ModManager.genreMod.getFreeId(), 1));
-            spinnerId.setToolTipText("<html>[Range: Automatic]<br>This is the unique id for your genre.<br>It can only be changed when the safety features are disabled fia the settings.");
-            spinnerId.setEnabled(false);
-            spinnerId.setVisible(false);
             labelGenreID.setVisible(false);
             buttonExplainGenreID.setVisible(false);
             buttonNext.setBounds(220, 100, 100, 23);
@@ -142,7 +131,7 @@ public class WindowAddGenrePage1 extends JFrame {
 
 
         textFieldGenreName.setBounds(120, 10, 100, 23);
-        textFieldGenreName.setText(GenreMod.mapNewGenre.get("NAME EN"));
+        textFieldGenreName.setText(GenreManager.currentGenreHelper.name);
         contentPane.add(textFieldGenreName);
 
         buttonAddNameTranslations.setBounds(230, 10, 90, 23);
@@ -157,7 +146,7 @@ public class WindowAddGenrePage1 extends JFrame {
         contentPane.add(labelGenreID);
 
         textFieldGenreDescription.setBounds(120, 35, 100, 23);
-        textFieldGenreDescription.setText(GenreMod.mapNewGenre.get("DESC EN"));
+        textFieldGenreDescription.setText(GenreManager.currentGenreHelper.description);
         textFieldGenreDescription.setToolTipText(I18n.INSTANCE.get("mod.genre.description.hint"));
         contentPane.add(textFieldGenreDescription);
 
@@ -176,16 +165,12 @@ public class WindowAddGenrePage1 extends JFrame {
         contentPane.add(buttonQuit);
     }
 
-    private static boolean saveInputs(JSpinner spinnerId, JTextField textFieldGenreName, JTextField textFieldGenreDescription) throws ModProcessingException {
-        for (String string : ModManager.genreMod.getContentByAlphabet()) {
+    private static boolean saveInputs(JTextField textFieldGenreName, JTextField textFieldGenreDescription) throws ModProcessingException {
+        for (String string : GenreManager.INSTANCE.getContentByAlphabet()) {
             if (string.equals(textFieldGenreName.getText())) {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.nameAlreadyInUse"));
                 return false;
             }
-        }
-        if (ModManager.genreMod.getActiveIds().contains(spinnerId.getValue())) {
-            JOptionPane.showMessageDialog(new Frame(), "Please enter a different genre id.\nYour id is already in use!");
-            return false;
         }
         if (textFieldGenreName.getText().isEmpty()) {
             JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.enterNameFirst"));
@@ -193,14 +178,10 @@ public class WindowAddGenrePage1 extends JFrame {
         } else if (textFieldGenreDescription.getText().isEmpty()) {
             JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.enterDescriptionFirst"));
         } else {
-            GenreMod.mapNewGenre.remove("NAME EN");
-            GenreMod.mapNewGenre.remove("DESC EN");
-            if (Settings.disableSafetyFeatures) {
-                GenreMod.mapNewGenre.remove("ID");
-                GenreMod.mapNewGenre.put("ID", spinnerId.getValue().toString());
-            }
-            GenreMod.mapNewGenre.put("NAME EN", textFieldGenreName.getText());
-            GenreMod.mapNewGenre.put("DESC EN", textFieldGenreDescription.getText());
+            GenreManager.currentGenreHelper.name = textFieldGenreName.getText();
+            GenreManager.currentGenreHelper.description = textFieldGenreDescription.getText();
+            GenreManager.currentGenreHelper.nameTranslations = mapNameTranslations;
+            GenreManager.currentGenreHelper.descriptionTranslations = mapDescriptionTranslations;
             return true;
         }
         return false;
@@ -248,34 +229,6 @@ public class WindowAddGenrePage1 extends JFrame {
         if (continueWithTranslations) {
             mapDescriptionTranslations = TranslationManager.getTranslationsMap();
         }
-    }
-
-    /**
-     * Uses the maps {@link WindowAddGenrePage1#mapNameTranslations} and {@link WindowAddGenrePage1#mapDescriptionTranslations} to parse new map that contains evey translation. When the maps are empty all translation will be set to english
-     *
-     * @return Returns a map containg all genre translations in the format that they are read in {@link com.github.lmh01.mgt2mt.mod.GenreMod}
-     */
-    public static Map<String, String> getMapGenreTranslations() {
-        Map<String, String> mapGenreTranslation = new HashMap<>();
-        if (mapNameTranslations.isEmpty()) {
-            for (String string : TranslationManager.TRANSLATION_KEYS) {
-                mapGenreTranslation.put("NAME " + string, GenreMod.mapNewGenre.get("NAME EN"));
-            }
-        } else {
-            for (Map.Entry<String, String> entry : mapNameTranslations.entrySet()) {
-                mapGenreTranslation.put("NAME " + entry.getKey(), entry.getValue());
-            }
-        }
-        if (mapDescriptionTranslations.isEmpty()) {
-            for (String string : TranslationManager.TRANSLATION_KEYS) {
-                mapGenreTranslation.put("DESC " + string, GenreMod.mapNewGenre.get("DESC EN"));
-            }
-        } else {
-            for (Map.Entry<String, String> entry : mapDescriptionTranslations.entrySet()) {
-                mapGenreTranslation.put("DESC " + entry.getKey(), entry.getValue());
-            }
-        }
-        return mapGenreTranslation;
     }
 
     /**

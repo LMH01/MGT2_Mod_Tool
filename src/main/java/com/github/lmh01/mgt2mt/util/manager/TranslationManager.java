@@ -1,68 +1,130 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.util.I18n;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @deprecated Use {@link TranslationManagerNew} instead.
+ * Used to manage the translations of content.
+ * Can be instantiated to store the translations of a single content.
+ * English is not stored as translation.
  */
-@Deprecated
-public class TranslationManager {//TODO Delete class and rename TranslationManagerNew to TranslationManager
-    private static final Logger LOGGER = LoggerFactory.getLogger(TranslationManager.class);
+public class TranslationManager {
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "JA", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
     public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR", "CH", "CT", "IT", "ES", "RO", "JA", "RU", "TU"};
     public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"CZ", "EN", "FR", "GE", "HU", "KO", "PB", "PL"};
 
     /**
-     * @return An array list with the user input that should be used as translation. See cases for translation position in array list.
+     * Stores the translations for the translation manager
+     * Map coding: Key = Translation key, value = translation | example: GE|Test
      */
-    public static ArrayList<String> getTranslationsArrayList() {
-        ArrayList<String> arrayListTranslations = new ArrayList<>();
-        JTextField textFieldDescriptionTranslation = new JTextField();
-        JLabel labelExplanation = new JLabel();
-        Object[] params = {labelExplanation, textFieldDescriptionTranslation};
-        boolean breakLoop = false;
-        for (String translationName : TRANSLATION_NAMES) {
-            if (!breakLoop) {
-                if (translationName.equals("English")) {
-                    arrayListTranslations.add("English");
-                } else {
-                    labelExplanation.setText(I18n.INSTANCE.get("translationManager.enterTranslationFor") + " " + translationName + ":");
-                    if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("translationManager.addTranslation"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                        arrayListTranslations.add(textFieldDescriptionTranslation.getText());
-                        textFieldDescriptionTranslation.setText("");
-                    } else {
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.canceled"));
-                        breakLoop = true;
-                    }
+    private Map<String, String> nameTranslations;
+    private Map<String, String> descriptionTranslations;
+
+    /**
+     * Creates a new translation manager with empty translations.
+     */
+    public TranslationManager() {
+        nameTranslations = new HashMap<>();
+        descriptionTranslations = new HashMap<>();
+    }
+
+    /**
+     * Creates a new translation manager from the input map.
+     * The input map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
+     */
+    public TranslationManager(Map<String, ?> map) {
+        Map<String, String> nt = new HashMap<>();
+        Map<String, String> dt = new HashMap<>();
+        for (Map.Entry<String, ?> entry : map.entrySet()) {
+            if (!entry.getKey().replace("NAME", "").replace("DESC", "").trim().equals("EN")) {
+                // English is not added as translation
+                if (entry.getKey().contains("NAME")) {
+                    nt.put(entry.getKey().replace("NAME", "").trim(), (String) entry.getValue());
+                } else if (entry.getKey().contains("DESC")) {
+                    dt.put(entry.getKey().replace("DESC", "").trim(), (String) entry.getValue());
                 }
             }
         }
-        if (!breakLoop) {
-            StringBuilder translations = new StringBuilder();
-            int translationNumber = 0;
-            for (String string : TRANSLATION_NAMES) {
-                if (!string.equals("English")) {
-                    translations.append("\n").append(string).append(": ").append(arrayListTranslations.get(translationNumber));
-                }
-                translationNumber++;
-            }
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.followingTranslationsAdded") + "\n" + translations + "\n", I18n.INSTANCE.get("translationManager.translationsAdded"), JOptionPane.INFORMATION_MESSAGE);
+        nameTranslations = nt;
+        descriptionTranslations = dt;
+    }
+
+    /**
+     * Creates a new translation manager from the two input maps.
+     * When one of the maps is null or non-existent an empty map will be created instead.
+     * @param nameTranslations Map that contains the name translations
+     * @param descriptionTranslations Map that contains the description translations
+     */
+    public TranslationManager(Map<String, String> nameTranslations, Map<String, String> descriptionTranslations) {
+        if (nameTranslations != null) {
+            this.nameTranslations = nameTranslations;
+        } else {
+            this.nameTranslations = new HashMap<>();
         }
-        return arrayListTranslations;
+        if (descriptionTranslations != null) {
+            this.descriptionTranslations = descriptionTranslations;
+        } else {
+            this.descriptionTranslations = new HashMap<>();
+        }
+    }
+
+    /**
+     * Sets the name translations map.
+     */
+    public void setNameTranslations(Map<String, String> map) {
+        nameTranslations = map;
+    }
+
+    public void setDescriptionTranslations(Map<String, String> map) {
+        descriptionTranslations = map;
+    }
+
+    /**
+     * Prints the translations stored in the maps with the help of the buffered writer.
+     * Example line: [NAME GE]Hallo Welt!
+     * Does not write the translations for english!
+     */
+    public void printTranslations(BufferedWriter bw) throws IOException {
+        for (String string : TranslationManager.TRANSLATION_KEYS) {
+            for (Map.Entry<String, String> entry : nameTranslations.entrySet()) {
+                if (entry.getKey().equals(string)) {
+                    System.out.println("[NAME " + string + "]" + entry.getValue() + "\r\n");
+                    bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
+                }
+            }
+            for (Map.Entry<String, String> entry : descriptionTranslations.entrySet()) {
+                if (entry.getKey().equals(string)) {
+                    System.out.println("[DESC " + string + "]" + entry.getValue() + "\r\n");
+                    bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
+                }
+            }
+        }
+    }
+
+    /**
+     * Transforms the maps of this translation manager to a map that can be used to export the translations.
+     * The output map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
+     */
+    public Map<String, String> toMap() {
+        Map<String, String> map = new HashMap<>();
+        for (Map.Entry<String, String> entry : nameTranslations.entrySet()) {
+            map.put("NAME " + entry.getKey(), entry.getValue());
+        }
+        for (Map.Entry<String, String> entry: descriptionTranslations.entrySet()) {
+            map.put("DESC " + entry.getKey(), entry.getValue());
+        }
+        return map;
     }
 
     /**
      * @return A map containing the translations for each language.
+     * Does not contain the translation of english.
      */
     public static Map<String, String> getTranslationsMap() {
         Map<String, String> map = new HashMap<>();
@@ -82,14 +144,12 @@ public class TranslationManager {//TODO Delete class and rename TranslationManag
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.canceled"));
                         breakLoop = true;
                     }
-                } else {
-                    map.put("EN", "English");
                 }
             }
         }
         if (!breakLoop) {
             StringBuilder translations = new StringBuilder();
-            for (int i = 0; i < map.size(); i++) {
+            for (int i = 0; i <= map.size(); i++) {
                 if (!TRANSLATION_KEYS[i].equals("EN")) {
                     translations.append(System.getProperty("line.separator")).append(TRANSLATION_NAMES[i]).append(": ").append(map.get(TRANSLATION_KEYS[i]));
                 }
@@ -97,25 +157,6 @@ public class TranslationManager {//TODO Delete class and rename TranslationManag
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.followingTranslationsAdded") + "\n" + translations + "\n", I18n.INSTANCE.get("translationManager.translationsAdded"), JOptionPane.INFORMATION_MESSAGE);
         }
         return map;
-    }
-
-    /**
-     * Writes the language translations
-     *
-     * @param bw  The buffered writer
-     * @param map The map containing the translations
-     */
-    public static void printLanguages(BufferedWriter bw, Map<String, String> map) throws IOException {
-        for (String string : TranslationManager.TRANSLATION_KEYS) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                if (entry.getKey().equals("NAME " + string)) {
-                    bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
-                }
-                if (entry.getKey().equals("DESC " + string)) {
-                    bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
-                }
-            }
-        }
     }
 
     /**
@@ -151,16 +192,24 @@ public class TranslationManager {//TODO Delete class and rename TranslationManag
     }
 
     /**
-     * The input map just has the language keys and the translations. This function changes the key to include the type. Eg. input map is "Key: GE" "Value: Hey" this is transformed to "Key: NAME GE" "Value Hey"
+     * Writes the language translations using the buffered writer.
+     * This is an alternative to using {@link TranslationManager#printTranslations(BufferedWriter)}
+     * that does not require a new instance.
      *
-     * @param map  The input map
-     * @param type NAME or DESC
+     * @param bw  The buffered writer
+     * @param map The map containing the translations
      */
-    public static Map<String, String> transformTranslationMap(Map<String, String> map, String type) {
-        Map<String, String> outputMap = new HashMap<>();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            outputMap.put(type + " " + entry.getKey(), entry.getValue());
+    public static void printLanguages(BufferedWriter bw, Map<String, String> map) throws IOException {
+        for (String string : TranslationManager.TRANSLATION_KEYS) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                // Empty translations will not be printed
+                if (entry.getKey().equals("NAME " + string) && !entry.getValue().trim().isEmpty()) {
+                    bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
+                }
+                if (entry.getKey().equals("DESC " + string) && !entry.getValue().trim().isEmpty()){
+                    bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
+                }
+            }
         }
-        return outputMap;
     }
 }

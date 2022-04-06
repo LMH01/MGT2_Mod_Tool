@@ -1,10 +1,12 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.mod.GenreMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.GenreHelper;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,22 +44,29 @@ public class WindowAddGenrePage6 extends JFrame {
 
     public WindowAddGenrePage6() {
         buttonNext.addActionListener(actionEvent -> {
-            if (saveInputs(LIST_AVAILABLE_THEMES)) {
-                GenreMod.openStepWindow(7);
-                FRAME.dispose();
-            } else {
-                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
-                    LOGGER.info("Cleared array list with compatible themes.");
-                    GenreMod.mapNewGenre.remove("THEME COMB");
-                    GenreMod.mapNewGenre.put("THEME COMB", "");
-                    GenreMod.openStepWindow(7);
+            try {
+                if (saveInputs(LIST_AVAILABLE_THEMES)) {
+                    GenreManager.openStepWindow(7);
                     FRAME.dispose();
+                } else {
+                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.themeComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
+                        LOGGER.info("Cleared array list with compatible themes.");
+                        GenreManager.currentGenreHelper.compatibleThemes = new ArrayList<>();
+                        GenreManager.openStepWindow(7);
+                        FRAME.dispose();
+                    }
                 }
+            } catch (ModProcessingException e) {
+                TextAreaHelper.printStackTrace(e);
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            saveInputs(LIST_AVAILABLE_THEMES);
-            GenreMod.openStepWindow(5);
+            try {
+                saveInputs(LIST_AVAILABLE_THEMES);
+            } catch (ModProcessingException e) {
+                TextAreaHelper.printStackTrace(e);
+            }
+            GenreManager.openStepWindow(5);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -104,10 +113,10 @@ public class WindowAddGenrePage6 extends JFrame {
         LIST_AVAILABLE_THEMES.removeAll();
         listModel.clear();
         int currentTopic = 0;
-        for (String string : ModManager.themeMod.getContentByAlphabet()) {
+        for (String string : ThemeManager.INSTANCE.getContentByAlphabet()) {
             listModel.addElement(string);
-            if (GenreMod.mapNewGenre.containsKey("THEME COMB")) {
-                if (GenreMod.mapNewGenre.get("THEME COMB").contains(string)) {
+            if (GenreManager.currentGenreHelper.compatibleThemes != null) {
+                if (GenreManager.currentGenreHelper.compatibleThemes.contains(ThemeManager.INSTANCE.getContentIdByName(string))) {
                     genresSelected.add(currentTopic);
                 }
             }
@@ -131,19 +140,13 @@ public class WindowAddGenrePage6 extends JFrame {
         contentPane.add(SCROLL_PANE_AVAILABLE_THEMES);
     }
 
-    private static boolean saveInputs(JList<String> listAvailableThemes) {
+    private static boolean saveInputs(JList<String> listAvailableThemes) throws ModProcessingException {
         LOGGER.info("Cleared array list with compatible genres.");
-        StringBuilder compatibleThemes = new StringBuilder();
-        for (Map.Entry<Integer, String> entry : ModManager.themeMod.getFileContent().entrySet()) {
-            for (String string : listAvailableThemes.getSelectedValuesList()) {
-                if (ModManager.themeMod.getReplacedLine(entry.getValue()).equals(string)) {
-                    compatibleThemeIds.add(entry.getKey());
-                    compatibleThemes.append("<").append(string).append(">");
-                    LOGGER.info("Compatible Theme: " + entry.getKey() + " | " + entry.getValue());
-                }
-            }
+        ArrayList<Integer> compatibleThemes = new ArrayList<>();
+        for (String string : listAvailableThemes.getSelectedValuesList()) {
+            compatibleThemes.add(ThemeManager.INSTANCE.getContentIdByName(string));
         }
-        GenreMod.mapNewGenre.put("THEME COMB", compatibleThemes.toString());
+        GenreManager.currentGenreHelper.compatibleThemes = compatibleThemes;
         return listAvailableThemes.getSelectedValuesList().size() != 0;
     }
 }

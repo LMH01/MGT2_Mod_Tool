@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.mod.GenreMod;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -46,13 +46,13 @@ public class WindowAddGenrePage8 extends JFrame {
     public WindowAddGenrePage8() {
         buttonNext.addActionListener(actionEvent -> {
             if (saveInputs(false, spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5, spinnerDesign6, spinnerDesign7, spinnerDesign8, spinnerDesign9, spinnerDesign10, spinnerDesign11)) {
-                GenreMod.openStepWindow(9);
+                GenreManager.openStepWindow(9);
                 FRAME.dispose();
             }
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(true, spinnerDesign1, spinnerDesign2, spinnerDesign3, spinnerDesign4, spinnerDesign5, spinnerDesign6, spinnerDesign7, spinnerDesign8, spinnerDesign9, spinnerDesign10, spinnerDesign11);
-            GenreMod.openStepWindow(7);
+            GenreManager.openStepWindow(7);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -161,17 +161,17 @@ public class WindowAddGenrePage8 extends JFrame {
         spinnerDesign9.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Core Gamers are favoured type value smaller 5.<br>If Casual Gamers are favoured type value bigger 5.");
         spinnerDesign10.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Nonviolence is favoured type value smaller 5.<br>If Explicit Content is favoured type value bigger 5.");
         spinnerDesign11.setToolTipText("<html>[Range: 0 - 10; Default 5]<br>Design Direction:<br>If Easy is favoured type value smaller 5.<br>If Hard is favoured type value bigger 5.");
-        spinnerDesign1.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS0")), 0, 10, 1));
-        spinnerDesign2.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS1")), 0, 10, 1));
-        spinnerDesign3.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS2")), 0, 10, 1));
-        spinnerDesign4.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS3")), 0, 10, 1));
-        spinnerDesign5.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS4")), 0, 10, 1));
-        spinnerDesign6.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS5")), 0, 10, 1));
-        spinnerDesign7.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS6")), 0, 10, 1));
-        spinnerDesign8.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("FOCUS7")), 0, 10, 1));
-        spinnerDesign9.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("ALIGN0")), 0, 10, 1));
-        spinnerDesign10.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("ALIGN1")), 0, 10, 1));
-        spinnerDesign11.setModel(new SpinnerNumberModel(Integer.parseInt(GenreMod.mapNewGenre.get("ALIGN2")), 0, 10, 1));
+        spinnerDesign1.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus0, 0, 10, 1));
+        spinnerDesign2.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus1, 0, 10, 1));
+        spinnerDesign3.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus2, 0, 10, 1));
+        spinnerDesign4.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus3, 0, 10, 1));
+        spinnerDesign5.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus4, 0, 10, 1));
+        spinnerDesign6.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus5, 0, 10, 1));
+        spinnerDesign7.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus6, 0, 10, 1));
+        spinnerDesign8.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.focus7, 0, 10, 1));
+        spinnerDesign9.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.align0, 0, 10, 1));
+        spinnerDesign10.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.align1, 0, 10, 1));
+        spinnerDesign11.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.align2, 0, 10, 1));
         if (Settings.disableSafetyFeatures) {
             ((JSpinner.DefaultEditor) spinnerDesign1.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor) spinnerDesign2.getEditor()).getTextField().setEditable(true);
@@ -237,28 +237,17 @@ public class WindowAddGenrePage8 extends JFrame {
             }
         }
         if (saveValues) {
-            GenreMod.mapNewGenre.remove("FOCUS0");
-            GenreMod.mapNewGenre.remove("FOCUS1");
-            GenreMod.mapNewGenre.remove("FOCUS2");
-            GenreMod.mapNewGenre.remove("FOCUS3");
-            GenreMod.mapNewGenre.remove("FOCUS4");
-            GenreMod.mapNewGenre.remove("FOCUS5");
-            GenreMod.mapNewGenre.remove("FOCUS6");
-            GenreMod.mapNewGenre.remove("FOCUS7");
-            GenreMod.mapNewGenre.remove("ALIGN0");
-            GenreMod.mapNewGenre.remove("ALIGN1");
-            GenreMod.mapNewGenre.remove("ALIGN2");
-            GenreMod.mapNewGenre.put("FOCUS0", spinnerDesign1.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS1", spinnerDesign2.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS2", spinnerDesign3.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS3", spinnerDesign4.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS4", spinnerDesign5.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS5", spinnerDesign6.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS6", spinnerDesign7.getValue().toString());
-            GenreMod.mapNewGenre.put("FOCUS7", spinnerDesign8.getValue().toString());
-            GenreMod.mapNewGenre.put("ALIGN0", spinnerDesign9.getValue().toString());
-            GenreMod.mapNewGenre.put("ALIGN1", spinnerDesign10.getValue().toString());
-            GenreMod.mapNewGenre.put("ALIGN2", spinnerDesign11.getValue().toString());
+            GenreManager.currentGenreHelper.focus0 = Integer.parseInt(spinnerDesign1.getValue().toString());
+            GenreManager.currentGenreHelper.focus1 = Integer.parseInt(spinnerDesign2.getValue().toString());
+            GenreManager.currentGenreHelper.focus2 = Integer.parseInt(spinnerDesign3.getValue().toString());
+            GenreManager.currentGenreHelper.focus3 = Integer.parseInt(spinnerDesign4.getValue().toString());
+            GenreManager.currentGenreHelper.focus4 = Integer.parseInt(spinnerDesign5.getValue().toString());
+            GenreManager.currentGenreHelper.focus5 = Integer.parseInt(spinnerDesign6.getValue().toString());
+            GenreManager.currentGenreHelper.focus6 = Integer.parseInt(spinnerDesign7.getValue().toString());
+            GenreManager.currentGenreHelper.focus7 = Integer.parseInt(spinnerDesign8.getValue().toString());
+            GenreManager.currentGenreHelper.align0 = Integer.parseInt(spinnerDesign9.getValue().toString());
+            GenreManager.currentGenreHelper.align1 = Integer.parseInt(spinnerDesign10.getValue().toString());
+            GenreManager.currentGenreHelper.align2 = Integer.parseInt(spinnerDesign11.getValue().toString());
             LOGGER.info("Design focus 1 = " + spinnerDesign1.getValue().toString());
             LOGGER.info("Design focus 2 = " + spinnerDesign2.getValue().toString());
             LOGGER.info("Design focus 3 = " + spinnerDesign3.getValue().toString());

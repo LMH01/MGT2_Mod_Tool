@@ -1,9 +1,10 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.HardwareFeatureManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class HardwareFeature extends AbstractAdvancedContent {
 
     public HardwareFeature(String name,
                            Integer id,
-                           TranslationManagerNew translationManager,
+                           TranslationManager translationManager,
                            String description,
                            String date,
                            int researchPoints,

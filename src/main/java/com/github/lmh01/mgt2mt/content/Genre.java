@@ -1,12 +1,14 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.*;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.mod.managed.TargetGroup;
+import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,37 +18,37 @@ import java.util.*;
 
 public class Genre extends AbstractAdvancedContent implements RequiresPictures, DependentContent {
 
-    String description;
-    String date;
-    int researchPoints;
-    int price;
-    int devCosts;
-    public Image icon;
-    public ArrayList<Image> screenshots;
-    ArrayList<TargetGroup> targetGroups;
-    int gameplay;
-    int graphic;
-    int sound;
-    int control;
-    ArrayList<Integer> compatibleGenres;
-    ArrayList<Integer> compatibleThemes;
-    ArrayList<Integer> badGameplayFeatures;
-    ArrayList<Integer> goodGameplayFeatures;
-    int focus0;
-    int focus1;
-    int focus2;
-    int focus3;
-    int focus4;
-    int focus5;
-    int focus6;
-    int focus7;
-    int align0;
-    int align1;
-    int align2;
+    public final String description;
+    public final String date;
+    public final int researchPoints;
+    public final int price;
+    public final int devCosts;
+    public final Image icon;
+    public final ArrayList<Image> screenshots;
+    public final ArrayList<TargetGroup> targetGroups;
+    public final int gameplay;
+    public final int graphic;
+    public final int sound;
+    public final int control;
+    public final ArrayList<Integer> compatibleGenres;
+    public final ArrayList<Integer> compatibleThemes;
+    public final ArrayList<Integer> badGameplayFeatures;
+    public final ArrayList<Integer> goodGameplayFeatures;
+    public final int focus0;
+    public final int focus1;
+    public final int focus2;
+    public final int focus3;
+    public final int focus4;
+    public final int focus5;
+    public final int focus6;
+    public final int focus7;
+    public final int align0;
+    public final int align1;
+    public final int align2;
 
     public Genre(String name,
                  Integer id,
-                 TranslationManagerNew translationManager,
+                 TranslationManager translationManager,
                  String description,
                  String date,
                  int researchPoints,
@@ -160,7 +162,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
         map.put(contentType.getExportType(), new HashSet<>(SharingHelper.getExportNamesArray(contentType, compatibleGenres)));
-        map.put(ModManager.themeMod.getExportType(), new HashSet<>(SharingHelper.getExportNamesArray(ThemeManager.INSTANCE, compatibleThemes)));
+        map.put(ThemeManager.INSTANCE.getExportType(), new HashSet<>(SharingHelper.getExportNamesArray(ThemeManager.INSTANCE, compatibleThemes)));
         Set<String> gameplayFeatures = new HashSet<>();
         gameplayFeatures.addAll(SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, goodGameplayFeatures));
         gameplayFeatures.addAll(SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, badGameplayFeatures));
@@ -175,7 +177,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
             genreCombNames.add(GenreManager.INSTANCE.getContentNameById(i));
         }
         map.replace("GENRE COMB", SharingHelper.getExportNamesString(GenreManager.INSTANCE, Utils.transformStringArrayToIntegerArray(genreCombNames)));
-        map.put("THEME COMB", GenreManager.getCompatibleThemeIdsForGenre(ModManager.genreMod.getPositionInFileContentListById(id)));
+        map.put("THEME COMB", ThemeManager.getCompatibleThemeIdsForGenre(id));
         map.put("GAMEPLAYFEATURE GOOD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, true));
         map.put("GAMEPLAYFEATURE BAD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));
     }
@@ -199,8 +201,12 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         //Remove icon
         Files.delete(icon.gameFile.toPath());
         //Remove screenshots
-        for (Image image : screenshots) {
-            Files.delete(image.gameFile.toPath());
+        if (!screenshots.isEmpty()) {
+            for (Image image : screenshots) {
+                Files.delete(image.gameFile.toPath());
+            }
+            Path dir = screenshots.get(0).gameFile.getParentFile().toPath();
+            Files.delete(dir);
         }
     }
 

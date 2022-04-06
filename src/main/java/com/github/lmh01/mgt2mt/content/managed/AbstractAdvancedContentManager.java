@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 
@@ -15,8 +14,8 @@ import java.util.*;
 public abstract class AbstractAdvancedContentManager extends AbstractBaseContentManager {
     public List<Map<String, String>> fileContent;
 
-    public AbstractAdvancedContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset, String[] compatibleModToolVersions) {
-        super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset, compatibleModToolVersions);
+    public AbstractAdvancedContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
+        super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
     }
     
     /**
@@ -147,5 +146,18 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.", e);
         }
+    }
+
+    @Override
+    public ArrayList<Integer> getActiveIds() {
+        ArrayList<Integer> activeIds = new ArrayList<>();
+        for (Map<String, String> map : fileContent) {
+            try {
+                activeIds.add(Integer.parseInt(map.get("ID")));
+            } catch (NumberFormatException ignored) {
+
+            }
+        }
+        return activeIds;
     }
 }

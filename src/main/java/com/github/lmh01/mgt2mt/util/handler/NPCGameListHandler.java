@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
-import com.github.lmh01.mgt2mt.mod.NpcGamesMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.NpcGameManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -17,7 +17,7 @@ public class NPCGameListHandler {
      * Opens a window where the user can modify the npc games list
      */
     public static void modifyNPCGameList() throws ModProcessingException {
-        ModManager.genreMod.analyzeFile();
+        GenreManager.INSTANCE.analyzeFile();
         JLabel labelNPCGameList = new JLabel(I18n.INSTANCE.get("window.npcGamesList.label"));
 
         JPanel panelChance = new JPanel();
@@ -39,7 +39,7 @@ public class NPCGameListHandler {
 
         JLabel labelGenre = new JLabel(I18n.INSTANCE.get("window.npcGamesList.label.genre"));
 
-        JList<String> listAvailableOperations = new JList<>(ModManager.genreMod.getCustomContentString());
+        JList<String> listAvailableOperations = new JList<>(GenreManager.INSTANCE.getCustomContentString());
         listAvailableOperations.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listAvailableOperations.setLayoutOrientation(JList.VERTICAL);
         listAvailableOperations.setVisibleRowCount(-1);
@@ -70,7 +70,7 @@ public class NPCGameListHandler {
                         ProgressBarHelper.increment();
                         for (String string : listAvailableOperations.getSelectedValuesList()) {
                             try {
-                                NpcGamesMod.editNPCGames(ModManager.genreMod.getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
+                                NpcGameManager.INSTANCE.editNPCGames(GenreManager.INSTANCE.getContentIdByName(string), addGenreID, Integer.parseInt(spinnerChance.getValue().toString()));
                                 if (addGenreID) {
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.added.upperCase") + " " + string + " " + I18n.INSTANCE.get("window.npcGamesList.to") + " " + I18n.INSTANCE.get("window.npcGamesList.confirmDialog.2").replace(".", ""));
                                 } else {

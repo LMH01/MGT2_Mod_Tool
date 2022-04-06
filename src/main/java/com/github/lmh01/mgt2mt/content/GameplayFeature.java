@@ -1,12 +1,13 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.*;
-import com.github.lmh01.mgt2mt.mod.managed.GameplayFeatureType;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.types.GameplayFeatureType;
+import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.*;
 
@@ -29,7 +30,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
 
     public GameplayFeature(String name,
                            Integer id,
-                           TranslationManagerNew translationManager,
+                           TranslationManager translationManager,
                            String description,
                            GameplayFeatureType gameplayFeatureType,
                            String date,
@@ -94,7 +95,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         StringBuilder badGenresOut = new StringBuilder();
         boolean firstBadFeature = true;
         for (int i : badGenres) {
-            badGenresOut.append(ModManager.genreMod.getContentNameById(i));
+            badGenresOut.append(GenreManager.INSTANCE.getContentNameById(i));
             if (!firstBadFeature) {
                 badGenresOut.append(", ");
             } else {
@@ -103,8 +104,8 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         }
         StringBuilder goodGenresOut = new StringBuilder();
         boolean firstGoodGenre = true;
-        for (int i : badGenres) {
-            goodGenresOut.append(ModManager.genreMod.getContentNameById(i));
+        for (int i : goodGenres) {
+            goodGenresOut.append(GenreManager.INSTANCE.getContentNameById(i));
             if (!firstGoodGenre) {
                 goodGenresOut.append(", ");
             } else {
@@ -143,10 +144,10 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
     @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         if (map.containsKey("GOOD")) {
-            map.replace("GOOD", ModManager.genreMod.getGenreNames(map.get("GOOD")));
+            map.replace("GOOD", SharingHelper.getExportNamesString(GenreManager.INSTANCE, Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("GOOD")))));
         }
         if (map.containsKey("BAD")) {
-            map.replace("BAD", ModManager.genreMod.getGenreNames(map.get("BAD")));
+            map.replace("BAD", SharingHelper.getExportNamesString(GenreManager.INSTANCE, Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")))));
         }
     }
 
@@ -156,7 +157,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
     private ArrayList<String> getGenreNames(ArrayList<Integer> genreIds) throws ModProcessingException {
         ArrayList<String> genreNames = new ArrayList<>();
         for (int i : genreIds) {
-            genreNames.add(ModManager.genreMod.getContentNameById(i));
+            genreNames.add(GenreManager.INSTANCE.getContentNameById(i));
         }
         return genreNames;
     }

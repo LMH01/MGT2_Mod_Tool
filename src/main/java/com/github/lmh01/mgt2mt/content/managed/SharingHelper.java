@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.Utils;
 
 import java.nio.file.Path;

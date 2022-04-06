@@ -2,11 +2,16 @@ package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.NpcEngineManager;
+import com.github.lmh01.mgt2mt.content.manager.PlatformManager;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
+import java.io.File;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +25,7 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
 
     public NpcEngine(String name,
                      Integer id,
-                     TranslationManagerNew translationManager,
+                     TranslationManager translationManager,
                      String date,
                      int genre,
                      int platform,
@@ -55,7 +60,7 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + date + "<br>" +
                 I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + GenreManager.INSTANCE.getContentNameById(genre) + "<br>" +
-                I18n.INSTANCE.get("commonText.platform.upperCase") + ": " + ModManager.platformMod.getContentNameById(platform) + "<br>" +
+                I18n.INSTANCE.get("commonText.platform.upperCase") + ": " + PlatformManager.INSTANCE.getContentNameById(platform) + "<br>" +
                 I18n.INSTANCE.get("commonText.price") + ": " + price + "<br>" +
                 I18n.INSTANCE.get("commonText.profitShare") + ": " + share + "<br>";
     }

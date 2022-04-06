@@ -1,20 +1,24 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.mod.GenreMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
+import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class WindowAddGenrePage10 extends JFrame {
     static final WindowAddGenrePage10 FRAME = new WindowAddGenrePage10();
-    public static AtomicReference<ArrayList<File>> screenshotFiles = new AtomicReference<>(new ArrayList<>());
     JPanel contentPane = new JPanel();
     JButton buttonAddScreenshot = new JButton("Add screenshot(s)");
     JButton buttonResetAddedScreenshots = new JButton("Reset");
@@ -35,18 +39,40 @@ public class WindowAddGenrePage10 extends JFrame {
     }
 
     public WindowAddGenrePage10() {
-        buttonAddScreenshot.addActionListener(actionEvent -> ModManager.genreMod.setGenreScreenshots(screenshotFiles, buttonAddScreenshot));
+        buttonAddScreenshot.addActionListener(actionEvent -> {
+            ArrayList<File> screenshotsSource = getScreenshotImages();
+            ArrayList<Image> screenshots = new ArrayList<>();
+            if (screenshotsSource.isEmpty()) {
+                for (int i = 0; i<=4; i++) {
+                    screenshots.add(new Image(MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve("0/" + i + ".png").toFile(), MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(GenreManager.INSTANCE.getExportImageName(i + ".png", GenreManager.currentGenreHelper.name)).toFile()));
+                }
+            } else {
+                int id = 1;
+                for (File file : screenshotsSource) {
+                    screenshots.add(new Image(file, MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(GenreManager.INSTANCE.getExportImageName(id + ".png", GenreManager.currentGenreHelper.name)).toFile()));
+                    id+=1;
+                }
+            }
+            GenreManager.currentGenreHelper.screenshots = screenshots;
+        });
         buttonResetAddedScreenshots.addActionListener(actionEvent -> {
             if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.screenshots.button.resetScreenshots.confirm"), I18n.INSTANCE.get("frame.title.reset"), JOptionPane.YES_NO_OPTION) == 0) {
-                screenshotFiles.get().clear();
+                GenreManager.currentGenreHelper.screenshots = new ArrayList<>();
             }
         });
         buttonNext.addActionListener(actionEvent -> {
-            GenreMod.openStepWindow(11);
+            if (GenreManager.currentGenreHelper.screenshots.isEmpty()) {
+                ArrayList<Image> screenshots = new ArrayList<>();
+                for (int i = 0; i<=4; i++) {
+                    screenshots.add(new Image(MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve("0/" + i + ".png").toFile(), MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(GenreManager.INSTANCE.getExportImageName(i + ".png", GenreManager.currentGenreHelper.name)).toFile()));
+                }
+                GenreManager.currentGenreHelper.screenshots = screenshots;
+            }
+            GenreManager.openStepWindow(11);
             FRAME.dispose();
         });
         buttonPrevious.addActionListener(actionEvent -> {
-            GenreMod.openStepWindow(9);
+            GenreManager.openStepWindow(9);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -99,5 +125,98 @@ public class WindowAddGenrePage10 extends JFrame {
         buttonQuit.setBounds(120, 100, 90, 23);
         buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
+    }
+
+    /**
+     * Opens an ui where the user can select image files.
+     *
+     * @return Returns the image files as ArrayList
+     */
+    public static ArrayList<File> getScreenshotImages() {
+        ArrayList<File> arrayListScreenshotFiles = new ArrayList<>();
+        ArrayList<File> arrayListScreenshotFilesSelected = new ArrayList<>();
+        JTextField textFieldScreenshotFile = new JTextField();
+        JLabel labelMessage = new JLabel(I18n.INSTANCE.get("dialog.genreHelper.getGenreScreenshots.message"));
+        JButton buttonBrowse = new JButton(I18n.INSTANCE.get("commonText.browse"));
+        AtomicBoolean multipleFilesSelected = new AtomicBoolean(false);
+        AtomicInteger numberOfScreenshotsToAdd = new AtomicInteger();
+        buttonBrowse.addActionListener(actionEventSmall -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); //set Look and Feel to Windows
+
+                FileFilter fileFilter = new FileFilter() {//File filter to only show .png files.
+                    @Override
+                    public boolean accept(File f) {
+                        if (f.getName().contains(".png")) {
+                            return true;
+                        }
+                        return f.isDirectory();
+                    }
+
+                    public String getDescription() {
+                        return I18n.INSTANCE.get("commonText.imageFile.selectionType");
+                    }
+                };
+
+                JFileChooser fileChooser = new JFileChooser(); //Create a new GUI that will use the current(windows) Look and Feel
+                fileChooser.setFileFilter(fileFilter);
+                fileChooser.setDialogTitle(I18n.INSTANCE.get("commonText.imageFile.selectPngFiles.fileChooser"));
+                fileChooser.setMultiSelectionEnabled(true);
+
+                int return_value = fileChooser.showOpenDialog(null);
+                if (return_value == 0) {
+                    final int NUMBER_OF_SCREENSHOTS = fileChooser.getSelectedFiles().length;
+                    numberOfScreenshotsToAdd.set(NUMBER_OF_SCREENSHOTS);
+                    File[] screenshots = fileChooser.getSelectedFiles();
+                    if (NUMBER_OF_SCREENSHOTS > 1) {
+                        multipleFilesSelected.set(true);
+                    }
+                    boolean failed = false;
+                    for (int i = 0; i < NUMBER_OF_SCREENSHOTS; i++) {
+                        if (!failed) {
+                            if (screenshots[i].getName().contains(".png")) {
+                                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                                if (multipleFilesSelected.get()) {
+                                    arrayListScreenshotFilesSelected.add(screenshots[i]);
+                                    textFieldScreenshotFile.setText(I18n.INSTANCE.get("commonText.multipleFilesSelected"));
+                                } else {
+                                    textFieldScreenshotFile.setText(fileChooser.getSelectedFile().getPath());
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectOnlyPngFile"));
+                                failed = true;
+                                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+                            }
+                        }
+                    }
+                }
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); //revert the Look and Feel back to the ugly Swing
+            } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException e) {
+                e.printStackTrace();
+            }
+        });
+        Object[] params = {labelMessage, textFieldScreenshotFile, buttonBrowse};
+        if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.OK_CANCEL_OPTION) == 0) {
+            String textFieldPath = textFieldScreenshotFile.getText();
+            if (textFieldPath.endsWith(".png")) {
+                File imageFile = new File(textFieldPath);
+                if (imageFile.exists()) {
+                    arrayListScreenshotFiles.add(new File(textFieldPath));
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.utils.imageFileAdded"));
+                } else {
+                    JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.doesNotExist"), I18n.INSTANCE.get("frame.title.fileNotFound"), JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (multipleFilesSelected.get()) {
+                for (int i = 0; i < numberOfScreenshotsToAdd.get(); i++) {
+                    arrayListScreenshotFiles.add(arrayListScreenshotFilesSelected.get(i));
+                }
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("dialog.utils.imageFilesAdded"));
+            } else {
+                JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("commonText.imageFile.selectPngFile"));
+
+            }
+            return arrayListScreenshotFiles;
+        }
+        return arrayListScreenshotFiles;
     }
 }

@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
@@ -26,11 +25,10 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     private final JMenuItem exportMenuItem;
     protected final File gameFile;
     private final Charset gameFileCharset;
-    private final String[] compatibleModToolVersions;
     private ImportHelperMap currentImportHelperMap;
     private int maxId = 0;
 
-    public AbstractBaseContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset, String[] compatibleModToolVersions) {
+    public AbstractBaseContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
         this.mainTranslationKey = mainTranslationKey;
         this.defaultContentFileName = defaultContentFileName;
         this.defaultContent = getDefaultContentFromFiles();
@@ -39,7 +37,6 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
         this.exportMenuItem = getInitialExportMenuItem();
         this.gameFile = gameFile;
         this.gameFileCharset = gameFileCharset;
-        this.compatibleModToolVersions = compatibleModToolVersions;
     }
 
     protected final ArrayList<JMenuItem> getInitialModMenuItems() {
@@ -100,7 +97,11 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
      */
     protected String[] getDefaultContentFromFiles() {
         try {
-            return ReadDefaultContent.getDefault(defaultContentFileName);
+            if (this instanceof AbstractSimpleContentManager) {
+                return ReadDefaultContent.getDefault(defaultContentFileName, ((AbstractSimpleContentManager)this)::getReplacedLine);
+            } else {
+                return ReadDefaultContent.getDefault(defaultContentFileName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
@@ -115,11 +116,30 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
         JOptionPane.showMessageDialog(null, name + " \"" + getType() + "\" " + I18n.INSTANCE.get("commonText.hasSuccessfullyBeenAddedToTheGame"), "frame.title.success", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * If the map key contains the missing dependency in its value it is replaced with the replacement.
+     * If the replacement already exists in the map the missing dependency is removed and not replaced.
+     * Value formatting: {@literal <DATA> (DATA = missingDependency}
+     * Note: Also works if {@literal <> is missing}
+     *
+     * @param mapKey The map key for which the values should be replaced
+     * @see DependentContentManager#replaceMissingDependency(Map, String, String) Parameters
+     */
+    protected final void replaceMapEntry(Map<String, Object> map, String missingDependency, String replacement, String mapKey) {
+        if (map.containsKey(mapKey)) {
+            if (map.get(mapKey).toString().contains(missingDependency) && !map.get(mapKey).toString().contains(replacement)) {
+                map.replace(mapKey, map.get(mapKey).toString().replaceAll(missingDependency, replacement));
+            } else {
+                map.replace(mapKey, map.get(mapKey).toString().replaceAll(missingDependency, "").replaceAll("<>", ""));
+            }
+        }
+    }
+
     @Override
     public void addContent(AbstractBaseContent content) throws ModProcessingException {
         try {
             analyzeFile();
-            createBackup();
+            createBackup(false);
             // Check if the id has been set already, if not the id will be set here
             if (content.id == null) {
                 content.id = getFreeId();
@@ -142,7 +162,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     public void removeContent(String name) throws ModProcessingException {
         try {
             analyzeFile();
-            createBackup();
+            createBackup(false);
             AbstractBaseContent content = constructContentFromName(name);
             if (content instanceof RequiresPictures) {
                 try {
@@ -260,11 +280,6 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     }
 
     @Override
-    public String[] getCompatibleModToolVersions() {
-        return compatibleModToolVersions;
-    }
-
-    @Override
     public ArrayList<JMenuItem> getModMenuItems() {
         return modMenuItems;
     }
@@ -295,6 +310,11 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
             getExportMenuItem().setEnabled(false);
             getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
         }
+    }
+
+    @Override
+    public String getDefaultContentFileName() {
+        return defaultContentFileName;
     }
 
     @Override
@@ -349,12 +369,17 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     }
 
     @Override
-    public void createBackup() throws ModProcessingException {
+    public void createBackup(boolean initialBackup) throws ModProcessingException {
         try {
-            Backup.createBackup(gameFile);
+            Backup.createBackup(gameFile, initialBackup, false);
         } catch (IOException e) {
             throw new ModProcessingException("Unable to create backup of file " + gameFile.getName(), e);
         }
+    }
+
+    @Override
+    public File getGameFile() {
+        return gameFile;
     }
 
     @Override

@@ -1,7 +1,8 @@
 package com.github.lmh01.mgt2mt;
 
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.OSType;
@@ -36,6 +37,16 @@ public class MadGamesTycoon2ModTool {
     *  export should not crash, instead the mod that is corrupt should not be exported and a message should be printed to the user.
     *   Maybe add function "modValid" or something to the the abstract mod classes (the classes similar to NpcIp).
     *   Or check if mod is valid when it is constructed initially.
+    *
+    * !TODO!
+    *   Add possibility to add/remove multiple contents of the same type simultaneously (open the game file just once)
+    *       This should result in a massive speed improvement when adding / removing large quantities of mods
+    *
+    * TODO
+    *  Add progress bar usage for restore initial backup (remove all mods)
+    *
+    * TODO
+    *  Check all compatibleModToolVersions strings and update them possible
     * */
     public static void main(String[] args) {
         Settings.importSettings();
@@ -48,14 +59,14 @@ public class MadGamesTycoon2ModTool {
         }
         LogFile.startLogging();
         Runtime.getRuntime().addShutdownHook(ThreadHandler.getShutdownHookThread());
-        ModManager.initializeMods();
+        ContentAdministrator.initializeContentManagers();
         ToolTipManager.sharedInstance().setDismissDelay(30000);
         ToolTipManager.sharedInstance().setInitialDelay(500);
         WindowMain.createFrame();
         Settings.validateMGT2Folder();
         if (Settings.mgt2FolderIsCorrect) {
             try {
-                ModManager.themeMod.writeCustomThemeFile();
+                ThemeManager.INSTANCE.writeCustomThemeFile();
             } catch (ModProcessingException e) {
                 TextAreaHelper.printStackTrace(e);
                 e.printStackTrace();

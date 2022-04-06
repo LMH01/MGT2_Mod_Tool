@@ -735,6 +735,7 @@ progressBar.creatingInitialBackup|Initial-Backup wird erstellt
 progressBar.initializingTool|Initialisiere Tool
 progressBar.downloadingDefaultContentUpdate|Lade Update für die "default_content" Datei herunter
 progressBar.export.creatingExportMap|Erstelle export map
+progressBar.constructingContent|Baue Inhalte
 
 textArea.exportComplete|Export abgeschlossen
 textArea.uninstalling|Deinstalliere
@@ -924,10 +925,6 @@ window.main.backup.deleteAllBackups.toolTip|Klicke hier, um alle Backups zu lös
 window.main.backup.openBackupFolder|Backup Ordner öffnen
 window.main.backup.openBackupFolder.toolTip|<html>Clicke hier, um den Backup Ordner zu öffnen.<br>Alle Backups, die von dem Tool erstellt wurden sind hier gespeichert.<br>Nützlich, wenn mein ein Backup manuell wiederherstellen möchte.
 window.main.utilities|Nützliches
-window.main.utilities.experimentalFeatures|Experimentelle Funktionen
-window.main.utilities.experimentalFeatures.toolTip|Enthält Funktionen, die experimentell sind und Probleme oder Fehler verursachen können
-window.main.utilities.experimentalFeatures.replacePublisher|Publisher mit echten Publishern ersetzen.
-window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Clicke hier, um die standart Publisher mit den "echten" Publishern zu ersetzen
 window.main.utilities.openGithubPage|Github Seite öffnen
 window.main.utilities.openMGT2Folder|MGT2 Ordner öffnen
 window.main.utilities.openSaveGameFolder|Spielstand Ordner öffnen

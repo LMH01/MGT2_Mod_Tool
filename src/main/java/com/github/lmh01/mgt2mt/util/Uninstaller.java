@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
+import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
@@ -167,22 +167,22 @@ public class Uninstaller {
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {
         boolean uninstallFailed = false;
         ArrayList<String> customContentArrayList = new ArrayList<>();
-        for (AbstractBaseMod mod : ModManager.mods) {
-            customContentArrayList.addAll(Arrays.asList(mod.getCustomContentString()));
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            customContentArrayList.addAll(Arrays.asList(manager.getCustomContentString()));
         }
         if (customContentArrayList.size() != 0) {
             ProgressBarHelper.initializeProgressBar(0, customContentArrayList.size(), I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
-            for (AbstractBaseMod mod : ModManager.mods) {
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 String currentMod = "";
                 try {
-                    for (String string : mod.getCustomContentString()) {
+                    for (String string : manager.getCustomContentString()) {
                         currentMod = string;
-                        mod.removeMod(string);
+                        manager.removeContent(string);
                     }
                 } catch (ModProcessingException e) {
                     TextAreaHelper.printStackTrace(e);
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + currentMod + " - " + customContentArrayList + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                    LOGGER.info("Mod of type " + mod.getType() + " could not be removed: " + e.getMessage());
+                    LOGGER.info("Mod of type " + manager.getType() + " could not be removed: " + e.getMessage());
                     uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
                     uninstallFailed = true;
                 }

@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows.genre;
 
-import com.github.lmh01.mgt2mt.mod.GenreMod;
+import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ public class WindowAddGenrePage4 extends JFrame {
     public WindowAddGenrePage4() {
         buttonNext.addActionListener(actionEvent -> {
             if (saveInputs(LIST_TARGET_GROUPS)) {
-                GenreMod.openStepWindow(5);
+                GenreManager.openStepWindow(5);
                 FRAME.dispose();
             } else {
                 JOptionPane.showMessageDialog(new Frame(), I18n.INSTANCE.get("mod.genre.selectAtLeastOneTargetGroup"));
@@ -45,7 +46,7 @@ public class WindowAddGenrePage4 extends JFrame {
         });
         buttonPrevious.addActionListener(actionEvent -> {
             saveInputs(LIST_TARGET_GROUPS);
-            GenreMod.openStepWindow(3);
+            GenreManager.openStepWindow(3);
             FRAME.dispose();
         });
         buttonQuit.addActionListener(actionEvent -> {
@@ -93,17 +94,8 @@ public class WindowAddGenrePage4 extends JFrame {
     private void setList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         ArrayList<Integer> arrayListInt = new ArrayList<>();
-        if (GenreMod.mapNewGenre.get("TGROUP").contains("KID")) {
-            arrayListInt.add(0);
-        }
-        if (GenreMod.mapNewGenre.get("TGROUP").contains("TEEN")) {
-            arrayListInt.add(1);
-        }
-        if (GenreMod.mapNewGenre.get("TGROUP").contains("ADULT")) {
-            arrayListInt.add(2);
-        }
-        if (GenreMod.mapNewGenre.get("TGROUP").contains("OLD")) {
-            arrayListInt.add(3);
+        for (TargetGroup tg : GenreManager.currentGenreHelper.targetGroups) {
+            arrayListInt.add(tg.getId());
         }
 
         //Converts ArrayList to int[]
@@ -128,25 +120,24 @@ public class WindowAddGenrePage4 extends JFrame {
     }
 
     private static boolean saveInputs(JList<String> listTargetGroups) {
-        GenreMod.mapNewGenre.remove("TGROUP");
-        StringBuilder targetGroups = new StringBuilder();
         if (listTargetGroups.getSelectedValuesList().size() != 0) {
+            ArrayList<TargetGroup> targetGroups = new ArrayList<>();
             for (int i = 0; i < listTargetGroups.getSelectedValuesList().size(); i++) {
                 LOGGER.info("Current target group " + listTargetGroups.getSelectedValuesList().get(i));
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Kid")) {
-                    targetGroups.append("<KID>");
+                    targetGroups.add(TargetGroup.KID);
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Teen")) {
-                    targetGroups.append("<TEEN>");
+                    targetGroups.add(TargetGroup.TEEN);
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Adult")) {
-                    targetGroups.append("<ADULT>");
+                    targetGroups.add(TargetGroup.ADULT);
                 }
                 if (listTargetGroups.getSelectedValuesList().get(i).contains("Senior")) {
-                    targetGroups.append("<OLD>");
+                    targetGroups.add(TargetGroup.OLD);
                 }
             }
-            GenreMod.mapNewGenre.put("TGROUP", targetGroups.toString());
+            GenreManager.currentGenreHelper.targetGroups = targetGroups;
             return true;
         } else {
             return false;

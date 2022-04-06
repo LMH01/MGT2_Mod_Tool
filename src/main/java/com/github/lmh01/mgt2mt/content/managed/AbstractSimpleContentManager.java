@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -12,8 +12,8 @@ import java.util.Map;
 public abstract class AbstractSimpleContentManager extends AbstractBaseContentManager {
     public Map<Integer, String> fileContent;
 
-    public AbstractSimpleContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset, String[] compatibleModToolVersions) {
-        super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset, compatibleModToolVersions);
+    public AbstractSimpleContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
+        super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
     }
 
     /**
@@ -38,7 +38,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
     @Override
     public void analyzeFile() throws ModProcessingException {
         try {
-            fileContent = DataStreamHelper.getContentFromFileNew(gameFile, getCharset());
+            fileContent = DataStreamHelper.getContentFromFile(gameFile, getCharset());
             setMaxId(fileContent.size()-1);
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze game file for mod " + getType(), e);
@@ -74,8 +74,17 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
     @Override
     public String getContentNameById(int id) throws ModProcessingException {
         if (fileContent.containsKey(id)) {
-            return fileContent.get(id);
+            return getReplacedLine(fileContent.get(id));
         }
         throw new ModProcessingException("Unable to find name for id " + id + ": This id does not exist in the map!");
+    }
+
+    @Override
+    public ArrayList<Integer> getActiveIds() {
+        ArrayList<Integer> activeIds = new ArrayList<>();
+        for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
+            activeIds.add(entry.getKey());
+        }
+        return activeIds;
     }
 }

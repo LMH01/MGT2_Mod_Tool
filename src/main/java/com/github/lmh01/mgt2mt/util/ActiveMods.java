@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.mod.managed.AbstractBaseMod;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
+import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,15 +18,15 @@ public class ActiveMods {
     public static void showActiveMods() throws ModProcessingException {
         boolean noModsActive = true;
         ArrayList<JPanel> objects = new ArrayList<>();
-        for (AbstractBaseMod mod : ModManager.mods) {
-            String[] customContent = mod.getCustomContentString();
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            String[] customContent = manager.getCustomContentString();
             if (customContent.length > 0) {
                 JPanel panel = new JPanel();
-                JLabel label = new JLabel(mod.getType() + ": ");
+                JLabel label = new JLabel(manager.getType() + ": ");
                 JButton button = new JButton(Integer.toString(customContent.length));
                 button.addActionListener(actionEvent -> {
                     try {
-                        JList<String> listAvailableGenres = new JList<>(mod.getCustomContentString());
+                        JList<String> listAvailableGenres = new JList<>(manager.getCustomContentString());
                         listAvailableGenres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                         listAvailableGenres.setLayoutOrientation(JList.VERTICAL);
                         listAvailableGenres.setVisibleRowCount(-1);
@@ -35,12 +35,12 @@ public class ActiveMods {
                         Object[] params = {label, scrollPaneAvailableGenres};
                         JOptionPane.showMessageDialog(null, params);
                     } catch (ModProcessingException e) {
-                        ModManager.showException(e);
+                        ContentAdministrator.showException(e);
                     }
                 });
                 panel.add(label);
                 panel.add(button);
-                panel.setName(mod.getType());
+                panel.setName(manager.getType());
                 objects.add(panel);
                 noModsActive = false;
             }

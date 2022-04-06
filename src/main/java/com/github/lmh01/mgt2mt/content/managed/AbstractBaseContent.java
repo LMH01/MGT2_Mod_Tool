@@ -1,7 +1,5 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
-import com.github.lmh01.mgt2mt.mod.managed.ModConstructionType;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 
 import java.util.HashMap;
@@ -32,9 +30,10 @@ public abstract class AbstractBaseContent {
      * Note: This function can not be overwritten
      * @return A map representation of this content. This map is used to export the mod.
      */
-    public final Map<String, String> getExportMap() throws ModProcessingException {
-        Map<String, String> map = getMap();
-        map.remove("ID");
+    public final Map<String, Object> getExportMap() throws ModProcessingException {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, String> baseMap = getMap();
+        baseMap.remove("ID");
         if (this instanceof RequiresPictures) {
             // Adds the images that should be exported to the export map
             try {
@@ -46,7 +45,8 @@ public abstract class AbstractBaseContent {
             }
         }
         if (this instanceof DependentContent) {
-            ((DependentContent)this).changeExportMap(map);
+            ((DependentContent)this).changeExportMap(baseMap);
+            map.put("dependencies", ((DependentContent) this).getDependencyMap());
         }
         return map;
     }

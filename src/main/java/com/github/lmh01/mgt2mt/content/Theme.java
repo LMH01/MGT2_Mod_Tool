@@ -1,10 +1,12 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.*;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.*;
 
@@ -13,9 +15,9 @@ public class Theme extends AbstractBaseContent implements SimpleContent, Depende
     /**
      * Contains the translations of this theme.
      * The map key is the translation key and the value is the translation for that key.
-     * @see TranslationManagerNew#TRANSLATION_KEYS The translation keys.
+     * @see TranslationManager#TRANSLATION_KEYS The translation keys.
      */
-    Map<String, String> translations;
+    public Map<String, String> translations;
 
     ArrayList<Integer> compatibleGenres;
 

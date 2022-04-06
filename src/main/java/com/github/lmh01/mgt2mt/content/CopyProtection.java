@@ -1,9 +1,10 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.CopyProtectionManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class CopyProtection extends AbstractAdvancedContent {
     int price;
     int devCosts;
 
-    public CopyProtection(String name, Integer id, TranslationManagerNew nameTranslations, String date, int price, int devCosts) {
+    public CopyProtection(String name, Integer id, TranslationManager nameTranslations, String date, int price, int devCosts) {
         super(CopyProtectionManager.INSTANCE, name, id, nameTranslations);
         this.date = date;
         this.price = price;

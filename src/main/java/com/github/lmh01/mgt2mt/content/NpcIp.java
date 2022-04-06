@@ -3,9 +3,12 @@ package com.github.lmh01.mgt2mt.content;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
 import com.github.lmh01.mgt2mt.content.managed.SimpleContent;
-import com.github.lmh01.mgt2mt.mod.managed.ModManager;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.mod.managed.TargetGroup;
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
+import com.github.lmh01.mgt2mt.content.manager.NpcIpManager;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
+import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
+import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 
 import java.util.HashMap;
@@ -57,16 +60,16 @@ public class NpcIp extends AbstractBaseContent implements SimpleContent, Depende
     public Map<String, String> getMap() throws ModProcessingException {
         Map<String, String> exportMap = new HashMap<>();
         exportMap.put("name", name);
-        exportMap.put("genre", ModManager.genreMod.getContentNameById(genre));
+        exportMap.put("genre", GenreManager.INSTANCE.getContentNameById(genre));
         if (subGenre != null) {
-            exportMap.put("sub_genre", ModManager.genreMod.getContentNameById(subGenre));
+            exportMap.put("sub_genre", GenreManager.INSTANCE.getContentNameById(subGenre));
         }
-        exportMap.put("theme", ModManager.themeMod.getContentNameById(theme));
+        exportMap.put("theme", ThemeManager.INSTANCE.getContentNameById(theme));
         if (subTheme != null) {
-            exportMap.put("sub_theme", ModManager.themeMod.getContentNameById(theme));
+            exportMap.put("sub_theme", ThemeManager.INSTANCE.getContentNameById(theme));
         }
         exportMap.put("target_group", Integer.toString(targetGroup.getId()));
-        exportMap.put("publisher", ModManager.publisherMod.getContentNameById(publisher));
+        exportMap.put("publisher", PublisherManager.INSTANCE.getContentNameById(publisher));
         exportMap.put("release_year", Integer.toString(releaseYear));
         exportMap.put("rating", Integer.toString(rating));
         return exportMap;
@@ -76,22 +79,22 @@ public class NpcIp extends AbstractBaseContent implements SimpleContent, Depende
     public String getOptionPaneMessage() throws ModProcessingException {
         String subGenrePrint = "none";
         if (subGenre != null) {
-            subGenrePrint = ModManager.genreMod.getContentNameById(subGenre);
+            subGenrePrint = GenreManager.INSTANCE.getContentNameById(subGenre);
         }
         String subThemePrint = "none";
         if (subTheme != null) {
-            subThemePrint = ModManager.themeMod.getContentNameById(subTheme);
+            subThemePrint = ThemeManager.INSTANCE.getContentNameById(subTheme);
         }
         System.out.printf("Theme id: %s\n", theme);
         return "<html>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.optionPaneMessage.firstPart") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
-                I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + ModManager.genreMod.getContentNameById(genre) + "<br>" +
+                I18n.INSTANCE.get("commonText.genre.upperCase") + ": " + GenreManager.INSTANCE.getContentNameById(genre) + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.button.subGenre") + ": " + subGenrePrint + "<br>" +
-                I18n.INSTANCE.get("commonText.theme.upperCase") + ": " + ModManager.themeMod.getContentNameById(theme) + "<br>" +
+                I18n.INSTANCE.get("commonText.theme.upperCase") + ": " + ThemeManager.INSTANCE.getContentNameById(theme) + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.button.subTheme") + ": " + subThemePrint + "<br>" +
                 I18n.INSTANCE.get("commonText.targetGroup") + ": " + targetGroup.getTypeName() + "<br>" +
-                I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher") + ": " + ModManager.publisherMod.getContentNameById(publisher) + "<br>" +
+                I18n.INSTANCE.get("mod.npcIp.addMod.components.button.publisher") + ": " + PublisherManager.INSTANCE.getContentNameById(publisher) + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.label.releaseYear") + ": " + releaseYear + "<br>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.components.spinner.rating") + ": " + rating;
     }
@@ -106,14 +109,14 @@ public class NpcIp extends AbstractBaseContent implements SimpleContent, Depende
         }
         map.put(GenreManager.INSTANCE.getExportType(), genres);
         Set<String> themes = new HashSet<>();
-        themes.add(ModManager.themeMod.getContentNameById(theme));
+        themes.add(ThemeManager.INSTANCE.getContentNameById(theme));
         if (subTheme != null) {
-            themes.add(ModManager.themeMod.getContentNameById(subTheme));
+            themes.add(ThemeManager.INSTANCE.getContentNameById(subTheme));
         }
-        map.put(ModManager.themeMod.getExportType(), themes);
+        map.put(ThemeManager.INSTANCE.getExportType(), themes);
         Set<String> publisher = new HashSet<>();
-        publisher.add(ModManager.publisherMod.getContentNameById(this.publisher));
-        map.put(ModManager.publisherMod.getExportType(), publisher);
+        publisher.add(PublisherManager.INSTANCE.getContentNameById(this.publisher));
+        map.put(PublisherManager.INSTANCE.getExportType(), publisher);
         return map;
     }
 

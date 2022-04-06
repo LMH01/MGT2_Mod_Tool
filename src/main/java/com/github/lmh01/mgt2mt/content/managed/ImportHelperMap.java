@@ -1,6 +1,5 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ public class ImportHelperMap {
         if (type instanceof AbstractSimpleContentManager) {
             AbstractSimpleContentManager cm = ((AbstractSimpleContentManager) type);
             for (Map.Entry<Integer, String> entry : cm.fileContent.entrySet()) {
-                helperMap.put(entry.getValue(), entry.getKey());
+                helperMap.put(cm.getReplacedLine(entry.getValue()), entry.getKey());
             }
         } else if (type instanceof AbstractAdvancedContentManager) {
             AbstractAdvancedContentManager cm = ((AbstractAdvancedContentManager) type);

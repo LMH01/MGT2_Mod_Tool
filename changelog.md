@@ -5,6 +5,13 @@
 ### New feature
 - Added new possibilities to customize new publishers
 
+### Removed feature
+- It is no longer possible to select a custom genre id when adding a genre
+- Removed experimental menu: Publishers can no longer be replaced with real life publishers
+
+### Bug fixes
+- Turkish translation is now displayed in the translation summary again
+
 ## [v3.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.2.0) (Latest Version)
 
 ### New feature

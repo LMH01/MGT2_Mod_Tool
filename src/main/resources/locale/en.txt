@@ -655,8 +655,8 @@ dialog.genreManager.addGenre.npcGamesList.error.1|Error while adding genre with 
 dialog.genreManager.addGenre.npcGamesList.error.2|to NpcGames.txt.<br>Please try again with administrator rights.<br>Exception:
 
 dialog.genreHelper.getGenreScreenshots.message|<html>Click browse or enter enter the image path manually.<br>When the image path is set click okay.<br>This will add the screenshot to a list of screenshots that will be shown in the development progress page.<br>Note: The image file as to be a `.png` file and the aspect ratio should be 4:3
-dialog.genreHelper.getGenreScreenshots.imageFileAdded|Image file has been added.
-dialog.genreHelper.getGenreScreenshots.imageFilesAdded|Image files have been added.
+dialog.utils.imageFileAdded|Image file has been added.
+dialog.utils.imageFilesAdded|Image files have been added.
 
 dialog.contentEditor.editGenreThemeFit.message.title|Edit genre/theme fit
 dialog.contentEditor.editGenreThemeFit.message|<html>Here you can edit the genre/theme fit.<br>Select the themes and genres that are to be combined with each other.<br>The combinations can also be undone by selecting remove instead of add.
@@ -732,6 +732,7 @@ progressBar.creatingInitialBackup|Creating initial backup
 progressBar.initializingTool|Initializing tool
 progressBar.downloadingDefaultContentUpdate|Downloading default content update
 progressBar.export.creatingExportMap|Creating export map
+progressBar.constructingContent|Constructing contents
 
 textArea.exportComplete|Export complete
 textArea.uninstalling|Uninstalling
@@ -922,10 +923,6 @@ window.main.backup.deleteAllBackups.toolTip|Click to delete all backups that hav
 window.main.backup.openBackupFolder|Open backup folder
 window.main.backup.openBackupFolder.toolTip|<html>Click to open the backup folder.<br>All backups that have been created are located here.<br>Use this if you do want to restore a backup manually.
 window.main.utilities|Utilities
-window.main.utilities.experimentalFeatures|Experimental features
-window.main.utilities.experimentalFeatures.toolTip|Contains features that are experimental and might cause problems or bugs
-window.main.utilities.experimentalFeatures.replacePublisher|Replace publishers with real publishers
-window.main.utilities.experimentalFeatures.replacePublisher.toolTip|Click to replace the original publishers with real publishers
 window.main.utilities.openGithubPage|Open Github page
 window.main.utilities.openMGT2Folder|Open MGT2 folder
 window.main.utilities.openSaveGameFolder|Open save game folder

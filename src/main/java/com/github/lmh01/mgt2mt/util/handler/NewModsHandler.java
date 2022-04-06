@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;

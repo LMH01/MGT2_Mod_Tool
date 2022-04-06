@@ -1,12 +1,12 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
-import com.github.lmh01.mgt2mt.mod.managed.SpinnerType;
-import com.github.lmh01.mgt2mt.mod.managed.TypeEnum;
+import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.types.TypeEnum;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -205,7 +205,7 @@ public class WindowHelper {
         button.setToolTipText(buttonToolTipAddTranslations);
         button.addActionListener(actionEvent -> {
             if (!translationsAdded.get()) {
-                mapTranslationsAdded[0] = TranslationManagerNew.getTranslationsMap();
+                mapTranslationsAdded[0] = TranslationManager.getTranslationsMap();
                 if (mapTranslationsAdded[0].size() > 0) {
                     translationsAdded.set(true);
                     button.setText(buttonToolTipTranslationsAdded);
@@ -214,7 +214,7 @@ public class WindowHelper {
                 }
             } else {
                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION) {
-                    mapTranslationsAdded[0] = TranslationManagerNew.getTranslationsMap();
+                    mapTranslationsAdded[0] = TranslationManager.getTranslationsMap();
                     if (mapTranslationsAdded[0].size() > 0) {
                         button.setText(buttonToolTipTranslationsAdded);
                         translationsAdded.set(true);

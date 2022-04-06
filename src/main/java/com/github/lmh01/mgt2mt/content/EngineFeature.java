@@ -1,10 +1,11 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
-import com.github.lmh01.mgt2mt.mod.managed.EngineFeatureType;
-import com.github.lmh01.mgt2mt.mod.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.types.EngineFeatureType;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.manager.EngineFeatureManager;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.manager.TranslationManagerNew;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class EngineFeature extends AbstractAdvancedContent {
     int tech;
 
     public EngineFeature(String name,
-                         TranslationManagerNew translations,
+                         TranslationManager translations,
                          Integer id,
                          String description,
                          EngineFeatureType engineFeatureType,
