@@ -45,9 +45,10 @@ public abstract class AbstractBaseContent {
             }
         }
         if (this instanceof DependentContent) {
-            ((DependentContent)this).changeExportMap(baseMap);
+            ((DependentContent) this).changeExportMap(baseMap);
             map.put("dependencies", ((DependentContent) this).getDependencyMap());
         }
+        map.putAll(baseMap);
         return map;
     }
 
