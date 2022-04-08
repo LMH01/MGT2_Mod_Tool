@@ -10,7 +10,7 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.util.*;
 
-public class Theme extends AbstractBaseContent implements SimpleContent, DependentContent {
+public class Theme extends AbstractSimpleContent implements DependentContent {
 
     /**
      * Contains the translations of this theme.

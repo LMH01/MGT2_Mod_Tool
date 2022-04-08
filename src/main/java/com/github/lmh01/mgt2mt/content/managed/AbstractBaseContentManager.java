@@ -180,8 +180,8 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public void editTextFiles(AbstractBaseContent content, ContentAction action) throws ModProcessingException {
-        if (content instanceof SimpleContent && this instanceof AbstractSimpleContentManager) {
-            SimpleContent sc = (SimpleContent) content;
+        if (content instanceof AbstractSimpleContent && this instanceof AbstractSimpleContentManager) {
+            AbstractSimpleContent sc = (AbstractSimpleContent) content;
             AbstractSimpleContentManager scm = (AbstractSimpleContentManager) this;
             try {
                 Charset charset = getCharset();

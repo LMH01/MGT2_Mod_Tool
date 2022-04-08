@@ -1,8 +1,7 @@
 package com.github.lmh01.mgt2mt.content;
 
-import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
+import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
 import com.github.lmh01.mgt2mt.content.managed.types.LicenceType;
-import com.github.lmh01.mgt2mt.content.managed.SimpleContent;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.manager.LicenceManager;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -10,7 +9,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Licence extends AbstractBaseContent implements SimpleContent {
+public class Licence extends AbstractSimpleContent {
 
     LicenceType licenceType;
 

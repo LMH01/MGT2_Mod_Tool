@@ -86,7 +86,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                     if (action.equals(ContentAction.ADD_MOD)) {
                         bw.write("\r\n");
                         if (string.equals("GE")) {
-                            bw.write(((SimpleContent)content).getLine());
+                            bw.write(((AbstractSimpleContent)content).getLine());
                         } else if (string.equals("EN")){
                             bw.write(content.name);
                         } else {

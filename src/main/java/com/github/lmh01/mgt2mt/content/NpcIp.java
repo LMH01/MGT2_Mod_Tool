@@ -1,12 +1,8 @@
 package com.github.lmh01.mgt2mt.content;
 
-import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
-import com.github.lmh01.mgt2mt.content.managed.DependentContent;
-import com.github.lmh01.mgt2mt.content.managed.SimpleContent;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.NpcIpManager;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
 import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -16,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class NpcIp extends AbstractBaseContent implements SimpleContent, DependentContent {
+public class NpcIp extends AbstractSimpleContent implements DependentContent {
 
     // genre, subGenre, theme, subTheme and publisher store the id of the corresponding mod
     public Integer genre;
