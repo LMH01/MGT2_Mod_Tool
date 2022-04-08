@@ -68,6 +68,14 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         if (map.containsKey("NO_MOBILE")) {
             mobile = false;
         }
+        ArrayList<Integer> badGameplayFeatures = new ArrayList<>();
+        if (map.containsKey("BAD")) {
+            badGameplayFeatures = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")));
+        }
+        ArrayList<Integer> goodGameplayFeatures = new ArrayList<>();
+        if (map.containsKey("BAD")) {
+            goodGameplayFeatures = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")));
+        }
         return new GameplayFeature(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -82,8 +90,8 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 Integer.parseInt(map.get("GRAPHIC")),
                 Integer.parseInt(map.get("SOUND")),
                 Integer.parseInt(map.get("TECH")),
-                Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD"))),
-                Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("GOOD"))),
+                badGameplayFeatures,
+                goodGameplayFeatures,
                 mobile,
                 arcade
         );
