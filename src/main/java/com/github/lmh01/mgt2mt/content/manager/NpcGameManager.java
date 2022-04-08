@@ -24,7 +24,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
 
     public static final NpcGameManager INSTANCE = new NpcGameManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", "3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private NpcGameManager() {
         super("npcGames", "npc_game", "default_npcGames.txt", MGT2Paths.TEXT_DATA.getPath().resolve("NpcGames.txt").toFile(), StandardCharsets.UTF_16LE);

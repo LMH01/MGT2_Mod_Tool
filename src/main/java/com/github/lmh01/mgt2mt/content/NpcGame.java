@@ -38,14 +38,14 @@ public class NpcGame extends AbstractBaseContent implements SimpleContent, Depen
         boolean firstString = true;
         int number = 1;
         for (String string : genreNames) {
-            if (number > 5) {
-                number = 1;
-                genrePrint.append("<br>");
-            }
             if (firstString) {
                 firstString = false;
             } else {
                 genrePrint.append(", ");
+            }
+            if (number > 4) {
+                number = 1;
+                genrePrint.append("<br>");
             }
             genrePrint.append(string);
             number+=1;

@@ -30,7 +30,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
 
     public static final ThemeManager INSTANCE = new ThemeManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", "3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private ThemeManager() {
         super("theme", "theme", "default_themes_en.txt", ModManagerPaths.MAIN.getPath().resolve("themes_2.txt").toFile(), StandardCharsets.UTF_16LE);

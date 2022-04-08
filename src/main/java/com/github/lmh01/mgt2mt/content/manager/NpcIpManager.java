@@ -19,10 +19,10 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
 
     public static final NpcIpManager INSTANCE = new NpcIpManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private NpcIpManager() {
-        super("npcIp", "npc_ip", "default_npcIps.txt", MGT2Paths.TEXT_DATA.getPath().resolve("NpcIps.txt").toFile(), StandardCharsets.UTF_16LE);
+        super("npcIp", "npc_ip", "default_npcIps.txt", MGT2Paths.TEXT_DATA.getPath().resolve("NpcIPs.txt").toFile(), StandardCharsets.UTF_16LE);
     }
 
     @Override

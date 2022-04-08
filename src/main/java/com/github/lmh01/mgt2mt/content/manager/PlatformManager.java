@@ -47,9 +47,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             }
         }
         EditHelper.printLine("DATE", map, bw);
-        if (map.containsKey("DATE END")) {
-            EditHelper.printLine("DATE END", map, bw);
-        }
+        EditHelper.printLine("DATE END", map, bw);
         EditHelper.printLine("PRICE", map, bw);
         EditHelper.printLine("DEV COSTS", map, bw);
         EditHelper.printLine("TECHLEVEL", map, bw);

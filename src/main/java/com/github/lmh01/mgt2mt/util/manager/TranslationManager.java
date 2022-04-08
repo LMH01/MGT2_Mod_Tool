@@ -16,8 +16,8 @@ import java.util.Map;
 public class TranslationManager {
     public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "JA", "KO", "PB", "PL", "RO", "RU", "TU"};
     public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
-    public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR", "CH", "CT", "IT", "ES", "RO", "JA", "RU", "TU"};
-    public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"CZ", "EN", "FR", "GE", "HU", "KO", "PB", "PL"};
+    public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR", "CH", "CT", "IT", "ES", "RO", "JA", "RU", "TU", "PB", "PL"};
+    public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"CZ", "EN", "FR", "GE", "HU", "KO"};
 
     /**
      * Stores the translations for the translation manager
