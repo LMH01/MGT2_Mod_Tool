@@ -29,7 +29,7 @@ public class Theme extends AbstractBaseContent implements SimpleContent, Depende
         this.ageNumber = ageNumber;
         Map<String, String> translationsCorrect = new HashMap<>();
         for (Map.Entry<String, String> entry : translations.entrySet()) {
-            if (entry.getValue().isEmpty()) {
+            if (entry.getValue() == null || entry.getValue().isEmpty()) {
                 translationsCorrect.put(entry.getKey(), name);
             } else {
                 translationsCorrect.put(entry.getKey(), entry.getValue());

@@ -227,7 +227,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
         for (String string : Utils.getEntriesFromString(line)) {
             if (string.contains("M")) {
                 violenceLevel = Integer.parseInt(string.replace("M", ""));
-            } else {
+            } else if (!string.isEmpty()) {
                 genres.add(Integer.parseInt(string));
             }
         }
