@@ -1,9 +1,8 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
-import com.github.lmh01.mgt2mt.content.managed.ModAction;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -76,6 +75,26 @@ public class ThreadHandler {
                 e.printStackTrace();
             }
             ProgressBarHelper.resetProgressBar();
+
+            if (Settings.disableSafetyFeatures) {
+                DebugHelper.warn(LOGGER, "check for game file integrity is disabled because the safety features are disabled");
+            } else {
+                try {
+                    LOGGER.info("Checking game file integrity...");
+                    for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                        if (manager instanceof AbstractAdvancedContentManager) {
+                            ((AbstractAdvancedContentManager) manager).verifyContentIntegrity();
+                        }
+                    }
+                    LOGGER.info("Integrity check successful!");
+                } catch (ModProcessingException e) {
+                    LOGGER.error("Error: Game file integrity is violated. Stacktrace: ");
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.3"));
+                    TextAreaHelper.printStackTrace(e);
+                }
+            }
         });
         thread.setName("PerformStartTasks");
         return thread;

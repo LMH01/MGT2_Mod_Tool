@@ -4,6 +4,8 @@
 
 ### New feature
 - Added new possibilities to customize new publishers
+- The integrity of the most game files (The `.txt` files) is now checked at the start
+  - This check can be disabled by disabling the safety features
 
 ### Removed feature
 - It is no longer possible to select a custom genre id when adding a genre

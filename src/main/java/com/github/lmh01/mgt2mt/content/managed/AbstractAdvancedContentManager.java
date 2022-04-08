@@ -60,6 +60,29 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     }
 
     /**
+     * Checks if the integrity of the fileContent is violated.
+     * The integrity is violated if an id is missing from an entry, if
+     * an id is assigned more than once or if the ID or NAME EN tag are missing from  the map.
+     */
+    public void verifyContentIntegrity() throws ModProcessingException {
+        Map<Integer, String> usedIds = new HashMap<>();// Stores the id and the names
+        for (Map<String, String> map : fileContent) {
+            if (!map.containsKey("ID") | !map.containsKey("NAME EN")) {
+                throw new ModProcessingException("The integrity of game file \"" + gameFile.getName() +  "\" is not valid. Reason: The [NAME EN] or [ID] tag of " + map.get("NAME EN") + " of type " + getType() + " is missing.");
+            }
+            try {
+                int id = Integer.parseInt(map.get("ID"));
+                if (usedIds.containsKey(id)) {
+                    throw new ModProcessingException("The integrity of game file \"" + gameFile.getName() +  "\" is not valid. Reason: The id " + id + " of " + map.get("NAME EN") + " of type " + getType() + " is already used by " + usedIds.get(id) + ".");
+                }
+                usedIds.put(id, map.get("NAME EN"));
+            } catch (NumberFormatException e) {
+                throw new ModProcessingException("The integrity of game file  \"" + gameFile.getName() +  "\" is not valid. Reason: The [ID] field of " + map.get("NAME EN") + " of type " + getType() + " is invalid.", e);
+            }
+        }
+    }
+
+    /**
      * Should be overwritten if content is dependent on other contents.
      */
     @Override

@@ -678,6 +678,10 @@ errorMessages.gameFileCorrupted|Error while analysing game files. The file is cu
 errorMessages.gameFileCorrupted.textArea.firstPart|Fatal error: Error occurred while game files where analyzed. The files are damaged.
 errorMessages.gameFileCorrupted.textArea.secondPart|Please try to repair the game files through Steam or reinstall the game.
 
+warnMessage.integrityCheckFailed.textArea.1|Warning: The integrity of the game files is violated.
+warnMessage.integrityCheckFailed.textArea.2|If the tool is used anyway, problems may occur.
+warnMessage.integrityCheckFailed.textArea.3|Reason for this warning:
+
 frame.title.error|Error
 frame.title.warning|Warning
 frame.title.success|Success
@@ -1006,7 +1010,7 @@ window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
 window.settings.safetyFeatures.checkBoxText|Disable safety features
 window.settings.safetyFeatures.checkBoxToolTip|<html>Check this box to disable the automatic genre id allocation.<br>If checked most spinners won't have a maximum value.<br>Do only enable when you use your own genre id system and you need the spinners to be unlocked.
-window.settings.safetyFeatures.warning|<html>Are you sure that you want to disable the safety features?<br>This could lead to problems.<br><br>When deactivating, among other things, the following happens:<br>- Spinners are unlocked and most of them have no maximum value<br>- When deleting backups, initial backups are also deleted<br>- Some lists also contain entries that belong to the game<br>- When importing, the check for the assets folder is deactivated<br><br>USE THIS FEATURE AT YOUR OWN RISK!<br>I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!<br><br>Disable safety features?
+window.settings.safetyFeatures.warning|<html>Are you sure that you want to disable the safety features?<br>This could lead to problems.<br><br>When deactivating, among other things, the following happens:<br>- Spinners are unlocked and most of them have no maximum value<br>- When deleting backups, initial backups are also deleted<br>- Some lists also contain entries that belong to the game<br>- When importing, the check for the assets folder is deactivated<br>- The game files integrity check when starting the tool will be disabled<br><br>USE THIS FEATURE AT YOUR OWN RISK!<br>I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!<br><br>Disable safety features?
 window.settings.safetyFeatures.warning.title|Disable safety features?
 window.settings.updateChannel.label|Update channel:
 window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
