@@ -174,19 +174,19 @@ public class Uninstaller {
             ProgressBarHelper.initializeProgressBar(0, customContentArrayList.size(), I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 String currentMod = "";
-                try {
-                    for (String string : manager.getCustomContentString()) {
-                        currentMod = string;
+                for (String string : manager.getCustomContentString()) {
+                    currentMod = string;
+                    try {
                         manager.removeContent(string);
+                    } catch (ModProcessingException e) {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + currentMod + "; " + I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
+                        TextAreaHelper.printStackTrace(e);
+                        LOGGER.info("Mod of type " + manager.getType() + " could not be removed: " + e.getMessage());
+                        uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
+                        uninstallFailed = true;
                     }
-                } catch (ModProcessingException e) {
-                    TextAreaHelper.printStackTrace(e);
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + currentMod + " - " + customContentArrayList + "; " + I18n.INSTANCE.get("commonBodies.exception") + " " + e.getMessage());
-                    LOGGER.info("Mod of type " + manager.getType() + " could not be removed: " + e.getMessage());
-                    uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
-                    uninstallFailed = true;
+                    ProgressBarHelper.increment();
                 }
-                ProgressBarHelper.increment();
             }
             Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));
