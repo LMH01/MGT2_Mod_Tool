@@ -353,6 +353,7 @@ mod.theme.addTheme.components.button.addTranslations.toolTip|Klicke hier, um Üb
 mod.theme.addTheme.components.label.violenceLevel|Wähle die Altersfreigabe aus:
 mod.theme.addTheme.components.comboBox.violenceLevel|<html>Dies gibt an, welche Altersfreigabe ein Spiel mit diesem Thema mindestens bekommt
 mod.theme.addTheme.components.label.explainList|<html>Wähle aus, welche Genres gut zu dem Thema passen sollen.<br>(Tipp: Halte STRG gedrückt und klicke mit der Maus)
+mod.npcGame.addMod.optionPaneMessage.firstPart|Dieses Npc-Spiel hinzufügen?
 mod.npcGames.addMod.selectGenres|Wähle die Genres aus, die mit dem neuen Npc Spiel kompatibel sein sollen:
 mod.npcGames.addMod.components.labelName|Gib den Namen für das Npc Spiel ein:
 mod.platform.addPlatform.optionPaneMessage.firstPart|Diese Plattform hinzufügen?

@@ -353,6 +353,7 @@ mod.theme.addTheme.components.button.addTranslations.toolTip|Click to add transl
 mod.theme.addTheme.components.label.violenceLevel|Choose the age rating:
 mod.theme.addTheme.components.comboBox.violenceLevel|<html>This indicates the minimum age rating a game with this theme gets
 mod.theme.addTheme.components.label.explainList|<html>Chose what genres should work good together<br>with your theme.<br>(Tip: Hold CTRL and click with your mouse)
+mod.npcGame.addMod.optionPaneMessage.firstPart|Add this npc game?
 mod.npcGames.addMod.selectGenres|Select the genres that should be compatible with the new npc game:
 mod.npcGames.addMod.components.labelName|Enter the name for the npc game:
 mod.platform.addPlatform.optionPaneMessage.firstPart|Add this platform?
