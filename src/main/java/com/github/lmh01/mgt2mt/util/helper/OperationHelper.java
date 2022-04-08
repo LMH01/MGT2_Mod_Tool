@@ -27,7 +27,6 @@ public class OperationHelper {
      */
     public static void process(Processor processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, String operationVerb, boolean export) throws ModProcessingException {
         try {
-            ProgressBarHelper.initializeProgressBar(0, 1, operationVerb + " " + exportType);
             boolean noOperationAvailable = true;
             JLabel labelChooseOperations = new JLabel(I18n.INSTANCE.get("processor.chooseEntries.label.firstPart") + " " + exportType + I18n.INSTANCE.get("processor.chooseEntries.label.secondPart") + " " + operation);
             String[] string;
@@ -54,44 +53,40 @@ public class OperationHelper {
                     if (!listAvailableOperations.isSelectionEmpty()) {
                         boolean operationFailed = false;
                         boolean multipleExports = listAvailableOperations.getSelectedValuesList().size() > 0;
-                        int numberOfOperations = listAvailableOperations.getSelectedValuesList().size();
                         StringBuilder failedOperations = new StringBuilder();
-                        ProgressBarHelper.increaseMaxValue(numberOfOperations - 1);
+                        ProgressBarHelper.initializeProgressBar(0, listAvailableOperations.getSelectedValuesList().size() - 1, operationVerb + " " + exportType);
                         for (int i = 0; i < listAvailableOperations.getSelectedValuesList().size(); i++) {
-                            String currentExport = listAvailableOperations.getSelectedValuesList().get(i);
+                            String current = listAvailableOperations.getSelectedValuesList().get(i);
                             try {
-                                processor.process(currentExport);
-                            } catch (IOException e) {
+                                processor.process(current);
+                            } catch (ModProcessingException e) {
                                 e.printStackTrace();
                                 if (!multipleExports) {
                                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.alreadyProcessed.firstPart") + " " + exportType + " " + I18n.INSTANCE.get("processor.alreadyProcessed.secondPart") + " " + operation, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                                 }
-                                failedOperations.append(currentExport).append(" - ").append(I18n.INSTANCE.get("processor.alreadyProcessed.firstPart")).append(" ").append(exportType).append(" ").append(I18n.INSTANCE.get("processor.alreadyProcessed.secondPart")).append(" ").append(operation).append(System.getProperty("line.separator"));
+                                failedOperations.append(current).append(" - ").append(I18n.INSTANCE.get("processor.alreadyProcessed.firstPart")).append(" ").append(exportType).append(" ").append(I18n.INSTANCE.get("processor.alreadyProcessed.secondPart")).append(" ").append(operation).append(System.getProperty("line.separator"));
                                 operationFailed = true;
                             }
-                            numberOfOperations--;
                             ProgressBarHelper.increment();
                         }
-                        if (numberOfOperations == 0) {
-                            if (operationFailed) {
-                                if (export) {
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations);
-                                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations + "\n\n" + I18n.INSTANCE.get("processor.somethingWentWrong.fourthPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                                        Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
-                                    }
-                                } else {
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + " " + exportType);
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType, I18n.INSTANCE.get("frame.title.error"), JOptionPane.INFORMATION_MESSAGE);
+                        if (operationFailed) {
+                            if (export) {
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations);
+                                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations + "\n\n" + I18n.INSTANCE.get("processor.somethingWentWrong.fourthPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                                    Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
                                 }
                             } else {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!");
-                                if (export) {
-                                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!\n\n" + I18n.INSTANCE.get("processor.operationComplete.secondPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                                        Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
-                                    }
-                                } else {
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!", operationNoun + " " + exportType, JOptionPane.INFORMATION_MESSAGE);
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + " " + exportType);
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType, I18n.INSTANCE.get("frame.title.error"), JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        } else {
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!");
+                            if (export) {
+                                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!\n\n" + I18n.INSTANCE.get("processor.operationComplete.secondPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                                    Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
                                 }
+                            } else {
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!", operationNoun + " " + exportType, JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                     } else {
