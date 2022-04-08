@@ -149,26 +149,23 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                 }
             }
         } catch (NullPointerException e) {
-            throw new ModProcessingException("The id for sub-mod '" + name + "' of mod " + getType() + " was not found.", e);
+            throw new ModProcessingException("The id for sub-mod '" + name + "' of type " + getType() + " was not found.", e);
         }
-        throw new ModProcessingException("The id for sub-mod '" + name + "' of mod " + getType() + " was not found.");
+        throw new ModProcessingException("The id for sub-mod '" + name + "' of type " + getType() + " was not found.");
     }
 
     @Override
     public String getContentNameById(int id) throws ModProcessingException {
-        try {
-            if (id >= 0) {
-                Map<Integer, String> idNameMap = new HashMap<>();
-                for (Map<String, String> map : fileContent) {
-                    idNameMap.put(Integer.parseInt(map.get("ID")), map.get("NAME EN"));
+        if (id >= 0) {
+            for (Map<String, String> map : fileContent) {
+                if (Integer.parseInt(map.get("ID")) == id) {
+                    return map.get("NAME EN");
                 }
-                return idNameMap.get(id);
-            } else {
-                throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.");
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ModProcessingException("The name of the sub-mod with id " + id + " for mod " + getType() + " could not be returned. The id is invalid.", e);
+        } else {
+            throw new ModProcessingException("The name of sub-mod with id " + id + " for type " + getType() + " could not be returned. The id is invalid.");
         }
+        throw new ModProcessingException("The name of sub-mod with id " + id + " for type " + getType() + " could not be returned. The id is invalid.");
     }
 
     @Override
