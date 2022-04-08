@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -202,11 +203,8 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         Files.delete(icon.gameFile.toPath());
         //Remove screenshots
         if (!screenshots.isEmpty()) {
-            for (Image image : screenshots) {
-                Files.delete(image.gameFile.toPath());
-            }
-            Path dir = screenshots.get(0).gameFile.getParentFile().toPath();
-            Files.delete(dir);
+            // Delete screenshots directory
+            DataStreamHelper.deleteDirectory(screenshots.get(0).gameFile.getParentFile().toPath());
         }
     }
 

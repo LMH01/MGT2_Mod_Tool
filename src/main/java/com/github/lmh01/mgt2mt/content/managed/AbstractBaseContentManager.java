@@ -168,7 +168,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
                 try {
                     ((RequiresPictures) content).removePictures();
                 } catch (IOException e) {
-                    throw new ModProcessingException("Unable to remove image files");
+                    throw new ModProcessingException("Unable to remove image files", e);
                 }
             }
             editTextFiles(content, ContentAction.REMOVE_MOD);
