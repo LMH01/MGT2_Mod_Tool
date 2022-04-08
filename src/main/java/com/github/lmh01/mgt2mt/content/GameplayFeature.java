@@ -85,8 +85,12 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         if (!mobile) {
             map.put("NO_MOBILE", "");
         }
-        map.put("BAD", Utils.transformArrayListToString(badGenres));
-        map.put("GOOD", Utils.transformArrayListToString(goodGenres));
+        if (!badGenres.isEmpty()) {
+            map.put("BAD", Utils.transformArrayListToString(badGenres));
+        }
+        if (!goodGenres.isEmpty()) {
+            map.put("GOOD", Utils.transformArrayListToString(goodGenres));
+        }
         return map;
     }
 
