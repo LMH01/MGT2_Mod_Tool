@@ -11,6 +11,11 @@
 - It is no longer possible to select a custom genre id when adding a genre
 - Removed experimental menu: Publishers can no longer be replaced with real life publishers
 
+### Other
+- When multiple mods are added/removed to/from the game files the processing speed is now much higher.
+  - This is caused by only writing the games `.txt` file once.
+- General improvements to the text area outputs and the progress bar
+
 ### Bug fixes
 - Turkish translation is now displayed in the translation summary again
 - The description text label should now be correct when adding a new hardware and hardware feature

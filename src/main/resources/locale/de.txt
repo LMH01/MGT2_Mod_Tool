@@ -741,12 +741,14 @@ progressBar.initializingTool|Initialisiere Tool
 progressBar.downloadingDefaultContentUpdate|Lade Update für die "default_content" Datei herunter
 progressBar.export.creatingExportMap|Erstelle export map
 progressBar.constructingContent|Baue Inhalte
+progressBar.copyingImages|Kopiere Bilder
+progressBar.removingImages|Entferne Bilder
 
 textArea.exportComplete|Export abgeschlossen
 textArea.uninstalling|Deinstalliere
 textArea.uninstalling.uninstallingAllMods|Deinstalliere alle Mods
-textArea.uninstalling.uninstallingAllMods.mod.failed|Fehlgeschlagen:
-textArea.uninstalling.uninstallingAllMods.success|Spieldateien wurden zu ihrem original Zustand zurückgesetzt
+textArea.uninstalling.uninstallingAllMods.mod.failed|Fehler beim entfernen der Inhalte vom typ
+textArea.uninstalling.uninstallingAllMods.success|Spieldateien wurden zu ihrem original Zustand zurückgesetzt. Dauer %s Sekunden!
 textArea.uninstalling.uninstallingAllMods.noModsFound|Es müssen keine Mods entfernt werden: Keine Mods gefunden
 textArea.uninstalling.uninstallingAllMods.error|Die folgende Fehlermeldung ist aufgetreten, während die Mods deinstalliert werden sollten, der Deinstallationsprozess wird trotzdem fortgesetzt:
 textArea.deleteModManagerFiles|Lösche alle mod manager Dateien
@@ -852,6 +854,12 @@ textArea.export.warningExportMapNotChangedProperly|WARNUNG: Die Export-Map wurde
 textArea.runningAlphaVersion.1|Vielen Dank für das Testen dieser Alpha-Version
 textArea.runningAlphaVersion.2|Bitte melde Probleme, die auftreten auf der Github-Seite (Nützliches -> Github Seite öffnen)
 textArea.runningAlphaVersion.3|Die Konfigurationsdateien für diese Version werden hier gespeichert
+textArea.constructingContents.duration|Inhaltserstellung dauerte %.2f Sekunden!
+textArea.copyingImages|Kopiere Bilder des Inhaltes %s
+textArea.deletingImages|Lösche Bilder des Inhaltes %
+textArea.addedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich zu der .txt Datei nach %s Sekunden hinzugefügt!
+textArea.removedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich aus der .txt Datei nach %s Sekunden entfernt!
+textArea.totalDuration|Gesamtdauer: %s Sekunden
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?

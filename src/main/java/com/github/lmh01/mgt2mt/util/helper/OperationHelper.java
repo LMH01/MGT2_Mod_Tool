@@ -1,19 +1,28 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
+import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.interfaces.Processor;
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContentManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class OperationHelper {
 
     /**
-     * Opens a gui where the user can select items. The selected entries are then processed by processor.
+     * Opens a gui where the user can select items. The selected entries are then constructed using
+     * {@link AbstractBaseContentManager#constructContentFromName(String)} and put into a list.
+     * This list is the given to the processor to do something.
+     * The progress bar is utilized while the contents are constructed.
      *
      * @param processor                         The function that does something
      * @param stringArraySafetyFeaturesOn       An array containing the list items when the safety features are on
@@ -23,23 +32,24 @@ public class OperationHelper {
      * @param operationNoun                     The operation that should be written in some windows. Eg. Remove, Add, Export
      * @param operationVerb                     The operation that should be written in some windows. Eg. Removing, Adding, Exporting
      * @param export                            If true a message is shown in the end where the export folder is shown when yes is clicked
+     * @param manager                           The manager that is used to construct the content
      * @throws ModProcessingException When something went wrong
      */
-    public static void process(Processor processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, String operationVerb, boolean export) throws ModProcessingException {
+    public static void process(Processor processor, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, String exportType, String operation, String operationNoun, String operationVerb, boolean export, BaseContentManager manager) throws ModProcessingException {
         try {
             boolean noOperationAvailable = true;
             JLabel labelChooseOperations = new JLabel(I18n.INSTANCE.get("processor.chooseEntries.label.firstPart") + " " + exportType + I18n.INSTANCE.get("processor.chooseEntries.label.secondPart") + " " + operation);
-            String[] string;
+            String[] listContent;
             if (Settings.disableSafetyFeatures) {
-                string = stringArraySafetyFeaturesDisabled;
+                listContent = stringArraySafetyFeaturesDisabled;
                 noOperationAvailable = false;
             } else {
-                string = stringArraySafetyFeaturesOn;
-                if (string.length != 0) {
+                listContent = stringArraySafetyFeaturesOn;
+                if (listContent.length != 0) {
                     noOperationAvailable = false;
                 }
             }
-            JList<String> listAvailableOperations = new JList<>(string);
+            JList<String> listAvailableOperations = new JList<>(listContent);
             listAvailableOperations.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             listAvailableOperations.setLayoutOrientation(JList.VERTICAL);
             listAvailableOperations.setVisibleRowCount(-1);
@@ -51,42 +61,27 @@ public class OperationHelper {
             if (!noOperationAvailable) {
                 if (JOptionPane.showConfirmDialog(null, params, operationNoun + " " + exportType, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     if (!listAvailableOperations.isSelectionEmpty()) {
-                        boolean operationFailed = false;
-                        boolean multipleExports = listAvailableOperations.getSelectedValuesList().size() > 0;
-                        StringBuilder failedOperations = new StringBuilder();
-                        ProgressBarHelper.initializeProgressBar(0, listAvailableOperations.getSelectedValuesList().size() - 1, operationVerb + " " + exportType);
-                        for (int i = 0; i < listAvailableOperations.getSelectedValuesList().size(); i++) {
-                            String current = listAvailableOperations.getSelectedValuesList().get(i);
-                            try {
-                                processor.process(current);
-                            } catch (ModProcessingException e) {
-                                e.printStackTrace();
-                                if (!multipleExports) {
-                                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.alreadyProcessed.firstPart") + " " + exportType + " " + I18n.INSTANCE.get("processor.alreadyProcessed.secondPart") + " " + operation, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
-                                }
-                                failedOperations.append(current).append(" - ").append(I18n.INSTANCE.get("processor.alreadyProcessed.firstPart")).append(" ").append(exportType).append(" ").append(I18n.INSTANCE.get("processor.alreadyProcessed.secondPart")).append(" ").append(operation).append(System.getProperty("line.separator"));
-                                operationFailed = true;
-                            }
-                            ProgressBarHelper.increment();
-                        }
-                        if (operationFailed) {
-                            if (export) {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations);
-                                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + ": " + "\n" + failedOperations + "\n\n" + I18n.INSTANCE.get("processor.somethingWentWrong.fourthPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                                    Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
-                                }
-                            } else {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + " " + exportType);
-                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType, I18n.INSTANCE.get("frame.title.error"), JOptionPane.INFORMATION_MESSAGE);
-                            }
-                        } else {
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!");
+                        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+                        List<AbstractBaseContent> contents = Utils.constructContents(listAvailableOperations.getSelectedValuesList(), manager);
+                        try {
+                            processor.process(contents);
+                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.totalDuration"), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
                             if (export) {
                                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!\n\n" + I18n.INSTANCE.get("processor.operationComplete.secondPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                                     Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
                                 }
                             } else {
                                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!", operationNoun + " " + exportType, JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        } catch (ModProcessingException e) {
+                            if (export) {
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation);
+                                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + ".\n" + I18n.INSTANCE.get("processor.somethingWentWrong.secondPart") + " " + exportType + I18n.INSTANCE.get("processor.somethingWentWrong.thirdPart") + " " + operation + "\n\n" + I18n.INSTANCE.get("processor.somethingWentWrong.fourthPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                                    Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());
+                                }
+                            } else {
+                                TextAreaHelper.appendText(I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + operationVerb + " " + exportType);
+                                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("processor.somethingWentWrong.firstPart") + " " + exportType, I18n.INSTANCE.get("frame.title.error"), JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
                     } else {

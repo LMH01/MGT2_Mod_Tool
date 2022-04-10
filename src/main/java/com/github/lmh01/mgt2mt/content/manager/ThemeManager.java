@@ -38,8 +38,19 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
 
     @Override
     public void editTextFiles(AbstractBaseContent content, ContentAction action) throws ModProcessingException {
-        analyzeFile();
+        List<AbstractBaseContent> contents = new ArrayList<>();
+        contents.add(content);
+        editTextFiles(contents, action);
+    }
+
+    @Override
+    public void editTextFiles(List<AbstractBaseContent> contents, ContentAction action) throws ModProcessingException {
         try {
+            analyzeFile();
+            ArrayList<Integer> contentIds = new ArrayList<>();
+            for (AbstractBaseContent sc : contents) {
+                contentIds.add(sc.id);
+            }
             for (String string : TranslationManager.TRANSLATION_KEYS) {
                 File themeFile = Utils.getThemeFile(string);
                 Map<Integer, String> currentThemeFileContent;
@@ -63,38 +74,41 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                 } else {
                     throw new ModProcessingException("Unable to determine what charset to use");
                 }
-                int currentLine = 0;
                 boolean firstLine = true;
-                for (int i = 0; i < Objects.requireNonNull(currentThemeFileContent).size(); i++) {
-                    if (!firstLine) {
-                        if (action.equals(ContentAction.REMOVE_MOD)) {
-                            if (currentLine != content.id) {
+                for (Map.Entry<Integer, String> entry : currentThemeFileContent.entrySet()) {
+                    if (action.equals(ContentAction.REMOVE_MOD)) {
+                        if (!contentIds.contains(entry.getKey())) {
+                            if (!firstLine) {
                                 bw.write("\r\n");
+                            } else {
+                                firstLine = false;
                             }
-                        } else {
-                            bw.write("\r\n");
+                            bw.write(entry.getValue());
                         }
                     } else {
-                        firstLine = false;
-                    }
-                    if (action.equals(ContentAction.ADD_MOD) || currentLine != content.id) {
-                        bw.write(currentThemeFileContent.get(currentLine));
-                    }
-                    currentLine++;
-                }
-                try {
-                    if (action.equals(ContentAction.ADD_MOD)) {
-                        bw.write("\r\n");
-                        if (string.equals("GE")) {
-                            bw.write(((AbstractSimpleContent)content).getLine());
-                        } else if (string.equals("EN")){
-                            bw.write(content.name);
+                        if (!firstLine) {
+                            bw.write("\r\n");
                         } else {
-                            bw.write(((Theme)content).translations.get(string));
+                            firstLine = false;
+                        }
+                        bw.write(entry.getValue());
+                    }
+                }
+                if (action.equals(ContentAction.ADD_MOD)) {
+                    bw.write("\r\n");
+                    for (AbstractBaseContent content : contents) {
+                        if (content instanceof Theme) {
+                            if (string.equals("GE")) {
+                                bw.write(((Theme) content).getLine());
+                            } else {
+                                String line = ((Theme)content).translations.get(string);
+                                if (line == null) {
+                                    line = content.name;
+                                }
+                                bw.write(line);
+                            }
                         }
                     }
-                } catch (NullPointerException ignored) {
-
                 }
                 bw.close();
             }

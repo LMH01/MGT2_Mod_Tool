@@ -1,11 +1,13 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Uninstaller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Uninstaller.class);
@@ -171,25 +175,24 @@ public class Uninstaller {
             customContentArrayList.addAll(Arrays.asList(manager.getCustomContentString()));
         }
         if (customContentArrayList.size() != 0) {
-            ProgressBarHelper.initializeProgressBar(0, customContentArrayList.size(), I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"), true);
+            TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-                String currentMod = "";
-                for (String string : manager.getCustomContentString()) {
-                    currentMod = string;
-                    try {
-                        manager.removeContent(string);
-                    } catch (ModProcessingException e) {
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + currentMod + "; " + I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
-                        TextAreaHelper.printStackTrace(e);
-                        LOGGER.info("Mod of type " + manager.getType() + " could not be removed: " + e.getMessage());
-                        uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
-                        uninstallFailed = true;
+                try {
+                    if (manager.getCustomContentString().length > 0) {
+                        List<AbstractBaseContent> contents = Utils.constructContents(Arrays.asList(manager.getCustomContentString()), manager);
+                        manager.removeContents(contents);
                     }
-                    ProgressBarHelper.increment();
+                } catch (ModProcessingException e) {
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.mod.failed") + " " + manager.getType() + "; " + I18n.INSTANCE.get("textArea.modProcessingException.thirdPart"));
+                    TextAreaHelper.printStackTrace(e);
+                    LOGGER.info("Mod of type " + manager.getType() + " could not be removed: " + e.getMessage());
+                    uninstallFailedExplanation.append(e.getMessage()).append(System.getProperty("line.separator"));
+                    uninstallFailed = true;
                 }
             }
             Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"));
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
             LOGGER.info("Game files have been restored to original.");
         } else {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.noModsFound"));

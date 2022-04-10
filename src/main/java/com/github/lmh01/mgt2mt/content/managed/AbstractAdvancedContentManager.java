@@ -3,15 +3,20 @@ package com.github.lmh01.mgt2mt.content.managed;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public abstract class AbstractAdvancedContentManager extends AbstractBaseContentManager {
+    Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedContentManager.class);
+
     public List<Map<String, String>> fileContent;
 
     public AbstractAdvancedContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
@@ -78,6 +83,78 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                 usedIds.put(id, map.get("NAME EN"));
             } catch (NumberFormatException e) {
                 throw new ModProcessingException("The integrity of game file  \"" + gameFile.getName() +  "\" is not valid. Reason: The [ID] field of " + map.get("NAME EN") + " of type " + getType() + " is invalid.", e);
+            }
+        }
+    }
+
+    /**
+     * Edits the games text file(s) to add or remove the content.
+     * This function should be used when multiple contents should be removed/added simultaneously because the
+     * text file is only written once this way.
+     * @param contents A list containing the contents that should be added/removed.
+     * @param action The action that should be performed
+     */
+    public void editTextFiles(List<AbstractBaseContent> contents, ContentAction action) throws ModProcessingException {
+        ArrayList<AbstractAdvancedContent> advancedContents = new ArrayList<>();
+        for (AbstractBaseContent content : contents) {
+            if (content instanceof AbstractAdvancedContent) {
+                advancedContents.add((AbstractAdvancedContent) content);
+            } else {
+                DebugHelper.warn(LOGGER, "Found content that does not implement AbstractSimpleContent wile editing the game file of content " + getType() + ". The violator is " + content.name + " of type " + content.contentType.getType());
+            }
+        }
+        if (action.equals(ContentAction.ADD_MOD)) {
+            try {
+                Charset charset = getCharset();
+                Path gameFilePath = gameFile.toPath();
+                if (Files.exists(gameFilePath)) {
+                    Files.delete(gameFilePath);
+                }
+                Files.createFile(gameFilePath);
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameFile), charset));
+                if (charset.equals(StandardCharsets.UTF_8)) {
+                    bw.write("\ufeff");
+                }
+                for (Map<String, String> fileContent : fileContent) {
+                    printValues(fileContent, bw);
+                    bw.write("\r\n");
+                }
+                for (AbstractAdvancedContent ac : advancedContents) {
+                    Map<String, String> map = ac.getMap();
+                    printValues(map, bw);
+                    bw.write("\r\n");
+                }
+                bw.write("[EOF]");
+                bw.close();
+            } catch (IOException e) {
+                throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
+            }
+        } else {
+            ArrayList<Integer> idsToRemove = new ArrayList<>();
+            for (AbstractAdvancedContent ac : advancedContents) {
+                idsToRemove.add(ac.id);
+            }
+            try {
+                Charset charset = getCharset();
+                Path gameFilePath = gameFile.toPath();
+                if (Files.exists(gameFilePath)) {
+                    Files.delete(gameFilePath);
+                }
+                Files.createFile(gameFilePath);
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameFile), charset));
+                if (charset.equals(StandardCharsets.UTF_8)) {
+                    bw.write("\ufeff");
+                }
+                for (Map<String, String> fileContent : fileContent) {
+                    if (!idsToRemove.contains(Integer.parseInt(fileContent.get("ID")))) {
+                        printValues(fileContent, bw);
+                        bw.write("\r\n");
+                    }
+                }
+                bw.write("[EOF]");
+                bw.close();
+            } catch (IOException e) {
+                throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
             }
         }
     }

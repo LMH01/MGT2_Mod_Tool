@@ -5,6 +5,7 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface BaseContentManager {
@@ -31,11 +32,34 @@ public interface BaseContentManager {
     void removeContent(String name) throws ModProcessingException;
 
     /**
+     * Adds all contents contained within the array list.
+     * This will edit the games text file only once.
+     * @see BaseContentManager#addContent(AbstractBaseContent) Parameters and description
+     */
+    void addContents(List<AbstractBaseContent> contents) throws ModProcessingException;
+
+    /**
+     * Removes all contents contained within the array list.
+     * This wil edit the games text file only once.
+     * @see BaseContentManager#removeContent(String) Parameters and description
+     */
+    void removeContents(List<AbstractBaseContent> contents) throws ModProcessingException;
+
+    /**
      * Edits the games text file(s) to add or remove the content.
+     * Use {@link AbstractSimpleContentManager#editTextFiles(List, ContentAction)}
+     * or {@link AbstractAdvancedContentManager#editTextFiles(List, ContentAction)} instead if multiple contents should be added removed.
      * @param content The content that should be removed or added
      * @param action The action that should be performed
      */
     void editTextFiles(AbstractBaseContent content, ContentAction action) throws ModProcessingException;
+
+    /**
+     * Edits the games text file(s) to add or remove content.
+     * This will edit the games text file(s) only once.
+     * @see BaseContentManager#editTextFiles(AbstractBaseContent, ContentAction) Parameters and description
+     */
+    void editTextFiles(List<AbstractBaseContent> contents, ContentAction action) throws ModProcessingException;
 
     /**
      * Opens the gui where the user can enter the values that are required to add the content to the game.

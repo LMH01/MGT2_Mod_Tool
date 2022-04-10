@@ -1,10 +1,12 @@
 package com.github.lmh01.mgt2mt.util.interfaces;
 
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 
 import java.io.IOException;
+import java.util.List;
 
 @FunctionalInterface
 public interface Processor {
-    void process(String name) throws IOException, ModProcessingException;
+    void process(List<AbstractBaseContent> contents) throws IOException, ModProcessingException;
 }

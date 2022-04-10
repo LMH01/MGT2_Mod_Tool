@@ -4,17 +4,19 @@ import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractBaseContentManager implements BaseContentManager {
     private final String mainTranslationKey;
@@ -66,7 +68,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     private void removeModMenuItemAction() {
         ThreadHandler.startModThread(() -> {
             analyzeFile();
-            OperationHelper.process(this::removeContent, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false);
+            OperationHelper.process(this::removeContents, getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.removed"), I18n.INSTANCE.get("commonText.remove"), I18n.INSTANCE.get("commonText.removing"), false, this);
         }, "runnableRemove" + getType().replaceAll("\\s+", ""));
     }
 
@@ -137,145 +139,104 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public void addContent(AbstractBaseContent content) throws ModProcessingException {
+        ArrayList<AbstractBaseContent> contents = new ArrayList<>();
+        contents.add(content);
+        addContents(contents);
+    }
+
+    @Override
+    public void addContents(List<AbstractBaseContent> contents) throws ModProcessingException {
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         try {
             analyzeFile();
             createBackup(false);
-            // Check if the id has been set already, if not the id will be set here
-            if (content.id == null) {
-                content.id = getFreeId();
-            }
-            if (content instanceof RequiresPictures) {
-                try {
-                    ((RequiresPictures) content).addPictures();
-                } catch (IOException | NullPointerException e) {
-                    throw new ModProcessingException("Unable to add image files", e);
+            // Get amount of contents that require images
+            int contentsRequiringImages = 0;
+            for (AbstractBaseContent content : contents) {
+                if (content instanceof RequiresPictures) {
+                    contentsRequiringImages += 1;
+                }
+                // Check if the id has been set already, if not the id will be set here
+                if (content.id == null) {
+                    content.id = getFreeId();
                 }
             }
-            editTextFiles(content, ContentAction.ADD_MOD);
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.added") + " " + getTypeUpperCase() + " - " + content.name);
+            if (contentsRequiringImages > 0) {
+                ProgressBarHelper.initializeProgressBar(0, contentsRequiringImages, I18n.INSTANCE.get("progressBar.copyingImages"));
+                for (AbstractBaseContent content : contents) {
+                    if (content instanceof RequiresPictures) {
+                        try {
+                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.copyingImages"), content.name));
+                            ((RequiresPictures) content).addPictures();
+                        } catch (IOException | NullPointerException e) {
+                            throw new ModProcessingException("Unable to add image files for " + content.name, e);
+                        }
+                    }
+                    ProgressBarHelper.increment();
+                }
+                ProgressBarHelper.resetProgressBar();
+            }
+            editTextFiles(contents, ContentAction.ADD_MOD);
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.addedAllContents"), contents.size(), getType(), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
         } catch (ModProcessingException e) {
-            throw new ModProcessingException("Unable to add " + content.name + " of type " + getType(), e);
+            throw new ModProcessingException("Unable to add contents of type " + getType(), e);
         }
     }
 
     @Override
     public void removeContent(String name) throws ModProcessingException {
+        ArrayList<AbstractBaseContent> contents = new ArrayList<>();
+        contents.add(constructContentFromName(name));
+        removeContents(contents);
+    }
+
+    @Override
+    public void removeContents(List<AbstractBaseContent> contents) throws ModProcessingException {
+        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
         try {
             analyzeFile();
             createBackup(false);
-            AbstractBaseContent content = constructContentFromName(name);
-            if (content instanceof RequiresPictures) {
-                try {
-                    ((RequiresPictures) content).removePictures();
-                } catch (IOException e) {
-                    throw new ModProcessingException("Unable to remove image files", e);
+            // Get amount of contents that require images
+            int contentsRequiringImages = 0;
+            for (AbstractBaseContent content : contents) {
+                if (content instanceof RequiresPictures) {
+                    contentsRequiringImages += 1;
                 }
             }
-            editTextFiles(content, ContentAction.REMOVE_MOD);
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.removed") + " " + getTypeUpperCase() + " - " + content.name);
+            if (contentsRequiringImages > 0) {
+                ProgressBarHelper.initializeProgressBar(0, contentsRequiringImages, I18n.INSTANCE.get("progressBar.removingImages"));
+                for (AbstractBaseContent content : contents) {
+                    if (content instanceof RequiresPictures) {
+                        try {
+                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.deletingImages"), content.name));
+                            ((RequiresPictures) content).removePictures();
+                        } catch (IOException e) {
+                            throw new ModProcessingException("Unable to remove image files for " + content.name, e);
+                        }
+                    }
+                    ProgressBarHelper.increment();
+                }
+                ProgressBarHelper.resetProgressBar();
+            }
+            editTextFiles(contents, ContentAction.REMOVE_MOD);
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.removedAllContents"), contents.size(), getType(), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
         } catch (ModProcessingException e) {
-            throw new ModProcessingException("Unable to remove " + name + " of type " + getType(), e);
+            throw new ModProcessingException("Unable to remove contents of type" + getType(), e);
         }
     }
 
     @Override
     public void editTextFiles(AbstractBaseContent content, ContentAction action) throws ModProcessingException {
         if (content instanceof AbstractSimpleContent && this instanceof AbstractSimpleContentManager) {
-            AbstractSimpleContent sc = (AbstractSimpleContent) content;
-            AbstractSimpleContentManager scm = (AbstractSimpleContentManager) this;
-            try {
-                Charset charset = getCharset();
-                Path gameFilePath = gameFile.toPath();
-                if (Files.exists(gameFilePath)) {
-                    Files.delete(gameFilePath);
-                }
-                Files.createFile(gameFilePath);
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameFilePath.toFile()), charset));
-                if (charset.equals(StandardCharsets.UTF_8)) {
-                    bw.write("\ufeff");
-                }
-                boolean firstLine = true;
-                for (int i = 0; i < scm.fileContent.size(); i++) {
-                    if (action.equals(ContentAction.ADD_MOD)) {
-                        if (!firstLine) {
-                            bw.write("\r\n");
-                        } else {
-                            firstLine = false;
-                        }
-                        bw.write(scm.fileContent.get(i));
-                    } else {
-                        if (!scm.getReplacedLine(scm.fileContent.get(i)).equals(content.name)) {
-                            if (!firstLine) {
-                                bw.write("\r\n");
-                            } else {
-                                firstLine = false;
-                            }
-                            bw.write(scm.fileContent.get(i));
-                        }
-                    }
-                }
-                if (action.equals(ContentAction.ADD_MOD)) {
-                    bw.write("\r\n");
-                    bw.write(sc.getLine());
-                }
-                bw.close();
-            } catch (IOException e) {
-                throw new ModProcessingException("Unable to edit mod file for mod " + getType(), e);
-            }
+            ArrayList<AbstractBaseContent> simpleContents = new ArrayList<>();
+            simpleContents.add(content);
+            ((AbstractSimpleContentManager)this).editTextFiles(simpleContents, action);
         } else if (content instanceof AbstractAdvancedContent && this instanceof AbstractAdvancedContentManager) {
-            AbstractAdvancedContent ac = (AbstractAdvancedContent) content;
-            AbstractAdvancedContentManager acm = (AbstractAdvancedContentManager) this;
-            if (action.equals(ContentAction.ADD_MOD)) {
-                try {
-                    Charset charset = getCharset();
-                    Path gameFilePath = gameFile.toPath();
-                    if (Files.exists(gameFilePath)) {
-                        Files.delete(gameFilePath);
-                    }
-                    Files.createFile(gameFilePath);
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameFile), charset));
-                    if (charset.equals(StandardCharsets.UTF_8)) {
-                        bw.write("\ufeff");
-                    }
-                    for (Map<String, String> fileContent : acm.fileContent) {
-                        acm.printValues(fileContent, bw);
-                        bw.write("\r\n");
-                    }
-                    Map<String, String> map = ac.getMap();
-                    acm.printValues(ac.getMap(), bw);
-                    bw.write("\r\n");
-                    bw.write("[EOF]");
-                    bw.close();
-                } catch (IOException e) {
-                    throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
-                }
-            } else {
-                try {
-                    int contentId = content.id;
-                    Charset charset = getCharset();
-                    Path gameFilePath = gameFile.toPath();
-                    if (Files.exists(gameFilePath)) {
-                        Files.delete(gameFilePath);
-                    }
-                    Files.createFile(gameFilePath);
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameFile), charset));
-                    if (charset.equals(StandardCharsets.UTF_8)) {
-                        bw.write("\ufeff");
-                    }
-                    for (Map<String, String> fileContent : acm.fileContent) {
-                        if (Integer.parseInt(fileContent.get("ID")) != contentId) {
-                            acm.printValues(fileContent, bw);
-                            bw.write("\r\n");
-                        }
-                    }
-                    bw.write("[EOF]");
-                    bw.close();
-                } catch (IOException e) {
-                    throw new ModProcessingException("Something went wrong while editing game file for mod " + getType(), e);
-                }
-            }
+            ArrayList<AbstractBaseContent> advancedContents = new ArrayList<>();
+            advancedContents.add(content);
+            ((AbstractAdvancedContentManager)this).editTextFiles(advancedContents, action);
         } else {
-            throw new ModProcessingException("Unable to edit game files: No implementation found! This is caused because content does not implement SimpleContent or AdvancedContent.");
+            throw new ModProcessingException("Unable to edit game files: No implementation found! This happened because the input content does not implement SimpleContent or AdvancedContent.");
         }
     }
 

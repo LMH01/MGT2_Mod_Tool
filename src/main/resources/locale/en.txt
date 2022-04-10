@@ -738,12 +738,14 @@ progressBar.initializingTool|Initializing tool
 progressBar.downloadingDefaultContentUpdate|Downloading default content update
 progressBar.export.creatingExportMap|Creating export map
 progressBar.constructingContent|Constructing contents
+progressBar.copyingImages|Copying images
+progressBar.removingImages|Removing images
 
 textArea.exportComplete|Export complete
 textArea.uninstalling|Uninstalling
 textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
-textArea.uninstalling.uninstallingAllMods.mod.failed|Failed:
-textArea.uninstalling.uninstallingAllMods.success|Game files have been restored to original
+textArea.uninstalling.uninstallingAllMods.mod.failed|Error removing content of type
+textArea.uninstalling.uninstallingAllMods.success|Game files have been restored to original. Duration: %s seconds!
 textArea.uninstalling.uninstallingAllMods.noModsFound|No mods need to be removed: No mods found
 textArea.uninstalling.uninstallingAllMods.error|The following exception was caught while mods where being uninstalled, uninstall process will continue anyway:
 textArea.deleteModManagerFiles|Deleting all mod manager files
@@ -850,6 +852,12 @@ textArea.export.warningExportMapNotChangedProperly|WARNING: The export map was n
 textArea.runningAlphaVersion.1|Thank you for testing this alpha version
 textArea.runningAlphaVersion.2|Please report problems that occur on the Github page (Utilities -> Open Github page)
 textArea.runningAlphaVersion.3|The configuration files for this version will be saved in
+textArea.constructingContents.duration|Content construction took %.2f seconds!
+textArea.copyingImages|Copying images for content %s
+textArea.deletingImages|Deleting images for content %s
+textArea.addedAllContents|All content (%d) of type %s has been successfully added to the .txt file after %s seconds!
+textArea.removedAllContents|All content (%d) of type %s has been successfully removed from .txt file after %s seconds!
+textArea.totalDuration|Total duration: %s seconds
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>The real publisher download files already exist.<br><br>Do you want to download the files again?

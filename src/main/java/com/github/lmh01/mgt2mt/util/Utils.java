@@ -1,11 +1,15 @@
 package com.github.lmh01.mgt2mt.util;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -673,5 +678,31 @@ public class Utils {
         String[] out = new String[list.size()];
         list.toArray(out);
         return out;
+    }
+
+    /**
+     * Constructs a content for each name in the names list.
+     * Uses the progressbar.
+     * @param names The names for which the content should be constructed.
+     * @param manager The manager that is used to construct the mods.
+     * @return The list with the constructed content.
+     * @throws ModProcessingException When the content could not be constructed.
+     */
+    public static List<AbstractBaseContent> constructContents(List<String> names, BaseContentManager manager) throws ModProcessingException {
+        TimeHelper th = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        ArrayList<AbstractBaseContent> contents = new ArrayList<>();
+        ProgressBarHelper.initializeProgressBar(0, names.size(), I18n.INSTANCE.get("progressBar.constructingContent"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.constructingContent"));
+        for (String name : names) {
+            try {
+                contents.add(manager.constructContentFromName(name));
+                ProgressBarHelper.increment();
+            } catch (ModProcessingException | NumberFormatException e) {
+                throw new ModProcessingException("Unable to construct content named " + name, e);
+            }
+        }
+        ProgressBarHelper.resetProgressBar();
+        TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.constructingContents.duration"), th.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
+        return contents;
     }
 }
