@@ -18,6 +18,8 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedContentManager.class);
 
     public List<Map<String, String>> fileContent;
+    private Map<String, Integer> contentIdsByNames;
+    private Map<Integer, String> contentNamesByIds;
 
     public AbstractAdvancedContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
         super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
@@ -174,21 +176,25 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
 
     @Override
     public void analyzeFile() throws ModProcessingException {
+        contentNamesByIds = new HashMap<>();
+        contentIdsByNames = new HashMap<>();
         try {
             fileContent = DataStreamHelper.parseDataFile(gameFile);
             int currentMaxId = 0;
             for (Map<String, String> map : fileContent) {
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-                    if (entry.getKey().equals("ID")) {
-                        try {
-                            int currentId = Integer.parseInt(entry.getValue());
-                            if (currentMaxId < currentId) {
-                                currentMaxId = currentId;
-                            }
-                        } catch (NumberFormatException e) {
-                            throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
-                        }
+                if (!map.containsKey("ID") || !map.containsKey("NAME EN")) {
+                    throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"));
+                }
+                try {
+                    int currentId = Integer.parseInt(map.get("ID"));
+                    String currentName = map.get("NAME EN");
+                    if (currentMaxId < currentId) {
+                        currentMaxId = currentId;
                     }
+                    contentNamesByIds.put(currentId, currentName);
+                    contentIdsByNames.put(currentName, currentId);
+                } catch (NumberFormatException e) {
+                    throw new IOException(I18n.INSTANCE.get("errorMessages.gameFileCorrupted"), e);
                 }
             }
             setMaxId(currentMaxId);
@@ -219,30 +225,20 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
 
     @Override
     public int getContentIdByName(String name) throws ModProcessingException {
-        try {
-            for (Map<String, String> map : fileContent) {
-                if (map.get("NAME EN").equals(name)) {
-                    return Integer.parseInt(map.get("ID"));
-                }
-            }
-        } catch (NullPointerException e) {
-            throw new ModProcessingException("The id for sub-mod '" + name + "' of type " + getType() + " was not found.", e);
+        if (contentIdsByNames.containsKey(name)) {
+            return contentIdsByNames.get(name);
+        } else {
+            throw new ModProcessingException("The id for sub-mod '" + name + "' of type " + getType() + " was not found.");
         }
-        throw new ModProcessingException("The id for sub-mod '" + name + "' of type " + getType() + " was not found.");
     }
 
     @Override
     public String getContentNameById(int id) throws ModProcessingException {
-        if (id >= 0) {
-            for (Map<String, String> map : fileContent) {
-                if (Integer.parseInt(map.get("ID")) == id) {
-                    return map.get("NAME EN");
-                }
-            }
+        if (contentNamesByIds.containsKey(id)) {
+            return contentNamesByIds.get(id);
         } else {
             throw new ModProcessingException("The name of sub-mod with id " + id + " for type " + getType() + " could not be returned. The id is invalid.");
         }
-        throw new ModProcessingException("The name of sub-mod with id " + id + " for type " + getType() + " could not be returned. The id is invalid.");
     }
 
     @Override

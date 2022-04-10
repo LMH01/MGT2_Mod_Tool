@@ -10,15 +10,13 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractSimpleContentManager extends AbstractBaseContentManager {
     Logger LOGGER = LoggerFactory.getLogger(AbstractSimpleContentManager.class);
 
     public Map<Integer, String> fileContent;
+    private Map<String, Integer> contentIdsByNames;
 
     public AbstractSimpleContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
         super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
@@ -107,6 +105,11 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
         try {
             fileContent = DataStreamHelper.getContentFromFile(gameFile, getCharset());
             setMaxId(fileContent.size()-1);
+            Map<String, Integer> contentIdsByName = new HashMap<>();
+            for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
+                contentIdsByName.put(getReplacedLine(entry.getValue()), entry.getKey());
+            }
+            this.contentIdsByNames = contentIdsByName;
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze game file for mod " + getType(), e);
         }
@@ -130,12 +133,11 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
 
     @Override
     public int getContentIdByName(String name) throws ModProcessingException {
-        for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
-            if (getReplacedLine(entry.getValue()).equals(name)) {
-                return entry.getKey();
-            }
+        if (contentIdsByNames.containsKey(name)) {
+            return contentIdsByNames.get(name);
+        } else {
+            throw new ModProcessingException("Unable to find id for name " + name + ": This name does not exist in the map!");
         }
-        throw new ModProcessingException("Unable to find id for name " + name + ": This name does not exist in the map!");
     }
 
     @Override
