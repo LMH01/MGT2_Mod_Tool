@@ -19,7 +19,7 @@ public abstract class AbstractBaseContent {
 
     /**
      * @return A map representation of this content.
-     * {@link SimpleContent} uses this map to print the export map.
+     * {@link AbstractSimpleContent} uses this map to print the export map.
      * {@link AbstractAdvancedContent} uses this map to print the export map and to write the game file.
      * @see DependentContent#changeExportMap(Map) - This function will change values in this map to export the content with its
      *                                              dependencies properly
@@ -31,25 +31,29 @@ public abstract class AbstractBaseContent {
      * @return A map representation of this content. This map is used to export the mod.
      */
     public final Map<String, Object> getExportMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, String> baseMap = getMap();
-        baseMap.remove("ID");
-        if (this instanceof RequiresPictures) {
-            // Adds the images that should be exported to the export map
-            try {
-                for (Map.Entry<String, Image> entry : ((RequiresPictures)this).getImageMap().entrySet()) {
-                    map.put(entry.getKey(), Objects.requireNonNull(entry.getValue().extern).getName());
+        try {
+            Map<String, Object> map = new HashMap<>();
+            Map<String, String> baseMap = getMap();
+            baseMap.remove("ID");
+            if (this instanceof RequiresPictures) {
+                // Adds the images that should be exported to the export map
+                try {
+                    for (Map.Entry<String, Image> entry : ((RequiresPictures)this).getImageMap().entrySet()) {
+                        map.put(entry.getKey(), Objects.requireNonNull(entry.getValue().extern).getName());
+                    }
+                } catch (NullPointerException e) {
+                    throw new ModProcessingException("An image file is null", e);
                 }
-            } catch (NullPointerException e) {
-                throw new ModProcessingException("Unable to create export map: An image file is null", e);
             }
+            if (this instanceof DependentContent) {
+                ((DependentContent) this).changeExportMap(baseMap);
+                map.put("dependencies", ((DependentContent) this).getDependencyMap());
+            }
+            map.putAll(baseMap);
+            return map;
+        } catch (ModProcessingException e) {
+            throw new ModProcessingException("Unable to construct export map for " + name + " of type " + contentType.getType(), e);
         }
-        if (this instanceof DependentContent) {
-            ((DependentContent) this).changeExportMap(baseMap);
-            map.put("dependencies", ((DependentContent) this).getDependencyMap());
-        }
-        map.putAll(baseMap);
-        return map;
     }
 
     /**
