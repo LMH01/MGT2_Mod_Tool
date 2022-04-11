@@ -742,7 +742,7 @@ progressBar.constructingContent|Constructing contents of type %s
 progressBar.copyingImages|Copying images
 progressBar.removingImages|Removing images
 
-textArea.exportComplete|Export complete
+textArea.exportComplete|Export complete after %s seconds!
 textArea.uninstalling|Uninstalling
 textArea.uninstalling.uninstallingAllMods|Uninstalling all mods
 textArea.uninstalling.uninstallingAllMods.mod.failed|Error removing content of type

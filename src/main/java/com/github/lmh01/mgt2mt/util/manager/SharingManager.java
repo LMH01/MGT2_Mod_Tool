@@ -1006,7 +1006,6 @@ public class SharingManager {
      */
     public static void export(ExportType exportType, ArrayList<AbstractBaseContent> contents) throws ModProcessingException {
         TimeHelper timeHelper = new TimeHelper();
-        timeHelper.measureTime();
         if (exportType.equals(ExportType.ALL_SINGLE)) {
             Path exportFolder;
             if (Settings.enableExportStorage) {
@@ -1086,8 +1085,9 @@ public class SharingManager {
                 throw new ModProcessingException("Unable to export mods", e);
             }
         }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.exportComplete"));
-        LOGGER.info("Exporting mods as " + exportType.getTypeName() + " took " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
+        String measuredTime = timeHelper.getMeasuredTimeDisplay();
+        TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.exportComplete"), measuredTime));
+        LOGGER.info("Exporting mods as " + exportType.getTypeName() + " took " + measuredTime + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
         ProgressBarHelper.resetProgressBar();
     }
 
