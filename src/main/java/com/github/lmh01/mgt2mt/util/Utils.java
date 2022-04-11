@@ -348,8 +348,8 @@ public class Utils {
      * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
      * @return Returns the selected entry names. If cancel is pressed null is returned.
      */
-    public static Set<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled) {
-        Set<String> returnValues = new HashSet<>();
+    public static List<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled) {
+        List<String> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
         if (Settings.disableSafetyFeatures) {

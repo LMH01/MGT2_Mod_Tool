@@ -159,9 +159,9 @@ public class SharingManager {
     private static Set<Map<String, Object>> getCustomizedImportMap(ImportType importType, Set<Map<String, Object>> set) {
         Map<BaseContentManager, JPanel> importModPanels = new HashMap<>();
         Map<BaseContentManager, AtomicBoolean> enabledMods = new HashMap<>();
-        Map<BaseContentManager, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
+        Map<BaseContentManager, AtomicReference<List<String>>> selectedMods = new HashMap<>();
         for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            Set<String> modNames = new HashSet<>();
+            List<String> modNames = new ArrayList<>();
             for (Map<String, Object> map : set) {
                 if (map.get("mod_type").equals(manager.getExportType())) {
                     modNames.add(map.get("mod_name").toString());
@@ -913,7 +913,6 @@ public class SharingManager {
         return true;
     }
 
-    //TODO Change to use List<String> instead of Set<String>
     /**
      * Adds gui components to be displayed in the summary.
      *
@@ -923,12 +922,12 @@ public class SharingManager {
      * @param selectedEntries An atomic reference where the return values should be saved
      * @param frameTitle      The title that should be displayed when the button is pressed
      */
-    private static void setFeatureAvailableGuiComponents(String labelText, Set<String> set, JPanel panel, AtomicReference<Set<String>> selectedEntries, AtomicBoolean disableImport, String frameTitle) {
+    private static void setFeatureAvailableGuiComponents(String labelText, List<String> set, JPanel panel, AtomicReference<List<String>> selectedEntries, AtomicBoolean disableImport, String frameTitle) {
         JLabel label = new JLabel(labelText);
         JButton button = new JButton(set.size() + "/" + set.size());
         disableImport.set(false);
         button.addActionListener(actionEvent -> {
-            Set<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), frameTitle, Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)));
+            List<String> selectedMods = Utils.getSelectedEntries(I18n.INSTANCE.get("dialog.sharingManager.selectImports"), frameTitle, Utils.convertArrayListToArray(new ArrayList<>(set)), Utils.convertArrayListToArray(new ArrayList<>(set)));
             if (selectedMods != null) {
                 selectedEntries.set(selectedMods);
                 if (selectedMods.isEmpty()) {
@@ -1101,9 +1100,9 @@ public class SharingManager {
     public static void exportSelected() throws ModProcessingException {
         Map<BaseContentManager, JPanel> importModPanels = new HashMap<>();
         Map<BaseContentManager, AtomicBoolean> enabledMods = new HashMap<>();
-        Map<BaseContentManager, AtomicReference<Set<String>>> selectedMods = new HashMap<>();
+        Map<BaseContentManager, AtomicReference<List<String>>> selectedMods = new HashMap<>();
         for (BaseContentManager mod : ContentAdministrator.contentManagers) {
-            Set<String> modNames = new HashSet<>(Arrays.asList(mod.getCustomContentString()));
+            List<String> modNames = Arrays.asList(mod.getCustomContentString());
             selectedMods.put(mod, new AtomicReference<>(modNames));
             enabledMods.put(mod, new AtomicBoolean(true));
             importModPanels.put(mod, new JPanel());
