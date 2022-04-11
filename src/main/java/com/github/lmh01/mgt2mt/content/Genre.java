@@ -173,11 +173,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
 
     @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
-        ArrayList<String> genreCombNames = new ArrayList<>();
-        for (Integer i : compatibleGenres) {
-            genreCombNames.add(GenreManager.INSTANCE.getContentNameById(i));
-        }
-        map.replace("GENRE COMB", SharingHelper.getExportNamesString(GenreManager.INSTANCE, Utils.transformStringArrayToIntegerArray(genreCombNames)));
+        map.replace("GENRE COMB", SharingHelper.getExportNamesString(GenreManager.INSTANCE, compatibleGenres));
         map.put("THEME COMB", ThemeManager.getCompatibleThemeIdsForGenre(id));
         map.put("GAMEPLAYFEATURE GOOD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, true));
         map.put("GAMEPLAYFEATURE BAD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));
