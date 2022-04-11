@@ -146,7 +146,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public void addContents(List<AbstractBaseContent> contents) throws ModProcessingException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         try {
             analyzeFile();
             createBackup(false);
@@ -177,7 +177,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
                 ProgressBarHelper.resetProgressBar();
             }
             editTextFiles(contents, ContentAction.ADD_MOD);
-            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.addedAllContents"), contents.size(), getType(), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.addedAllContents"), contents.size(), getType(), timeHelper.getMeasuredTimeDisplay()));
         } catch (ModProcessingException e) {
             throw new ModProcessingException("Unable to add contents of type " + getType(), e);
         }
@@ -192,7 +192,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public void removeContents(List<AbstractBaseContent> contents) throws ModProcessingException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         try {
             analyzeFile();
             createBackup(false);
@@ -219,7 +219,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
                 ProgressBarHelper.resetProgressBar();
             }
             editTextFiles(contents, ContentAction.REMOVE_MOD);
-            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.removedAllContents"), contents.size(), getType(), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.removedAllContents"), contents.size(), getType(), timeHelper.getMeasuredTimeDisplay()));
         } catch (ModProcessingException e) {
             throw new ModProcessingException("Unable to remove contents of type" + getType(), e);
         }

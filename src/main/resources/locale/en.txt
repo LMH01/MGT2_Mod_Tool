@@ -198,6 +198,7 @@ commonText.startplatform|Startplatform
 commonText.onlyMobile|Only mobile
 commonText.speed|Speed
 commonText.comVal|Computer value
+commonText.seconds|seconds
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:

@@ -61,11 +61,11 @@ public class OperationHelper {
             if (!noOperationAvailable) {
                 if (JOptionPane.showConfirmDialog(null, params, operationNoun + " " + exportType, JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     if (!listAvailableOperations.isSelectionEmpty()) {
-                        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+                        TimeHelper timeHelper = new TimeHelper();
                         List<AbstractBaseContent> contents = Utils.constructContents(listAvailableOperations.getSelectedValuesList(), manager);
                         try {
                             processor.process(contents);
-                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.totalDuration"), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
+                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.totalDuration"), timeHelper.getMeasuredTimeDisplay()));
                             if (export) {
                                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("processor.operationComplete.allSelected") + " " + exportType + I18n.INSTANCE.get("processor.operationComplete.firstPart") + " " + operation + " " + I18n.INSTANCE.get("commonText.successfully") + "!\n\n" + I18n.INSTANCE.get("processor.operationComplete.secondPart"), operation + " " + exportType, JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                                     Desktop.getDesktop().open(ModManagerPaths.EXPORT.toFile());

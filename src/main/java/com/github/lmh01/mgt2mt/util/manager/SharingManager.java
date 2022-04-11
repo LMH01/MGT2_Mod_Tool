@@ -268,7 +268,7 @@ public class SharingManager {
      */
     private static ArrayList<File> getTomlFiles(Set<Path> paths) throws ModProcessingException {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingForTomlFiles"));
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         ArrayList<File> tomlFiles = new ArrayList<>();
         ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.scanningDirectories"), false, false);
         JCheckBox checkBoxPreventZipMessage = new JCheckBox(I18n.INSTANCE.get("dialog.sharingManager.importAll.checkBox.saveOption"));
@@ -284,8 +284,8 @@ public class SharingManager {
         if (abortImport.get()) {
             return new ArrayList<>();
         }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchComplete") + " " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
-        LOGGER.info("Search for .toml files complete. Took " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchComplete") + " " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
+        LOGGER.info("Search for .toml files complete. Took " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
         return tomlFiles;
     }
 
@@ -436,7 +436,7 @@ public class SharingManager {
     private static Set<Map<String, Object>> getImportMaps(ArrayList<Map<String, Object>> singleMods, ArrayList<Map<String, Object>> bundledMods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, singleMods.size() + bundledMods.size(), I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         /*
          * ModType = Simple or advanced
          * Map<String, Object> = The map that contains the values for the specific mod.
@@ -532,7 +532,7 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.incompatible") + ": " + modsIncompatible);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.duplicated") + ": " + modsDuplicated);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.unique") + ": " + uniqueMods);
-        LOGGER.info("Search for mods complete. Found " + modsTotal + " mods after " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
+        LOGGER.info("Search for mods complete. Found " + modsTotal + " mods after " + timeHelper.getMeasuredTimeDisplay() + " " +  I18n.INSTANCE.get("commonText.seconds")  + "!");
         if (uniqueMods > 0) {
             return mods;
         }
@@ -890,7 +890,7 @@ public class SharingManager {
      */
     private static boolean importAllMods(Set<Map<String, Object>> mods) throws ModProcessingException {
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         timeHelper.measureTime();
         for (BaseContentManager manager : ContentAdministrator.contentManagers) {
             for (Map<String, Object> map : mods) {
@@ -909,7 +909,7 @@ public class SharingManager {
             }
         }
         ProgressBarHelper.resetProgressBar();
-        LOGGER.info("Import completed after " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms!");
+        LOGGER.info("Import completed after " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
         return true;
     }
 
@@ -1013,7 +1013,7 @@ public class SharingManager {
      * @throws ModProcessingException If something went wrong while exporting mods
      */
     public static void export(ExportType exportType, ArrayList<AbstractBaseContent> contents) throws ModProcessingException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         timeHelper.measureTime();
         if (exportType.equals(ExportType.ALL_SINGLE)) {
             Path exportFolder;
@@ -1095,7 +1095,7 @@ public class SharingManager {
             }
         }
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.exportComplete"));
-        LOGGER.info("Exporting mods as " + exportType.getTypeName() + " took " + timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " milliseconds!");
+        LOGGER.info("Exporting mods as " + exportType.getTypeName() + " took " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
         ProgressBarHelper.resetProgressBar();
     }
 

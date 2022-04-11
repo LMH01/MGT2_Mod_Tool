@@ -175,7 +175,7 @@ public class Uninstaller {
             customContentArrayList.addAll(Arrays.asList(manager.getCustomContentString()));
         }
         if (customContentArrayList.size() != 0) {
-            TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+            TimeHelper timeHelper = new TimeHelper();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 try {
@@ -192,7 +192,7 @@ public class Uninstaller {
                 }
             }
             Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
-            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"), timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"), timeHelper.getMeasuredTimeDisplay()));
             LOGGER.info("Game files have been restored to original.");
         } else {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.noModsFound"));

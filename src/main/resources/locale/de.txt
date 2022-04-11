@@ -197,6 +197,7 @@ commonText.startplattform|Startplattform
 commonText.onlyMobile|Nur mobil
 commonText.speed|Geschwindigkeit
 commonText.comVal|Computergegner Wert
+commonText.seconds|Sekunden
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:

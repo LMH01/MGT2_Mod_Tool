@@ -689,7 +689,7 @@ public class Utils {
      * @throws ModProcessingException When the content could not be constructed.
      */
     public static List<AbstractBaseContent> constructContents(List<String> names, BaseContentManager manager) throws ModProcessingException {
-        TimeHelper th = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper th = new TimeHelper();
         ArrayList<AbstractBaseContent> contents = new ArrayList<>();
         ProgressBarHelper.initializeProgressBar(0, names.size(), I18n.INSTANCE.get("progressBar.constructingContent"));
         TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.constructingContent"));
@@ -702,7 +702,7 @@ public class Utils {
             }
         }
         ProgressBarHelper.resetProgressBar();
-        TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.constructingContents.duration"), th.getMeasuredTime(TimeUnit.MILLISECONDS) / 1000.0));
+        TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.constructingContents.duration"), th.getMeasuredTime() / 1000.0));
         return contents;
     }
 }

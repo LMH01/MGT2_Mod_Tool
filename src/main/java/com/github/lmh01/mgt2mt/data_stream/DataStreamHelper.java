@@ -224,7 +224,7 @@ public class DataStreamHelper {
      * @param destination The destination where the file should be unzipped to.
      */
     public static void unzip(Path zipFile, Path destination) throws IOException, IllegalArgumentException {
-        TimeHelper timeHelper = new TimeHelper(TimeUnit.MILLISECONDS, true);
+        TimeHelper timeHelper = new TimeHelper();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.secondPart"));
@@ -234,7 +234,7 @@ public class DataStreamHelper {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile.toFile()));
         ZipEntry zipEntry = zis.getNextEntry();
         ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.unzip.unzipping"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + (int) timeHelper.getMeasuredTime(TimeUnit.MILLISECONDS) + " ms - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.startingUnzip.firstPart") + " " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + " - " + I18n.INSTANCE.get("textArea.unzip.startingUnzip.secondPart"));
         while (zipEntry != null) {
             File newFile = newFile(destination.toFile(), zipEntry);
             DebugHelper.debug(LOGGER, "Unzipped file: " + newFile.getPath());
