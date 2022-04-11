@@ -91,7 +91,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         }
         map.putAll(manufacturerTranslations);
         map.put("DATE", releaseDate);
-        map.put("DATE END", endDate);
+        if (endDate != null) {
+            map.put("DATE END", endDate);
+        }
         map.put("PRICE", devKitCost.toString());
         map.put("DEV COSTS", devCosts.toString());
         map.put("TECHLEVEL", techLevel.toString());

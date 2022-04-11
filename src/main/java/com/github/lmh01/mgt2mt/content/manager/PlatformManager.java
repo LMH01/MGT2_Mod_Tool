@@ -450,7 +450,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                 Collections.sort(pictureYears);
                                 int pictureNumber = 1;
                                 for (Integer integer : pictureYears) {
-                                    platformImages.add(new PlatformImage(pictureNumber, integer, new Image(pictureMap.get(integer), MGT2Paths.PLATFORM_ICONS.getPath().resolve(textFieldName.getText() + "_pic_" + pictureNumber + ".png").toFile())));
+                                    platformImages.add(new PlatformImage(pictureNumber, integer, new Image(pictureMap.get(integer), MGT2Paths.PLATFORM_ICONS.getPath().resolve(textFieldName.getText().replaceAll(" ", "_") + "_pic_" + pictureNumber + ".png").toFile())));
                                     pictureNumber++;
                                 }
                             }
@@ -507,7 +507,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     Integer.parseInt(spinnerComplexity.getValue().toString()),
                                     checkBoxInternet.isSelected(),
                                     pT,
-                                    checkBoxStartplatform.isBorderPaintedFlat()
+                                    checkBoxStartplatform.isSelected()
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);

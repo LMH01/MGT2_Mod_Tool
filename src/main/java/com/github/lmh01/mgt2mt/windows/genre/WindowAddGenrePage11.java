@@ -55,13 +55,13 @@ public class WindowAddGenrePage11 extends JFrame {
                 if (textFieldImagePath.getText().isEmpty()) {
                     if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                         genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
-                        GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name + ".png").toFile());
+                        GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
                     }
                 } else {
                     String imageFilePath = getGenreImageFilePath(true, false, textFieldImagePath);
                     if (!imageFilePath.equals("error")) {
                         genreIcon = new File(imageFilePath);
-                        GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name + ".png").toFile());
+                        GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
                     } else if (textFieldImagePath.getText().isEmpty()) {
 
                     }
