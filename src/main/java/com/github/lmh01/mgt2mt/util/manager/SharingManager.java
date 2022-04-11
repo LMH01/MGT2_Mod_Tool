@@ -913,6 +913,7 @@ public class SharingManager {
         return true;
     }
 
+    //TODO Change to use List<String> instead of Set<String>
     /**
      * Adds gui components to be displayed in the summary.
      *
@@ -988,19 +989,11 @@ public class SharingManager {
      */
     public static void export(ExportType exportType) throws ModProcessingException {
         ArrayList<AbstractBaseContent> contents = new ArrayList<>();
-        int modsToExport = 0;
         for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            modsToExport += manager.getCustomContentString().length;
-        }
-        ProgressBarHelper.initializeProgressBar(0, modsToExport, I18n.INSTANCE.get("progressBar.constructingContent"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.constructingContent"));
-        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            for (String string : manager.getCustomContentString()) {
-                contents.add(manager.constructContentFromName(string));
-                ProgressBarHelper.increment();
+            if (manager.getCustomContentString().length > 0) {
+                contents.addAll(Utils.constructContents(Arrays.asList(manager.getCustomContentString()), manager));
             }
         }
-        ProgressBarHelper.resetProgressBar();
         export(exportType, contents);
     }
 
@@ -1134,19 +1127,11 @@ public class SharingManager {
         if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.sharingManager.exportAll.exportReady.message.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             // Construct content
             ArrayList<AbstractBaseContent> contents = new ArrayList<>();
-            int contentToConstruct = 0;
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-                contentToConstruct += selectedMods.get(manager).get().size();
-            }
-            ProgressBarHelper.initializeProgressBar(0, contentToConstruct, I18n.INSTANCE.get("progressBar.constructingContent"));
-            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-                for (String name : selectedMods.get(manager).get()) {
-                    contents.add(manager.constructContentFromName(name));
-                    ProgressBarHelper.increment();
+                if (selectedMods.get(manager).get().size() > 0) {
+                    contents.addAll(Utils.constructContents(new ArrayList<>(selectedMods.get(manager).get()), manager));
                 }
             }
-            ProgressBarHelper.resetProgressBar();
-
             if (checkBox.isSelected()) {
                 export(ExportType.ALL_SINGLE, contents);
             } else {

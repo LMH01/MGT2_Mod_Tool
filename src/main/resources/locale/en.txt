@@ -738,7 +738,7 @@ progressBar.creatingInitialBackup|Creating initial backup
 progressBar.initializingTool|Initializing tool
 progressBar.downloadingDefaultContentUpdate|Downloading default content update
 progressBar.export.creatingExportMap|Creating export map
-progressBar.constructingContent|Constructing contents
+progressBar.constructingContent|Constructing contents of type %s
 progressBar.copyingImages|Copying images
 progressBar.removingImages|Removing images
 

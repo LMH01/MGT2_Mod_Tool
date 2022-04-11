@@ -691,8 +691,8 @@ public class Utils {
     public static List<AbstractBaseContent> constructContents(List<String> names, BaseContentManager manager) throws ModProcessingException {
         TimeHelper th = new TimeHelper();
         ArrayList<AbstractBaseContent> contents = new ArrayList<>();
-        ProgressBarHelper.initializeProgressBar(0, names.size(), I18n.INSTANCE.get("progressBar.constructingContent"));
-        TextAreaHelper.appendText(I18n.INSTANCE.get("progressBar.constructingContent"));
+        ProgressBarHelper.initializeProgressBar(0, names.size(), String.format(I18n.INSTANCE.get("progressBar.constructingContent"), manager.getType()));
+        TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("progressBar.constructingContent"), manager.getType()));
         for (String name : names) {
             try {
                 contents.add(manager.constructContentFromName(name));
