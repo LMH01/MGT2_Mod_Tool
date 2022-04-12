@@ -2,6 +2,10 @@
 
 ## v4.0.0
 
+### Important
+- **Previously exported mods will not work together with this release**
+- **Restore points that have been created prior to this release will not work together with this release**
+
 ### New feature
 - Added new possibilities to customize new publishers
 - The integrity of the most game files (The `.txt` files) is now checked at the start
@@ -16,6 +20,8 @@
   - The `.txt` files are now only written once per cycle and not once for each content.
   - Example: Before it could take about 3 and 1/2 minutes to remove 9870 NpcEngines. Now it is almost instant.
 - General improvements to the text area outputs and the progress bar
+- Reworked the backend of the tool
+- Massive internal code changes
 
 ### Bug fixes
 - Turkish translation is now displayed in the translation summary again
