@@ -478,8 +478,9 @@ public class SharingManager {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modNotCompatible.firstPart") + ": " + map.get("mod_type") + " - " + map.get("name") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.secondPart") + ": " + map.get("mod_tool_version") + "; " + I18n.INSTANCE.get("textArea.importAll.modNotCompatible.thirdPart") + ": " + Arrays.toString(getRequiredModToolVersions((String) map.get("mod_type"))));
                 }
             } catch (ModProcessingException | NullPointerException e) {
-                LOGGER.info("Found incompatible content map: ");
+                LOGGER.info("Found incompatible content map: " + e.getMessage());
                 LogFile.printStacktrace(e);
+                e.printStackTrace();
             }
             ProgressBarHelper.increment();
         }
@@ -1009,10 +1010,10 @@ public class SharingManager {
                 map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
                 map.put("type", ExportType.ALL_SINGLE.getTypeName());
                 map.put("mod_type", content.contentType.getExportType());
+                map.put("name", content.name);
                 TomlWriter tomlWriter = new TomlWriter();
                 if (content instanceof RequiresPictures) {
-                    Path singleMod = path.resolve(Utils.convertName(content.name));
-                    Path assets = singleMod.resolve("assets");
+                    Path assets = path.resolve("assets");
                     ((RequiresPictures) content).exportPictures(assets);
                     map.put("requires_pictures", true);
                 } else {
