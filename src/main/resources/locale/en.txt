@@ -739,6 +739,7 @@ progressBar.initializingTool|Initializing tool
 progressBar.downloadingDefaultContentUpdate|Downloading default content update
 progressBar.export.creatingExportMap|Creating export map
 progressBar.constructingContent|Constructing contents of type %s
+progressBar.constructingImportContent|Constructing contents
 progressBar.copyingImages|Copying images
 progressBar.removingImages|Removing images
 
@@ -761,7 +762,7 @@ textArea.import.notCompatible.2|Genre was exported in version
 textArea.import.specialPublisherNotExisting|The following publisher was not imported because the special genre does not exist:
 textArea.importAll.start|Starting import process
 textArea.importAll.cancel|Import process has been canceled
-textArea.importAll.completed|Import process has been completed
+textArea.importAll.completed|Import process has been completed after %s seconds!
 textArea.importAll.scanningDirectories|Scanning directories for compatible mods
 textArea.importAll.currentPath|Current path:
 textArea.importAll.indexingFolder|Indexing folder:
@@ -818,6 +819,7 @@ textArea.importAll.settingNewModIds|Setting new mod ids
 textArea.importAll.noTomlFilesFound|Unable to import: No .toml files found
 textArea.importAll.assetFoldersMissing|asset folder(s) is/are missing
 textArea.importAll.accessDeniedError|Unable to search folder for .toml files, access denied
+textArea.importAll.errorConstructingContent|Error while constructing content named %s of type %s.\n\nWould you like to continue the content construction anyway?\n\nWarning: Doing so might result in problems!
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to
@@ -834,7 +836,7 @@ textArea.restorePoint.restorePointNotCreatedAlreadyExists|Restore point was not 
 textArea.restorePoint.errorWhileMoving|There was a problem moving the old restore point files to the storage folder. The restore point has not been created!
 textArea.restorePoint.restoreToRestorePoint|Restoring to restore point
 textArea.restorePoint.notAllModsRemoved|Something went wrong while uninstalling mods, however this should not necessarily impact the uninstall process:
-textArea.restorePoint.restoreSuccessful|Restoration complete: All mods have been restored to the restore point.
+textArea.restorePoint.restoreSuccessful|Restoration complete: All mods have been restored to the restore point. Took: %s seconds!
 textArea.restorePoint.canceled|The restoring process has been canceled
 textArea.backup.createBackup.success|Backup has been created:
 textArea.backup.restoringBackup|Restoring backup

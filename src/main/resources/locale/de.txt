@@ -742,6 +742,7 @@ progressBar.initializingTool|Initialisiere Tool
 progressBar.downloadingDefaultContentUpdate|Lade Update für die "default_content" Datei herunter
 progressBar.export.creatingExportMap|Erstelle export map
 progressBar.constructingContent|Baue Inhalte vom Typ %s
+progressBar.constructingImportContent|Baue Inhalte
 progressBar.copyingImages|Kopiere Bilder
 progressBar.removingImages|Entferne Bilder
 
@@ -764,7 +765,7 @@ textArea.import.notCompatible.2|Genre wurde exportiert in version
 textArea.import.specialPublisherNotExisting|Der folgende Publisher wurde nicht importiert, da das Spezial Genre von ihm nicht existiert:
 textArea.importAll.start|Importvorgang starten
 textArea.importAll.cancel|Importvorgang wurde abgebrochen
-textArea.importAll.completed|Importvorgang wurde abgeschlossen
+textArea.importAll.completed|Importvorgang wurde nach %s Sekunden abgeschlossen!
 textArea.importAll.scanningDirectories|Durchsuche Ordner nach kompatiblen mods
 textArea.importAll.currentPath|Aktueller Dateipfad:
 textArea.importAll.indexingFolder|Indizierung des Ordners:
@@ -820,6 +821,7 @@ textArea.importAll.settingNewModIds|Setze Neue Mod-IDs
 textArea.importAll.noTomlFilesFound|Importieren nicht möglich: Keine .toml-Dateien gefunden
 textArea.importAll.assetFoldersMissing|es gibt fehlende Assets-Ordner
 textArea.importAll.accessDeniedError|Ordner kann nicht nach .toml-Dateien durchsucht werden, Zugriff verweigert
+textArea.importAll.errorConstructingContent|Fehler beim Erstellen des Inhalts namens %s vom Typ %s.\n\nSoll trotzdem mit dem Erstellen der Inhalte fortgefahren werden?\n\nWarnung: Dies könnte zu Problemen führen!
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach
@@ -836,7 +838,7 @@ textArea.restorePoint.restorePointNotCreatedAlreadyExists|Der Wiederherstellungs
 textArea.restorePoint.errorWhileMoving|Beim Verschieben der alten Wiederherstellungspunktdateien in den Speicherordner ist ein Problem aufgetreten. Der Wiederherstellungspunkt wurde nicht erstellt!
 textArea.restorePoint.restoreToRestorePoint|Wiederherstellen zum Wiederherstellungspunkt
 textArea.restorePoint.notAllModsRemoved|Bei der Deinstallation der Mods ist ein Fehler aufgetreten. Dies sollte sich jedoch nicht unbedingt auf den Deinstallationsprozess auswirken:
-textArea.restorePoint.restoreSuccessful|Wiederherstellung abgeschlossen: Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt.
+textArea.restorePoint.restoreSuccessful|Wiederherstellung abgeschlossen: Alle Mods wurden zum Wiederherstellungspunkt zurückgesetzt. Dauer: %s Sekunden!
 textArea.restorePoint.canceled|Wiederherstellungsprozess wurde abgebrochen
 textArea.backup.createBackup.success|Backup wurde erstellt:
 textArea.backup.restoringBackup|Backup wird wiederhergestellt
