@@ -173,7 +173,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         ArrayList<Integer> requiredGenres = new ArrayList<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED-")) {
-                requiredGenres.add(SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) entry.getValue()));
+                requiredGenres.add(SharingHelper.getContentIdByNameFromImport(GameplayFeatureManager.INSTANCE, (String) entry.getValue()));
             }
         }
         return new Hardware(

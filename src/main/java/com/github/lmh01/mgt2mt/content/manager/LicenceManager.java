@@ -106,6 +106,8 @@ public class LicenceManager extends AbstractSimpleContentManager {
             licenceType = LicenceType.MOVIE;
         } else if (data.contains("SPORT")) {
             licenceType = LicenceType.SPORT;
+        } else {
+            throw new ModProcessingException("Unable to construct content: licence type not found!");
         }
         return new Licence(name, null, licenceType);
     }

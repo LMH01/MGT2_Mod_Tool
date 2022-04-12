@@ -376,6 +376,6 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public String getExportImageName(String identifier, String name) {
-        return getExportType().toLowerCase().replaceAll(" ", "_") + "_" + name.toLowerCase().replaceAll(" ", "_") + "_" + identifier;
+        return getExportType().toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + name.toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + identifier;
     }
 }
