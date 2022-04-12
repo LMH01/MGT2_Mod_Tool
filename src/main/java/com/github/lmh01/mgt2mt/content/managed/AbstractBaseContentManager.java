@@ -7,6 +7,9 @@ import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
+import com.github.lmh01.mgt2mt.util.interfaces.Processor;
+import com.github.lmh01.mgt2mt.util.manager.ExportType;
+import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 
 import javax.swing.*;
 import java.io.*;
@@ -75,14 +78,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     protected final void exportMenuItemAction() {
         ThreadHandler.startModThread(() -> {
             analyzeFile();
-            Path path;
-            if (Settings.enableExportStorage) {
-                path = ModManagerPaths.EXPORT.getPath().resolve("single/" + Utils.getCurrentDateTime());
-            } else {
-                path = ModManagerPaths.EXPORT.getPath().resolve("single");
-            }
-            throw new ModProcessingException("Not yet implemented! SharingManager.exportSingleMod has to be rewritten, or i have to find a better way to export a single mod.");
-            //OperationHelper.process((string) -> SharingManager.exportSingleMod(this, string, path), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true);
+            OperationHelper.process(contents -> SharingManager.export(ExportType.ALL_SINGLE, (ArrayList<AbstractBaseContent>) contents), getCustomContentString(), getContentByAlphabet(), I18n.INSTANCE.get("commonText." + getMainTranslationKey()), I18n.INSTANCE.get("commonText.exported"), I18n.INSTANCE.get("commonText.export"), I18n.INSTANCE.get("commonText.exporting"), true, this);
         }, "runnableExport" + getType().replaceAll("\\s+", ""));
     }
 

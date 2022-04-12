@@ -1001,7 +1001,7 @@ public class SharingManager {
      */
     public static void exportSingleMod(AbstractBaseContent content, Path folder) throws ModProcessingException {
         LOGGER.info("exporting mod: " + content.name);
-        Path path = folder.resolve(content.contentType.getExportType());
+        Path path = folder.resolve(content.contentType.getExportType()).resolve(Utils.convertName(content.name));
         String fileName = content.contentType.getExportType() + "_" + Utils.convertName(content.name) + ".toml";
         if (!Files.exists(path.resolve(fileName)) && !Files.exists(path.resolve(Utils.convertName(content.name) + "/" + fileName))) {
             try {
