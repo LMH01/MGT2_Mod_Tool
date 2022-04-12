@@ -44,7 +44,7 @@ public class CopyProtectionManager extends AbstractAdvancedContentManager {
 
     @Override
     public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
-        return new AntiCheat(map.get("NAME EN"),
+        return new CopyProtection(map.get("NAME EN"),
                 getIdFromMap(map),
                 new TranslationManager(map),
                 map.get("DATE"),
