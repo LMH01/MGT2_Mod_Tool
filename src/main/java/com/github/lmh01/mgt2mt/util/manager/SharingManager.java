@@ -709,7 +709,6 @@ public class SharingManager {
      * @return The replacement
      * @see SharingManager#replaceDependencies(BaseContentManager, Map, BaseContentManager, String, String)  Parameters
      */
-    @SuppressWarnings("unchecked")
     private static <T extends BaseContentManager & DependentContentManager> String replaceDependencies(T parent, Map<String, Object> parentMap, BaseContentManager child, String childName) throws ModProcessingException {
         String replacement = child.getContentByAlphabet()[Utils.getRandomNumber(0, child.getContentByAlphabet().length)];
         replaceDependencies(parent, parentMap, child, childName, replacement);
@@ -921,7 +920,9 @@ public class SharingManager {
      */
     private static boolean importContents(Map<BaseContentManager, List<AbstractBaseContent>> contents) throws ModProcessingException {
         for (Map.Entry<BaseContentManager, List<AbstractBaseContent>> entry : contents.entrySet()) {
-            entry.getKey().addContents(entry.getValue());
+            if (!entry.getValue().isEmpty()) {
+                entry.getKey().addContents(entry.getValue());
+            }
         }
         return true;
     }
