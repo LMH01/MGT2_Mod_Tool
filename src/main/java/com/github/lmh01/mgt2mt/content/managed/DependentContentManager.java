@@ -1,8 +1,13 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Used to signify that a content manager requires dependencies.
+ * Content managers that implement this interface should overwrite {@link BaseContentManager#constructContentFromImportMap(Map, Path)}.
+ */
 public interface DependentContentManager {
 
     /**

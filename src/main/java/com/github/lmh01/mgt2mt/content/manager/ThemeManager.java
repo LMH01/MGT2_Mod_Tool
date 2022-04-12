@@ -219,17 +219,6 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     }
 
     @Override
-    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
-        Map<String, String> translations = new HashMap<>();
-        for (String key : TranslationManager.TRANSLATION_KEYS) {
-            if (map.containsKey("NAME " + key)) {
-                translations.put(key, (String)map.get("NAME " + key));
-            }
-        }
-        return new Theme((String)map.get("NAME EN"), null, translations, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String)map.get("GENRES")), Integer.parseInt((String)map.get("AGE")));
-    }
-
-    @Override
     public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
         String line = getLineByName(name);
         Map<String, String> translations = new HashMap<>();
@@ -246,6 +235,17 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
             }
         }
         return new Theme(name, getContentIdByName(name), translations, genres, violenceLevel);
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        Map<String, String> translations = new HashMap<>();
+        for (String key : TranslationManager.TRANSLATION_KEYS) {
+            if (map.containsKey("NAME " + key)) {
+                translations.put(key, (String)map.get("NAME " + key));
+            }
+        }
+        return new Theme((String)map.get("NAME EN"), null, translations, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String)map.get("GENRES")), Integer.parseInt((String)map.get("AGE")));
     }
 
     @Override

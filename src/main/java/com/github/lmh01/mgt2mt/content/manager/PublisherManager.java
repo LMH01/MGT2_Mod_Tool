@@ -59,25 +59,6 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
-        return new Publisher(
-                (String) map.get("NAME EN"),
-                getIdFromMap(map),
-                new TranslationManager(map),
-                (String) map.get("DATE"),
-                new Image(assetsFolder.resolve("publisher_icon").toFile(), null),
-                Boolean.getBoolean((String) map.get("DEVELOPER")),
-                Boolean.getBoolean((String) map.get("PUBLISHER")),
-                Integer.parseInt((String) map.get("MARKET")),
-                Integer.parseInt((String) map.get("SHARE")),
-                GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String)map.get("GENRE")),
-                map.containsKey("ONLYMOBILE"),
-                Integer.parseInt((String) map.get("SPEED")),
-                Integer.parseInt((String) map.get("COMVAL")),
-                map.containsKey("NOTFORSALE"));
-    }
-
-    @Override
     public String[] getCompatibleModToolVersions() {
         return compatibleModToolVersions;
     }
@@ -98,6 +79,25 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 map.containsKey("ONLYMOBILE"),
                 Integer.parseInt(map.get("SPEED")),
                 Integer.parseInt(map.get("COMVAL")),
+                map.containsKey("NOTFORSALE"));
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        return new Publisher(
+                (String) map.get("NAME EN"),
+                getIdFromMap(map),
+                new TranslationManager(map),
+                (String) map.get("DATE"),
+                new Image(assetsFolder.resolve(getExportImageName("publisher_icon.png", (String) map.get("NAME EN"))).toFile(), MGT2Paths.COMPANY_ICONS.getPath().resolve(String.valueOf(CompanyLogoAnalyzer.getFreeLogoNumber() + ".png")).toFile()),
+                Boolean.getBoolean((String) map.get("DEVELOPER")),
+                Boolean.getBoolean((String) map.get("PUBLISHER")),
+                Integer.parseInt((String) map.get("MARKET")),
+                Integer.parseInt((String) map.get("SHARE")),
+                GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String)map.get("GENRE")),
+                map.containsKey("ONLYMOBILE"),
+                Integer.parseInt((String) map.get("SPEED")),
+                Integer.parseInt((String) map.get("COMVAL")),
                 map.containsKey("NOTFORSALE"));
     }
 
@@ -225,7 +225,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                     if (publisherImageFilePath.get().equals(ImageFileHandler.defaultPublisherIcon)) {
                         logoId = 87;
                     } else {
-                        logoId = CompanyLogoAnalyzer.getLogoNumber();
+                        CompanyLogoAnalyzer.analyzeLogoNumbers();
+                        logoId = CompanyLogoAnalyzer.getFreeLogoNumber();
                     }
                     Publisher publisher = new Publisher(
                             textFieldName.getText(),

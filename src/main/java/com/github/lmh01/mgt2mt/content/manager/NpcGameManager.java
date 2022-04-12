@@ -100,14 +100,14 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
     }
 
     @Override
-    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
-        return new NpcGame((String) map.get("NAME EN"), null, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GENRES")));
-    }
-
-    @Override
     public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
         String data = getDataForName(name);
         return new NpcGame(name, getContentIdByName(name), Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(data)));
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        return new NpcGame((String) map.get("NAME EN"), null, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GENRES")));
     }
 
     @Override

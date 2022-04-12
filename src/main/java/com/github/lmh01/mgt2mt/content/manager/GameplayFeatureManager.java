@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,8 +74,8 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
             badGameplayFeatures = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")));
         }
         ArrayList<Integer> goodGameplayFeatures = new ArrayList<>();
-        if (map.containsKey("BAD")) {
-            goodGameplayFeatures = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")));
+        if (map.containsKey("GOOD")) {
+            goodGameplayFeatures = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("GOOD")));
         }
         return new GameplayFeature(
                 map.get("NAME EN"),
@@ -90,6 +91,45 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 Integer.parseInt(map.get("GRAPHIC")),
                 Integer.parseInt(map.get("SOUND")),
                 Integer.parseInt(map.get("TECH")),
+                badGameplayFeatures,
+                goodGameplayFeatures,
+                mobile,
+                arcade
+        );
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        boolean arcade = true;
+        if (map.containsKey("NO_ARCADE")) {
+            arcade = false;
+        }
+        boolean mobile = true;
+        if (map.containsKey("NO_MOBILE")) {
+            mobile = false;
+        }
+        ArrayList<Integer> badGameplayFeatures = new ArrayList<>();
+        if (map.containsKey("BAD")) {
+            badGameplayFeatures = SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("BAD"));
+        }
+        ArrayList<Integer> goodGameplayFeatures = new ArrayList<>();
+        if (map.containsKey("GOOD")) {
+            goodGameplayFeatures = SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GOOD"));
+        }
+        return new GameplayFeature(
+                (String) map.get("NAME EN"),
+                getIdFromMap(map),
+                new TranslationManager(map),
+                (String) map.get("DESC EN"),
+                GameplayFeatureType.getFromId(Integer.parseInt((String) map.get("TYP"))),
+                (String) map.get("DATE"),
+                Integer.parseInt((String) map.get("RES POINTS")),
+                Integer.parseInt((String) map.get("PRICE")),
+                Integer.parseInt((String) map.get("DEV COSTS")),
+                Integer.parseInt((String) map.get("GAMEPLAY")),
+                Integer.parseInt((String) map.get("GRAPHIC")),
+                Integer.parseInt((String) map.get("SOUND")),
+                Integer.parseInt((String) map.get("TECH")),
                 badGameplayFeatures,
                 goodGameplayFeatures,
                 mobile,

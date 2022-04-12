@@ -9,14 +9,17 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CompanyLogoAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(CompanyLogoAnalyzer.class);
 
+    static int maxLogoNumber = 0;
+
     /**
      * @return Returns a free logo number for a company logo.
      */
-    public static int getLogoNumber() {
+    public static void analyzeLogoNumbers() {
         Path path = MGT2Paths.COMPANY_ICONS.getPath();
         ArrayList<File> companyLogos = DataStreamHelper.getFilesInFolder(path);
         int currentMaxNumber = 0;
@@ -28,8 +31,16 @@ public class CompanyLogoAnalyzer {
                 }
             }
         }
-        int numberOut = currentMaxNumber + 1;
-        DebugHelper.debug(LOGGER, "Max logo number: " + numberOut);
-        return numberOut;
+        maxLogoNumber = currentMaxNumber;
+        DebugHelper.debug(LOGGER, "Max logo number: " + maxLogoNumber);
+    }
+
+    /**
+     * Returns a free logo id.
+     * This id is then blocked from being used again.
+     */
+    public static int getFreeLogoNumber() {
+        maxLogoNumber += 1;
+        return maxLogoNumber;
     }
 }

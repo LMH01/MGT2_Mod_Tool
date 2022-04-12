@@ -30,6 +30,14 @@ public class SharingHelper {
     }
 
     /**
+     * Does the same as {@link SharingHelper#transformContentNamesToIds(BaseContentManager, String)} except that this
+     * function only transforms the one string.
+     */
+    public static Integer getContentIdByNameFromImport(BaseContentManager contentManager, String name) throws ModProcessingException {
+        return contentManager.getImportHelperMap().getContentIdByName(name);
+    }
+
+    /**
      * Transforms an integer array list to a string containing the corresponding names for the content ids.
      * Example: {@literal ArrayList<Integer> {1, 2, 3} becomes String <Name1><Name2><Name3>}
      * This should be primarily be used by {@link DependentContent#changeExportMap(Map)}.

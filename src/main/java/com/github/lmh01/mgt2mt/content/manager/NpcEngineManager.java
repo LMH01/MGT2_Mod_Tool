@@ -2,11 +2,7 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.NpcEngine;
-import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
-import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
-import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
-import com.github.lmh01.mgt2mt.content.managed.DependentContentManager;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
@@ -23,6 +19,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +60,20 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
                 Integer.parseInt(map.get("PLATFORM")),
                 Integer.parseInt(map.get("PRICE")),
                 Integer.parseInt(map.get("SHARE"))
+        );
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        return new NpcEngine(
+                (String) map.get("NAME EN"),
+                getIdFromMap(map),
+                new TranslationManager(map),
+                (String) map.get("DATE"),
+                SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) map.get("GENRE")),
+                SharingHelper.getContentIdByNameFromImport(PlatformManager.INSTANCE, (String) map.get("PLATFORM")),
+                Integer.parseInt((String) map.get("PRICE")),
+                Integer.parseInt((String) map.get("SHARE"))
         );
     }
 

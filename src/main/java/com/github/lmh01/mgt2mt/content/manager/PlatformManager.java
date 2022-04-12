@@ -189,13 +189,13 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             // Add platform images
             if (entry.getKey().contains("platform_image_")) {
                 int id = Integer.parseInt(entry.getKey().replaceAll("[^0-9]", ""));
-                Integer date = null;
+                Integer year = null;
                 if (id != 1) {
-                    date = Integer.parseInt(transformedMap.get("PIC- " + id + " YEAR"));
+                    year = Integer.parseInt(transformedMap.get("PIC-" + id + " YEAR").replaceAll("[^0-9]", ""));
                 }
                 platformImages.add(new PlatformImage(
                         id,
-                        date,
+                        year,
                         new Image(assetsFolder.resolve(entry.getValue()).toFile(), MGT2Paths.PLATFORM_ICONS.getPath().resolve(entry.getValue()).toFile())));
             }
         }

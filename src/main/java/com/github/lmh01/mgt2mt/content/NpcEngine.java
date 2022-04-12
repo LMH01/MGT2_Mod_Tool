@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
+import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.NpcEngineManager;
 import com.github.lmh01.mgt2mt.content.manager.PlatformManager;
@@ -12,6 +13,7 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,8 +70,12 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
     @Override
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        map.put(GenreManager.INSTANCE.getExportType(), GenreManager.INSTANCE.getContentNameById(genre));
-        map.put(PlatformManager.INSTANCE.getExportType(), PlatformManager.INSTANCE.getContentNameById(platform));
+        ArrayList<String> genres = new ArrayList<>();
+        genres.add(GenreManager.INSTANCE.getContentNameById(genre));
+        map.put(GenreManager.INSTANCE.getExportType(), genres);
+        ArrayList<String> platforms = new ArrayList<>();
+        platforms.add(PlatformManager.INSTANCE.getContentNameById(platform));
+        map.put(PlatformManager.INSTANCE.getExportType(), platforms);
         return map;
     }
 

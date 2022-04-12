@@ -67,11 +67,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         insertIdInMap(map);
         map.putAll(translationManager.toMap());
         map.put("DATE", date);
-        if (icon.gameFile == null) {
-            map.put("PIC", CompanyLogoAnalyzer.getLogoNumber() + ".png");
-        } else {
-            map.put("PIC", icon.gameFile.getName().replace(".png", ""));
-        }
+        map.put("PIC", icon.gameFile.getName().replace(".png", ""));
         map.put("DEVELOPER", String.valueOf(developer));
         map.put("PUBLISHER", String.valueOf(developer));
         map.put("MARKET", marketShare.toString());
@@ -126,7 +122,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         }
         if (!icon.gameFile.getName().equals("87.png")) {
             // Only copy image if it is a custom file
-            Files.copy(icon.extern.toPath(), MGT2Paths.COMPANY_ICONS.getPath().resolve(CompanyLogoAnalyzer.getLogoNumber() + ".png"));
+            Files.copy(icon.extern.toPath(), icon.gameFile.toPath());
         }
     }
 

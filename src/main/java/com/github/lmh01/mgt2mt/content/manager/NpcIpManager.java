@@ -141,26 +141,6 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
     }
 
     @Override
-    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
-        String name = (String) map.get("name");
-        int genre = Integer.parseInt((String) map.get("genre"));
-        Integer subGenre = null;
-        if (map.containsKey("sub_genre")) {
-            subGenre = Integer.parseInt((String) map.get("sub_genre"));
-        }
-        int theme = Integer.parseInt((String) map.get("theme"));
-        Integer subTheme = null;
-        if (map.containsKey("sub_theme")) {
-            subTheme = Integer.parseInt((String) map.get("sub_theme"));
-        }
-        TargetGroup targetGroup = TargetGroup.getTargetGroup((String) map.get("target_group"));
-        int publisher = Integer.parseInt((String) map.get("publisher"));
-        int releaseYear = Integer.parseInt((String) map.get("release_year"));
-        int rating = Integer.parseInt((String) map.get("rating"));
-        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);
-    }
-
-    @Override
     public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
         String line = getLineByName(name);
         ArrayList<String> data = Utils.getEntriesFromString(line);
@@ -196,6 +176,26 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                 rating = Integer.parseInt(d.replaceAll("%", ""));
             }
         }
+        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        String name = (String) map.get("name");
+        int genre = SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) map.get("genre"));
+        Integer subGenre = null;
+        if (map.containsKey("sub_genre")) {
+            subGenre = SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) map.get("sub_genre"));
+        }
+        int theme = SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, (String) map.get("theme"));
+        Integer subTheme = null;
+        if (map.containsKey("sub_theme")) {
+            subTheme = SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, (String) map.get("sub_theme"));
+        }
+        TargetGroup targetGroup = TargetGroup.getTargetGroup((String) map.get("target_group"));
+        int publisher = SharingHelper.getContentIdByNameFromImport(PublisherManager.INSTANCE, (String) map.get("publisher"));
+        int releaseYear = Integer.parseInt((String) map.get("release_year"));
+        int rating = Integer.parseInt((String) map.get("rating"));
         return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);
     }
 

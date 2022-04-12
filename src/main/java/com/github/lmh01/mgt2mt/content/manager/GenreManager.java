@@ -143,7 +143,6 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
         String name = String.valueOf(map.get("NAME EN"));
-        System.out.println("Icon key name in map: " + getExportImageName("icon.png", name));
         Image icon = new Image(assetsFolder.resolve(String.valueOf(map.get("iconName"))).toFile(),
                 MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + name.replaceAll(" ", "").trim() + ".png").toFile());
         ArrayList<Image> screenshots = new ArrayList<>();
@@ -163,9 +162,6 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         ArrayList<Integer> compatibleThemes = SharingHelper.transformContentNamesToIds(ThemeManager.INSTANCE, String.valueOf(map.get("THEME COMB")));
         ArrayList<Integer> badGameplayFeatures = SharingHelper.transformContentNamesToIds(GameplayFeatureManager.INSTANCE, String.valueOf(map.get("GAMEPLAYFEATURE BAD")));
         ArrayList<Integer> goodGameplayFeatures = SharingHelper.transformContentNamesToIds(GameplayFeatureManager.INSTANCE, String.valueOf(map.get("GAMEPLAYFEATURE GOOD")));
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            System.out.printf("%s|%s\n", entry.getKey(), entry.getValue());
-        }
         return new Genre(
                 String.valueOf(map.get("NAME EN")),
                 getIdFromMap(map),

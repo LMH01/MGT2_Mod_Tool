@@ -169,6 +169,31 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
     }
 
     @Override
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        ArrayList<Integer> requiredGenres = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getKey().contains("NEED-")) {
+                requiredGenres.add(SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) entry.getValue()));
+            }
+        }
+        return new Hardware(
+                (String) map.get("NAME EN"),
+                getIdFromMap(map),
+                new TranslationManager(map),
+                (String) map.get("DESC EN"),
+                (String) map.get("DATE"),
+                HardwareType.getFromId(Integer.parseInt((String) map.get("TYP"))),
+                Integer.parseInt((String) map.get("RES POINTS")),
+                Integer.parseInt((String) map.get("PRICE")),
+                Integer.parseInt((String) map.get("DEV COSTS")),
+                Integer.parseInt((String) map.get("TECHLEVEL")),
+                map.containsKey("ONLY_HANDHELD"),
+                map.containsKey("ONLY_STATIONARY"),
+                requiredGenres
+        );
+    }
+
+    @Override
     public void openAddModGui() throws ModProcessingException {
         JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue"));
         final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};

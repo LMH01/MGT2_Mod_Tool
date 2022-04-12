@@ -20,7 +20,8 @@ public class NewModsHandler {
             Path imageFilePath = Utils.getImagePath();
             File imageFileSource = imageFilePath.toFile();
             if (imageFileSource.exists()) {
-                File targetImage = MGT2Paths.COMPANY_ICONS.getPath().resolve(CompanyLogoAnalyzer.getLogoNumber() + ".png").toFile();
+                CompanyLogoAnalyzer.analyzeLogoNumbers();
+                File targetImage = MGT2Paths.COMPANY_ICONS.getPath().resolve(CompanyLogoAnalyzer.getFreeLogoNumber() + ".png").toFile();
                 try {
                     Files.copy(Paths.get(imageFileSource.getPath()), Paths.get(targetImage.getPath()));
                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.addCompanyIcon.success"));

@@ -55,7 +55,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
     @Override
     public Map<String, String> getMap() throws ModProcessingException {
         Map<String, String> exportMap = new HashMap<>();
-        exportMap.put("name", name);
+        exportMap.put("NAME EN", name);
         exportMap.put("genre", GenreManager.INSTANCE.getContentNameById(genre));
         if (subGenre != null) {
             exportMap.put("sub_genre", GenreManager.INSTANCE.getContentNameById(subGenre));
@@ -64,7 +64,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         if (subTheme != null) {
             exportMap.put("sub_theme", ThemeManager.INSTANCE.getContentNameById(theme));
         }
-        exportMap.put("target_group", Integer.toString(targetGroup.getId()));
+        exportMap.put("target_group", targetGroup.getTypeName());
         exportMap.put("publisher", PublisherManager.INSTANCE.getContentNameById(publisher));
         exportMap.put("release_year", Integer.toString(releaseYear));
         exportMap.put("rating", Integer.toString(rating));

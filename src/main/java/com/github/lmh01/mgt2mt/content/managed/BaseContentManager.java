@@ -69,6 +69,14 @@ public interface BaseContentManager {
     void openAddModGui() throws ModProcessingException;
 
     /**
+     * Uses the game files to construct the base content.
+     * @param name The name of the content for which a base content should be constructed
+     * @return The newly constructed content
+     * @throws ModProcessingException When the content could not be constructed
+     */
+    AbstractBaseContent constructContentFromName(String name) throws ModProcessingException;
+
+    /**
      * Constructs the base content from the import map
      * @param map The map that contains the values from which the content should be constructed
      * @param assetsFolder The folder that contains the assets that are required to build the content
@@ -76,14 +84,6 @@ public interface BaseContentManager {
      * @throws ModProcessingException When required values are missing from the map and the base content could not be constructed
      */
     AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException;
-
-    /**
-     * Uses the game files to construct the base content.
-     * @param name The name of the content for which a base content should be constructed
-     * @return The newly constructed content
-     * @throws ModProcessingException When the content could not be constructed
-     */
-    AbstractBaseContent constructContentFromName(String name) throws ModProcessingException;
 
     /**
      * @return Returns a string that contains the compatible mod tool versions
