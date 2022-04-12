@@ -181,7 +181,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
-        String name = (String) map.get("name");
+        String name = (String) map.get("NAME EN");
         int genre = SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) map.get("genre"));
         Integer subGenre = null;
         if (map.containsKey("sub_genre")) {
