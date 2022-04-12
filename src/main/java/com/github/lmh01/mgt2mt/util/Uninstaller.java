@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
@@ -18,7 +19,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Uninstaller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Uninstaller.class);
@@ -169,6 +169,7 @@ public class Uninstaller {
      * @return Returns false when the removal of mods was successful
      */
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {
+        CompanyLogoAnalyzer.analyzeLogoNumbers();
         boolean uninstallFailed = false;
         ArrayList<String> customContentArrayList = new ArrayList<>();
         for (BaseContentManager manager : ContentAdministrator.contentManagers) {

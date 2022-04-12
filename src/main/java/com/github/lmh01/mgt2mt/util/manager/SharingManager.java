@@ -64,6 +64,7 @@ public class SharingManager {
      * @param paths      The root folders where the search for mods should be started at.
      */
     public static void importAll(ImportType importType, Set<Path> paths) throws ModProcessingException {
+        CompanyLogoAnalyzer.analyzeLogoNumbers();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.start"));
         ArrayList<File> tomlFiles = getTomlFiles(paths);
         if (!tomlFiles.isEmpty()) {
@@ -78,6 +79,7 @@ public class SharingManager {
                 if (importType.equals(ImportType.RESTORE_POINT)) {
                     Uninstaller.uninstallAllMods();
                     ContentAdministrator.analyzeContents();
+                    CompanyLogoAnalyzer.analyzeLogoNumbers();
                 }
                 Set<Map<String, Object>> modMaps = getImportMaps(singleMods, bundledMods);
                 if (!modMaps.isEmpty()) {

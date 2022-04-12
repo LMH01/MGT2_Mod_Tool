@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
 import com.github.lmh01.mgt2mt.util.handler.NewModsHandler;
@@ -236,6 +237,7 @@ public class WindowMain {
             try {
                 boolean noModsAvailable = true;
                 ContentAdministrator.analyzeContents();
+                CompanyLogoAnalyzer.analyzeLogoNumbers();
                 boolean noModRestorePointSet = true;
                 if (ModManagerPaths.CURRENT_RESTORE_POINT.toFile().exists()) {
                     noModRestorePointSet = false;
