@@ -59,4 +59,15 @@ public class ContentAdministrator {
     public static void modAdded(String modName, String modType) {
         JOptionPane.showMessageDialog(null, modType + " \"" + modName + "\" " + I18n.INSTANCE.get("commonText.hasSuccessfullyBeenAddedToTheGame"), "frame.title.success", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    /**
+     * Calls the function {@link AbstractBaseContentManager#initializeDefaultContent()} for each content manager.
+     */
+    public static void initializeDefaultContents() {
+        for (BaseContentManager manager : contentManagers) {
+            if (manager instanceof AbstractBaseContentManager) {
+                ((AbstractBaseContentManager)manager).initializeDefaultContent();
+            }
+        }
+    }
 }

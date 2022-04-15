@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractBaseContentManager implements BaseContentManager {
     private final String mainTranslationKey;
     private final String defaultContentFileName;
-    private final String[] defaultContent;
+    private String[] defaultContent;
     private final String exportType;
     private final ArrayList<JMenuItem> modMenuItems;
     private final JMenuItem exportMenuItem;
@@ -36,7 +36,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     public AbstractBaseContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
         this.mainTranslationKey = mainTranslationKey;
         this.defaultContentFileName = defaultContentFileName;
-        this.defaultContent = getDefaultContentFromFiles();
+        this.defaultContent = null;
         this.exportType = exportType;
         this.modMenuItems = getInitialModMenuItems();
         this.exportMenuItem = getInitialExportMenuItem();
@@ -88,6 +88,13 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     protected final void setMaxId(int id) {
         this.maxId = id;
+    }
+
+    /**
+     * Initializes the default content
+     */
+    public final void initializeDefaultContent() {
+        this.defaultContent = getDefaultContentFromFiles();
     }
 
     /**

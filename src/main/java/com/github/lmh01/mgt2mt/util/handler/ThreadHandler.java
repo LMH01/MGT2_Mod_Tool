@@ -49,6 +49,7 @@ public class ThreadHandler {
             UpdateChecker.checkForUpdates(false, false);
             DefaultContentManager.performStartTasks();
             deleteTempFolder();
+            ContentAdministrator.initializeDefaultContents();
             try {
                 WindowMain.checkActionAvailability();
                 if (Settings.mgt2FolderIsCorrect) {
