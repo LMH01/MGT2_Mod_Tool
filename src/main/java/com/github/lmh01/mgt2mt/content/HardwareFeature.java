@@ -47,6 +47,7 @@ public class HardwareFeature extends AbstractAdvancedContent {
         Map<String, String> map = new HashMap<>();
         insertIdInMap(map);
         map.put("NAME EN", name);
+        map.put("DESC EN", description);
         map.put("DATE", date);
         map.put("RES POINTS", Integer.toString(researchPoints));
         map.put("PRICE", Integer.toString(price));
