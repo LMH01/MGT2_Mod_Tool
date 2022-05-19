@@ -239,7 +239,9 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
             }
         });
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity};
+        JLabel componentRatingDescription = new JLabel(I18n.INSTANCE.get("mod.hardware.addMod.components.label.ratingDescription"));
+
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity, componentRatingDescription};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))) {

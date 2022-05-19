@@ -474,6 +474,7 @@ mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Check thi
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationary console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|Select here for which console type this hardware should be exclusive
+mod.hardware.addMod.components.label.ratingDescription|<html>Info:<br>The rating of the component cannot be set manually.<br>It is calculated automatically using the tech level and research points, among others.
 mod.npcIp.addMod.optionPaneMessage.firstPart|Add this npc ip?
 mod.npcIp.addMod.components.textFieldName.initialValue|ENTER NPC IP NAME
 mod.npcIp.addMod.components.spinner.rating|Game rating in %

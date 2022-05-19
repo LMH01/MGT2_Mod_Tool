@@ -16,6 +16,7 @@
 - Removed experimental menu: Publishers can no longer be replaced with real life publishers
 
 ### Other
+- Added an informative message that explains how the hardware component rating is determined
 - Significant performance improvements when adding and removing mods
   - The `.txt` files are now only written once per cycle and not once for each content.
   - Example: Before it could take about 3 and 1/2 minutes to remove 9870 NpcEngines. Now it is almost instant.
