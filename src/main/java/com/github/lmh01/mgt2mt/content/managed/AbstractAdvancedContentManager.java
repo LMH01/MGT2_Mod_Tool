@@ -111,7 +111,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      * Map value: The type of which the object is
      * @return A map containing the values of the text files that should be checked for existence.
      */
-    protected abstract Map<String, TagType> getIntegrityCheckMap();//TODO Add this function to all other managers
+    protected abstract Map<String, TagType> getIntegrityCheckMap();
 
     /**
      * Edits the games text file(s) to add or remove the content.

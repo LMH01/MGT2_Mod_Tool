@@ -103,7 +103,6 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 targetGroups.add(tg);
             }
         }
-        //TODO see if some calls here can be simplified
         ArrayList<Integer> compatibleGenres = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("GENRE COMB")));
         ArrayList<Integer> compatibleThemes = Utils.getCompatibleThemeIdsForGenreNew(id);
         ArrayList<Integer> badGameplayFeatures = Utils.getContentIdsFromString(GameplayFeatureManager.INSTANCE, Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));

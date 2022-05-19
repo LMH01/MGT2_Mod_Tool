@@ -91,7 +91,7 @@ public class ThreadHandler {
                 if (integrityViolations.toString().isEmpty()) {
                     LOGGER.info("Integrity check successful!");
                 } else {
-                    LOGGER.error("Error: Game file integrity is violated. Stacktrace: ");
+                    LOGGER.error("Error: Game file integrity is violated: \n" + integrityViolations.toString());
                     TextAreaHelper.appendText(integrityViolations.toString());
                     TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
                     TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
