@@ -681,7 +681,6 @@ errorMessages.gameFileCorrupted.textArea.secondPart|Please try to repair the gam
 
 warnMessage.integrityCheckFailed.textArea.1|Warning: The integrity of the game files is violated.
 warnMessage.integrityCheckFailed.textArea.2|If the tool is used anyway, problems may occur.
-warnMessage.integrityCheckFailed.textArea.3|Reason for this warning:
 
 frame.title.error|Error
 frame.title.warning|Warning

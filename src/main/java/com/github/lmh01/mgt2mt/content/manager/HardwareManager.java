@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -166,6 +167,18 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 map.containsKey("ONLY_STATIONARY"),
                 requiredGenres
         );
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("DATE", TagType.STRING);
+        map.put("TYP", TagType.INT);
+        map.put("RES POINTS", TagType.INT);
+        map.put("PRICE", TagType.INT);
+        map.put("DEV COSTS", TagType.INT);
+        map.put("TECHLEVEL", TagType.INT);
+        return map;
     }
 
     @Override

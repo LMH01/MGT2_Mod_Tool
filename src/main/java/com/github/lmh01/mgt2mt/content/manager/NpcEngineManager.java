@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.NpcEngine;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -61,6 +62,17 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
                 Integer.parseInt(map.get("PRICE")),
                 Integer.parseInt(map.get("SHARE"))
         );
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("DATE", TagType.STRING);
+        map.put("GENRE", TagType.INT);
+        map.put("PLATFORM", TagType.INT);
+        map.put("PRICE", TagType.INT);
+        map.put("SHARE", TagType.INT);
+        return map;
     }
 
     @Override

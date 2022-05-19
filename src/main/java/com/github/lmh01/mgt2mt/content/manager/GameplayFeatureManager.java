@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.content.GameplayFeature;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.GameplayFeatureType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -96,6 +97,22 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 mobile,
                 arcade
         );
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("DESC EN", TagType.STRING);
+        map.put("TYP", TagType.STRING);
+        map.put("DATE", TagType.STRING);
+        map.put("RES POINTS", TagType.INT);
+        map.put("PRICE", TagType.INT);
+        map.put("DEV COSTS", TagType.INT);
+        map.put("GAMEPLAY", TagType.INT);
+        map.put("GRAPHIC", TagType.INT);
+        map.put("SOUND", TagType.INT);
+        map.put("TECH", TagType.INT);
+        return map;
     }
 
     @Override

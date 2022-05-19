@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -170,6 +171,20 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 PlatformType.getFromId(Integer.parseInt(map.get("TYP"))),
                 map.containsKey("STARTPLATFORM")
                 );
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("MANUFACTURER EN", TagType.STRING);
+        map.put("DATE", TagType.STRING);
+        map.put("PRICE", TagType.INT);
+        map.put("DEV COSTS", TagType.INT);
+        map.put("TECHLEVEL", TagType.INT);
+        map.put("UNITS", TagType.INT);
+        map.put("COMPLEX", TagType.INT);
+        map.put("TYP", TagType.INT);
+        return map;
     }
 
     @Override

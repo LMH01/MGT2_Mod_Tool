@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -49,6 +50,15 @@ public class AntiCheatManager extends AbstractAdvancedContentManager {
                 map.get("DATE"),
                 Integer.parseInt(map.get("PRICE")),
                 Integer.parseInt(map.get("DEV COSTS")));
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("DATE", TagType.STRING);
+        map.put("PRICE", TagType.INT);
+        map.put("DEV COSTS", TagType.INT);
+        return map;
     }
 
     @Override

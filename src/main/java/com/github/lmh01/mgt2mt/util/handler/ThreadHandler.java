@@ -80,20 +80,21 @@ public class ThreadHandler {
             if (Settings.disableSafetyFeatures) {
                 DebugHelper.warn(LOGGER, "check for game file integrity is disabled because the safety features are disabled");
             } else {
-                try {
-                    LOGGER.info("Checking game file integrity...");
-                    for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-                        if (manager instanceof AbstractAdvancedContentManager) {
-                            ((AbstractAdvancedContentManager) manager).verifyContentIntegrity();
-                        }
+                StringBuilder integrityViolations = new StringBuilder();
+
+                LOGGER.info("Checking game file integrity...");
+                for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                    if (manager instanceof AbstractAdvancedContentManager) {
+                        integrityViolations.append(((AbstractAdvancedContentManager) manager).verifyContentIntegrity());
                     }
+                }
+                if (integrityViolations.toString().isEmpty()) {
                     LOGGER.info("Integrity check successful!");
-                } catch (ModProcessingException e) {
+                } else {
                     LOGGER.error("Error: Game file integrity is violated. Stacktrace: ");
+                    TextAreaHelper.appendText(integrityViolations.toString());
                     TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
                     TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.3"));
-                    TextAreaHelper.printStackTrace(e);
                 }
             }
         });

@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Genre;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
@@ -21,6 +22,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GenreManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -138,6 +140,32 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(map.get("ALIGN1")),
                 Integer.parseInt(map.get("ALIGN2"))
         );
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("DESC EN", TagType.STRING);
+        map.put("DATE", TagType.STRING);
+        map.put("RES POINTS", TagType.INT);
+        map.put("PRICE", TagType.INT);
+        map.put("DEV COSTS", TagType.INT);
+        map.put("GAMEPLAY", TagType.INT);
+        map.put("GRAPHIC", TagType.INT);
+        map.put("SOUND", TagType.INT);
+        map.put("CONTROL", TagType.INT);
+        map.put("FOCUS0", TagType.INT);
+        map.put("FOCUS1", TagType.INT);
+        map.put("FOCUS2", TagType.INT);
+        map.put("FOCUS3", TagType.INT);
+        map.put("FOCUS4", TagType.INT);
+        map.put("FOCUS5", TagType.INT);
+        map.put("FOCUS6", TagType.INT);
+        map.put("FOCUS7", TagType.INT);
+        map.put("ALIGN0", TagType.INT);
+        map.put("ALIGN1", TagType.INT);
+        map.put("ALIGN2", TagType.INT);
+        return map;
     }
 
     @Override

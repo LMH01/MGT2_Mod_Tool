@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Publisher;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
@@ -24,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -80,6 +82,22 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 Integer.parseInt(map.get("SPEED")),
                 Integer.parseInt(map.get("COMVAL")),
                 map.containsKey("NOTFORSALE"));
+    }
+
+    @Override
+    protected Map<String, TagType> getIntegrityCheckMap() {
+        Map<String, TagType> map = new HashMap<>();
+        map.put("DATE", TagType.STRING);
+        map.put("PIC", TagType.INT);
+        map.put("DEVELOPER", TagType.STRING);
+        map.put("PUBLISHER", TagType.STRING);
+        map.put("MARKET", TagType.INT);
+        map.put("SHARE", TagType.INT);
+        map.put("GENRE", TagType.INT);
+        map.put("SPEED", TagType.INT);
+        map.put("COMVAL", TagType.INT);
+        map.put("COUNTRY", TagType.INT);
+        return map;
     }
 
     @Override

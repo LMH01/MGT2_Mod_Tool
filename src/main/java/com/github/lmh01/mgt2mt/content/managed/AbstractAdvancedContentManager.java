@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
+import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -70,24 +71,47 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      * Checks if the integrity of the fileContent is violated.
      * The integrity is violated if an id is missing from an entry, if
      * an id is assigned more than once or if the ID or NAME EN tag are missing from  the map.
+     * @return StringBuilder that contains content integrity violations
      */
-    public void verifyContentIntegrity() throws ModProcessingException {
+    public String verifyContentIntegrity() {
+        StringBuilder integrityViolations = new StringBuilder();
         Map<Integer, String> usedIds = new HashMap<>();// Stores the id and the names
         for (Map<String, String> map : fileContent) {
             if (!map.containsKey("ID") | !map.containsKey("NAME EN")) {
-                throw new ModProcessingException("The integrity of game file \"" + gameFile.getName() +  "\" is not valid. Reason: The [NAME EN] or [ID] tag of " + map.get("NAME EN") + " of type " + getType() + " is missing.");
+                integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [NAME EN] or [ID] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
             }
             try {
                 int id = Integer.parseInt(map.get("ID"));
                 if (usedIds.containsKey(id)) {
-                    throw new ModProcessingException("The integrity of game file \"" + gameFile.getName() +  "\" is not valid. Reason: The id " + id + " of " + map.get("NAME EN") + " of type " + getType() + " is already used by " + usedIds.get(id) + ".");
+                    integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The id ").append(id).append(" of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is already used by ").append(usedIds.get(id)).append(".").append("\n");
                 }
                 usedIds.put(id, map.get("NAME EN"));
             } catch (NumberFormatException e) {
-                throw new ModProcessingException("The integrity of game file  \"" + gameFile.getName() +  "\" is not valid. Reason: The [ID] field of " + map.get("NAME EN") + " of type " + getType() + " is invalid.", e);
+                integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [ID] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is invalid.").append("\n");
+            }
+            for (Map.Entry<String, TagType> entry : getIntegrityCheckMap().entrySet()) {
+                if (!map.containsKey(entry.getKey())) {
+                    integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(entry.getKey()).append("] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
+                } else {
+                    if (entry.getValue().equals(TagType.INT)) {
+                        try {
+                            Integer.parseInt(map.get(entry.getKey()));
+                        } catch (NumberFormatException e) {
+                            integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(entry.getKey()).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not a number. Value was: ").append(map.get(entry.getKey())).append("\n");
+                        }
+                    }
+                }
             }
         }
+        return integrityViolations.toString();
     }
+
+    /**
+     * Map key: The entry in the text file
+     * Map value: The type of which the object is
+     * @return A map containing the values of the text files that should be checked for existence.
+     */
+    protected abstract Map<String, TagType> getIntegrityCheckMap();//TODO Add this function to all other managers
 
     /**
      * Edits the games text file(s) to add or remove the content.
