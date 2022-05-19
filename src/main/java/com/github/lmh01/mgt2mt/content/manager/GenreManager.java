@@ -31,6 +31,8 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
 
     public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
+    public static final Path defaultGenreIcon = MGT2Paths.GENRE_ICONS.getPath().resolve("iconSkill.png");
+
     private GenreManager() {
         super("genre", "genre", "default_genres.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Genres.txt").toFile(), StandardCharsets.UTF_8);
     }

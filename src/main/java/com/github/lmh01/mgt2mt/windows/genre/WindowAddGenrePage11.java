@@ -26,7 +26,7 @@ public class WindowAddGenrePage11 extends JFrame {
     JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
     JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JTextField textFieldImagePath = new JTextField();
-    File genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
+    File genreIcon = GenreManager.defaultGenreIcon.toFile();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {
@@ -47,14 +47,14 @@ public class WindowAddGenrePage11 extends JFrame {
                 genreIcon = new File(imageFilePath);
                 textFieldImagePath.setText(imageFilePath);
             } else {
-                textFieldImagePath.setText(ImageFileHandler.defaultGenreIcon.toString());
+                textFieldImagePath.setText(GenreManager.defaultGenreIcon.toString());
             }
         });
         buttonNext.addActionListener(actionEvent -> {
             ThreadHandler.startModThread(() -> {
                 if (textFieldImagePath.getText().isEmpty()) {
                     if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                        genreIcon = ImageFileHandler.defaultGenreIcon.toFile();
+                        genreIcon = GenreManager.defaultGenreIcon.toFile();
                         GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
                     }
                 } else {

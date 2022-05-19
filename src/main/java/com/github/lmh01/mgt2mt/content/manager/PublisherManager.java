@@ -39,6 +39,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
 
     public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
+    public static final Path defaultPublisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve("87.png");
+
     private PublisherManager() {
         super("publisher", "publisher", "default_publisher.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Publisher.txt").toFile(), StandardCharsets.UTF_8);
     }
@@ -126,7 +128,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
 
-        AtomicReference<Path> publisherImageFilePath = new AtomicReference<>(ImageFileHandler.defaultPublisherIcon);
+        AtomicReference<Path> publisherImageFilePath = new AtomicReference<>(defaultPublisherIcon);
         JPanel panelPublisherIcon = new JPanel();
         JLabel labelPublisherIcon = new JLabel(I18n.INSTANCE.get("mod.publisher.icon") + ":");
         JButton buttonBrowseIcon = new JButton(I18n.INSTANCE.get("commonText.browse"));
@@ -137,7 +139,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                     publisherImageFilePath.set(imageFilePath);
                 }
             } catch (ModProcessingException e) {
-                publisherImageFilePath.set(ImageFileHandler.defaultPublisherIcon);
+                publisherImageFilePath.set(defaultPublisherIcon);
                 e.printStackTrace();
             }
         });
@@ -240,7 +242,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 } else {
                     ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(new File(publisherImageFilePath.toString()).getPath()));
                     int logoId;
-                    if (publisherImageFilePath.get().equals(ImageFileHandler.defaultPublisherIcon)) {
+                    if (publisherImageFilePath.get().equals(defaultPublisherIcon)) {
                         logoId = 87;
                     } else {
                         CompanyLogoAnalyzer.analyzeLogoNumbers();

@@ -142,7 +142,7 @@ public class Backup {
             }
             restoreThemeFileBackups(initialBackup);
             if (initialBackup) {
-                ImageFileHandler.removePublisherIcons();
+                removePublisherIcons();
                 if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
@@ -437,6 +437,22 @@ public class Backup {
                 } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        }
+    }
+
+    /**
+     * Removes all custom publisher icons
+     */
+    public static void removePublisherIcons() {
+        ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(MGT2Paths.GENRE_SCREENSHOTS.getPath(), ".png");
+        for (File file : files) {
+            try {
+                if (Integer.parseInt(file.getName().replace(".png", "")) > 187) {
+                    file.delete();
+                }
+            } catch (NumberFormatException e) {
+
             }
         }
     }
