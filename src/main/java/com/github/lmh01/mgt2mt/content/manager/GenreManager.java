@@ -29,7 +29,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
 
     public static final GenreManager INSTANCE = new GenreManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", "3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private GenreManager() {
         super("genre", "genre", "default_genres.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Genres.txt").toFile(), StandardCharsets.UTF_8);

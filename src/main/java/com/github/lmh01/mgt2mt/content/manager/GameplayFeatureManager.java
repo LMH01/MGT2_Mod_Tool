@@ -26,7 +26,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
 
     public static final GameplayFeatureManager INSTANCE = new GameplayFeatureManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", "3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private GameplayFeatureManager() {
         super("gameplayFeature", "gameplay_feature", "default_gameplay_features.txt", MGT2Paths.TEXT_DATA.getPath().resolve("GameplayFeatures.txt").toFile(), StandardCharsets.UTF_8);

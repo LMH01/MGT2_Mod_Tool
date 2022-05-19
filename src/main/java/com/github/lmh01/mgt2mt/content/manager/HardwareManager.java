@@ -30,7 +30,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
 
     public static final HardwareManager INSTANCE = new HardwareManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", "3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private HardwareManager() {
         super("hardware", "hardware", "default_hardware.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Hardware.txt").toFile(), StandardCharsets.UTF_8);

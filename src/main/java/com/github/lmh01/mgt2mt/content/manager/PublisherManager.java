@@ -37,7 +37,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
 
     public static final PublisherManager INSTANCE = new PublisherManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"3.0.0-alpha-1", "3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.1.0", "3.2.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
 
     private PublisherManager() {
         super("publisher", "publisher", "default_publisher.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Publisher.txt").toFile(), StandardCharsets.UTF_8);
