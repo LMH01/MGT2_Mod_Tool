@@ -5,7 +5,6 @@ import com.github.lmh01.mgt2mt.content.Publisher;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.content.managed.types.TagType;
-import com.github.lmh01.mgt2mt.data_stream.ImageFileHandler;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
@@ -99,6 +98,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         map.put("SPEED", TagType.INT);
         map.put("COMVAL", TagType.INT);
         map.put("COUNTRY", TagType.INT);
+        //TODO Add support for that COUNTRY key
         return map;
     }
 
