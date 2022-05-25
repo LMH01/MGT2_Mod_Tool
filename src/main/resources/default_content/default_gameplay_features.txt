@@ -59,3 +59,5 @@ In-App Purchases
 Dance pad support
 Arcade Joystick Support
 Flight Stick Support
+Voice Acting
+Voice Over IP
