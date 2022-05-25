@@ -1,12 +1,11 @@
 package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.types.CountryType;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
@@ -31,6 +30,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
     Integer speed;
     Integer comVal;
     boolean notForSale;
+    CountryType country;
 
     public Publisher(String name,
                      Integer id,
@@ -45,7 +45,8 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
                      boolean onlyMobile,
                      Integer speed,
                      Integer comVal,
-                     boolean notForSale) {
+                     boolean notForSale,
+                     CountryType country) {
         super(PublisherManager.INSTANCE, name, id, translationManager);
         this.date = date;
         this.icon = icon;
@@ -58,6 +59,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         this.speed = speed;
         this.comVal = comVal;
         this.notForSale = notForSale;
+        this.country = country;
     }
 
     @Override
@@ -81,6 +83,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         if (notForSale) {
             map.put("NOTFORSALE", "true");
         }
+        map.put("COUNTRY", Integer.toString(country.getId()));
         return map;
     }
 
@@ -98,7 +101,8 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
                 I18n.INSTANCE.get("commonText.onlyMobile") + ": " + Utils.getTranslatedValueFromBoolean(onlyMobile) + "\n" +
                 I18n.INSTANCE.get("commonText.speed") + ": " + speed + "\n" +
                 I18n.INSTANCE.get("commonText.comVal") + ": " + comVal + "\n" +
-                I18n.INSTANCE.get("mod.publisher.addMod.checkBox.notForSale") + ": " + Utils.getTranslatedValueFromBoolean(notForSale) + "\n";
+                I18n.INSTANCE.get("mod.publisher.addMod.checkBox.notForSale") + ": " + Utils.getTranslatedValueFromBoolean(notForSale) + "\n" +
+                I18n.INSTANCE.get("commonText.country") + ": " + country.getTypeName();
     }
 
     @Override

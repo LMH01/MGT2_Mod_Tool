@@ -198,6 +198,72 @@ commonText.onlyMobile|Nur mobil
 commonText.speed|Geschwindigkeit
 commonText.comVal|Computergegner Wert
 commonText.seconds|Sekunden
+commonText.country|Land
+
+commonText.country.argentina|Argentinien
+commonText.country.armenia|Armenien
+commonText.country.australia|australien
+commonText.country.austria|Österreich
+commonText.country.azerbaijan|Aserbaidschan
+commonText.country.bangladesh|Bangladesch
+commonText.country.belgium|Belgien
+commonText.country.brazil|Brasilien
+commonText.country.bulgaria|Bulgarien
+commonText.country.chile|Chile
+commonText.country.china|China
+commonText.country.colombia|Kolumbien
+commonText.country.croatia|Kroatien
+commonText.country.czech_republic|Tschechische Republik
+commonText.country.denmark|Dänemark
+commonText.country.egypt|Ägypten
+commonText.country.estonia|Estland
+commonText.country.ethiopia|Äthiopien
+commonText.country.finland|Finnland
+commonText.country.france|Frankreich
+commonText.country.georgia|Georgien
+commonText.country.germany|Deutschland
+commonText.country.greece|Griechenland
+commonText.country.hungary|Ungarn
+commonText.country.iceland|Island
+commonText.country.india|Indien
+commonText.country.indonesia|Indonesien
+commonText.country.iran|Iran
+commonText.country.ireland|Irland
+commonText.country.israel|Israel
+commonText.country.italy|Italien
+commonText.country.japan|Japan
+commonText.country.kanada|Kanada
+commonText.country.kenya|Kenia
+commonText.country.latvia|Lettland
+commonText.country.lithuania|Litauen
+commonText.country.luxembourg|Luxemburg
+commonText.country.malaysia|Malaysia
+commonText.country.mexico|Mexiko
+commonText.country.netherlands|Niederlande
+commonText.country.new_zealand|Neuseeland
+commonText.country.nigeria|Nigeria
+commonText.country.norway|Norwegen
+commonText.country.pakistan|Pakistan
+commonText.country.peru|Peru
+commonText.country.philippines|Philippinen
+commonText.country.poland|Polen
+commonText.country.portugal|Portugal
+commonText.country.romania|Rumänien
+commonText.country.russia|Russland
+commonText.country.slovakia|Slowakei
+commonText.country.slovenia|Slowenien
+commonText.country.south_afrika|Süd Afrika
+commonText.country.south_korea|Süd Korea
+commonText.country.spain|Spanien
+commonText.country.sweden|Schweden
+commonText.country.switzerland|Schweiz
+commonText.country.thailand|Thailand
+commonText.country.turkey|Türkei
+commonText.country.uk|Großbritannien
+commonText.country.ukraine|Ukraine
+commonText.country.usa|Usa
+commonText.country.venezuela|Venezuela
+commonText.country.vietnam|Vietnam
 
 analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
 analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
@@ -367,6 +433,7 @@ mod.platform.addPlatform.components.comboBox.type.console|Konsole
 mod.platform.addPlatform.components.comboBox.type.handheld|Handheld
 mod.platform.addPlatform.components.comboBox.type.cellPhone|Mobiltelefon
 mod.platform.addPlatform.components.comboBox.type.arcadeSystemBoard|Arcade System Board
+mod.platform.addPlatform.components.comboBox.country.toolTip|Das Land, aus welchem der Hersteller kommt
 mod.platform.addPlatform.components.checkBox.enableEndDate|<html>Aktiviere diese Option,<br>damit die Plattform vom Markt genommen wird,<br>wenn das unten stehende Datum erreicht ist.
 mod.platform.addPlatform.components.spinner.endYear.toolTip|Dies ist das Jahr, in welchem die Plattform vom Markt genommen wird, sofern die check box oben aktiviert ist
 mod.platform.addPlatform.components.label.endDate|Enddatum

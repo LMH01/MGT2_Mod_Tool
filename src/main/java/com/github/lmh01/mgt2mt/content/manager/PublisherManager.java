@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Publisher;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.types.CountryType;
 import com.github.lmh01.mgt2mt.content.managed.types.TagType;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
@@ -59,6 +60,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         EditHelper.printLine("SPEED", map, bw);
         EditHelper.printLine("COMVAL", map, bw);
         EditHelper.printLine("NOTFORSALE", map, bw);
+        EditHelper.printLine("COUNTRY", map, bw);
     }
 
     @Override
@@ -82,7 +84,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 map.containsKey("ONLYMOBILE"),
                 Integer.parseInt(map.get("SPEED")),
                 Integer.parseInt(map.get("COMVAL")),
-                map.containsKey("NOTFORSALE"));
+                map.containsKey("NOTFORSALE"),
+                CountryType.getFromId(Integer.parseInt(map.get("COUNTRY"))));
     }
 
     @Override
@@ -98,12 +101,12 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         map.put("SPEED", TagType.INT);
         map.put("COMVAL", TagType.INT);
         map.put("COUNTRY", TagType.INT);
-        //TODO Add support for that COUNTRY key
         return map;
     }
 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        Map<String, String> transformedMap = Utils.transformObjectMapToStringMap(map);
         return new Publisher(
                 (String) map.get("NAME EN"),
                 getIdFromMap(map),
@@ -118,7 +121,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 map.containsKey("ONLYMOBILE"),
                 Integer.parseInt((String) map.get("SPEED")),
                 Integer.parseInt((String) map.get("COMVAL")),
-                map.containsKey("NOTFORSALE"));
+                map.containsKey("NOTFORSALE"),
+                CountryType.getFromId(Integer.parseInt(transformedMap.get("COUNTRY"))));
     }
 
     @Override
@@ -221,7 +225,13 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         JCheckBox onlyMobile = new JCheckBox(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.onlyMobile"));
         onlyMobile.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.onlyMobile.toolTip"));
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, SpinnerType.MARKET_SHARE), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), panelGenre, WindowHelper.getSpinnerPanel(speed, "mod.publisher.addMod.spinner.speed"), WindowHelper.getSpinnerPanel(comVal, "mod.publisher.addMod.spinner.comVal"), notForSale, onlyMobile};
+        JLabel countryLabel = new JLabel(I18n.INSTANCE.get("commonText.country") + ": ");
+        JComboBox<String> country = WindowHelper.getComboBox(CountryType.class, "mod.platform.addPlatform.components.comboBox.country.toolTip", CountryType.USA.getTypeName(), true);
+        JPanel countryPanel = new JPanel();
+        countryPanel.add(countryLabel);
+        countryPanel.add(country);
+
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), panelPublisherIcon, checkBoxIsDeveloper, checkBoxIsPublisher, WindowHelper.getSpinnerPanel(spinnerMarketShare, SpinnerType.MARKET_SHARE), WindowHelper.getSpinnerPanel(spinnerShare, SpinnerType.PROFIT_SHARE), panelGenre, WindowHelper.getSpinnerPanel(speed, "mod.publisher.addMod.spinner.speed"), WindowHelper.getSpinnerPanel(comVal, "mod.publisher.addMod.spinner.comVal"), notForSale, onlyMobile, countryPanel};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 boolean publisherAlreadyExists = false;
@@ -262,7 +272,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                             onlyMobile.isSelected(),
                             Integer.parseInt(speed.getValue().toString()),
                             Integer.parseInt(comVal.getValue().toString()),
-                            notForSale.isSelected()
+                            notForSale.isSelected(),
+                            CountryType.getFromName(Objects.requireNonNull(country.getSelectedItem()).toString())
                     );
                     if (JOptionPane.showConfirmDialog(null, publisher.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
                         addContent(publisher);
