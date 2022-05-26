@@ -24,6 +24,7 @@
 - General improvements to the text area outputs and the progress bar
 - Reworked the backend of the tool
 - Massive internal code changes
+- Updated default content files
 
 ### Bug fixes
 - Turkish translation is now displayed in the translation summary again
