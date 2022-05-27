@@ -1145,7 +1145,7 @@ verifyContentIntegrity.npcIpInvalid.unknownError|The integrity of the game file 
 verifyContentIntegrity.themeInvalid.formatInvalid|The integrity of the game file Themes_GE.txt is invalid. Reason: The theme named %s contains invalid genre ids: %s.
 verifyContentIntegrity.themeInvalid.noGenreIds|The integrity of the game file Themes_GE.txt is invalid. Reason: The theme named %s does not contain genre ids.
 
-verifyContentIntegrity.platformInvalid.pictureNotFound|The integrity of the game file Platforms.txt is invalid. Reason: The picture of platform %s with the name %s does not exist in the designated folder: %s.
+verifyContentIntegrity.pictureNotFound|The integrity of the game file %s is invalid. Reason: The picture of %s with name %s named %s does not exist in the designated folder: %s.
 
 verifyContentIntegrity.typeInvalid|The integrity of the game file %s is invalid. Reason: the id for the %s named %s is invalid: %s
 

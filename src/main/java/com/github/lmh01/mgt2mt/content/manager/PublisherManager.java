@@ -88,6 +88,18 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        // Check if platform picture is valid
+        if (map.containsKey("PIC")) {
+            File file = MGT2Paths.COMPANY_ICONS.getPath().resolve(map.get("PIC") + ".png").toFile();
+            if (!file.exists()) {
+                return String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound") + "\n",gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.COMPANY_ICONS.getPath());
+            }
+        }
+        return "";
+    }
+
+    @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
         Map<String, String> transformedMap = Utils.transformObjectMapToStringMap(map);
         return new Publisher(

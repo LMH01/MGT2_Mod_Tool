@@ -207,12 +207,12 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         // Check if platform picture is valid
         File file = MGT2Paths.PLATFORM_ICONS.getPath().resolve(map.get("PIC-1")).toFile();
         if (!file.exists()) {
-            sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.platformInvalid.pictureNotFound"), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
+            sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"),gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
         }
         if (map.containsKey("PIC-2")) {
             file = MGT2Paths.PLATFORM_ICONS.getPath().resolve(map.get("PIC-2")).toFile();
             if (!file.exists()) {
-                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.platformInvalid.pictureNotFound"), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
+                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"),gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
             }
         }
         return sb.toString();

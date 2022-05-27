@@ -138,6 +138,18 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     }
 
     @Override
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        // Check if platform picture is valid
+        if (map.containsKey("PIC")) {
+            File file = MGT2Paths.GENRE_ICONS.getPath().resolve(map.get("PIC")).toFile();
+            if (!file.exists()) {
+                return String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound") + "\n",gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.GENRE_ICONS.getPath());
+            }
+        }
+        return "";
+    }
+
+    @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
         String name = String.valueOf(map.get("NAME EN"));
         Image icon = new Image(assetsFolder.resolve(String.valueOf(map.get("iconName"))).toFile(),
