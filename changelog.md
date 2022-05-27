@@ -10,6 +10,9 @@
 - Added new possibilities to customize new publishers
 - The country of publishers and developers can now be set
 - The integrity of the most game files (The `.txt` files) is now checked at the start
+  - These checks include:
+    - Check if images are available
+    - Check if data entries are existing, valid and can be parsed as numbers (where applicable)
   - This check can be disabled by disabling the safety features
 - Added button ``reanalyze game files`` to the ``utilities`` menu
   - This way the game files can be manually analyzed, useful if the integrity check fails, and you want to fix it
