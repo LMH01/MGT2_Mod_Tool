@@ -340,7 +340,7 @@ public class WindowMain {
     }
 
     /**
-     * Will disable all menus except File -> CheckForUpdates, About and settings
+     * Will disable all menus except File {@literal ->} CheckForUpdates, About and settings
      */
     public static void setMGT2FolderAvailability(boolean folderAvailable) {
         M_12_UPDATE_CHECK.setEnabled(folderAvailable);

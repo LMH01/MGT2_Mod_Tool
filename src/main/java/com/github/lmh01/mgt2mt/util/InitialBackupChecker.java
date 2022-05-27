@@ -33,8 +33,6 @@ public class InitialBackupChecker {
 
     /**
      * Updates the initial backup version
-     *
-     * @throws IOException
      */
     public static void updateInitialBackupVersion() {
         try {

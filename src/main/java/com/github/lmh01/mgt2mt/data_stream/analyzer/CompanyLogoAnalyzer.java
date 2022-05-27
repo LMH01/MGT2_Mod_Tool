@@ -17,7 +17,7 @@ public class CompanyLogoAnalyzer {
     static int maxLogoNumber = 0;
 
     /**
-     * @return Returns a free logo number for a company logo.
+     * Analyzes the logo number and updates {@link CompanyLogoAnalyzer#maxLogoNumber}.
      */
     public static void analyzeLogoNumbers() {
         Path path = MGT2Paths.COMPANY_ICONS.getPath();

@@ -216,7 +216,7 @@ public class Utils {
     }
 
     /**
-     * Converts the input string to an array list containing the elements of the string. Input string formatting: <s1><s2><s3>. The content between the <> is added to the array list.
+     * Converts the input string to an array list containing the elements of the string. Input string formatting: {@literal <s1><s2><s3>}. The content between the {@literal <>} is added to the array list.
      *
      * @param string Input string
      * @return Returns an array list containing the elements of string
@@ -254,7 +254,7 @@ public class Utils {
     }
 
     /**
-     * Returns the part before the first <.
+     * Returns the part before the first {@literal <}.
      * Trims the string to remove whitespaces.
      * See {@link Utils#getEntriesFromString(String)} for more information
      */
@@ -588,7 +588,7 @@ public class Utils {
     }
 
     /**
-     * Converts the input integer to string in the following way: 1000000 -> 1.000.000
+     * Converts the input integer to string in the following way: 1000000 {@literal ->} 1.000.000
      *
      * @return Returns the converted number as string
      */
