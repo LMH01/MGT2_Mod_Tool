@@ -111,6 +111,12 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                             if (!map.get(dl.key).equals("true") && !map.get(dl.key).equals("false")) {
                                 integrityViolations.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.variation5"), gameFile.getName(), dl.key, map.get("NAME EN"), getType(), map.get(dl.key))).append("\n");
                             }
+                        } else if (dl.dataType.equals(DataType.INT_LIST)) {
+                            try {
+                                Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get(dl.key)));
+                            } catch (NumberFormatException e) {
+                                integrityViolations.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.variation6"), gameFile.getName(), dl.key, map.get("NAME EN"), getType(), e.getMessage())).append("\n");
+                            }
                         }
                     }
                 }

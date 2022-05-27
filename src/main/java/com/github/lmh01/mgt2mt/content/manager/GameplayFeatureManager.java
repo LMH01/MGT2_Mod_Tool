@@ -82,8 +82,8 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         list.add(new DataLine("GRAPHIC", true, DataType.INT));
         list.add(new DataLine("SOUND", true, DataType.INT));
         list.add(new DataLine("TECH", true, DataType.INT));
-        list.add(new DataLine("GOOD", false, DataType.STRING));
-        list.add(new DataLine("BAD", false, DataType.STRING));
+        list.add(new DataLine("GOOD", false, DataType.INT_LIST));
+        list.add(new DataLine("BAD", false, DataType.INT_LIST));
         list.add(new DataLine("NO_ARCADE", false, DataType.EMPTY));
         list.add(new DataLine("NO_MOBILE", false, DataType.EMPTY));
         return list;

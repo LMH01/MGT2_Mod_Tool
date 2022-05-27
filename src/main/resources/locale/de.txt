@@ -1133,6 +1133,7 @@ verifyContentIntegrity.variation2|Die Integrität der Spieldatei %s ist ungülti
 verifyContentIntegrity.variation3|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist keine Zahl. Der Wert war: %s.
 verifyContentIntegrity.variation4|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist nicht leer. Der Wert war: %s.
 verifyContentIntegrity.variation5|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist kein boolescher Wert. Der Wert war: %s. Sollte true oder false sein.
+verifyContentIntegrity.variation6|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s kann nicht in eine Integer-Liste konvertiert werden. Begründung: %s.
 
 verifyContentIntegrity.licenceInvalid.tagMissing|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Die Lizenz namens %s enthält keinen typ-Tag.
 verifyContentIntegrity.licenceInvalid.tooManyTags|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Die Lizenz namens %s enthält mehr als einen typ-Tag.

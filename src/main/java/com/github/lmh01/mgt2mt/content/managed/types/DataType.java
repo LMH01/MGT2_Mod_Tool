@@ -15,6 +15,11 @@ public enum DataType {
     INT,
 
     /**
+     * For data that is stored in {@literal <1><2><3><4>} and should contain integers
+     */
+    INT_LIST,
+
+    /**
      * This entry does not contain any data, just the key
      */
     EMPTY,

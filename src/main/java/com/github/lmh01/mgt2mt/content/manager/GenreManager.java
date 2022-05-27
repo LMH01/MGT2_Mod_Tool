@@ -123,6 +123,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         list.add(new DataLine("GRAPHIC",true, DataType.INT));
         list.add(new DataLine("SOUND",true, DataType.INT));
         list.add(new DataLine("CONTROL",true, DataType.INT));
+        list.add(new DataLine("GENRE COMB", true, DataType.INT_LIST));
         list.add(new DataLine("FOCUS0",true, DataType.INT));
         list.add(new DataLine("FOCUS1",true, DataType.INT));
         list.add(new DataLine("FOCUS2",true, DataType.INT));
