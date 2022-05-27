@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Platform;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.types.EngineFeatureType;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
@@ -186,6 +187,35 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         line.add(new DataLine("COMPLEX", true, DataType.INT));
         line.add(new DataLine("TYP", true, DataType.INT));
         return line;
+    }
+
+    @Override
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        // Check if platform type is valid
+        StringBuilder sb = new StringBuilder();
+        try {
+            if (map.containsKey("TYP")) {
+                try {
+                    PlatformType.getFromId(Integer.parseInt(map.get("TYP")));
+                } catch (NumberFormatException ignored) {
+
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.typeInvalid"), getGameFile().getName(), getType(), map.get("NAME EN"), e.getMessage())).append("\n");
+        }
+        // Check if platform picture is valid
+        File file = MGT2Paths.PLATFORM_ICONS.getPath().resolve(map.get("PIC-1")).toFile();
+        if (!file.exists()) {
+            sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.platformInvalid.pictureNotFound"), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
+        }
+        if (map.containsKey("PIC-2")) {
+            file = MGT2Paths.PLATFORM_ICONS.getPath().resolve(map.get("PIC-2")).toFile();
+            if (!file.exists()) {
+                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.platformInvalid.pictureNotFound"), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
+            }
+        }
+        return sb.toString();
     }
 
     @Override

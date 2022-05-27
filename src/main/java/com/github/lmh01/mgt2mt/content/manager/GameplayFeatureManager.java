@@ -100,7 +100,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 }
             }
         } catch (IllegalArgumentException e) {
-            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.gameplayFeatureInvalid.gameplayFeatureTypeInvalid") + "\n", map.get("NAME EN"), e.getMessage());
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.typeInvalid") + "\n", getGameFile().getName(), getType(), map.get("NAME EN"), e.getMessage());
         }
         return "";
     }

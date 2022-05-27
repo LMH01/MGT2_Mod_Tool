@@ -66,6 +66,22 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
     }
 
     @Override
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        try {
+            if (map.containsKey("TYP")) {
+                try {
+                    EngineFeatureType.getFromId(Integer.parseInt(map.get("TYP")));
+                } catch (NumberFormatException ignored) {
+
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.typeInvalid") + "\n", getGameFile().getName(), getType(), map.get("NAME EN"), e.getMessage());
+        }
+        return "";
+    }
+
+    @Override
     public void openAddModGui() throws ModProcessingException {
         createBackup(false);
         analyzeFile();

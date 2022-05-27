@@ -167,6 +167,22 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
     }
 
     @Override
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        try {
+            if (map.containsKey("TYP")) {
+                try {
+                    HardwareType.getFromId(Integer.parseInt(map.get("TYP")));
+                } catch (NumberFormatException ignored) {
+
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.typeInvalid") + "\n", getGameFile().getName(), getType(), map.get("NAME EN"), e.getMessage());
+        }
+        return "";
+    }
+
+    @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
         ArrayList<Integer> requiredGenres = new ArrayList<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {

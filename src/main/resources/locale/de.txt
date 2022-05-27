@@ -1147,7 +1147,9 @@ verifyContentIntegrity.npcIpInvalid.unknownError|Die Integrität der Spieldatei 
 verifyContentIntegrity.themeInvalid.formatInvalid|Die Integrität der Spieldatei Themes_GE.txt ist ungültig. Grund: Das Thema namens %s enthält ungültige genre ids: %s.
 verifyContentIntegrity.themeInvalid.noGenreIds|Die Integrität der Spieldatei Themes_GE.txt ist ungültig. Grund: Das Thema namens %s enthält keine genre ids.
 
-verifyContentIntegrity.gameplayFeatureInvalid.gameplayFeatureTypeInvalid|Die Integrität der Spieldatei GameplayFeatures.txt ist ungültig. Grund: die Id für das Gameplay feature namens %s ist ungültig: %s
+verifyContentIntegrity.platformInvalid.pictureNotFound|Die Integrität der Spieldatei Platforms.txt ist ungültig. Grund: Das Bild mit dem Namen %s existiert nicht im dafür vorgesehenen ordner: %s
+
+verifyContentIntegrity.typeInvalid|Die Integrität der Spieldatei %s ist ungültig. Grund: die Id für das %s namens %s ist ungültig: %s
 
 month.january|Januar
 month.february|Februar
