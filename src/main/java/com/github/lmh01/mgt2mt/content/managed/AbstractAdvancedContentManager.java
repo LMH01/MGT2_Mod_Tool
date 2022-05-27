@@ -115,6 +115,11 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                     }
                 }
             }
+            String specialCases = analyzeSpecialCases(map);
+            if (!specialCases.isEmpty()) {
+                integrityViolations.append(specialCases);
+            }
+
         }
         return integrityViolations.toString();
     }
@@ -125,6 +130,16 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      * This function is used by {@link AbstractAdvancedContentManager#printValues(Map, BufferedWriter)} and {@link AbstractAdvancedContentManager#verifyContentIntegrity()}
      */
     protected abstract List<DataLine> getDataLines();
+
+    /**
+     * This function can be overwritten to add special cases to the content verification.
+     * This function is used by {@link AbstractAdvancedContentManager#verifyContentIntegrity()}
+     * @param map Contains the data of the content
+     * @return A string containing problems, empty if no problems where found
+     */
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        return "";
+    }
 
     /**
      * Edits the games text file(s) to add or remove the content.

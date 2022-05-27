@@ -90,6 +90,22 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     }
 
     @Override
+    protected String analyzeSpecialCases(Map<String, String> map) {
+        try {
+            if (map.containsKey("TYP")) {
+                try {
+                    GameplayFeatureType.getFromId(Integer.parseInt(map.get("TYP")));
+                } catch (NumberFormatException ignored) {
+
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.gameplayFeatureInvalid.gameplayFeatureTypeInvalid") + "\n", map.get("NAME EN"), e.getMessage());
+        }
+        return "";
+    }
+
+    @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
         boolean arcade = true;
         if (map.containsKey("NO_ARCADE")) {
