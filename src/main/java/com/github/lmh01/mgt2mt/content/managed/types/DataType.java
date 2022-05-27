@@ -20,6 +20,11 @@ public enum DataType {
     EMPTY,
 
     /**
+     * This entry should be interpreted as a boolean
+     */
+    BOOLEAN,
+
+    /**
      * Does not perform any checks if the data is valid
      */
     UNCHECKED,

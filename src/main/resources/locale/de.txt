@@ -1131,6 +1131,7 @@ verifyContentIntegrity.variation1|Die Integrität der Spieldatei %s ist ungülti
 verifyContentIntegrity.variation2|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s fehlt.
 verifyContentIntegrity.variation3|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist keine Zahl. Der Wert war: %s.
 verifyContentIntegrity.variation4|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist nicht leer. Der Wert war: %s.
+verifyContentIntegrity.variation5|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist kein boolescher Wert. Der Wert war: %s. Sollte true oder false sein.
 
 month.january|Januar
 month.february|Februar

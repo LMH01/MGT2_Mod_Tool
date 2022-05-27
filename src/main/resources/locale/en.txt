@@ -1129,6 +1129,7 @@ verifyContentIntegrity.variation1|The integrity of game file %s is not valid. Re
 verifyContentIntegrity.variation2|The integrity of game file %s is not valid. Reason: The [%s] tag of %s of type %s is missing.
 verifyContentIntegrity.variation3|The integrity of game file %s is not valid. Reason: The [%s] tag of %s of type %s is not a number. Value was: %s.
 verifyContentIntegrity.variation4|The integrity of game file %s is not valid. Reason: The [%s] tag of %s of type %s is not empty. Value was: %s.
+verifyContentIntegrity.variation5|The integrity of game file %s is not valid. Reason: The [%s] tag of %s of type %s is not an boolean. Value was: %s. Should be true or false.
 
 month.january|January
 month.february|February

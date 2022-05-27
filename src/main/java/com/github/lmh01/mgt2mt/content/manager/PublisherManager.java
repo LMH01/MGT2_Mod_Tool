@@ -74,15 +74,15 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         List<DataLine> list = new ArrayList<>();
         list.add(new DataLine("DATE", true, DataType.STRING));
         list.add(new DataLine("PIC", true, DataType.INT));
-        list.add(new DataLine("DEVELOPER", true, DataType.STRING));
-        list.add(new DataLine("PUBLISHER", true, DataType.STRING));
+        list.add(new DataLine("DEVELOPER", true, DataType.BOOLEAN));
+        list.add(new DataLine("PUBLISHER", true, DataType.BOOLEAN));
         list.add(new DataLine("MARKET", true, DataType.INT));
         list.add(new DataLine("SHARE", true, DataType.INT));
         list.add(new DataLine("GENRE", true, DataType.INT));
-        list.add(new DataLine("ONLYMOBILE", false, DataType.EMPTY));
+        list.add(new DataLine("ONLYMOBILE", false, DataType.BOOLEAN));
         list.add(new DataLine("SPEED", true, DataType.INT));
         list.add(new DataLine("COMVAL", true, DataType.INT));
-        list.add(new DataLine("NOTFORSALE", false, DataType.EMPTY));
+        list.add(new DataLine("NOTFORSALE", false, DataType.BOOLEAN));
         list.add(new DataLine("COUNTRY", true, DataType.INT));
         return list;
     }
