@@ -86,6 +86,14 @@ public interface BaseContentManager {
     AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException;
 
     /**
+     * Checks if the integrity of the fileContent is violated.
+     * The integrity is violated if an id is missing from an entry, if
+     * an id is assigned more than once or if the ID or NAME EN tag are missing from  the map.
+     * @return StringBuilder that contains content integrity violations
+     */
+    String verifyContentIntegrity();
+
+    /**
      * @return Returns a string that contains the compatible mod tool versions
      */
     String[] getCompatibleModToolVersions();

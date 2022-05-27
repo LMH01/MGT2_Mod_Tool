@@ -752,6 +752,7 @@ errorMessages.gameFileCorrupted.textArea.secondPart|Versuche bitte die Spieldate
 
 warnMessage.integrityCheckFailed.textArea.1|Warnung: Die Integrität der Spieldateien ist verletzt.
 warnMessage.integrityCheckFailed.textArea.2|Wird das Tool trotzdem benutzt, kann es zu fehlern kommen.
+warnMessage.integrityCheckFailed.textArea.3|Hinweis: Wenn das Problem weiterhin besteht und du die Spieldateien bereits überprüft hast, handelt es sich um ein Problem in den originalen Spieldateien und das Spielen und Verwenden dieses Tools ist wahrscheinlich in Ordnung.
 
 frame.title.error|Fehler
 frame.title.warning|Warnung
@@ -1132,6 +1133,19 @@ verifyContentIntegrity.variation2|Die Integrität der Spieldatei %s ist ungülti
 verifyContentIntegrity.variation3|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist keine Zahl. Der Wert war: %s.
 verifyContentIntegrity.variation4|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist nicht leer. Der Wert war: %s.
 verifyContentIntegrity.variation5|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist kein boolescher Wert. Der Wert war: %s. Sollte true oder false sein.
+
+verifyContentIntegrity.licenceInvalid.tagMissing|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Die Lizenz namens %s enthält keinen typ-Tag.
+verifyContentIntegrity.licenceInvalid.tooManyTags|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Die Lizenz namens %s enthält mehr als einen typ-Tag.
+
+verifyContentIntegrity.npcGameInvalid.formatInvalid|Die Integrität der Spieldatei NpcGames.txt ist ungültig. Grund: Das Npc-Spiel namens %s enthält ungültige genre ids: %s.
+verifyContentIntegrity.npcGameInvalid.noGenreIds|Die Integrität der Spieldatei NpcGames.txt ist ungültig. Grund: Das Npc-Spiel namens %s enthält keine genre ids.
+
+verifyContentIntegrity.npcIpInvalid.formatInvalid|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Bei der NpcIP %s fehlt einer der Tags P, G, T, Y oder TG.
+verifyContentIntegrity.npcIpInvalid.invalidNumber|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Bei der NpcIP %s ist einer der Tags keine Nummer: %s.
+verifyContentIntegrity.npcIpInvalid.unknownError|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Ein unbekannter Fehler ist beim Analysieren aufgetreten: %s.
+
+verifyContentIntegrity.themeInvalid.formatInvalid|Die Integrität der Spieldatei Themes_GE.txt ist ungültig. Grund: Das Thema namens %s enthält ungültige genre ids: %s.
+verifyContentIntegrity.themeInvalid.noGenreIds|Die Integrität der Spieldatei Themes_GE.txt ist ungültig. Grund: Das Thema namens %s enthält keine genre ids.
 
 month.january|Januar
 month.february|Februar

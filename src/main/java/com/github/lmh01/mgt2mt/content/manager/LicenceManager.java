@@ -32,6 +32,26 @@ public class LicenceManager extends AbstractSimpleContentManager {
     }
 
     @Override
+    protected String isLineValid(String line) {
+        int availableTags = 0;
+        if (line.contains("BOOK")) {
+            availableTags++;
+        }
+        if (line.contains("MOVIE")) {
+            availableTags++;
+        }
+        if (line.contains("SPORT")) {
+            availableTags++;
+        }
+        if (availableTags < 1) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.tagMissing"), getReplacedLine(line));
+        } else if (availableTags > 1) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.tooManyTags"), getReplacedLine(line));
+        }
+        return "";
+    }
+
+    @Override
     public String[] getCustomContentString() throws ModProcessingException {
         List<String> custom = Arrays.stream(super.getCustomContentString()).unordered().collect(Collectors.toList());
         custom.remove("Chronicles of Nornio [5]");

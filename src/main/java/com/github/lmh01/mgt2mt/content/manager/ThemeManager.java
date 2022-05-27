@@ -118,6 +118,25 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     }
 
     @Override
+    protected String isLineValid(String line) {
+        ArrayList<String> toTransform = Utils.getEntriesFromString(line);
+        toTransform.remove("M1");
+        toTransform.remove("M2");
+        toTransform.remove("M3");
+        toTransform.remove("M4");
+        toTransform.remove("M5");
+        try {
+            Utils.transformStringArrayToIntegerArray(toTransform);
+        } catch (NumberFormatException e) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.themeInvalid.formatInvalid"), line, e.getMessage());
+        }
+        if (Utils.transformStringArrayToIntegerArray(toTransform).isEmpty()) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.themeInvalid.noGenreIds"), line);
+        }
+        return "";
+    }
+
+    @Override
     public void analyzeFile() throws ModProcessingException {
         writeCustomThemeFile();
         super.analyzeFile();

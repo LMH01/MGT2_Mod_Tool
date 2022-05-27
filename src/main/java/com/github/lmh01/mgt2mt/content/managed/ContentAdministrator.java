@@ -80,9 +80,7 @@ public class ContentAdministrator {
 
         LOGGER.info("Checking game file integrity...");
         for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            if (manager instanceof AbstractAdvancedContentManager) {
-                integrityViolations.append(((AbstractAdvancedContentManager) manager).verifyContentIntegrity());
-            }
+            integrityViolations.append(manager.verifyContentIntegrity());
         }
         if (integrityViolations.toString().isEmpty()) {
             if (showInTextArea) {
@@ -94,6 +92,7 @@ public class ContentAdministrator {
             TextAreaHelper.appendText(integrityViolations.toString());
             TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.3"));
         }
     }
 }

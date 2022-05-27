@@ -46,6 +46,19 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
     }
 
     @Override
+    protected String isLineValid(String line) {
+        try {
+            Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(line));
+        } catch (NumberFormatException e) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcGameInvalid.formatInvalid"), line, e.getMessage());
+        }
+        if (Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(line)).isEmpty()) {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcGameInvalid.noGenreIds"), line);
+        }
+        return "";
+    }
+
+    @Override
     public void openAddModGui() throws ModProcessingException {
         JLabel labelModName = new JLabel(I18n.INSTANCE.get("mod.npcGames.addMod.components.labelName"));
         JTextField textFieldName = new JTextField();

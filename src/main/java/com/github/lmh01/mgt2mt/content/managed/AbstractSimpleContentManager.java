@@ -1,6 +1,8 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +101,24 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
             throw new ModProcessingException("Unable to edit mod file for mod " + getType(), e);
         }
     }
+
+    @Override
+    public String verifyContentIntegrity() {
+        StringBuilder integrityViolations = new StringBuilder();
+        for (Map.Entry<Integer, String> map : fileContent.entrySet()) {
+            String result = isLineValid(map.getValue());
+            if (!result.isEmpty()) {
+                integrityViolations.append(result).append("\n");
+            }
+        }
+        return integrityViolations.toString();
+    }
+
+    /**
+     * Checks if the input line is valid
+     * @return An empty string if the line is valid, otherwise a string containing the error
+     */
+    protected abstract String isLineValid(String line);
 
     @Override
     public void analyzeFile() throws ModProcessingException {

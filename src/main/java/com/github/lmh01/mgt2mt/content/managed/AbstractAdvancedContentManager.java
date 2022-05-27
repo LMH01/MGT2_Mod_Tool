@@ -81,6 +81,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      * an id is assigned more than once or if the ID or NAME EN tag are missing from  the map.
      * @return StringBuilder that contains content integrity violations
      */
+    @Override
     public String verifyContentIntegrity() {
         StringBuilder integrityViolations = new StringBuilder();
         Map<Integer, String> usedIds = new HashMap<>();// Stores the id and the names

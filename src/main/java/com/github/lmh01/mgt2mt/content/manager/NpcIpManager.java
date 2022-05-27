@@ -31,6 +31,26 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
     }
 
     @Override
+    protected String isLineValid(String line) {
+        if (line.contains("P") && line.contains("G") && line.contains("T")  && line.contains("Y") && line.contains("TG")) {
+            try {
+                constructContentFromName(getReplacedLine(line));
+            } catch (ModProcessingException | NumberFormatException | NullPointerException e) {
+                if (e instanceof NumberFormatException) {
+                    return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcIpInvalid.invalidNumber"), line, e.getMessage());
+                } else if (e instanceof NullPointerException) {
+                    return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcIpInvalid.formatInvalid"), getReplacedLine(line));
+                } else {
+                    return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcIpInvalid.unknownError"), line, e.getMessage());
+                }
+            }
+        } else {
+            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcIpInvalid.formatInvalid"), getReplacedLine(line));
+        }
+        return "";
+    }
+
+    @Override
     public void openAddModGui() throws ModProcessingException {
         JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.npcIp.addMod.components.textFieldName.initialValue"));
         JLabel labelReleaseYear = new JLabel(I18n.INSTANCE.get("mod.npcIp.addMod.components.label.releaseYear") + ":");
