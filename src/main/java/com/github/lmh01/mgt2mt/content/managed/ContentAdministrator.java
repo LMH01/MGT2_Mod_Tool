@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.content.managed;
 import com.github.lmh01.mgt2mt.content.manager.*;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +69,31 @@ public class ContentAdministrator {
             if (manager instanceof AbstractBaseContentManager) {
                 ((AbstractBaseContentManager)manager).initializeDefaultContent();
             }
+        }
+    }
+
+    /**
+     * Analyzes the integrity of the games files and displays a warning if the integrity is not correct.
+     */
+    public static void analyzeGameFileIntegrity(boolean showInTextArea) {
+        StringBuilder integrityViolations = new StringBuilder();
+
+        LOGGER.info("Checking game file integrity...");
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            if (manager instanceof AbstractAdvancedContentManager) {
+                integrityViolations.append(((AbstractAdvancedContentManager) manager).verifyContentIntegrity());
+            }
+        }
+        if (integrityViolations.toString().isEmpty()) {
+            if (showInTextArea) {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.gameFileIntegrityCheckSuccessful"));
+            }
+            LOGGER.info("Integrity check successful!");
+        } else {
+            LOGGER.error("Error: Game file integrity is violated: \n" + integrityViolations.toString());
+            TextAreaHelper.appendText(integrityViolations.toString());
+            TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
         }
     }
 }

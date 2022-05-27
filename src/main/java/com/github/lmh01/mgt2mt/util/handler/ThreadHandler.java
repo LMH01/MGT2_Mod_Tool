@@ -80,22 +80,7 @@ public class ThreadHandler {
             if (Settings.disableSafetyFeatures) {
                 DebugHelper.warn(LOGGER, "check for game file integrity is disabled because the safety features are disabled");
             } else {
-                StringBuilder integrityViolations = new StringBuilder();
-
-                LOGGER.info("Checking game file integrity...");
-                for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-                    if (manager instanceof AbstractAdvancedContentManager) {
-                        integrityViolations.append(((AbstractAdvancedContentManager) manager).verifyContentIntegrity());
-                    }
-                }
-                if (integrityViolations.toString().isEmpty()) {
-                    LOGGER.info("Integrity check successful!");
-                } else {
-                    LOGGER.error("Error: Game file integrity is violated: \n" + integrityViolations.toString());
-                    TextAreaHelper.appendText(integrityViolations.toString());
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
-                }
+                ContentAdministrator.analyzeGameFileIntegrity(false);
             }
         });
         thread.setName("PerformStartTasks");

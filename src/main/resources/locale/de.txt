@@ -930,6 +930,7 @@ textArea.deletingImages|Lösche Bilder des Inhaltes %
 textArea.addedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich zu der .txt Datei nach %s Sekunden hinzugefügt!
 textArea.removedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich aus der .txt Datei nach %s Sekunden entfernt!
 textArea.totalDuration|Gesamtdauer: %s Sekunden
+textArea.gameFileIntegrityCheckSuccessful|Integritätsprüfung der Spieldateien erfolgreich!
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
@@ -1014,6 +1015,8 @@ window.main.utilities.openSaveGameFolder|Spielstand Ordner öffnen
 window.main.utilities.openSaveGameFolder.toolTip|Klicke hier, um den Ordner zu öffnen, wo die Spielstände gespeichert sind.
 window.main.utilities.openSettingsTomlFile|Settings.toml-Datei öffnen
 window.main.utilities.openSettingsTomlFile.toolTip|<html>Klicke hier, um die Settings.toml-Datei zu öffnen<br>Diese Datei enthällt alle Einstellungen, auch solche,<br>die nicht über das Einstellungsfenster verändert werden können.<br>Bitte sei beim Bearbeiten der Datei vorsichtig!
+window.main.utilities.reanalyzeGameFiles|Spieldateien neu analysieren
+window.main.utilities.reanalyzeGameFiles.toolTip|Klicke, um die Spieldateien erneut zu analysieren
 window.main.actionAvailability.acceptMessageFirst|Deaktiviert -> Du musst erst akzeptieren, dass du die Nachricht gelesen hast!
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
@@ -1022,6 +1025,7 @@ window.main.lockMenuItems|Deaktiviert -> Eine Aufgabe wird gerade ausgeführt
 window.main.button.quit.taskPerformed|<html>Eine Aufgabe wird gerade ausgeführt,<br>bist du dir sicher, dass du das Programm verlassen möchtest?<br>Die aktuelle Aufgabe wird dann abgebrochen, dies könnte zu Problemen führen.
 window.main.button.quit.taskPerformed.title|Programm verlassen?
 window.main.mgt2FolderNotFound.toolTip|Deaktiviert -> Der Mad Games Tycoon 2 Ordner wurde nicht gesetzt. Gehe bitte in die Einstellungen uns wähle ihn manuell aus.
+window.main.reanalyzeGameFiles|<html> Bist du dir sicher,<br>dass du die Spieldateien neu analysieren möchtest?
 
 window.importFromURL.labelText|<html>Geb unten die URL zum ZIP-Archiv ein.<br>Hinweis: Es muss ein direkter Download-Link sein.
 window.importFromURL.textFieldURL.toolTip|Gib die URL zum ZIP-Archiv ein
@@ -1122,6 +1126,11 @@ window.npcGamesList.success|Die NPC-Spieleliste wurde erfolgreich geändert.
 window.npcGamesList.noGenreSelected|<html>Fortsetzung nicht möglich:<br>Bitte wähle mindestens ein Genre aus.
 
 window.showActiveMods.message.firstPart|Diese Mods sind derzeit aktiv:
+
+verifyContentIntegrity.variation1|Die Integrität der Spieldatei %s ist ungültig. Grund: Die ID %d von %s des Typs %s wird bereits von %s verwendet.
+verifyContentIntegrity.variation2|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s fehlt.
+verifyContentIntegrity.variation3|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist keine Zahl. Der Wert war: %s.
+verifyContentIntegrity.variation4|Die Integrität der Spieldatei %s ist ungültig. Grund: Das [%s]-Tag von %s des Typs %s ist nicht leer. Der Wert war: %s.
 
 month.january|Januar
 month.february|Februar

@@ -11,6 +11,8 @@
 - The country of publishers and developers can now be set
 - The integrity of the most game files (The `.txt` files) is now checked at the start
   - This check can be disabled by disabling the safety features
+- Added button ``reanalyze game files`` to the ``utilities`` menu
+  - This way the game files can be manually analyzed, useful if the integrity check fails, and you want to fix it
 
 ### Removed feature
 - It is no longer possible to select a custom genre id when adding a genre

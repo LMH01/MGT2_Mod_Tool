@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
@@ -182,11 +183,15 @@ public class WindowMain {
         JMenuItem m55OpenSettingsTomlFile = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.openSettingsTomlFile"));
         m55OpenSettingsTomlFile.setToolTipText(I18n.INSTANCE.get("window.main.utilities.openSettingsTomlFile.toolTip"));
         m55OpenSettingsTomlFile.addActionListener(actionEvent -> Utils.open(ModManagerPaths.MAIN.getPath().resolve("settings.toml")));
+        JMenuItem m560ReanalyzeGameFiles = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.reanalyzeGameFiles"));
+        m560ReanalyzeGameFiles.setToolTipText(I18n.INSTANCE.get("window.main.utilities.reanalyzeGameFiles.toolTip"));
+        m560ReanalyzeGameFiles.addActionListener(actionEvent -> reanalyzeGameFiles());
         MB.add(M_5_UTIL);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
         M_5_UTIL.add(m54OpenSaveGameFolder);
         M_5_UTIL.add(m55OpenSettingsTomlFile);
+        M_5_UTIL.add(m560ReanalyzeGameFiles);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
@@ -425,5 +430,14 @@ public class WindowMain {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static void reanalyzeGameFiles() {
+        ThreadHandler.startModThread(() -> {
+            if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.main.reanalyzeGameFiles"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                ContentAdministrator.analyzeContents();
+                ContentAdministrator.analyzeGameFileIntegrity(true);
+            }
+        }, "ReanalyzeGameFiles");
     }
 }

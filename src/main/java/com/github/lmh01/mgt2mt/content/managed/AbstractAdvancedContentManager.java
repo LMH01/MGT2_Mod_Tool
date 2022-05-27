@@ -85,32 +85,29 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         StringBuilder integrityViolations = new StringBuilder();
         Map<Integer, String> usedIds = new HashMap<>();// Stores the id and the names
         for (Map<String, String> map : fileContent) {
-            if (!map.containsKey("ID") | !map.containsKey("NAME EN")) {
-                integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [NAME EN] or [ID] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
+            // It is not checked for the ID and NAME EN tag because the program will throw an exception if they are missing even before this function is called
+            int id = Integer.parseInt(map.get("ID"));
+            if (usedIds.containsKey(id)) {
+                integrityViolations.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.variation1"), gameFile.getName(), id, map.get("NAME EN"), getType(), usedIds.get(id))).append("\n");
             }
-            try {
-                int id = Integer.parseInt(map.get("ID"));
-                if (usedIds.containsKey(id)) {
-                    integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The id ").append(id).append(" of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is already used by ").append(usedIds.get(id)).append(".").append("\n");
-                }
-                usedIds.put(id, map.get("NAME EN"));
-            } catch (NumberFormatException e) {
-                integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [ID] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is invalid.").append("\n");
-            }
+            usedIds.put(id, map.get("NAME EN"));
             for (DataLine dl : getDataLines()) {
                 if (dl.required) {
                     if (!map.containsKey(dl.key)) {
-                        integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
+                        integrityViolations.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.variation2"), gameFile.getName(), dl.key, map.get("NAME EN"), getType())).append("\n");
+                        //integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
                     } else {
                         if (dl.dataType.equals(DataType.INT)) {
                             try {
                                 Integer.parseInt(map.get(dl.key));
                             } catch (NumberFormatException e) {
-                                integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not a number. Value was: ").append(map.get(dl.key)).append("\n");
+                                integrityViolations.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.variation3"), gameFile.getName(), dl.key, map.get("NAME EN"), getType(), dl.key)).append("\n");
+                                //integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not a number. Value was: ").append(map.get(dl.key)).append("\n");
                             }
                         } else if (dl.dataType.equals(DataType.EMPTY)) {
                             if (!map.get(dl.key).isEmpty()) {
-                                integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not empty. Value was: ").append(map.get(dl.key)).append("\n");
+                                integrityViolations.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.variation4"), gameFile.getName(), dl.key, map.get("NAME EN"), getType(), dl.key)).append("\n");
+                                //integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not empty. Value was: ").append(map.get(dl.key)).append("\n");
                             }
                         }
                     }
