@@ -1,10 +1,12 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.helper.EditHelper;
+import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +34,13 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      *
      * @throws IOException Is thrown if something went wrong when the file is being written
      */
-    protected abstract void printValues(Map<String, String> map, BufferedWriter bw) throws IOException;
+    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
+        EditHelper.printLine("ID", map, bw);
+        TranslationManager.printLanguages(bw, map);
+        for (DataLine dl : getDataLines()) {
+            dl.print(map, bw);
+        }
+    }
 
     /**
      * Constructs the base content from the input map.
@@ -89,15 +97,21 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
             } catch (NumberFormatException e) {
                 integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [ID] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is invalid.").append("\n");
             }
-            for (Map.Entry<String, TagType> entry : getIntegrityCheckMap().entrySet()) {
-                if (!map.containsKey(entry.getKey())) {
-                    integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(entry.getKey()).append("] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
-                } else {
-                    if (entry.getValue().equals(TagType.INT)) {
-                        try {
-                            Integer.parseInt(map.get(entry.getKey()));
-                        } catch (NumberFormatException e) {
-                            integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(entry.getKey()).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not a number. Value was: ").append(map.get(entry.getKey())).append("\n");
+            for (DataLine dl : getDataLines()) {
+                if (dl.required) {
+                    if (!map.containsKey(dl.key)) {
+                        integrityViolations.append("The integrity of game file \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] tag of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is missing.").append("\n");
+                    } else {
+                        if (dl.dataType.equals(DataType.INT)) {
+                            try {
+                                Integer.parseInt(map.get(dl.key));
+                            } catch (NumberFormatException e) {
+                                integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not a number. Value was: ").append(map.get(dl.key)).append("\n");
+                            }
+                        } else if (dl.dataType.equals(DataType.EMPTY)) {
+                            if (!map.get(dl.key).isEmpty()) {
+                                integrityViolations.append("The integrity of game file  \"").append(gameFile.getName()).append("\" is not valid. Reason: The [").append(dl.key).append("] field of ").append(map.get("NAME EN")).append(" of type ").append(getType()).append(" is not empty. Value was: ").append(map.get(dl.key)).append("\n");
+                            }
                         }
                     }
                 }
@@ -107,11 +121,11 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     }
 
     /**
-     * Map key: The entry in the text file
-     * Map value: The type of which the object is
-     * @return A map containing the values of the text files that should be checked for existence.
+     * Returns a list of the data lines for this content.
+     * Does not contain data lines for the name and the id.
+     * This function is used by {@link AbstractAdvancedContentManager#printValues(Map, BufferedWriter)} and {@link AbstractAdvancedContentManager#verifyContentIntegrity()}
      */
-    protected abstract Map<String, TagType> getIntegrityCheckMap();
+    protected abstract List<DataLine> getDataLines();
 
     /**
      * Edits the games text file(s) to add or remove the content.

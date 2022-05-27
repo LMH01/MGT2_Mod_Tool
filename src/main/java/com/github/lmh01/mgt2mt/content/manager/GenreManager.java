@@ -4,14 +4,13 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Genre;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import com.github.lmh01.mgt2mt.windows.genre.*;
@@ -22,7 +21,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GenreManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -54,39 +53,6 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         NpcEngineManager.INSTANCE.removeGenre(name);
         NpcGameManager.INSTANCE.editNPCGames(getContentIdByName(name), false, 0);
         super.removeContent(name);
-    }
-
-    @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("RES POINTS", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-        if (map.containsKey("PIC")) {
-            EditHelper.printLine("PIC", map, bw);
-        } else {
-            bw.write("[PIC]icon" + map.get("NAME EN").replaceAll(" ", "") + ".png");
-            bw.write("\r\n");
-        }
-        EditHelper.printLine("TGROUP", map, bw);
-        EditHelper.printLine("GAMEPLAY", map, bw);
-        EditHelper.printLine("GRAPHIC", map, bw);
-        EditHelper.printLine("SOUND", map, bw);
-        EditHelper.printLine("CONTROL", map, bw);
-        EditHelper.printLine("GENRE COMB", map, bw);
-        EditHelper.printLine("FOCUS0", map, bw);
-        EditHelper.printLine("FOCUS1", map, bw);
-        EditHelper.printLine("FOCUS2", map, bw);
-        EditHelper.printLine("FOCUS3", map, bw);
-        EditHelper.printLine("FOCUS4", map, bw);
-        EditHelper.printLine("FOCUS5", map, bw);
-        EditHelper.printLine("FOCUS6", map, bw);
-        EditHelper.printLine("FOCUS7", map, bw);
-        EditHelper.printLine("ALIGN0", map, bw);
-        EditHelper.printLine("ALIGN1", map, bw);
-        EditHelper.printLine("ALIGN2", map, bw);
     }
 
     @Override
@@ -144,29 +110,31 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DESC EN", TagType.STRING);
-        map.put("DATE", TagType.STRING);
-        map.put("RES POINTS", TagType.INT);
-        map.put("PRICE", TagType.INT);
-        map.put("DEV COSTS", TagType.INT);
-        map.put("GAMEPLAY", TagType.INT);
-        map.put("GRAPHIC", TagType.INT);
-        map.put("SOUND", TagType.INT);
-        map.put("CONTROL", TagType.INT);
-        map.put("FOCUS0", TagType.INT);
-        map.put("FOCUS1", TagType.INT);
-        map.put("FOCUS2", TagType.INT);
-        map.put("FOCUS3", TagType.INT);
-        map.put("FOCUS4", TagType.INT);
-        map.put("FOCUS5", TagType.INT);
-        map.put("FOCUS6", TagType.INT);
-        map.put("FOCUS7", TagType.INT);
-        map.put("ALIGN0", TagType.INT);
-        map.put("ALIGN1", TagType.INT);
-        map.put("ALIGN2", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> list = new ArrayList<>();
+        list.add(new DataLine("DESC EN", true, DataType.STRING));
+        list.add(new DataLine("DATE",true, DataType.STRING));
+        list.add(new DataLine("RES POINTS",true, DataType.INT));
+        list.add(new DataLine("PRICE",true, DataType.INT));
+        list.add(new DataLine("DEV COSTS",true, DataType.INT));
+        list.add(new DataLine("PIC",true, DataType.UNCHECKED));
+        list.add(new DataLine("TGROUP",true, DataType.UNCHECKED));
+        list.add(new DataLine("GAMEPLAY",true, DataType.INT));
+        list.add(new DataLine("GRAPHIC",true, DataType.INT));
+        list.add(new DataLine("SOUND",true, DataType.INT));
+        list.add(new DataLine("CONTROL",true, DataType.INT));
+        list.add(new DataLine("FOCUS0",true, DataType.INT));
+        list.add(new DataLine("FOCUS1",true, DataType.INT));
+        list.add(new DataLine("FOCUS2",true, DataType.INT));
+        list.add(new DataLine("FOCUS3",true, DataType.INT));
+        list.add(new DataLine("FOCUS4",true, DataType.INT));
+        list.add(new DataLine("FOCUS5",true, DataType.INT));
+        list.add(new DataLine("FOCUS6",true, DataType.INT));
+        list.add(new DataLine("FOCUS7",true, DataType.INT));
+        list.add(new DataLine("ALIGN0",true, DataType.INT));
+        list.add(new DataLine("ALIGN1",true, DataType.INT));
+        list.add(new DataLine("ALIGN2",true, DataType.INT));
+        return list;
     }
 
     @Override

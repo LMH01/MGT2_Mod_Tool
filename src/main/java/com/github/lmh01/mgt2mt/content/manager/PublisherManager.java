@@ -5,13 +5,12 @@ import com.github.lmh01.mgt2mt.content.Publisher;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.content.managed.types.CountryType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
@@ -25,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,24 +42,6 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
 
     private PublisherManager() {
         super("publisher", "publisher", "default_publisher.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Publisher.txt").toFile(), StandardCharsets.UTF_8);
-    }
-
-    @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("PIC", map, bw);
-        EditHelper.printLine("DEVELOPER", map, bw);
-        EditHelper.printLine("PUBLISHER", map, bw);
-        EditHelper.printLine("MARKET", map, bw);
-        EditHelper.printLine("SHARE", map, bw);
-        EditHelper.printLine("GENRE", map, bw);
-        EditHelper.printLine("ONLYMOBILE", map, bw);
-        EditHelper.printLine("SPEED", map, bw);
-        EditHelper.printLine("COMVAL", map, bw);
-        EditHelper.printLine("NOTFORSALE", map, bw);
-        EditHelper.printLine("COUNTRY", map, bw);
     }
 
     @Override
@@ -89,19 +70,21 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DATE", TagType.STRING);
-        map.put("PIC", TagType.INT);
-        map.put("DEVELOPER", TagType.STRING);
-        map.put("PUBLISHER", TagType.STRING);
-        map.put("MARKET", TagType.INT);
-        map.put("SHARE", TagType.INT);
-        map.put("GENRE", TagType.INT);
-        map.put("SPEED", TagType.INT);
-        map.put("COMVAL", TagType.INT);
-        map.put("COUNTRY", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> list = new ArrayList<>();
+        list.add(new DataLine("DATE", true, DataType.STRING));
+        list.add(new DataLine("PIC", true, DataType.INT));
+        list.add(new DataLine("DEVELOPER", true, DataType.STRING));
+        list.add(new DataLine("PUBLISHER", true, DataType.STRING));
+        list.add(new DataLine("MARKET", true, DataType.INT));
+        list.add(new DataLine("SHARE", true, DataType.INT));
+        list.add(new DataLine("GENRE", true, DataType.INT));
+        list.add(new DataLine("ONLYMOBILE", false, DataType.EMPTY));
+        list.add(new DataLine("SPEED", true, DataType.INT));
+        list.add(new DataLine("COMVAL", true, DataType.INT));
+        list.add(new DataLine("NOTFORSALE", false, DataType.EMPTY));
+        list.add(new DataLine("COUNTRY", true, DataType.INT));
+        return list;
     }
 
     @Override

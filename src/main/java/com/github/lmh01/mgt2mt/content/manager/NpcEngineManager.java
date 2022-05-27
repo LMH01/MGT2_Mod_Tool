@@ -4,13 +4,12 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.NpcEngine;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
@@ -21,10 +20,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NpcEngineManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -37,17 +33,6 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
 
     private NpcEngineManager() {
         super("npcEngine", "npc_engine", "default_npc_engines.txt", MGT2Paths.TEXT_DATA.getPath().resolve("NpcEngines.txt").toFile(), StandardCharsets.UTF_8);
-    }
-
-    @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("GENRE", map, bw);
-        EditHelper.printLine("PLATFORM", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("SHARE", map, bw);
     }
 
     @Override
@@ -65,14 +50,14 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DATE", TagType.STRING);
-        map.put("GENRE", TagType.INT);
-        map.put("PLATFORM", TagType.INT);
-        map.put("PRICE", TagType.INT);
-        map.put("SHARE", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> list = new ArrayList<>();
+        list.add(new DataLine("DATE", true, DataType.STRING));
+        list.add(new DataLine("GENRE", true, DataType.INT));
+        list.add(new DataLine("PLATFORM", true, DataType.INT));
+        list.add(new DataLine("PRICE", true, DataType.INT));
+        list.add(new DataLine("SHARE", true, DataType.INT));
+        return list;
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -174,17 +175,17 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("MANUFACTURER EN", TagType.STRING);
-        map.put("DATE", TagType.STRING);
-        map.put("PRICE", TagType.INT);
-        map.put("DEV COSTS", TagType.INT);
-        map.put("TECHLEVEL", TagType.INT);
-        map.put("UNITS", TagType.INT);
-        map.put("COMPLEX", TagType.INT);
-        map.put("TYP", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> line = new ArrayList<>();
+        line.add(new DataLine("MANUFACTURER EN", true, DataType.STRING));
+        line.add(new DataLine("DATE", true, DataType.STRING));
+        line.add(new DataLine("PRICE", true, DataType.INT));
+        line.add(new DataLine("DEV COSTS", true, DataType.INT));
+        line.add(new DataLine("TECHLEVEL", true, DataType.INT));
+        line.add(new DataLine("UNITS", true, DataType.INT));
+        line.add(new DataLine("COMPLEX", true, DataType.INT));
+        line.add(new DataLine("TYP", true, DataType.INT));
+        return line;
     }
 
     @Override

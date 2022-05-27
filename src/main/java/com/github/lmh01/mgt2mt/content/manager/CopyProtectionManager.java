@@ -1,27 +1,22 @@
 package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.content.AntiCheat;
 import com.github.lmh01.mgt2mt.content.CopyProtection;
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
+import com.github.lmh01.mgt2mt.content.managed.DataLine;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CopyProtectionManager extends AbstractAdvancedContentManager {
@@ -35,15 +30,6 @@ public class CopyProtectionManager extends AbstractAdvancedContentManager {
     }
 
     @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-    }
-
-    @Override
     public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
         return new CopyProtection(map.get("NAME EN"),
                 getIdFromMap(map),
@@ -54,12 +40,12 @@ public class CopyProtectionManager extends AbstractAdvancedContentManager {
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DATE", TagType.STRING);
-        map.put("PRICE", TagType.INT);
-        map.put("DEV COSTS", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> lines = new ArrayList<>();
+        lines.add(new DataLine("DATE", true, DataType.STRING));
+        lines.add(new DataLine("PRICE", true, DataType.INT));
+        lines.add(new DataLine("DEV COSTS", true, DataType.INT));
+        return lines;
     }
 
     @Override

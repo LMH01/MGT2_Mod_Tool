@@ -6,11 +6,10 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
@@ -20,10 +19,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HardwareManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -123,20 +119,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
 
     @Override
     protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        EditHelper.printLine("TYP", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("RES POINTS", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-        EditHelper.printLine("TECHLEVEL", map, bw);
-        if (map.containsKey("ONLY_HANDHELD")) {
-            EditHelper.printLine("ONLY_HANDHELD", map, bw);
-        }
-        if (map.containsKey("ONLY_STATIONARY")) {
-            EditHelper.printLine("ONLY_STATIONARY", map, bw);
-        }
+        super.printValues(map, bw);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED")) {
                 bw.write("[" + entry.getKey() + "]" + entry.getValue() + "\r\n");
@@ -170,15 +153,17 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DATE", TagType.STRING);
-        map.put("TYP", TagType.INT);
-        map.put("RES POINTS", TagType.INT);
-        map.put("PRICE", TagType.INT);
-        map.put("DEV COSTS", TagType.INT);
-        map.put("TECHLEVEL", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> list = new ArrayList<>();
+        list.add(new DataLine("DATE", true, DataType.STRING));
+        list.add(new DataLine("TYP", true, DataType.INT));
+        list.add(new DataLine("RES POINTS", true, DataType.INT));
+        list.add(new DataLine("PRICE", true, DataType.INT));
+        list.add(new DataLine("DEV COSTS", true, DataType.INT));
+        list.add(new DataLine("TECHLEVEL", true, DataType.INT));
+        list.add(new DataLine("ONLY_HANDHELD", false, DataType.EMPTY));
+        list.add(new DataLine("ONLY_STATIONARY", false, DataType.EMPTY));
+        return list;
     }
 
     @Override

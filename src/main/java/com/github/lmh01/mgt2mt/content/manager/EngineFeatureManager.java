@@ -4,22 +4,18 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.EngineFeature;
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
+import com.github.lmh01.mgt2mt.content.managed.DataLine;
 import com.github.lmh01.mgt2mt.content.managed.types.EngineFeatureType;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.*;
-import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EngineFeatureManager extends AbstractAdvancedContentManager {
@@ -30,23 +26,6 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
 
     private EngineFeatureManager() {
         super("engineFeature", "engine_feature", "default_engine_features.txt", MGT2Paths.TEXT_DATA.getPath().resolve("EngineFeatures.txt").toFile(), StandardCharsets.UTF_8);
-    }
-
-    @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        EditHelper.printLine("TYP", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("RES POINTS", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-        EditHelper.printLine("TECHLEVEL", map, bw);
-        EditHelper.printLine("PIC", map, bw);
-        EditHelper.printLine("GAMEPLAY", map, bw);
-        EditHelper.printLine("GRAPHIC", map, bw);
-        EditHelper.printLine("SOUND", map, bw);
-        EditHelper.printLine("TECH", map, bw);
     }
 
     @Override
@@ -70,20 +49,20 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DESC EN", TagType.STRING);
-        map.put("TYP", TagType.STRING);
-        map.put("DATE", TagType.STRING);
-        map.put("RES POINTS", TagType.INT);
-        map.put("PRICE", TagType.INT);
-        map.put("DEV COSTS", TagType.INT);
-        map.put("TECHLEVEL", TagType.INT);
-        map.put("GAMEPLAY", TagType.INT);
-        map.put("GRAPHIC", TagType.INT);
-        map.put("SOUND", TagType.INT);
-        map.put("TECH", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> list = new ArrayList<>();
+        list.add(new DataLine("TYP", true, DataType.INT));
+        list.add(new DataLine("DESC EN", true, DataType.STRING));
+        list.add(new DataLine("DATE", true, DataType.STRING));
+        list.add(new DataLine("RES POINTS", true, DataType.INT));
+        list.add(new DataLine("PRICE", true, DataType.INT));
+        list.add(new DataLine("DEV COSTS", true, DataType.INT));
+        list.add(new DataLine("TECHLEVEL", true, DataType.INT));
+        list.add(new DataLine("GAMEPLAY", true, DataType.INT));
+        list.add(new DataLine("GRAPHIC", true, DataType.INT));
+        list.add(new DataLine("SOUND", true, DataType.INT));
+        list.add(new DataLine("TECH", true, DataType.INT));
+        return list;
     }
 
     @Override

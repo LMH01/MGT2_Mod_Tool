@@ -5,7 +5,7 @@ import com.github.lmh01.mgt2mt.content.GameplayFeature;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.GameplayFeatureType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.TagType;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -16,10 +16,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameplayFeatureManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -30,34 +27,6 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
 
     private GameplayFeatureManager() {
         super("gameplayFeature", "gameplay_feature", "default_gameplay_features.txt", MGT2Paths.TEXT_DATA.getPath().resolve("GameplayFeatures.txt").toFile(), StandardCharsets.UTF_8);
-    }
-
-    @Override
-    protected void printValues(Map<String, String> map, BufferedWriter bw) throws IOException {
-        EditHelper.printLine("ID", map, bw);
-        EditHelper.printLine("TYP", map, bw);
-        TranslationManager.printLanguages(bw, map);
-        EditHelper.printLine("DATE", map, bw);
-        EditHelper.printLine("RES POINTS", map, bw);
-        EditHelper.printLine("PRICE", map, bw);
-        EditHelper.printLine("DEV COSTS", map, bw);
-        EditHelper.printLine("PIC", map, bw);
-        EditHelper.printLine("GAMEPLAY", map, bw);
-        EditHelper.printLine("GRAPHIC", map, bw);
-        EditHelper.printLine("SOUND", map, bw);
-        EditHelper.printLine("TECH", map, bw);
-        map.putIfAbsent("GOOD", "");
-        map.putIfAbsent("BAD", "");
-        EditHelper.printLine("GOOD", map, bw);
-        EditHelper.printLine("BAD", map, bw);
-        if (map.get("NO_ARCADE") != null) {
-            bw.write("[NO_ARCADE]");
-            bw.write("\r\n");
-        }
-        if (map.get("NO_MOBILE") != null) {
-            bw.write("[NO_MOBILE]");
-            bw.write("\r\n");
-        }
     }
 
     @Override
@@ -100,19 +69,24 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     }
 
     @Override
-    protected Map<String, TagType> getIntegrityCheckMap() {
-        Map<String, TagType> map = new HashMap<>();
-        map.put("DESC EN", TagType.STRING);
-        map.put("TYP", TagType.STRING);
-        map.put("DATE", TagType.STRING);
-        map.put("RES POINTS", TagType.INT);
-        map.put("PRICE", TagType.INT);
-        map.put("DEV COSTS", TagType.INT);
-        map.put("GAMEPLAY", TagType.INT);
-        map.put("GRAPHIC", TagType.INT);
-        map.put("SOUND", TagType.INT);
-        map.put("TECH", TagType.INT);
-        return map;
+    protected List<DataLine> getDataLines() {
+        List<DataLine> list = new ArrayList<>();
+        list.add(new DataLine("TYP", true, DataType.INT));
+        list.add(new DataLine("DESC EN", true, DataType.STRING));
+        list.add(new DataLine("DATE", true, DataType.STRING));
+        list.add(new DataLine("RES POINTS", true, DataType.INT));
+        list.add(new DataLine("PRICE", true, DataType.INT));
+        list.add(new DataLine("DEV COSTS", true, DataType.INT));
+        list.add(new DataLine("PIC", true, DataType.UNCHECKED));
+        list.add(new DataLine("GAMEPLAY", true, DataType.INT));
+        list.add(new DataLine("GRAPHIC", true, DataType.INT));
+        list.add(new DataLine("SOUND", true, DataType.INT));
+        list.add(new DataLine("TECH", true, DataType.INT));
+        list.add(new DataLine("GOOD", false, DataType.STRING));
+        list.add(new DataLine("BAD", false, DataType.STRING));
+        list.add(new DataLine("NO_ARCADE", false, DataType.EMPTY));
+        list.add(new DataLine("NO_MOBILE", false, DataType.EMPTY));
+        return list;
     }
 
     @Override
