@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class LogFile {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogFile.class);
@@ -76,6 +77,10 @@ public class LogFile {
                     "Enable export storage: " + Settings.enableExportStorage + "\n" +
                     "Write text area output to console: " + Settings.writeTextAreaOutputToConsole);
             bw.write(System.getProperty("line.separator"));
+            for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {
+                bw.write(entry.getKey().getIdentifier() + ": " + entry.getValue());
+                bw.write(System.getProperty("line.separator"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

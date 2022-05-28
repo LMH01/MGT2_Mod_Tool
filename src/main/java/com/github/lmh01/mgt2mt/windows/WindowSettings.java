@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -19,10 +21,11 @@ public class WindowSettings extends JFrame {
     private static boolean unsavedChanges = false;
     static Path inputFolder = null;//This string contains the current mgt2folder when the program is started
     private static Path outputFolder = null;//This string contains the folder path that should be set
+    private HashMap<SafetyFeature, JCheckBox> safetyFeatureCheckboxes = new HashMap<>();
     JComboBox comboBoxMGT2FolderOperation = new JComboBox();
     JComboBox comboBoxLanguage = new JComboBox();
     JComboBox comboBoxUpdateChannel = new JComboBox();
-    JCheckBox checkBoxDisableSafety = new JCheckBox(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxText"));
+    JButton configureSafetyFeatures = new JButton(I18n.INSTANCE.get("window.settings.safetyFeatures.configureButton"));
     JCheckBox checkBoxExportStorage = new JCheckBox(I18n.INSTANCE.get("window.settings.exportStorage.checkBoxText"));
     JCheckBox checkBoxSaveLogs = new JCheckBox(I18n.INSTANCE.get("window.settings.checkBox.saveLogs"));
     AtomicBoolean doNotPerformComboBoxActionListener = new AtomicBoolean(false);
@@ -61,21 +64,37 @@ public class WindowSettings extends JFrame {
         });
         contentPane.add(checkBoxExportStorage);
 
-        checkBoxDisableSafety.setBounds(20, 70, 250, 23);
-        checkBoxDisableSafety.setToolTipText(I18n.INSTANCE.get("window.settings.safetyFeatures.checkBoxToolTip"));
-        checkBoxDisableSafety.addActionListener(e -> {
-            LOGGER.info("checkBoxDisableSafety action: " + e.getActionCommand());
-            if (checkBoxDisableSafety.isSelected()) {
-                checkBoxDisableSafety.setSelected(JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.safetyFeatures.warning"), I18n.INSTANCE.get("window.settings.safetyFeatures.warning.title"), JOptionPane.YES_NO_OPTION) == 0);
-            }
-            unsavedChanges = checkBoxDisableSafety.isSelected() != Settings.disableSafetyFeatures;
-        });
-        contentPane.add(checkBoxDisableSafety);
-
-        checkBoxSaveLogs.setBounds(20, 100, 250, 23);
+        checkBoxSaveLogs.setBounds(20, 70, 250, 23);
         checkBoxSaveLogs.setToolTipText(I18n.INSTANCE.get("window.settings.checkBox.saveLogs.toolTip"));
         checkBoxSaveLogs.addActionListener(actionEvent -> unsavedChanges = checkBoxSaveLogs.isSelected() != Settings.saveLogs);
         contentPane.add(checkBoxSaveLogs);
+
+        configureSafetyFeatures.setBounds(20, 100, 250, 23);
+        configureSafetyFeatures.setToolTipText(I18n.INSTANCE.get("window.settings.safetyFeatures.configureButton.toolTip"));
+        configureSafetyFeatures.addActionListener(e -> {
+            HashMap<SafetyFeature, Boolean> safetyFeaturesUnchanged = new HashMap<>();
+            for (Map.Entry<SafetyFeature, JCheckBox> entry : safetyFeatureCheckboxes.entrySet()) {
+                safetyFeaturesUnchanged.put(entry.getKey(), entry.getValue().isSelected());
+            }
+
+            JPanel panel = new JPanel(new GridLayout(0, 1));
+            JLabel label = new JLabel(I18n.INSTANCE.get("window.settings.safetyFeatures.configure.label"));
+            panel.add(label);
+            for (Map.Entry<SafetyFeature, JCheckBox> entry : safetyFeatureCheckboxes.entrySet()) {
+                panel.add(entry.getValue());
+            }
+            panel.add(new JLabel(I18n.INSTANCE.get("window.settings.safetyFeatures.configure.warning")));
+            if (JOptionPane.showConfirmDialog(null, panel, I18n.INSTANCE.get("window.settings.safetyFeatures.configure.frame.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                for (Map.Entry<SafetyFeature, Boolean> entry : safetyFeaturesUnchanged.entrySet()) {
+                    if (entry.getValue() != safetyFeatureCheckboxes.get(entry.getKey()).isSelected()) {
+                        unsavedChanges = true;
+                    }
+                }
+            } else {
+                safetyFeatureCheckboxes = getSafetyFeatureCheckboxes();
+            }
+        });
+        contentPane.add(configureSafetyFeatures);
 
         JLabel labelLanguage = new JLabel(I18n.INSTANCE.get("window.settings.language.label"));
         labelLanguage.setBounds(20, 133, 127, 14);
@@ -217,9 +236,9 @@ public class WindowSettings extends JFrame {
         btnBack.setToolTipText(I18n.INSTANCE.get("window.settings.button.back.toolTip"));
         btnBack.addActionListener(actionEvent -> {
             if (unsavedChanges) {
-                String unsavedChanges = getChangesInSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+                String unsavedChanges = getChangesInSettings(checkBoxExportStorage, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs, safetyFeatureCheckboxes);
                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.changesNotSaved.part1") + "\n\n" + unsavedChanges + "\n" + I18n.INSTANCE.get("window.settings.changesNotSaved.part2"), I18n.INSTANCE.get("window.settings.changesNotSaved.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                    setCurrentSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+                    setCurrentSettings(checkBoxExportStorage, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs, safetyFeatureCheckboxes);
                     WindowMain.checkActionAvailability();
                     customFolderSetAndValid = false;
                     WindowSettings.FRAME.dispose();
@@ -242,7 +261,7 @@ public class WindowSettings extends JFrame {
                 Settings.resetSettings();
                 doNotPerformComboBoxActionListener.set(true);
                 checkBoxExportStorage.setSelected(false);
-                checkBoxDisableSafety.setSelected(false);
+                safetyFeatureCheckboxes = getSafetyFeatureCheckboxes();
                 customFolderSetAndValid = false;
                 comboBoxMGT2FolderOperation.setSelectedItem("Automatic");
                 automaticWasLastSelectedOption.set(true);
@@ -259,12 +278,12 @@ public class WindowSettings extends JFrame {
         btnSave.setBounds(230, 222, 89, 23);
         btnSave.setToolTipText(I18n.INSTANCE.get("window.settings.button.save.toolTip"));
         btnSave.addActionListener(actionEvent -> {
-            String unsavedChangesList = getChangesInSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+            String unsavedChangesList = getChangesInSettings(checkBoxExportStorage, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs, safetyFeatureCheckboxes);
             if (unsavedChangesList.isEmpty()) {
                 JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.settings.button.save.nothingToSave"));
             } else {
                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.settings.button.save.saveSettings") + "\n\n" + unsavedChangesList, I18n.INSTANCE.get("window.settings.button.save.saveSettings.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                    setCurrentSettings(checkBoxExportStorage, checkBoxDisableSafety, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs);
+                    setCurrentSettings(checkBoxExportStorage, comboBoxLanguage, comboBoxUpdateChannel, checkBoxSaveLogs, safetyFeatureCheckboxes);
                     WindowMain.checkActionAvailability();
                     Backup.createInitialBackup();
                     unsavedChanges = false;
@@ -303,36 +322,51 @@ public class WindowSettings extends JFrame {
             comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.disabled"));
         }
         checkBoxExportStorage.setSelected(Settings.enableExportStorage);
-        checkBoxDisableSafety.setSelected(Settings.disableSafetyFeatures);
         checkBoxSaveLogs.setSelected(Settings.saveLogs);
         comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + Settings.mgt2Path);
         if (Settings.mgt2FolderIsCorrect) {
-            checkBoxDisableSafety.setEnabled(true);
+            configureSafetyFeatures.setEnabled(true);
         } else {
             comboBoxMGT2FolderOperation.setToolTipText(I18n.INSTANCE.get("window.settings.mgt2location.toolTip") + " " + I18n.INSTANCE.get("window.settings.mgt2location.toolTip.notSet"));
         }
         customFolderSetAndValid = Settings.enableCustomFolder;
+        // Load current safety features into check boxes
+        safetyFeatureCheckboxes = getSafetyFeatureCheckboxes();
+    }
+
+    /**
+     * Loads the current safety feature settings into a map of checkboxes
+     */
+    private static HashMap<SafetyFeature, JCheckBox> getSafetyFeatureCheckboxes() {
+        HashMap<SafetyFeature, JCheckBox> map = new HashMap<>();
+        for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {
+            JCheckBox current = new JCheckBox(entry.getKey().getName());
+            current.setToolTipText(entry.getKey().getToolTip());
+            current.setSelected(entry.getValue());
+            map.put(entry.getKey(), current);
+        }
+        return map;
     }
 
     /**
      * Applies the local changes in the settings to the global settings by calling Settings.setSettings(...)
      */
-    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
-        Settings.setSettings(true, checkBoxExportStorage.isSelected(), checkBoxDisableSafety.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), UpdateBranch.getUpdateBranch(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString()), checkBoxSaveLogs.isSelected(), Settings.enableInitialBackupCheck);
+    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
+        Map<SafetyFeature, Boolean> safetyFeatures = new HashMap<>();
+        for (Map.Entry<SafetyFeature, JCheckBox> entry : safetyFeatureCheckboxes.entrySet()) {
+            safetyFeatures.put(entry.getKey(), entry.getValue().isSelected());
+        }
+        Settings.setSettings(true, checkBoxExportStorage.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), UpdateBranch.getUpdateBranch(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString()), checkBoxSaveLogs.isSelected(), Settings.enableInitialBackupCheck ,safetyFeatures);
     }
 
     /**
      * @param checkBoxExportStorage The debug mode checkbox
-     * @param checkBoxDisableSafety The "disable safety features" checkbox
      * @return Returns the changes that have been made to the settings
      */
-    private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JCheckBox checkBoxDisableSafety, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs) {
+    private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
         StringBuilder unsavedChanges = new StringBuilder();
         if (Settings.enableExportStorage != checkBoxExportStorage.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableExportStorage).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
-        }
-        if (Settings.disableSafetyFeatures != checkBoxDisableSafety.isSelected()) {
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.disableSafetyFeatures")).append(" ").append(Settings.disableSafetyFeatures).append(" -> ").append(checkBoxDisableSafety.isSelected()).append(System.getProperty("line.separator"));
         }
         if (!inputFolder.equals(outputFolder)) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2Path).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
@@ -345,6 +379,16 @@ public class WindowSettings extends JFrame {
         }
         if (Settings.saveLogs != checkBoxSaveLogs.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.saveLogs")).append(" ").append(Settings.saveLogs).append(" -> ").append(checkBoxSaveLogs.isSelected()).append(System.getProperty("line.separator"));
+        }
+        boolean firstChangedSafetyFeature = true;
+        for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {
+            if (entry.getValue() != safetyFeatureCheckboxes.get(entry.getKey()).isSelected()) {
+                if (firstChangedSafetyFeature) {
+                    unsavedChanges.append("\n").append(I18n.INSTANCE.get("window.settings.changesInSettings.safetyFeatures")).append(": ").append(System.getProperty("line.separator"));
+                    firstChangedSafetyFeature = false;
+                }
+                unsavedChanges.append(entry.getKey().getName()).append(": ").append(Utils.getTranslatedValueFromBoolean(entry.getValue())).append(" -> ").append(Utils.getTranslatedValueFromBoolean(safetyFeatureCheckboxes.get(entry.getKey()).isSelected())).append(System.getProperty("line.separator"));
+            }
         }
         return unsavedChanges.toString();
     }

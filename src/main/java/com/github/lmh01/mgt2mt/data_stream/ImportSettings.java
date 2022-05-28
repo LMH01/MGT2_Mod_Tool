@@ -1,15 +1,17 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.github.lmh01.mgt2mt.util.UpdateBranch;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.moandjiezana.toml.Toml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ImportSettings {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportSettings.class);
@@ -28,7 +30,6 @@ public class ImportSettings {
             Settings.mgt2Path = Paths.get(toml.getString("mgt2Path"));
             Settings.enableDisclaimerMessage = toml.getBoolean("enableDisclaimerMessage");
             Settings.enableDebugLogging = toml.getBoolean("enableDebugLogging");
-            Settings.disableSafetyFeatures = toml.getBoolean("disableSafetyFeatures");
             Settings.enableCustomFolder = toml.getBoolean("enableCustomFolder");
             Settings.enableGenreNameTranslationInfo = toml.getBoolean("enableGenreNameTranslationInfo");
             Settings.enableGenreDescriptionTranslationInfo = toml.getBoolean("enableGenreDescriptionTranslationInfo");
@@ -38,6 +39,16 @@ public class ImportSettings {
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
             Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");
             Settings.writeTextAreaOutputToConsole = toml.getBoolean("writeTextAreaOutputToConsole");
+            Map<SafetyFeature, Boolean> safetyFeatures = new HashMap<>();
+            for  (SafetyFeature safetyFeature : SafetyFeature.values()) {
+                if (toml.getBoolean("safety_feature_" + safetyFeature.getIdentifier()) != null) {
+                    safetyFeatures.put(safetyFeature, toml.getBoolean("safety_feature_" + safetyFeature.getIdentifier()));
+                } else {
+                    DebugHelper.warn(LOGGER, "Safety feature value for " + safetyFeature.getIdentifier() + " is null. Setting to false.");
+                    safetyFeatures.put(safetyFeature, false);
+                }
+            }
+            Settings.safetyFeatures = safetyFeatures;
             return true;
         } catch (RuntimeException e) {
             LOGGER.info("Unable to import settings!:");

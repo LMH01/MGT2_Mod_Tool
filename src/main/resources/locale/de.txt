@@ -1065,12 +1065,17 @@ window.settings.button.save.saveSettings|Die folgenden Einstellungen speichern?
 window.settings.button.save.saveSettings.title|Ungespeicherte Änderungen
 window.settings.button.save.nothingToSave|<html>Es gibt keine ungespeicherten Änderungen.
 window.settings.changesInSettings.debugLogging|Debug-Protokollierung aktivieren:
-window.settings.changesInSettings.disableSafetyFeatures|Sicherheitsfunktionen deaktivieren:
 window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon Ordner:
 window.settings.changesInSettings.language|Sprache:
 window.settings.changesInSettings.updateChannel|Update Kanal:
 window.settings.changesInSettings.saveLogs|Logs speichern:
 window.settings.changesInSettings.exportStorage|Export lager aktivieren:
+window.settings.changesInSettings.safetyFeatures|Sicherheitsfunktionen
+window.settings.safetyFeatures.configureButton|Sicherheitsfunktionen konfigurieren
+window.settings.safetyFeatures.configureButton.toolTip|Klicke, um die Sicherheitsfunktionen zu konfigurieren
+window.settings.safetyFeatures.configure.label|<html>Hier kannst du die Sicherheitsfunktionen konfigurieren.<br>Fahre mit dem Mauszeiger über die Kontrollkästchen, um mehr Informationen zu erhalten.
+window.settings.safetyFeatures.configure.warning|<html>Warnung: Änderungen an diesen Einstellungen können zu Problemen führen,<br>ändere die Einstellungen auf eigene Gefahr!
+window.settings.safetyFeatures.configure.frame.title|Sicherheitsfunktionen konfigurieren
 window.settings.changesNotSaved.part1|Es wurden Änderungen gemacht, die noch nicht gespeichert wurden:
 window.settings.changesNotSaved.part2|Möchtest du sie speichern?
 window.settings.changesNotSaved.title|Ungespeicherte änderungen
@@ -1093,10 +1098,6 @@ window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>Die Suche 
 window.settings.mgt2location.automaticSelected.folderNotFound|<html>Die Suche nach dem MGT2 Ordner war nicht erfolgreich.<br>Der benutzerdefinierter Ordner wird beibehalten.
 window.settings.reset.label|Zurücksetzen
 window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
-window.settings.safetyFeatures.checkBoxText|Sicherheitsfunktionen deaktivieren
-window.settings.safetyFeatures.checkBoxToolTip|<html>Aktiviere dieses Kontrollkästchen, um die automatische Zuweisung von Genre-IDs zu deaktivieren.<br>Wenn diese Option aktiviert ist, haben die meisten Spinner keinen Maximalwert.<br>Aktiviere diese Option nur, wenn du dein eigenes Genre-ID-System verwendest und die Spinner erforderlicher weise freigeschaltet sein müssen.
-window.settings.safetyFeatures.warning|<html>Bist du dir sicher, dass du die Sicherheitsfunktionen deaktivieren möchtest?<br>Dies kann zu Problemen führen.<br><br>Beim deaktivieren passiert unter anderem folgendes:<br>- Spinner werden entsperrt und die Meisten besitzen keinen Maximalwert<br>- Beim löschen von Backups werden auch Initial-Backups gelöscht<br>- Einige Listen enthalten auch Einträge, die zum Spiel gehören<br>- Beim import wird der Check nach dem Assets-Ordner deaktiviert<br>- Der Spieldateien-Integritätscheck bei start des Tool wird deaktiviert<br><br>VERWENDE DIESE FUNKTION AUF EIGENES RISIKO!<br>ICH ÜBERNEHME KEINE VERANTWORTUNG, WENN ETWAS KAPUTT GEHT! <br><br>Sicherheitsfunktionen deaktivieren?
-window.settings.safetyFeatures.warning.title|Sicherheitsfunktionen deaktivieren?
 window.settings.updateChannel.label|Update Kanal:
 window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
 window.settings.updateChannel.disabled|<html>Deaktiviert: Kann nicht zum Release-Kanal wechseln, da die derzeit laufende Mod-Tool-Version Alpha ist
@@ -1154,6 +1155,9 @@ verifyContentIntegrity.typeInvalid|Die Integrität der Spieldatei %s ist ungült
 
 verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation1|Die Integrität der Spieldatei %s ist ungültig. Grund: Die Zielgruppe der %s namens %s ist leer.
 verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2|Die Integrität der Spieldatei %s ist ungültig. Grund: Die Zielgruppe der %s namens %s ist ungültig: %s.
+
+safetyFeatures.unlockSpinners|Die Spinner entsperren
+safetyFeatures.unlockSpinners.toolTip|Aktivieren, um alle Spinner zu entsperren und die Maximalwerte zu deaktivieren
 
 month.january|Januar
 month.february|Februar

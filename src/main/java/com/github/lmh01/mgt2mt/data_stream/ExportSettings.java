@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.Settings;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
@@ -37,7 +38,6 @@ public class ExportSettings {
             map.put("mgt2Path", Settings.mgt2Path.toString());
             map.put("enableDisclaimerMessage", Settings.enableDisclaimerMessage);
             map.put("enableDebugLogging", Settings.enableDebugLogging);
-            map.put("disableSafetyFeatures", Settings.disableSafetyFeatures);
             map.put("enableCustomFolder", Settings.enableCustomFolder);
             map.put("enableGenreNameTranslationInfo", Settings.enableGenreNameTranslationInfo);
             map.put("enableGenreDescriptionTranslationInfo", Settings.enableGenreDescriptionTranslationInfo);
@@ -47,6 +47,9 @@ public class ExportSettings {
             map.put("enableExportStorage", Settings.enableExportStorage);
             map.put("enableInitialBackupCheck", Settings.enableInitialBackupCheck);
             map.put("writeTextAreaOutputToConsole", Settings.writeTextAreaOutputToConsole);
+            for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {
+                map.put("safety_feature_" + entry.getKey().getIdentifier(), entry.getValue());
+            }
             tomlWriter.write(map, file);
             LOGGER.info("Settings have been saved.");
             LogFile.write("Settings have been saved to file: " + file);

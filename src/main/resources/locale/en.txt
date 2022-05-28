@@ -1063,12 +1063,17 @@ window.settings.button.save.saveSettings|Save the following settings?
 window.settings.button.save.saveSettings.title|Unsaved changes
 window.settings.button.save.nothingToSave|There are no unsaved changes.
 window.settings.changesInSettings.debugLogging|Enable debug logging:
-window.settings.changesInSettings.disableSafetyFeatures|Disable safety features:
 window.settings.changesInSettings.mgt2Folder|Mad Games Tycoon folder:
 window.settings.changesInSettings.language|Language:
 window.settings.changesInSettings.updateChannel|Update channel:
 window.settings.changesInSettings.saveLogs|Save logs:
 window.settings.changesInSettings.exportStorage|Enable export storage:
+window.settings.changesInSettings.safetyFeatures|Safety features
+window.settings.safetyFeatures.configureButton|Configure safety features
+window.settings.safetyFeatures.configureButton.toolTip|Click to configure the safety features
+window.settings.safetyFeatures.configure.label|<html>Here you can configure the safety features.<br>Hover over the checkboxes to get more information.
+window.settings.safetyFeatures.configure.warning|<html>Warning: Changes to these settings may cause problems,<br>change the settings at your own risk!
+window.settings.safetyFeatures.configure.frame.title|Configure safety features
 window.settings.changesNotSaved.part1|You have made changes that have not been saved:
 window.settings.changesNotSaved.part2|Do you want to save them?
 window.settings.changesNotSaved.title|Unsaved changes
@@ -1091,10 +1096,6 @@ window.settings.mgt2location.resetFolder.noAutomaticFolderFound|<html>The search
 window.settings.mgt2location.automaticSelected.folderNotFound|<html>The search for the mgt2 folder was unsuccessful.<br>The manual folder will still be used.
 window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
-window.settings.safetyFeatures.checkBoxText|Disable safety features
-window.settings.safetyFeatures.checkBoxToolTip|<html>Check this box to disable the automatic genre id allocation.<br>If checked most spinners won't have a maximum value.<br>Do only enable when you use your own genre id system and you need the spinners to be unlocked.
-window.settings.safetyFeatures.warning|<html>Are you sure that you want to disable the safety features?<br>This could lead to problems.<br><br>When deactivating, among other things, the following happens:<br>- Spinners are unlocked and most of them have no maximum value<br>- When deleting backups, initial backups are also deleted<br>- Some lists also contain entries that belong to the game<br>- When importing, the check for the assets folder is deactivated<br>- The game files integrity check when starting the tool will be disabled<br><br>USE THIS FEATURE AT YOUR OWN RISK!<br>I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!<br><br>Disable safety features?
-window.settings.safetyFeatures.warning.title|Disable safety features?
 window.settings.updateChannel.label|Update channel:
 window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
 window.settings.updateChannel.disabled|<html>Disabled: Can not change to release channel because the current running mod tool version is alpha
@@ -1152,6 +1153,9 @@ verifyContentIntegrity.typeInvalid|The integrity of game file %s is invalid. Rea
 
 verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation1|The integrity of game file %s is invalid. Reason: The target group of the %s named %s is empty.
 verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2|The integrity of game file %s is invalid. Reason: The target group of the %s named %s is invalid: %s.
+
+safetyFeatures.unlockSpinners|Unlock spinners
+safetyFeatures.unlockSpinners.toolTip|Enable to unlock all spinners and disable the maximum values
 
 month.january|January
 month.february|February
