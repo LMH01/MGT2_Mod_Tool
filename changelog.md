@@ -28,6 +28,9 @@
   - The `.txt` files are now only written once per cycle and not once for each content.
   - Example: Before it could take about 3 and 1/2 minutes to remove 9870 NpcEngines. Now it is almost instant.
 - General improvements to the text area outputs and the progress bar
+- Split ``disable safety features`` up into multiple options
+  - This way it is now possible to disable specific safety features only
+    - For example, it is now possible to only unlock the spinners without turning of other safety features
 - Reworked the backend of the tool
 - Massive internal code changes
 - Updated default content files
