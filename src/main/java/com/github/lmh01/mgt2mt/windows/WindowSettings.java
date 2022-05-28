@@ -370,7 +370,7 @@ public class WindowSettings extends JFrame {
     private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JComboBox<String> comboBoxLanguage, JComboBox<String> comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
         StringBuilder unsavedChanges = new StringBuilder();
         if (Settings.enableExportStorage != checkBoxExportStorage.isSelected()) {
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableExportStorage).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Utils.getTranslatedValueFromBoolean(Settings.enableExportStorage)).append(" -> ").append(Utils.getTranslatedValueFromBoolean(checkBoxExportStorage.isSelected())).append(System.getProperty("line.separator"));
         }
         if (!inputFolder.equals(outputFolder)) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.mgt2Folder")).append(" ").append(Settings.mgt2Path).append(" -> ").append(outputFolder).append(System.getProperty("line.separator"));
@@ -382,7 +382,7 @@ public class WindowSettings extends JFrame {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.updateChannel")).append(" ").append(Settings.updateBranch.getName()).append(" -> ").append(comboBoxUpdateBranch.getSelectedItem().toString()).append(System.getProperty("line.separator"));
         }
         if (Settings.saveLogs != checkBoxSaveLogs.isSelected()) {
-            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.saveLogs")).append(" ").append(Settings.saveLogs).append(" -> ").append(checkBoxSaveLogs.isSelected()).append(System.getProperty("line.separator"));
+            unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.saveLogs")).append(" ").append(Utils.getTranslatedValueFromBoolean(Settings.saveLogs)).append(" -> ").append(Utils.getTranslatedValueFromBoolean(checkBoxSaveLogs.isSelected())).append(System.getProperty("line.separator"));
         }
         boolean firstChangedSafetyFeature = true;
         for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {

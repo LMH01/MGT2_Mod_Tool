@@ -35,6 +35,7 @@
 - Reworked the backend of the tool
 - Massive internal code changes
 - Updated default content files
+- Improved and added some missing translations
 - In the ``settings.toml`` file it can now be enabled to write the text area output to the console
 
 ### Bug fixes
