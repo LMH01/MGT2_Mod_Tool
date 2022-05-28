@@ -197,6 +197,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         try {
             if (map.containsKey("TYP")) {
                 try {
+                    //noinspection ResultOfMethodCallIgnored
                     PlatformType.getFromId(Integer.parseInt(map.get("TYP")));
                 } catch (NumberFormatException ignored) {
 

@@ -196,6 +196,9 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                 rating = Integer.parseInt(d.replaceAll("%", ""));
             }
         }
+        if (genre == null || theme == null || publisher == null || releaseYear == null || rating == null ) {
+            throw new ModProcessingException("Unable to construct content named " + name + ". Reason: missing data.");
+        }
         return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);
     }
 

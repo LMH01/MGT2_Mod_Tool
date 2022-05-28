@@ -59,8 +59,6 @@ public class WindowAddGenrePage11 extends JFrame {
                 if (!imageFilePath.equals("error")) {
                     genreIcon = new File(imageFilePath);
                     GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
-                } else if (textFieldImagePath.getText().isEmpty()) {
-
                 }
             }
             Genre genre = new Genre(

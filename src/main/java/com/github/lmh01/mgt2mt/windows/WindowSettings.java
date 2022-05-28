@@ -124,7 +124,7 @@ public class WindowSettings extends JFrame {
 
         comboBoxUpdateChannel.setBounds(117, 155, 100, 23);
         comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.toolTip"));
-        comboBoxUpdateChannel.addActionListener(actionEvent -> unsavedChanges = !Objects.equals(Objects.requireNonNull(comboBoxUpdateChannel.getSelectedItem()).toString(), Settings.updateBranch));
+        comboBoxUpdateChannel.addActionListener(actionEvent -> unsavedChanges = !Objects.equals(Objects.requireNonNull(comboBoxUpdateChannel.getSelectedItem()).toString(), Settings.updateBranch.getName()));
         contentPane.add(comboBoxUpdateChannel);
 
         JLabel lblMGT2Location = new JLabel(I18n.INSTANCE.get("window.settings.mgt2location.label"));

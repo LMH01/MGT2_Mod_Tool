@@ -20,13 +20,13 @@ public class LogFile {
         try {
             logFile = ModManagerPaths.MAIN.getPath().resolve(Utils.getCurrentDateTime() + ".log").toFile();
             File mainFolder = ModManagerPaths.MAIN.getPath().toFile();
-            if (!mainFolder.exists()) {
-                mainFolder.mkdirs();
+            if (!Files.exists(ModManagerPaths.MAIN.getPath())) {
+                Files.createDirectories(ModManagerPaths.MAIN.getPath());
             }
-            if (logFile.exists()) {
-                logFile.delete();
+            if (Files.exists(logFile.toPath())) {
+                Files.delete(logFile.toPath());
             }
-            logFile.createNewFile();
+            Files.createFile(logFile.toPath());
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logFile)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,18 +113,19 @@ public class LogFile {
             bw.close();
             LOGGER.info("Logging to file has been stopped!");
             File latestLog = ModManagerPaths.MAIN.getPath().resolve("latest.log").toFile();
-            if (latestLog.exists()) {
-                latestLog.delete();
+            if (Files.exists(latestLog.toPath())) {
+                Files.delete(latestLog.toPath());
             }
             Files.copy(Paths.get(logFile.getPath()), Paths.get(latestLog.getPath()));
             if (Settings.saveLogs) {
                 File storageFile = ModManagerPaths.LOG.getPath().resolve(logFile.getName()).toFile();
                 if (!ModManagerPaths.LOG.getPath().toFile().exists()) {
-                    ModManagerPaths.LOG.getPath().toFile().mkdirs();
+                    Files.createDirectories(ModManagerPaths.LOG.getPath());
                 }
                 Files.move(Paths.get(logFile.getPath()), Paths.get(storageFile.getPath()));
+            } else {
+                Files.delete(logFile.toPath());
             }
-            logFile.delete();
         } catch (IOException e) {
             e.printStackTrace();
         }

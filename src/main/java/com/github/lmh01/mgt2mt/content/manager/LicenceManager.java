@@ -74,13 +74,15 @@ public class LicenceManager extends AbstractSimpleContentManager {
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().isEmpty()) {
-                    String identifier = null;
+                    String identifier;
                     if (Objects.equals(comboBoxType.getSelectedItem(), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"))) {
                         identifier = "MOVIE";
                     } else if (Objects.equals(comboBoxType.getSelectedItem(), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"))) {
                         identifier = "BOOK";
                     } else if (Objects.equals(comboBoxType.getSelectedItem(), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport"))) {
                         identifier = "SPORT";
+                    } else {
+                        throw new ModProcessingException("Unable to identify type, internal error!");
                     }
                     Licence licence = new Licence(textFieldName.getText(), null, LicenceType.getTypeByIdentifier(identifier));
                     boolean licenceAlreadyExists = false;
@@ -118,7 +120,7 @@ public class LicenceManager extends AbstractSimpleContentManager {
 
     @Override
     public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
-        LicenceType licenceType = null;
+        LicenceType licenceType;
         String data = fileContent.get(getContentIdByName(name)).replace(name, "");
         if (data.contains("BOOK")) {
             licenceType = LicenceType.BOOK;

@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -218,10 +219,10 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
             DebugHelper.debug(LOGGER, "Replacing genre id in npc engine file: " + name);
             Charset charset = getCharset();
             File fileToEdit = getGameFile();
-            if (fileToEdit.exists()) {
-                fileToEdit.delete();
+            if (Files.exists(fileToEdit.toPath())) {
+                Files.delete(fileToEdit.toPath());
             }
-            fileToEdit.createNewFile();
+            Files.createFile(fileToEdit.toPath());
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToEdit), charset));
             if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");

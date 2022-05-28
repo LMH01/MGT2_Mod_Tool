@@ -57,8 +57,13 @@ public class DefaultContentManager {
             break;
             case FILE_MISSING_OR_LOCALLY_OUTDATED: {
                 LogFile.write("The default content file has not yet been generated or is corrupted. A new file will be generated.");
-                if (DEFAULT_CONTENT_FILE.exists()) {
-                    DEFAULT_CONTENT_FILE.delete();
+                if (Files.exists(DEFAULT_CONTENT_FILE.toPath())) {
+                    try {
+                        Files.delete(DEFAULT_CONTENT_FILE.toPath());
+                    } catch (IOException e) {
+                        DebugHelper.warn(DefaultContentManager.class, "Failed to delete the default content file.");
+                        e.printStackTrace();
+                    }
                 }
                 writeNewDefaultContentFile();
                 performStartTasks();
@@ -182,9 +187,9 @@ public class DefaultContentManager {
         try {
             File tomlDownload = ModManagerPaths.MAIN.getPath().resolve("default_content_update.toml").toFile();
             DataStreamHelper.downloadFile(NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL, tomlDownload);
-            DEFAULT_CONTENT_FILE.delete();
+            Files.delete(DEFAULT_CONTENT_FILE.toPath());
             Files.copy(Paths.get(tomlDownload.getPath()), Paths.get(DEFAULT_CONTENT_FILE.getPath()));
-            tomlDownload.delete();
+            Files.delete(tomlDownload.toPath());
             LogFile.write("The default_content.toml file has been updated successfully!");
         } catch (IOException e) {
             e.printStackTrace();

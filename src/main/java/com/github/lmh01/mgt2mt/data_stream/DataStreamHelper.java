@@ -31,10 +31,10 @@ public class DataStreamHelper {
      * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
     public static void downloadFile(String URL, File destination) throws IOException {
-        if (destination.exists()) {
-            destination.delete();
+        if (Files.exists(destination.toPath())) {
+            Files.delete(destination.toPath());
         }
-        destination.getParentFile().mkdirs();
+        Files.createDirectories(destination.toPath().getParent());
 
         BufferedInputStream in = new BufferedInputStream(new URL(URL).openStream());
         FileOutputStream fileOutputStream = new FileOutputStream(destination);
@@ -55,12 +55,11 @@ public class DataStreamHelper {
      * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
     public static void downloadZip(String URL, Path destination) throws IOException {
-        File destinationFile = destination.toFile();
-        if (destinationFile.exists()) {
-            destinationFile.delete();
+        if (Files.exists(destination)) {
+            Files.delete(destination);
         }
-        destinationFile.getParentFile().mkdirs();
-        new FileOutputStream(destinationFile).getChannel().transferFrom(Channels.newChannel(new URL(URL).openStream()), 0, Long.MAX_VALUE);
+        Files.createDirectories(destination.getParent());
+        new FileOutputStream(destination.toFile()).getChannel().transferFrom(Channels.newChannel(new URL(URL).openStream()), 0, Long.MAX_VALUE);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.downloadZip.downloadSuccess") + " " + URL + " -> " + destination);
         LOGGER.info("The zip file from " + URL + " has been successfully downloaded to " + destination);
     }

@@ -80,16 +80,11 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
                             }
                         }
                         if (!modAlreadyExists) {
-                            StringBuilder newModLine = new StringBuilder();
-                            newModLine.append(newModName).append(" ");
                             ArrayList<Integer> genreIds = new ArrayList<>();
                             for (String string : listAvailableThemes.getSelectedValuesList()) {
                                 genreIds.add(GenreManager.INSTANCE.getContentIdByName(string));
                             }
                             Collections.sort(genreIds);
-                            for (Integer integer : genreIds) {
-                                newModLine.append("<").append(integer).append(">");
-                            }
                             NpcGame npcGame = new NpcGame(textFieldName.getText(), null, genreIds);
                             if (JOptionPane.showConfirmDialog(null, npcGame.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(npcGame);

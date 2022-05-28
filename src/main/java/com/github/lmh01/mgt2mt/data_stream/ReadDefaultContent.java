@@ -36,12 +36,13 @@ public class ReadDefaultContent {
      * @throws IOException If the default content file does not exist or could not be read.
      */
     public static String[] getDefault(String defaultContentName, Replacer replacer) throws IOException {
-        ArrayList<Object> arrayList = new ArrayList<>();
-        List<Object> list = toml.getList(defaultContentName.replace(".txt", ""));
+        ArrayList<String> arrayList = new ArrayList<>();
+        List<String> list = toml.getList(defaultContentName.replace(".txt", ""));
         if (list == null) {
             Files.delete(DefaultContentManager.DEFAULT_CONTENT_FILE.toPath());
+            throw new IOException("Default content file does not exist or could not be read.");
         }
-        for (Object obj : list) {
+        for (String obj : list) {
             if (replacer != null) {
                 arrayList.add(replacer.replace(obj.toString()));
             } else {

@@ -22,6 +22,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
@@ -466,11 +467,10 @@ public class Utils {
      */
     public static void open(Path path) {
         try {
-            File file = path.toFile();
-            if (!file.exists()) {
-                file.mkdirs();
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
             }
-            Desktop.getDesktop().open(file);
+            Desktop.getDesktop().open(path.toFile());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to open folder.\n\nException:\n" + e.getMessage(), "Unable to open folder", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
