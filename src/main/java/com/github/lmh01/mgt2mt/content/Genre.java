@@ -212,4 +212,24 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         }
         return map;
     }
+
+    @Override
+    public String externalImagesAvailable() throws ModProcessingException {
+        StringBuilder sb = new StringBuilder();
+        if (icon.extern == null) {
+            throw new ModProcessingException("icon extern is null");
+        }
+        if (!Files.exists(icon.extern.toPath())) {
+            sb.append(icon.extern.getPath()).append("\n");
+        }
+        for (Image screenshot : screenshots) {
+            if (screenshot.extern == null) {
+                throw new ModProcessingException("screenshot extern for game file " + screenshot.gameFile.getName() + " is null");
+            }
+            if (!Files.exists(screenshot.extern.toPath())) {
+                sb.append(screenshot.extern.getPath()).append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }

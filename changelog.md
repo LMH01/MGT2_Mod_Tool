@@ -32,6 +32,8 @@
   - This way it is now possible to disable specific safety features only
     - For example, it is now possible to only unlock the spinners without turning of other safety features
 - All combo boxes are now sorted alphabetically
+- The presence of image files is now checked before the images are copied and the content is added when importing mods
+  - If images are missing the import is canceled and a message is shown that displays which image files are missing
 - Reworked the backend of the tool
 - Massive internal code changes
 - Updated default content files

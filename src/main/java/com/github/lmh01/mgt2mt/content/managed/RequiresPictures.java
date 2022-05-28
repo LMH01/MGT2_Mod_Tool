@@ -51,4 +51,11 @@ public interface RequiresPictures {
      * @return A map with all images of this content mapped to the name of the entry in the export map.
      */
     Map<String, Image> getImageMap();
+
+    /**
+     * Checks if the external image files exist.
+     * @return String containing the missing image files. If empty all images are present.
+     * @throws ModProcessingException When an image file is null that should not be null. If this is thrown it indicates that the content was not constructed correctly.
+     */
+    String externalImagesAvailable() throws ModProcessingException;
 }

@@ -66,7 +66,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         ArrayList<Integer> assignedIds = new ArrayList<>();
         for (PlatformImage image : platformImages) {
             if (assignedIds.contains(image.id)) {
-                throw new ModProcessingException("Unable to create platform: The platform images are invalid: At least one image id is duplicate.");
+                throw new ModProcessingException("Unable to create platform: The platform images are invalid: At least one image id is duplicated.");
             }
             assignedIds.add(image.id);
         }
@@ -200,5 +200,19 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
             map.put(identifier, new Image(new File(contentType.getExportImageName(identifier + ".png", name)), image.image.gameFile));
         }
         return map;
+    }
+
+    @Override
+    public String externalImagesAvailable() throws ModProcessingException {
+        StringBuilder sb = new StringBuilder();
+        for (PlatformImage image : platformImages) {
+            if (image.image.extern == null) {
+                throw new ModProcessingException("image extern for game file " + image.image.gameFile.getName() + " is null");
+            }
+            if (!image.image.extern.exists()) {
+                sb.append(image.image.extern.getName()).append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

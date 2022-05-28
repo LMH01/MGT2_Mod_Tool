@@ -668,6 +668,7 @@ dialog.sharingManager.importAll.manyImportFilesFound.title|Import fortsetzen?
 dialog.sharingManager.importAll.errorWhileImportingMod.firstPart|<html>Fehler beim importieren des Mods
 dialog.sharingManager.importAll.errorWhileImportingMod.secondPart|Soll mit dem Import der anderen Mods fortgefahren werden?<br>Warnung: Dies kann zu Problemen führen, da Abhängigkeiten fehlen könnten.
 dialog.sharingManager.importAll.assetsFoldersMissing|Die folgenden Assets-Ordner wurden nicht gefunden:
+dialog.sharingManager.importAll.missingPictures|Die folgenden Bilder fehlen:
 dialog.sharingManager.analyzeReturnValue.alreadyExists|existiert bereits
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Unterstützte Versionen:
 dialog.sharingManager.importThings.error.firstPart|Import unmöglich:
@@ -888,6 +889,10 @@ textArea.importAll.replacingOfMapEntryFailed|WARNUNG: Import-Map Eintrag konnte 
 textArea.importAll.settingNewModIds|Setze Neue Mod-IDs
 textArea.importAll.noTomlFilesFound|Importieren nicht möglich: Keine .toml-Dateien gefunden
 textArea.importAll.assetFoldersMissing|es gibt fehlende Assets-Ordner
+textArea.importAll.picturesMissing|es gibt fehlende Bilder
+textArea.importAll.checkingAssetsFolder|Prüfe Assets-Ordner
+textArea.importAll.checkingImages|Prüfe Bilder
+textArea.importAll.contentWrongConstructed|Kritischer Fehler: Inhalt wurde nicht korrekt erstellt:
 textArea.importAll.accessDeniedError|Ordner kann nicht nach .toml-Dateien durchsucht werden, Zugriff verweigert
 textArea.importAll.errorConstructingContent|Fehler beim Erstellen des Inhalts namens %s vom Typ %s.\n\nSoll trotzdem mit dem Erstellen der Inhalte fortgefahren werden?\n\nWarnung: Dies könnte zu Problemen führen!
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners

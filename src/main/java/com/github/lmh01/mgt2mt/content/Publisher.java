@@ -144,4 +144,15 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         map.put(identifier, new Image(new File(contentType.getExportImageName(identifier + ".png", name)), icon.gameFile));
         return map;
     }
+
+    @Override
+    public String externalImagesAvailable() throws ModProcessingException {
+        if (icon.extern == null) {
+            throw new ModProcessingException("Icon extern is null");
+        }
+        if (!Files.exists(icon.extern.toPath())) {
+            return icon.extern.getPath() + "\n";
+        }
+        return "";
+    }
 }

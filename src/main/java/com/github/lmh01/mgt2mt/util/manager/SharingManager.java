@@ -110,6 +110,7 @@ public class SharingManager {
                             importMap = modMaps;
                         }
                         if (!importMap.isEmpty()) {
+                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingAssetsFolder"));
                             if (checkAssetsFolders(importMap)) {
                                 Set<Map<String, Object>> modsChecked = checkDependencies(importMap);
                                 if (modsChecked != null) {
@@ -117,6 +118,10 @@ public class SharingManager {
                                     Map<BaseContentManager, List<AbstractBaseContent>> contentsToImport = constructImportContents(modsChecked);
                                     if (contentsToImport == null) {
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+                                        return;
+                                    }
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingImages"));
+                                    if (!checkImages(contentsToImport)) {
                                         return;
                                     }
                                     try {
@@ -895,7 +900,7 @@ public class SharingManager {
      * @return True if import was successful. False if import was canceled.
      */
     @Deprecated
-    private static boolean importAllMods(Set<Map<String, Object>> mods) {
+    private static boolean importAllMods(Set<Map<String, Object>> mods) {//TODO Delete
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
         TimeHelper timeHelper = new TimeHelper();
         timeHelper.measureTime();
@@ -961,6 +966,40 @@ public class SharingManager {
         TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.constructingContents.duration"), timeHelper.getMeasuredTime() / 1000.0));
         ProgressBarHelper.resetProgressBar();
         return constructedContents;
+    }
+
+    /**
+     * Checks if all images of contents that require images are available
+     * @param contentsToImport The map that contains all contents that should be imported
+     * @return True if all images are available, false if not
+     */
+    private static boolean checkImages(Map<BaseContentManager, List<AbstractBaseContent>> contentsToImport) {
+        // Check if all images are available
+        StringBuilder missingPictures = new StringBuilder();
+        for (Map.Entry<BaseContentManager, List<AbstractBaseContent>> entry : contentsToImport.entrySet()) {
+            for (AbstractBaseContent content : entry.getValue()) {
+                if (content instanceof RequiresPictures) {
+                    try {
+                        missingPictures.append(((RequiresPictures) content).externalImagesAvailable());
+                    } catch (ModProcessingException e) {
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.contentWrongConstructed"));
+                        TextAreaHelper.printStackTrace(e);
+                        return false;
+                    }
+                }
+            }
+        }
+        if (missingPictures.length() > 0) {
+            String[] problems = missingPictures.toString().split("\n");
+            JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.firstPart") + "<br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.missingPictures"));
+            JList<String> list = WindowHelper.getList(problems, false);
+            JScrollPane scrollPane = WindowHelper.getScrollPane(list);
+            JComponent[] components = {label, scrollPane};
+            JOptionPane.showMessageDialog(null, components, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.picturesMissing"));
+            return false;
+        }
+        return true;
     }
 
     /**
