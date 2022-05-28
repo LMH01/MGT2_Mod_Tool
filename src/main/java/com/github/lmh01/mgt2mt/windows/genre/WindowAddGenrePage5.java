@@ -37,27 +37,23 @@ public class WindowAddGenrePage5 extends JFrame {
     }
 
     public WindowAddGenrePage5() {
-        buttonNext.addActionListener(actionEvent -> {
-            ThreadHandler.startModThread(() -> {
-                if (saveInputs(LIST_AVAILABLE_GENRES)) {
+        buttonNext.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            if (saveInputs(LIST_AVAILABLE_GENRES)) {
+                GenreManager.openStepWindow(6);
+                FRAME.dispose();
+            } else {
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
+                    LOGGER.info("Cleared array list with compatible genres.");
                     GenreManager.openStepWindow(6);
                     FRAME.dispose();
-                } else {
-                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage"), I18n.INSTANCE.get("mod.genre.genreComb.noSelectionMessage.title"), JOptionPane.YES_NO_OPTION) == 0) {
-                        LOGGER.info("Cleared array list with compatible genres.");
-                        GenreManager.openStepWindow(6);
-                        FRAME.dispose();
-                    }
                 }
-            }, "WindowAddGenrePage5ButtonNext");
-        });
-        buttonPrevious.addActionListener(actionEvent -> {
-            ThreadHandler.startModThread(() -> {
-                saveInputs(LIST_AVAILABLE_GENRES);
-                GenreManager.openStepWindow(4);
-                FRAME.dispose();
-            }, "WindowAddGenrePage5ButtonPrevious");
-        });
+            }
+        }, "WindowAddGenrePage5ButtonNext"));
+        buttonPrevious.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            saveInputs(LIST_AVAILABLE_GENRES);
+            GenreManager.openStepWindow(4);
+            FRAME.dispose();
+        }, "WindowAddGenrePage5ButtonPrevious"));
         buttonQuit.addActionListener(actionEvent -> {
             if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();

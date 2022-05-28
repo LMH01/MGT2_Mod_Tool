@@ -47,14 +47,12 @@ public class WindowAddGenrePage1 extends JFrame {
     }
 
     public WindowAddGenrePage1() {
-        buttonNext.addActionListener(actionEvent -> {
-            ThreadHandler.startModThread(() -> {
-                if (saveInputs(textFieldGenreName, textFieldGenreDescription)) {
-                    GenreManager.openStepWindow(2);
-                    FRAME.dispose();
-                }
-            }, "WindowAddGenrePage1ButtonNext");
-        });
+        buttonNext.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            if (saveInputs(textFieldGenreName, textFieldGenreDescription)) {
+                GenreManager.openStepWindow(2);
+                FRAME.dispose();
+            }
+        }, "WindowAddGenrePage1ButtonNext"));
 
         buttonQuit.addActionListener(actionEvent -> {
             if (Utils.showConfirmDialog(1)) {

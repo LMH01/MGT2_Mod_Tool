@@ -41,23 +41,19 @@ public class WindowAddGenrePage7 extends JFrame {
     }
 
     public WindowAddGenrePage7() {
-        buttonNext.addActionListener(actionEvent -> {
-            ThreadHandler.startModThread(() -> {
-                if (!saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD)) {
-                    GenreManager.openStepWindow(8);
-                    FRAME.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
-                }
-            }, "WindowAddGenrePage7ButtonNext");
-        });
-        buttonPrevious.addActionListener(actionEvent -> {
-            ThreadHandler.startModThread(() -> {
-                saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD);
-                GenreManager.openStepWindow(6);
+        buttonNext.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            if (!saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD)) {
+                GenreManager.openStepWindow(8);
                 FRAME.dispose();
-            }, "WindowAddGenrePage7ButtonPrevious");
-        });
+            } else {
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
+            }
+        }, "WindowAddGenrePage7ButtonNext"));
+        buttonPrevious.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            saveInputs(LIST_GAMEPLAY_FEATURES_GOOD, LIST_GAMEPLAY_FEATURES_BAD);
+            GenreManager.openStepWindow(6);
+            FRAME.dispose();
+        }, "WindowAddGenrePage7ButtonPrevious"));
         buttonQuit.addActionListener(actionEvent -> {
             if (Utils.showConfirmDialog(1)) {
                 FRAME.dispose();

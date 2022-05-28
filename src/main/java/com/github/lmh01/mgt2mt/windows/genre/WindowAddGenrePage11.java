@@ -49,61 +49,57 @@ public class WindowAddGenrePage11 extends JFrame {
                 textFieldImagePath.setText(GenreManager.defaultGenreIcon.toString());
             }
         });
-        buttonNext.addActionListener(actionEvent -> {
-            ThreadHandler.startModThread(() -> {
-                if (textFieldImagePath.getText().isEmpty()) {
-                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                        genreIcon = GenreManager.defaultGenreIcon.toFile();
-                        GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
-                    }
-                } else {
-                    String imageFilePath = getGenreImageFilePath(true, false, textFieldImagePath);
-                    if (!imageFilePath.equals("error")) {
-                        genreIcon = new File(imageFilePath);
-                        GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
-                    } else if (textFieldImagePath.getText().isEmpty()) {
-
-                    }
+        buttonNext.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
+            if (textFieldImagePath.getText().isEmpty()) {
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.genre.picture.noPictureSelected"), "Reset image?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                    genreIcon = GenreManager.defaultGenreIcon.toFile();
+                    GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
                 }
-                Genre genre = new Genre(
-                        GenreManager.currentGenreHelper.name,
-                        null,
-                        new TranslationManager(GenreManager.currentGenreHelper.nameTranslations, GenreManager.currentGenreHelper.descriptionTranslations),
-                        GenreManager.currentGenreHelper.description,
-                        GenreManager.currentGenreHelper.date,
-                        GenreManager.currentGenreHelper.researchPoints,
-                        GenreManager.currentGenreHelper.price,
-                        GenreManager.currentGenreHelper.devCosts,
-                        GenreManager.currentGenreHelper.icon,
-                        GenreManager.currentGenreHelper.screenshots,
-                        GenreManager.currentGenreHelper.targetGroups,
-                        GenreManager.currentGenreHelper.gameplay,
-                        GenreManager.currentGenreHelper.graphic,
-                        GenreManager.currentGenreHelper.sound,
-                        GenreManager.currentGenreHelper.control,
-                        GenreManager.currentGenreHelper.compatibleGenres,
-                        GenreManager.currentGenreHelper.compatibleThemes,
-                        GenreManager.currentGenreHelper.badGameplayFeatures,
-                        GenreManager.currentGenreHelper.goodGameplayFeatures,
-                        GenreManager.currentGenreHelper.focus0,
-                        GenreManager.currentGenreHelper.focus1,
-                        GenreManager.currentGenreHelper.focus2,
-                        GenreManager.currentGenreHelper.focus3,
-                        GenreManager.currentGenreHelper.focus4,
-                        GenreManager.currentGenreHelper.focus5,
-                        GenreManager.currentGenreHelper.focus6,
-                        GenreManager.currentGenreHelper.focus7,
-                        GenreManager.currentGenreHelper.align0,
-                        GenreManager.currentGenreHelper.align1,
-                        GenreManager.currentGenreHelper.align2
-                        );
-                ThreadHandler.startModThread(() -> {
-                    GenreManager.INSTANCE.addGenre(genre, true);
-                }, "AddGenre");
-                FRAME.dispose();
-                WindowMain.checkActionAvailability();
-            }, "WindowAddGenrePage11ButtonNext");
-        });
+            } else {
+                String imageFilePath = getGenreImageFilePath(true, false, textFieldImagePath);
+                if (!imageFilePath.equals("error")) {
+                    genreIcon = new File(imageFilePath);
+                    GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
+                } else if (textFieldImagePath.getText().isEmpty()) {
+
+                }
+            }
+            Genre genre = new Genre(
+                    GenreManager.currentGenreHelper.name,
+                    null,
+                    new TranslationManager(GenreManager.currentGenreHelper.nameTranslations, GenreManager.currentGenreHelper.descriptionTranslations),
+                    GenreManager.currentGenreHelper.description,
+                    GenreManager.currentGenreHelper.date,
+                    GenreManager.currentGenreHelper.researchPoints,
+                    GenreManager.currentGenreHelper.price,
+                    GenreManager.currentGenreHelper.devCosts,
+                    GenreManager.currentGenreHelper.icon,
+                    GenreManager.currentGenreHelper.screenshots,
+                    GenreManager.currentGenreHelper.targetGroups,
+                    GenreManager.currentGenreHelper.gameplay,
+                    GenreManager.currentGenreHelper.graphic,
+                    GenreManager.currentGenreHelper.sound,
+                    GenreManager.currentGenreHelper.control,
+                    GenreManager.currentGenreHelper.compatibleGenres,
+                    GenreManager.currentGenreHelper.compatibleThemes,
+                    GenreManager.currentGenreHelper.badGameplayFeatures,
+                    GenreManager.currentGenreHelper.goodGameplayFeatures,
+                    GenreManager.currentGenreHelper.focus0,
+                    GenreManager.currentGenreHelper.focus1,
+                    GenreManager.currentGenreHelper.focus2,
+                    GenreManager.currentGenreHelper.focus3,
+                    GenreManager.currentGenreHelper.focus4,
+                    GenreManager.currentGenreHelper.focus5,
+                    GenreManager.currentGenreHelper.focus6,
+                    GenreManager.currentGenreHelper.focus7,
+                    GenreManager.currentGenreHelper.align0,
+                    GenreManager.currentGenreHelper.align1,
+                    GenreManager.currentGenreHelper.align2
+                    );
+            ThreadHandler.startModThread(() -> GenreManager.INSTANCE.addGenre(genre, true), "AddGenre");
+            FRAME.dispose();
+            WindowMain.checkActionAvailability();
+        }, "WindowAddGenrePage11ButtonNext"));
         buttonPrevious.addActionListener(actionEvent -> {
             GenreManager.openStepWindow(10);
             FRAME.dispose();

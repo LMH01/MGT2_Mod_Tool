@@ -24,9 +24,9 @@ public class WindowSettings extends JFrame {
     static Path inputFolder = null;//This string contains the current mgt2folder when the program is started
     private static Path outputFolder = null;//This string contains the folder path that should be set
     private HashMap<SafetyFeature, JCheckBox> safetyFeatureCheckboxes = new HashMap<>();
-    final JComboBox comboBoxMGT2FolderOperation = new JComboBox();
-    final JComboBox comboBoxLanguage = new JComboBox();
-    final JComboBox comboBoxUpdateChannel = new JComboBox();
+    final JComboBox<String> comboBoxMGT2FolderOperation = new JComboBox<>();
+    final JComboBox<String> comboBoxLanguage = new JComboBox<>();
+    final JComboBox<String> comboBoxUpdateChannel = new JComboBox<>();
     final JButton configureSafetyFeatures = new JButton(I18n.INSTANCE.get("window.settings.safetyFeatures.configureButton"));
     final JCheckBox checkBoxExportStorage = new JCheckBox(I18n.INSTANCE.get("window.settings.exportStorage.checkBoxText"));
     final JCheckBox checkBoxSaveLogs = new JCheckBox(I18n.INSTANCE.get("window.settings.checkBox.saveLogs"));
@@ -353,7 +353,7 @@ public class WindowSettings extends JFrame {
     /**
      * Applies the local changes in the settings to the global settings by calling Settings.setSettings(...)
      */
-    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
+    private static void setCurrentSettings(JCheckBox checkBoxExportStorage, JComboBox<String> comboBoxLanguage, JComboBox<String> comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
         Map<SafetyFeature, Boolean> safetyFeatures = new HashMap<>();
         for (Map.Entry<SafetyFeature, JCheckBox> entry : safetyFeatureCheckboxes.entrySet()) {
             safetyFeatures.put(entry.getKey(), entry.getValue().isSelected());
@@ -365,7 +365,7 @@ public class WindowSettings extends JFrame {
      * @param checkBoxExportStorage The debug mode checkbox
      * @return Returns the changes that have been made to the settings
      */
-    private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JComboBox comboBoxLanguage, JComboBox comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
+    private static String getChangesInSettings(JCheckBox checkBoxExportStorage, JComboBox<String> comboBoxLanguage, JComboBox<String> comboBoxUpdateBranch, JCheckBox checkBoxSaveLogs, Map<SafetyFeature, JCheckBox> safetyFeatureCheckboxes) {
         StringBuilder unsavedChanges = new StringBuilder();
         if (Settings.enableExportStorage != checkBoxExportStorage.isSelected()) {
             unsavedChanges.append(I18n.INSTANCE.get("window.settings.changesInSettings.exportStorage")).append(" ").append(Settings.enableExportStorage).append(" -> ").append(checkBoxExportStorage.isSelected()).append(System.getProperty("line.separator"));
