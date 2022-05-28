@@ -40,6 +40,7 @@
 ### Bug fixes
 - Turkish translation is now displayed in the translation summary again
 - The description text label should now be correct when adding a new hardware and hardware feature
+- Fixed #95 - Many things would fail if more than one empty lines are between two data entries in the game files
 
 ## [v3.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v3.2.0) (Latest Version)
 
