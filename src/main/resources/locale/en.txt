@@ -1169,8 +1169,8 @@ safetyFeatures.includeOriginalContentsInLists.toolTip|<html>If this option is en
 safetyFeatures.skipAssetsFolderCheck|Skip assets folder check
 safetyFeatures.skipAssetsFolderCheck.toolTip|<html>If this option is enabled,<br>the check for the existence of the assets folder<br>will be skipped when importing contents.
 
-safetyFeatures.enableDeleteInitialBackups|Enable delete initial backups
-safetyFeatures.enableDeleteInitialBackups.toolTip|<html>If this option is enabled,<br>the initial backups will also be deleted when backups are deleted.<br>When enabled, there will be a new menu entry with which all backups can be deleted.
+safetyFeatures.disableBackupSecurityMechanisms|Disable backup security mechanisms
+safetyFeatures.disableBackupSecurityMechanisms.toolTip|<html>If this option is enabled,<br>the initial backups will also be deleted when backups are deleted.<br>When enabled, there will be a new menu entry with which all backups can be deleted.<br>When enabled, it is also possible to restore the latest backup.
 
 month.january|January
 month.february|February

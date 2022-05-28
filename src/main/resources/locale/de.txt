@@ -1171,8 +1171,8 @@ safetyFeatures.includeOriginalContentsInLists.toolTip|<html>Wenn diese Option ak
 safetyFeatures.skipAssetsFolderCheck|Prüfung des Assets-Ordners überspringen
 safetyFeatures.skipAssetsFolderCheck.toolTip|<html>Wenn diese Option aktiviert ist,<br>wird die Prüfung auf das Vorhandensein des Asset-Ordners<br>beim Importieren von Inhalten übersprungen.
 
-safetyFeatures.enableDeleteInitialBackups|Aktiviere das Löschen der initialen Backups
-safetyFeatures.enableDeleteInitialBackups.toolTip|<html>Wenn diese Option aktiviert ist,<br>werden beim Löschen von Backups auch die initialen Backups gelöscht.<br>Wenn aktiviert, gibt es einen neuen Menüeintrag, mit dem alle Backups gelöscht werden können.
+safetyFeatures.disableBackupSecurityMechanisms|Backup-Sicherheitsmechanismen deaktivieren
+safetyFeatures.disableBackupSecurityMechanisms.toolTip|<html>Wenn diese Option aktiviert ist,<br>werden beim Löschen von Backups auch die initialen Backups gelöscht.<br>Wenn aktiviert, gibt es einen neuen Menüeintrag, mit dem alle Backups gelöscht werden können.<br>Außerdem kann das letzte Backup wiederhergestellt werden.
 
 month.january|Januar
 month.february|Februar

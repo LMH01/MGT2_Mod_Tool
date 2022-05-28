@@ -375,7 +375,7 @@ public class WindowMain {
      * This will cause some menu items to be reloaded, for the safety feature setting to be applied.
      */
     public static void setSafetyFeatureComponents() {
-        if (Settings.safetyFeatures.get(SafetyFeature.DELETE_INITIAL_BACKUPS)) {
+        if (Settings.safetyFeatures.get(SafetyFeature.DISABLE_BACKUP_SECURITY_MECHANISMS)) {
             M_4_BACKUP.add(M_44_DELETE_ALL_BACKUPS);
             M_42_RESTORE_BACKUP.add(M_422_RESTORE_LATEST_BACKUP);
         } else {

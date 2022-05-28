@@ -88,7 +88,7 @@ public class Uninstaller {
                         } else {
                             if (checkboxDeleteBackups.isSelected()) {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingBackups"));
-                                if (Settings.safetyFeatures.get(SafetyFeature.DELETE_INITIAL_BACKUPS)) {
+                                if (Settings.safetyFeatures.get(SafetyFeature.DISABLE_BACKUP_SECURITY_MECHANISMS)) {
                                     try {
                                         DataStreamHelper.deleteDirectory(ModManagerPaths.BACKUP.getPath());
                                     } catch (IOException e) {

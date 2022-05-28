@@ -12,7 +12,7 @@ public enum SafetyFeature {
     DISABLE_GAME_FILE_INTEGRITY_CHECK("disableGameFileIntegrityCheck", false),
     INCLUDE_ORIGINAL_CONTENTS_IN_LISTS("includeOriginalContentsInLists", false),
     SKIP_ASSETS_FOLDER_CHECK("skipAssetsFolderCheck", false),
-    DELETE_INITIAL_BACKUPS("enableDeleteInitialBackups", false),;
+    DISABLE_BACKUP_SECURITY_MECHANISMS("disableBackupSecurityMechanisms", false),;
 
     /**
      * This is the identifier of the safety feature, it is used to identify it in the settings file.
