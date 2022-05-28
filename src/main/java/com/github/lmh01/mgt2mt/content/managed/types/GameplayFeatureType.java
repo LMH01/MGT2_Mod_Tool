@@ -8,6 +8,8 @@ public enum GameplayFeatureType implements TypeEnum {
 
     SOUND("sound", 1),
 
+    AI("artificialIntelligence", 2),
+
     PHYSICS("physics", 3),
 
     GAMEPLAY("gameplay", 4),
@@ -51,16 +53,9 @@ public enum GameplayFeatureType implements TypeEnum {
      * Returns the engine feature type that corresponds to the id
      */
     public static GameplayFeatureType getFromId(int id) throws IllegalArgumentException {
-        for (GameplayFeatureType gameplayFeatureType : GameplayFeatureType.values()) {
-            if (gameplayFeatureType.getId() == id) {
-                switch (id) {
-                    case 0: return GameplayFeatureType.GRAPHIC;
-                    case 1: return GameplayFeatureType.SOUND;
-                    case 3: return GameplayFeatureType.PHYSICS;
-                    case 4: return GameplayFeatureType.GAMEPLAY;
-                    case 5: return GameplayFeatureType.CONTROL;
-                    case 6: return GameplayFeatureType.MULTIPLAYER;
-                }
+        for (GameplayFeatureType gc : GameplayFeatureType.values()) {
+            if (gc.getId() == id) {
+                return gc;
             }
         }
         throw new IllegalArgumentException("Gameplay feature for id " + id + " does not exist!");

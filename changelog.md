@@ -8,7 +8,8 @@
 
 ### New feature
 - Added new possibilities to customize new publishers
-- The country of publishers and developers can now be set
+  - The country of publishers and developers can now be set
+- Gameplay features can now be of type artificial intelligence
 - The integrity of the most game files (The `.txt` files) is now checked at the start
   - These checks include:
     - Check if images are available
