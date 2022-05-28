@@ -73,7 +73,8 @@ public class LogFile {
                     "Enable genre name translation info: " + Settings.enableGenreNameTranslationInfo + "\n" +
                     "Enable genre description translation info: " + Settings.enableGenreDescriptionTranslationInfo + "\n" +
                     "Save logs: " + Settings.saveLogs + "\n" +
-                    "Enable export storage: " + Settings.enableExportStorage);
+                    "Enable export storage: " + Settings.enableExportStorage + "\n" +
+                    "Write text area output to console: " + Settings.writeTextAreaOutputToConsole);
             bw.write(System.getProperty("line.separator"));
         } catch (IOException e) {
             e.printStackTrace();

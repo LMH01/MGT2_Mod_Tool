@@ -37,6 +37,7 @@ public class ImportSettings {
             Settings.saveLogs = toml.getBoolean("saveLogs");
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
             Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");
+            Settings.writeTextAreaOutputToConsole = toml.getBoolean("writeTextAreaOutputToConsole");
             return true;
         } catch (RuntimeException e) {
             LOGGER.info("Unable to import settings!:");

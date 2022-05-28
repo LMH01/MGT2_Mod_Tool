@@ -46,6 +46,7 @@ public class ExportSettings {
             map.put("saveLogs", Settings.saveLogs);
             map.put("enableExportStorage", Settings.enableExportStorage);
             map.put("enableInitialBackupCheck", Settings.enableInitialBackupCheck);
+            map.put("writeTextAreaOutputToConsole", Settings.writeTextAreaOutputToConsole);
             tomlWriter.write(map, file);
             LOGGER.info("Settings have been saved.");
             LogFile.write("Settings have been saved to file: " + file);

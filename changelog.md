@@ -31,6 +31,7 @@
 - Reworked the backend of the tool
 - Massive internal code changes
 - Updated default content files
+- In the ``settings.toml`` file it can now be enabled to write the text area output to the console
 
 ### Bug fixes
 - Turkish translation is now displayed in the translation summary again

@@ -31,6 +31,7 @@ public class Settings {
     public static boolean enableGenreDescriptionTranslationInfo = true;
     public static boolean enableExportStorage = true; //If true each new export will be saved in a new folder.
     public static boolean enableInitialBackupCheck = true; //If true the user will be notified if the initial backup is outdated
+    public static boolean writeTextAreaOutputToConsole = false;
     public static String language = "English";
     public static UpdateBranch updateBranch = UpdateBranch.RELEASE;
 
