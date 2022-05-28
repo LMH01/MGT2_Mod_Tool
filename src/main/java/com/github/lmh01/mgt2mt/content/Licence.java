@@ -27,7 +27,7 @@ public class Licence extends AbstractSimpleContent {
 
     @Override
     public String getOptionPaneMessage() {
-       return I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + name + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + licenceType.getTypeName();
+        return I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + name + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + licenceType.getTypeName();
     }
 
     @Override

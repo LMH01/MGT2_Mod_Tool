@@ -16,6 +16,7 @@ public enum UpdateBranch {
     /**
      * Transforms the name to an update branch.
      * If the name is not found {@link UpdateBranch#RELEASE} is returned.
+     *
      * @param name the name to transform
      * @return The update branch for the name
      */

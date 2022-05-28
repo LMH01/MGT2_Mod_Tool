@@ -4,7 +4,10 @@ import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Theme;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
+import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
@@ -100,7 +103,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                             if (string.equals("GE")) {
                                 bw.write(((Theme) content).getLine());
                             } else {
-                                String line = ((Theme)content).translations.get(string);
+                                String line = ((Theme) content).translations.get(string);
                                 if (line == null) {
                                     line = content.name;
                                 }
@@ -261,10 +264,10 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
         Map<String, String> translations = new HashMap<>();
         for (String key : TranslationManager.TRANSLATION_KEYS) {
             if (map.containsKey("NAME " + key)) {
-                translations.put(key, (String)map.get("NAME " + key));
+                translations.put(key, (String) map.get("NAME " + key));
             }
         }
-        return new Theme((String)map.get("NAME EN"), null, translations, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String)map.get("GENRES")), Integer.parseInt((String)map.get("AGE")));
+        return new Theme((String) map.get("NAME EN"), null, translations, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GENRES")), Integer.parseInt((String) map.get("AGE")));
     }
 
     @Override

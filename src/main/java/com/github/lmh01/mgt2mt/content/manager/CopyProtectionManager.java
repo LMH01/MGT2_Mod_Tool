@@ -6,8 +6,8 @@ import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.DataLine;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
+import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -72,7 +72,7 @@ public class CopyProtectionManager extends AbstractAdvancedContentManager {
                     }
                     if (!modAlreadyExists) {
                         TranslationManager translationManager = new TranslationManager(mapNameTranslations[0], null);
-                        AbstractBaseContent copyProtection = new CopyProtection(textFieldName.getText(), null, translationManager, Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(), (int)spinnerCost.getValue(), (int)spinnerDevelopmentCost.getValue());
+                        AbstractBaseContent copyProtection = new CopyProtection(textFieldName.getText(), null, translationManager, Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(), (int) spinnerCost.getValue(), (int) spinnerDevelopmentCost.getValue());
                         if (JOptionPane.showConfirmDialog(null, copyProtection.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             addContent(copyProtection);
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.copyProtect.upperCase") + ": [" + copyProtection.name + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);

@@ -3,9 +3,9 @@ package com.github.lmh01.mgt2mt.content.manager;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.GameplayFeature;
 import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.content.managed.types.GameplayFeatureType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -257,13 +257,13 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                                 textFieldDescription.getText(),
                                 gft,
                                 Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(),
-                                (int)spinnerResearchPoints.getValue(),
-                                (int)spinnerResearchCost.getValue(),
-                                (int)spinnerDevelopmentCost.getValue(),
-                                (int)spinnerGameplay.getValue(),
-                                (int)spinnerGraphic.getValue(),
-                                (int)spinnerSound.getValue(),
-                                (int)spinnerTech.getValue(),
+                                (int) spinnerResearchPoints.getValue(),
+                                (int) spinnerResearchCost.getValue(),
+                                (int) spinnerDevelopmentCost.getValue(),
+                                (int) spinnerGameplay.getValue(),
+                                (int) spinnerGraphic.getValue(),
+                                (int) spinnerSound.getValue(),
+                                (int) spinnerTech.getValue(),
                                 badGenreIds[0],
                                 goodGenreIds[0],
                                 checkBoxCompatibleWithArcadeCabinets.isSelected(),

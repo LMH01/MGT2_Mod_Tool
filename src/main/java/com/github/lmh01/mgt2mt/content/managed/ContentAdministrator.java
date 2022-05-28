@@ -67,7 +67,7 @@ public class ContentAdministrator {
     public static void initializeDefaultContents() {
         for (BaseContentManager manager : contentManagers) {
             if (manager instanceof AbstractBaseContentManager) {
-                ((AbstractBaseContentManager)manager).initializeDefaultContent();
+                ((AbstractBaseContentManager) manager).initializeDefaultContent();
             }
         }
     }

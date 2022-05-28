@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.content;
 
-import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
+import com.github.lmh01.mgt2mt.content.managed.DependentContent;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -14,6 +17,7 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
     /**
      * Contains the translations of this theme.
      * The map key is the translation key and the value is the translation for that key.
+     *
      * @see TranslationManager#TRANSLATION_KEYS The translation keys.
      */
     public final Map<String, String> translations;
@@ -75,7 +79,7 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
      */
     @Override
     public String getLine() {
-        StringBuilder line = new StringBuilder(translations.get("GE") + " " +  Utils.transformArrayListToString(compatibleGenres));
+        StringBuilder line = new StringBuilder(translations.get("GE") + " " + Utils.transformArrayListToString(compatibleGenres));
         if (ageNumber > 0) {
             line.append("<").append("M").append(ageNumber).append(">");
         }

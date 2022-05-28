@@ -542,7 +542,7 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.incompatible") + ": " + modsIncompatible);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.duplicated") + ": " + modsDuplicated);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.unique") + ": " + uniqueMods);
-        LOGGER.info("Search for mods complete. Found " + modsTotal + " mods after " + timeHelper.getMeasuredTimeDisplay() + " " +  I18n.INSTANCE.get("commonText.seconds")  + "!");
+        LOGGER.info("Search for mods complete. Found " + modsTotal + " mods after " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
         if (uniqueMods > 0) {
             return mods;
         }
@@ -732,9 +732,9 @@ public class SharingManager {
      * @param childName   The name of the mod that should be replaced
      * @param replacement The name with which the missing dependency should be replaced
      * @param <T>         An abstract base mod that needs dependencies
+     * @throws ModProcessingException If the dependency could not be replaced
      * @see SharingManager#replaceDependencyInMap(BaseContentManager, Map, String, String)
      * @see SharingManager#replaceDependencyInDependencyMap(Map, BaseContentManager, String, String)
-     * @throws ModProcessingException If the dependency could not be replaced
      */
     private static <T extends BaseContentManager & DependentContentManager> void replaceDependencies(T parent, Map<String, Object> parentMap, BaseContentManager child, String childName, String replacement) throws ModProcessingException {
         replaceDependencyInMap(parent, parentMap, childName, replacement);
@@ -857,7 +857,7 @@ public class SharingManager {
     private static String[] getRequiredModToolVersions(String modType) {
         for (BaseContentManager mod : ContentAdministrator.contentManagers) {
             if (mod.getExportType().equals(modType)) {
-                Object[] objects =  Arrays.stream(mod.getCompatibleModToolVersions()).distinct().toArray();
+                Object[] objects = Arrays.stream(mod.getCompatibleModToolVersions()).distinct().toArray();
                 return Arrays.asList(objects).toArray(new String[objects.length]);
             }
         }
@@ -999,8 +999,8 @@ public class SharingManager {
      * Exports the specified mod to the export folder.
      * Writes a message to the text area if mod export was successful or if mod was already exported
      *
-     * @param content    The content that should be exported
-     * @param folder The root folder where the mods should be exported to
+     * @param content The content that should be exported
+     * @param folder  The root folder where the mods should be exported to
      * @throws ModProcessingException When something went wrong.
      */
     public static void exportSingleMod(AbstractBaseContent content, Path folder) throws ModProcessingException {
@@ -1062,7 +1062,7 @@ public class SharingManager {
      * The text area and the progress bar are used to display progress.
      *
      * @param exportType Determines how and to where the mods should be exported
-     * @param contents  The contents that should be exported
+     * @param contents   The contents that should be exported
      * @throws ModProcessingException If something went wrong while exporting mods
      */
     public static void export(ExportType exportType, ArrayList<AbstractBaseContent> contents) throws ModProcessingException {
@@ -1167,8 +1167,8 @@ public class SharingManager {
      * Opens a window where the user can select what mods should be exported.
      * The selected mods are then exported
      *
-     * @see SharingManager#export(ExportType, ArrayList) will be used to write the export files.
      * @throws ModProcessingException When something went wrong.
+     * @see SharingManager#export(ExportType, ArrayList) will be used to write the export files.
      */
     public static void exportSelected() throws ModProcessingException {
         Map<BaseContentManager, JPanel> importModPanels = new HashMap<>();
@@ -1215,6 +1215,7 @@ public class SharingManager {
 
     /**
      * Opens a JOptionPane where the user can decide how the mods should be exported: Single or bundled
+     *
      * @throws ModProcessingException When something went wrong.
      */
     public static void displayExportModsWindow() throws ModProcessingException {

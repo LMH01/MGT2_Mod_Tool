@@ -2,8 +2,8 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Genre;
-import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -15,7 +15,7 @@ import com.github.lmh01.mgt2mt.windows.genre.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -110,28 +110,28 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     @Override
     protected List<DataLine> getDataLines() {
         List<DataLine> list = new ArrayList<>();
-        list.add(new DataLine("DATE",true, DataType.STRING));
-        list.add(new DataLine("RES POINTS",true, DataType.INT));
-        list.add(new DataLine("PRICE",true, DataType.INT));
-        list.add(new DataLine("DEV COSTS",true, DataType.INT));
-        list.add(new DataLine("PIC",true, DataType.UNCHECKED));
-        list.add(new DataLine("TGROUP",true, DataType.UNCHECKED));
-        list.add(new DataLine("GAMEPLAY",true, DataType.INT));
-        list.add(new DataLine("GRAPHIC",true, DataType.INT));
-        list.add(new DataLine("SOUND",true, DataType.INT));
-        list.add(new DataLine("CONTROL",true, DataType.INT));
+        list.add(new DataLine("DATE", true, DataType.STRING));
+        list.add(new DataLine("RES POINTS", true, DataType.INT));
+        list.add(new DataLine("PRICE", true, DataType.INT));
+        list.add(new DataLine("DEV COSTS", true, DataType.INT));
+        list.add(new DataLine("PIC", true, DataType.UNCHECKED));
+        list.add(new DataLine("TGROUP", true, DataType.UNCHECKED));
+        list.add(new DataLine("GAMEPLAY", true, DataType.INT));
+        list.add(new DataLine("GRAPHIC", true, DataType.INT));
+        list.add(new DataLine("SOUND", true, DataType.INT));
+        list.add(new DataLine("CONTROL", true, DataType.INT));
         list.add(new DataLine("GENRE COMB", true, DataType.INT_LIST));
-        list.add(new DataLine("FOCUS0",true, DataType.INT));
-        list.add(new DataLine("FOCUS1",true, DataType.INT));
-        list.add(new DataLine("FOCUS2",true, DataType.INT));
-        list.add(new DataLine("FOCUS3",true, DataType.INT));
-        list.add(new DataLine("FOCUS4",true, DataType.INT));
-        list.add(new DataLine("FOCUS5",true, DataType.INT));
-        list.add(new DataLine("FOCUS6",true, DataType.INT));
-        list.add(new DataLine("FOCUS7",true, DataType.INT));
-        list.add(new DataLine("ALIGN0",true, DataType.INT));
-        list.add(new DataLine("ALIGN1",true, DataType.INT));
-        list.add(new DataLine("ALIGN2",true, DataType.INT));
+        list.add(new DataLine("FOCUS0", true, DataType.INT));
+        list.add(new DataLine("FOCUS1", true, DataType.INT));
+        list.add(new DataLine("FOCUS2", true, DataType.INT));
+        list.add(new DataLine("FOCUS3", true, DataType.INT));
+        list.add(new DataLine("FOCUS4", true, DataType.INT));
+        list.add(new DataLine("FOCUS5", true, DataType.INT));
+        list.add(new DataLine("FOCUS6", true, DataType.INT));
+        list.add(new DataLine("FOCUS7", true, DataType.INT));
+        list.add(new DataLine("ALIGN0", true, DataType.INT));
+        list.add(new DataLine("ALIGN1", true, DataType.INT));
+        list.add(new DataLine("ALIGN2", true, DataType.INT));
         return list;
     }
 
@@ -306,7 +306,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     /**
      * Ads a new genre to mad games tycoon 2. Shows a summary for the genre that should be added.
      *
-     * @param showMessages       True when the messages should be shown. False if not.
+     * @param showMessages True when the messages should be shown. False if not.
      * @throws ModProcessingException When something went wrong while adding the genre
      */
     public void addGenre(Genre genre, boolean showMessages) throws ModProcessingException {

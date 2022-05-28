@@ -38,6 +38,7 @@ public enum LicenceType {
 
     /**
      * Returns the licence type for the corresponding identifier
+     *
      * @throws IllegalArgumentException If the identifier is invalid
      */
     public static LicenceType getTypeByIdentifier(String identifier) throws IllegalArgumentException {

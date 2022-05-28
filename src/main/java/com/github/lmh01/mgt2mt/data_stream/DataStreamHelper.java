@@ -26,7 +26,8 @@ public class DataStreamHelper {
 
     /**
      * Downloads the specified file to the destination
-     * @param URL The URL of the file to be downloaded.
+     *
+     * @param URL         The URL of the file to be downloaded.
      * @param destination The destination where the file should be downloaded to.
      * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
@@ -50,7 +51,8 @@ public class DataStreamHelper {
     /**
      * Downloads the specified zip file to the destination.
      * Prints message to text area.
-     * @param URL The URL of the file to be downloaded.
+     *
+     * @param URL         The URL of the file to be downloaded.
      * @param destination The destination where the file should be downloaded to.
      * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
@@ -329,6 +331,7 @@ public class DataStreamHelper {
     /**
      * Deletes a complete directory with its contents.
      * Will use the progress bar.
+     *
      * @param directoryToBeDeleted The directory to delete
      * @throws IOException Thrown if the directory can not be deleted
      */
@@ -340,7 +343,7 @@ public class DataStreamHelper {
      * Deletes a directory with its contents
      *
      * @param directoryToBeDeleted The directory to delete
-     * @param useProgressBar True when the progress bar should be used.
+     * @param useProgressBar       True when the progress bar should be used.
      * @throws IOException Thrown if the directory can not be deleted
      */
     public static void deleteDirectory(Path directoryToBeDeleted, boolean useProgressBar) throws IOException {

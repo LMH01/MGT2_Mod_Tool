@@ -3,10 +3,10 @@ package com.github.lmh01.mgt2mt.windows.genre;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Months;
-import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
-import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

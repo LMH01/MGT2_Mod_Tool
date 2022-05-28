@@ -41,14 +41,14 @@ public class WindowAddGenrePage10 extends JFrame {
             ArrayList<File> screenshotsSource = getScreenshotImages();
             ArrayList<Image> screenshots = new ArrayList<>();
             if (screenshotsSource.isEmpty()) {
-                for (int i = 0; i<=4; i++) {
+                for (int i = 0; i <= 4; i++) {
                     screenshots.add(new Image(MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve("0/" + i + ".png").toFile(), MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(GenreManager.INSTANCE.getExportImageName(i + ".png", GenreManager.currentGenreHelper.name)).toFile()));
                 }
             } else {
                 int id = 1;
                 for (File file : screenshotsSource) {
                     screenshots.add(new Image(file, MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(GenreManager.INSTANCE.getExportImageName(id + ".png", GenreManager.currentGenreHelper.name)).toFile()));
-                    id+=1;
+                    id += 1;
                 }
             }
             GenreManager.currentGenreHelper.screenshots = screenshots;
@@ -61,7 +61,7 @@ public class WindowAddGenrePage10 extends JFrame {
         buttonNext.addActionListener(actionEvent -> {
             if (GenreManager.currentGenreHelper.screenshots.isEmpty()) {
                 ArrayList<Image> screenshots = new ArrayList<>();
-                for (int i = 0; i<=4; i++) {
+                for (int i = 0; i <= 4; i++) {
                     screenshots.add(new Image(MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve("0/" + i + ".png").toFile(), MGT2Paths.GENRE_SCREENSHOTS.getPath().resolve(GenreManager.INSTANCE.getExportImageName(i + ".png", GenreManager.currentGenreHelper.name)).toFile()));
                 }
                 GenreManager.currentGenreHelper.screenshots = screenshots;

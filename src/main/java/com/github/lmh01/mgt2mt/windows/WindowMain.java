@@ -3,10 +3,10 @@ package com.github.lmh01.mgt2mt.windows;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.NPCGameListHandler;
@@ -344,6 +344,7 @@ public class WindowMain {
 
     /**
      * Will disable all menus except File {@literal ->} CheckForUpdates, About and settings
+     *
      * @param folderAvailable True when the mgt2 folder is available
      */
     public static void setMGT2FolderAvailability(boolean folderAvailable) {

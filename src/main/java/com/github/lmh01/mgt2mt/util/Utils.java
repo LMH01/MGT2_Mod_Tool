@@ -27,8 +27,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Utils {
@@ -117,6 +117,7 @@ public class Utils {
 
     /**
      * Opens the GitHub page for MGT2MT in the default browser.
+     *
      * @throws IOException If the page could not be opened
      */
     public static void openGithubPage() throws Exception {
@@ -125,6 +126,7 @@ public class Utils {
 
     /**
      * Opens the GitHub page for MGT2MT in the default browser.
+     *
      * @throws IOException If the page could not be opened
      */
     public static void openMoreModsPage() throws Exception {
@@ -247,6 +249,7 @@ public class Utils {
 
     /**
      * Transforms a string array to a integer array.
+     *
      * @param strings String array to transform
      * @return The transformed integer array
      * @throws NumberFormatException When the strings can not be parsed to integer.
@@ -262,6 +265,7 @@ public class Utils {
     /**
      * Returns the part before the first {@literal <}.
      * Trims the string to remove whitespaces.
+     *
      * @param string The string to split the first part from
      * @return The first part of the string
      * @see Utils#getEntriesFromString(String) for more information
@@ -281,8 +285,9 @@ public class Utils {
     /**
      * Converts the names in the string to the corresponding id.
      * Example: Input: {@literal <hallo><tree>} Output: {@literal [0,1]}
+     *
      * @param contentManager The content manager to get the names from
-     * @param string The string to convert
+     * @param string         The string to convert
      * @return An array list containing the ids of the names
      * @throws ModProcessingException When {@link Utils#getEntriesFromString(String)} fails
      */
@@ -446,6 +451,7 @@ public class Utils {
 
     /**
      * Checks the array lists if they have mutual entries. Returns true if the do. Returns false if the don't
+     *
      * @param arrayList1 The first array list
      * @param arrayList2 The second array list
      * @return Returns true if the lists have mutual entries, false if they don't
@@ -463,6 +469,7 @@ public class Utils {
 
     /**
      * Opens the given folder/file
+     *
      * @param path The path that should be opened
      */
     public static void open(Path path) {
@@ -514,6 +521,7 @@ public class Utils {
 
     /**
      * Converts the input seconds to minute and seconds
+     *
      * @param second The number of seconds to convert
      * @return Returns the converted time
      */
@@ -549,6 +557,7 @@ public class Utils {
 
     /**
      * Turns the input string to lowercase and replaces all whitespaces and symbols with space
+     *
      * @param string The input string
      * @return Returns the converted string
      */
@@ -609,7 +618,8 @@ public class Utils {
     /**
      * Replaces all keys in the origin map with the values in the replacement map.
      * For that the replacement map has to contain the same keys as the origin map.
-     * @param origin In this map the values will be replaced.
+     *
+     * @param origin       In this map the values will be replaced.
      * @param replacements The map that contains the values that should be replaced.
      * @throws IllegalArgumentException When the replacement map contains a key that does not exist in the origin map.
      */
@@ -637,7 +647,8 @@ public class Utils {
     /**
      * Constructs a content for each name in the names list.
      * Uses the progressbar.
-     * @param names The names for which the content should be constructed.
+     *
+     * @param names   The names for which the content should be constructed.
      * @param manager The manager that is used to construct the mods.
      * @return The list with the constructed content.
      * @throws ModProcessingException When the content could not be constructed.

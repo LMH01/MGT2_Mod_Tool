@@ -1,8 +1,8 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 
 import javax.swing.*;
@@ -13,6 +13,7 @@ public class ContentEditor {
 
     /**
      * Opens a window where the user can edit the genre/theme fits
+     *
      * @throws ModProcessingException Something went wrong while editing the genre theme fit
      */
     public static void editGenreThemeFit() throws ModProcessingException {

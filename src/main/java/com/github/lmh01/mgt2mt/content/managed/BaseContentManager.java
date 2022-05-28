@@ -17,6 +17,7 @@ public interface BaseContentManager {
      * A text area message is written.
      * Uses {@link BaseContentManager#editTextFiles(AbstractBaseContent, ContentAction)} to add the mod to the text file(s).
      * Uses {@link RequiresPictures#addPictures()} to add the pictures.
+     *
      * @param content The content that should be added to the game
      */
     void addContent(AbstractBaseContent content) throws ModProcessingException;
@@ -34,6 +35,7 @@ public interface BaseContentManager {
     /**
      * Adds all contents contained within the array list.
      * This will edit the games text file only once.
+     *
      * @see BaseContentManager#addContent(AbstractBaseContent) Parameters and description
      */
     void addContents(List<AbstractBaseContent> contents) throws ModProcessingException;
@@ -41,6 +43,7 @@ public interface BaseContentManager {
     /**
      * Removes all contents contained within the array list.
      * This wil edit the games text file only once.
+     *
      * @see BaseContentManager#removeContent(String) Parameters and description
      */
     void removeContents(List<AbstractBaseContent> contents) throws ModProcessingException;
@@ -49,14 +52,16 @@ public interface BaseContentManager {
      * Edits the games text file(s) to add or remove the content.
      * Use {@link AbstractSimpleContentManager#editTextFiles(List, ContentAction)}
      * or {@link AbstractAdvancedContentManager#editTextFiles(List, ContentAction)} instead if multiple contents should be added removed.
+     *
      * @param content The content that should be removed or added
-     * @param action The action that should be performed
+     * @param action  The action that should be performed
      */
     void editTextFiles(AbstractBaseContent content, ContentAction action) throws ModProcessingException;
 
     /**
      * Edits the games text file(s) to add or remove content.
      * This will edit the games text file(s) only once.
+     *
      * @see BaseContentManager#editTextFiles(AbstractBaseContent, ContentAction) Parameters and description
      */
     void editTextFiles(List<AbstractBaseContent> contents, ContentAction action) throws ModProcessingException;
@@ -70,6 +75,7 @@ public interface BaseContentManager {
 
     /**
      * Uses the game files to construct the base content.
+     *
      * @param name The name of the content for which a base content should be constructed
      * @return The newly constructed content
      * @throws ModProcessingException When the content could not be constructed
@@ -78,7 +84,8 @@ public interface BaseContentManager {
 
     /**
      * Constructs the base content from the import map
-     * @param map The map that contains the values from which the content should be constructed
+     *
+     * @param map          The map that contains the values from which the content should be constructed
      * @param assetsFolder The folder that contains the assets that are required to build the content
      * @return The newly constructed content
      * @throws ModProcessingException When required values are missing from the map and the base content could not be constructed
@@ -89,6 +96,7 @@ public interface BaseContentManager {
      * Checks if the integrity of the fileContent is violated.
      * The integrity is violated if an id is missing from an entry, if
      * an id is assigned more than once or if the ID or NAME EN tag are missing from  the map.
+     *
      * @return StringBuilder that contains content integrity violations
      */
     String verifyContentIntegrity();
@@ -172,6 +180,7 @@ public interface BaseContentManager {
 
     /**
      * Creates a backup of the text file for this content
+     *
      * @throws ModProcessingException When the backup failed
      */
     void createBackup(boolean initialBackup) throws ModProcessingException;
@@ -203,6 +212,7 @@ public interface BaseContentManager {
 
     /**
      * Initializes a fresh import helper map.
+     *
      * @see ImportHelperMap
      */
     void initializeImportHelperMap() throws ModProcessingException;
@@ -222,8 +232,9 @@ public interface BaseContentManager {
      * Used to get the name of the export image.
      * This should be used to make all exported images consistent.
      * Does not add file extension to name.
+     *
      * @param identifier The identifier of this image. Will be appended to the end of the file
-     * @param name The name of the content
+     * @param name       The name of the content
      */
     String getExportImageName(String identifier, String name);
 }

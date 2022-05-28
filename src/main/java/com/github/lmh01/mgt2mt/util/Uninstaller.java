@@ -3,8 +3,8 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -27,6 +27,7 @@ public class Uninstaller {
 
     /**
      * Opens a gui where the user can select what should be removed. Selected items are then removed and the tool closes.
+     *
      * @throws ModProcessingException If something went wrong while removing mods.
      */
     public static void uninstall() throws ModProcessingException {

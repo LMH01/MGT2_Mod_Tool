@@ -12,6 +12,7 @@ public class ImportHelperMap {
 
     /**
      * Constructs a new import helper map.
+     *
      * @param type The content type of this map. Used to initialize the map correctly with the currently active content.
      * @throws ModProcessingException When the map could not be initialized
      */
@@ -39,6 +40,7 @@ public class ImportHelperMap {
     /**
      * Adds a new entry to the helper map.
      * The name will be linked to a free id.
+     *
      * @param name The name that should be added
      */
     public void addEntry(String name) {
@@ -47,6 +49,7 @@ public class ImportHelperMap {
 
     /**
      * Searches the helperMap for the name and returns the corresponding id.
+     *
      * @throws ModProcessingException When the id was not found
      */
     public int getContentIdByName(String name) throws ModProcessingException {

@@ -14,9 +14,9 @@ public interface DependentContentManager {
      * Replaces all occurrences of the missingDependency in the map with the replacement.
      * This function is used to change the map when a dependency is missing
      *
-     * @param map The map where the values are replaced
+     * @param map               The map where the values are replaced
      * @param missingDependency The dependency that should be replaced
-     * @param replacement The replacement
+     * @param replacement       The replacement
      */
     void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement);
 
@@ -28,7 +28,7 @@ public interface DependentContentManager {
     /**
      * Analyses all dependencies of this mod
      */
-    default void analyzeDependencies() throws ModProcessingException  {
+    default void analyzeDependencies() throws ModProcessingException {
         for (BaseContentManager mod : getDependencies()) {
             mod.analyzeFile();
         }

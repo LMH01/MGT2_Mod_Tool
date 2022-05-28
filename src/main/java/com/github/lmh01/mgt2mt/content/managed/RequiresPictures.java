@@ -10,7 +10,8 @@ public interface RequiresPictures {
     /**
      * Adds the pictures of this content to the game files.
      * For that the images that are input in the content will have to be the source files not the target files.
-     * @throws IOException When an image file fails to be copied
+     *
+     * @throws IOException          When an image file fails to be copied
      * @throws NullPointerException When {@link Image#extern} is null in an image that should be added
      */
     void addPictures() throws IOException, NullPointerException;
@@ -18,6 +19,7 @@ public interface RequiresPictures {
     /**
      * Removes the pictures of this content from the game files
      * For that the images that are input in the content will have to be the game files.
+     *
      * @throws IOException When an image file fails to be removed
      */
     void removePictures() throws IOException;
@@ -45,6 +47,7 @@ public interface RequiresPictures {
      * The key is the key that should be written in the export map.
      * The value is the image that is exported. It is used to get the exported image name that should be written in the export map.
      * This function is primarily used by {@link RequiresPictures#exportPictures(Path)} and {@link AbstractBaseContent#getExportMap()}.
+     *
      * @return A map with all images of this content mapped to the name of the entry in the export map.
      */
     Map<String, Image> getImageMap();

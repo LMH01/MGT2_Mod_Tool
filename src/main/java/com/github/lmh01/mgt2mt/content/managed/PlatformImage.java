@@ -10,8 +10,9 @@ public class PlatformImage {
 
     /**
      * Creates a new platform image
-     * @param id The id of the image
-     * @param year The year the image should be activated
+     *
+     * @param id    The id of the image
+     * @param year  The year the image should be activated
      * @param image The image file
      */
     public PlatformImage(int id, Integer year, Image image) {

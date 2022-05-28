@@ -5,11 +5,14 @@ import com.github.lmh01.mgt2mt.content.EngineFeature;
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.DataLine;
-import com.github.lmh01.mgt2mt.content.managed.types.EngineFeatureType;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.content.managed.types.EngineFeatureType;
+import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
+import com.github.lmh01.mgt2mt.util.Months;
+import com.github.lmh01.mgt2mt.util.Summaries;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
@@ -130,15 +133,15 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
                                 textFieldDescription.getText(),
                                 eft,
                                 Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(),
-                                (int)spinnerResearchPoints.getValue(),
-                                (int)spinnerResearchCost.getValue(),
-                                (int)spinnerDevelopmentCost.getValue(),
-                                (int)spinnerTechLevel.getValue(),
-                                (int)spinnerGameplay.getValue(),
-                                (int)spinnerGraphic.getValue(),
-                                (int)spinnerSound.getValue(),
-                                (int)spinnerTech.getValue()
-                                );
+                                (int) spinnerResearchPoints.getValue(),
+                                (int) spinnerResearchCost.getValue(),
+                                (int) spinnerDevelopmentCost.getValue(),
+                                (int) spinnerTechLevel.getValue(),
+                                (int) spinnerGameplay.getValue(),
+                                (int) spinnerGraphic.getValue(),
+                                (int) spinnerSound.getValue(),
+                                (int) spinnerTech.getValue()
+                        );
                         boolean addFeature = Summaries.showSummary(engineFeature.getOptionPaneMessage(), I18n.INSTANCE.get("mod.engineFeature.addMod.title"));
                         if (addFeature) {
                             addContent(engineFeature);

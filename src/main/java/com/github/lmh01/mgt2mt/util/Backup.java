@@ -3,8 +3,8 @@ package com.github.lmh01.mgt2mt.util;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -49,8 +49,8 @@ public class Backup {
     /**
      * Creates a backup of a given file. And sets it was initial backup
      *
-     * @param fileToBackup  This is the file from which a backup should be created.
-     * @param initialBackup Set true when this is the initial backup.
+     * @param fileToBackup         This is the file from which a backup should be created.
+     * @param initialBackup        Set true when this is the initial backup.
      * @param showTextAreaMessages Set true when messages should be written to the text area.
      * @throws IOException Throws IOException when backup was not successful.
      */
@@ -323,6 +323,7 @@ public class Backup {
 
     /**
      * Create a backup of each save game.
+     *
      * @param initialBackup True if this is the initial backup
      * @throws IOException Throws IOException when backup was not successful.
      */
@@ -345,7 +346,7 @@ public class Backup {
     /**
      * Creates a backup of each Theme file.
      *
-     * @param initialBackup True if this is the initial backup.
+     * @param initialBackup        True if this is the initial backup.
      * @param showTextAreaMessages True if text area messages should be printed.
      * @throws IOException Throws IOException when backup was not successful.
      */

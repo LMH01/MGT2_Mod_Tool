@@ -92,7 +92,7 @@ public class WindowAddGenrePage11 extends JFrame {
                     GenreManager.currentGenreHelper.align0,
                     GenreManager.currentGenreHelper.align1,
                     GenreManager.currentGenreHelper.align2
-                    );
+            );
             ThreadHandler.startModThread(() -> GenreManager.INSTANCE.addGenre(genre, true), "AddGenre");
             FRAME.dispose();
             WindowMain.checkActionAvailability();

@@ -37,6 +37,7 @@ public class TranslationManager {
     /**
      * Creates a new translation manager from the input map.
      * The input map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
+     *
      * @param map Map that contains the initial translations
      */
     public TranslationManager(Map<String, ?> map) {
@@ -59,7 +60,8 @@ public class TranslationManager {
     /**
      * Creates a new translation manager from the two input maps.
      * When one of the maps is null or non-existent an empty map will be created instead.
-     * @param nameTranslations Map that contains the name translations
+     *
+     * @param nameTranslations        Map that contains the name translations
      * @param descriptionTranslations Map that contains the description translations
      */
     public TranslationManager(Map<String, String> nameTranslations, Map<String, String> descriptionTranslations) {
@@ -78,6 +80,7 @@ public class TranslationManager {
     /**
      * Transforms the maps of this translation manager to a map that can be used to export the translations.
      * The output map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
+     *
      * @return The translations as a map
      */
     public Map<String, String> toMap() {
@@ -85,7 +88,7 @@ public class TranslationManager {
         for (Map.Entry<String, String> entry : nameTranslations.entrySet()) {
             map.put("NAME " + entry.getKey(), entry.getValue());
         }
-        for (Map.Entry<String, String> entry: descriptionTranslations.entrySet()) {
+        for (Map.Entry<String, String> entry : descriptionTranslations.entrySet()) {
             map.put("DESC " + entry.getKey(), entry.getValue());
         }
         return map;
@@ -143,7 +146,7 @@ public class TranslationManager {
                 if (entry.getKey().equals("NAME " + string) && !entry.getValue().trim().isEmpty()) {
                     bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
                 }
-                if (entry.getKey().equals("DESC " + string) && !entry.getValue().trim().isEmpty()){
+                if (entry.getKey().equals("DESC " + string) && !entry.getValue().trim().isEmpty()) {
                     bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
                 }
             }

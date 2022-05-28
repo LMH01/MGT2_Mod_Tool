@@ -18,6 +18,7 @@ public class Image {
      * The extern file fill be set to null.
      * Use this constructor when constructing a content from the game files.
      * Use {@link Image#Image(File, File)} otherwise.
+     *
      * @param image The image file
      */
     public Image(File image) {
@@ -27,7 +28,8 @@ public class Image {
 
     /**
      * Constructs a new image content
-     * @param extern The external file
+     *
+     * @param extern   The external file
      * @param gameFile The gameFile where the source should be copied to
      */
     public Image(File extern, File gameFile) {

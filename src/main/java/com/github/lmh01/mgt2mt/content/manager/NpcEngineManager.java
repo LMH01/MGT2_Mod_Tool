@@ -3,8 +3,8 @@ package com.github.lmh01.mgt2mt.content.manager;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.NpcEngine;
 import com.github.lmh01.mgt2mt.content.managed.*;
-import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
+import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -109,7 +109,8 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
                                             I18n.INSTANCE.get("commonText.unlockDate") + ": " + Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString() + "<br>" +
                                             I18n.INSTANCE.get("commonText.platform.upperCase") + ": " + listAvailablePlatforms.getSelectedValue() + "<br>" +
                                             I18n.INSTANCE.get("commonText.price") + ": " + spinnerCost.getValue().toString() + "<br>" +
-                                            I18n.INSTANCE.get("commonText.profitShare") + ": " + spinnerShare.getValue().toString() + "<br>";;
+                                            I18n.INSTANCE.get("commonText.profitShare") + ": " + spinnerShare.getValue().toString() + "<br>";
+                                    ;
                                     int result = JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("mod.npcEngine.addMod.optionPaneMessage.multipleGenres") + values, I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION);
                                     if (result == JOptionPane.NO_OPTION) {
                                         continue;

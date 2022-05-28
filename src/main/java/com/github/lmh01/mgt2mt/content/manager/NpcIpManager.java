@@ -32,7 +32,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
 
     @Override
     protected String isLineValid(String line) {
-        if (line.contains("P") && line.contains("G") && line.contains("T")  && line.contains("Y") && line.contains("TG")) {
+        if (line.contains("P") && line.contains("G") && line.contains("T") && line.contains("Y") && line.contains("TG")) {
             try {
                 constructContentFromName(getReplacedLine(line));
             } catch (ModProcessingException | NumberFormatException | NullPointerException e) {
@@ -186,17 +186,17 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                         targetGroup = tg;
                     }
                 }
-            }  else if (d.startsWith("T")) {
+            } else if (d.startsWith("T")) {
                 theme = Integer.parseInt(d.replaceAll("[^0-9]", ""));
             } else if (d.startsWith("ST")) {
                 subTheme = Integer.parseInt(d.replaceAll("[^0-9]", ""));
-            }else if (d.startsWith("Y")) {
+            } else if (d.startsWith("Y")) {
                 releaseYear = Integer.parseInt(d.replaceAll("[^0-9]", ""));
             } else if (d.startsWith("%")) {
                 rating = Integer.parseInt(d.replaceAll("%", ""));
             }
         }
-        if (genre == null || theme == null || publisher == null || releaseYear == null || rating == null ) {
+        if (genre == null || theme == null || publisher == null || releaseYear == null || rating == null) {
             throw new ModProcessingException("Unable to construct content named " + name + ". Reason: missing data.");
         }
         return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);

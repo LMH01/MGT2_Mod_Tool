@@ -2,12 +2,15 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Platform;
-import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.DataType;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
+import com.github.lmh01.mgt2mt.util.Months;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -23,8 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -173,7 +176,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 hasInternet,
                 PlatformType.getFromId(Integer.parseInt(map.get("TYP"))),
                 map.containsKey("STARTPLATFORM")
-                );
+        );
     }
 
     @Override
@@ -209,12 +212,12 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         // Check if platform picture is valid
         File file = MGT2Paths.PLATFORM_ICONS.getPath().resolve(map.get("PIC-1")).toFile();
         if (!file.exists()) {
-            sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"),gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
+            sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"), gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
         }
         if (map.containsKey("PIC-2")) {
             file = MGT2Paths.PLATFORM_ICONS.getPath().resolve(map.get("PIC-2")).toFile();
             if (!file.exists()) {
-                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"),gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
+                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"), gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.PLATFORM_ICONS.getPath())).append("\n");
             }
         }
         return sb.toString();

@@ -22,12 +22,13 @@ public abstract class AbstractBaseContent {
      * {@link AbstractSimpleContent} uses this map to print the export map.
      * {@link AbstractAdvancedContent} uses this map to print the export map and to write the game file.
      * @see DependentContent#changeExportMap(Map) - This function will change values in this map to export the content with its
-     *                                              dependencies properly
+     * dependencies properly
      */
     public abstract Map<String, String> getMap() throws ModProcessingException;
 
     /**
      * Note: This function can not be overwritten
+     *
      * @return A map representation of this content. This map is used to export the mod.
      */
     public final Map<String, Object> getExportMap() throws ModProcessingException {
@@ -38,7 +39,7 @@ public abstract class AbstractBaseContent {
             if (this instanceof RequiresPictures) {
                 // Adds the images that should be exported to the export map
                 try {
-                    for (Map.Entry<String, Image> entry : ((RequiresPictures)this).getImageMap().entrySet()) {
+                    for (Map.Entry<String, Image> entry : ((RequiresPictures) this).getImageMap().entrySet()) {
                         map.put(entry.getKey(), Objects.requireNonNull(entry.getValue().extern).getName());
                     }
                 } catch (NullPointerException e) {

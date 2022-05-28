@@ -1,15 +1,15 @@
 package com.github.lmh01.mgt2mt.util.helper;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
-import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.interfaces.Processor;
-import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContentManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
 import java.awt.*;

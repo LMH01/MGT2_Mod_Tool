@@ -64,9 +64,9 @@ public class Settings {
     /**
      * Sets the settings. This is the only function that can change the settings. The changed values will be written to the settings.txt file.
      *
-     * @param enableExportStorage   True when exports should be stored in multiple folders
-     * @param mgt2FilePath          The custom folder path
-     * @param enableCustomFolder    True when the custom folder is enabled.
+     * @param enableExportStorage True when exports should be stored in multiple folders
+     * @param mgt2FilePath        The custom folder path
+     * @param enableCustomFolder  True when the custom folder is enabled.
      */
     public static void setSettings(boolean showSuccessDialog, boolean enableExportStorage, boolean enableCustomFolder, Path mgt2FilePath, boolean showDisclaimerMessage, boolean enableGenreNameTranslationInfo, boolean enableGenreDescriptionTranslationInfo, String language, UpdateBranch updateBranch, boolean saveLogs, boolean enableInitialBackupCheck, Map<SafetyFeature, Boolean> safetyFeatures) {
         Settings.enableExportStorage = enableExportStorage;

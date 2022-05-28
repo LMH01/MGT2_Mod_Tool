@@ -80,7 +80,7 @@ public class DefaultContentManager {
      * Analyzes if the default content files are up-to-date.
      *
      * @return Returns {@link DefaultContentStatus#FILE_MISSING_OR_LOCALLY_OUTDATED} if the default content file has not been created yet,
-     *          is corrupt or the packaged default content file is newer than the file that already exists.
+     * is corrupt or the packaged default content file is newer than the file that already exists.
      * Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
      * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
      * Returns {@link DefaultContentStatus#UPDATE_CHECK_FAILED} if the default content file exists but the update check has failed.

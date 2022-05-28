@@ -2,15 +2,17 @@ package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
 import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.HardwareManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Hardware extends AbstractAdvancedContent implements DependentContent {
 

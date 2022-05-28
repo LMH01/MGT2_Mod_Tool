@@ -3,9 +3,9 @@ package com.github.lmh01.mgt2mt.content.manager;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Hardware;
 import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -13,7 +13,10 @@ import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,7 +39,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         if (!(content instanceof Hardware)) {
             throw new ModProcessingException("Unable to edit text files for content of type " + getType() + ": The input content is not instance of Hardware!");
         }
-        Hardware hardware = (Hardware)content;
+        Hardware hardware = (Hardware) content;
         if (action.equals(ContentAction.ADD_MOD)) {
             try {
                 Charset charset = getCharset();

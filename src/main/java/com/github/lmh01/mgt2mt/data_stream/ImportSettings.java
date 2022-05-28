@@ -1,9 +1,9 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
-import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
-import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.UpdateBranch;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.moandjiezana.toml.Toml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class ImportSettings {
             Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");
             Settings.writeTextAreaOutputToConsole = toml.getBoolean("writeTextAreaOutputToConsole");
             Map<SafetyFeature, Boolean> safetyFeatures = new HashMap<>();
-            for  (SafetyFeature safetyFeature : SafetyFeature.values()) {
+            for (SafetyFeature safetyFeature : SafetyFeature.values()) {
                 if (toml.getBoolean("safety_feature_" + safetyFeature.getIdentifier()) != null) {
                     safetyFeatures.put(safetyFeature, toml.getBoolean("safety_feature_" + safetyFeature.getIdentifier()));
                 } else {

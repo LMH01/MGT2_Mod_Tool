@@ -27,7 +27,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     public AbstractAdvancedContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
         super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
     }
-    
+
     /**
      * This function is called by {@link AbstractBaseContentManager#addContent(AbstractBaseContent)} and {@link AbstractBaseContentManager#removeContent(String)}.
      * The values that are stored in the map will be written to the file by the buffered writer.
@@ -79,6 +79,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      * Checks if the integrity of the fileContent is violated.
      * The integrity is violated if an id is missing from an entry, if
      * an id is assigned more than once or if the ID or NAME EN tag are missing from  the map.
+     *
      * @return StringBuilder that contains content integrity violations
      */
     @Override
@@ -140,6 +141,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     /**
      * This function can be overwritten to add special cases to the content verification.
      * This function is used by {@link AbstractAdvancedContentManager#verifyContentIntegrity()}
+     *
      * @param map Contains the data of the content
      * @return A string containing problems, empty if no problems where found
      */
@@ -151,8 +153,9 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
      * Edits the games text file(s) to add or remove the content.
      * This function should be used when multiple contents should be removed/added simultaneously because the
      * text file is only written once this way.
+     *
      * @param contents A list containing the contents that should be added/removed.
-     * @param action The action that should be performed
+     * @param action   The action that should be performed
      */
     public void editTextFiles(List<AbstractBaseContent> contents, ContentAction action) throws ModProcessingException {
         ArrayList<AbstractAdvancedContent> advancedContents = new ArrayList<>();

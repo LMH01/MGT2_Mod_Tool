@@ -30,7 +30,8 @@ public class DebugHelper {
 
     /**
      * Sends a log message as warning into the console and writes it into the log file
-     * @param c The class from which the warning is sent
+     *
+     * @param c      The class from which the warning is sent
      * @param string The message that should be sent
      */
     public static void warn(Class<?> c, String string) {

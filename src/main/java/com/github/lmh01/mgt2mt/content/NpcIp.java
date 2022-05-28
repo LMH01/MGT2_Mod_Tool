@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.content;
 
-import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
+import com.github.lmh01.mgt2mt.content.managed.DependentContent;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.NpcIpManager;
 import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
@@ -26,16 +29,17 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
 
     /**
      * Construct a new npcIp.
-     * @param name The name of the npcIp
-     * @param id The id of this mod, can be null. If null the id will be set when the content is added to the game
-     * @param genre The id of the main genre
-     * @param subGenre The id of the sub-genre
-     * @param theme The id of the main theme
-     * @param subTheme The id of the sub-theme
+     *
+     * @param name        The name of the npcIp
+     * @param id          The id of this mod, can be null. If null the id will be set when the content is added to the game
+     * @param genre       The id of the main genre
+     * @param subGenre    The id of the sub-genre
+     * @param theme       The id of the main theme
+     * @param subTheme    The id of the sub-theme
      * @param targetGroup The target group of the npcIp
-     * @param publisher The publisher
+     * @param publisher   The publisher
      * @param releaseYear The release year
-     * @param rating The rating in percent 0-100%
+     * @param rating      The rating in percent 0-100%
      */
     public NpcIp(String name, Integer id, int genre, Integer subGenre, int theme, Integer subTheme, TargetGroup targetGroup, int publisher, int releaseYear, int rating) throws IllegalArgumentException {
         super(NpcIpManager.INSTANCE, name, id);

@@ -43,10 +43,14 @@ public enum EngineFeatureType implements TypeEnum {
         for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
             if (engineFeatureType.getId() == id) {
                 switch (id) {
-                    case 0: return EngineFeatureType.GRAPHIC;
-                    case 1: return EngineFeatureType.SOUND;
-                    case 2: return EngineFeatureType.AI;
-                    case 3: return EngineFeatureType.PHYSICS;
+                    case 0:
+                        return EngineFeatureType.GRAPHIC;
+                    case 1:
+                        return EngineFeatureType.SOUND;
+                    case 2:
+                        return EngineFeatureType.AI;
+                    case 3:
+                        return EngineFeatureType.PHYSICS;
                 }
             }
         }

@@ -4,10 +4,10 @@ import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.content.managed.types.TypeEnum;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Months;
-import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
-import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -237,8 +237,8 @@ public class WindowHelper {
      * @param toolTipTranslationKey The translation key for the tool tip of the combo box
      * @param selectedItem          The item that should be selected
      * @param <E>                   An enum that implements the interface {@link TypeEnum}
+     * @param sorted                If true all entries will be sorted by alphabet
      * @return A new {@link JComboBox}.
-     * @param sorted If true all entries will be sorted by alphabet
      */
     public static <E extends Enum<?> & TypeEnum> JComboBox<String> getComboBox(Class<E> c, String toolTipTranslationKey, String selectedItem, boolean sorted) {
         JComboBox<String> comboBox = new JComboBox<>();
@@ -364,9 +364,10 @@ public class WindowHelper {
     /**
      * Adds the following action to the button:
      * When the button is clicked a message is displayed where the user can select an entry for a list.
+     *
      * @param labelText The label of the button and the message that is written above the list when the button is clicked
-     * @param list The list that should be displayed
-     * @param action The action that should be performed when the user clicks ok
+     * @param list      The list that should be displayed
+     * @param action    The action that should be performed when the user clicks ok
      */
     public static void setListButtonAction(JButton button, String labelText, JList<String> list, ActionListener action) {
         button.addActionListener(actionEvent -> {

@@ -2,13 +2,16 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Publisher;
-import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.CountryType;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
-import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.MGT2Paths;
+import com.github.lmh01.mgt2mt.util.Months;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -92,7 +95,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         if (map.containsKey("PIC")) {
             File file = MGT2Paths.COMPANY_ICONS.getPath().resolve(map.get("PIC") + ".png").toFile();
             if (!file.exists()) {
-                return String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound") + "\n",gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.COMPANY_ICONS.getPath());
+                return String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound") + "\n", gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.COMPANY_ICONS.getPath());
             }
         }
         return "";
@@ -111,7 +114,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 Boolean.parseBoolean((String) map.get("PUBLISHER")),
                 Integer.parseInt((String) map.get("MARKET")),
                 Integer.parseInt((String) map.get("SHARE")),
-                GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String)map.get("GENRE")),
+                GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String) map.get("GENRE")),
                 map.containsKey("ONLYMOBILE"),
                 Integer.parseInt((String) map.get("SPEED")),
                 Integer.parseInt((String) map.get("COMVAL")),

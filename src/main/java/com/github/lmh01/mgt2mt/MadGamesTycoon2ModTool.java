@@ -6,9 +6,9 @@ import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.OSType;
-import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,22 +32,22 @@ public class MadGamesTycoon2ModTool {
     }
 
     /*
-    * TODO
-    *  When/during rework of abstract mod classes rework how export is handeled: When a corrupt mod has been found the
-    *  export should not crash, instead the mod that is corrupt should not be exported and a message should be printed to the user.
-    *   Maybe add function "modValid" or something to the the abstract mod classes (the classes similar to NpcIp).
-    *   Or check if mod is valid when it is constructed initially.
-    *
-    * !TODO!
-    *   Add possibility to add/remove multiple contents of the same type simultaneously (open the game file just once)
-    *       This should result in a massive speed improvement when adding / removing large quantities of mods
-    *
-    * TODO
-    *  Add progress bar usage for restore initial backup (remove all mods)
-    *
-    * TODO
-    *  Check all compatibleModToolVersions strings and update them possible
-    * */
+     * TODO
+     *  When/during rework of abstract mod classes rework how export is handeled: When a corrupt mod has been found the
+     *  export should not crash, instead the mod that is corrupt should not be exported and a message should be printed to the user.
+     *   Maybe add function "modValid" or something to the the abstract mod classes (the classes similar to NpcIp).
+     *   Or check if mod is valid when it is constructed initially.
+     *
+     * !TODO!
+     *   Add possibility to add/remove multiple contents of the same type simultaneously (open the game file just once)
+     *       This should result in a massive speed improvement when adding / removing large quantities of mods
+     *
+     * TODO
+     *  Add progress bar usage for restore initial backup (remove all mods)
+     *
+     * TODO
+     *  Check all compatibleModToolVersions strings and update them possible
+     * */
     public static void main(String[] args) {
         Settings.importSettings();
         if (Settings.language.equals("English")) {

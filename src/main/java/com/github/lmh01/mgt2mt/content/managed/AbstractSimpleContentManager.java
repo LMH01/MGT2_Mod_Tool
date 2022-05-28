@@ -45,8 +45,9 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
      * Edits the games text file(s) to add or remove the content.
      * This function should be used when multiple contents should be removed/added simultaneously because the
      * text file is only written once this way.
+     *
      * @param contents A list containing the contents that should be added/removed.
-     * @param action The action that should be performed
+     * @param action   The action that should be performed
      */
     public void editTextFiles(List<AbstractBaseContent> contents, ContentAction action) throws ModProcessingException {
         ArrayList<String> contentNames = new ArrayList<>();
@@ -114,6 +115,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
 
     /**
      * Checks if the input line is valid
+     *
      * @return An empty string if the line is valid, otherwise a string containing the error
      */
     protected abstract String isLineValid(String line);
@@ -122,7 +124,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
     public void analyzeFile() throws ModProcessingException {
         try {
             fileContent = DataStreamHelper.getContentFromFile(gameFile, getCharset());
-            setMaxId(fileContent.size()-1);
+            setMaxId(fileContent.size() - 1);
             Map<String, Integer> contentIdsByName = new HashMap<>();
             for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
                 contentIdsByName.put(getReplacedLine(entry.getValue()), entry.getKey());

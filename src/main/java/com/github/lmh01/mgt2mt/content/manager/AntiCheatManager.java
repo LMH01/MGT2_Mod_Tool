@@ -2,9 +2,12 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.AntiCheat;
-import com.github.lmh01.mgt2mt.content.managed.*;
-import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
+import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
+import com.github.lmh01.mgt2mt.content.managed.DataLine;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
+import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -69,7 +72,7 @@ public class AntiCheatManager extends AbstractAdvancedContentManager {
                     }
                     if (!modAlreadyExists) {
                         TranslationManager translationManager = new TranslationManager(mapNameTranslations[0], null);
-                        AbstractBaseContent antiCheat = new AntiCheat(textFieldName.getText(), null, translationManager, Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(), (int)spinnerCost.getValue(), (int)spinnerDevelopmentCost.getValue());
+                        AbstractBaseContent antiCheat = new AntiCheat(textFieldName.getText(), null, translationManager, Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(), (int) spinnerCost.getValue(), (int) spinnerDevelopmentCost.getValue());
                         if (JOptionPane.showConfirmDialog(null, antiCheat.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             addContent(antiCheat);
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.antiCheat.upperCase") + ": [" + antiCheat.name + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);

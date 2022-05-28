@@ -108,7 +108,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         int needNumber = 1;
         for (Integer integer : requiredGameplayFeatures) {
             map.put("NEED-" + needNumber, integer.toString());
-            needNumber+=1;
+            needNumber += 1;
         }
         map.put("COMPLEX", complexity.toString());
         if (hasInternet) {

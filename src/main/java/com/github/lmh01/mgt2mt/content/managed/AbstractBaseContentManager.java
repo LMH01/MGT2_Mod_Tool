@@ -1,7 +1,8 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
@@ -13,7 +14,8 @@ import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,7 +104,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     protected String[] getDefaultContentFromFiles() {
         try {
             if (this instanceof AbstractSimpleContentManager) {
-                return ReadDefaultContent.getDefault(defaultContentFileName, ((AbstractSimpleContentManager)this)::getReplacedLine);
+                return ReadDefaultContent.getDefault(defaultContentFileName, ((AbstractSimpleContentManager) this)::getReplacedLine);
             } else {
                 return ReadDefaultContent.getDefault(defaultContentFileName);
             }
@@ -232,11 +234,11 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
         if (content instanceof AbstractSimpleContent && this instanceof AbstractSimpleContentManager) {
             ArrayList<AbstractBaseContent> simpleContents = new ArrayList<>();
             simpleContents.add(content);
-            ((AbstractSimpleContentManager)this).editTextFiles(simpleContents, action);
+            ((AbstractSimpleContentManager) this).editTextFiles(simpleContents, action);
         } else if (content instanceof AbstractAdvancedContent && this instanceof AbstractAdvancedContentManager) {
             ArrayList<AbstractBaseContent> advancedContents = new ArrayList<>();
             advancedContents.add(content);
-            ((AbstractAdvancedContentManager)this).editTextFiles(advancedContents, action);
+            ((AbstractAdvancedContentManager) this).editTextFiles(advancedContents, action);
         } else {
             throw new ModProcessingException("Unable to edit game files: No implementation found! This happened because the input content does not implement SimpleContent or AdvancedContent.");
         }
@@ -357,7 +359,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public int getFreeId() {
-        maxId+=1;
+        maxId += 1;
         return maxId;
     }
 

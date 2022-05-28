@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.util.*;
+import com.github.lmh01.mgt2mt.util.Backup;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.UpdateBranch;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
@@ -357,7 +360,7 @@ public class WindowSettings extends JFrame {
         for (Map.Entry<SafetyFeature, JCheckBox> entry : safetyFeatureCheckboxes.entrySet()) {
             safetyFeatures.put(entry.getKey(), entry.getValue().isSelected());
         }
-        Settings.setSettings(true, checkBoxExportStorage.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), UpdateBranch.getUpdateBranch(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString()), checkBoxSaveLogs.isSelected(), Settings.enableInitialBackupCheck ,safetyFeatures);
+        Settings.setSettings(true, checkBoxExportStorage.isSelected(), customFolderSetAndValid, outputFolder, Settings.enableDisclaimerMessage, Settings.enableGenreNameTranslationInfo, Settings.enableGenreDescriptionTranslationInfo, Objects.requireNonNull(comboBoxLanguage.getSelectedItem()).toString(), UpdateBranch.getUpdateBranch(Objects.requireNonNull(comboBoxUpdateBranch.getSelectedItem()).toString()), checkBoxSaveLogs.isSelected(), Settings.enableInitialBackupCheck, safetyFeatures);
     }
 
     /**

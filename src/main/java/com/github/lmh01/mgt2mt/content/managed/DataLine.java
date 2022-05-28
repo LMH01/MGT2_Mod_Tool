@@ -36,10 +36,11 @@ public class DataLine {
 
     /**
      * Constructs a new data line
-     * @param key {@link DataLine#key}
+     *
+     * @param key      {@link DataLine#key}
      * @param required {@link DataLine#required}
      * @param dataType How this data line should be interpreted. If this interpretation fails an integrity violation
-     *                will be shown at startup.
+     *                 will be shown at startup.
      */
     public DataLine(String key, boolean required, DataType dataType) {
         this.key = key;
@@ -49,8 +50,9 @@ public class DataLine {
 
     /**
      * Uses the map to retrieve the value of this data line. The retrieved value is the written by the buffered writer.
+     *
      * @param map The map that contains the value behind this data line
-     * @param bw The buffered writer that writes the message
+     * @param bw  The buffered writer that writes the message
      */
     public void print(Map<String, String> map, BufferedWriter bw) throws IOException {
         if (map.containsKey(key)) {

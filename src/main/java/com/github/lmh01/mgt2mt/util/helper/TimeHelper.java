@@ -71,14 +71,28 @@ public class TimeHelper {
      */
     public String getMeasuredTimeDisplay() {
         double divisor;
-        switch(timeUnit) {
-            case DAYS: divisor = 0.0000115741;break;
-            case HOURS: divisor = 0.00027778;break;
-            case MINUTES: divisor = 0.016667;break;
-            case SECONDS: divisor = 1.0;break;
-            case MILLISECONDS: divisor = 1000.0;break;
-            case MICROSECONDS: divisor = 1000000.0;break;
-            case NANOSECONDS: divisor = 1000000000.0;break;
+        switch (timeUnit) {
+            case DAYS:
+                divisor = 0.0000115741;
+                break;
+            case HOURS:
+                divisor = 0.00027778;
+                break;
+            case MINUTES:
+                divisor = 0.016667;
+                break;
+            case SECONDS:
+                divisor = 1.0;
+                break;
+            case MILLISECONDS:
+                divisor = 1000.0;
+                break;
+            case MICROSECONDS:
+                divisor = 1000000.0;
+                break;
+            case NANOSECONDS:
+                divisor = 1000000000.0;
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + timeUnit);
         }

@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.content;
 
-import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
+import com.github.lmh01.mgt2mt.content.managed.DependentContent;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.NpcGameManager;
 import com.github.lmh01.mgt2mt.util.I18n;
@@ -44,7 +47,7 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
                 genrePrint.append("<br>");
             }
             genrePrint.append(string);
-            number+=1;
+            number += 1;
         }
         return "<html>" +
                 I18n.INSTANCE.get("mod.npcGame.addMod.optionPaneMessage.firstPart") + "<br><br>" +

@@ -88,9 +88,9 @@ public enum CountryType implements TypeEnum {
     }
 
 
-
     /**
      * Returns the country that corresponds to the name.
+     *
      * @param name The translated name.
      */
     public static CountryType getFromName(String name) {
