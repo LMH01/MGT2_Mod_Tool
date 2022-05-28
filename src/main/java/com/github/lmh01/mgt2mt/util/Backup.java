@@ -457,7 +457,7 @@ public class Backup {
                     file.delete();
                 }
             } catch (NumberFormatException e) {
-
+                DebugHelper.warn(Backup.class, "Could not parse publisher icon file name: " + file.getName());
             }
         }
     }

@@ -31,7 +31,7 @@ public class AbstractAdvancedModTest {
             }
             Files.createFile(testGameFile);
             Files.copy(openFile("default_test_mod.txt"), testGameFile, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
     }
