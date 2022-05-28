@@ -298,7 +298,6 @@ public class WindowSettings extends JFrame {
         contentPane.add(btnSave);
     }
 
-    @SuppressWarnings("unchecked")
     private void loadCurrentSelections() {
         inputFolder = Settings.mgt2Path;
         outputFolder = Settings.mgt2Path;
