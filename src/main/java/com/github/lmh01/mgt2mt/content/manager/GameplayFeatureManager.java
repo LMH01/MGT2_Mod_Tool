@@ -10,6 +10,7 @@ import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
 import java.io.*;

@@ -1,11 +1,9 @@
 package com.github.lmh01.mgt2mt.windows;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContentManager;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
-import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
@@ -20,6 +18,7 @@ import com.github.lmh01.mgt2mt.util.helper.RestorePointHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

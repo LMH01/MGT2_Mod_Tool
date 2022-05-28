@@ -5,7 +5,7 @@ import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.interfaces.Processor;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContentManager;
@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class OperationHelper {
 

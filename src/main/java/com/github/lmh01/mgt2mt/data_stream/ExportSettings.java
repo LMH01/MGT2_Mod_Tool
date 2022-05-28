@@ -2,8 +2,8 @@ package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.util.LogFile;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.SafetyFeature;
-import com.github.lmh01.mgt2mt.util.Settings;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,9 +1,11 @@
-package com.github.lmh01.mgt2mt.util;
+package com.github.lmh01.mgt2mt.util.settings;
+
+import com.github.lmh01.mgt2mt.util.I18n;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum SafetyFeature {//TODO Move together with settings to new Settings package
+public enum SafetyFeature {
 
     UNLOCK_SPINNERS("unlockSpinners", false);
 
