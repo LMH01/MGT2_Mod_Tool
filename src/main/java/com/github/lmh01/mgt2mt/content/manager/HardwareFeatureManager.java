@@ -30,7 +30,7 @@ public class HardwareFeatureManager extends AbstractAdvancedContentManager {
     }
 
     @Override
-    public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
         return new HardwareFeature(
                 map.get("NAME EN"),
                 getIdFromMap(map),

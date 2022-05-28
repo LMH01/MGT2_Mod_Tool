@@ -129,7 +129,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "GENRES");
     }
 

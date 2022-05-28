@@ -117,7 +117,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
     }
 
     @Override
-    public void changeExportMap(Map<String, String> map) throws ModProcessingException {
+    public void changeExportMap(Map<String, String> map) {
         // Nothing has to be done here, everything has been completed in getMap
     }
 

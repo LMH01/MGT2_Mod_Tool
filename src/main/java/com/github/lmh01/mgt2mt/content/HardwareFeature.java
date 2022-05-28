@@ -43,7 +43,7 @@ public class HardwareFeature extends AbstractAdvancedContent {
     }
 
     @Override
-    public Map<String, String> getMap() throws ModProcessingException {
+    public Map<String, String> getMap() {
         Map<String, String> map = new HashMap<>();
         insertIdInMap(map);
         map.put("NAME EN", name);
@@ -64,7 +64,7 @@ public class HardwareFeature extends AbstractAdvancedContent {
     }
 
     @Override
-    public String getOptionPaneMessage() throws ModProcessingException {
+    public String getOptionPaneMessage() {
         StringBuilder lastPart = new StringBuilder();
         lastPart.append(I18n.INSTANCE.get("commonText.needInternet")).append(": ");
         if (needsInternet) {

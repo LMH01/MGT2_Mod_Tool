@@ -74,7 +74,7 @@ public class EngineFeature extends AbstractAdvancedContent {
     }
 
     @Override
-    public String getOptionPaneMessage() throws ModProcessingException {
+    public String getOptionPaneMessage() {
         return I18n.INSTANCE.get("sharer.engineFeature.optionPaneMessage.main") + "\n\n" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + description + "\n" +

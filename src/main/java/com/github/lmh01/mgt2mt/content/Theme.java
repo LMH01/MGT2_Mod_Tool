@@ -39,7 +39,7 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
     }
 
     @Override
-    public Map<String, String> getMap() throws ModProcessingException {
+    public Map<String, String> getMap() {
         Map<String, String> map = new HashMap<>();
         map.put("NAME EN", name);
         for (Map.Entry<String, String> entry : translations.entrySet()) {
@@ -51,7 +51,7 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
     }
 
     @Override
-    public String getOptionPaneMessage() throws ModProcessingException {
+    public String getOptionPaneMessage() {
         return I18n.INSTANCE.get("mod.theme.addTheme.addTheme.question") + ":\n" + name;
     }
 

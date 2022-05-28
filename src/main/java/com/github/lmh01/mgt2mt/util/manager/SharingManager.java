@@ -365,7 +365,7 @@ public class SharingManager {
                     }
 
                     @Override
-                    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                    public FileVisitResult visitFileFailed(Path file, IOException exc) {
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.accessDeniedError") + ": " + file);
                         DebugHelper.warn(LOGGER, "Unable to search folder for .toml files, access denied: " + file);
                         return FileVisitResult.SKIP_SUBTREE;
@@ -386,7 +386,7 @@ public class SharingManager {
      * @param files The array list that should be searched for compatible toml files
      * @return An array list that contains maps, which contain mods
      */
-    private static ArrayList<Map<String, Object>> transformTomlFilesToMaps(ArrayList<File> files) throws ModProcessingException {
+    private static ArrayList<Map<String, Object>> transformTomlFilesToMaps(ArrayList<File> files) {
         ArrayList<Map<String, Object>> modList = new ArrayList<>();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.analyzeTomlFiles"));
         ProgressBarHelper.initializeProgressBar(0, files.size(), I18n.INSTANCE.get("textArea.importAll.readingFiles"));
@@ -448,7 +448,7 @@ public class SharingManager {
      * If no compatible mods are found an empty map is returned.
      */
     @SuppressWarnings("unchecked")
-    private static Set<Map<String, Object>> getImportMaps(ArrayList<Map<String, Object>> singleMods, ArrayList<Map<String, Object>> bundledMods) throws ModProcessingException {
+    private static Set<Map<String, Object>> getImportMaps(ArrayList<Map<String, Object>> singleMods, ArrayList<Map<String, Object>> bundledMods) {
         ProgressBarHelper.initializeProgressBar(0, singleMods.size() + bundledMods.size(), I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.searchingTomlFilesForMods"));
         TimeHelper timeHelper = new TimeHelper();
@@ -895,10 +895,9 @@ public class SharingManager {
      *
      * @param mods A set of maps that contain the values for the mods that should be imported.
      * @return True if import was successful. False if import was canceled.
-     * @throws ModProcessingException If something went wrong while importing a mod
      */
     @Deprecated
-    private static boolean importAllMods(Set<Map<String, Object>> mods) throws ModProcessingException {
+    private static boolean importAllMods(Set<Map<String, Object>> mods) {
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
         TimeHelper timeHelper = new TimeHelper();
         timeHelper.measureTime();

@@ -20,7 +20,7 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
     }
 
     @Override
-    public Map<String, String> getMap() throws ModProcessingException {
+    public Map<String, String> getMap() {
         Map<String, String> map = new HashMap<>();
         map.put("NAME EN", name);
         map.put("GENRES", Utils.transformArrayListToString(genres));

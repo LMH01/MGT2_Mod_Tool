@@ -19,7 +19,7 @@ public class AbstractAdvancedModTest {
         setupModFile();
     }
 
-    private InputStream openFile(String filename) throws IOException {
+    private InputStream openFile(String filename) {
         return AbstractAdvancedModTest.class.getClassLoader().getResourceAsStream(filename);
     }
 

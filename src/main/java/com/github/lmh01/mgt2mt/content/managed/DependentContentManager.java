@@ -18,7 +18,7 @@ public interface DependentContentManager {
      * @param missingDependency The dependency that should be replaced
      * @param replacement The replacement
      */
-    void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException;
+    void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement);
 
     /**
      * @return An array list that contains all the dependencies of the mod

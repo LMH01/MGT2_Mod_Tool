@@ -30,7 +30,7 @@ public class CopyProtectionManager extends AbstractAdvancedContentManager {
     }
 
     @Override
-    public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
         return new CopyProtection(map.get("NAME EN"),
                 getIdFromMap(map),
                 new TranslationManager(map),

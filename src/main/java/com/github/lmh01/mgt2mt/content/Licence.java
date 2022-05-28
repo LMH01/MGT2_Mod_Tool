@@ -19,7 +19,7 @@ public class Licence extends AbstractSimpleContent {
     }
 
     @Override
-    public Map<String, String> getMap() throws ModProcessingException {
+    public Map<String, String> getMap() {
         Map<String, String> map = new HashMap<>();
         map.put("NAME EN", name);
         map.put("LICENCE TYP", licenceType.getIdentifier());
@@ -27,7 +27,7 @@ public class Licence extends AbstractSimpleContent {
     }
 
     @Override
-    public String getOptionPaneMessage() throws ModProcessingException {
+    public String getOptionPaneMessage() {
        return I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence") + "<br>" + name + "<br>" + I18n.INSTANCE.get("dialog.sharingHandler.type") + " " + licenceType.getTypeName();
     }
 

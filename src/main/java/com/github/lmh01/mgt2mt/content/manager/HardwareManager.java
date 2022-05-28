@@ -321,7 +321,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED-")) {
                 replaceMapEntry(map, missingDependency, replacement, entry.getKey());

@@ -8,5 +8,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface Processor {
-    void process(List<AbstractBaseContent> contents) throws IOException, ModProcessingException;
+    void process(List<AbstractBaseContent> contents) throws ModProcessingException;
 }

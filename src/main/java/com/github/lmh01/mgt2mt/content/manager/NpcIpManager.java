@@ -225,7 +225,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "genre");
         replaceMapEntry(map, missingDependency, replacement, "theme");
         replaceMapEntry(map, missingDependency, replacement, "publisher");

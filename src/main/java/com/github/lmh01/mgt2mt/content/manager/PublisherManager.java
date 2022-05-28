@@ -50,7 +50,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
         return new Publisher(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -283,7 +283,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "GENRE");
     }
 

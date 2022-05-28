@@ -42,7 +42,7 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
     }
 
     @Override
-    public Map<String, String> getMap() throws ModProcessingException {
+    public Map<String, String> getMap() {
         Map<String, String> map = new HashMap<>();
         insertIdInMap(map);
         map.put("NAME EN", name);

@@ -205,7 +205,7 @@ public class Uninstaller {
         return uninstallFailed;
     }
 
-    public static void deleteAllExports() throws ModProcessingException {
+    public static void deleteAllExports() {
         if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.exports.message"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == 0) {
             try {
                 DataStreamHelper.deleteDirectory(ModManagerPaths.EXPORT.getPath());

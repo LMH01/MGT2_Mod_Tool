@@ -29,7 +29,7 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
     }
 
     @Override
-    public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
         return new EngineFeature(
                 map.get("NAME EN"),
                 new TranslationManager(map),

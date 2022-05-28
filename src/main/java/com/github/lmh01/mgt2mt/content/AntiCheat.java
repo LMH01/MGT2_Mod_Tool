@@ -35,7 +35,7 @@ public class AntiCheat extends AbstractAdvancedContent {
     }
 
     @Override
-    public String getOptionPaneMessage() throws ModProcessingException {
+    public String getOptionPaneMessage() {
         return "<html>" +
                 I18n.INSTANCE.get("mod.antiCheat.addMod.optionPaneMessage.firstPart") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +

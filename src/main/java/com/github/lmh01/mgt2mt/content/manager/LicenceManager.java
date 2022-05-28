@@ -112,7 +112,7 @@ public class LicenceManager extends AbstractSimpleContentManager {
     }
 
     @Override
-    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) {
         return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")));
     }
 

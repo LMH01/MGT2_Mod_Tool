@@ -36,7 +36,7 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
         return new NpcEngine(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -178,7 +178,7 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "GENRE");
         replaceMapEntry(map, missingDependency, replacement, "PLATFORM");
     }

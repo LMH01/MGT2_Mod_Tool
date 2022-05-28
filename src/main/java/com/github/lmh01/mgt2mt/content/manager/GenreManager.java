@@ -233,7 +233,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "GENRE COMB");
         replaceMapEntry(map, missingDependency, replacement, "THEME COMB");
         replaceMapEntry(map, missingDependency, replacement, "GAMEPLAYFEATURE BAD");

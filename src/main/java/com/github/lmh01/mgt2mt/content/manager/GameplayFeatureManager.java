@@ -31,7 +31,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     }
 
     @Override
-    public AbstractBaseContent constructContentFromMap(Map<String, String> map) throws ModProcessingException {
+    public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
         boolean arcade = true;
         if (map.containsKey("NO_ARCADE")) {
             arcade = false;
@@ -294,7 +294,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     }
 
     @Override
-    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) throws ModProcessingException {
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "GOOD");
         replaceMapEntry(map, missingDependency, replacement, "BAD");
     }
