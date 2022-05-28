@@ -26,8 +26,6 @@ public class WindowAddGenrePage1 extends JFrame {
     public static boolean nameTranslationsAdded = false;
     public static boolean descriptionTranslationsAdded = false;
     JPanel contentPane = new JPanel();
-    JLabel labelGenreID = new JLabel("Genre id: ");
-    JButton buttonExplainGenreID = new JButton("id?");
     JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
     JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     JButton buttonAddNameTranslations = new JButton("TRANSL");
@@ -105,24 +103,9 @@ public class WindowAddGenrePage1 extends JFrame {
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        if (Settings.disableSafetyFeatures) {
-            setBounds(100, 100, 335, 190);
-            labelGenreID.setVisible(true);
-            buttonExplainGenreID.setVisible(true);
-            buttonNext.setBounds(220, 130, 100, 23);
-            buttonQuit.setBounds(120, 130, 90, 23);
-            buttonExplainGenreID.setBounds(230, 95, 80, 23);
-            buttonExplainGenreID.setToolTipText("Click to learn what the genre id is");
-            buttonExplainGenreID.addActionListener(actionEvent -> JOptionPane.showMessageDialog(null, "The genre id is the unique id under which your genre can be found.\nWhenever a game file is modified that should reference your genre this genre id is used.", "Genre id", JOptionPane.INFORMATION_MESSAGE));
-            contentPane.add(buttonExplainGenreID);
-        } else {
-            setBounds(100, 100, 335, 160);
-            labelGenreID.setVisible(false);
-            buttonExplainGenreID.setVisible(false);
-            buttonNext.setBounds(220, 100, 100, 23);
-            buttonQuit.setBounds(120, 100, 90, 23);
-        }
-
+        setBounds(100, 100, 335, 160);
+        buttonNext.setBounds(220, 100, 100, 23);
+        buttonQuit.setBounds(120, 100, 90, 23);
 
         JLabel labelGenreName = new JLabel(I18n.INSTANCE.get("commonText.name") + ":");
         labelGenreName.setBounds(10, 10, 100, 23);
@@ -140,9 +123,6 @@ public class WindowAddGenrePage1 extends JFrame {
         JLabel labelGenreDescription = new JLabel(I18n.INSTANCE.get("commonText.description") + ":");
         labelGenreDescription.setBounds(10, 35, 120, 23);
         contentPane.add(labelGenreDescription);
-
-        labelGenreID.setBounds(10, 95, 120, 23);
-        contentPane.add(labelGenreID);
 
         textFieldGenreDescription.setBounds(120, 35, 100, 23);
         textFieldGenreDescription.setText(GenreManager.currentGenreHelper.description);
