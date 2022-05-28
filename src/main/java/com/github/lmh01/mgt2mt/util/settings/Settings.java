@@ -23,7 +23,7 @@ public class Settings {
     public static Path steamLibraryFolder = null;
     private static final Path MGT2_MOD_MANAGER_PATH;
     public static boolean enableDebugLogging = false;
-    public static boolean disableSafetyFeatures = false;
+    //public static boolean disableSafetyFeatures = false;
     public static boolean enableCustomFolder = false;
     public static boolean saveLogs = true;
     private static final Logger LOGGER = LoggerFactory.getLogger(Settings.class);

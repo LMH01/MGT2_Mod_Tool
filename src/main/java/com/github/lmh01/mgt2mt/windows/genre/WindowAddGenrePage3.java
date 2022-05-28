@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ public class WindowAddGenrePage3 extends JFrame {
         spinnerResearchPoints.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 10.000; " + I18n.INSTANCE.get("commonText.default") + ": 1.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchPointCost.spinner.toolTip"));
         spinnerDevelopmentCost.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 100.000; " + I18n.INSTANCE.get("commonText.default") + ": 3.000]" + "<br>" + I18n.INSTANCE.get("commonText.developmentCost.spinner.toolTip"));
         spinnerGenrePrice.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 0 - 1.000.000; " + I18n.INSTANCE.get("commonText.default") + ": 150.000]" + "<br>" + I18n.INSTANCE.get("commonText.researchCost.spinner.toolTip"));
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             spinnerResearchPoints.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.researchPoints, 0, Integer.MAX_VALUE, 1));
             spinnerDevelopmentCost.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.devCosts, 0, Integer.MAX_VALUE, 1));
             spinnerGenrePrice.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.price, 0, Integer.MAX_VALUE, 1));

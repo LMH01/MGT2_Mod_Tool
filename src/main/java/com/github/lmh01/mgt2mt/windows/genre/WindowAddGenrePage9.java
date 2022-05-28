@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class WindowAddGenrePage9 extends JFrame {
 
     public WindowAddGenrePage9() {
         buttonNext.addActionListener(actionEvent -> {
-            if (saveInputs(spinnerGameplay, spinnerGraphic, spinnerSound, spinnerControl) || Settings.disableSafetyFeatures) {
+            if (saveInputs(spinnerGameplay, spinnerGraphic, spinnerSound, spinnerControl)) {
                 GenreManager.openStepWindow(10);
                 FRAME.dispose();
             } else {
@@ -111,7 +112,7 @@ public class WindowAddGenrePage9 extends JFrame {
         spinnerGraphic.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.graphic, 5, 85, 5));
         spinnerSound.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.sound, 5, 85, 5));
         spinnerControl.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.control, 5, 85, 5));
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             ((JSpinner.DefaultEditor) spinnerGameplay.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor) spinnerGraphic.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor) spinnerSound.getEditor()).getTextField().setEditable(true);

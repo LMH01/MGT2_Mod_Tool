@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
@@ -375,7 +376,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 final boolean[] firstImage = {true};
                 buttonAddPicture.addActionListener(actionEvent2 -> {
                     boolean continueWithPictures = false;
-                    if (pictureMap.size() < 2 || Settings.disableSafetyFeatures) {
+                    if (pictureMap.size() < 2 || Settings.safetyFeatures.get(SafetyFeature.DISABLE_PLATFORM_PICTURE_LIMIT)) {
                         continueWithPictures = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("frame.title.unableToContinue") + ":<br><br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.maxPicturesSelectedMessage"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
@@ -391,7 +392,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                         comboBoxChangeMonth.setSelectedItem("JAN");
                         JSpinner spinnerChangeYear = new JSpinner();
                         spinnerChangeYear.setEnabled(false);
-                        if (Settings.disableSafetyFeatures) {
+                        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
                             spinnerChangeYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip"));
                             spinnerChangeYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
                             ((JSpinner.DefaultEditor) spinnerEndYear.getEditor()).getTextField().setEditable(true);
@@ -592,7 +593,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
     }
 
     private void setEndYearSpinner(JSpinner spinnerUnlockYear, JSpinner spinnerEndYear) {
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             spinnerEndYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.endYear.toolTip"));
             spinnerEndYear.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
             ((JSpinner.DefaultEditor) spinnerEndYear.getEditor()).getTextField().setEditable(true);

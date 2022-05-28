@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 import com.github.lmh01.mgt2mt.util.helper.*;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
@@ -577,7 +578,7 @@ public class SharingManager {
                 }
             }
         }
-        if (!invalidAssetFolders.isEmpty() && !Settings.disableSafetyFeatures) {
+        if (!invalidAssetFolders.isEmpty() && !Settings.safetyFeatures.get(SafetyFeature.SKIP_ASSETS_FOLDER_CHECK)) {
             JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("dialog.sharingManager.importThings.error.firstPart") + "<br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.assetsFoldersMissing"));
             String[] string = new String[invalidAssetFolders.size()];
             invalidAssetFolders.toArray(string);
@@ -587,7 +588,7 @@ public class SharingManager {
             JOptionPane.showMessageDialog(null, components, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             return false;
         } else {
-            if (Settings.disableSafetyFeatures) {
+            if (Settings.safetyFeatures.get(SafetyFeature.SKIP_ASSETS_FOLDER_CHECK)) {
                 DebugHelper.warn(LOGGER, "Check for asset folders is disabled");
             }
             return true;

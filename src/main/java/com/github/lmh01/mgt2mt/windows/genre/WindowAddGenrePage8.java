@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import org.slf4j.Logger;
@@ -172,7 +173,7 @@ public class WindowAddGenrePage8 extends JFrame {
         spinnerDesign9.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.align0, 0, 10, 1));
         spinnerDesign10.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.align1, 0, 10, 1));
         spinnerDesign11.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.align2, 0, 10, 1));
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             ((JSpinner.DefaultEditor) spinnerDesign1.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor) spinnerDesign2.getEditor()).getTextField().setEditable(true);
             ((JSpinner.DefaultEditor) spinnerDesign3.getEditor()).getTextField().setEditable(true);
@@ -225,9 +226,7 @@ public class WindowAddGenrePage8 extends JFrame {
                 + Integer.parseInt(spinnerDesign7.getValue().toString())
                 + Integer.parseInt(spinnerDesign8.getValue().toString());
         boolean saveValues = false;
-        if (Settings.disableSafetyFeatures) {
-            saveValues = true;
-        } else if (combinedValue == 40) {
+        if (combinedValue == 40) {
             saveValues = true;
         } else {
             if (!calledFromButtonPrevious) {

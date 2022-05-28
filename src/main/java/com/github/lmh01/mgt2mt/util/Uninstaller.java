@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +88,7 @@ public class Uninstaller {
                         } else {
                             if (checkboxDeleteBackups.isSelected()) {
                                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.deletingBackups"));
-                                if (Settings.disableSafetyFeatures) {
+                                if (Settings.safetyFeatures.get(SafetyFeature.DELETE_INITIAL_BACKUPS)) {
                                     try {
                                         DataStreamHelper.deleteDirectory(ModManagerPaths.BACKUP.getPath());
                                     } catch (IOException e) {

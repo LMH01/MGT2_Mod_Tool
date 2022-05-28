@@ -1157,6 +1157,21 @@ verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2|The integrity 
 safetyFeatures.unlockSpinners|Unlock spinners
 safetyFeatures.unlockSpinners.toolTip|Enable to unlock all spinners and disable the maximum values
 
+safetyFeatures.disablePlatformPictureLimit|Disable platform picture limit
+safetyFeatures.disablePlatformPictureLimit.toolTip|<html>Currently only two images per platform are supported,<br>so currently no more than two images can be added.<br>If this option is enabled, more images can be added,<br> although this is not supported by the game.
+
+safetyFeatures.disableGameFileIntegrityCheck|Disable game file integrity check
+safetyFeatures.disableGameFileIntegrityCheck.toolTip|<html>If this option is enabled,<br>the game file integrity check at startup will be skipped.
+
+safetyFeatures.includeOriginalContentsInLists|Include original contents in lists
+safetyFeatures.includeOriginalContentsInLists.toolTip|<html>If this option is enabled,<br>the original contents of the game files will be included in the lists.<br>This can be used to remove or export content that belongs to the game.
+
+safetyFeatures.skipAssetsFolderCheck|Skip assets folder check
+safetyFeatures.skipAssetsFolderCheck.toolTip|<html>If this option is enabled,<br>the check for the existence of the assets folder<br>will be skipped when importing contents.
+
+safetyFeatures.enableDeleteInitialBackups|Enable delete initial backups
+safetyFeatures.enableDeleteInitialBackups.toolTip|<html>If this option is enabled,<br>the initial backups will also be deleted when backups are deleted.<br>When enabled, there will be a new menu entry with which all backups can be deleted.
+
 month.january|January
 month.february|February
 month.march|March

@@ -18,6 +18,7 @@ import com.github.lmh01.mgt2mt.util.helper.RestorePointHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.ImportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -374,7 +375,7 @@ public class WindowMain {
      * This will cause some menu items to be reloaded, for the safety feature setting to be applied.
      */
     public static void setSafetyFeatureComponents() {
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.DELETE_INITIAL_BACKUPS)) {
             M_4_BACKUP.add(M_44_DELETE_ALL_BACKUPS);
             M_42_RESTORE_BACKUP.add(M_422_RESTORE_LATEST_BACKUP);
         } else {

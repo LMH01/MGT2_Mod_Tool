@@ -10,6 +10,8 @@ import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import com.github.lmh01.mgt2mt.util.interfaces.Processor;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
 import java.io.*;
@@ -258,7 +260,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
         String[] customContentString = getCustomContentString();
         for (JMenuItem menuItem : getModMenuItems()) {
             if (menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))) {
-                if (customContentString.length > 0) {
+                if (customContentString.length > 0 || Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
                     menuItem.setEnabled(true);
                     menuItem.setToolTipText("");
                 } else {
@@ -267,7 +269,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
                 }
             }
         }
-        if (customContentString.length > 0) {
+        if (customContentString.length > 0 || Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
             getExportMenuItem().setEnabled(true);
             getExportMenuItem().setToolTipText("");
         } else {

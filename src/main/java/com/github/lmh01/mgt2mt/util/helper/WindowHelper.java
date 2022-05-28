@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
 import com.github.lmh01.mgt2mt.content.managed.types.TypeEnum;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Months;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -154,7 +155,7 @@ public class WindowHelper {
      */
     public static JSpinner getUnlockYearSpinner() {
         JSpinner spinner = new JSpinner();
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             spinner.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
             spinner.setModel(new SpinnerNumberModel(1976, 1976, 2999, 1));
             ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(true);
@@ -312,7 +313,7 @@ public class WindowHelper {
                 + "]"
                 + "<br>"
                 + currentToolTipText);
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             spinner.setModel(new SpinnerNumberModel(1, 0, Integer.MAX_VALUE, 1));
             ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(true);
         } else {

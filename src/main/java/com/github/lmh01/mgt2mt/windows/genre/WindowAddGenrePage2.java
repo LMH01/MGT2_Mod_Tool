@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.windows.genre;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Months;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
@@ -64,7 +65,7 @@ public class WindowAddGenrePage2 extends JFrame {
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             spinnerUnlockYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2050]<br>" + I18n.INSTANCE.get("commonText.unlockYear.toolTip"));
             spinnerUnlockYear.setModel(new SpinnerNumberModel(GenreManager.currentGenreHelper.year, 1976, 2050, 1));
             ((JSpinner.DefaultEditor) spinnerUnlockYear.getEditor()).getTextField().setEditable(true);

@@ -48,12 +48,7 @@ public class WindowAddGenrePage7 extends JFrame {
                     GenreManager.openStepWindow(8);
                     FRAME.dispose();
                 } else {
-                    if (Settings.disableSafetyFeatures) {
-                        GenreManager.openStepWindow(8);
-                        FRAME.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
-                    }
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.genre.sameSelection.text"), I18n.INSTANCE.get("frame.title.unableToContinue"), JOptionPane.ERROR_MESSAGE);
                 }
             }, "WindowAddGenrePage7ButtonNext");
         });

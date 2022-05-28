@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.windows.WindowMain;
 import org.slf4j.Logger;
@@ -78,8 +79,8 @@ public class ThreadHandler {
             }
             ProgressBarHelper.resetProgressBar();
 
-            if (Settings.disableSafetyFeatures) {
-                DebugHelper.warn(LOGGER, "check for game file integrity is disabled because the safety features are disabled");
+            if (Settings.safetyFeatures.get(SafetyFeature.DISABLE_GAME_FILE_INTEGRITY_CHECK)) {
+                DebugHelper.warn(LOGGER, "check for game file integrity is disabled");
             } else {
                 ContentAdministrator.analyzeGameFileIntegrity(false);
             }

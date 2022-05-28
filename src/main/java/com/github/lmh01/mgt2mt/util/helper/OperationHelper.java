@@ -5,6 +5,7 @@ import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.interfaces.Processor;
@@ -39,7 +40,7 @@ public class OperationHelper {
             boolean noOperationAvailable = true;
             JLabel labelChooseOperations = new JLabel(I18n.INSTANCE.get("processor.chooseEntries.label.firstPart") + " " + exportType + I18n.INSTANCE.get("processor.chooseEntries.label.secondPart") + " " + operation);
             String[] listContent;
-            if (Settings.disableSafetyFeatures) {
+            if (Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
                 listContent = stringArraySafetyFeaturesDisabled;
                 noOperationAvailable = false;
             } else {

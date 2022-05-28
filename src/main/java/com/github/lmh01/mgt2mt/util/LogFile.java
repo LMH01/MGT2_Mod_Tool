@@ -69,7 +69,6 @@ public class LogFile {
                     "MGT2 file path: " + Settings.mgt2Path + "\n" +
                     "Steam library folder: " + Settings.steamLibraryFolder + "\n" +
                     "Update branch: " + Settings.updateBranch + "\n" +
-                    "Disable safety features: " + Settings.disableSafetyFeatures + "\n" +
                     "Enable disclaimer message: " + Settings.enableDisclaimerMessage + "\n" +
                     "Enable debug logging: " + Settings.enableDebugLogging + "\n" +
                     "Enable custom folder: " + Settings.enableCustomFolder + "\n" +

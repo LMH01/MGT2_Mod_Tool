@@ -179,7 +179,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 badGenreIds[0] = badGenreIdsOut;
                 if (badGenreIds[0].size() != 0) {
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
-                    if (Settings.disableSafetyFeatures || !mutualEntries) {
+                    if (!mutualEntries) {
                         buttonBadGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.selected"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.selected"));
                     } else {
@@ -209,7 +209,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 goodGenreIds[0] = goodGenreIdsOut;
                 if (goodGenreIds[0].size() != 0) {
                     boolean mutualEntries = Utils.checkForMutualEntries(badGenreIds[0], goodGenreIds[0]);
-                    if (Settings.disableSafetyFeatures || !mutualEntries) {
+                    if (!mutualEntries) {
                         buttonGoodGenres.setText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.selected"));
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectGoodGenres.selected"));
                     } else {

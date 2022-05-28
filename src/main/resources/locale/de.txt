@@ -1157,7 +1157,22 @@ verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation1|Die Integritä
 verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2|Die Integrität der Spieldatei %s ist ungültig. Grund: Die Zielgruppe der %s namens %s ist ungültig: %s.
 
 safetyFeatures.unlockSpinners|Die Spinner entsperren
-safetyFeatures.unlockSpinners.toolTip|Aktivieren, um alle Spinner zu entsperren und die Maximalwerte zu deaktivieren
+safetyFeatures.unlockSpinners.toolTip|Wenn diese Option aktiviert ist, werden alle Spinner entsperrt und die Maximalwerte werden deaktiviert
+
+safetyFeatures.disablePlatformPictureLimit|Die Platform-Bilder-Limitierung deaktivieren
+safetyFeatures.disablePlatformPictureLimit.toolTip|<html>Aktuell werden nur zwei Bilder pro Platform unterstützt,<br>weswegen nicht mehr als zwei Bilder hinzugefügt werden können.<br>Wenn diese Option aktiviert ist, können mehr Bilder hinzugefügt werden,<br>obwohl dies vom Spiel nicht unterstützt wird.
+
+safetyFeatures.disableGameFileIntegrityCheck|Integritätsprüfung der Spieldateien deaktivieren
+safetyFeatures.disableGameFileIntegrityCheck.toolTip|<html>Wenn diese Option aktiviert ist, wird die<br>Integritätsprüfung der Spieldateien beim Start des Tools übersprungen.
+
+safetyFeatures.includeOriginalContentsInLists|Originalinhalte in Listen aufnehmen
+safetyFeatures.includeOriginalContentsInLists.toolTip|<html>Wenn diese Option aktiviert ist,<br>werden die Originalinhalte der Spieldateien in die Listen aufgenommen.<br>Hiermit können zum Spiel gehörende Inhalte entfernt oder exportiert werden.
+
+safetyFeatures.skipAssetsFolderCheck|Prüfung des Assets-Ordners überspringen
+safetyFeatures.skipAssetsFolderCheck.toolTip|<html>Wenn diese Option aktiviert ist,<br>wird die Prüfung auf das Vorhandensein des Asset-Ordners<br>beim Importieren von Inhalten übersprungen.
+
+safetyFeatures.enableDeleteInitialBackups|Aktiviere das Löschen der initialen Backups
+safetyFeatures.enableDeleteInitialBackups.toolTip|<html>Wenn diese Option aktiviert ist,<br>werden beim Löschen von Backups auch die initialen Backups gelöscht.<br>Wenn aktiviert, gibt es einen neuen Menüeintrag, mit dem alle Backups gelöscht werden können.
 
 month.january|Januar
 month.february|Februar

@@ -7,15 +7,17 @@ import java.util.Map;
 
 public enum SafetyFeature {
 
-    UNLOCK_SPINNERS("unlockSpinners", false);
-
-    private final String name;
-    private final String toolTip;
+    UNLOCK_SPINNERS("unlockSpinners", false),
+    DISABLE_PLATFORM_PICTURE_LIMIT("disablePlatformPictureLimit", false),
+    DISABLE_GAME_FILE_INTEGRITY_CHECK("disableGameFileIntegrityCheck", false),
+    INCLUDE_ORIGINAL_CONTENTS_IN_LISTS("includeOriginalContentsInLists", false),
+    SKIP_ASSETS_FOLDER_CHECK("skipAssetsFolderCheck", false),
+    DELETE_INITIAL_BACKUPS("enableDeleteInitialBackups", false),;
 
     /**
      * This is the identifier of the safety feature, it is used to identify it in the settings file.
      */
-    private final String identifier;
+    private final String translationKey;
 
     /**
      * This is the default value of the safety feature.
@@ -23,31 +25,24 @@ public enum SafetyFeature {
     private final boolean defaultValue;
 
     SafetyFeature(String translationKey, boolean defaultValue) {
-        this.name = I18n.INSTANCE.get("safetyFeatures." + translationKey);
-        this.toolTip = I18n.INSTANCE.get("safetyFeatures." + translationKey + ".toolTip");
-        this.identifier  = translationKey;
+        this.translationKey = translationKey;
         this.defaultValue = defaultValue;
     }
 
     public String getName() {
-        return name;
+        return I18n.INSTANCE.get("safetyFeatures." + translationKey);
     }
 
     public String getToolTip() {
-        return toolTip;
+        return I18n.INSTANCE.get("safetyFeatures." + translationKey + ".toolTip");
     }
 
     public String getIdentifier() {
-        return identifier;
+        return translationKey;
     }
 
     public boolean getDefaultValue() {
         return defaultValue;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     /**

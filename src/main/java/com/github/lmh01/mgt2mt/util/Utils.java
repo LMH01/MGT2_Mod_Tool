@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -350,7 +351,7 @@ public class Utils {
         List<String> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
             existingListContent = stringArraySafetyFeaturesDisabled;
         } else {
             existingListContent = stringArraySafetyFeaturesOn;
@@ -389,7 +390,7 @@ public class Utils {
         ArrayList<Integer> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
-        if (Settings.disableSafetyFeatures) {
+        if (Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
             existingListContent = stringArraySafetyFeaturesDisabled;
         } else {
             existingListContent = stringArraySafetyFeaturesOn;
