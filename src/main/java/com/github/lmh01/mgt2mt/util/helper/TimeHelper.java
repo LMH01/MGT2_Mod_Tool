@@ -13,7 +13,7 @@ public class TimeHelper {
 
     private int timePassed = 0;
     private boolean measureTime = false;
-    private int id;
+    private final int id;
     private int lastMeasurement = 0;
 
     /**

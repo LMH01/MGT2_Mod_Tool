@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class NpcGame extends AbstractSimpleContent implements DependentContent {
 
-    ArrayList<Integer> genres;
+    final ArrayList<Integer> genres;
 
     public NpcGame(String name, Integer id, ArrayList<Integer> genres) {
         super(NpcGameManager.INSTANCE, name, id);

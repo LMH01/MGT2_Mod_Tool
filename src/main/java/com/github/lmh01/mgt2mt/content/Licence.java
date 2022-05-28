@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Licence extends AbstractSimpleContent {
 
-    LicenceType licenceType;
+    final LicenceType licenceType;
 
     public Licence(String name, Integer id, LicenceType licenceType) {
         super(LicenceManager.INSTANCE, name, id);

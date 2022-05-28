@@ -166,6 +166,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void openAddModGui() throws ModProcessingException {
         final Map<String, String>[] nameTranslations = new Map[]{new HashMap<>()};
         String[] string = GenreManager.INSTANCE.getContentByAlphabet();

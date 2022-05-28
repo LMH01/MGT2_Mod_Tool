@@ -16,14 +16,14 @@ public class WindowAddGenrePage9 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage9.class);
     static final WindowAddGenrePage9 FRAME = new WindowAddGenrePage9();
     static int combinedValue;
-    JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
-    JSpinner spinnerGameplay = new JSpinner();
-    JSpinner spinnerGraphic = new JSpinner();
-    JSpinner spinnerSound = new JSpinner();
-    JSpinner spinnerControl = new JSpinner();
+    final JPanel contentPane = new JPanel();
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JSpinner spinnerGameplay = new JSpinner();
+    final JSpinner spinnerGraphic = new JSpinner();
+    final JSpinner spinnerSound = new JSpinner();
+    final JSpinner spinnerControl = new JSpinner();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

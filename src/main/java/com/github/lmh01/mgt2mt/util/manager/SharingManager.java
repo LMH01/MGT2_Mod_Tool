@@ -119,7 +119,8 @@ public class SharingManager {
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                                         return;
                                     }
-                                    if (importContents(contentsToImport)) {
+                                    try {
+                                        importContents(contentsToImport);
                                         if (importType.equals(ImportType.RESTORE_POINT)) {
                                             TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"), timeHelper.getMeasuredTimeDisplay()));
                                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
@@ -127,7 +128,7 @@ public class SharingManager {
                                             TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.importAll.completed"), timeHelper.getMeasuredTimeDisplay()));
                                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                                         }
-                                    } else {
+                                    } catch (ModProcessingException e) {
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                                     }
                                 } else {
@@ -925,13 +926,12 @@ public class SharingManager {
     /**
      * Adds all contents contained in the list to the game.
      */
-    private static boolean importContents(Map<BaseContentManager, List<AbstractBaseContent>> contents) throws ModProcessingException {
+    private static void importContents(Map<BaseContentManager, List<AbstractBaseContent>> contents) throws ModProcessingException {
         for (Map.Entry<BaseContentManager, List<AbstractBaseContent>> entry : contents.entrySet()) {
             if (!entry.getValue().isEmpty()) {
                 entry.getKey().addContents(entry.getValue());
             }
         }
-        return true;
     }
 
     /**

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ReadDefaultContent {
 
-    public static Toml toml;
+    public static final Toml toml;
 
     static {
         toml = new Toml().read(DefaultContentManager.DEFAULT_CONTENT_FILE);

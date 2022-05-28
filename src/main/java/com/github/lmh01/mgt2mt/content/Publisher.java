@@ -19,18 +19,18 @@ import java.util.Set;
 
 public class Publisher extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
 
-    String date;
-    Image icon;
-    boolean developer;
-    boolean publisher;
-    Integer marketShare;
-    Integer share;
-    Integer genreId;
-    boolean onlyMobile;
-    Integer speed;
-    Integer comVal;
-    boolean notForSale;
-    CountryType country;
+    final String date;
+    final Image icon;
+    final boolean developer;
+    final boolean publisher;
+    final Integer marketShare;
+    final Integer share;
+    final Integer genreId;
+    final boolean onlyMobile;
+    final Integer speed;
+    final Integer comVal;
+    final boolean notForSale;
+    final CountryType country;
 
     public Publisher(String name,
                      Integer id,

@@ -19,11 +19,11 @@ import java.util.Map;
 
 public class NpcEngine extends AbstractAdvancedContent implements DependentContent {
 
-    String date;
-    int genre;
-    int platform;
-    int price;
-    int share;
+    final String date;
+    final int genre;
+    final int platform;
+    final int price;
+    final int share;
 
     public NpcEngine(String name,
                      Integer id,

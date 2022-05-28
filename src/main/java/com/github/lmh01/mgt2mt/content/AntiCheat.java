@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class AntiCheat extends AbstractAdvancedContent {
 
-    String date;
-    int price;
-    int devCosts;
+    final String date;
+    final int price;
+    final int devCosts;
 
     public AntiCheat(String name, Integer id, TranslationManager nameTranslations, String date, int price, int devCosts) {
         super(AntiCheatManager.INSTANCE, name, id, nameTranslations);

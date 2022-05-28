@@ -15,13 +15,13 @@ import java.awt.*;
 public class WindowAddGenrePage3 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage3.class);
     static final WindowAddGenrePage3 FRAME = new WindowAddGenrePage3();
-    JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
-    JSpinner spinnerResearchPoints = new JSpinner();
-    JSpinner spinnerDevelopmentCost = new JSpinner();
-    JSpinner spinnerGenrePrice = new JSpinner();
+    final JPanel contentPane = new JPanel();
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JSpinner spinnerResearchPoints = new JSpinner();
+    final JSpinner spinnerDevelopmentCost = new JSpinner();
+    final JSpinner spinnerGenrePrice = new JSpinner();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

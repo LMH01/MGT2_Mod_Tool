@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class CopyProtection extends AbstractAdvancedContent {
 
-    String date;
-    int price;
-    int devCosts;
+    final String date;
+    final int price;
+    final int devCosts;
 
     public CopyProtection(String name, Integer id, TranslationManager nameTranslations, String date, int price, int devCosts) {
         super(CopyProtectionManager.INSTANCE, name, id, nameTranslations);

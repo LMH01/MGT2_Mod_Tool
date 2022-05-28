@@ -12,17 +12,17 @@ import java.util.Map;
 
 public class EngineFeature extends AbstractAdvancedContent {
 
-    String description;
-    EngineFeatureType engineFeatureType;
-    String date;
-    int researchPoints;
-    int price;
-    int devConsts;
-    int techLevel;
-    int gameplay;
-    int graphic;
-    int sound;
-    int tech;
+    final String description;
+    final EngineFeatureType engineFeatureType;
+    final String date;
+    final int researchPoints;
+    final int price;
+    final int devConsts;
+    final int techLevel;
+    final int gameplay;
+    final int graphic;
+    final int sound;
+    final int tech;
 
     public EngineFeature(String name,
                          TranslationManager translations,

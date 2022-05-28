@@ -24,13 +24,13 @@ public class WindowSettings extends JFrame {
     static Path inputFolder = null;//This string contains the current mgt2folder when the program is started
     private static Path outputFolder = null;//This string contains the folder path that should be set
     private HashMap<SafetyFeature, JCheckBox> safetyFeatureCheckboxes = new HashMap<>();
-    JComboBox comboBoxMGT2FolderOperation = new JComboBox();
-    JComboBox comboBoxLanguage = new JComboBox();
-    JComboBox comboBoxUpdateChannel = new JComboBox();
-    JButton configureSafetyFeatures = new JButton(I18n.INSTANCE.get("window.settings.safetyFeatures.configureButton"));
-    JCheckBox checkBoxExportStorage = new JCheckBox(I18n.INSTANCE.get("window.settings.exportStorage.checkBoxText"));
-    JCheckBox checkBoxSaveLogs = new JCheckBox(I18n.INSTANCE.get("window.settings.checkBox.saveLogs"));
-    AtomicBoolean doNotPerformComboBoxActionListener = new AtomicBoolean(false);
+    final JComboBox comboBoxMGT2FolderOperation = new JComboBox();
+    final JComboBox comboBoxLanguage = new JComboBox();
+    final JComboBox comboBoxUpdateChannel = new JComboBox();
+    final JButton configureSafetyFeatures = new JButton(I18n.INSTANCE.get("window.settings.safetyFeatures.configureButton"));
+    final JCheckBox checkBoxExportStorage = new JCheckBox(I18n.INSTANCE.get("window.settings.exportStorage.checkBoxText"));
+    final JCheckBox checkBoxSaveLogs = new JCheckBox(I18n.INSTANCE.get("window.settings.checkBox.saveLogs"));
+    final AtomicBoolean doNotPerformComboBoxActionListener = new AtomicBoolean(false);
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

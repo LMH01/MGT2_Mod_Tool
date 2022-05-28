@@ -9,7 +9,7 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
  */
 public abstract class AbstractAdvancedContent extends AbstractBaseContent {
 
-    protected TranslationManager translationManager;
+    protected final TranslationManager translationManager;
 
     public AbstractAdvancedContent(AbstractBaseContentManager contentType, String name, Integer id, TranslationManager translationManager) {
         super(contentType, name, id);

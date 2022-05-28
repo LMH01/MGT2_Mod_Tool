@@ -18,10 +18,10 @@ import java.util.ArrayList;
 public class WindowAddGenrePage7 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
     static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
-    JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JPanel contentPane = new JPanel();
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
     final JList<String> LIST_GAMEPLAY_FEATURES_BAD = new JList<>();
     final JList<String> LIST_GAMEPLAY_FEATURES_GOOD = new JList<>();
     final JScrollPane SCROLL_PANE_GAMEPLAY_FEATURES_BAD = new JScrollPane(LIST_GAMEPLAY_FEATURES_BAD);

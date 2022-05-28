@@ -18,12 +18,12 @@ import java.util.Objects;
 public class WindowAddGenrePage2 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage2.class);
     static final WindowAddGenrePage2 FRAME = new WindowAddGenrePage2();
-    JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
-    JSpinner spinnerUnlockYear = new JSpinner();
-    JComboBox<String> comboBoxGenreUnlockMonth = WindowHelper.getUnlockMonthComboBox();
+    final JPanel contentPane = new JPanel();
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JSpinner spinnerUnlockYear = new JSpinner();
+    final JComboBox<String> comboBoxGenreUnlockMonth = WindowHelper.getUnlockMonthComboBox();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

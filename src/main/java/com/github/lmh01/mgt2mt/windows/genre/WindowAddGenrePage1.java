@@ -25,14 +25,14 @@ public class WindowAddGenrePage1 extends JFrame {
     private static Map<String, String> mapDescriptionTranslations = new HashMap<>();
     public static boolean nameTranslationsAdded = false;
     public static boolean descriptionTranslationsAdded = false;
-    JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
-    JButton buttonAddNameTranslations = new JButton("TRANSL");
-    JButton buttonAddDescriptionTranslations = new JButton("TRANSL");
-    JButton buttonClearTranslations = new JButton(I18n.INSTANCE.get("mod.genre.clearTranslations"));
-    JTextField textFieldGenreName = new JTextField();
-    JTextField textFieldGenreDescription = new JTextField();
+    final JPanel contentPane = new JPanel();
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JButton buttonAddNameTranslations = new JButton("TRANSL");
+    final JButton buttonAddDescriptionTranslations = new JButton("TRANSL");
+    final JButton buttonClearTranslations = new JButton(I18n.INSTANCE.get("mod.genre.clearTranslations"));
+    final JTextField textFieldGenreName = new JTextField();
+    final JTextField textFieldGenreDescription = new JTextField();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

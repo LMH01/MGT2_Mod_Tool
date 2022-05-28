@@ -15,21 +15,21 @@ import java.awt.*;
 public class WindowAddGenrePage8 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage8.class);
     static final WindowAddGenrePage8 FRAME = new WindowAddGenrePage8();
-    JPanel contentPane = new JPanel();
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
-    JSpinner spinnerDesign1 = new JSpinner();
-    JSpinner spinnerDesign2 = new JSpinner();
-    JSpinner spinnerDesign3 = new JSpinner();
-    JSpinner spinnerDesign4 = new JSpinner();
-    JSpinner spinnerDesign5 = new JSpinner();
-    JSpinner spinnerDesign6 = new JSpinner();
-    JSpinner spinnerDesign7 = new JSpinner();
-    JSpinner spinnerDesign8 = new JSpinner();
-    JSpinner spinnerDesign9 = new JSpinner();
-    JSpinner spinnerDesign10 = new JSpinner();
-    JSpinner spinnerDesign11 = new JSpinner();
+    final JPanel contentPane = new JPanel();
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JSpinner spinnerDesign1 = new JSpinner();
+    final JSpinner spinnerDesign2 = new JSpinner();
+    final JSpinner spinnerDesign3 = new JSpinner();
+    final JSpinner spinnerDesign4 = new JSpinner();
+    final JSpinner spinnerDesign5 = new JSpinner();
+    final JSpinner spinnerDesign6 = new JSpinner();
+    final JSpinner spinnerDesign7 = new JSpinner();
+    final JSpinner spinnerDesign8 = new JSpinner();
+    final JSpinner spinnerDesign9 = new JSpinner();
+    final JSpinner spinnerDesign10 = new JSpinner();
+    final JSpinner spinnerDesign11 = new JSpinner();
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

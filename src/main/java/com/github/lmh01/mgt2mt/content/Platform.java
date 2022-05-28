@@ -16,20 +16,20 @@ import java.util.*;
 
 public class Platform extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
 
-    String manufacturer;
-    Map<String, String> manufacturerTranslations;
-    String releaseDate;
-    String endDate;
-    Integer devKitCost;
-    Integer devCosts;
-    Integer techLevel;
-    Integer units;
-    ArrayList<PlatformImage> platformImages;// The images that belong to the platform
-    ArrayList<Integer> requiredGameplayFeatures;
-    Integer complexity;
-    boolean hasInternet;
-    PlatformType type;
-    boolean startPlatform;
+    final String manufacturer;
+    final Map<String, String> manufacturerTranslations;
+    final String releaseDate;
+    final String endDate;
+    final Integer devKitCost;
+    final Integer devCosts;
+    final Integer techLevel;
+    final Integer units;
+    final ArrayList<PlatformImage> platformImages;// The images that belong to the platform
+    final ArrayList<Integer> requiredGameplayFeatures;
+    final Integer complexity;
+    final boolean hasInternet;
+    final PlatformType type;
+    final boolean startPlatform;
 
     public Platform(String name,
                     Integer id,

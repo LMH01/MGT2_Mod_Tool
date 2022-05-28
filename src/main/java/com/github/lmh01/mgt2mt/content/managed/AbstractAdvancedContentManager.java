@@ -18,7 +18,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 public abstract class AbstractAdvancedContentManager extends AbstractBaseContentManager {
-    Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedContentManager.class);
+    final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedContentManager.class);
 
     public List<Map<String, String>> fileContent;
     private Map<String, Integer> contentIdsByNames;

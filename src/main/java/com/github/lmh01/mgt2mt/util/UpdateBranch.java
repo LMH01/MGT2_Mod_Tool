@@ -3,7 +3,7 @@ package com.github.lmh01.mgt2mt.util;
 public enum UpdateBranch {
     RELEASE("Release"), ALPHA("Alpha");
 
-    String name;
+    final String name;
 
     UpdateBranch(String name) {
         this.name = name;

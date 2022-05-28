@@ -23,14 +23,14 @@ public class ThreadHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ThreadHandler.class);
     private static int threadsRunning = 0;
     private static final String[] controlThreadBlacklist = {"runnableCheckForUpdates"};
-    private static Map<String, Integer> threadsRan = new HashMap<>();
-    public static Runnable runnableDoOnShutdown = () -> {
+    private static final Map<String, Integer> threadsRan = new HashMap<>();
+    public static final Runnable runnableDoOnShutdown = () -> {
         LOGGER.info("Performing exit tasks...");
         LogFile.stopLogging();
         LOGGER.info("Exit tasks complete. Good night");
     };
 
-    public static Runnable runnableDeleteTempFolder = () -> {
+    public static final Runnable runnableDeleteTempFolder = () -> {
         WindowMain.lockMenuItems(true);
         deleteTempFolder();
         WindowMain.lockMenuItems(false);
@@ -161,6 +161,7 @@ public class ThreadHandler {
     /**
      * Starts a thread that waits until the started thread dies and performs tasks after that.
      */
+    @SuppressWarnings({"LoopConditionNotUpdatedInsideLoop", "StatementWithEmptyBody"})
     public static void startControlThread(Thread threadToWaitFor) {
         Thread thread = new Thread(() -> {
             DebugHelper.debug(LOGGER, "Started control thread for thread: " + threadToWaitFor.getName());

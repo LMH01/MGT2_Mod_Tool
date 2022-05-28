@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class I18n {
     private static final Logger LOGGER = LoggerFactory.getLogger(I18n.class);
-    public static I18n INSTANCE = new I18n();
+    public static final I18n INSTANCE = new I18n();
 
     static {
         try {
@@ -28,7 +28,7 @@ public class I18n {
         }
     }
 
-    Map<String, Map<String, String>> locale = new HashMap<>();
+    final Map<String, Map<String, String>> locale = new HashMap<>();
     String currentLocale = "en";
     String fallbackLocale = "en";
 

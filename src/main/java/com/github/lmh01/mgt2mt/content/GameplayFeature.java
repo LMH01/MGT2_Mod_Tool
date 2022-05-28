@@ -13,20 +13,20 @@ import java.util.*;
 
 public class GameplayFeature extends AbstractAdvancedContent implements DependentContent {
 
-    String description;
-    GameplayFeatureType gameplayFeatureType;
-    String date;
-    int researchPoints;
-    int price;
-    int devCosts;
-    int gameplay;
-    int graphic;
-    int sound;
-    int tech;
-    ArrayList<Integer> badGenres;// Stores the ids of genres that fit good with this gameplay feature
-    ArrayList<Integer> goodGenres;// Stores the ids of genres that fit bad with this gameplay feature
-    boolean arcade;
-    boolean mobile;
+    final String description;
+    final GameplayFeatureType gameplayFeatureType;
+    final String date;
+    final int researchPoints;
+    final int price;
+    final int devCosts;
+    final int gameplay;
+    final int graphic;
+    final int sound;
+    final int tech;
+    final ArrayList<Integer> badGenres;// Stores the ids of genres that fit good with this gameplay feature
+    final ArrayList<Integer> goodGenres;// Stores the ids of genres that fit bad with this gameplay feature
+    final boolean arcade;
+    final boolean mobile;
 
     public GameplayFeature(String name,
                            Integer id,

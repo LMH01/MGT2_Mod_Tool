@@ -17,11 +17,11 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
      * The map key is the translation key and the value is the translation for that key.
      * @see TranslationManager#TRANSLATION_KEYS The translation keys.
      */
-    public Map<String, String> translations;
+    public final Map<String, String> translations;
 
-    ArrayList<Integer> compatibleGenres;
+    final ArrayList<Integer> compatibleGenres;
 
-    Integer ageNumber;
+    final Integer ageNumber;
 
     public Theme(String name, Integer id, Map<String, String> translations, ArrayList<Integer> compatibleGenres, int ageNumber) {
         super(ThemeManager.INSTANCE, name, id);

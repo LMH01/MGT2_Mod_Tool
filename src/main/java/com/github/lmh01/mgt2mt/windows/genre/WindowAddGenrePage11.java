@@ -19,12 +19,12 @@ import java.io.File;
 
 public class WindowAddGenrePage11 extends JFrame {
     static final WindowAddGenrePage11 FRAME = new WindowAddGenrePage11();
-    JPanel contentPane = new JPanel();
-    JButton buttonBrowse = new JButton("Browse");
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
-    JTextField textFieldImagePath = new JTextField();
+    final JPanel contentPane = new JPanel();
+    final JButton buttonBrowse = new JButton("Browse");
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JTextField textFieldImagePath = new JTextField();
     File genreIcon = GenreManager.defaultGenreIcon.toFile();
 
     public static void createFrame() {

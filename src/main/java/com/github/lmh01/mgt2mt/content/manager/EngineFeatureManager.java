@@ -81,6 +81,7 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void openAddModGui() throws ModProcessingException {
         createBackup(false);
         analyzeFile();

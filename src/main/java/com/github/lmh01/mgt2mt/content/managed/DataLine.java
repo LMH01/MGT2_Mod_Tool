@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class DataLine {
 
-    Logger logger = LoggerFactory.getLogger(DataLine.class);
+    final Logger logger = LoggerFactory.getLogger(DataLine.class);
 
     /**
      * The key of this data entry, this the value between the [] in the games files.

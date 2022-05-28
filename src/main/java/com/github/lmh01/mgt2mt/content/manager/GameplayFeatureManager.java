@@ -145,6 +145,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void openAddModGui() throws ModProcessingException {
         final ArrayList<Integer>[] badGenreIds = new ArrayList[]{new ArrayList<>()};
         final ArrayList<Integer>[] goodGenreIds = new ArrayList[]{new ArrayList<>()};

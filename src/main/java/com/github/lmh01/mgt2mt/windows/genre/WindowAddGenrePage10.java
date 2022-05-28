@@ -19,12 +19,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class WindowAddGenrePage10 extends JFrame {
     static final WindowAddGenrePage10 FRAME = new WindowAddGenrePage10();
-    JPanel contentPane = new JPanel();
-    JButton buttonAddScreenshot = new JButton("Add screenshot(s)");
-    JButton buttonResetAddedScreenshots = new JButton("Reset");
-    JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
-    JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
-    JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JPanel contentPane = new JPanel();
+    final JButton buttonAddScreenshot = new JButton("Add screenshot(s)");
+    final JButton buttonResetAddedScreenshots = new JButton("Reset");
+    final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
+    final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
+    final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
 
     public static void createFrame() {
         EventQueue.invokeLater(() -> {

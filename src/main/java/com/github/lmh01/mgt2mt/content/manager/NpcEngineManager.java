@@ -75,6 +75,7 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void openAddModGui() throws ModProcessingException {
         JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.npcEngine.addMod.components.textFieldName.initialValue"));
         final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};

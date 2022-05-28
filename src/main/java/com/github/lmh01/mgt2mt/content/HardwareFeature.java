@@ -11,14 +11,14 @@ import java.util.Map;
 
 public class HardwareFeature extends AbstractAdvancedContent {
 
-    String description;
-    String date;
-    int researchPoints;
-    int price;
-    int devCosts;
-    int quality;
-    boolean onlyStationary;
-    boolean needsInternet;
+    final String description;
+    final String date;
+    final int researchPoints;
+    final int price;
+    final int devCosts;
+    final int quality;
+    final boolean onlyStationary;
+    final boolean needsInternet;
 
     public HardwareFeature(String name,
                            Integer id,

@@ -285,6 +285,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void openAddModGui() throws ModProcessingException {
         analyzeFile();
         GenreManager.INSTANCE.analyzeFile();

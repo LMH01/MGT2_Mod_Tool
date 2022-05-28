@@ -60,6 +60,7 @@ public class HardwareFeatureManager extends AbstractAdvancedContentManager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void openAddModGui() throws ModProcessingException {
         JTextField textFieldName = new JTextField(I18n.INSTANCE.get("mod.hardwareFeature.addMod.components.textFieldName.initialValue"));
         final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
