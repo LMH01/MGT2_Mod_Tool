@@ -732,9 +732,9 @@ public class SharingManager {
      * @param childName   The name of the mod that should be replaced
      * @param replacement The name with which the missing dependency should be replaced
      * @param <T>         An abstract base mod that needs dependencies
-     * @throws ModProcessingException
      * @see SharingManager#replaceDependencyInMap(BaseContentManager, Map, String, String)
      * @see SharingManager#replaceDependencyInDependencyMap(Map, BaseContentManager, String, String)
+     * @throws ModProcessingException If the dependency could not be replaced
      */
     private static <T extends BaseContentManager & DependentContentManager> void replaceDependencies(T parent, Map<String, Object> parentMap, BaseContentManager child, String childName, String replacement) throws ModProcessingException {
         replaceDependencyInMap(parent, parentMap, childName, replacement);

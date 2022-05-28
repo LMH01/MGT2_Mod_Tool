@@ -70,10 +70,10 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
         map.replace("GENRES", SharingHelper.getExportNamesString(GenreManager.INSTANCE, compatibleGenres));
     }
 
-    @Override
     /**
      * Returns the german name with the genre ids and the violence level
      */
+    @Override
     public String getLine() {
         StringBuilder line = new StringBuilder(translations.get("GE") + " " +  Utils.transformArrayListToString(compatibleGenres));
         if (ageNumber > 0) {
