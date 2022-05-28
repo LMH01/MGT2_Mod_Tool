@@ -215,7 +215,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         JCheckBox notForSale = new JCheckBox(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.notForSale"));
         notForSale.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.notForSale.toolTip"));
 
-        JSpinner speed = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.speed.toolTip", 5, 0, 10, 1);
+        JSpinner speed = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.speed.toolTip", 5, 0, 5, 1);
 
         JSpinner comVal = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.comVal.toolTip", 10000000, 10000000, 100000000, 500000);
 
