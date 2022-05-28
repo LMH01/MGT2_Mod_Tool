@@ -14,6 +14,7 @@ public class ContentEditor {
 
     /**
      * Opens a window where the user can edit the genre/theme fits
+     * @throws ModProcessingException Something went wrong while editing the genre theme fit
      */
     public static void editGenreThemeFit() throws ModProcessingException {
         JLabel labelExplanation = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.message"));

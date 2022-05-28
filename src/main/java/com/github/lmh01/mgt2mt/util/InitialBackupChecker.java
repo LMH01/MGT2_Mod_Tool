@@ -21,6 +21,7 @@ public class InitialBackupChecker {
      * Checks if the initial backup is up-to-date
      *
      * @return True if initial backup is up-to-date. False otherwise
+     * @throws IOException If the file cannot be read
      */
     public static boolean checkIfUpToDate() throws IOException {
         if (Files.exists(initialBackupVersion)) {

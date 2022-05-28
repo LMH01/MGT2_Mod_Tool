@@ -51,6 +51,7 @@ public class Backup {
      *
      * @param fileToBackup  This is the file from which a backup should be created.
      * @param initialBackup Set true when this is the initial backup.
+     * @param showTextAreaMessages Set true when messages should be written to the text area.
      * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createBackup(File fileToBackup, boolean initialBackup, boolean showTextAreaMessages) throws IOException {
@@ -206,6 +207,7 @@ public class Backup {
      * Restores the save game backup for the input save game slot
      *
      * @param saveGameSlot The slot where the save game is saved that should be restored
+     * @throws IOException If the backup could not be restored
      */
     public static void restoreSaveGameBackup(int saveGameSlot) throws IOException {
         File saveGameBackup = ModManagerPaths.BACKUP.getPath().resolve(latestBackupFolderName + "/savegame" + saveGameSlot + ".txt").toFile();
@@ -321,6 +323,8 @@ public class Backup {
 
     /**
      * Create a backup of each save game.
+     * @param initialBackup True if this is the initial backup
+     * @throws IOException Throws IOException when backup was not successful.
      */
     public static void backupSaveGames(boolean initialBackup) throws IOException {
         if (Backup.FILE_SAVE_GAME_FOLDER.toFile().exists()) {
@@ -342,6 +346,8 @@ public class Backup {
      * Creates a backup of each Theme file.
      *
      * @param initialBackup True if this is the initial backup.
+     * @param showTextAreaMessages True if text area messages should be printed.
+     * @throws IOException Throws IOException when backup was not successful.
      */
     public static void createThemeFilesBackup(boolean initialBackup, boolean showTextAreaMessages) throws IOException {
         for (int i = 0; i < TranslationManager.TRANSLATION_KEYS.length; i++) {

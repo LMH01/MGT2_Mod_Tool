@@ -37,6 +37,7 @@ public class TranslationManager {
     /**
      * Creates a new translation manager from the input map.
      * The input map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
+     * @param map Map that contains the initial translations
      */
     public TranslationManager(Map<String, ?> map) {
         Map<String, String> nt = new HashMap<>();
@@ -76,6 +77,7 @@ public class TranslationManager {
 
     /**
      * Sets the name translations map.
+     * @param map Map that contains the name translations
      */
     public void setNameTranslations(Map<String, String> map) {
         nameTranslations = map;
@@ -89,6 +91,8 @@ public class TranslationManager {
      * Prints the translations stored in the maps with the help of the buffered writer.
      * Example line: [NAME GE]Hallo Welt!
      * Does not write the translations for english!
+     * @param bw Buffered writer that writes the translations
+     * @throws IOException When an IO error occurs while the buffered writer writes
      */
     public void printTranslations(BufferedWriter bw) throws IOException {
         for (String string : TranslationManager.TRANSLATION_KEYS) {
@@ -110,6 +114,7 @@ public class TranslationManager {
     /**
      * Transforms the maps of this translation manager to a map that can be used to export the translations.
      * The output map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
+     * @return The translations as a map
      */
     public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>();
@@ -198,6 +203,7 @@ public class TranslationManager {
      *
      * @param bw  The buffered writer
      * @param map The map containing the translations
+     * @throws IOException If an error occurs while writing
      */
     public static void printLanguages(BufferedWriter bw, Map<String, String> map) throws IOException {
         for (String string : TranslationManager.TRANSLATION_KEYS) {

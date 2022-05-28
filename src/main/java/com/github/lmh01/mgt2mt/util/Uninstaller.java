@@ -27,6 +27,7 @@ public class Uninstaller {
 
     /**
      * Opens a gui where the user can select what should be removed. Selected items are then removed and the tool closes.
+     * @throws ModProcessingException If something went wrong while removing mods.
      */
     public static void uninstall() throws ModProcessingException {
         JLabel labelDescription = new JLabel(I18n.INSTANCE.get("window.uninstall.labelDescription"));
@@ -169,6 +170,7 @@ public class Uninstaller {
      *
      * @param uninstallFailedExplanation This string builder contains reasons in case the removal of some mods fails
      * @return Returns false when the removal of mods was successful
+     * @throws ModProcessingException If something went wrong while uninstalling mods
      */
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {
         CompanyLogoAnalyzer.analyzeLogoNumbers();

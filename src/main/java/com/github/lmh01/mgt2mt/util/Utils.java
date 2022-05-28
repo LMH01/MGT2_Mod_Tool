@@ -115,14 +115,16 @@ public class Utils {
     }
 
     /**
-     * Opens the Github page for MGT2MT in the default browser.
+     * Opens the GitHub page for MGT2MT in the default browser.
+     * @throws IOException If the page could not be opened
      */
     public static void openGithubPage() throws Exception {
         Desktop.getDesktop().browse(new URL(GITHUB_URL).toURI());
     }
 
     /**
-     * Opens the Github page for MGT2MT in the default browser.
+     * Opens the GitHub page for MGT2MT in the default browser.
+     * @throws IOException If the page could not be opened
      */
     public static void openMoreModsPage() throws Exception {
         Desktop.getDesktop().browse(new URL(MORE_MODS_URL).toURI());
@@ -159,6 +161,7 @@ public class Utils {
      * Opens a file chooser where a single image file can be selected.
      *
      * @return The selected image file path
+     * @throws ModProcessingException If the user did not select a file
      */
     public static Path getImagePath() throws ModProcessingException {
         return getImagePath(false);
@@ -169,6 +172,7 @@ public class Utils {
      *
      * @param showConfirmMessage Set true to display a message that the image file has been set.
      * @return Returns the selected image file path
+     * @throws ModProcessingException If the user did not select a file
      */
     public static Path getImagePath(boolean showConfirmMessage) throws ModProcessingException {
         try {
@@ -242,6 +246,8 @@ public class Utils {
 
     /**
      * Transforms a string array to a integer array.
+     * @param strings String array to transform
+     * @return The transformed integer array
      * @throws NumberFormatException When the strings can not be parsed to integer.
      */
     public static ArrayList<Integer> transformStringArrayToIntegerArray(ArrayList<String> strings) throws NumberFormatException {
@@ -255,7 +261,9 @@ public class Utils {
     /**
      * Returns the part before the first {@literal <}.
      * Trims the string to remove whitespaces.
-     * See {@link Utils#getEntriesFromString(String)} for more information
+     * @param string The string to split the first part from
+     * @return The first part of the string
+     * @see Utils#getEntriesFromString(String) for more information
      */
     public static String getFirstPart(String string) throws NullPointerException {
         StringBuilder output = new StringBuilder();
@@ -272,6 +280,10 @@ public class Utils {
     /**
      * Converts the names in the string to the corresponding id.
      * Example: Input: {@literal <hallo><tree>} Output: {@literal [0,1]}
+     * @param contentManager The content manager to get the names from
+     * @param string The string to convert
+     * @return An array list containing the ids of the names
+     * @throws ModProcessingException When {@link Utils#getEntriesFromString(String)} fails
      */
     public static ArrayList<Integer> getContentIdsFromString(BaseContentManager contentManager, String string) throws ModProcessingException {
         ArrayList<Integer> ids = new ArrayList<>();
@@ -433,6 +445,9 @@ public class Utils {
 
     /**
      * Checks the array lists if they have mutual entries. Returns true if the do. Returns false if the don't
+     * @param arrayList1 The first array list
+     * @param arrayList2 The second array list
+     * @return Returns true if the lists have mutual entries, false if they don't
      */
     public static boolean checkForMutualEntries(ArrayList<?> arrayList1, ArrayList<?> arrayList2) {
         for (Object object1 : arrayList1) {
@@ -447,6 +462,7 @@ public class Utils {
 
     /**
      * Opens the given folder/file
+     * @param path The path that should be opened
      */
     public static void open(Path path) {
         try {
@@ -488,10 +504,12 @@ public class Utils {
     }
 
     /**
+     * @param min The smallest number
+     * @param max The largest number
      * @return Returns a random number between and including origin and range.
      */
-    public static int getRandomNumber(int origin, int range) {
-        return ThreadLocalRandom.current().nextInt(origin, range);
+    public static int getRandomNumber(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max);
     }
 
     /**
@@ -566,7 +584,9 @@ public class Utils {
 // --Commented out by Inspection STOP (13.08.2021 22:57)
 
     /**
-     * Converts the input seconds to minutes and seconds
+     * Converts the input seconds to minute and seconds
+     * @param second The number of seconds to convert
+     * @return Returns the converted time
      */
     public static String convertSecondsToTime(int second) {
         int minutes = (second % 3600) / 60;
@@ -576,6 +596,7 @@ public class Utils {
     }
 
     /**
+     * @param value The value that should be translated
      * @return Returns the value of the boolean translated
      */
     public static String getTranslatedValueFromBoolean(boolean value) {
@@ -589,6 +610,7 @@ public class Utils {
     /**
      * Converts the input integer to string in the following way: 1000000 {@literal ->} 1.000.000
      *
+     * @param inputInt The input number
      * @return Returns the converted number as string
      */
     public static String convertIntToString(int inputInt) {
@@ -598,6 +620,8 @@ public class Utils {
 
     /**
      * Turns the input string to lowercase and replaces all whitespaces and symbols with space
+     * @param string The input string
+     * @return Returns the converted string
      */
     public static String convertName(String string) {
         return string.toLowerCase().trim().replaceAll("[^a-zA-Z0-9]", "_");
@@ -607,6 +631,7 @@ public class Utils {
      * Transforms the input map of format {@literal Map<String, Object> to Map<String, String>}.
      * If an object can not be cast to string it will not be placed in the map that is returned.
      *
+     * @param map The map that should be converted
      * @return The transformed map
      */
     public static Map<String, String> transformObjectMapToStringMap(Map<String, Object> map) {
@@ -671,7 +696,8 @@ public class Utils {
 
 
     /**
-     * Transforms the input array list to a normal array
+     * @param list The list that should be converted to a string array
+     * @return The array that contains the strings of the list
      */
     public static String[] transformListToArray(List<String> list) {
         String[] out = new String[list.size()];

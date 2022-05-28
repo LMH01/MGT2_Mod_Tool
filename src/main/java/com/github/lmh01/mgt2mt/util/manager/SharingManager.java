@@ -34,6 +34,8 @@ public class SharingManager {
     /**
      * Opens a window where the user can select folders that should be searched for mods.
      *
+     * @param importType The type of the import.
+     * @throws ModProcessingException When something went wrong.
      * @see SharingManager#importAll(ImportType, Set)
      */
     public static void importAll(ImportType importType) throws ModProcessingException {
@@ -50,6 +52,7 @@ public class SharingManager {
      *
      * @param importType The type of the import.
      * @param path       The root folder where the search for mods should be started at. Use {@link SharingManager#importAll(ImportType, Set)} if multiple root folders should be searched.
+     * @throws ModProcessingException When something went wrong.
      */
     public static void importAll(ImportType importType, Path path) throws ModProcessingException {
         Set<Path> paths = new HashSet<>();
@@ -64,6 +67,7 @@ public class SharingManager {
      *
      * @param importType The type of the import.
      * @param paths      The root folders where the search for mods should be started at.
+     * @throws ModProcessingException When something went wrong.
      */
     public static void importAll(ImportType importType, Set<Path> paths) throws ModProcessingException {
         TimeHelper timeHelper = new TimeHelper();
@@ -1000,6 +1004,7 @@ public class SharingManager {
      *
      * @param content    The content that should be exported
      * @param folder The root folder where the mods should be exported to
+     * @throws ModProcessingException When something went wrong.
      */
     public static void exportSingleMod(AbstractBaseContent content, Path folder) throws ModProcessingException {
         LOGGER.info("exporting mod: " + content.name);
@@ -1060,6 +1065,7 @@ public class SharingManager {
      * The text area and the progress bar are used to display progress.
      *
      * @param exportType Determines how and to where the mods should be exported
+     * @param contents  The contents that should be exported
      * @throws ModProcessingException If something went wrong while exporting mods
      */
     public static void export(ExportType exportType, ArrayList<AbstractBaseContent> contents) throws ModProcessingException {
@@ -1165,6 +1171,7 @@ public class SharingManager {
      * The selected mods are then exported
      *
      * @see SharingManager#export(ExportType, ArrayList) will be used to write the export files.
+     * @throws ModProcessingException When something went wrong.
      */
     public static void exportSelected() throws ModProcessingException {
         Map<BaseContentManager, JPanel> importModPanels = new HashMap<>();
@@ -1211,6 +1218,7 @@ public class SharingManager {
 
     /**
      * Opens a JOptionPane where the user can decide how the mods should be exported: Single or bundled
+     * @throws ModProcessingException When something went wrong.
      */
     public static void displayExportModsWindow() throws ModProcessingException {
         ContentAdministrator.analyzeContents();

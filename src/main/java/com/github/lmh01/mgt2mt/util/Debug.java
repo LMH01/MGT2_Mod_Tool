@@ -528,6 +528,7 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
     /**
      * @param path The file that should be checked
      * @return The date the file was last modified
+     * @throws IOException If the file does not exist
      */
     public static String getLastModifiedDateFromFile(Path path) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -539,6 +540,8 @@ public class Debug {//TODO Calls zu debug aus richtigem code rausnehmen (wenn be
      * Checks if the new date is after the old date.
      * Input string formatting: dd/MM/yyyy HH:mm:ss
      *
+     * @param oldDate The old date
+     * @param newDate The new date
      * @return True if new date is after old date. False otherwise
      */
     public static boolean isDateNewer(String oldDate, String newDate) {

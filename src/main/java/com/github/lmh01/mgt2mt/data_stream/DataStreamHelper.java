@@ -29,8 +29,9 @@ public class DataStreamHelper {
 
     /**
      * Downloads the specified file to the destination
-     *
-     * @throws IOException when download failed
+     * @param URL The URL of the file to be downloaded.
+     * @param destination The destination where the file should be downloaded to.
+     * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
     public static void downloadFile(String URL, File destination) throws IOException {
         if (destination.exists()) {
@@ -52,6 +53,9 @@ public class DataStreamHelper {
     /**
      * Downloads the specified zip file to the destination.
      * Prints message to text area.
+     * @param URL The URL of the file to be downloaded.
+     * @param destination The destination where the file should be downloaded to.
+     * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
     public static void downloadZip(String URL, Path destination) throws IOException {
         File destinationFile = destination.toFile();
@@ -67,6 +71,7 @@ public class DataStreamHelper {
     /**
      * @param file The input file
      * @return Returns a list containing map entries for every data package in the input text file.
+     * @throws IOException If the file cannot be opened.
      */
     public static List<Map<String, String>> parseDataFile(File file) throws IOException {
         List<Map<String, String>> fileParts = new ArrayList<>();
@@ -152,6 +157,7 @@ public class DataStreamHelper {
      * @param file    The input file
      * @param charSet Defines what charset the source file uses
      * @return Returns a map. The key is the line number(=id) and the value is the content for that line number. Note: line number is reduced by 1, so line 1 becomes line 0.
+     * @throws IOException When the file cannot be read.
      */
     public static Map<Integer, String> getContentFromFile(File file, Charset charSet) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
@@ -222,8 +228,9 @@ public class DataStreamHelper {
      *
      * @param zipFile     The input zip file
      * @param destination The destination where the file should be unzipped to.
+     * @throws IOException If the zip file could not be unzipped or the destination directory could not be created or is not empty.
      */
-    public static void unzip(Path zipFile, Path destination) throws IOException, IllegalArgumentException {
+    public static void unzip(Path zipFile, Path destination) throws IOException {
         TimeHelper timeHelper = new TimeHelper();
         LOGGER.info("Unzipping folder [" + zipFile + "] to [" + destination + "]");
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.firstPart") + " [" + zipFile + "] " + I18n.INSTANCE.get("textArea.unzip.thirdPart") + " " + "[" + destination + "]");
@@ -299,6 +306,7 @@ public class DataStreamHelper {
      * @param rootDirectory The directory where the file search is started
      * @param fileName      The file name that should be searched
      * @return Returns an array list containing all files that match the file to search
+     * @throws IOException Thrown if the file search fails
      */
     public static ArrayList<File> getFiles(File rootDirectory, String fileName) throws IOException {
         ArrayList<File> arrayList = new ArrayList<>();
@@ -325,6 +333,7 @@ public class DataStreamHelper {
      *
      * @param sourceDirectory      The source
      * @param destinationDirectory The destination
+     * @throws IOException Thrown if the copy fails
      */
     public static void copyDirectory(Path sourceDirectory, Path destinationDirectory)
             throws IOException {
@@ -349,6 +358,8 @@ public class DataStreamHelper {
     /**
      * Deletes a complete directory with its contents.
      * Will use the progress bar.
+     * @param directoryToBeDeleted The directory to delete
+     * @throws IOException Thrown if the directory can not be deleted
      */
     public static void deleteDirectory(Path directoryToBeDeleted) throws IOException {
         deleteDirectory(directoryToBeDeleted, true);
@@ -357,7 +368,9 @@ public class DataStreamHelper {
     /**
      * Deletes a directory with its contents
      *
+     * @param directoryToBeDeleted The directory to delete
      * @param useProgressBar True when the progress bar should be used.
+     * @throws IOException Thrown if the directory can not be deleted
      */
     public static void deleteDirectory(Path directoryToBeDeleted, boolean useProgressBar) throws IOException {
         if (useProgressBar) {
@@ -392,7 +405,9 @@ public class DataStreamHelper {
     }
 
     /**
+     * @param dir The directory for which the number of files should be counted
      * @return The number of files in the directory and its subdirectories
+     * @throws IOException Thrown if the directory can not be read
      */
     public static long getFileCount(Path dir) throws IOException {
         return Files.walk(dir)

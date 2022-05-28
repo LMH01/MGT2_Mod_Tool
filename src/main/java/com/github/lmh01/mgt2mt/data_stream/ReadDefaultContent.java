@@ -21,6 +21,7 @@ public class ReadDefaultContent {
      *
      * @param defaultContentName The name that should be searched in the file.
      * @return Returns an array containing the content of the input file.
+     * @throws IOException If the default content file does not exist or could not be read.
      */
     public static String[] getDefault(String defaultContentName) throws IOException {
         return getDefault(defaultContentName, null);
@@ -32,6 +33,7 @@ public class ReadDefaultContent {
      * @param defaultContentName The name that should be searched in the file.
      * @param replacer           The function that is used to replace specific parts of the input.
      * @return Returns an array containing the content of the input file.
+     * @throws IOException If the default content file does not exist or could not be read.
      */
     public static String[] getDefault(String defaultContentName, Replacer replacer) throws IOException {
         ArrayList<Object> arrayList = new ArrayList<>();
