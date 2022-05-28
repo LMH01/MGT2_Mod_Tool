@@ -178,7 +178,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
     @Override
     protected List<DataLine> getDataLines() {
         List<DataLine> line = new ArrayList<>();
-        line.add(new DataLine("MANUFACTURER EN", true, DataType.STRING));
+        line.add(new DataLine("MANUFACTURER EN", false, DataType.STRING));
         line.add(new DataLine("DATE", true, DataType.STRING));
         line.add(new DataLine("PRICE", true, DataType.INT));
         line.add(new DataLine("DEV COSTS", true, DataType.INT));
