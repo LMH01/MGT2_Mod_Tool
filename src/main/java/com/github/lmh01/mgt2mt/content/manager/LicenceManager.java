@@ -34,13 +34,13 @@ public class LicenceManager extends AbstractSimpleContentManager {
     @Override
     protected String isLineValid(String line) {
         int availableTags = 0;
-        if (line.contains("BOOK")) {
+        if (line.contains("[BOOK]")) {
             availableTags++;
         }
-        if (line.contains("MOVIE")) {
+        if (line.contains("[MOVIE]")) {
             availableTags++;
         }
-        if (line.contains("SPORT")) {
+        if (line.contains("[SPORT]")) {
             availableTags++;
         }
         if (availableTags < 1) {
