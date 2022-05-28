@@ -72,7 +72,6 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     protected List<DataLine> getDataLines() {
         List<DataLine> list = new ArrayList<>();
         list.add(new DataLine("TYP", true, DataType.INT));
-        list.add(new DataLine("DESC EN", true, DataType.STRING));
         list.add(new DataLine("DATE", true, DataType.STRING));
         list.add(new DataLine("RES POINTS", true, DataType.INT));
         list.add(new DataLine("PRICE", true, DataType.INT));
