@@ -223,7 +223,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         onlyMobile.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.onlyMobile.toolTip"));
 
         JLabel countryLabel = new JLabel(I18n.INSTANCE.get("commonText.country") + ": ");
-        JComboBox<String> country = WindowHelper.getComboBox(CountryType.class, "mod.platform.addPlatform.components.comboBox.country.toolTip", CountryType.USA.getTypeName(), true);
+        JComboBox<String> country = WindowHelper.getComboBox(CountryType.class, "mod.platform.addPlatform.components.comboBox.country.toolTip", CountryType.USA.getTypeName());
         JPanel countryPanel = new JPanel();
         countryPanel.add(countryLabel);
         countryPanel.add(country);

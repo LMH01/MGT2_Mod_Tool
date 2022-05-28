@@ -9,6 +9,7 @@ import com.github.lmh01.mgt2mt.content.managed.types.LicenceType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 
 import javax.swing.*;
 import java.nio.charset.StandardCharsets;
@@ -65,8 +66,7 @@ public class LicenceManager extends AbstractSimpleContentManager {
 
         JPanel panelType = new JPanel();
         JLabel labelType = new JLabel(I18n.INSTANCE.get("commonText.type") + ":");
-        JComboBox<String> comboBoxType = new JComboBox<>();
-        comboBoxType.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport")}));
+        JComboBox<String> comboBoxType = WindowHelper.getComboBox(LicenceType.class, "commonText.type", "mod.licence.addMod.optionPaneMessage.movie");
         panelType.add(labelType);
         panelType.add(comboBoxType);
 

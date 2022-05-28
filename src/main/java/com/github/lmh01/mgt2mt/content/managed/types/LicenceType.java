@@ -2,25 +2,30 @@ package com.github.lmh01.mgt2mt.content.managed.types;
 
 import com.github.lmh01.mgt2mt.util.I18n;
 
-public enum LicenceType {
-
-    MOVIE("movie"),
+public enum LicenceType implements TypeEnum {
 
     BOOK("book"),
 
+    MOVIE("movie"),
+
     SPORT("sport");
 
-    private final String name;
+    private final String translationKey;
 
     LicenceType(String translationKey) {
-        this.name = I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage." + translationKey);
+        this.translationKey = translationKey;
     }
 
     /**
      * @return The translated name of the platform type
      */
     public String getTypeName() {
-        return name;
+        return I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage." + translationKey);
+    }
+
+    @Override
+    public int getId() {
+        return 0;
     }
 
     /**

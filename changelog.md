@@ -31,6 +31,7 @@
 - Split ``disable safety features`` up into multiple options
   - This way it is now possible to disable specific safety features only
     - For example, it is now possible to only unlock the spinners without turning of other safety features
+- All combo boxes are now sorted alphabetically
 - Reworked the backend of the tool
 - Massive internal code changes
 - Updated default content files

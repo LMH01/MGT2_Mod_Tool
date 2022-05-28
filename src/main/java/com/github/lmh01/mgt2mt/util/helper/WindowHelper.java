@@ -226,30 +226,20 @@ public class WindowHelper {
     }
 
     /**
-     * @see WindowHelper#getComboBox(Class, String, String, boolean) Parameters
-     */
-    public static <E extends Enum<?> & TypeEnum> JComboBox<String> getComboBox(Class<E> c, String toolTipTranslationKey, String selectedItem) {
-        return getComboBox(c, toolTipTranslationKey, selectedItem, false);
-    }
-
-    /**
      * @param c                     The enum class that contains the values
      * @param toolTipTranslationKey The translation key for the tool tip of the combo box
      * @param selectedItem          The item that should be selected
      * @param <E>                   An enum that implements the interface {@link TypeEnum}
-     * @param sorted                If true all entries will be sorted by alphabet
      * @return A new {@link JComboBox}.
      */
-    public static <E extends Enum<?> & TypeEnum> JComboBox<String> getComboBox(Class<E> c, String toolTipTranslationKey, String selectedItem, boolean sorted) {
+    public static <E extends Enum<?> & TypeEnum> JComboBox<String> getComboBox(Class<E> c, String toolTipTranslationKey, String selectedItem) {
         JComboBox<String> comboBox = new JComboBox<>();
         comboBox.setToolTipText(I18n.INSTANCE.get(toolTipTranslationKey));
         ArrayList<String> modelContent = new ArrayList<>();
         for (E o : c.getEnumConstants()) {
             modelContent.add(o.getTypeName());
         }
-        if (sorted) {
-            Collections.sort(modelContent);
-        }
+        Collections.sort(modelContent);
         String[] model = new String[modelContent.size()];
         modelContent.toArray(model);
         comboBox.setModel(new DefaultComboBoxModel<>(model));
