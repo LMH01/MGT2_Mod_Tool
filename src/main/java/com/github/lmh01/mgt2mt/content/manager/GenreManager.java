@@ -139,14 +139,29 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
 
     @Override
     protected String analyzeSpecialCases(Map<String, String> map) {
+        StringBuilder sb = new StringBuilder();
         // Check if platform picture is valid
         if (map.containsKey("PIC")) {
             File file = MGT2Paths.GENRE_ICONS.getPath().resolve(map.get("PIC")).toFile();
             if (!file.exists()) {
-                return String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound") + "\n",gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.GENRE_ICONS.getPath());
+                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound"), gameFile.getName(), getType(), map.get("NAME EN"), file.getName(), MGT2Paths.GENRE_ICONS.getPath())).append("\n");
             }
         }
-        return "";
+        // Check if TGROUP is valid
+        if (map.containsKey("TGROUP")) {
+            String tgroup = map.get("TGROUP");
+            if (tgroup.isEmpty()) {
+                sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation1"), gameFile.getName(), getType(), map.get("NAME EN"))).append("\n");
+            } else {
+                ArrayList<String> tgroups = Utils.getEntriesFromString(tgroup);
+                for (String tg : tgroups) {
+                    if (!tg.equals("KID") && !tg.equals("TEEN") && !tg.equals("ADULT") && !tg.equals("OLD") && !tg.equals("ALL")) {
+                        sb.append(String.format(I18n.INSTANCE.get("verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2"), gameFile.getName(), getType(), map.get("NAME EN"), tgroup)).append("\n");
+                    }
+                }
+            }
+        }
+        return sb.toString();
     }
 
     @Override

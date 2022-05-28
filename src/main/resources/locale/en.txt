@@ -1150,6 +1150,9 @@ verifyContentIntegrity.pictureNotFound|The integrity of game file %s is invalid.
 
 verifyContentIntegrity.typeInvalid|The integrity of game file %s is invalid. Reason: the id for the %s named %s is invalid: %s
 
+verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation1|The integrity of game file %s is invalid. Reason: The target group of the %s named %s is empty.
+verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2|The integrity of game file %s is invalid. Reason: The target group of the %s named %s is invalid: %s.
+
 month.january|January
 month.february|February
 month.march|March

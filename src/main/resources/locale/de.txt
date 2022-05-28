@@ -1152,6 +1152,9 @@ verifyContentIntegrity.pictureNotFound|Die Integrität der Spieldatei %s ist ung
 
 verifyContentIntegrity.typeInvalid|Die Integrität der Spieldatei %s ist ungültig. Grund: die Id für das %s namens %s ist ungültig: %s
 
+verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation1|Die Integrität der Spieldatei %s ist ungültig. Grund: Die Zielgruppe der %s namens %s ist leer.
+verifyContentIntegrity.genreInvalid.targetGroupInvalid.variation2|Die Integrität der Spieldatei %s ist ungültig. Grund: Die Zielgruppe der %s namens %s ist ungültig: %s.
+
 month.january|Januar
 month.february|Februar
 month.march|März
