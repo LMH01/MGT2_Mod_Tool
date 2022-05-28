@@ -118,6 +118,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         if (map.containsKey("STARTPLATFORM")) {
             EditHelper.printLine("STARTPLATFORM", map, bw);
         }
+        EditHelper.printLine("END", map, bw);
     }
 
     @Override
@@ -190,6 +191,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         line.add(new DataLine("UNITS", true, DataType.INT));
         line.add(new DataLine("COMPLEX", true, DataType.INT));
         line.add(new DataLine("TYP", true, DataType.INT));
+        line.add(new DataLine("END", false, DataType.UNCHECKED));
         return line;
     }
 

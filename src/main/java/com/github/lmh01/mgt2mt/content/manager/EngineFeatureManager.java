@@ -60,6 +60,7 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
         list.add(new DataLine("PRICE", true, DataType.INT));
         list.add(new DataLine("DEV COSTS", true, DataType.INT));
         list.add(new DataLine("TECHLEVEL", true, DataType.INT));
+        list.add(new DataLine("PIC", false, DataType.UNCHECKED));
         list.add(new DataLine("GAMEPLAY", true, DataType.INT));
         list.add(new DataLine("GRAPHIC", true, DataType.INT));
         list.add(new DataLine("SOUND", true, DataType.INT));
