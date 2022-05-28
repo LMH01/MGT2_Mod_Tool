@@ -68,7 +68,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         if (subTheme != null) {
             exportMap.put("sub_theme", ThemeManager.INSTANCE.getContentNameById(theme));
         }
-        exportMap.put("target_group", targetGroup.getTypeName());
+        exportMap.put("target_group", targetGroup.getDataType());
         exportMap.put("publisher", PublisherManager.INSTANCE.getContentNameById(publisher));
         exportMap.put("release_year", Integer.toString(releaseYear));
         exportMap.put("rating", Integer.toString(rating));

@@ -927,7 +927,7 @@ textArea.runningAlphaVersion.2|Bitte melde Probleme, die auftreten auf der Githu
 textArea.runningAlphaVersion.3|Die Konfigurationsdateien für diese Version werden hier gespeichert
 textArea.constructingContents.duration|Inhaltserstellung dauerte %.2f Sekunden!
 textArea.copyingImages|Kopiere Bilder des Inhaltes %s
-textArea.deletingImages|Lösche Bilder des Inhaltes %
+textArea.deletingImages|Lösche Bilder des Inhaltes %s
 textArea.addedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich zu der .txt Datei nach %s Sekunden hinzugefügt!
 textArea.removedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich aus der .txt Datei nach %s Sekunden entfernt!
 textArea.totalDuration|Gesamtdauer: %s Sekunden

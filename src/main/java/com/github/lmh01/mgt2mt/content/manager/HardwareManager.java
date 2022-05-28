@@ -124,7 +124,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         super.printValues(map, bw);
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED")) {
-                bw.write("[" + entry.getKey() + "]" + entry.getValue() + "\r\n");
+                bw.write(entry.getKey()  + entry.getValue() + "\r\n");
             }
         }
     }
