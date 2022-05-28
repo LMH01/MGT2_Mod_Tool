@@ -61,3 +61,8 @@ Arcade Joystick Support
 Flight Stick Support
 Voice Acting
 Voice Over IP
+Facial Recognition
+Gaming Suit Support
+Gaming Vest Support
+Quick Time Events
+Speech Recognition

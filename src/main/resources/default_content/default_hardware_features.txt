@@ -22,3 +22,6 @@ Friends list
 User profiles
 Family share
 Streaming
+Gaming Suit Support
+Gaming Vest Support
+Quick Resume

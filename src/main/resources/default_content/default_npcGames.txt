@@ -653,7 +653,7 @@ Jim Fandango <2>
 Jimmy Blacks Snooker <8>
 John Falcon <5><12><14><16>
 Johnes Basketball <8>
-Joy Gunner ACTION>
+Joy Gunner <5>
 Julius Caesar <9><11>
 Julius X <10>
 Jumping Rabbit <5><12><14><16>
@@ -877,7 +877,7 @@ OID: Revenge of Moh <0><6>
 Oil Giant <9><11>
 Oil Manager <9><11>
 Ultimate Quest <3>
-Oltimoon <2><3><15>
+Optimoon <2><3><15>
 Olympic Games 2000 <8>
 One and Two <1>
 Onexgears <2><3><15>
@@ -998,7 +998,7 @@ River Action <5>
 River of Snake <2><3><15>
 Road Master <7>
 Roads of USA <17>
-Robodog vs. Catinator <SKLL>
+Robodog vs. Catinator <0><5><6>
 Robofish <6>
 Robotraid <4><14><16>
 Robots <10>
@@ -1286,7 +1286,7 @@ The Global Effect <4><13>
 The golden Cup <8>
 The Golden Knight <10>
 The Graveyard <2><3><15>
-The Guerilla Wars <START>
+The Guerilla Wars <4><13>
 The Gulf <4><13>
 The Hammer <0><6>
 The Hell <5><12><14><16>
@@ -1512,4 +1512,3 @@ Zortium <1>
 Zuk MacCrack <2><3><15>
 Zweihanders <5><12><14><16>
 Zybermorphing <5>
-Optimoon <2><3><15>
