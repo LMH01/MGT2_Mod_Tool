@@ -892,40 +892,6 @@ public class SharingManager {
     }
 
     /**
-     * Imports all mods that are stored in the mods set.
-     * The progress bar and text area are used to display progress.
-     * This function should only be called by {@link SharingManager#importAll(ImportType, Set)}.
-     *
-     * @param mods A set of maps that contain the values for the mods that should be imported.
-     * @return True if import was successful. False if import was canceled.
-     */
-    @Deprecated
-    private static boolean importAllMods(Set<Map<String, Object>> mods) {//TODO Delete
-        ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("progressBar.importingMods"));
-        TimeHelper timeHelper = new TimeHelper();
-        timeHelper.measureTime();
-        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            for (Map<String, Object> map : mods) {
-                if (map.get("mod_type").equals(manager.getExportType())) {
-                    try {
-                        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.importingMods") + " - " + manager.getType());
-                        manager.addContent(manager.constructContentFromImportMap(map, Paths.get("")));
-                        ProgressBarHelper.increment();
-                    } catch (ModProcessingException e) {
-                        TextAreaHelper.printStackTrace(e);
-                        if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.firstPart") + ": " + manager.getTypeUpperCase() + " - " + map.get("NAME EN") + "<br>" + I18n.INSTANCE.get("commonText.reason") + " " + e.getMessage() + "<br><br>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.errorWhileImportingMod.secondPart"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        ProgressBarHelper.resetProgressBar();
-        LOGGER.info("Import completed after " + timeHelper.getMeasuredTimeDisplay() + " " + I18n.INSTANCE.get("commonText.seconds") + "!");
-        return true;
-    }
-
-    /**
      * Adds all contents contained in the list to the game.
      */
     private static void importContents(Map<BaseContentManager, List<AbstractBaseContent>> contents) throws ModProcessingException {
