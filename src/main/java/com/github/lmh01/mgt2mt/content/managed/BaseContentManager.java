@@ -196,8 +196,6 @@ public interface BaseContentManager {
      */
     int getFreeId();
 
-
-
     /**
      * @return An array list containing all active ids for this mod
      */

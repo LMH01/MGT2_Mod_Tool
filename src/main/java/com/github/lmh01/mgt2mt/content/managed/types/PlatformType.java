@@ -44,19 +44,6 @@ public enum PlatformType implements TypeEnum {
         return defaultImage;
     }
 
-    /**
-     * @param id The id for which the name should be returned
-     * @return The name for the id
-     */
-    public static String getTypeNameById(int id) {
-        for (PlatformType platformType : PlatformType.values()) {
-            if (platformType.getId() == id) {
-                return platformType.getTypeName();
-            }
-        }
-        throw new IllegalArgumentException("Id is invalid. Should be 0-4 was " + id);
-    }
-
     public static PlatformType getFromId(int id) {
         switch(id) {
             case 0: return PlatformType.COMPUTER;

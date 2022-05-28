@@ -303,31 +303,6 @@ public class DataStreamHelper {
     }
 
     /**
-     * @param rootDirectory The directory where the file search is started
-     * @param fileName      The file name that should be searched
-     * @return Returns an array list containing all files that match the file to search
-     * @throws IOException Thrown if the file search fails
-     */
-    public static ArrayList<File> getFiles(File rootDirectory, String fileName) throws IOException {
-        ArrayList<File> arrayList = new ArrayList<>();
-        Path start = Paths.get(rootDirectory.getPath());
-        try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
-            List<String> collect = stream
-                    .map(String::valueOf)
-                    .sorted()
-                    .collect(Collectors.toList());
-
-            collect.forEach((string) -> {
-                if (string.contains(fileName)) {
-                    LOGGER.info(fileName + ": " + string);
-                    arrayList.add(new File(string));
-                }
-            });
-        }
-        return arrayList;
-    }
-
-    /**
      * Copied from https://www.baeldung.com/java-copy-directory.
      * Will use the progress bar.
      *

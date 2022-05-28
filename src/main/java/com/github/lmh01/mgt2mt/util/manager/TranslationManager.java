@@ -76,42 +76,6 @@ public class TranslationManager {
     }
 
     /**
-     * Sets the name translations map.
-     * @param map Map that contains the name translations
-     */
-    public void setNameTranslations(Map<String, String> map) {
-        nameTranslations = map;
-    }
-
-    public void setDescriptionTranslations(Map<String, String> map) {
-        descriptionTranslations = map;
-    }
-
-    /**
-     * Prints the translations stored in the maps with the help of the buffered writer.
-     * Example line: [NAME GE]Hallo Welt!
-     * Does not write the translations for english!
-     * @param bw Buffered writer that writes the translations
-     * @throws IOException When an IO error occurs while the buffered writer writes
-     */
-    public void printTranslations(BufferedWriter bw) throws IOException {
-        for (String string : TranslationManager.TRANSLATION_KEYS) {
-            for (Map.Entry<String, String> entry : nameTranslations.entrySet()) {
-                if (entry.getKey().equals(string)) {
-                    System.out.println("[NAME " + string + "]" + entry.getValue() + "\r\n");
-                    bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
-                }
-            }
-            for (Map.Entry<String, String> entry : descriptionTranslations.entrySet()) {
-                if (entry.getKey().equals(string)) {
-                    System.out.println("[DESC " + string + "]" + entry.getValue() + "\r\n");
-                    bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
-                }
-            }
-        }
-    }
-
-    /**
      * Transforms the maps of this translation manager to a map that can be used to export the translations.
      * The output map has the following formatting: NAME/DESC {EN, GE, etc...} | TRANSLATION
      * @return The translations as a map
@@ -165,40 +129,7 @@ public class TranslationManager {
     }
 
     /**
-     * @param nameEN The name that should be added
-     * @return A map with the translation keys where every name translation is set as the english one
-     */
-    public static Map<String, String> getDefaultNameTranslations(String nameEN) {
-        Map<String, String> returnMap = new HashMap<>();
-        for (String string : TranslationManager.TRANSLATION_KEYS) {
-            returnMap.put("NAME " + string, nameEN);
-        }
-        return returnMap;
-    }
-
-    /**
-     * @param descriptionEN The description that should be added
-     * @return A map with the translation keys where every description translation is set as the english one
-     */
-    public static Map<String, String> getDefaultDescriptionTranslations(String descriptionEN) {
-        Map<String, String> returnMap = new HashMap<>();
-        for (String string : TranslationManager.TRANSLATION_KEYS) {
-            returnMap.put("DESC " + string, descriptionEN);
-        }
-        return returnMap;
-    }
-
-    public static Map<String, String> getDefaultManufacturerTranslations(String manufacturerEN) {
-        Map<String, String> returnMap = new HashMap<>();
-        for (String string : TranslationManager.TRANSLATION_KEYS) {
-            returnMap.put("MANUFACTURER " + string, manufacturerEN);
-        }
-        return returnMap;
-    }
-
-    /**
      * Writes the language translations using the buffered writer.
-     * This is an alternative to using {@link TranslationManager#printTranslations(BufferedWriter)}
      * that does not require a new instance.
      *
      * @param bw  The buffered writer

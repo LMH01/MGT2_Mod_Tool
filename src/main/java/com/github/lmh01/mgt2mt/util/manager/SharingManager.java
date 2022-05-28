@@ -741,8 +741,6 @@ public class SharingManager {
         replaceDependencyInDependencyMap(parentMap, child, childName, replacement);
     }
 
-    static int timesRan = 0;
-
     /**
      * Replaces the dependency name in the map with the replacement
      *

@@ -209,12 +209,4 @@ public class WindowAddGenrePage1 extends JFrame {
             mapDescriptionTranslations = TranslationManager.getTranslationsMap();
         }
     }
-
-    /**
-     * Clears the translation maps
-     */
-    public static void clearTranslationArrayLists() {
-        mapNameTranslations.clear();
-        mapDescriptionTranslations.clear();
-    }
 }

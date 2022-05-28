@@ -107,14 +107,6 @@ public class ProgressBarHelper {
     }
 
     /**
-     * Sets the progress bar value
-     */
-    public static void setValue(int value) {
-        WindowMain.PROGRESS_BAR.setValue(value);
-        changeProgress();
-    }
-
-    /**
      * Increases the maximum value of the progress bar by value
      */
     public static void increaseMaxValue(int value) {
@@ -160,13 +152,6 @@ public class ProgressBarHelper {
         } else {
             return "";
         }
-    }
-
-    /**
-     * Returns how many second the progress bar is running
-     */
-    public static int getProgressBarTimer() {
-        return secondsElapsed;
     }
 
     /**

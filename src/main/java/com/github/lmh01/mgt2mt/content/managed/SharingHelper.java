@@ -61,11 +61,4 @@ public class SharingHelper {
         }
         return names;
     }
-
-    /**
-     * Creates an image from the identifier, the assets folder and the game file
-     */
-    public static Image createImage(String identifier, Path assetsFolder, Path gameFile) {
-        return new Image(assetsFolder.resolve(identifier).toFile(), gameFile.toFile());
-    }
 }

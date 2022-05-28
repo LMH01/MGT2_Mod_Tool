@@ -55,17 +55,4 @@ public class ImportHelperMap {
         }
         throw new ModProcessingException("Unable to find id for " + name + " in import helper map of type " + type.getType() + "!");
     }
-
-    /**
-     * Searches the helperMap for the id and returns the corresponding name.
-     * @throws ModProcessingException When the name was not found
-     */
-    public String getContentNameById(int id) throws ModProcessingException {
-        for (Map.Entry<String, Integer> entry : helperMap.entrySet()) {
-            if (entry.getValue() == id) {
-                return entry.getKey();
-            }
-        }
-        throw new ModProcessingException("Unable to find name for " + id + " in import helper map!");
-    }
 }

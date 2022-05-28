@@ -44,19 +44,6 @@ public enum Months implements TypeEnum {
     }
 
     /**
-     * @param id The id for which the name should be returned
-     * @return The name for the id
-     */
-    public static String getTypeNameById(int id) {
-        for (Months month : Months.values()) {
-            if (month.getId() == id) {
-                return month.getTypeName();
-            }
-        }
-        throw new IllegalArgumentException("Id is invalid. Should be 0-11 was " + id);
-    }
-
-    /**
      * @param name The name for which the id should be returned
      * @return The id of the name
      */

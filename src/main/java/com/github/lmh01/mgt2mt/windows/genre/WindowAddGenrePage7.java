@@ -16,7 +16,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class WindowAddGenrePage7 extends JFrame {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage7.class);
     static final WindowAddGenrePage7 FRAME = new WindowAddGenrePage7();
     final JPanel contentPane = new JPanel();
     final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));

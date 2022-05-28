@@ -132,10 +132,6 @@ public class WindowHelper {
         return getBaseSpinner("mod.platform.addPlatform.components.spinner.units.toolTip", 1000000, 100000, 1000000000, 100000);
     }
 
-    public static JSpinner getMarketShareSpinner() {
-        return getBaseSpinner("mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip", 50, 1, 100, 1);
-    }
-
     /**
      * @return Returns a new spinner set with the values for the research point cost spinner. The following is already initialized: Min/max value, step size and tooltip.
      */

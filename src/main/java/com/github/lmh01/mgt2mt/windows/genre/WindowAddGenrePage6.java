@@ -21,7 +21,6 @@ import java.util.Set;
 public class WindowAddGenrePage6 extends JFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(WindowAddGenrePage6.class);
     static final WindowAddGenrePage6 FRAME = new WindowAddGenrePage6();
-    public static Set<Integer> compatibleThemeIds = new HashSet<>();
     final JPanel contentPane = new JPanel();
     final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
     final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));

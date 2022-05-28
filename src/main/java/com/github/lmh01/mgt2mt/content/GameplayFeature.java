@@ -154,15 +154,4 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
             map.replace("BAD", SharingHelper.getExportNamesString(GenreManager.INSTANCE, Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")))));
         }
     }
-
-    /**
-     * Changes the genre ids to the genre names and puts them in a new array list.
-     */
-    private ArrayList<String> getGenreNames(ArrayList<Integer> genreIds) throws ModProcessingException {
-        ArrayList<String> genreNames = new ArrayList<>();
-        for (int i : genreIds) {
-            genreNames.add(GenreManager.INSTANCE.getContentNameById(i));
-        }
-        return genreNames;
-    }
 }

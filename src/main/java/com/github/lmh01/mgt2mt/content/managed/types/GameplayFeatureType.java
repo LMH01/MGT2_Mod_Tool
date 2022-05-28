@@ -37,19 +37,6 @@ public enum GameplayFeatureType implements TypeEnum {
     }
 
     /**
-     * @param id The id for which the name should be returned
-     * @return The name for the id
-     */
-    public static String getTypeNameById(int id) {
-        for (GameplayFeatureType gameplayFeatureType : GameplayFeatureType.values()) {
-            if (gameplayFeatureType.getId() == id) {
-                return gameplayFeatureType.getTypeName();
-            }
-        }
-        throw new IllegalArgumentException("Id is invalid. Should be 0-1 or 3-6 was " + id);
-    }
-
-    /**
      * Returns the engine feature type that corresponds to the id
      */
     public static GameplayFeatureType getFromId(int id) throws IllegalArgumentException {

@@ -37,19 +37,6 @@ public enum EngineFeatureType implements TypeEnum {
     }
 
     /**
-     * @param id The id for which the name should be returned
-     * @return The name for the id
-     */
-    public static String getTypeNameById(int id) {
-        for (EngineFeatureType engineFeatureType : EngineFeatureType.values()) {
-            if (engineFeatureType.getId() == id) {
-                return engineFeatureType.getTypeName();
-            }
-        }
-        throw new IllegalArgumentException("Id is invalid. Should be 0-3 was " + id);
-    }
-
-    /**
      * Returns the engine feature type that corresponds to the id
      */
     public static EngineFeatureType getFromId(int id) throws IllegalArgumentException {

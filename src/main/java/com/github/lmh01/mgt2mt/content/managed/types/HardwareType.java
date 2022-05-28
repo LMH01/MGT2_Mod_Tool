@@ -43,19 +43,6 @@ public enum HardwareType implements TypeEnum {
     }
 
     /**
-     * @param id The id for which the name should be returned
-     * @return The name for the id
-     */
-    public static String getTypeNameById(int id) {
-        for (HardwareType hardwareType : HardwareType.values()) {
-            if (hardwareType.getId() == id) {
-                return hardwareType.getTypeName();
-            }
-        }
-        throw new IllegalArgumentException("Id is invalid. Should be 0-9 was " + id);
-    }
-
-    /**
      * Returns the engine feature type that corresponds to the id
      */
     public static HardwareType getFromId(int id) throws IllegalArgumentException {
