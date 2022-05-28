@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.content;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
 import com.github.lmh01.mgt2mt.content.managed.types.LicenceType;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.manager.LicenceManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 

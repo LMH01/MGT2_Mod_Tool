@@ -7,7 +7,6 @@ import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.helper.TimeHelper;
-import com.github.lmh01.mgt2mt.util.interfaces.Processor;
 import com.github.lmh01.mgt2mt.util.manager.ExportType;
 import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
@@ -16,12 +15,10 @@ import com.github.lmh01.mgt2mt.util.settings.Settings;
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractBaseContentManager implements BaseContentManager {
     private final String mainTranslationKey;

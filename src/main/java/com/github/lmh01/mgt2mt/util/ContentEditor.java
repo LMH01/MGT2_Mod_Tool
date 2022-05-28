@@ -7,7 +7,6 @@ import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
 
 public class ContentEditor {

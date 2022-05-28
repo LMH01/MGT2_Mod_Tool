@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CompanyLogoAnalyzer {
     private static final Logger LOGGER = LoggerFactory.getLogger(CompanyLogoAnalyzer.class);
