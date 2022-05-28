@@ -73,13 +73,13 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 ### Share your modifications
 - It is supported to export all mods, to be loaded later. Here is how it works:
     - `Menu: Share -> Export -> Export all` or select the item manually that you would like to export. 
-    - To share the mod you simply have click: `Menu: Share -> Open export folder` 
+    - To share the mod you simply have to click: `Menu: Share -> Open export folder` 
         - This folder contains all mods that have been exported. Copy the desired folder and send it to your friend. 
     - To import mods you have to click: `Menu: Mods -> Import -> Import from file system` 
-        - Select then the folder where your mods are saved. The program then scans all folders for mods and displays a summary of what can be imported. Just click **ok**, and the program will import the files.
+        - Select the folder where your mods are saved. The program then scans all folders for mods and displays a summary of what can be imported. Just click **ok**, and the program will import the files.
 - You can also import mods by using a direct download url. For a list of mods you can take a look [here](https://github.com/LMH01/MGT2_Mod_Tool/discussions/34).
 ### Create backups
-- Every time you change the game files a backup is created. This backup will be stored as latest backup until another backup is made. It is not recommended however to restore these backups, if you would like to remove mods please do so by using the respective menu. If you would like to restore the backup anyway, you have to disable the safety features.
+- Every time you change the game files a backup is created. This backup will be stored as latest backup until another backup is made. It is not recommended however to restore these backups, if you would like to remove mods please do so by using the respective menu. If you would like to restore the backup anyway, you have to enable the option ``Disable backup security mechanisms`` in the settings under ``Configure safety features``.
 - Backups can be created manually
 - When starting this program for the first time an initial backup is created that can be restored later with the click of one button.
 - Backups of your saved games will be created but not automatically restored. To restore a save game backup go into the **Backup** menu, click **Restore Backup** and then **Restore Save Game Backup**. 
@@ -92,7 +92,21 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
     - Should you need help to figure out what an input or button means simply hover over it with your mouse.   
 - **Settings**
     - If you wish to not use the automatically detected MGT2 folder you can select a folder manually.
-    - Most spinners are locked and some features do only work on specific conditions to prevent problems. Disable the safety features to circumvent this behaviour. **Do only do so if you know what you are doing! I WILL NOT TAKE ANY RESPONSIBILITY IF YOU BREAK SOMETHING!**
+    - Safety features
+      - You can disable specific security mechanisms to circumvent specific behaviours.
+      - The settings are:
+        - ``Inlude original contents in lists``
+          - If this option is enabled, the original contents of the game files will be included in the lists. This can be used to remove or export content that belongs to the game. In addition, the original content is also exported when all content is exported.
+        - ``Skip assets folder check``
+          - If this option is enabled, the check for the existence of the assets' folder will be skipped when importing contents.
+        - ``Disable platform picture limit``
+          - Currently, only two images per platform are supported, so currently no more than two images can be added. If this option is enabled, more images can be added, although this is not supported by the game.
+        - ``Unlock spinners``
+          - Enable to unlock all spinners and disable the maximum values
+        - ``Disable game file integrity check``
+          - If this option is enabled, the game file integrity check at startup will be skipped.
+        - ``Disable backup security mechanisms``
+          - If this option is enabled, the initial backups will also be deleted when backups are deleted. When enabled, there will be a new menu entry with which all backups can be deleted. When enabled, it is also possible to restore the latest backup.
     - It is possible to change the **language** of the tool. The supported languages are currently german and english.
 - **The Mad Games Tycoon 2 folder is set automatically**
     - When launching the application all Steam libraries will be searched if they contain Mad Games Tycoon 2. If they don't a prompt is displayed where the path can be entered.
