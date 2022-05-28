@@ -1164,7 +1164,7 @@ safetyFeatures.disableGameFileIntegrityCheck|Disable game file integrity check
 safetyFeatures.disableGameFileIntegrityCheck.toolTip|<html>If this option is enabled,<br>the game file integrity check at startup will be skipped.
 
 safetyFeatures.includeOriginalContentsInLists|Include original contents in lists
-safetyFeatures.includeOriginalContentsInLists.toolTip|<html>If this option is enabled,<br>the original contents of the game files will be included in the lists.<br>This can be used to remove or export content that belongs to the game.
+safetyFeatures.includeOriginalContentsInLists.toolTip|<html>If this option is enabled,<br>the original contents of the game files will be included in the lists.<br>This can be used to remove or export content that belongs to the game.<br>In addition, the original content is also exported when all content is exported.
 
 safetyFeatures.skipAssetsFolderCheck|Skip assets folder check
 safetyFeatures.skipAssetsFolderCheck.toolTip|<html>If this option is enabled,<br>the check for the existence of the assets folder<br>will be skipped when importing contents.

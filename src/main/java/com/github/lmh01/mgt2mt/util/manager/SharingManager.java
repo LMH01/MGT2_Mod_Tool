@@ -1041,8 +1041,14 @@ public class SharingManager {
     public static void export(ExportType exportType) throws ModProcessingException {
         ArrayList<AbstractBaseContent> contents = new ArrayList<>();
         for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            if (manager.getCustomContentString().length > 0) {
-                contents.addAll(Utils.constructContents(Arrays.asList(manager.getCustomContentString()), manager));
+            if (Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
+                if (manager.getContentByAlphabet().length > 0) {
+                    contents.addAll(Utils.constructContents(Arrays.asList(manager.getContentByAlphabet()), manager));
+                }
+            } else {
+                if (manager.getCustomContentString().length > 0) {
+                    contents.addAll(Utils.constructContents(Arrays.asList(manager.getCustomContentString()), manager));
+                }
             }
         }
         export(exportType, contents);

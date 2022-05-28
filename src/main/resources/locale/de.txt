@@ -1166,7 +1166,7 @@ safetyFeatures.disableGameFileIntegrityCheck|Integritätsprüfung der Spieldatei
 safetyFeatures.disableGameFileIntegrityCheck.toolTip|<html>Wenn diese Option aktiviert ist, wird die<br>Integritätsprüfung der Spieldateien beim Start des Tools übersprungen.
 
 safetyFeatures.includeOriginalContentsInLists|Originalinhalte in Listen aufnehmen
-safetyFeatures.includeOriginalContentsInLists.toolTip|<html>Wenn diese Option aktiviert ist,<br>werden die Originalinhalte der Spieldateien in die Listen aufgenommen.<br>Hiermit können zum Spiel gehörende Inhalte entfernt oder exportiert werden.
+safetyFeatures.includeOriginalContentsInLists.toolTip|<html>Wenn diese Option aktiviert ist,<br>werden die Originalinhalte der Spieldateien in die Listen aufgenommen.<br>Hiermit können zum Spiel gehörende Inhalte entfernt oder exportiert werden.<br>Außerdem werden auch die originalen Inhalte exportiert, wenn alle Inhalte exportiert werden.
 
 safetyFeatures.skipAssetsFolderCheck|Prüfung des Assets-Ordners überspringen
 safetyFeatures.skipAssetsFolderCheck.toolTip|<html>Wenn diese Option aktiviert ist,<br>wird die Prüfung auf das Vorhandensein des Asset-Ordners<br>beim Importieren von Inhalten übersprungen.
