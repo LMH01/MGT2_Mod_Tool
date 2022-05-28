@@ -37,7 +37,6 @@ public enum HardwareType implements TypeEnum {
         return name;
     }
 
-    @Override
     public int getId() {
         return id;
     }

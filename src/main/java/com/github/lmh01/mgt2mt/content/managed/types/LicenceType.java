@@ -23,11 +23,6 @@ public enum LicenceType implements TypeEnum {
         return I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage." + translationKey);
     }
 
-    @Override
-    public int getId() {
-        return 0;
-    }
-
     /**
      * Returns the identifier for the licence type
      */

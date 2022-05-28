@@ -82,7 +82,6 @@ public enum CountryType implements TypeEnum {
         return name;
     }
 
-    @Override
     public int getId() {
         return id;
     }

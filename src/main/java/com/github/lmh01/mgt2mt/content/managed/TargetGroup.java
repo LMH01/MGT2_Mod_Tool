@@ -30,7 +30,6 @@ public enum TargetGroup implements TypeEnum {
         return name;
     }
 
-    @Override
     public int getId() {
         return id;
     }

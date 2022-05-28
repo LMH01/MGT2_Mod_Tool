@@ -38,8 +38,7 @@ public enum Months implements TypeEnum {
         return name;
     }
 
-    @Override
-    public int getId() {
+    private int getId() {
         return id;
     }
 

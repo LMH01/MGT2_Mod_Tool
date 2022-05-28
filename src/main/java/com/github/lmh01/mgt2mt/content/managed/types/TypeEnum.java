@@ -10,8 +10,4 @@ public interface TypeEnum {
      */
     public String getTypeName();
 
-    /**
-     * @return The id for the type
-     */
-    public int getId();
 }

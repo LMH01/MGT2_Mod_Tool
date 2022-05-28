@@ -31,7 +31,6 @@ public enum EngineFeatureType implements TypeEnum {
     /**
      * @return The id for the type
      */
-    @Override
     public int getId() {
         return id;
     }
