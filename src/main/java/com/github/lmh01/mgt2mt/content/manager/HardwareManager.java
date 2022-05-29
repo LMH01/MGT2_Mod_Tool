@@ -146,6 +146,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 map.get("NAME EN"),
                 getIdFromMap(map),
                 new TranslationManager(map),
+                map.get("DESC EN"),
                 map.get("DATE"),
                 HardwareType.getFromId(Integer.parseInt(map.get("TYP"))),
                 Integer.parseInt(map.get("RES POINTS")),
@@ -211,6 +212,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 (String) map.get("NAME EN"),
                 getIdFromMap(map),
                 new TranslationManager(map),
+                (String) map.get("DESC EN"),
                 (String) map.get("DATE"),
                 HardwareType.getFromId(Integer.parseInt((String) map.get("TYP"))),
                 Integer.parseInt((String) map.get("RES POINTS")),
@@ -231,6 +233,10 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         final Map<String, String>[] mapNameTranslations = new Map[]{new HashMap<>()};
         AtomicBoolean nameTranslationsAdded = new AtomicBoolean(false);
         JButton buttonAddNameTranslations = WindowHelper.getAddTranslationsButton(mapNameTranslations, nameTranslationsAdded, 0);
+        JTextField textFieldDescription = new JTextField(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"));
+        final Map<String, String>[] mapDescriptionTranslation = new Map[]{new HashMap<>()};
+        AtomicBoolean descriptionTranslationsAdded = new AtomicBoolean(false);
+        JButton buttonAddDescriptionTranslations = WindowHelper.getAddTranslationsButton(mapDescriptionTranslation, descriptionTranslationsAdded, 1);
         JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
         JComboBox<String> comboBoxType = WindowHelper.getComboBox(HardwareType.class, "mod.hardware.addMod.components.comboBox.type.toolTip", HardwareType.CPU.getTypeName());
@@ -274,10 +280,10 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
             }
         });
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity, componentRatingDescription, buttonCustomIcon};
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity, componentRatingDescription, buttonCustomIcon};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue"))) {
+                if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))) {
                     boolean modAlreadyExists = false;
                     for (String string : getContentByAlphabet()) {
                         if (textFieldName.getText().equals(string)) {
@@ -321,7 +327,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                         AbstractBaseContent hardware = new Hardware(
                                 textFieldName.getText(),
                                 null,
-                                new TranslationManager(mapNameTranslations[0]),
+                                new TranslationManager(mapNameTranslations[0], mapDescriptionTranslation[0]),
+                                textFieldDescription.getText(),
                                 Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(),
                                 hT,
                                 Integer.parseInt(spinnerResearchPoints.getValue().toString()),

@@ -533,6 +533,7 @@ mod.hardwareFeature.addMod.components.checkBoxOnlyStationary.toolTip|Aktiviere d
 mod.hardwareFeature.addMod.components.textFieldDescription.initialValue|GIB EINE BESCHREIBUNG FÜR DIE HARDWARE EIN
 mod.hardware.addMod.optionPaneMessage.firstPart|Diese Hardware hinzufügen?
 mod.hardware.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE HARDWARE EIN
+mod.hardware.addMod.components.textFieldDescription.initialValue|GIB EINEN BESCHREIBUNG FÜR DIE HARDWARE EIN
 mod.hardware.addMod.components.comboBox.type.toolTip|Wähle aus, von welchem Typ die Hardware sein soll
 mod.hardware.addMod.components.checkBox.exclusiveConsole|Exlusivität für eine Konsolenart aktivieren
 mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Aktiviere dieses Kästchen, damit die Hardware nur für eine bestimmte Konsolenart benutzt werden können soll<br>Die erlaubte Konsolenart kann unten ausgewählt werden

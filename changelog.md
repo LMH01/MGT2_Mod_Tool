@@ -6,10 +6,6 @@
 - Custom hardware icons can now be added
   - Hardware icons that have been set by editing the game files are now recognized. This means that they will be included when importing and exporting the hardware.
 
-### Removed features
-- It is no longer possible to add a description to custom hardware
-  - This is because the game no longer supports descriptions for custom hardware
-
 ### Other
 - Updated some spinner values:
   - Global:

@@ -17,6 +17,7 @@ import java.util.Optional;
 
 public class Hardware extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
 
+    String description;
     String date;
     public HardwareType hardwareType;
     int researchPoints;
@@ -31,6 +32,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
     public Hardware(String name,
                     Integer id,
                     TranslationManager translationManager,
+                    String description,
                     String date,
                     HardwareType hardwareType,
                     int researchPoints,
@@ -46,6 +48,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
         if (onlyHandheld && onlyStationary) {
             throw new ModProcessingException("Unable to construct hardware: Invalid arguments");
         }
+        this.description = description;
         this.date = date;
         this.hardwareType = hardwareType;
         this.researchPoints = researchPoints;
@@ -63,6 +66,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
         Map<String, String> map = new HashMap<>();
         insertIdInMap(map);
         map.put("NAME EN", name);
+        map.put("DESC EN", description);
         map.put("TYP", Integer.toString(hardwareType.getId()));
         map.put("DATE", date);
         map.put("RES POINTS", Integer.toString(researchPoints));
@@ -104,6 +108,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
         return "<html>" +
                 I18n.INSTANCE.get("mod.hardware.addMod.optionPaneMessage.firstPart") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
+                I18n.INSTANCE.get("commonText.description") + ": " + description + "<br>" +
                 I18n.INSTANCE.get("commonText.unlockDate") + ": " + date + "<br>" +
                 I18n.INSTANCE.get("commonText.researchPointCost") + ": " + researchPoints + "<br>" +
                 I18n.INSTANCE.get("commonText.price") + ": " + price + "<br>" +
