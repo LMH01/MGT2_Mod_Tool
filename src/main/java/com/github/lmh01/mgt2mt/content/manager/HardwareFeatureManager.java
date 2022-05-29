@@ -23,7 +23,7 @@ public class HardwareFeatureManager extends AbstractAdvancedContentManager {
 
     public static final HardwareFeatureManager INSTANCE = new HardwareFeatureManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", "4.1.0", MadGamesTycoon2ModTool.VERSION};
 
     private HardwareFeatureManager() {
         super("hardwareFeature", "hardware_feature", "default_hardware_features.txt", MGT2Paths.TEXT_DATA.getPath().resolve("HardwareFeatures.txt").toFile(), StandardCharsets.UTF_8);

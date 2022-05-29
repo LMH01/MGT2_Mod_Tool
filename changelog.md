@@ -1,6 +1,6 @@
 # Changelog
 
-## v4.1.0
+## [v4.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.1.0) (Latest Version)
 
 ### New feature
 - Custom hardware icons can now be added
@@ -46,7 +46,7 @@
 - Fixed game content not showing up in export selected lists when safety feature ``Include original contents in lists`` was off
 - Fixed import failing when ``DESC EN`` tag was missing even though it was not needed
 
-## [v4.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.0.0) (Latest Version)
+## [v4.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.0.0)
 
 ### Important
 - **Previously exported mods will not work together with this release**

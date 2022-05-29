@@ -21,7 +21,7 @@ public class LicenceManager extends AbstractSimpleContentManager {
 
     public static final LicenceManager INSTANCE = new LicenceManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", "4.1.0", MadGamesTycoon2ModTool.VERSION};
 
     private LicenceManager() {
         super("licence", "licence", "default_licences.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Licence.txt").toFile(), StandardCharsets.UTF_8);
