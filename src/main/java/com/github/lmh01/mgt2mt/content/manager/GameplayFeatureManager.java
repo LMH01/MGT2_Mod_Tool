@@ -162,10 +162,10 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
         JSpinner spinnerDevelopmentCost = WindowHelper.getDevCostSpinner();
         JSpinner spinnerResearchCost = WindowHelper.getResearchCostSpinner();
-        JSpinner spinnerGameplay = WindowHelper.getPointSpinner();
-        JSpinner spinnerGraphic = WindowHelper.getPointSpinner();
-        JSpinner spinnerSound = WindowHelper.getPointSpinner();
-        JSpinner spinnerTech = WindowHelper.getPointSpinner();
+        JSpinner spinnerGameplay = WindowHelper.getBaseSpinner("commonText.points.spinner.toolTip", 30, 0, 400, 5);
+        JSpinner spinnerGraphic = WindowHelper.getBaseSpinner("commonText.points.spinner.toolTip", 30, 0, 400, 5);
+        JSpinner spinnerSound = WindowHelper.getBaseSpinner("commonText.points.spinner.toolTip", 30, 0, 400, 5);
+        JSpinner spinnerTech = WindowHelper.getBaseSpinner("commonText.points.spinner.toolTip", 30, 0, 400, 5);
 
         JButton buttonBadGenres = new JButton(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres"));
         buttonBadGenres.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.button.selectBadGenres.toolTip"));

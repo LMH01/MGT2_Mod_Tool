@@ -3,7 +3,33 @@
 ## v4.0.1
 
 ### Other
-- Updated some spinner values in the add publisher window.
+- Updated some spinner values:
+  - Global:
+    - Research point cost:
+      - Max: 10.000 -> 6.000
+  - Engine feature:
+    - Gameplay, Graphics, Sound, Tech
+      - Max: 4.500 -> 3.000
+  - Gameplay feature:
+    - Gameplay, Graphics, Sound, Tech
+      - Default: 100 -> 30
+      - Max: 4.500 -> 400
+  - Hardware:
+    - Price
+      - Max: 10.000.000 -> 30.000.000
+      - Step size: 10.000 -> 100.000
+    - Dev costs:
+      - Max: 100.000.000 -> 50.000.000
+  - Npc engine:
+    - Profit share:
+      - Default: 10 -> 5
+  - Publisher:
+    - Speed:
+      - Default: 5 -> 3
+    - Com value:
+      - Min: 10.000.000 -> 2.000.000
+      - Max: 100.000.000 -> 40.000.000
+      - Step size: 500.000 -> 200.000
 
 ### Bug fixes
 - Fixed export fail when a npc engine was exported where genre/platform ids where ``-1``

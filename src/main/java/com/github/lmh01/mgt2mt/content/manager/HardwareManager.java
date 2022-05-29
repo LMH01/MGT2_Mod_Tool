@@ -224,8 +224,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
         JComboBox<String> comboBoxType = WindowHelper.getComboBox(HardwareType.class, "mod.hardware.addMod.components.comboBox.type.toolTip", HardwareType.CPU.getTypeName());
         JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
-        JSpinner spinnerCost = WindowHelper.getBaseSpinner("commonText.cost.spinner.toolTip", 500000, 0, 10000000, 10000);
-        JSpinner spinnerDevelopmentCost = WindowHelper.getBaseSpinner("commonText.developmentCost.spinner", 1000000, 0, 100000000, 10000);
+        JSpinner spinnerCost = WindowHelper.getBaseSpinner("commonText.cost.spinner.toolTip", 500000, 0, 30000000, 100000);
+        JSpinner spinnerDevelopmentCost = WindowHelper.getBaseSpinner("commonText.developmentCost.spinner", 1000000, 0, 50000000, 10000);
         JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
 
         JComboBox<String> comboBoxExclusivity = new JComboBox<>(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"), I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value2")}));

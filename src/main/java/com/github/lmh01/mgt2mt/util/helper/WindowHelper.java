@@ -136,7 +136,7 @@ public class WindowHelper {
      * @return Returns a new spinner set with the values for the research point cost spinner. The following is already initialized: Min/max value, step size and tooltip.
      */
     public static JSpinner getResearchPointSpinner() {
-        return getBaseSpinner("commonText.researchPointCost.spinner.toolTip", 500, 0, 10000, 100);
+        return getBaseSpinner("commonText.researchPointCost.spinner.toolTip", 500, 0, 6000, 100);
     }
 
     /**
@@ -258,14 +258,14 @@ public class WindowHelper {
      * @return Returns a new spinner set with the values for the point spinners. The following is already initialized: Min/max value, step size and tooltip.
      */
     public static JSpinner getPointSpinner() {
-        return getBaseSpinner("commonText.points.spinner.toolTip", 100, 0, 4500, 5);
+        return getBaseSpinner("commonText.points.spinner.toolTip", 100, 0, 3000, 5);
     }
 
     /**
      * @return Returns a new spinner set with the values for the profit share spinner. The following is already initialized: Min/max value, step size and tooltip.
      */
     public static JSpinner getProfitShareSpinner() {
-        return getBaseSpinner("mod.npcEngine.addMod.components.spinner.share.toolTip", 10, 0, 10, 1);
+        return getBaseSpinner("mod.npcEngine.addMod.components.spinner.share.toolTip", 5, 0, 10, 1);
     }
 
     /**
