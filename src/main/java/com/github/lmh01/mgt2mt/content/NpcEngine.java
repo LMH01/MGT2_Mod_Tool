@@ -66,18 +66,30 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
     @Override
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        ArrayList<String> genres = new ArrayList<>();
-        genres.add(GenreManager.INSTANCE.getContentNameById(genre));
-        map.put(GenreManager.INSTANCE.getExportType(), genres);
-        ArrayList<String> platforms = new ArrayList<>();
-        platforms.add(PlatformManager.INSTANCE.getContentNameById(platform));
-        map.put(PlatformManager.INSTANCE.getExportType(), platforms);
+        if (genre != -1) {
+            ArrayList<String> genres = new ArrayList<>();
+            genres.add(GenreManager.INSTANCE.getContentNameById(genre));
+            map.put(GenreManager.INSTANCE.getExportType(), genres);
+        }
+        if (platform != -1) {
+            ArrayList<String> platforms = new ArrayList<>();
+            platforms.add(PlatformManager.INSTANCE.getContentNameById(platform));
+            map.put(PlatformManager.INSTANCE.getExportType(), platforms);
+        }
         return map;
     }
 
     @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
-        map.replace("GENRE", GenreManager.INSTANCE.getContentNameById(genre));
-        map.replace("PLATFORM", PlatformManager.INSTANCE.getContentNameById(platform));
+        if (genre != -1) {
+            map.replace("GENRE", GenreManager.INSTANCE.getContentNameById(genre));
+        } else {
+            map.replace("GENRE", "none");
+        }
+        if (genre != -1) {
+            map.replace("PLATFORM", PlatformManager.INSTANCE.getContentNameById(platform));
+        } else {
+            map.replace("PLATFORM", "none");
+        }
     }
 }

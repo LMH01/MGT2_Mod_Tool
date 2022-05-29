@@ -63,13 +63,21 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        int genreId = -1;
+        if (!map.get("GENRE").equals("none")) {
+            genreId = SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) map.get("GENRE"));
+        }
+        int platformId = -1;
+        if (!map.get("PLATFORM").equals("none")) {
+            platformId = SharingHelper.getContentIdByNameFromImport(PlatformManager.INSTANCE, (String) map.get("PLATFORM"));
+        }
         return new NpcEngine(
                 (String) map.get("NAME EN"),
                 getIdFromMap(map),
                 new TranslationManager(map),
                 (String) map.get("DATE"),
-                SharingHelper.getContentIdByNameFromImport(GenreManager.INSTANCE, (String) map.get("GENRE")),
-                SharingHelper.getContentIdByNameFromImport(PlatformManager.INSTANCE, (String) map.get("PLATFORM")),
+                genreId,
+                platformId,
                 Integer.parseInt((String) map.get("PRICE")),
                 Integer.parseInt((String) map.get("SHARE"))
         );
