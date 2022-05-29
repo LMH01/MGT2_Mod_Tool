@@ -9,6 +9,7 @@
 ### Removed features
 - It is no longer possible to add a description to custom hardware
   - This is because the game no longer supports descriptions for custom hardware
+  - When the game supports the description again, it will be added back
 
 ### Other
 - Updated some spinner values:
