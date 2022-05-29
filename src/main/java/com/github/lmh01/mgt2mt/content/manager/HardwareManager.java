@@ -15,16 +15,15 @@ import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HardwareManager extends AbstractAdvancedContentManager implements DependentContentManager {
 
@@ -263,7 +262,25 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
 
         JLabel componentRatingDescription = new JLabel(I18n.INSTANCE.get("mod.hardware.addMod.components.label.ratingDescription"));
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity, componentRatingDescription};
+
+        AtomicReference<Path> customIconPath = new AtomicReference<>(null);
+        JButton buttonCustomIcon = new JButton(I18n.INSTANCE.get("mod.hardware.addMod.components.button.customIcon"));
+        buttonCustomIcon.setToolTipText(I18n.INSTANCE.get("mod.hardware.addMod.components.button.customIcon.toolTip"));
+        buttonCustomIcon.addActionListener(actionEvent -> {
+            try {
+                Path imageFilePath = Utils.getImagePath();
+                if (imageFilePath.toFile().exists()) {
+                    customIconPath.set(imageFilePath);
+                }
+                buttonCustomIcon.setText(I18n.INSTANCE.get("mod.hardware.addMod.components.button.customIcon.selected"));
+            } catch (ModProcessingException e) {
+                customIconPath.set(null);
+                buttonCustomIcon.setText(I18n.INSTANCE.get("mod.hardware.addMod.components.button.customIcon"));
+                e.printStackTrace();
+            }
+        });
+
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity, componentRatingDescription, buttonCustomIcon};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue")) && !textFieldDescription.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldDescription.initialValue"))) {
@@ -303,6 +320,10 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                                 onlyHandheld = true;
                             }
                         }
+                        Image icon = null;
+                        if (customIconPath.get() != null) {
+                            icon = new Image(customIconPath.get().toFile(), MGT2Paths.HARDWARE_ICONS.getPath().resolve(Utils.convertName(textFieldName.getText()) + "platform_icon" + ".png").toFile());
+                        }
                         AbstractBaseContent hardware = new Hardware(
                                 textFieldName.getText(),
                                 null,
@@ -317,7 +338,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                                 onlyHandheld,
                                 onlyStationary,
                                 requiredGameplayFeatures,
-                                null
+                                icon
                         );
                         if (JOptionPane.showConfirmDialog(null, hardware.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             addContent(hardware);

@@ -3,7 +3,8 @@
 ## v4.1.0
 
 ### New feature
-- Hardware icons that have been set by editing the game files are now recognized. This means that they will be included when importing and exporting the hardware.
+- Custom hardware icons can now be added
+  - Hardware icons that have been set by editing the game files are now recognized. This means that they will be included when importing and exporting the hardware.
 
 ### Other
 - Updated some spinner values:
