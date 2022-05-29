@@ -6,9 +6,11 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
@@ -137,6 +139,10 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 requiredGenres.add(Integer.parseInt(entry.getValue()));
             }
         }
+        Image icon = null;
+        if (map.containsKey("PIC")) {
+            icon = new Image(MGT2Paths.HARDWARE_ICONS.getPath().resolve(map.get("PIC")).toFile());
+        }
         return new Hardware(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -150,7 +156,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt(map.get("TECHLEVEL")),
                 map.containsKey("ONLY_HANDHELD"),
                 map.containsKey("ONLY_STATIONARY"),
-                requiredGenres
+                requiredGenres,
+                icon
         );
     }
 
@@ -163,6 +170,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         list.add(new DataLine("PRICE", true, DataType.INT));
         list.add(new DataLine("DEV COSTS", true, DataType.INT));
         list.add(new DataLine("TECHLEVEL", true, DataType.INT));
+        list.add(new DataLine("PIC", false, DataType.UNCHECKED));
         list.add(new DataLine("ONLY_HANDHELD", false, DataType.EMPTY));
         list.add(new DataLine("ONLY_STATIONARY", false, DataType.EMPTY));
         return list;
@@ -181,6 +189,11 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         } catch (IllegalArgumentException e) {
             return String.format(I18n.INSTANCE.get("verifyContentIntegrity.typeInvalid") + "\n", getGameFile().getName(), getType(), map.get("NAME EN"), e.getMessage());
         }
+        if (map.containsKey("PIC")) {
+            if (!MGT2Paths.HARDWARE_ICONS.getPath().resolve(map.get("PIC")).toFile().exists()) {
+                return String.format(I18n.INSTANCE.get("verifyContentIntegrity.pictureNotFound") + "\n", getGameFile().getName(), getType(), map.get("NAME EN"), map.get("PIC"), MGT2Paths.HARDWARE_ICONS.getPath());
+            }
+        }
         return "";
     }
 
@@ -191,6 +204,10 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
             if (entry.getKey().contains("NEED-")) {
                 requiredGenres.add(SharingHelper.getContentIdByNameFromImport(GameplayFeatureManager.INSTANCE, (String) entry.getValue()));
             }
+        }
+        Image icon = null;
+        if (map.containsKey("platform_icon")) {
+            icon = new Image(assetsFolder.resolve((String) map.get("platform_icon")).toFile(), MGT2Paths.HARDWARE_ICONS.getPath().resolve("icon_" + Utils.convertName((String) map.get("NAME EN")) + ".png").toFile());
         }
         return new Hardware(
                 (String) map.get("NAME EN"),
@@ -205,7 +222,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt((String) map.get("TECHLEVEL")),
                 map.containsKey("ONLY_HANDHELD"),
                 map.containsKey("ONLY_STATIONARY"),
-                requiredGenres
+                requiredGenres,
+                icon
         );
     }
 
@@ -298,7 +316,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                                 Integer.parseInt(spinnerTechLevel.getValue().toString()),
                                 onlyHandheld,
                                 onlyStationary,
-                                requiredGameplayFeatures
+                                requiredGameplayFeatures,
+                                null
                         );
                         if (JOptionPane.showConfirmDialog(null, hardware.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             addContent(hardware);

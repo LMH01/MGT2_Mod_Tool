@@ -37,6 +37,11 @@ public enum MGT2Paths {
     PLATFORM_ICONS(Settings.mgt2Path.resolve("Mad Games Tycoon 2_Data/Extern/Icons_Platforms")),
 
     /**
+     * Path to /Mad Games Tycoon 2_Data/Extern/Icons_Hardware
+     */
+    HARDWARE_ICONS(Settings.mgt2Path.resolve("Mad Games Tycoon 2_Data/Extern/Icons_Hardware")),
+
+    /**
      * Path to /Mad Games Tycoon 2_Data/Extern/Screenshots
      */
     GENRE_SCREENSHOTS(Settings.mgt2Path.resolve("Mad Games Tycoon 2_Data/Extern/Screenshots"));

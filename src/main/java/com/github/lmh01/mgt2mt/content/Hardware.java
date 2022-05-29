@@ -1,20 +1,21 @@
 package com.github.lmh01.mgt2mt.content;
 
-import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
-import com.github.lmh01.mgt2mt.content.managed.DependentContent;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
-import com.github.lmh01.mgt2mt.content.managed.SharingHelper;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.HardwareType;
 import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.HardwareManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-public class Hardware extends AbstractAdvancedContent implements DependentContent {
+public class Hardware extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
 
     String description;
     String date;
@@ -26,6 +27,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
     boolean onlyHandheld;
     boolean onlyStationary;
     ArrayList<Integer> requiredGameplayFeatures;
+    Image icon;//The image is optional and can currently not be added with the guide
 
     public Hardware(String name,
                     Integer id,
@@ -39,7 +41,8 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
                     int techLevel,
                     boolean onlyHandheld,
                     boolean onlyStationary,
-                    ArrayList<Integer> requiredGameplayFeatures) throws ModProcessingException {
+                    ArrayList<Integer> requiredGameplayFeatures,
+                    Image icon) throws ModProcessingException {
         super(HardwareManager.INSTANCE, name, id, translationManager);
         // Check if this hardware is valid
         if (onlyHandheld && onlyStationary) {
@@ -55,6 +58,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
         this.onlyHandheld = onlyHandheld;
         this.onlyStationary = onlyStationary;
         this.requiredGameplayFeatures = requiredGameplayFeatures;
+        this.icon = icon;
     }
 
     @Override
@@ -69,6 +73,9 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
         map.put("PRICE", Integer.toString(price));
         map.put("DEV COSTS", Integer.toString(devCosts));
         map.put("TECHLEVEL", Integer.toString(techLevel));
+        if (icon != null && icon.gameFile != null) {
+            map.put("PIC", icon.gameFile.getName());
+        }
         if (onlyStationary) {
             map.put("ONLY_STATIONARY", "");
         }
@@ -128,5 +135,45 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
         for (Map.Entry<String, String> entry : modifications.entrySet()) {
             map.replace(entry.getKey(), entry.getValue());
         }
+    }
+
+    @Override
+    public void addPictures() throws IOException, NullPointerException {
+        if (icon != null) {
+            if (icon.extern == null) {
+                throw new NullPointerException("Icon extern is null");
+            }
+            Files.copy(icon.extern.toPath(), icon.gameFile.toPath());
+        }
+    }
+
+    @Override
+    public void removePictures() throws IOException {
+        if (icon != null) {
+            Files.delete(icon.gameFile.toPath());
+        }
+    }
+
+    @Override
+    public Map<String, Image> getImageMap() {
+        Map<String, Image> map = new HashMap<>();
+        if (icon != null) {
+            String identifier = "platform_icon";
+            map.put(identifier, new Image(new File(contentType.getExportImageName(identifier + ".png", name)), icon.gameFile));
+        }
+        return map;
+    }
+
+    @Override
+    public String externalImagesAvailable() throws ModProcessingException {
+        if (icon != null) {
+            if (icon.extern == null) {
+                throw new ModProcessingException("Icon extern is null");
+            }
+            if (!Files.exists(icon.extern.toPath())) {
+                return icon.extern.getPath() + "\n";
+            }
+        }
+        return "";
     }
 }
