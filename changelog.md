@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.0.1
+
+### Other
+- Updated some spinner values in the add publisher window.
+
 ## [v4.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.0.0) (Latest Version)
 
 ### Important

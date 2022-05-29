@@ -156,7 +156,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         checkBoxIsPublisher.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.optionPaneMessage.publisher.toolTip"));
 
         JSpinner spinnerMarketShare = WindowHelper.getBaseSpinner("mod.publisher.addMod.optionPaneMessage.spinner.marketShare.toolTip", 50, 1, 100, 1);
-        JSpinner spinnerShare = WindowHelper.getBaseSpinner("mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip", 10, 0, 10, 1);
+        JSpinner spinnerShare = WindowHelper.getBaseSpinner("mod.publisher.addMod.optionPaneMessage.spinner.share.toolTip", 5, 0, 10, 1);
 
         AtomicInteger genreID = new AtomicInteger();
         JPanel panelGenre = new JPanel();
@@ -215,9 +215,9 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         JCheckBox notForSale = new JCheckBox(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.notForSale"));
         notForSale.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.notForSale.toolTip"));
 
-        JSpinner speed = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.speed.toolTip", 5, 0, 5, 1);
+        JSpinner speed = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.speed.toolTip", 3, 0, 5, 1);
 
-        JSpinner comVal = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.comVal.toolTip", 10000000, 10000000, 100000000, 500000);
+        JSpinner comVal = WindowHelper.getBaseSpinner("mod.publisher.addMod.spinner.comVal.toolTip", 10000000, 2000000, 40000000, 200000);
 
         JCheckBox onlyMobile = new JCheckBox(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.onlyMobile"));
         onlyMobile.setToolTipText(I18n.INSTANCE.get("mod.publisher.addMod.checkBox.onlyMobile.toolTip"));
