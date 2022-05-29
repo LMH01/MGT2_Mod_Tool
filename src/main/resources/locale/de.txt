@@ -540,6 +540,9 @@ mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationäre Kons
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable Konsole
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|<html>Wähle hier aus, für welche Konsolenart diese Hardware exclusiv sein soll
 mod.hardware.addMod.components.label.ratingDescription|<html>Info:<br>Die Bewertung des Bauteiles kann nicht manuell eingestellt werden.<br>Sie wird automatisch unter anderem über das tech level und die research points berechnet.
+mod.hardware.addMod.components.button.customIcon|Benutzerdefiniertes Symbol auswählen
+mod.hardware.addMod.components.button.customIcon.toolTip|<html>Klicke hier, um eine Bilddatei auszuwählen, die als Hardwaresymbol verwendet werden soll.<br>Wenn kein benutzerdefiniertes Symbol eingestellt ist, wird das Standardsymbol verwendet
+mod.hardware.addMod.components.button.customIcon.selected|Benutzerdefiniertes Symbol ausgewählt
 mod.npcIp.addMod.optionPaneMessage.firstPart|Diese Npc IP hinzufügen?
 mod.npcIp.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC IP EIN
 mod.npcIp.addMod.components.spinner.rating|Spiel Bewertung in %
