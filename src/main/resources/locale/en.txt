@@ -534,7 +534,6 @@ mod.hardwareFeature.addMod.components.checkBoxOnlyStationary.toolTip|Aktiviere d
 mod.hardwareFeature.addMod.components.textFieldDescription.initialValue|ENTER HARDWARE FEATURE DESCRIPTION
 mod.hardware.addMod.optionPaneMessage.firstPart|Add this hardware?
 mod.hardware.addMod.components.textFieldName.initialValue|ENTER HARDWARE NAME
-mod.hardware.addMod.components.textFieldDescription.initialValue|ENTER HARDWARE DESCRIPTION
 mod.hardware.addMod.components.comboBox.type.toolTip|Select what type the hardware should be
 mod.hardware.addMod.components.checkBox.exclusiveConsole|Enable console exclusivity
 mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Check this box to make the hardware exclusive for a specific hardware type.<br>You can select the allowed console type below
