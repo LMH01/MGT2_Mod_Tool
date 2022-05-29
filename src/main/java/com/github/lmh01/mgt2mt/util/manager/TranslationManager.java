@@ -146,7 +146,7 @@ public class TranslationManager {
                 if (entry.getKey().equals("NAME " + string) && !entry.getValue().trim().isEmpty()) {
                     bw.write("[NAME " + string + "]" + entry.getValue() + "\r\n");
                 }
-                if (entry.getKey().equals("DESC " + string) && !entry.getValue().trim().isEmpty()) {
+                if (entry.getKey().equals("DESC " + string) && entry.getValue() != null &&!entry.getValue().trim().isEmpty()) {
                     bw.write("[DESC " + string + "]" + entry.getValue() + "\r\n");
                 }
             }
