@@ -1180,7 +1180,12 @@ public class SharingManager {
         Map<BaseContentManager, AtomicBoolean> enabledMods = new HashMap<>();
         Map<BaseContentManager, AtomicReference<List<String>>> selectedMods = new HashMap<>();
         for (BaseContentManager mod : ContentAdministrator.contentManagers) {
-            List<String> modNames = Arrays.asList(mod.getCustomContentString());
+            List<String> modNames;
+            if (Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
+                modNames = Arrays.asList(mod.getContentByAlphabet());
+            } else {
+                modNames = Arrays.asList(mod.getCustomContentString());
+            }
             selectedMods.put(mod, new AtomicReference<>(modNames));
             enabledMods.put(mod, new AtomicBoolean(true));
             importModPanels.put(mod, new JPanel());

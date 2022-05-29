@@ -8,6 +8,7 @@
 ### Bug fixes
 - Fixed export fail when a npc engine was exported where genre/platform ids where ``-1``
   - This would only occur when the safety features where off, and it was tried to export the ``without engine`` npc engine
+- Fixed game content not showing up in export selected lists when safety feature ``Include original contents in lists`` was off
 
 ## [v4.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.0.0) (Latest Version)
 
