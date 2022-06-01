@@ -217,7 +217,7 @@ Skifahren <0><6><7><8><17>
 Deck-Building <0><1><2><3><4><13>
 Volleyball <0><8><9>
 Dart <0><8>
-Billiard <0><8>
+Billard <0><8>
 Leichtathletik <0><8><9>
 Bergsteigen <0><5><6><7><8><14><15>
 Bowling <0><8>

@@ -1145,7 +1145,7 @@ Starblade <5><14><16>
 Stardriver <5><12><14><16>
 Starfighters <7>
 Starkid <2><3><15>
-Starrabbit <2><3><15>
+Star Rabbit <2><3><15>
 Stars of Dynasties <4><13>
 Stealth Fighter <7>
 Steel Fighters <10>
