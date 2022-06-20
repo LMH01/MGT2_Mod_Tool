@@ -10,6 +10,8 @@
 ### Other
 - Improved the message that is shown when the content integrity check fails
 - When a new initial backup should be created but the uninstallation fails the user can now decide to create the new initial backup anyway
+- Linux:
+  - Added information message that is shown when the tool runs on linux and the integrity of a game file is violated.
 
 
 ## [v4.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.1.0) (Latest Version)

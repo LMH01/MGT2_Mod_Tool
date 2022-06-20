@@ -769,6 +769,8 @@ warnMessage.integrityCheckFailed.textArea.2|Wird das Tool trotzdem benutzt, kann
 warnMessage.integrityCheckFailed.textArea.3|Hinweis: Wenn das Problem weiterhin besteht und du die Spieldateien bereits überprüft hast, handelt es sich um ein Problem in den originalen Spieldateien und das Spielen und Verwenden dieses Tools ist wahrscheinlich in Ordnung.
 warnMessage.integrityCheckFailed.textArea.mod_tool_not_compatible|Dies wird wahrscheinlich dadurch verursacht, dass das Mod-Tool nicht mit der neuesten Version des Spiels kompatibel ist.
 warnMessage.integrityCheckFailed.textArea.checkGithub|Bitte sieh dir die Github-Issues an, um zu prüfen, ob mir das Problem bereits bekannt ist. Wenn es kein solches Problem gibt, erstelle bitte ein neues.
+warnMessage.integrityCheckFailed.textArea.linux|Da du unter Linux arbeitest, könnten einige Warnungen über fehlende Bilder ungenau sein. Das liegt daran, dass Linux-Dateipfade die Großschreibung des Dateinamens berücksichtigen.
+warnMessage.integrityCheckFailed.textArea.linux2|Um alle Warnungen dieser Art zu deaktivieren, kann die Option "Integritätsprüfung der Spieldateien deaktivieren" im Reiter Sicherheitsfunktionen konfigurieren in den Einstellungen aktiviert werden.
 
 frame.title.error|Fehler
 frame.title.warning|Warnung

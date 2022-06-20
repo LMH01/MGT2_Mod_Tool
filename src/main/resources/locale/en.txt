@@ -767,6 +767,8 @@ warnMessage.integrityCheckFailed.textArea.2|If the tool is used anyway, problems
 warnMessage.integrityCheckFailed.textArea.3|Note: If this problem persists and you have already verified the game files, than it is a problem in the original game files and playing and using this tool is probably fine.
 warnMessage.integrityCheckFailed.textArea.mod_tool_not_compatible|This is probably caused by the mod tool not being compatible with the latest version of the game.
 warnMessage.integrityCheckFailed.textArea.checkGithub|Please view the github issues page to check if I'm already aware of that problem. If no such issue exists please create a new one.
+warnMessage.integrityCheckFailed.textArea.linux|Because you are running on linux some warnings regarding missing pictures might be inaccurate. That is because linux file paths take the capitalization of the file name into account.
+warnMessage.integrityCheckFailed.textArea.linux2|To disable all warnings of this type, the "Disable game file integrity check" option can be enabled in the "Configure safety features" tab in the Settings.
 
 frame.title.error|Error
 frame.title.warning|Warning
