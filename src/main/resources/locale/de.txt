@@ -1058,6 +1058,7 @@ window.uninstall.confirmMessage.firstPart|<html>Warnung!<br>Bist du sicher, dass
 window.uninstall.confirmMessage.secondPart|Dies kann nicht rückgängig gemacht werden!
 window.uninstall.confirmMessage.title|Bestätigen der Deinstallation
 window.uninstall.uninstallIncomplete|Bei der Deinstallation ist ein Problem aufgetreten:
+window.uninstall.uninstallIncomplete.question|Soll trotzdem ein neues Initial-Backup erstellt werden?
 window.uninstall.uninstallIncomplete.title|Deinstallation unvollstäding
 window.uninstall.uninstallSuccessful|Die ausgewählten Dateien wurden erfolgreich deinstalliert!
 window.uninstall.uninstallSuccessful.title|Deinstallation erfolgreich

@@ -1056,6 +1056,7 @@ window.uninstall.confirmMessage.firstPart|<html>Warning!<br>Are you sure that yo
 window.uninstall.confirmMessage.secondPart|This can't be reverted!
 window.uninstall.confirmMessage.title|Confirm uninstall
 window.uninstall.uninstallIncomplete|There was a problem while uninstalling:
+window.uninstall.uninstallIncomplete.question|Should a new initial backup be created anyway?
 window.uninstall.uninstallIncomplete.title|Uninstalling incomplete
 window.uninstall.uninstallSuccessful|Your selected files have been uninstalled successfully!
 window.uninstall.uninstallSuccessful.title|Uninstalling successful

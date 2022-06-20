@@ -376,9 +376,13 @@ public class Backup {
                 uninstallFailed = true;
                 uninstallFailedExplanation.append(e.getMessage());
             }
+            boolean continueWithBackup = false;
             if (uninstallFailed) {
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.WARNING_MESSAGE);
-            } else {
+                if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation + "\n\n" + I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.question"), I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    continueWithBackup = true;
+                }
+            }
+            if (continueWithBackup) {
                 ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(ModManagerPaths.BACKUP.getPath(), ".initialBackup");
                 File oldInitialBackupFolder = ModManagerPaths.BACKUP.getPath().resolve("InitialBackups/" + Utils.getCurrentDateTime()).toFile();
                 oldInitialBackupFolder.mkdirs();
