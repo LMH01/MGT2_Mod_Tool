@@ -2,6 +2,9 @@
 
 ## v4.2.0
 
+### New feature
+- When the tool is incompatible with the current game version the reason is now displayed
+
 ### Other
 - Improved the message that is shown when the content integrity check fails
 - When a new initial backup should be created but the uninstallation fails the user can now decide to create the new initial backup anyway

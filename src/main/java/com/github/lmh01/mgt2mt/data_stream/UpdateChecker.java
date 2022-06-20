@@ -109,6 +109,7 @@ public class UpdateChecker {
             try {
                 Scanner scanner = new Scanner(new URL(COMPATIBILITY_CHECK_URL).openStream());
                 String currentLine = scanner.nextLine();
+                StringBuilder stringBuilder = new StringBuilder();
                 if (currentLine.equals("true")) {
                     latestGameVersionCompatible = true;
                     LOGGER.info("Latest mod tool version is compatible with mgt2");
@@ -116,8 +117,13 @@ public class UpdateChecker {
                     latestGameVersionCompatible = false;
                     LOGGER.info("Latest mod tool version is not compatible with mgt2");
                 }
+                while (scanner.hasNextLine()) {
+                    currentLine = scanner.nextLine();
+                    LOGGER.info(currentLine);
+                    stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
+                }
                 if (!latestGameVersionCompatible && !Utils.isAlpha()) {
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible"), I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible") + "\n" + stringBuilder, I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

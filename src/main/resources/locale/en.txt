@@ -700,7 +700,7 @@ dialog.updateChecker.updateAvailable.title|New version available
 dialog.updateChecker.updateAvailable.versionType.ver1|A new release is available:
 dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is available:
 dialog.updateChecker.updateFailed|Update check failed: No internet connection
-dialog.updateChecker.latestGameVersionNotCompatible|<html>Warning:<br><br>This tool is not compatible with the current game version!<br>You can choose to use the tool anyway but some things might not work properly.<br><br>I will do my best to make this tool compatible again as quickly as possible.
+dialog.updateChecker.latestGameVersionNotCompatible|<html>Warning:<br><br>This tool is not compatible with the current game version!<br>You can choose to use the tool anyway but some things might not work properly.<br><br>I will do my best to make this tool compatible again as quickly as possible.<br><br>Reason for the incompatibility:
 
 dialog.dataStreamHelper.newFile.entryOutOfTarget|Entry is outside of the target dir:
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Failed to create directory
