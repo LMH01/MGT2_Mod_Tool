@@ -200,6 +200,7 @@ commonText.speed|Speed
 commonText.comVal|Computer value
 commonText.seconds|seconds
 commonText.country|Country
+commonText.notSet|Not set
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia
@@ -390,6 +391,9 @@ mod.publisher.icon|Publisher Icon
 mod.licence.addMod.optionPaneMessage.book|Book
 mod.licence.addMod.optionPaneMessage.movie|Movie
 mod.licence.addMod.optionPaneMessage.sport|Sport
+mod.licence.addMod.optionPaneMessage.comics|Comics
+mod.licence.addMod.optionPaneMessage.board_games|Board games
+mod.licence.addMod.optionPaneMessage.toys|Toys
 mod.licence.addMod.confirm|Add this licence
 mod.engineFeature.addMod.title|Add engine feature?
 mod.engineFeature.addMod.components.type.toolTip|Select what type your engine feature should be
@@ -706,6 +710,10 @@ dialog.dataStreamHelper.newFile.entryOutOfTarget|Entry is outside of the target 
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Failed to create directory
 
 dialog.sharingHandler.licence.addLicence|<html>Add this licence:<br>Name:
+dialog.sharingHandler.licence.goodGenreId|Good fitting genre
+dialog.sharingHandler.licence.badGenreId|Bad fitting genre
+dialog.sharingHandler.licence.releaseYear|Release year
+
 dialog.sharingHandler.theme.addTheme|Add this theme?
 dialog.sharingHandler.theme.addTheme.title|Add theme?
 dialog.sharingHandler.type|Type:
@@ -1146,6 +1154,9 @@ verifyContentIntegrity.variation6|The integrity of game file %s is not valid. Re
 
 verifyContentIntegrity.licenceInvalid.tagMissing|The integrity of game file Licence.txt is invalid. Reason: The license named %s does not contain a type tag.
 verifyContentIntegrity.licenceInvalid.tooManyTags|The integrity of game file Licence.txt is invalid. Reason: The license named %s contains more than one type tag.
+verifyContentIntegrity.licenceInvalid.goodGenreIdNotNumber|The integrity of game file Licence.txt is invalid. Reason: The good genre id of licence named %s is not a number: %s.
+verifyContentIntegrity.licenceInvalid.badGenreIdNotNumber|The integrity of game file Licence.txt is invalid. Reason: The bad genre id of licence named %s  is not a number: %s.
+verifyContentIntegrity.licenceInvalid.yearNotNumber|The integrity of game file Licence.txt is invalid. Reason: The year of licence named %s is not a number: %s.
 
 verifyContentIntegrity.npcGameInvalid.formatInvalid|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s contains invalid genre ids: %s.
 verifyContentIntegrity.npcGameInvalid.noGenreIds|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s does not contain genre ids.

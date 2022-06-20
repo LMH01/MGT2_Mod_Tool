@@ -199,6 +199,7 @@ commonText.speed|Geschwindigkeit
 commonText.comVal|Computergegner Wert
 commonText.seconds|Sekunden
 commonText.country|Land
+commonText.notSet|Nicht gesetzt
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien
@@ -390,6 +391,9 @@ mod.gameplayFeature.addMod.optionPaneMessage.firstPart|Dein Gameplay Feature ist
 mod.licence.addMod.optionPaneMessage.book|Buch
 mod.licence.addMod.optionPaneMessage.movie|Film
 mod.licence.addMod.optionPaneMessage.sport|Sport
+mod.licence.addMod.optionPaneMessage.comics|Comics
+mod.licence.addMod.optionPaneMessage.board_games|Brettspiele
+mod.licence.addMod.optionPaneMessage.toys|Spielsachen
 mod.licence.addMod.confirm|Soll diese Lizenz hinzugefügt werden?
 mod.engineFeature.addMod.title|Engine Feature hinzufügen?
 mod.engineFeature.addMod.components.type.toolTip|Wähle aus, welchen Typs das Engine Feature sein soll
@@ -709,6 +713,9 @@ dialog.dataStreamHelper.newFile.entryOutOfTarget|Der Eintrag befindet sich auße
 dialog.dataStreamHelper.newFile.failedToCreateDirectory|Verzeichnis konnte nicht erstellt werden
 
 dialog.sharingHandler.licence.addLicence|<html>Diese Lizenz hinzufügen:
+dialog.sharingHandler.licence.goodGenreId|Gut passendes Genre
+dialog.sharingHandler.licence.badGenreId|Schlecht passendes Genre
+dialog.sharingHandler.licence.releaseYear|Erscheinungsjahr
 dialog.sharingHandler.theme.addTheme|Dieses Thema hinzufügen?
 dialog.sharingHandler.theme.addTheme.title|Thema hinzufügen?
 dialog.sharingHandler.type|Typ:
@@ -1148,6 +1155,9 @@ verifyContentIntegrity.variation6|Die Integrität der Spieldatei %s ist ungülti
 
 verifyContentIntegrity.licenceInvalid.tagMissing|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Die Lizenz namens %s enthält keinen typ-Tag.
 verifyContentIntegrity.licenceInvalid.tooManyTags|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Die Lizenz namens %s enthält mehr als einen typ-Tag.
+verifyContentIntegrity.licenceInvalid.goodGenreIdNotNumber|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Das schlecht passende Genre der Lizenz namens %s ist keine Zahl: %s.
+verifyContentIntegrity.licenceInvalid.badGenreIdNotNumber|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Das gut passende Genre der Lizenz namens %s ist keine Zahl: %s.
+verifyContentIntegrity.licenceInvalid.yearNotNumber|Die Integrität der Spieldatei Licence.txt ist ungültig. Grund: Das Jahr der Lizenz namens %s ist keine Zahl: %s.
 
 verifyContentIntegrity.npcGameInvalid.formatInvalid|Die Integrität der Spieldatei NpcGames.txt ist ungültig. Grund: Das Npc-Spiel namens %s enthält ungültige genre ids: %s.
 verifyContentIntegrity.npcGameInvalid.noGenreIds|Die Integrität der Spieldatei NpcGames.txt ist ungültig. Grund: Das Npc-Spiel namens %s enthält keine genre ids.

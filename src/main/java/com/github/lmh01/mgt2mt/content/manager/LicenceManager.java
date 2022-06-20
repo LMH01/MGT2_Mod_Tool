@@ -2,9 +2,7 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.Licence;
-import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
-import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContentManager;
-import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.LicenceType;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
@@ -17,7 +15,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LicenceManager extends AbstractSimpleContentManager {
+public class LicenceManager extends AbstractSimpleContentManager implements DependentContentManager {
 
     public static final LicenceManager INSTANCE = new LicenceManager();
 
@@ -29,19 +27,28 @@ public class LicenceManager extends AbstractSimpleContentManager {
 
     @Override
     protected String getReplacedLine(String line) {
-        return line.replace("[MOVIE]", "").replace("[BOOK]", "").replace("[SPORT]", "").trim();
+        return Utils.getFirstPart(line).trim();
     }
 
     @Override
     protected String isLineValid(String line) {
         int availableTags = 0;
-        if (line.contains("[BOOK]")) {
+        if (line.contains("<BOOK>")) {
             availableTags++;
         }
-        if (line.contains("[MOVIE]")) {
+        if (line.contains("<MOVIE>")) {
             availableTags++;
         }
-        if (line.contains("[SPORT]")) {
+        if (line.contains("<SPORT>")) {
+            availableTags++;
+        }
+        if (line.contains("<COMIC>")) {
+            availableTags++;
+        }
+        if (line.contains("<TOY>")) {
+            availableTags++;
+        }
+        if (line.contains("<BOARD>")) {
             availableTags++;
         }
         if (availableTags < 1) {
@@ -49,14 +56,40 @@ public class LicenceManager extends AbstractSimpleContentManager {
         } else if (availableTags > 1) {
             return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.tooManyTags"), getReplacedLine(line));
         }
+        if (line.contains("G+") || line.contains("G-")) {
+            ArrayList<String> ids = Utils.getEntriesFromString(line);
+            for (String string : ids) {
+                if (string.startsWith("G")) {
+                    if (string.charAt(1) == '+') {
+                        try {
+                            Integer.parseInt(string.replace("G", "").replace("+", ""));
+                        } catch (NumberFormatException e) {
+                            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.goodGenreIdNotNumber"), getReplacedLine(line), string.replace("G", "").replace("+", ""));
+                        }
+                    } else if (string.charAt(1) == '-') {
+                        try {
+                            Integer.parseInt(string.replace("G", "").replace("-", ""));
+                        } catch (NumberFormatException e) {
+                            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.badGenreIdNotNumber"), getReplacedLine(line), string.replace("G", "").replace("-", ""));
+                        }
+                    }
+                } else if (string.startsWith("Y")) {
+                    try {
+                        Integer.parseInt(string.replace("Y", ""));
+                    } catch (NumberFormatException e) {
+                        return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.yearNotNumber"), getReplacedLine(line), string.replace("Y", ""));
+                    }
+                }
+            }
+        }
         return "";
     }
 
     @Override
     public String[] getCustomContentString() throws ModProcessingException {
         List<String> custom = Arrays.stream(super.getCustomContentString()).unordered().collect(Collectors.toList());
-        custom.remove("Chronicles of Nornio [5]");
-        return Utils.transformListToArray((ArrayList<String>) custom);
+        custom.remove("Chronicles of Nornio");
+        return Utils.transformListToArray(custom);
     }
 
     @Override
@@ -84,7 +117,7 @@ public class LicenceManager extends AbstractSimpleContentManager {
                     } else {
                         throw new ModProcessingException("Unable to identify type, internal error!");
                     }
-                    Licence licence = new Licence(textFieldName.getText(), null, LicenceType.getTypeByIdentifier(identifier));
+                    Licence licence = new Licence(textFieldName.getText(), null, LicenceType.getTypeByIdentifier(identifier), null, null, null);
                     boolean licenceAlreadyExists = false;
                     for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
                         if (entry.getValue().equals(licence.getLine())) {
@@ -115,27 +148,62 @@ public class LicenceManager extends AbstractSimpleContentManager {
 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) {
-        return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")));
+        return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")), Integer.parseInt((String) map.get("GOOD GENRE ID")), Integer.parseInt((String) map.get("BAD GENRE ID")), Integer.parseInt((String) map.get("RELEASE YEAR")));
     }
 
     @Override
     public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
-        LicenceType licenceType;
-        String data = fileContent.get(getContentIdByName(name)).replace(name, "");
-        if (data.contains("BOOK")) {
-            licenceType = LicenceType.BOOK;
-        } else if (data.contains("MOVIE")) {
-            licenceType = LicenceType.MOVIE;
-        } else if (data.contains("SPORT")) {
-            licenceType = LicenceType.SPORT;
-        } else {
+        LicenceType licenceType = null;
+        Integer goodGenreId = null;
+        Integer badGenreId = null;
+        Integer releaseYear = null;
+        ArrayList<String> data = Utils.getEntriesFromString(fileContent.get(getContentIdByName(name)));
+        for (String string : data) {
+            if (string.startsWith("G")) {
+                if (string.charAt(1) == '+') {
+                    try {
+                        goodGenreId = Integer.parseInt(string.replace("G", "").replace("+", ""));
+                    } catch (NumberFormatException e) {
+                        throw new ModProcessingException("Unable to construct content: Good genre ID is not a number!");
+                    }
+                } else if (string.charAt(1) == '-') {
+                    try {
+                        badGenreId = Integer.parseInt(string.replace("G", "").replace("-", ""));
+                    } catch (NumberFormatException e) {
+                        throw new ModProcessingException("Unable to construct content: Bad genre ID is not a number!");
+                    }
+                }
+            } else if (string.startsWith("Y")) {
+                try {
+                    releaseYear = Integer.parseInt(string.replace("Y", ""));
+                } catch (NumberFormatException e) {
+                    throw new ModProcessingException("Unable to construct content: Release year is not a number!");
+                }
+            } else {
+                licenceType = LicenceType.getTypeByIdentifier(string);
+            }
+        }
+        if (licenceType == null) {
             throw new ModProcessingException("Unable to construct content: licence type not found!");
         }
-        return new Licence(name, null, licenceType);
+        return new Licence(name, null, licenceType, goodGenreId, badGenreId, releaseYear);
     }
 
     @Override
     public String[] getCompatibleModToolVersions() {
         return compatibleModToolVersions;
+    }
+
+    @Override
+    public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
+        replaceMapEntry(map, missingDependency, replacement, "GOOD GENRE ID");
+        replaceMapEntry(map, missingDependency, replacement, "BAD GENRE ID");
+    }
+
+    @Override
+    public ArrayList<BaseContentManager> getDependencies() {
+        ArrayList<BaseContentManager> arrayList = new ArrayList<>();
+        arrayList.add(GenreManager.INSTANCE);
+        return arrayList;
     }
 }

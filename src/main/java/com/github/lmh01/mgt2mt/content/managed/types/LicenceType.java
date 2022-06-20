@@ -8,7 +8,13 @@ public enum LicenceType implements TypeEnum {
 
     MOVIE("movie"),
 
-    SPORT("sport");
+    SPORT("sport"),
+
+    COMIC("comics"),
+
+    BOARD_GAME("board_games"),
+
+    TOY("toys");
 
     private final String translationKey;
 
@@ -31,8 +37,14 @@ public enum LicenceType implements TypeEnum {
             return "BOOK";
         } else if (this == LicenceType.MOVIE) {
             return "MOVIE";
-        } else {
+        } else if (this == LicenceType.SPORT){
             return "SPORT";
+        } else if (this == LicenceType.COMIC){
+            return "COMICS";
+        } else if (this == LicenceType.BOARD_GAME){
+            return "BOARD_GAMES";
+        } else {
+            return "TOYS";
         }
     }
 
@@ -49,6 +61,12 @@ public enum LicenceType implements TypeEnum {
                 return LicenceType.BOOK;
             case "SPORT":
                 return LicenceType.SPORT;
+            case "COMICS":
+                return LicenceType.COMIC;
+            case "BOARD_GAMES":
+                return LicenceType.BOARD_GAME;
+            case "TOYS":
+                return LicenceType.TOY;
         }
         throw new IllegalArgumentException("Licence type identifier is invalid: " + identifier);
     }
