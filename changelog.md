@@ -1,6 +1,9 @@
 # Changelog
 
-## v4.2.0
+## [v4.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.0) (Latest Version)
+
+### Important
+- Previously exported licences will not work together with this release
 
 ### New feature
 - Licences can now be assigned good / bad fitting genres and the release year.
@@ -13,8 +16,7 @@
 - Linux:
   - Added information message that is shown when the tool runs on linux and the integrity of a game file is violated.
 
-
-## [v4.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.1.0) (Latest Version)
+## [v4.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.1.0)
 
 ### New feature
 - Custom hardware icons can now be added

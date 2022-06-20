@@ -20,7 +20,7 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 #### WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST
 
 #### TO COUNTERACT THIS YOU CAN CREATE A MOD RESTORE POINT IN THE BACKUP MENU
-## Download: [v4.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.1.0/MGT2_Mod_Tool_4.1.0.zip)
+## Download: [v4.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.2.0/MGT2_Mod_Tool_4.2.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
