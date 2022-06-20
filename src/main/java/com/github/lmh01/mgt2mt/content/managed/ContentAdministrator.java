@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.content.manager.*;
+import com.github.lmh01.mgt2mt.data_stream.UpdateChecker;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -88,11 +89,16 @@ public class ContentAdministrator {
             }
             LOGGER.info("Integrity check successful!");
         } else {
-            LOGGER.error("Error: Game file integrity is violated: \n" + integrityViolations.toString());
+            LOGGER.error("Error: Game file integrity is violated: \n" + integrityViolations);
             TextAreaHelper.appendText(integrityViolations.toString());
             TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.1"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.2"));
-            TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.3"));
+            if (UpdateChecker.latestGameVersionCompatible) {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.3"));
+            } else {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.mod_tool_not_compatible"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.checkGithub"));
+            }
         }
     }
 }

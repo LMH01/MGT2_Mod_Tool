@@ -1,5 +1,11 @@
 # Changelog
 
+## v4.2.0
+
+### Other
+- Improved the message that is shown when the content integrity check fails
+
+
 ## [v4.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.1.0) (Latest Version)
 
 ### New feature

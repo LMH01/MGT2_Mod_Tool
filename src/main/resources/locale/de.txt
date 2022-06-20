@@ -756,6 +756,8 @@ errorMessages.gameFileCorrupted.textArea.secondPart|Versuche bitte die Spieldate
 warnMessage.integrityCheckFailed.textArea.1|Warnung: Die Integrität der Spieldateien ist verletzt.
 warnMessage.integrityCheckFailed.textArea.2|Wird das Tool trotzdem benutzt, kann es zu fehlern kommen.
 warnMessage.integrityCheckFailed.textArea.3|Hinweis: Wenn das Problem weiterhin besteht und du die Spieldateien bereits überprüft hast, handelt es sich um ein Problem in den originalen Spieldateien und das Spielen und Verwenden dieses Tools ist wahrscheinlich in Ordnung.
+warnMessage.integrityCheckFailed.textArea.mod_tool_not_compatible|Dies wird wahrscheinlich dadurch verursacht, dass das Mod-Tool nicht mit der neuesten Version des Spiels kompatibel ist.
+warnMessage.integrityCheckFailed.textArea.checkGithub|Bitte sieh dir die Github-Issues an, um zu prüfen, ob mir das Problem bereits bekannt ist. Wenn es kein solches Problem gibt, erstelle bitte ein neues.
 
 frame.title.error|Fehler
 frame.title.warning|Warnung
