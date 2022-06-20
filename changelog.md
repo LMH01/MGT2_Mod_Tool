@@ -3,6 +3,8 @@
 ## v4.2.0
 
 ### New feature
+- Licences can now be assigned good / bad fitting genres and the release year.
+  - This is a response to update `2022.06.16A` (fr #69)
 - When the tool is incompatible with the current game version the reason is now displayed
 
 ### Other

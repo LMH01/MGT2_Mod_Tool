@@ -103,21 +103,45 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
         panelType.add(labelType);
         panelType.add(comboBoxType);
 
-        Object[] params = {labelAddLicence, textFieldName, panelType};
+        JSpinner spinnerReleaseYear = WindowHelper.getUnlockYearSpinner();
+
+        JLabel labelChooseBadGenre = new JLabel(I18n.INSTANCE.get("dialog.sharingHandler.licence.badGenreId") + ":");
+        JList<String> listBadGenre = WindowHelper.getList(GenreManager.INSTANCE.getContentByAlphabet(), false);
+        listBadGenre.setToolTipText(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.badGenreId.tooltip"));
+        JScrollPane scrollPaneBadGenre = WindowHelper.getScrollPane(listBadGenre);
+
+        JLabel labelChooseGoodGenre = new JLabel(I18n.INSTANCE.get("dialog.sharingHandler.licence.goodGenreId") + ":");
+        JList<String> listGoodGenre = WindowHelper.getList(GenreManager.INSTANCE.getContentByAlphabet(), false);
+        listGoodGenre.setToolTipText(I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.goodGenreId.tooltip"));
+        JScrollPane scrollPaneGoodGenre = WindowHelper.getScrollPane(listGoodGenre);
+
+        Object[] params = {labelAddLicence, textFieldName, panelType, WindowHelper.getSpinnerPanel(spinnerReleaseYear, "commonText.releaseYear"),
+                labelChooseBadGenre, scrollPaneBadGenre, labelChooseGoodGenre, scrollPaneGoodGenre};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (listBadGenre.getSelectedValue() != null && listGoodGenre.getSelectedValue() != null && listBadGenre.getSelectedValue().equals(listGoodGenre.getSelectedValue())) {
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.badAndGoodGenreId"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
                 if (!textFieldName.getText().isEmpty()) {
-                    String identifier;
-                    if (Objects.equals(comboBoxType.getSelectedItem(), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.movie"))) {
-                        identifier = "MOVIE";
-                    } else if (Objects.equals(comboBoxType.getSelectedItem(), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.book"))) {
-                        identifier = "BOOK";
-                    } else if (Objects.equals(comboBoxType.getSelectedItem(), I18n.INSTANCE.get("mod.licence.addMod.optionPaneMessage.sport"))) {
-                        identifier = "SPORT";
-                    } else {
-                        throw new ModProcessingException("Unable to identify type, internal error!");
+                    Integer badGenreId = null;
+                    if (listBadGenre.getSelectedValue() != null) {
+                        badGenreId = GenreManager.INSTANCE.getContentIdByName(listBadGenre.getSelectedValue());
                     }
-                    Licence licence = new Licence(textFieldName.getText(), null, LicenceType.getTypeByIdentifier(identifier), null, null, null);
+                    Integer goodGenreId = null;
+                    if (listGoodGenre.getSelectedValue() != null) {
+                        goodGenreId = GenreManager.INSTANCE.getContentIdByName(listGoodGenre.getSelectedValue());
+                    }
+                    LicenceType lt = null;
+                    for (LicenceType licenceType : LicenceType.values()) {
+                        if (Objects.requireNonNull(comboBoxType.getSelectedItem()).toString().equals(licenceType.getTypeName())) {
+                            lt = licenceType;
+                        }
+                    }
+                    Licence licence = new Licence(textFieldName.getText(), null, lt,
+                            badGenreId,
+                            goodGenreId,
+                            (Integer) spinnerReleaseYear.getValue());
                     boolean licenceAlreadyExists = false;
                     for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
                         if (entry.getValue().equals(licence.getLine())) {
@@ -125,11 +149,7 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
                         }
                     }
                     if (!licenceAlreadyExists) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append(I18n.INSTANCE.get("mod.licence.addMod.confirm")).append(":").append("\r\n")
-                                .append(textFieldName.getText()).append("\r\n")
-                                .append("Type: ").append(comboBoxType.getSelectedItem());
-                        if (JOptionPane.showConfirmDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        if (JOptionPane.showConfirmDialog(null, licence.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             addContent(licence);
                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("commonText.licence.upperCase") + ": [" + textFieldName.getText() + "] " + I18n.INSTANCE.get("commonText.successfullyAdded"), I18n.INSTANCE.get("textArea.added") + " " + getType(), JOptionPane.INFORMATION_MESSAGE);
                             break;
@@ -147,8 +167,24 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
     }
 
     @Override
-    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) {
-        return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")), Integer.parseInt((String) map.get("GOOD GENRE ID")), Integer.parseInt((String) map.get("BAD GENRE ID")), Integer.parseInt((String) map.get("RELEASE YEAR")));
+    public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        Integer badGenreId;
+        if (map.get("BAD GENRE") == null) {
+            badGenreId = null;
+        } else {
+            badGenreId = GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String) map.get("BAD GENRE"));
+        }
+        Integer goodGenreId;
+        if (map.get("GOOD GENRE") == null) {
+            goodGenreId = null;
+        } else {
+            goodGenreId = GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String) map.get("GOOD GENRE"));
+        }
+        Integer year = (Integer) map.get("year");
+        if (map.get("RELEASE YEAR") == null) {
+            year = null;
+        }
+        return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")), badGenreId, goodGenreId, year);
     }
 
     @Override
@@ -186,7 +222,7 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
         if (licenceType == null) {
             throw new ModProcessingException("Unable to construct content: licence type not found!");
         }
-        return new Licence(name, null, licenceType, goodGenreId, badGenreId, releaseYear);
+        return new Licence(name, null, licenceType, badGenreId, goodGenreId, releaseYear);
     }
 
     @Override

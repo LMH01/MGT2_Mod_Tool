@@ -73,6 +73,7 @@ commonText.unlockYear.toolTip|Dies ist das Jahr, in welchem der Mod freigeschalt
 commonText.range|Bereich
 commonText.date|Datum
 commonText.releaseDate|Markteinführung
+commonText.releaseYear|Jahr der Veröffentlichung
 commonText.productionEnd|Produktionsende
 commonText.type|Typ
 commonText.researchPointCost|Forschungspunktkosten
@@ -394,6 +395,9 @@ mod.licence.addMod.optionPaneMessage.sport|Sport
 mod.licence.addMod.optionPaneMessage.comics|Comics
 mod.licence.addMod.optionPaneMessage.board_games|Brettspiele
 mod.licence.addMod.optionPaneMessage.toys|Spielsachen
+mod.licence.addMod.optionPaneMessage.badGenreId.tooltip|Die Auswahl eines schlecht passenden Genres ist optional
+mod.licence.addMod.optionPaneMessage.goodGenreId.tooltip|Die Auswahl eines gut passenden Genres ist optional
+mod.licence.addMod.optionPaneMessage.badAndGoodGenreId|<html>Du kannst nicht das gleiche Genre gleichzeitig<br>als gut und schlecht passendes Genre auswählen!
 mod.licence.addMod.confirm|Soll diese Lizenz hinzugefügt werden?
 mod.engineFeature.addMod.title|Engine Feature hinzufügen?
 mod.engineFeature.addMod.components.type.toolTip|Wähle aus, welchen Typs das Engine Feature sein soll

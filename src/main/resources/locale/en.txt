@@ -73,6 +73,7 @@ commonText.unlockYear.toolTip|<html>This is the year when your feature will be u
 commonText.range|Range
 commonText.date|Date
 commonText.releaseDate|Release date
+commonText.releaseYear|Release year
 commonText.productionEnd|Production end
 commonText.type|Type
 commonText.researchPointCost|Research point cost
@@ -394,6 +395,9 @@ mod.licence.addMod.optionPaneMessage.sport|Sport
 mod.licence.addMod.optionPaneMessage.comics|Comics
 mod.licence.addMod.optionPaneMessage.board_games|Board games
 mod.licence.addMod.optionPaneMessage.toys|Toys
+mod.licence.addMod.optionPaneMessage.badGenreId.tooltip|Selecting a bad fitting genre is optional;
+mod.licence.addMod.optionPaneMessage.goodGenreId.tooltip|Selecting a good fitting genre is optional;
+mod.licence.addMod.optionPaneMessage.badAndGoodGenreId|<html>You can not select the same genre<br>as booth good and bad fitting genres!
 mod.licence.addMod.confirm|Add this licence
 mod.engineFeature.addMod.title|Add engine feature?
 mod.engineFeature.addMod.components.type.toolTip|Select what type your engine feature should be

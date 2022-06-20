@@ -20,42 +20,47 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
     final Integer badGenreId;
     final Integer releaseYear;
 
-    public Licence(String name, Integer id, LicenceType licenceType, Integer goodGenreId, Integer badGenreId, Integer releaseYear) {
+    public Licence(String name, Integer id, LicenceType licenceType, Integer badGenreId, Integer goodGenreId, Integer releaseYear) {
         super(LicenceManager.INSTANCE, name, id);
         this.licenceType = licenceType;
-        this.goodGenreId = goodGenreId;
         this.badGenreId = badGenreId;
+        this.goodGenreId = goodGenreId;
         this.releaseYear = releaseYear;
     }
 
     @Override
-    public Map<String, String> getMap() {
+    public Map<String, String> getMap() throws ModProcessingException {
         Map<String, String> map = new HashMap<>();
         map.put("NAME EN", name);
         map.put("LICENCE TYP", licenceType.getIdentifier());
-        map.put("GOOD GENRE ID", goodGenreId.toString());
-        map.put("BAD GENRE ID", badGenreId.toString());
-        map.put("RELEASE YEAR", releaseYear.toString());
+        if (badGenreId != null) {
+            map.put("BAD GENRE", GenreManager.INSTANCE.getContentNameById(badGenreId));
+        }
+        if (goodGenreId != null) {
+            map.put("GOOD GENRE", GenreManager.INSTANCE.getContentNameById(goodGenreId));
+        }
+        map.put("RELEASE YEAR", String.valueOf(releaseYear));
         return map;
     }
 
     @Override
     public String getOptionPaneMessage() throws ModProcessingException {
         StringBuilder sb = new StringBuilder();
-        sb.append(I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence")).append("<br>").append(name).append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.type"))
-                .append(licenceType.getIdentifier()).append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.licence.goodGenreId"));
-        if (goodGenreId != null) {
-            sb.append(goodGenreId);
-        } else {
-            sb.append(I18n.INSTANCE.get("commonText.notSet"));
-        }
-        sb.append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.licence.badGenreId"));
+        sb.append(I18n.INSTANCE.get("dialog.sharingHandler.licence.addLicence")).append(" ").append(name).append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.type"))
+                .append(" ").append(licenceType.getIdentifier()).append("<br>");
+        sb.append(I18n.INSTANCE.get("dialog.sharingHandler.licence.badGenreId")).append(": ");
         if (badGenreId != null) {
-            sb.append(badGenreId);
+            sb.append(GenreManager.INSTANCE.getContentNameById(badGenreId));
         } else {
             sb.append(I18n.INSTANCE.get("commonText.notSet"));
         }
-        sb.append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.licence.releaseYear"));
+        sb.append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.licence.goodGenreId")).append(" ");
+        if (goodGenreId != null) {
+            sb.append(GenreManager.INSTANCE.getContentNameById(goodGenreId));
+        } else {
+            sb.append(I18n.INSTANCE.get("commonText.notSet"));
+        }
+        sb.append("<br>").append(I18n.INSTANCE.get("dialog.sharingHandler.licence.releaseYear")).append(": ");
         if (releaseYear != null) {
             sb.append(releaseYear);
         } else {
@@ -84,8 +89,12 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
         Set<String> genres = new HashSet<>();
-        genres.add(GenreManager.INSTANCE.getContentNameById(goodGenreId));
-        genres.add(GenreManager.INSTANCE.getContentNameById(badGenreId));
+        if (goodGenreId != null) {
+            genres.add(GenreManager.INSTANCE.getContentNameById(goodGenreId));
+        }
+        if (badGenreId != null) {
+            genres.add(GenreManager.INSTANCE.getContentNameById(badGenreId));
+        }
         map.put(GenreManager.INSTANCE.getExportType(), genres);
         return map;
     }
