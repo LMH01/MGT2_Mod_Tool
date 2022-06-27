@@ -78,8 +78,15 @@ public class LogFile {
                     "Enable genre description translation info: " + Settings.enableGenreDescriptionTranslationInfo + "\n" +
                     "Save logs: " + Settings.saveLogs + "\n" +
                     "Enable export storage: " + Settings.enableExportStorage + "\n" +
+                    "" + Settings.safetyFeatures.get(SafetyFeature.DISABLE_GAME_FILE_INTEGRITY_CHECK) + "\n" +
                     "Write text area output to console: " + Settings.writeTextAreaOutputToConsole);
             bw.write(System.getProperty("line.separator"));
+            bw.write("Safety feature settings:");
+            bw.write(System.getProperty("line.separator"));
+            for (SafetyFeature sf : SafetyFeature.values()) {
+                bw.write(sf.name() + ": " + Settings.safetyFeatures.get(sf));
+                bw.write(System.getProperty("line.separator"));
+            }
             for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {
                 bw.write(entry.getKey().getIdentifier() + ": " + entry.getValue());
                 bw.write(System.getProperty("line.separator"));

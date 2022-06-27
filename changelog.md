@@ -2,6 +2,9 @@
 
 ## v4.2.1
 
+### Other
+- Safety feature settings are now printed to log file
+
 ### Bug fixes
 - #98 - The initial backup could not be created because a boolean value was not set properly
 
