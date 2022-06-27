@@ -381,6 +381,8 @@ public class Backup {
                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("window.uninstall.uninstallIncomplete") + "\n\n" + uninstallFailedExplanation + "\n\n" + I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.question"), I18n.INSTANCE.get("window.uninstall.uninstallIncomplete.title"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     continueWithBackup = true;
                 }
+            } else {
+                continueWithBackup = true;
             }
             if (continueWithBackup) {
                 ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(ModManagerPaths.BACKUP.getPath(), ".initialBackup");
