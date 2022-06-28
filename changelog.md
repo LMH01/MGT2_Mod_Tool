@@ -1,6 +1,6 @@
 # Changelog
 
-## v4.2.1
+## [v4.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.1) (Latest Version)
 
 ### Other
 - Safety feature settings are now printed to log file
@@ -8,7 +8,7 @@
 ### Bug fixes
 - #98 - The initial backup could not be created because a boolean value was not set properly
 
-## [v4.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.0) (Latest Version)
+## [v4.2.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.0)
 
 ### Important
 - Previously exported licences will not work together with this release
