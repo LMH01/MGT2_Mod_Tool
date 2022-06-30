@@ -25,3 +25,4 @@ Streaming
 Gaming Suit Support
 Gaming Vest Support
 Quick Resume
+Quality & Performance Modes
