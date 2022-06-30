@@ -355,6 +355,9 @@ public class DataStreamHelper {
             }
             ProgressBarHelper.increaseMaxValue((int) getFileCount(directoryToBeDeleted));
         }
+        if (!Files.exists(directoryToBeDeleted)) {
+            return;
+        }
         Files.walkFileTree(directoryToBeDeleted, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -384,9 +387,13 @@ public class DataStreamHelper {
      * @throws IOException Thrown if the directory can not be read
      */
     public static long getFileCount(Path dir) throws IOException {
-        return Files.walk(dir)
-                .parallel()
-                .filter(p -> !p.toFile().isDirectory())
-                .count();
+        if (Files.exists(dir)) {
+            return Files.walk(dir)
+                    .parallel()
+                    .filter(p -> !p.toFile().isDirectory())
+                    .count();
+        } else {
+            return 0;
+        }
     }
 }

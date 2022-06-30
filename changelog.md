@@ -7,6 +7,7 @@
 
 ### Bug fixes
 - Deleting backups from the uninstallation menu would sometimes fail
+- Deleting export folder would throw exception when it did not exist
 
 ## [v4.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.1) (Latest Version)
 
