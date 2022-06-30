@@ -23,7 +23,7 @@ public class AntiCheatManager extends AbstractAdvancedContentManager {
 
     public static final AntiCheatManager INSTANCE = new AntiCheatManager();
 
-    public static final String compatibleModToolVersions[] = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", MadGamesTycoon2ModTool.VERSION};
 
     private AntiCheatManager() {
         super("antiCheat", "anti_cheat", "default_anti_cheat.txt", MGT2Paths.TEXT_DATA.getPath().resolve("AntiCheat.txt").toFile(), StandardCharsets.UTF_8);

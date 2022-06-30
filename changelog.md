@@ -1,6 +1,6 @@
 # Changelog
 
-## v4.2.2
+## [v4.2.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.2) (Latest Version)
 
 ### Other
 - Updated default content files
@@ -9,7 +9,7 @@
 - Deleting backups from the uninstallation menu would sometimes fail
 - Deleting export folder would throw exception when it did not exist
 
-## [v4.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.1) (Latest Version)
+## [v4.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.1)
 
 ### Other
 - Safety feature settings are now printed to log file
