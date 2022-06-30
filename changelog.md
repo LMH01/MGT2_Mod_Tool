@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.2.2]
+
+### Other
+- Updated default content files
+
 ## [v4.2.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.1) (Latest Version)
 
 ### Other
