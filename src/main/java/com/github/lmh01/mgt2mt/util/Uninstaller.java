@@ -101,7 +101,11 @@ public class Uninstaller {
                                     for (File file : filesInBackupFolder) {
                                         if (!file.getPath().endsWith(".initialBackup")) {
                                             try {
-                                                Files.delete(file.toPath());
+                                                if (file.isDirectory()) {
+                                                    DataStreamHelper.deleteDirectory(file.toPath());
+                                                } else {
+                                                    Files.delete(file.toPath());
+                                                }
                                             } catch (IOException e) {
                                                 throw new ModProcessingException("Unable to delete backup", e);
                                             }
