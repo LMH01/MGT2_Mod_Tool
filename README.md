@@ -1,6 +1,6 @@
 [![Download latest release](https://img.shields.io/github/v/release/LMH01/MGT2_Mod_Tool)](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.2.2/MGT2_Mod_Tool_4.2.2.zip)
 ![Total Downloads](https://img.shields.io/github/downloads/LMH01/MGT2_Mod_Tool/total)
-[![License](https://img.shields.io/github/license/LMH01/MGT2_Mod_Tool)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/github/license/LMH01/MGT2_Mod_Tool)](LICENSE)
 # Welcome to the Mad Games Tycoon 2 Mod Tool
 
 This is a little program that can modify some files of Mad Games Tycoon 2. 
