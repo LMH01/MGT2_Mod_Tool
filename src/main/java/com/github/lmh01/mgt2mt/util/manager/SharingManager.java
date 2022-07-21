@@ -134,6 +134,8 @@ public class SharingManager {
                                             JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
                                         }
                                     } catch (ModProcessingException e) {
+                                        e.printStackTrace();
+                                        TextAreaHelper.printStackTrace(e);
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
                                     }
                                 } else {
