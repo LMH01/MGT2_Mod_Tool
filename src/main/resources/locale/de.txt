@@ -240,7 +240,7 @@ commonText.country.ireland|Irland
 commonText.country.israel|Israel
 commonText.country.italy|Italien
 commonText.country.japan|Japan
-commonText.country.kanada|Kanada
+commonText.country.canada|Kanada
 commonText.country.kenya|Kenia
 commonText.country.latvia|Lettland
 commonText.country.lithuania|Litauen
@@ -260,7 +260,7 @@ commonText.country.romania|Rumänien
 commonText.country.russia|Russland
 commonText.country.slovakia|Slowakei
 commonText.country.slovenia|Slowenien
-commonText.country.south_afrika|Süd Afrika
+commonText.country.south_africa|Süd Afrika
 commonText.country.south_korea|Süd Korea
 commonText.country.spain|Spanien
 commonText.country.sweden|Schweden
