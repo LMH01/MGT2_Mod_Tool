@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.3.0]
+## [v4.3.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.3.0) (Latest Version)
 
 ### New feature
 - Added support for dev-legends
@@ -16,7 +16,7 @@
 - Fixed #99 - Adding of npc ips now works again
 - Fixed two misspelled translation keys in the german localisation file
 
-## [v4.2.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.2) (Latest Version)
+## [v4.2.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.2)
 
 ### Other
 - Updated default content files

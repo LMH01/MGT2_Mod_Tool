@@ -1,4 +1,4 @@
-[![Download latest release](https://img.shields.io/github/v/release/LMH01/MGT2_Mod_Tool)](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.2.2/MGT2_Mod_Tool_4.2.2.zip)
+[![Download latest release](https://img.shields.io/github/v/release/LMH01/MGT2_Mod_Tool)](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.3.0/MGT2_Mod_Tool_4.3.0.zip)
 ![Total Downloads](https://img.shields.io/github/downloads/LMH01/MGT2_Mod_Tool/total)
 [![License](https://img.shields.io/github/license/LMH01/MGT2_Mod_Tool)](LICENSE)
 # Welcome to the Mad Games Tycoon 2 Mod Tool
@@ -23,7 +23,7 @@ To update the initial backup go to `Backup -> Create backup -> Create new initia
 #### WHEN THE GAME IS UPDATED IT MIGHT BE POSSIBLE THAT YOUR MODIFICATIONS TO THE GAME FILES ARE LOST
 
 #### TO COUNTERACT THIS YOU CAN CREATE A MOD RESTORE POINT IN THE BACKUP MENU
-## Download: [v4.2.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.2.2/MGT2_Mod_Tool_4.2.2.zip)
+## Download: [v4.3.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/download/v4.3.0/MGT2_Mod_Tool_4.3.0.zip)
 #### Getting started:
 - Install Java 8 (if not already installed)
 - Download and extract the `.zip` file
