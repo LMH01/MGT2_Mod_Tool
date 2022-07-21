@@ -4,6 +4,7 @@
 
 ### Buf fixes
 - Fixed error message formatting when restore point content could not be constructed
+- Fixed #99 - Adding of npc ips now works again
 
 ## [v4.2.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.2) (Latest Version)
 

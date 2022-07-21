@@ -43,6 +43,9 @@ public enum TargetGroup implements TypeEnum {
      */
     public static TargetGroup getTargetGroup(String name) throws IllegalArgumentException {
         for (TargetGroup tg : TargetGroup.values()) {
+            if (Objects.equals(tg.name, name)) {
+                return tg;
+            }
             if (Objects.equals(tg.dataType, name)) {
                 return tg;
             }
