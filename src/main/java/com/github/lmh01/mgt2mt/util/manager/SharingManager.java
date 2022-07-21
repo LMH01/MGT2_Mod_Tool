@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
@@ -122,6 +123,10 @@ public class SharingManager {
                                     }
                                     TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingImages"));
                                     if (!checkImages(contentsToImport)) {
+                                        return;
+                                    }
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingExistingImages"));
+                                    if (!checkExistingImages(contentsToImport)) {
                                         return;
                                     }
                                     try {
@@ -966,6 +971,44 @@ public class SharingManager {
             JOptionPane.showMessageDialog(null, components, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.picturesMissing"));
             return false;
+        }
+        return true;
+    }
+
+    /**
+     * Checks if image files that should be created in the games files already exist.
+     * If they do, the user is asked if he wants to overwrite them.
+     * @param contentsToImport The map that contains all contents that should be imported
+     * @return True when the user overwrote the files, false if not. Overwriting means that the image is deleted and the correct image is copied in {@link SharingManager#importContents(Map)}.
+     *          False means that the import is canceled.
+     * @throws ModProcessingException If an error occurred while duplicated image files where deleted
+     */
+    private static boolean checkExistingImages(Map<BaseContentManager, List<AbstractBaseContent>> contentsToImport) throws ModProcessingException {
+        boolean removeExistingImages = false;
+        for (Map.Entry<BaseContentManager, List<AbstractBaseContent>> entry : contentsToImport.entrySet()) {
+            for (AbstractBaseContent content : entry.getValue()) {
+                if (content instanceof RequiresPictures) {
+                    for (Map.Entry<String, Image> images : ((RequiresPictures) content).getImageMap().entrySet()) {
+                        if (Files.exists(images.getValue().gameFile.toPath())) {
+                            if (!removeExistingImages) {
+                                int result = JOptionPane.showConfirmDialog(null, String.format(I18n.INSTANCE.get("textArea.importAll.imageExists"), images.getValue().gameFile.getPath()), I18n.INSTANCE.get("frame.title.error"), JOptionPane.YES_NO_OPTION);
+                                if (result == JOptionPane.YES_OPTION) {
+                                    removeExistingImages = true;
+                                } else {
+                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.picturesAlreadyExist"));
+                                    return false;
+                                }
+                            }
+                            try {
+                                System.out.println("Deleting " + images.getValue().gameFile.getPath());
+                                Files.delete(images.getValue().gameFile.toPath());
+                            } catch (IOException e) {
+                                throw new ModProcessingException("Unable to delete duplicated images", e);
+                            }
+                        }
+                    }
+                }
+            }
         }
         return true;
     }

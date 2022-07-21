@@ -823,12 +823,15 @@ textArea.importAll.replacingOfMapEntryFailed|WARNING: Import-Map entry could not
 textArea.importAll.settingNewModIds|Setting new mod ids
 textArea.importAll.noTomlFilesFound|Unable to import: No .toml files found
 textArea.importAll.assetFoldersMissing|asset folder(s) is/are missing
-textArea.importAll.picturesMissing|picture(s) is/are missing
+textArea.importAll.picturesMissing|image(s) is/are missing
+textArea.importAll.picturesAlreadyExist|Existing image(s) found and they should not be replaced
 textArea.importAll.checkingAssetsFolder|Checking assets folder(s)
 textArea.importAll.checkingImages|Checking images
+textArea.importAll.checkingExistingImages|Checking for existing images
 textArea.importAll.accessDeniedError|Unable to search folder for .toml files, access denied
 textArea.importAll.contentWrongConstructed|Critical error: Content is not constructed correctly
 textArea.importAll.errorConstructingContent|<html>Error while constructing content named %s of type %s.<br><br>Would you like to continue the content construction anyway?<br><br>Warning: Doing so might result in problems!
+textArea.importAll.imageExists|<html>Found an already existing image: %s<br><br>Would you like to replace the existing image?<br><br>Note: If more duplicated images are found they will be replaced automatically.
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to

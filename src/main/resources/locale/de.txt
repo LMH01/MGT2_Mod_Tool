@@ -825,11 +825,14 @@ textArea.importAll.settingNewModIds|Setze Neue Mod-IDs
 textArea.importAll.noTomlFilesFound|Importieren nicht möglich: Keine .toml-Dateien gefunden
 textArea.importAll.assetFoldersMissing|es gibt fehlende Assets-Ordner
 textArea.importAll.picturesMissing|es gibt fehlende Bilder
+textArea.importAll.picturesAlreadyExist|Vorhandene(s) Bild(er) gefunden und sie sollten nicht ersetzt werden
 textArea.importAll.checkingAssetsFolder|Prüfe Assets-Ordner
 textArea.importAll.checkingImages|Prüfe Bilder
+textArea.importAll.checkingExistingImages|Prüfen auf vorhandene Bilder
 textArea.importAll.contentWrongConstructed|Kritischer Fehler: Inhalt wurde nicht korrekt erstellt:
 textArea.importAll.accessDeniedError|Ordner kann nicht nach .toml-Dateien durchsucht werden, Zugriff verweigert
 textArea.importAll.errorConstructingContent|<html>Fehler beim Erstellen des Inhalts namens %s vom Typ %s.<br><br>Soll trotzdem mit dem Erstellen der Inhalte fortgefahren werden?<br><br>Warnung: Dies könnte zu Problemen führen!
+textArea.importAll.imageExists|<html>Ein bereits vorhandenes Bild gefunden: %s<br><br>Soll das vorhandene Bild ersetzt werden?<br><br>Hinweis: Wenn weitere doppelte Bilder gefunden werden, werden sie automatisch ersetzt.
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach
