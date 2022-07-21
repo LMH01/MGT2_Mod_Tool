@@ -23,6 +23,7 @@ public class ContentAdministrator {
     public static void initializeContentManagers() {
         contentManagers.add(AntiCheatManager.INSTANCE);
         contentManagers.add(CopyProtectionManager.INSTANCE);
+        contentManagers.add(DevLegendsManager.INSTANCE);
         contentManagers.add(EngineFeatureManager.INSTANCE);
         contentManagers.add(GameplayFeatureManager.INSTANCE);
         contentManagers.add(NpcIpManager.INSTANCE);

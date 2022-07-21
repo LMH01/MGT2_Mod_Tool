@@ -47,9 +47,9 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     protected final ArrayList<JMenuItem> getInitialModMenuItems() {
         ArrayList<JMenuItem> menuItems = new ArrayList<>();
-        JMenuItem addModItem = new JMenuItem(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.addMod"));
+        JMenuItem addModItem = new JMenuItem(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.addMod"), getType()));
         addModItem.addActionListener(actionEvent -> addModMenuItemAction());
-        JMenuItem removeModItem = new JMenuItem(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod"));
+        JMenuItem removeModItem = new JMenuItem(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod"), getType()));
         removeModItem.addActionListener(actionEvent -> removeModMenuItemAction());
         menuItems.add(addModItem);
         menuItems.add(removeModItem);
@@ -110,7 +110,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage(), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, String.format(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage()), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -264,7 +264,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
                     menuItem.setToolTipText("");
                 } else {
                     menuItem.setEnabled(false);
-                    menuItem.setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+                    menuItem.setToolTipText(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod.toolTip"), getType()));
                 }
             }
         }
@@ -273,7 +273,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
             getExportMenuItem().setToolTipText("");
         } else {
             getExportMenuItem().setEnabled(false);
-            getExportMenuItem().setToolTipText(I18n.INSTANCE.get("modManager." + getMainTranslationKey() + ".windowMain.modButton.removeMod.toolTip"));
+            getExportMenuItem().setToolTipText(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod.toolTip"), getType()));
         }
     }
 

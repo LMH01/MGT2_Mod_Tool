@@ -256,7 +256,7 @@ public class WindowMain {
                     M_22_NPC_GAMES_LIST.setToolTipText("");
                 } else {
                     M_22_NPC_GAMES_LIST.setEnabled(false);
-                    M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("modManager.genre.windowMain.modButton.removeMod.toolTip"));
+                    M_22_NPC_GAMES_LIST.setToolTipText(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod.toolTip"), GenreManager.INSTANCE.getType()));
                 }
                 M_432_RESTORE_MOD_RESTORE_POINT.setEnabled(!noModRestorePointSet);
                 if (noModsAvailable) {

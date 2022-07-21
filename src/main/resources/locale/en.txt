@@ -49,6 +49,9 @@ commonText.hardware.upperCase.plural|Hardware
 commonText.npcIp|npc ip
 commonText.npcIp.upperCase|Npc IP
 commonText.npcIp.upperCase.plural|Npc IPs
+commonText.devLegend|dev-legend
+commonText.devLegend.upperCase|Dev-Legend
+commonText.devLegend.upperCase.plural|Dev-Legends
 commonText.exported|exported
 commonText.export|Export
 commonText.exporting|Exporting
@@ -128,6 +131,8 @@ commonText.tech|Tech
 commonText.artificialIntelligence|Artificial intelligence
 commonText.physics|Physics
 commonText.multiplayer|Multiplayer
+commonText.design|Design
+commonText.programming|Programming
 commonText.kid|Kid
 commonText.teen|Teen
 commonText.adult|Adult
@@ -202,6 +207,7 @@ commonText.comVal|Computer value
 commonText.seconds|seconds
 commonText.country|Country
 commonText.notSet|Not set
+commonText.woman|Woman
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia
@@ -268,105 +274,12 @@ commonText.country.usa|Usa
 commonText.country.venezuela|Venezuela
 commonText.country.vietnam|Vietnam
 
-analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning gameplay features:
-analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modded gameplay feature found:
-analyzer.gameplayFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded gameplay features complete
-analyzer.gameplayFeature.getCustomContentString.progressBar|Scanning for modded gameplay features
-analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning engine features:
-analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modded engine feature found:
-analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded engine features complete
-analyzer.engineFeature.getCustomContentString.progressBar|Scanning for modded engine features
-analyzer.genre.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning genres:
-analyzer.genre.getCustomContentString.customEngineFeatureFound|Modded genre found:
-analyzer.genre.getCustomContentString.customEngineFeatureComplete|Scanning for modded genres complete
-analyzer.genre.getCustomContentString.progressBar|Scanning for modded genres
-analyzer.licence.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning licences:
-analyzer.licence.getCustomContentString.customEngineFeatureFound|Modded licence found:
-analyzer.licence.getCustomContentString.customEngineFeatureComplete|Scanning for modded licences complete
-analyzer.licence.getCustomContentString.progressBar|Scanning for modded licences
-analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning publisher:
-analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modded publisher found:
-analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scanning for modded publisher complete
-analyzer.publisher.getCustomContentString.progressBar|Scanning for modded publisher
-analyzer.theme.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning themes:
-analyzer.theme.getCustomContentString.customEngineFeatureFound|Modded theme found:
-analyzer.theme.getCustomContentString.customEngineFeatureComplete|Scanning for modded themes complete
-analyzer.theme.getCustomContentString.progressBar|Scanning for modded themes
-analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc games:
-analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modded npc game:
-analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc games complete
-analyzer.npcGames.getCustomContentString.progressBar|Scanning for modded npc games
-analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning platforms:
-analyzer.platform.getCustomContentString.customEngineFeatureFound|Modded platform found:
-analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scanning for modded platforms complete
-analyzer.platform.getCustomContentString.progressBar|Scanning for modded platforms
-analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc engines:
-analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modded npc engine found:
-analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc engines complete
-analyzer.npcEngine.getCustomContentString.progressBar|Scanning for modded npc engines
-analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning anti cheats:
-analyzer.antiCheat.getCustomContentString.customEngineFeatureFound|Modded anti cheat found:
-analyzer.antiCheat.getCustomContentString.customEngineFeatureComplete|Scanning for modded anti cheats complete
-analyzer.antiCheat.getCustomContentString.progressBar|Scanning for modded anti cheats
-analyzer.copyProtect.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning copy protections:
-analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modded copy protection found:
-analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scanning for modded copy protections complete
-analyzer.copyProtect.getCustomContentString.progressBar|Scanning for modded copy protections
-analyzer.hardwareFeature.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning hardware features:
-analyzer.hardwareFeature.getCustomContentString.customEngineFeatureFound|Modded hardware feature found:
-analyzer.hardwareFeature.getCustomContentString.customEngineFeatureComplete|Scanning for modded hardware features complete
-analyzer.hardwareFeature.getCustomContentString.progressBar|Scanning for modded hardware features
-analyzer.hardware.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning hardware:
-analyzer.hardware.getCustomContentString.customEngineFeatureFound|Modded hardware found:
-analyzer.hardware.getCustomContentString.customEngineFeatureComplete|Scanning for modded hardware complete
-analyzer.hardware.getCustomContentString.progressBar|Scanning for modded hardware
-analyzer.npcIp.getCustomContentString.errorWhileScanningDefaultFiles|Error wile scanning npc ip:
-analyzer.npcIp.getCustomContentString.customEngineFeatureFound|Modded npc ip found:
-analyzer.npcIp.getCustomContentString.customEngineFeatureComplete|Scanning for modded npc ips complete
-analyzer.npcIp.getCustomContentString.progressBar|Scanning for modded npc ips
+analyzer.getCustomContentString.errorWhileScanningDefaultFiles|Error while scanning %s: %s
 
-modManager.gameplayFeature.windowMain.modButton.addMod|Add gameplay feature
-modManager.gameplayFeature.windowMain.modButton.removeMod|Remove gameplay feature
-modManager.gameplayFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No gameplay feature available
-modManager.engineFeature.windowMain.modButton.addMod|Add engine feature
-modManager.engineFeature.windowMain.modButton.removeMod|Remove engine feature
-modManager.engineFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No engine feature available
-modManager.genre.windowMain.modButton.addMod|Add genre
-modManager.genre.windowMain.modButton.removeMod|Remove genre
-modManager.genre.windowMain.modButton.removeMod.toolTip|Disabled -> No genre available
-modManager.licence.windowMain.modButton.addMod|Add licence
-modManager.licence.windowMain.modButton.removeMod|Remove licence
-modManager.licence.windowMain.modButton.removeMod.toolTip|Disabled -> No licence available
-modManager.publisher.windowMain.modButton.addMod|Add publisher
-modManager.publisher.windowMain.modButton.removeMod|Remove publisher
-modManager.publisher.windowMain.modButton.removeMod.toolTip|Disabled -> No publisher available
-modManager.theme.windowMain.modButton.addMod|Add theme
-modManager.theme.windowMain.modButton.removeMod|Remove theme
-modManager.theme.windowMain.modButton.removeMod.toolTip|Disabled -> No theme available
-modManager.npcGames.windowMain.modButton.addMod|Add npc game
-modManager.npcGames.windowMain.modButton.removeMod|Remove npc game
-modManager.npcGames.windowMain.modButton.removeMod.toolTip|Disabled -> No npc game available
-modManager.platform.windowMain.modButton.addMod|Add platform
-modManager.platform.windowMain.modButton.removeMod|Remove platform
-modManager.platform.windowMain.modButton.removeMod.toolTip|Disabled -> No platform available
-modManager.npcEngine.windowMain.modButton.addMod|Add npc engine
-modManager.npcEngine.windowMain.modButton.removeMod|Remove npc engine
-modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Disabled -> No npc engine available
-modManager.antiCheat.windowMain.modButton.addMod|Add anti cheat
-modManager.antiCheat.windowMain.modButton.removeMod|Remove anti cheat
-modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Disabled -> No anti cheat available
-modManager.copyProtect.windowMain.modButton.addMod|Add copy protection
-modManager.copyProtect.windowMain.modButton.removeMod|Remove copy protection
-modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Disabled -> No copy protection available
-modManager.hardwareFeature.windowMain.modButton.addMod|Add hardware feature
-modManager.hardwareFeature.windowMain.modButton.removeMod|Remove hardware feature
-modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Disabled -> No hardware feature available
-modManager.hardware.windowMain.modButton.addMod|Add hardware
-modManager.hardware.windowMain.modButton.removeMod|Remove hardware
-modManager.hardware.windowMain.modButton.removeMod.toolTip|Disabled -> No hardware available
-modManager.npcIp.windowMain.modButton.addMod|Add npc ip
-modManager.npcIp.windowMain.modButton.removeMod|Remove npc ip
-modManager.npcIp.windowMain.modButton.removeMod.toolTip|Disabled -> No npc ip available
+modManager.windowMain.modButton.addMod|Add %s
+modManager.windowMain.modButton.removeMod|Remove %s
+modManager.windowMain.modButton.removeMod.toolTip|Disabled -> No %s available
+
 modManager.general.enterNameFirst|Please enter a name first!
 modManager.general.enterNameDescriptionFirst|Please enter a name and description first!
 
@@ -572,6 +485,11 @@ mod.npcIp.addMod.components.button.subTheme.themeAlreadySelected|<html>This them
 mod.npcIp.addMod.components.button.publisher|Publisher
 mod.npcIp.addMod.components.button.publisher.initial|Select publisher
 mod.npcIp.addMod.somethingNotSelected|<html>At least one of the following fields is empty:<br><br>Main-genre<br>Main-theme<br>Publisher<br><br>Please make sure that you have selected each and try again.
+
+mod.devLegend.components.spinner.type.toolTip|Select what the specialization of the dev-legend should be
+mod.devLegend.components.checkBox.woman.toolTip|Enable to make this dev-legend a woman
+
+mod.addMod.optionPaneMessage.firstPart|Add this %s?
 
 sharer.engineFeature.optionPaneMessage.main|Your engine feature is ready:
 sharer.importMod.notCompatible|The following mod has not been imported because it is not compatible with the current mod tool version:
@@ -1170,6 +1088,9 @@ verifyContentIntegrity.npcGameInvalid.noGenreIds|The integrity of game file NpcG
 verifyContentIntegrity.npcIpInvalid.formatInvalid|The integrity of game file NpcIps.txt is invalid. Reason: NpcIP %s is missing one of the tags P, G, T, Y or TG.
 verifyContentIntegrity.npcIpInvalid.invalidNumber|The integrity of game file NpcIps.txt is invalid. Reason: For the NpcIP %s one of the tags is not a number: %s.
 verifyContentIntegrity.npcIpInvalid.unknownError|The integrity of game file NpcIps.txt is invalid. Reason: An unknown error occurred during parsing: %s.
+
+verifyContentIntegrity.devLegendInvalid.tagMissing|The integrity of game file DevLegends.txt is invalid. Reason: The dev-legend named %s does not contain a type tag.
+verifyContentIntegrity.devLegendInvalid.tooManyTags|The integrity of game file DevLegends.txt is invalid. Reason: The dev-legend named %s contains more than one type tag.
 
 verifyContentIntegrity.themeInvalid.formatInvalid|The integrity of game file Themes_GE.txt is invalid. Reason: The theme named %s contains invalid genre ids: %s.
 verifyContentIntegrity.themeInvalid.noGenreIds|The integrity of game file Themes_GE.txt is invalid. Reason: The theme named %s does not contain genre ids.

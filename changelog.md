@@ -2,8 +2,12 @@
 
 ## [v4.3.0]
 
+### New feature
+- Added support for dev-legends
+
 ### Other
 - When a new update is available and the GitHub repository is opened, the specific release page is now opened
+- Optimized localisation files
 
 ### Buf fixes
 - Fixed error message formatting when restore point content could not be constructed

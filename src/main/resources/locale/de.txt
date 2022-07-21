@@ -49,6 +49,9 @@ commonText.hardware.upperCase.plural|Hardware
 commonText.npcIp|npc ip
 commonText.npcIp.upperCase|Npc IP
 commonText.npcIp.upperCase.plural|Npc IPs
+commonText.devLegend|Entwickler-Legende
+commonText.devLegend.upperCase|Entwickler-Legende
+commonText.devLegend.upperCase.plural|Entwickler-Legenden
 commonText.exported|exportiert
 commonText.export|Exportieren
 commonText.exporting|Exportiere
@@ -128,6 +131,8 @@ commonText.tech|Technik
 commonText.artificialIntelligence|Künstliche Intelligenz
 commonText.physics|Physik
 commonText.multiplayer|Mehrspieler
+commonText.design|Design
+commonText.programming|Programmierung
 commonText.kid|Kinder
 commonText.teen|Teenager
 commonText.adult|Erwachsene
@@ -201,6 +206,7 @@ commonText.comVal|Computergegner Wert
 commonText.seconds|Sekunden
 commonText.country|Land
 commonText.notSet|Nicht gesetzt
+commonText.woman|Weiblich
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien
@@ -267,105 +273,12 @@ commonText.country.usa|Usa
 commonText.country.venezuela|Venezuela
 commonText.country.vietnam|Vietnam
 
-analyzer.gameplayFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Gameplay Features:
-analyzer.gameplayFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Gameplay Feature gefunden:
-analyzer.gameplayFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Gameplay Features abgeschlossen
-analyzer.gameplayFeature.getCustomContentString.progressBar|Scannen nach modifizierten Gameplay Features
-analyzer.engineFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Engine Features:
-analyzer.engineFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Engine Feature gefunden:
-analyzer.engineFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Engine Features abgeschlossen
-analyzer.engineFeature.getCustomContentString.progressBar|Scannen nach modifizierten Engine Features
-analyzer.genre.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Genres:
-analyzer.genre.getCustomContentString.customEngineFeatureFound|Modifiziertes Genre gefunden:
-analyzer.genre.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Genres abgeschlossen
-analyzer.genre.getCustomContentString.progressBar|Scannen nach modifizierten Genres
-analyzer.licence.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Lizenzen:
-analyzer.licence.getCustomContentString.customEngineFeatureFound|Modifizierte Lizenz gefunden:
-analyzer.licence.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Lizenzen abgeschlossen
-analyzer.licence.getCustomContentString.progressBar|Scannen nach modifizierten Lizenzen
-analyzer.publisher.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Publishern:
-analyzer.publisher.getCustomContentString.customEngineFeatureFound|Modifizierten Publisher gefunden:
-analyzer.publisher.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Publishern abgeschlossen
-analyzer.publisher.getCustomContentString.progressBar|Scannen nach modifizierten Publishern
-analyzer.theme.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Themen:
-analyzer.theme.getCustomContentString.customEngineFeatureFound|Modifiziertes Thema gefunden:
-analyzer.theme.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Themen abgeschlossen
-analyzer.theme.getCustomContentString.progressBar|Scannen nach modifizierten Themen
-analyzer.npcGames.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von Npc Spielen:
-analyzer.npcGames.getCustomContentString.customEngineFeatureFound|Modifiziertes Npc Spiel gefunden:
-analyzer.npcGames.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Spielen abgeschlossen
-analyzer.npcGames.getCustomContentString.progressBar|Scannen nach modifizierten Npc Spielen
-analyzer.platform.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Plattformen:
-analyzer.platform.getCustomContentString.customEngineFeatureFound|Modifizierte Plattform gefunden:
-analyzer.platform.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Plattformen abgeschlossen
-analyzer.platform.getCustomContentString.progressBar|Scannen nach modifizierten Plattformen
-analyzer.npcEngine.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc Engines:
-analyzer.npcEngine.getCustomContentString.customEngineFeatureFound|Modifizierte Npc Engine gefunden:
-analyzer.npcEngine.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc Engines abgeschlossen
-analyzer.npcEngine.getCustomContentString.progressBar|Scannen nach modifizierten Npc Engines
-analyzer.antiCheat.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Anti Cheats:
-analyzer.antiCheat.getCustomContentString.customEngineFeatureFound|Modifizierten Anti Cheat gefunden:
-analyzer.antiCheat.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Anti Cheats abgeschlossen
-analyzer.antiCheat.getCustomContentString.progressBar|Scannen nach modifizierten Anti Cheats
-analyzer.copyProtect.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Kopierschutze:
-analyzer.copyProtect.getCustomContentString.customEngineFeatureFound|Modifizierten Kopierschutz gefunden:
-analyzer.copyProtect.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Kopierschutzen abgeschlossen
-analyzer.copyProtect.getCustomContentString.progressBar|Scannen nach modifizierten Kopierschutzen
-analyzer.hardwareFeature.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Hardware Features:
-analyzer.hardwareFeature.getCustomContentString.customEngineFeatureFound|Modifiziertes Hardware Feature gefunden:
-analyzer.hardwareFeature.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Hardware Features abgeschlossen
-analyzer.hardwareFeature.getCustomContentString.progressBar|Scannen nach modifizierten Hardware Features
-analyzer.hardware.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Hardware:
-analyzer.hardware.getCustomContentString.customEngineFeatureFound|Modifizierte Hardware gefunden:
-analyzer.hardware.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierter Hardware abgeschlossen
-analyzer.hardware.getCustomContentString.progressBar|Scannen nach modifizierter Hardware
-analyzer.npcIp.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen der Npc IP:
-analyzer.npcIp.getCustomContentString.customEngineFeatureFound|Modifizierte Npc IP gefunden:
-analyzer.npcIp.getCustomContentString.customEngineFeatureComplete|Scannen nach modifizierten Npc IPs abgeschlossen
-analyzer.npcIp.getCustomContentString.progressBar|Scannen nach modifizierten Npc IPs
+analyzer.getCustomContentString.errorWhileScanningDefaultFiles|Fehler beim scannen von %s: %s
 
-modManager.gameplayFeature.windowMain.modButton.addMod|Gameplay Feature hinzufügen
-modManager.gameplayFeature.windowMain.modButton.removeMod|Gameplay Feature entfernen
-modManager.gameplayFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Gameplay feature verfügbar
-modManager.engineFeature.windowMain.modButton.addMod|Engine Feature hinzufügen
-modManager.engineFeature.windowMain.modButton.removeMod|Engine Feature entfernen
-modManager.engineFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Engine feature verfügbar
-modManager.genre.windowMain.modButton.addMod|Genre hinzufügen
-modManager.genre.windowMain.modButton.removeMod|Genre entfernen
-modManager.genre.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Genre verfügbar
-modManager.licence.windowMain.modButton.addMod|Lizenz hinzufügen
-modManager.licence.windowMain.modButton.removeMod|Lizenz entfernen
-modManager.licence.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Lizenz verfügbar
-modManager.publisher.windowMain.modButton.addMod|Publisher hinzufügen
-modManager.publisher.windowMain.modButton.removeMod|Publisher entfernen
-modManager.publisher.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Publisher verfügbar
-modManager.theme.windowMain.modButton.addMod|Thema hinzufügen
-modManager.theme.windowMain.modButton.removeMod|Thema entfernen
-modManager.theme.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Thema verfügbar
-modManager.npcGames.windowMain.modButton.addMod|Npc Spiel hinzufügen
-modManager.npcGames.windowMain.modButton.removeMod|Npc Spiel entfernen
-modManager.npcGames.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Npc Spiel verfügbar
-modManager.platform.windowMain.modButton.addMod|Plattform hinzufügen
-modManager.platform.windowMain.modButton.removeMod|Plattform entfernen
-modManager.platform.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Plattform verfügbar
-modManager.npcEngine.windowMain.modButton.addMod|Npc Engine hinzufügen
-modManager.npcEngine.windowMain.modButton.removeMod|Npc Engine entfernen
-modManager.npcEngine.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Npc Engine verfügbar
-modManager.antiCheat.windowMain.modButton.addMod|Anti Cheat hinzufügen
-modManager.antiCheat.windowMain.modButton.removeMod|Anti Cheat entfernen
-modManager.antiCheat.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Anti Cheat verfügbar
-modManager.copyProtect.windowMain.modButton.addMod|Kopierschutz hinzufügen
-modManager.copyProtect.windowMain.modButton.removeMod|Kopierschutz entfernen
-modManager.copyProtect.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Kopierschutz verfügbar
-modManager.hardwareFeature.windowMain.modButton.addMod|Hardware Feature hinzufügen
-modManager.hardwareFeature.windowMain.modButton.removeMod|Hardware Feature entfernen
-modManager.hardwareFeature.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein Hardware Feature verfügbar
-modManager.hardware.windowMain.modButton.addMod|Hardware hinzufügen
-modManager.hardware.windowMain.modButton.removeMod|Hardware entfernen
-modManager.hardware.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Hardware verfügbar
-modManager.npcIp.windowMain.modButton.addMod|Npc IP hinzufügen
-modManager.npcIp.windowMain.modButton.removeMod|Npc IP entfernen
-modManager.npcIp.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Keine Npc IP verfügbar
+modManager.windowMain.modButton.addMod|%s hinzufügen
+modManager.windowMain.modButton.removeMod|%s entfernen
+modManager.windowMain.modButton.removeMod.toolTip|Deaktiviert -> Kein %s verfügbar
+
 modManager.general.enterNameFirst|Bitte gebe zu erst einen Namen ein!
 modManager.general.enterNameDescriptionFirst|Bitte gebe zu erst einen Namen und eine Beschreibung ein!
 
@@ -571,6 +484,11 @@ mod.npcIp.addMod.components.button.subTheme.themeAlreadySelected|<html>Dieses Th
 mod.npcIp.addMod.components.button.publisher|Publisher
 mod.npcIp.addMod.components.button.publisher.initial|Publisher auswählen
 mod.npcIp.addMod.somethingNotSelected|<html>Mindestens eines der folgenden Felder ist leer:<br><br>Hauptgenre<br>Hauptthema<br>Publisher<br><br>Bitte vergewissere dich, dass du alle ausgewählt hast, und versuche es erneut.
+
+mod.devLegend.components.spinner.type.toolTip|Wähle aus, was die Spezialisierung der Entwicker-Legende sein soll
+mod.devLegend.components.checkBox.woman.toolTip|Aktivieren, um die Entwickler-Legende weiblich zu machen
+
+mod.addMod.optionPaneMessage.firstPart|Diese(s) %s hinzufügen?
 
 sharer.engineFeature.optionPaneMessage.main|Dein Engine Feature ist bereit:
 sharer.importMod.notCompatible|Der folgende Mod wurde nicht importiert, da er nicht mit der aktuellen Mod-Tool-Version kompatibel ist:
@@ -1171,6 +1089,9 @@ verifyContentIntegrity.npcGameInvalid.noGenreIds|Die Integrität der Spieldatei 
 verifyContentIntegrity.npcIpInvalid.formatInvalid|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Bei der NpcIP %s fehlt einer der Tags P, G, T, Y oder TG.
 verifyContentIntegrity.npcIpInvalid.invalidNumber|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Bei der NpcIP %s ist einer der Tags keine Nummer: %s.
 verifyContentIntegrity.npcIpInvalid.unknownError|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Ein unbekannter Fehler ist beim Analysieren aufgetreten: %s.
+
+verifyContentIntegrity.devLegendInvalid.tagMissing|Die Integrität der Spieldatei DevLegends.txt ist ungültig. Grund: Die Entwicker-Legende namens %s enthält keinen typ-Tag.
+verifyContentIntegrity.devLegendInvalid.tooManyTags|Die Integrität der Spieldatei DevLegends.txt ist ungültig. Grund: Die Entwicker-Legende namens %s enthält mehr als einen typ-Tag.
 
 verifyContentIntegrity.themeInvalid.formatInvalid|Die Integrität der Spieldatei Themes_GE.txt ist ungültig. Grund: Das Thema namens %s enthält ungültige genre ids: %s.
 verifyContentIntegrity.themeInvalid.noGenreIds|Die Integrität der Spieldatei Themes_GE.txt ist ungültig. Grund: Das Thema namens %s enthält keine genre ids.

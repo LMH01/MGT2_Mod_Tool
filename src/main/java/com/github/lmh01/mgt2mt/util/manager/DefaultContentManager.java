@@ -143,7 +143,7 @@ public class DefaultContentManager {
      * The values from "src/main/resources/default_content" are used to write that file.
      * If the default content file already exists it is replaced.
      */
-    private static void writeNewDefaultContentFile() {
+    public static void writeNewDefaultContentFile() {
         TomlWriter tomlWriter = new TomlWriter();
         Map<String, Object> map = new HashMap<>();
         try {
