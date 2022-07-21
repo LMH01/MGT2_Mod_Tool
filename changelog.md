@@ -8,13 +8,13 @@
 ### Other
 - When an image file already exists in the game files during import the user is now asked if it should be overwritten or if the import should be canceled.
 - When a new update is available and the GitHub repository is opened, the specific release page is now opened
-- Optimized localisation files
+- Optimized localization files
 - Error message is now written to the console when the import fails because image files could not be copied
 
-### Buf fixes
+### Bug fixes
 - Fixed error message formatting when restore point content could not be constructed
 - Fixed #99 - Adding of npc ips now works again
-- Fixed two misspelled translation keys in the german localisation file
+- Fixed two misspelled translation keys in the german localization file
 
 ## [v4.2.2](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.2.2)
 
