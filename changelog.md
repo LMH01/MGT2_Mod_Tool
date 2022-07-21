@@ -2,6 +2,9 @@
 
 ## [v4.3.0]
 
+### Other
+- When a new update is available and the GitHub repository is opened, the specific release page is now opened
+
 ### Buf fixes
 - Fixed error message formatting when restore point content could not be constructed
 - Fixed #99 - Adding of npc ips now works again

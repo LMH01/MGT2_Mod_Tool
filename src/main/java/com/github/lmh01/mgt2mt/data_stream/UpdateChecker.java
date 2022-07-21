@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
@@ -70,7 +71,7 @@ public class UpdateChecker {
                         LOGGER.info("Key features:");
                         if (JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0) {
                             try {
-                                Utils.openGithubPage();
+                                Desktop.getDesktop().browse(new URL(Utils.GITHUB_URL + "/releases/tag/v" + newestVersion).toURI());
                             } catch (Exception e) {
                                 Utils.showErrorMessage(2, e);
                                 e.printStackTrace();
