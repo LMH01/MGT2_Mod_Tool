@@ -911,7 +911,7 @@ textArea.importAll.checkingAssetsFolder|Prüfe Assets-Ordner
 textArea.importAll.checkingImages|Prüfe Bilder
 textArea.importAll.contentWrongConstructed|Kritischer Fehler: Inhalt wurde nicht korrekt erstellt:
 textArea.importAll.accessDeniedError|Ordner kann nicht nach .toml-Dateien durchsucht werden, Zugriff verweigert
-textArea.importAll.errorConstructingContent|Fehler beim Erstellen des Inhalts namens %s vom Typ %s.\n\nSoll trotzdem mit dem Erstellen der Inhalte fortgefahren werden?\n\nWarnung: Dies könnte zu Problemen führen!
+textArea.importAll.errorConstructingContent|<html>Fehler beim Erstellen des Inhalts namens %s vom Typ %s.<br><br>Soll trotzdem mit dem Erstellen der Inhalte fortgefahren werden?<br><br>Warnung: Dies könnte zu Problemen führen!
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach

@@ -910,7 +910,7 @@ textArea.importAll.checkingAssetsFolder|Checking assets folder(s)
 textArea.importAll.checkingImages|Checking images
 textArea.importAll.accessDeniedError|Unable to search folder for .toml files, access denied
 textArea.importAll.contentWrongConstructed|Critical error: Content is not constructed correctly
-textArea.importAll.errorConstructingContent|Error while constructing content named %s of type %s.\n\nWould you like to continue the content construction anyway?\n\nWarning: Doing so might result in problems!
+textArea.importAll.errorConstructingContent|<html>Error while constructing content named %s of type %s.<br><br>Would you like to continue the content construction anyway?<br><br>Warning: Doing so might result in problems!
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to
