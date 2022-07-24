@@ -70,7 +70,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         map.put("DATE", date);
         map.put("PIC", icon.gameFile.getName().replace(".png", ""));
         map.put("DEVELOPER", String.valueOf(developer));
-        map.put("PUBLISHER", String.valueOf(developer));
+        map.put("PUBLISHER", String.valueOf(publisher));
         map.put("MARKET", marketShare.toString());
         map.put("SHARE", share.toString());
         map.put("GENRE", genreId.toString());
