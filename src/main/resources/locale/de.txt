@@ -206,7 +206,7 @@ commonText.comVal|Computergegner Wert
 commonText.seconds|Sekunden
 commonText.country|Land
 commonText.notSet|Nicht gesetzt
-commonText.woman|Weiblich
+commonText.female|Weiblich
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien
@@ -486,7 +486,7 @@ mod.npcIp.addMod.components.button.publisher.initial|Publisher auswählen
 mod.npcIp.addMod.somethingNotSelected|<html>Mindestens eines der folgenden Felder ist leer:<br><br>Hauptgenre<br>Hauptthema<br>Publisher<br><br>Bitte vergewissere dich, dass du alle ausgewählt hast, und versuche es erneut.
 
 mod.devLegend.components.spinner.type.toolTip|Wähle aus, was die Spezialisierung der Entwicker-Legende sein soll
-mod.devLegend.components.checkBox.woman.toolTip|Aktivieren, um die Entwickler-Legende weiblich zu machen
+mod.devLegend.components.checkBox.female.toolTip|Aktivieren, um die Entwickler-Legende weiblich zu machen
 
 mod.addMod.optionPaneMessage.firstPart|Diese(s) %s hinzufügen?
 

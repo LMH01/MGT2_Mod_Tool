@@ -36,7 +36,7 @@ public class DevLegend extends AbstractSimpleContent {
                 String.format(I18n.INSTANCE.get("mod.addMod.optionPaneMessage.firstPart"), contentType.getType()) + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
                 I18n.INSTANCE.get("commonText.type") + ": " + type.getTypeName() + "<br>" +
-                I18n.INSTANCE.get("commonText.woman") + ": " + Utils.getTranslatedValueFromBoolean(woman);
+                I18n.INSTANCE.get("commonText.female") + ": " + Utils.getTranslatedValueFromBoolean(woman);
     }
 
     @Override

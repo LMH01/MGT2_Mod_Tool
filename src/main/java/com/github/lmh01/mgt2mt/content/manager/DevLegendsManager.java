@@ -68,8 +68,8 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
         panelType.add(labelType);
         panelType.add(comboBoxType);
 
-        JCheckBox woman = new JCheckBox(I18n.INSTANCE.get("commonText.woman"));
-        woman.setToolTipText(I18n.INSTANCE.get("mod.devLegend.components.checkBox.woman.toolTip"));
+        JCheckBox woman = new JCheckBox(I18n.INSTANCE.get("commonText.female"));
+        woman.setToolTipText(I18n.INSTANCE.get("mod.devLegend.components.checkBox.female.toolTip"));
 
         Object[] params = {labelAddLicence, textFieldName, panelType, woman};
         while (true) {

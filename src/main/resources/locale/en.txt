@@ -207,7 +207,7 @@ commonText.comVal|Computer value
 commonText.seconds|seconds
 commonText.country|Country
 commonText.notSet|Not set
-commonText.woman|Woman
+commonText.female|Female
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia
@@ -487,7 +487,7 @@ mod.npcIp.addMod.components.button.publisher.initial|Select publisher
 mod.npcIp.addMod.somethingNotSelected|<html>At least one of the following fields is empty:<br><br>Main-genre<br>Main-theme<br>Publisher<br><br>Please make sure that you have selected each and try again.
 
 mod.devLegend.components.spinner.type.toolTip|Select what the specialization of the dev-legend should be
-mod.devLegend.components.checkBox.woman.toolTip|Enable to make this dev-legend a woman
+mod.devLegend.components.checkBox.female.toolTip|Enable to make this dev-legend a female
 
 mod.addMod.optionPaneMessage.firstPart|Add this %s?
 
