@@ -20,7 +20,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
     // genre, subGenre, theme, subTheme and publisher store the id of the corresponding mod
     public Integer genre;
     public Integer subGenre;
-    public Integer theme;// The id offset is misaligned by one, that's why theme_id-1 has to be printed in the game npcip file - Will probably be fixed after the backend has been rewritten again
+    public Integer theme;
     public Integer subTheme;
     public TargetGroup targetGroup;
     public Integer publisher;
