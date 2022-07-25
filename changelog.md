@@ -1,6 +1,6 @@
 # Changelog
 
-## v4.3.1
+## [v4.3.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.3.1) (Latest Version)
 
 ### Other
 - Simple content: An empty line in the games ``.txt`` files is no longer treated as content
