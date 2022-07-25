@@ -2,6 +2,9 @@
 
 ## v4.3.1
 
+### Other
+- Simple content: An empty line in the games ``.txt`` files is no longer treated as content
+
 ### Bug fixes
 - Fixed #102 - NPCIP's that where added did not show up in game
 - Fixed #103 - Publisher/Developer setting is now set correctly when adding new Publisher/Developer

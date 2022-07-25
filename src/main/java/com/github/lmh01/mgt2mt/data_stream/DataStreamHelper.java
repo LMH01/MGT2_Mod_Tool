@@ -152,6 +152,7 @@ public class DataStreamHelper {
     }
 
     /**
+     * If an empty line is found it will be skipped and a warning will be printed into the console.
      * @param file    The input file
      * @param charSet Defines what charset the source file uses
      * @return Returns a map. The key is the line number(=id) and the value is the content for that line number. Note: line number is reduced by 1, so line 1 becomes line 0.
@@ -164,6 +165,10 @@ public class DataStreamHelper {
         Map<Integer, String> mapCurrent = new HashMap<>();
         int currentLineNumber = 0;
         while ((currentLine = br.readLine()) != null) {
+            if (currentLine.isEmpty()) {
+                DebugHelper.warn(DataStreamHelper.class, "Empty line found in file " + file.getPath());
+                continue;
+            }
             if (firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);
                 firstLine = false;
