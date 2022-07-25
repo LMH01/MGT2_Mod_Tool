@@ -85,7 +85,6 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         if (subTheme != null) {
             subThemePrint = ThemeManager.INSTANCE.getContentNameById(subTheme);
         }
-        System.out.printf("Theme id: %s\n", theme);
         return "<html>" +
                 I18n.INSTANCE.get("mod.npcIp.addMod.optionPaneMessage.firstPart") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
@@ -128,15 +127,16 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
     @Override
     public String getLine() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" <G").append(genre).append("><T").append(theme)
-                .append("><TG").append(targetGroup.getId()).append("><P").append(publisher)
-                .append("><%").append(rating).append("><Y").append(releaseYear).append(">");
+        sb.append(name).append(" <P").append(publisher).append("><G").append(genre).append(">");
         if (subGenre != null) {
             sb.append("<SG").append(subGenre).append(">");
         }
+        sb.append("<T").append(theme).append(">");
         if (subTheme != null) {
             sb.append("<ST").append(subTheme).append(">");
         }
+        sb.append("<%").append(rating)
+                        .append("><Y").append(releaseYear).append("><TG").append(targetGroup.getId()).append(">");
         return sb.toString();
     }
 }

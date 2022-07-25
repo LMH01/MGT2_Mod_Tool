@@ -3,6 +3,7 @@
 ## v4.3.1
 
 ### Bug fixes
+- Fixed #102 - NPCIP's that where added did not show up in game
 - Fixed #103 - Publisher/Developer setting is now set correctly when adding new Publisher/Developer
 
 ## [v4.3.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.3.0) (Latest Version)

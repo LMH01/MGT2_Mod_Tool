@@ -137,7 +137,6 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                 // Setup to add mod
                 int mainGenre = GenreManager.INSTANCE.getContentIdByName(listMainGenre.getSelectedValue());
                 int mainTheme = ThemeManager.INSTANCE.getContentIdByName(listMainTheme.getSelectedValue());
-                System.out.printf("Main theme id: %d\n", mainTheme);
                 int publisher = PublisherManager.INSTANCE.getContentIdByName(listPublisher.getSelectedValue());
                 Integer subGenre = null;
                 if (!listSubGenre.isSelectionEmpty()) {
