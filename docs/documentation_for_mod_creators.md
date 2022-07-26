@@ -96,7 +96,7 @@ DEPENDENCY_MOD_TYPE_3 = ["DEPENDENCY_NAME_1", "...", "DEPENDENCY_NAME_N"]
 ```
 ## Assets' folder
 When a mod is exported that requires pictures, an assets' folder is created in the directory where the ``export.toml``
-file is located. This folder contains all images that are required by the mods in the ``.toml file``. Import will not
+file is located. This folder contains all images that are required by the mods in the ``.toml`` file. Import will not
 work if the images are missing.
 
 ## Exporting mods
@@ -221,7 +221,7 @@ genre = ["Simulation"]
 ```
 When the mod is imported now the mod tool notices the ``replaces`` tag and notifies the user that content will be replaced.
 
-When the user accepts the replacement ``Minisoft`` will be replaced by ``Williams``.
+When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams``.
 ### Limitations
 - Only content of the same type can be replaced
 - The original content can only be restored by restoring the initial backup
