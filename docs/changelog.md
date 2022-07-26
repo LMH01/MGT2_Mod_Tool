@@ -3,7 +3,7 @@
 ## v4.4.0
 
 ### New feature
-- Exported content can now be marked to replace existing content. See the [documentation](Documentation.md) for further details.
+- Exported content can now be marked to replace existing content. See the [documentation](mod_creator_documentation.md) for further details.
 
 ### Other
 - A backup of all game images is now created

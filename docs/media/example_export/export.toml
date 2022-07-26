@@ -1,0 +1,239 @@
+mod_tool_version = "4.4.0-dev"
+type = "export_bundled"
+
+[mods.licence.licencename]
+"RELEASE YEAR" = "1976"
+"NAME EN" = "LicenceName"
+"BAD GENRE" = "Adventure"
+"GOOD GENRE" = "Building Game"
+"LICENCE TYP" = "BOARD"
+requires_pictures = false
+
+[mods.licence.licencename.dependencies]
+genre = ["Building Game", "Adventure"]
+
+[mods.dev_legend.devlegendname]
+TYP = "D"
+"NAME EN" = "DevLegendName"
+requires_pictures = false
+WOMAN = "false"
+
+[mods.anti_cheat.anticheatname]
+DATE = "JAN 1976"
+"NAME EN" = "AntiCheatName"
+PRICE = "30000"
+requires_pictures = false
+"DEV COSTS" = "35000"
+
+[mods.npc_game.npcgamename]
+"NAME EN" = "NpcGameName"
+GENRES = "<Adventure><Action><Economic Simulation><Building Game>"
+requires_pictures = false
+
+[mods.npc_game.npcgamename.dependencies]
+genre = ["Adventure", "Action", "Economic Simulation", "Building Game"]
+
+[mods.hardware_feature.hardwarefeaturename]
+DATE = "JAN 1976"
+"NAME EN" = "HardwareFeatureName"
+"RES POINTS" = "500"
+QUALITY = "2"
+PRICE = "30000"
+ONLY_STATIONARY = ""
+requires_pictures = false
+"DEV COSTS" = "35000"
+"DESC EN" = "HardwareFeatureDescription"
+
+[mods.npc_ip.npcipname]
+"NAME EN" = "NpcIpName"
+sub_theme = "Agents"
+sub_genre = "Adventure"
+genre = "Action"
+release_year = "1976"
+rating = "50"
+publisher = "3D Reality"
+theme = "Agents"
+target_group = "ALL"
+requires_pictures = false
+
+[mods.npc_ip.npcipname.dependencies]
+genre = ["Action", "Adventure"]
+publisher = ["3D Reality"]
+theme = ["Agents", "Agriculture"]
+
+[mods.engine_feature.enginefeaturename]
+"RES POINTS" = "500"
+PRICE = "50000"
+GRAPHIC = "100"
+TYP = "0"
+PIC = ""
+"DESC EN" = "EngineFeatureDescription"
+DATE = "JAN 1976"
+TECH = "100"
+"NAME EN" = "EngineFeatureName"
+GAMEPLAY = "100"
+SOUND = "100"
+requires_pictures = false
+"DEV COSTS" = "35000"
+TECHLEVEL = "1"
+
+[mods.platform.platformname]
+STARTPLATFORM = ""
+COMPLEX = "0"
+PRICE = "50000"
+INTERNET = "1"
+PIC-1 = "PlatformName_pic_1.png"
+TYP = "0"
+DATE = "JAN 1976"
+"NAME EN" = "PlatformName"
+platform_image_1 = "platform_platformname_platform_image_1.png"
+"MANUFACTURER EN" = "PlatformManufacturer"
+"MANUFACTURER MANUFACTURER EN" = "PlatformManufacturer"
+NEED-1 = "Day-Night Cycle"
+requires_pictures = true
+"DEV COSTS" = "35000"
+TECHLEVEL = "1"
+UNITS = "1000000"
+"DATE END" = "JAN 1977"
+
+[mods.platform.platformname.dependencies]
+gameplay_feature = ["Day-Night Cycle"]
+
+[mods.genre.genrename]
+"RES POINTS" = "1100"
+"GAMEPLAYFEATURE BAD" = "<Augmented-Reality-Support><Arcade Joystick Support>"
+GRAPHIC = "25"
+"screenshot_genre_genrename_1.png" = "genre_genrename_screenshot_genre_genrename_1.png"
+"DESC EN" = "GenreDescription"
+"screenshot_genre_genrename_2.png" = "genre_genrename_screenshot_genre_genrename_2.png"
+FOCUS4 = "5"
+ALIGN1 = "5"
+FOCUS5 = "5"
+ALIGN2 = "5"
+FOCUS6 = "5"
+FOCUS7 = "5"
+FOCUS0 = "5"
+"GENRE COMB" = "<Adventure><Building Game><Economic Simulation><Fighting Game>"
+FOCUS1 = "5"
+FOCUS2 = "5"
+FOCUS3 = "5"
+ALIGN0 = "5"
+GAMEPLAY = "25"
+SOUND = "25"
+"DEV COSTS" = "7000"
+PRICE = "12000"
+iconName = "genre_genrename_icon.png"
+PIC = "iconGenreName.png"
+"screenshot_genre_genrename_3.png" = "genre_genrename_screenshot_genre_genrename_3.png"
+TGROUP = "<KID><TEEN><ADULT><OLD>"
+DATE = "JAN 1976"
+"GAMEPLAYFEATURE GOOD" = "<Adjustable HUD><Adjustable Controls>"
+"THEME COMB" = "<Boxing><Building Blocks><Assassins><Art><Bicycle><Bunker><Barbarians><Angels><Bounty Hunter><Animals><Anime><Basketball><Baseball><Birds><Apocalypse><Archaeology><Androids><Billiards><Athletics><Bowling><Archery><Ancient><Asteroids><ThemeName>"
+"NAME EN" = "GenreName"
+"screenshot_genre_genrename_4.png" = "genre_genrename_screenshot_genre_genrename_4.png"
+requires_pictures = true
+"screenshot_genre_genrename_0.png" = "genre_genrename_screenshot_genre_genrename_0.png"
+CONTROL = "25"
+
+[mods.genre.genrename.dependencies]
+genre = ["Adventure", "Building Game", "Economic Simulation", "Fighting Game"]
+theme = ["Colonization"]
+gameplay_feature = ["Adjustable HUD", "Adjustable Controls", "Augmented-Reality-Support", "Arcade Joystick Support"]
+
+[mods.publisher.publishername]
+PUBLISHER = "true"
+DEVELOPER = "true"
+MARKET = "50"
+GENRE = "Racing"
+PIC = "87"
+ONLYMOBILE = "true"
+SHARE = "5"
+SPEED = "3"
+DATE = "JAN 1976"
+COMVAL = "10000000"
+"NAME EN" = "PublisherName"
+NOTFORSALE = "true"
+publisher_icon = "publisher_publishername_publisher_icon.png"
+COUNTRY = "2"
+requires_pictures = true
+
+[mods.publisher.publishername.dependencies]
+genre = ["Racing"]
+
+[mods.theme.themename]
+"NAME CZ" = "ThemeName"
+"NAME JA" = "ThemeName"
+GENRES = "<Fighting Game><First-Person Shooter><GenreName>"
+"NAME PB" = "ThemeName"
+"NAME AR" = "ThemeName"
+"NAME CT" = "ThemeName"
+"NAME FR" = "ThemeName"
+"NAME IT" = "ThemeName"
+"NAME ES" = "ThemeName"
+"NAME HU" = "ThemeName"
+"NAME EN" = "ThemeName"
+"NAME KO" = "ThemeName"
+"NAME RU" = "ThemeName"
+"NAME CH" = "ThemeName"
+"NAME TU" = "ThemeName"
+"NAME PL" = "ThemeName"
+requires_pictures = false
+"NAME GE" = "ThemeName <10><14><18>"
+"NAME RO" = "ThemeName"
+AGE = "0"
+
+[mods.theme.themename.dependencies]
+genre = ["First-Person Shooter", "GenreName", "Fighting Game"]
+
+[mods.gameplay_feature.gameplayfeaturename]
+"RES POINTS" = "500"
+PRICE = "50000"
+BAD = "<Action>"
+GRAPHIC = "30"
+TYP = "4"
+PIC = ""
+"DESC EN" = "GameplayFeatureDescription"
+DATE = "JAN 1976"
+TECH = "30"
+"NAME EN" = "GameplayFeatureName"
+GAMEPLAY = "30"
+SOUND = "30"
+GOOD = "<Strategy>"
+requires_pictures = false
+"DEV COSTS" = "35000"
+
+[mods.gameplay_feature.gameplayfeaturename.dependencies]
+genre = ["Action", "Strategy"]
+
+[mods.npc_engine.npcenginename]
+PLATFORM = "Game Mate"
+DATE = "JAN 1976"
+"NAME EN" = "NpcEngineName"
+PRICE = "30000"
+GENRE = "Action"
+SHARE = "5"
+requires_pictures = false
+
+[mods.npc_engine.npcenginename.dependencies]
+genre = ["Action"]
+platform = ["Game Mate"]
+
+[mods.copy_protect.copyprotectname]
+DATE = "JAN 1976"
+"NAME EN" = "CopyProtectName"
+PRICE = "30000"
+requires_pictures = false
+"DEV COSTS" = "35000"
+
+[mods.hardware.hardwarename]
+DATE = "JAN 1976"
+"NAME EN" = "HardwareName"
+"RES POINTS" = "500"
+PRICE = "500000"
+TYP = "0"
+requires_pictures = true
+"DEV COSTS" = "1000000"
+TECHLEVEL = "1"
+
+[mods.hardware.hardwarename.dependencies]
+gameplay_feature = []
