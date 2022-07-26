@@ -180,11 +180,7 @@ public class Uninstaller {
     public static boolean uninstallAllMods(StringBuilder uninstallFailedExplanation) throws ModProcessingException {
         CompanyLogoAnalyzer.analyzeLogoNumbers();
         boolean uninstallFailed = false;
-        ArrayList<String> customContentArrayList = new ArrayList<>();
-        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            customContentArrayList.addAll(Arrays.asList(manager.getCustomContentString()));
-        }
-        if (customContentArrayList.size() != 0) {
+        if (ContentAdministrator.areModsActive()) {
             TimeHelper timeHelper = new TimeHelper();
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods"));
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
@@ -201,8 +197,8 @@ public class Uninstaller {
                     uninstallFailed = true;
                 }
             }
-            Backup.restoreBackup(true, false);//This is used to restore the Themes files to its original condition
             TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.success"), timeHelper.getMeasuredTimeDisplay()));
+            Backup.restoreBackup(true, true);//This is used to restore the Themes files to its original condition
             LOGGER.info("Game files have been restored to original.");
         } else {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.uninstalling.uninstallingAllMods.noModsFound"));

@@ -19,6 +19,11 @@ public enum ModManagerPaths {
     BACKUP(Settings.getMgt2ModManagerPath().resolve("backup")),
 
     /**
+     * Path to /mgt2_mod_tool/backup/pictures
+     */
+    PICTURE_BACKUP(Settings.getMgt2ModManagerPath().resolve("backup/pictures")),
+
+    /**
      * Path to /mgt2_mod_tool/export
      */
     EXPORT(Settings.getMgt2ModManagerPath().resolve("export")),

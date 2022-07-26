@@ -306,7 +306,7 @@ public class DataStreamHelper {
     }
 
     /**
-     * Copied from https://www.baeldung.com/java-copy-directory.
+     * Parts copied from <a href="https://www.baeldung.com/java-copy-directory">baeldung.com</a>.
      * Will use the progress bar.
      *
      * @param sourceDirectory      The source

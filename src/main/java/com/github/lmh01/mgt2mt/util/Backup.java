@@ -142,7 +142,7 @@ public class Backup {
             }
             restoreThemeFileBackups(initialBackup);
             if (initialBackup) {
-                removePublisherIcons();
+                restoreImages();
                 if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
@@ -307,18 +307,79 @@ public class Backup {
      * @return Returns e.getMessage();
      */
     public static String createInitialBackup(boolean showTextAreaMessages) {
+        return createInitialBackup(showTextAreaMessages, false);
+    }
+
+    /**
+     * Creates an initial backup when initial backup does not exist already.
+     *
+     * @param showTextAreaMessages True if text area messages should be printed
+     * @param forceImages Used to force the backup of image files. If the image backup files already exist they will be deleted.
+     * @return Returns e.getMessage();
+     */
+    public static String createInitialBackup(boolean showTextAreaMessages, boolean forceImages) {
         try {
             for (File file : getBackupFiles()) {
                 Backup.createBackup(file, true, showTextAreaMessages);
             }
             backupSaveGames(true);
             createThemeFilesBackup(true, showTextAreaMessages);
+            backupImages(forceImages);
             return "";
         } catch (IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
             e.printStackTrace();
             return e.getMessage();
         }
+    }
+
+    /**
+     * Creates a backup of the following paths, if the backup does not already exist:
+     * "Extern/CompanyLogos",
+     * "Extern/Icons_Genres",
+     * "Extern/Icons_Hardware",
+     * "Extern/Icons_Platforms",
+     * "Extern/Screenshots"
+     * Backup is written to {@link ModManagerPaths#PICTURE_BACKUP}
+     * Progress bar is utilized.
+     * @param force Used to force the backup. If the backup files already exist they will be deleted.
+     */
+    public static void backupImages(boolean force) throws IOException {
+        if (force) {
+            if (Files.exists(ModManagerPaths.PICTURE_BACKUP.getPath())) {
+                DataStreamHelper.deleteDirectory(ModManagerPaths.PICTURE_BACKUP.getPath());
+            }
+        }
+        if (!Files.exists(ModManagerPaths.PICTURE_BACKUP.getPath())) {
+            DataStreamHelper.copyDirectory(MGT2Paths.COMPANY_ICONS.getPath(), ModManagerPaths.PICTURE_BACKUP.getPath().resolve("CompanyLogos"));
+            DataStreamHelper.copyDirectory(MGT2Paths.GENRE_ICONS.getPath(), ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Icons_Genres"));
+            DataStreamHelper.copyDirectory(MGT2Paths.HARDWARE_ICONS.getPath(), ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Icons_Hardware"));
+            DataStreamHelper.copyDirectory(MGT2Paths.PLATFORM_ICONS.getPath(), ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Icons_Platforms"));
+            DataStreamHelper.copyDirectory(MGT2Paths.GENRE_SCREENSHOTS.getPath(), ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Screenshots"));
+        }
+    }
+
+    /**
+     * Restores all image backups for the following paths:
+     * "Extern/CompanyLogos",
+     * "Extern/Icons_Genres",
+     * "Extern/Icons_Hardware",
+     * "Extern/Icons_Platforms",
+     * "Extern/Screenshots"
+     * For that all folders will be deleted and the backup will be copied.
+     * @throws IOException When the deletion of the directories or the copying fails
+     */
+    public static void restoreImages() throws IOException {
+        DataStreamHelper.deleteDirectory(MGT2Paths.COMPANY_ICONS.getPath());
+        DataStreamHelper.deleteDirectory(MGT2Paths.GENRE_ICONS.getPath());
+        DataStreamHelper.deleteDirectory(MGT2Paths.HARDWARE_ICONS.getPath());
+        DataStreamHelper.deleteDirectory(MGT2Paths.PLATFORM_ICONS.getPath());
+        DataStreamHelper.deleteDirectory(MGT2Paths.GENRE_SCREENSHOTS.getPath());
+        DataStreamHelper.copyDirectory(ModManagerPaths.PICTURE_BACKUP.getPath().resolve("CompanyLogos"), MGT2Paths.COMPANY_ICONS.getPath());
+        DataStreamHelper.copyDirectory(ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Icons_Genres"), MGT2Paths.GENRE_ICONS.getPath());
+        DataStreamHelper.copyDirectory(ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Icons_Hardware"), MGT2Paths.HARDWARE_ICONS.getPath());
+        DataStreamHelper.copyDirectory(ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Icons_Platforms"), MGT2Paths.PLATFORM_ICONS.getPath());
+        DataStreamHelper.copyDirectory(ModManagerPaths.PICTURE_BACKUP.getPath().resolve("Screenshots"), MGT2Paths.GENRE_SCREENSHOTS.getPath());
     }
 
     /**
@@ -401,7 +462,7 @@ public class Backup {
                 }
                 ProgressBarHelper.initializeProgressBar(0, 1, I18n.INSTANCE.get("progressBar.creatingInitialBackup"));
                 if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.verifyGameFilesNow"), I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.verifyGameFilesNow.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                    String returnValue = Backup.createInitialBackup(true);
+                    String returnValue = Backup.createInitialBackup(true, true);
                     ProgressBarHelper.increment();
                     if (returnValue.equals("")) {
                         InitialBackupChecker.updateInitialBackupVersion();
@@ -419,12 +480,16 @@ public class Backup {
             try {
                 LOGGER.info("Creating backup before restoring initial backup");
                 Backup.createFullBackup();
-                StringBuilder stringBuilder = new StringBuilder();
-                Uninstaller.uninstallAllMods(stringBuilder);
-                if (!stringBuilder.toString().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
+                if (ContentAdministrator.areModsActive()) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    Uninstaller.uninstallAllMods(stringBuilder);
+                    if (!stringBuilder.toString().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.notRestored.mods") + "\n\n" + stringBuilder, I18n.INSTANCE.get("frame.title.error"), JOptionPane.WARNING_MESSAGE);
+                        Backup.restoreBackup(true, true);
+                    }
+                } else {
+                    Backup.restoreBackup(true, true);
                 }
-                Backup.restoreBackup(true, true);
             } catch (IOException | ModProcessingException e) {
                 e.printStackTrace();
                 if (Utils.showConfirmDialog(1, e)) {
@@ -449,22 +514,6 @@ public class Backup {
                 } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.latestBackup.notRestored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.failed"), JOptionPane.ERROR_MESSAGE);
                 }
-            }
-        }
-    }
-
-    /**
-     * Removes all custom publisher icons
-     */
-    public static void removePublisherIcons() {
-        ArrayList<File> files = DataStreamHelper.getFilesInFolderWhiteList(MGT2Paths.GENRE_SCREENSHOTS.getPath(), ".png");
-        for (File file : files) {
-            try {
-                if (Integer.parseInt(file.getName().replace(".png", "")) > 187) {
-                    file.delete();
-                }
-            } catch (NumberFormatException e) {
-                DebugHelper.warn(Backup.class, "Could not parse publisher icon file name: " + file.getName());
             }
         }
     }

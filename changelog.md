@@ -5,6 +5,10 @@
 ### New feature
 - Exported content can now be marked to replace existing content. See the [documentation](Documentation.md) for further details.
 
+### Other
+- A backup of all game images is now created
+  - This means that the steam function ``verify game files`` will no longer have to be used when images get corrupted.
+
 ## [v4.3.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.3.1) (Latest Version)
 
 ### Other

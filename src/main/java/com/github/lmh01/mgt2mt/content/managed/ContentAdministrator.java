@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Manages all different contents
@@ -107,5 +108,18 @@ public class ContentAdministrator {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("warnMessage.integrityCheckFailed.textArea.linux2"));
             }
         }
+    }
+
+    /**
+     * Checks if mods are active.
+     * @return True if mods are found, false if not
+     * @throws ModProcessingException Thrown when {@link BaseContentManager#getCustomContentString()} fails.
+     */
+    public static boolean areModsActive() throws ModProcessingException {
+        ArrayList<String> customContentArrayList = new ArrayList<>();
+        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+            customContentArrayList.addAll(Arrays.asList(manager.getCustomContentString()));
+        }
+        return customContentArrayList.size() > 0;
     }
 }
