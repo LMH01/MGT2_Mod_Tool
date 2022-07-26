@@ -1,6 +1,16 @@
-## Current features:
-### Modify the game
-#### The following types of content is supported:
+# Current features
+
+## Table of contents
+1. [Modify the game](#modify-the-game)
+   1. [Types of content](#the-following-types-of-content-is-supported)
+   2. [NpcGames.txt](#edit-the-npcgamestxt-file)
+2. [Mod restore points](#mod-restore-points)
+3. [Share your modifications](#share-your-modifications)
+4. [Backups](#create-backups)
+5. [Utilities](#utilities)
+
+## Modify the game
+### The following types of content is supported:
 - Anti Cheat
 - Copy Protection
 - Dev Legend
@@ -15,12 +25,12 @@
 - Publisher/Developer
 - Theme
 
-#### Edit the `NpcGames.txt` file
+### Edit the `NpcGames.txt` file
 - You can add or remove a genre id to/from this file. This has the effect that games released by NPC-Companies can have the specified genre.
 - Additionally, you can change the chance with which the genre id should be added to the file. (100% = All games will have the corresponding genre as genre)
 - Example: When you add the genre "Sandbox" as genre to MGT2, and you use this feature to add the corresponding genre id to the `NpcGames.txt` file, NPC-Games will have a chance to use "Sandbox" as genre.
 
-### Mod restore points
+## Mod restore points
 Normally changes can be lost when the game receives an update. To counteract this you can create an ``restore point``
 that can be restored later to restore the mods that are currently active.
 
@@ -28,7 +38,7 @@ To create a restore point navigate to: ``Backup -> Mod restore point -> Create m
 
 To restore a restore point navigate to ``Backup -> Mod restore point -> Restore mod restore point``
 
-### Share your modifications
+## Share your modifications
 - It is supported to export all mods, to be loaded later. Here is how it works:
     - `Menu: Share -> Export -> Export all` or select the item manually that you would like to export.
     - To share the mod you simply have to click: `Menu: Share -> Open export folder`
@@ -36,13 +46,13 @@ To restore a restore point navigate to ``Backup -> Mod restore point -> Restore 
     - To import mods you have to click: `Menu: Mods -> Import -> Import from file system`
         - Select the folder where your mods are saved. The program then scans all folders for mods and displays a summary of what can be imported. Just click **ok**, and the program will import the files.
 - You can also import mods by using a direct download url. For a list of mods you can take a look [here](https://github.com/LMH01/MGT2_Mod_Tool/discussions/34).
-### Create backups
+## Create backups
 - Every time you change the game files a backup is created. This backup will be stored as latest backup until another backup is made. It is not recommended however to restore these backups, if you would like to remove mods please do so by using the respective menu. If you would like to restore the backup anyway, you have to enable the option ``Disable backup security mechanisms`` in the settings under ``Configure safety features``.
 - Backups can be created manually
 - When starting this program for the first time an initial backup is created that can be restored later with the click of one button.
 - Backups of your saved games will be created but not automatically restored. To restore a save game backup go into the **Backup** menu, click **Restore Backup** and then **Restore Save Game Backup**.
 - **Even though backups are created I will not take any responsibility if you loose or damage you saved games!**
-### Utilities
+## Utilities
 - **Update Checker**
     - When started the tool will look for updates. If an update is available the user will be notified.
 - **Tool tips**
