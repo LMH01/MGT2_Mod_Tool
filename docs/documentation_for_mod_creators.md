@@ -1,13 +1,21 @@
 # Documentation for Mod Creators
 
+This documentation aims to explain some advanced stuff about the mod tool that is
+especially helpful for mod creators.
+
 ## Table of contents
 1. [Toml file format](#toml-file-format)
    1. [Toml file types](#toml-file-types)
    2. [Mod types](#mod-types)
    3. [Data fields](#data-fields)
    4. [Dependencies](#dependencies)
-2. [Exporting mods](#exporting-mods)
-3. [Mark a mod as replacement](#mark-a-mod-as-replacement)
+2. [Assets' folder](#assets-folder)
+3. [Exporting mods](#exporting-mods)
+4. [Importing mods](#importing-mods)
+   1. [Customize import](#customize-import)
+   2. [How it works](#how-it-works)
+      1. [Recognition requirements](#recognition-requirements)
+5. [Mark a mod as replacement](#mark-a-mod-as-replacement)
    1. [Example](#example)
    2. [Limitations](#limitations)
 
@@ -86,6 +94,10 @@ DEPENDENCY_MOD_TYPE_1 = ["DEPENDENCY_NAME_1", "DEPENDENCY_NAME_2", "...", "DEPEN
 DEPENDENCY_MOD_TYPE_2 = ["DEPENDENCY_NAME_1", "...", "DEPENDENCY_NAME_N"]
 DEPENDENCY_MOD_TYPE_3 = ["DEPENDENCY_NAME_1", "...", "DEPENDENCY_NAME_N"]
 ```
+## Assets' folder
+When a mod is exported that requires pictures, an assets' folder is created in the directory where the ``export.toml``
+file is located. This folder contains all images that are required by the mods in the ``.toml file``. Import will not
+work if the images are missing.
 
 ## Exporting mods
 
@@ -98,6 +110,58 @@ There are two different ways of exporting mods:
     - Using this option will create a ``.toml`` file that contains each mod that has been selected.
     All images are put into the same assets' folder. Using this makes sure that all mods that require other mods are
     available when importing this bundle.
+
+## Importing mods
+
+As mods are stored in ``.toml`` files an unlimited amount of mods can be imported simultaneously.
+
+The only prerequisite is that the ``.toml`` file is formatted as described in [Toml file format](#toml-file-format) and
+contains all the required mod data.
+
+Mods can be imported by navigating to ``Mods -> Import -> Import from URL`` or `` -> Import from file system``.
+
+### Customize import
+The user can customize the import to select a range of found mods that should be added to the game.
+
+Note: When the import is customized it can happen that some mods complain that dependencies are missing.
+
+### How it works
+This section describes what the tool does when mods are being imported.
+ 
+The first step is for the user to select files and folders that should be searched for mods.
+This can be done by navigating to ``Mods -> Import -> Import from URL`` or `` -> Import from file system``.
+No matter what is chosen the next steps are similar.
+
+The (downloaded) files and folders are first searched if they are ``.toml files``.
+
+Once all ``.toml`` files are found the file content is analyzed to determine if they contain mods.
+
+#### Recognition requirements
+In order for the mod tool to recognize a file as a file that contains mods the following requirements must be met:
+- File extension is ``.toml``
+- The file is valid ``toml``
+- The following two tags must be included in the file:
+    - ``mod_tool_version``
+    - ``type``
+
+All files that where identified to contain mods are then turned into maps, where the ``key`` and ``value`` are the
+corresponding data entries that are required to add the mod.
+
+Next all mods are checked for the following:
+- Already added? (Is a mod with this name already active)
+- Duplicated? (Is a mod with this name duplicated in the ``.toml`` files)
+- Compatible with the current mod tool version?
+
+If the check passes (= not already added, not duplicated and compatible with the current mod tool version)
+the mod is added to a list of mods that can be added to the game. A summary is then displayed to the user where they
+can select if all mods should be added or if only selected mods should be added to the game.
+
+Once the user made a selection it is checked if all assets folders are available and if all **dependencies** are satisfied.
+
+If every check is passed the **mods are constructed** to be added to the game. This step can **fail** when
+specific data entries are missing from the mod file. Failing means that the whole import process is canceled.
+
+If everything went properly the mods have been added to the game.
 
 ## Mark a mod as replacement
 Mods can be marked as replacement by adding the following line to the toml-section of the content:
