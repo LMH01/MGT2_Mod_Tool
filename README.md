@@ -19,7 +19,7 @@ Before downloading please read [this information](docs/important.md) carefully.
 - [Adding a new genre](docs/adding_a_genre.md)
 - [Changelog](docs/changelog.md)
 - [Pictures](docs/features.md)
-- Mod creators might want to check out the [Mod Creator Documentation](docs/mod_creator_documentation.md).
+- Mod creators might want to check out the [Documentation for Mod Creators](docs/documentation_for_mod_creators.md).
 
 ## Getting Mods
 [This](https://github.com/LMH01/MGT2_Mod_Tool/discussions/34) discussion page contains some mods that have already been

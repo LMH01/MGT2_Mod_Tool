@@ -3,7 +3,7 @@
 ## [v4.4.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.4.0) (Latest Version)
 
 ### New feature
-- Exported content can now be marked to replace existing content. See the [documentation](mod_creator_documentation.md) for further details.
+- Exported content can now be marked to replace existing content. See the [documentation](documentation_for_mod_creators.md) for further details.
 
 ### Other
 - A backup of all game images is now created

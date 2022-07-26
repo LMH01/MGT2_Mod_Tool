@@ -1,4 +1,4 @@
-# Mod Creator Documentation
+# Documentation for Mod Creators
 
 ## Table of contents
 1. [Toml file format](#toml-file-format)
