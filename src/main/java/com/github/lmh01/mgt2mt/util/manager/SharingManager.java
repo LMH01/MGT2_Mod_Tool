@@ -112,11 +112,24 @@ public class SharingManager {
             return;
         }
 
+        // Check if some mods where found that replace default content
+        int contentToReplace = contentToReplace(modMaps);
+
         // Display summary of what mods have been found
         JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
         JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport"));
         checkBox.setToolTipText(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport.toolTip"));
-        JComponent[] components = {label, checkBox};
+
+        JLabel label2 = new JLabel(String.format("<html><br>" + I18n.INSTANCE.get("textArea.importAll.replaceModsFound"), contentToReplace));
+        JCheckBox allowReplacement = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox"));
+        allowReplacement.setToolTipText("<html>" + I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox.toolTip"));
+
+        JComponent[] components;
+        if (contentToReplace == 0) {
+            components = new JComponent[]{label, checkBox};
+        } else {
+            components = new JComponent[]{label, checkBox, label2, allowReplacement};
+        }
         boolean continueImport = false;
         if (importType.equals(ImportType.RESTORE_POINT) || importType.equals(ImportType.REAL_PUBLISHERS)) {
             continueImport = true;
@@ -146,12 +159,22 @@ public class SharingManager {
             }
             return;
         }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingAssetsFolder"));
 
         // Check if assets folders exist
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingAssetsFolder"));
         if (!checkAssetsFolders(importMap)) {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.assetFoldersMissing"));
             return;
+        }
+
+        if (allowReplacement.isSelected()) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.replaceModsFound.removing"));
+            // Construct content that should be replaced
+            ArrayList<AbstractBaseContent> replacedContent = getReplacedContent(importMap);
+            // Remove content that will be replaced
+            for (AbstractBaseContent content : replacedContent) {
+                content.contentType.removeContent(content.name);
+            }
         }
 
         // Check if all dependencies are available and replace missing dependencies
@@ -651,6 +674,7 @@ public class SharingManager {
      */
     @SuppressWarnings("unchecked")
     private static Set<Map<String, Object>> checkDependencies(Set<Map<String, Object>> mods) throws ModProcessingException {
+        ContentAdministrator.analyzeContents();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         Map<BaseContentManager, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
@@ -1076,6 +1100,47 @@ public class SharingManager {
         panel.add(label);
         panel.add(button);
         panel.setName(labelText);
+    }
+
+    /**
+     * Counts how many mods are included in the mod map that would replace a default content.
+     * @return Return the amount of default content that will be replaced
+     */
+    private static int contentToReplace(Set<Map<String, Object>> modMaps) {
+        int amount = 0;
+        for (Map<String, Object> map : modMaps) {
+            String replaces = (String) map.get("replaces");
+            if (replaces == null) {
+                continue;
+            }
+            amount += 1;
+        }
+        return amount;
+    }
+
+    /**
+     * Checks the input map for content that replaces default content and returns an array list containing
+     * the content that should be removed.
+     * @param modMaps The map containing the content that should be checked.
+     * @return An ArrayList containing all the content that will be replaced.
+     */
+    private static ArrayList<AbstractBaseContent> getReplacedContent(Set<Map<String, Object>> modMaps) {
+        ArrayList<AbstractBaseContent> contents = new ArrayList<>();
+        for (Map<String, Object> map : modMaps) {
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                if (map.get("mod_type").equals(manager.getExportType())) {
+                    try {
+                        if (map.get("replaces") == null) {
+                            continue;
+                        }
+                        contents.add(manager.constructContentFromName((String) map.get("replaces")));
+                    } catch (ModProcessingException e) {
+                        DebugHelper.warn(SharingManager.class, "Could not construct content that should be replaced, name is invalid: " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return contents;
     }
 
     /**

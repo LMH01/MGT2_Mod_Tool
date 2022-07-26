@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.4.0
+
+### New feature
+- Exported content can now be marked to replace existing content. See the [documentation](Documentation.md) for further details.
+
 ## [v4.3.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.3.1) (Latest Version)
 
 ### Other

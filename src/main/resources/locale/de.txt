@@ -832,6 +832,10 @@ textArea.importAll.contentWrongConstructed|Kritischer Fehler: Inhalt wurde nicht
 textArea.importAll.accessDeniedError|Ordner kann nicht nach .toml-Dateien durchsucht werden, Zugriff verweigert
 textArea.importAll.errorConstructingContent|<html>Fehler beim Erstellen des Inhalts namens %s vom Typ %s.<br><br>Soll trotzdem mit dem Erstellen der Inhalte fortgefahren werden?<br><br>Warnung: Dies könnte zu Problemen führen!
 textArea.importAll.imageExists|<html>Ein bereits vorhandenes Bild gefunden: %s<br><br>Soll das vorhandene Bild ersetzt werden?<br><br>Hinweis: Wenn weitere doppelte Bilder gefunden werden, werden sie automatisch ersetzt.
+textArea.importAll.replaceModsFound|%s Mod(s) gefunden, die bestehende Inhalte ersetzen werden.<br><br>Anmerkung:<br>Wenn ein Inhalt, der Bilder benötigt, ersetzt wird,<br>ist es derzeit nicht möglich, die Bilder wiederherzustellen.
+textArea.importAll.replaceModsFound.checkBox|Vorhandene Inhalte ersetzen
+textArea.importAll.replaceModsFound.checkBox.toolTip|Aktiviere das Ersetzen des Inhalts.<br>Wenn diese Option nicht ausgewählt ist, wird der Mod hinzugefügt, ohne den Inhalt zu ersetzen.
+textArea.importAll.replaceModsFound.removing|Entfernen von Inhalten, die ersetzt werden sollen
 textArea.unzip.firstPart|Vorbereitung zum Entpacken des Ordners
 textArea.unzip.secondPart|Indizierung der Dateien, die entpackt werden sollen: Dies kann eine Weile dauern
 textArea.unzip.thirdPart|nach

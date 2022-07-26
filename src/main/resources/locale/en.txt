@@ -831,6 +831,10 @@ textArea.importAll.accessDeniedError|Unable to search folder for .toml files, ac
 textArea.importAll.contentWrongConstructed|Critical error: Content is not constructed correctly
 textArea.importAll.errorConstructingContent|<html>Error while constructing content named %s of type %s.<br><br>Would you like to continue the content construction anyway?<br><br>Warning: Doing so might result in problems!
 textArea.importAll.imageExists|<html>Found an already existing image: %s<br><br>Would you like to replace the existing image?<br><br>Note: If more duplicated images are found they will be replaced automatically.
+textArea.importAll.replaceModsFound|Found %s mod(s) that will replace existing content.<br><br>Note:<br>When a content that requires pictures it replaced,<br>it is currently not possible to restore the pictures.
+textArea.importAll.replaceModsFound.checkBox|Replace existing content
+textArea.importAll.replaceModsFound.checkBox.toolTip|Enable to replace the content.<br>If this option is not selected, the mod is added without replacing the content.
+textArea.importAll.replaceModsFound.removing|Removing content that will be replaced
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to
