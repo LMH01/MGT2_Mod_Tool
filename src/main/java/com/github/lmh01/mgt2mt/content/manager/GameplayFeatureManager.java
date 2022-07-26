@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
-import com.github.lmh01.mgt2mt.content.GameplayFeature;
+import com.github.lmh01.mgt2mt.content.instances.GameplayFeature;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.content.managed.types.GameplayFeatureType;

@@ -1,4 +1,4 @@
-package com.github.lmh01.mgt2mt.content;
+package com.github.lmh01.mgt2mt.content.instances;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;

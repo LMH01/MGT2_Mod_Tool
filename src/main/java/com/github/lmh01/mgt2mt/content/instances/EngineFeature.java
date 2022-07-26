@@ -1,4 +1,4 @@
-package com.github.lmh01.mgt2mt.content;
+package com.github.lmh01.mgt2mt.content.instances;
 
 import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
 import com.github.lmh01.mgt2mt.content.managed.types.EngineFeatureType;
