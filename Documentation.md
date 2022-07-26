@@ -61,5 +61,4 @@ When the mod is imported now the mod tool notices the ``replaces`` tag and notif
 When the user accepts the replacement ``Minisoft`` will be replaced by ``Williams``.
 ### Limitations
 - Only content of the same type can be replaced
-- Because the original content is replaced and original images are removed it is currently not possible to fully restore backups when a content is replaced that requires pictures.
-This might change in a future update.
+- The original content can only be restored by restoring the initial backup
