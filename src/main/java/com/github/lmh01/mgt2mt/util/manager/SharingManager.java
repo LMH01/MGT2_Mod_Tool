@@ -74,103 +74,132 @@ public class SharingManager {
         TimeHelper timeHelper = new TimeHelper();
         CompanyLogoAnalyzer.analyzeLogoNumbers();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.start"));
+
+        // Search for toml files
         ArrayList<File> tomlFiles = getTomlFiles(paths);
-        if (!tomlFiles.isEmpty()) {
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.totalTomlFilesFound") + ": " + tomlFiles.size());
-            ArrayList<Map<String, Object>> modList = transformTomlFilesToMaps(tomlFiles);
-            if (!modList.isEmpty()) {
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.foundCompatibleFiles") + ": " + modList.size());
-                ArrayList<Map<String, Object>> singleMods = getFilteredModMaps(modList, false);
-                ArrayList<Map<String, Object>> bundledMods = getFilteredModMaps(modList, true);
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.singleMods") + ": " + singleMods.size());
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.bundledMods") + ": " + bundledMods.size());
-                if (importType.equals(ImportType.RESTORE_POINT)) {
-                    Uninstaller.uninstallAllMods();
-                    ContentAdministrator.analyzeContents();
-                    CompanyLogoAnalyzer.analyzeLogoNumbers();
-                }
-                Set<Map<String, Object>> modMaps = getImportMaps(singleMods, bundledMods);
-                if (!modMaps.isEmpty()) {
-                    JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
-                    JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport"));
-                    checkBox.setToolTipText(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport.toolTip"));
-                    JComponent[] components = {label, checkBox};
-                    boolean continueImport = false;
-                    if (importType.equals(ImportType.RESTORE_POINT) || importType.equals(ImportType.REAL_PUBLISHERS)) {
-                        continueImport = true;
-                    } else {
-                        if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("frame.title.import"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                            continueImport = true;
-                        }
-                    }
-                    if (continueImport) {
-                        Set<Map<String, Object>> importMap;
-                        if (checkBox.isSelected()) {
-                            importMap = getCustomizedImportMap(importType, modMaps);
-                        } else {
-                            importMap = modMaps;
-                        }
-                        if (!importMap.isEmpty()) {
-                            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingAssetsFolder"));
-                            if (checkAssetsFolders(importMap)) {
-                                Set<Map<String, Object>> modsChecked = checkDependencies(importMap);
-                                if (modsChecked != null) {
-                                    setImportHelperMaps(modsChecked);
-                                    Map<BaseContentManager, List<AbstractBaseContent>> contentsToImport = constructImportContents(modsChecked);
-                                    if (contentsToImport == null) {
-                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
-                                        return;
-                                    }
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingImages"));
-                                    if (!checkImages(contentsToImport)) {
-                                        return;
-                                    }
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingExistingImages"));
-                                    if (!checkExistingImages(contentsToImport)) {
-                                        return;
-                                    }
-                                    try {
-                                        importContents(contentsToImport);
-                                        if (importType.equals(ImportType.RESTORE_POINT)) {
-                                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"), timeHelper.getMeasuredTimeDisplay()));
-                                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
-                                        } else {
-                                            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.importAll.completed"), timeHelper.getMeasuredTimeDisplay()));
-                                            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
-                                        }
-                                    } catch (ModProcessingException e) {
-                                        e.printStackTrace();
-                                        TextAreaHelper.printStackTrace(e);
-                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
-                                    }
-                                } else {
-                                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
-                                }
-                            } else {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.assetFoldersMissing"));
-                            }
-                        } else {
-                            if (importType.equals(ImportType.RESTORE_POINT)) {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
-                            } else {
-                                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
-                            }
-                        }
-                    } else {
-                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
-                    }
-                } else {
-                    TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.noUniqueModsFound"));
-                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var2"), I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2"), JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else {
-                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.noCompatibleTomlFilesFound"));
-                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var2"), I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2"), JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
+        // Check if toml files have been found
+        if (tomlFiles.isEmpty()) {
             ThreadHandler.startModThread(() -> JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.importAll.noTomlFilesFound"), I18n.INSTANCE.get("frame.title.information"), JOptionPane.INFORMATION_MESSAGE), "showNoTomlFoundInformation");
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.noTomlFilesFound"));
+            return;
         }
+
+        // Transform toml files to maps
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.totalTomlFilesFound") + ": " + tomlFiles.size());
+        ArrayList<Map<String, Object>> modList = transformTomlFilesToMaps(tomlFiles);
+        // Check if toml files where found that contain mods
+        if (modList.isEmpty()) {
+            return;
+        }
+
+        // Split the mod list into two lists containing only single/only bundled mods
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.foundCompatibleFiles") + ": " + modList.size());
+        ArrayList<Map<String, Object>> singleMods = getFilteredModMaps(modList, false);
+        ArrayList<Map<String, Object>> bundledMods = getFilteredModMaps(modList, true);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.singleMods") + ": " + singleMods.size());
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.bundledMods") + ": " + bundledMods.size());
+        if (importType.equals(ImportType.RESTORE_POINT)) {
+            Uninstaller.uninstallAllMods();
+            ContentAdministrator.analyzeContents();
+            CompanyLogoAnalyzer.analyzeLogoNumbers();
+        }
+
+        Set<Map<String, Object>> modMaps = getImportMaps(singleMods, bundledMods);
+        // Check if mods are found
+        if (modMaps.isEmpty()) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.noUniqueModsFound"));
+            JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.error.noImportAvailable.var2"), I18n.INSTANCE.get("dialog.sharingManager.importAll.error.windowTitle.var2"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Display summary of what mods have been found
+        JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
+        JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport"));
+        checkBox.setToolTipText(I18n.INSTANCE.get("textArea.importAll.checkBox.customizeImport.toolTip"));
+        JComponent[] components = {label, checkBox};
+        boolean continueImport = false;
+        if (importType.equals(ImportType.RESTORE_POINT) || importType.equals(ImportType.REAL_PUBLISHERS)) {
+            continueImport = true;
+        } else {
+            if (JOptionPane.showConfirmDialog(null, components, I18n.INSTANCE.get("frame.title.import"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                continueImport = true;
+            }
+        }
+        // Continue import only when the user accepts it or when a restore point is restored;
+        if (!continueImport) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+            return;
+        }
+
+        // Ask the user which mods that have been found should be imported
+        Set<Map<String, Object>> importMap;
+        if (checkBox.isSelected()) {
+            importMap = getCustomizedImportMap(importType, modMaps);
+        } else {
+            importMap = modMaps;
+        }
+        if (importMap.isEmpty()) {
+            if (importType.equals(ImportType.RESTORE_POINT)) {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.restorePoint.canceled"));
+            } else {
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+            }
+            return;
+        }
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingAssetsFolder"));
+
+        // Check if assets folders exist
+        if (!checkAssetsFolders(importMap)) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel") + ": " + I18n.INSTANCE.get("textArea.importAll.assetFoldersMissing"));
+            return;
+        }
+
+        // Check if all dependencies are available and replace missing dependencies
+        Set<Map<String, Object>> modsChecked = checkDependencies(importMap);
+        if (modsChecked == null) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+            return;
+        }
+
+        // Set the new mod ids
+        setImportHelperMaps(modsChecked);
+
+        // Build the import maps into content that can be added to the game
+        Map<BaseContentManager, List<AbstractBaseContent>> contentsToImport = constructImportContents(modsChecked);
+        if (contentsToImport == null) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+            return;
+        }
+
+        // Check if all image files exist
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingImages"));
+        if (!checkImages(contentsToImport)) {
+            return;
+        }
+
+        // Check if some images already exist
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingExistingImages"));
+        if (!checkExistingImages(contentsToImport)) {
+            return;
+        }
+
+        // Import all the content that has been constructed
+        try {
+            importContents(contentsToImport);
+            if (importType.equals(ImportType.RESTORE_POINT)) {
+                TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.restorePoint.restoreSuccessful"), timeHelper.getMeasuredTimeDisplay()));
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.restorePointSuccessfullyRestored.title"), JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.importAll.completed"), timeHelper.getMeasuredTimeDisplay()));
+                JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful"), I18n.INSTANCE.get("dialog.sharingManager.importAll.summary.importSuccessful.title"), JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (ModProcessingException e) {
+            e.printStackTrace();
+            TextAreaHelper.printStackTrace(e);
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
+        }
+
+        // Clear temporary files
         if (ModManagerPaths.TEMP.toFile().exists()) {
             ThreadHandler.startThread(ThreadHandler.runnableDeleteTempFolder, "runnableDeleteTempFolder");
         }
@@ -679,7 +708,6 @@ public class SharingManager {
             }
             ProgressBarHelper.increment();
         }
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.dependencyCheckComplete"));
         return mods;
     }
 

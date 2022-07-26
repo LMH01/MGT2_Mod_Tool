@@ -808,7 +808,6 @@ textArea.importAll.noUniqueModsFound|No new mods were found, that could be added
 textArea.importAll.requiresDependencies|Mod requires dependencies
 textArea.importAll.dependencyDoesNotExist.firstPart|Missing dependency
 textArea.importAll.dependencyDoesNotExist.secondPart|will be replaced by
-textArea.importAll.dependencyCheckComplete|Dependency check complete
 textArea.importAll.dependencyCheck.optionPane.part1|Warning dependency not found
 textArea.importAll.dependencyCheck.optionPane.part2|Please choose a replacement from the list
 textArea.importAll.dependencyCheck.optionPane.part3|If no entry is selected, the replacement will be random.<br>Click cancel to cancel the import process.
