@@ -208,6 +208,7 @@ commonText.seconds|seconds
 commonText.country|Country
 commonText.notSet|Not set
 commonText.female|Female
+commonText.componentRating|Component rating
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia
@@ -461,7 +462,7 @@ mod.hardware.addMod.components.checkBox.exclusiveConsole.toolTip|<html>Check thi
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value1|Stationary console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.value2|Portable console
 mod.hardware.addMod.components.comboBox.exclusiveConsole.toolTip|Select here for which console type this hardware should be exclusive
-mod.hardware.addMod.components.label.ratingDescription|<html>Info:<br>The rating of the component cannot be set manually.<br>It is calculated automatically using the tech level and research points, among others.
+mod.hardware.addMod.components.textBox.rating|The rating of the component cannot be set manually.<br>It is calculated by the following formula: tech level * (research points + 500) / 100
 mod.hardware.addMod.components.button.customIcon|Select custom icon
 mod.hardware.addMod.components.button.customIcon.toolTip|<html>Click here to select an image file that should be used as your hardware icon.<br>If no custom icon is set the default icon will be used
 mod.hardware.addMod.components.button.customIcon.selected|Custom icon selected

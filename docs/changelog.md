@@ -1,5 +1,11 @@
 # Changelog
 
+## v4.5.0
+
+### Other
+- The component rating the hardware will receive is now displayed in the add hardware window. Thanks
+to `✗ Mehmet Ali` from the MGT2 discord for figuring out the formula.
+
 ## [v4.4.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.4.0) (Latest Version)
 
 ### New feature

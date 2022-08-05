@@ -232,10 +232,28 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         JComboBox<String> comboBoxUnlockMonth = WindowHelper.getUnlockMonthComboBox();
         JSpinner spinnerUnlockYear = WindowHelper.getUnlockYearSpinner();
         JComboBox<String> comboBoxType = WindowHelper.getComboBox(HardwareType.class, "mod.hardware.addMod.components.comboBox.type.toolTip", HardwareType.CPU.getTypeName());
-        JSpinner spinnerResearchPoints = WindowHelper.getResearchPointSpinner();
+
+        AtomicReference<JSpinner> spinnerResearchPoints = new AtomicReference<>(WindowHelper.getResearchPointSpinner());
+        AtomicReference<JSpinner> spinnerTechLevel = new AtomicReference<>(WindowHelper.getTechLevelSpinner());
+        JLabel labelComponentRating = new JLabel(String.format("%s: ", I18n.INSTANCE.get("commonText.componentRating")));
+        AtomicReference<JTextField> tfComponentRating = new AtomicReference<>(new JTextField());
+        tfComponentRating.get().setEditable(false);
+        tfComponentRating.get().setText(String.format("%03d", calculateComponentRating((Integer) spinnerTechLevel.get().getValue(), (Integer) spinnerResearchPoints.get().getValue())));
+        tfComponentRating.get().setToolTipText("<html>" + I18n.INSTANCE.get("mod.hardware.addMod.components.textBox.rating"));
+        JPanel panelComponentRating = new JPanel();
+        panelComponentRating.add(labelComponentRating);
+        panelComponentRating.add(tfComponentRating.get());
+
+        spinnerResearchPoints.get().addChangeListener(c -> {
+            tfComponentRating.get().setText(String.format("%03d", calculateComponentRating((Integer) spinnerTechLevel.get().getValue(), (Integer) spinnerResearchPoints.get().getValue())));
+        });
+
+        spinnerTechLevel.get().addChangeListener(c -> {
+            tfComponentRating.get().setText(String.format("%03d", calculateComponentRating((Integer) spinnerTechLevel.get().getValue(), (Integer) spinnerResearchPoints.get().getValue())));
+        });
+
         JSpinner spinnerCost = WindowHelper.getBaseSpinner("commonText.cost.spinner.toolTip", 500000, 0, 30000000, 100000);
         JSpinner spinnerDevelopmentCost = WindowHelper.getBaseSpinner("commonText.developmentCost.spinner", 1000000, 0, 50000000, 10000);
-        JSpinner spinnerTechLevel = WindowHelper.getTechLevelSpinner();
 
         JComboBox<String> comboBoxExclusivity = new JComboBox<>(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"), I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value2")}));
         comboBoxExclusivity.setSelectedItem(I18n.INSTANCE.get("mod.hardware.addMod.components.comboBox.exclusiveConsole.value1"));
@@ -251,9 +269,6 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 lastValue.set(checkBoxEnableExclusivity.isSelected());
             }
         });
-
-        JLabel componentRatingDescription = new JLabel(I18n.INSTANCE.get("mod.hardware.addMod.components.label.ratingDescription"));
-
 
         AtomicReference<Path> customIconPath = new AtomicReference<>(null);
         JButton buttonCustomIcon = new JButton(I18n.INSTANCE.get("mod.hardware.addMod.components.button.customIcon"));
@@ -272,7 +287,7 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
             }
         });
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), checkBoxEnableExclusivity, comboBoxExclusivity, componentRatingDescription, buttonCustomIcon};
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getTypePanel(comboBoxType), WindowHelper.getSpinnerPanel(spinnerResearchPoints.get(), SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerCost, SpinnerType.PRICE), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerTechLevel.get(), SpinnerType.TECH_LEVEL), panelComponentRating, checkBoxEnableExclusivity, comboBoxExclusivity, buttonCustomIcon};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.hardware.addMod.components.textFieldName.initialValue"))) {
@@ -322,10 +337,10 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                                 new TranslationManager(mapNameTranslations[0]),
                                 Months.getDataNameByTypeName(Objects.requireNonNull(comboBoxUnlockMonth.getSelectedItem()).toString()) + " " + spinnerUnlockYear.getValue().toString(),
                                 hT,
-                                Integer.parseInt(spinnerResearchPoints.getValue().toString()),
+                                Integer.parseInt(spinnerResearchPoints.get().getValue().toString()),
                                 Integer.parseInt(spinnerCost.getValue().toString()),
                                 Integer.parseInt(spinnerDevelopmentCost.getValue().toString()),
-                                Integer.parseInt(spinnerTechLevel.getValue().toString()),
+                                Integer.parseInt(spinnerTechLevel.get().getValue().toString()),
                                 onlyHandheld,
                                 onlyStationary,
                                 requiredGameplayFeatures,
@@ -367,5 +382,12 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         ArrayList<BaseContentManager> arrayList = new ArrayList<>();
         arrayList.add(GameplayFeatureManager.INSTANCE);
         return arrayList;
+    }
+
+    /**
+     * Calculates the component rating that the component will receive
+     */
+    private int calculateComponentRating(int techLevel, int researchPoints) {
+        return techLevel * (researchPoints + 500)/100;
     }
 }
