@@ -253,3 +253,51 @@ Rallycross
 Stock Car
 Chess
 Asteroids
+Spiders
+Circus
+Parties
+Cleaning
+Diplomacy
+Astronauts
+Tubes
+Surfing
+Curses
+Drones
+Sewers
+Desert
+Jungle
+Labyrinth
+Goblins
+Restaurants
+Viticulture
+Aztecs
+Inca
+Hotels
+Stock Exchanges
+Ancient Egypt
+Roman Empire
+Atlantis
+Recycling
+Graveyards
+Tourism
+Genetics
+Snowboarding
+Photography
+Books
+Make-up
+Mummies
+Yakuza
+Ants
+Stuffed Animals
+Greek Mythology
+Ancient China
+Dolls
+Bards
+Dolphins
+Villages
+Dieselpunk
+Victorian Age
+Terraforming
+Court Case
+University
+Curling

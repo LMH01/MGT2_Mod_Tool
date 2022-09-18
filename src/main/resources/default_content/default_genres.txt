@@ -16,3 +16,4 @@ First-Person Shooter
 Visual Novel
 Third-Person Shooter
 Racing
+Survival Game

@@ -198,3 +198,16 @@ Deadly Fury <P90><G10><T3><%80><Y1991><TG2>
 King of the Warriors <P90><G10><T3><%85><Y1994><TG2>
 Ronin Shodown <P90><G10><T22><ST3><%80><Y1993><TG2>
 Iron Slug <P90><G6><SG5><T23><ST55><%85><Y1996><TG2>
+Sisters in Arms <P91><G14><SG4><T55><ST19><%80><Y2005><TG2>
+Cyberian <P92><G2><SG1><T110><ST163><%80><Y2002><TG4>
+The Legacy of Cain <P93><G5><SG2><T58><ST162><%85><Y1996><TG2>
+Rak and the Power of Yumo <P94><G6><SG0><T4><ST164><%70><Y2003><TG0>
+Crown Defender <P95><G4><SG5><T5><ST123><%80><Y1986><TG4>
+It Came from the Ocean <P95><G5><SG2><T147><ST162><%85><Y1989><TG1>
+Glorious Wings! <P95><G7><SG5><T44><ST19><%75><Y1990><TG1>
+Simon the Magician <P96><G2><SG1><T24><ST47><%65><Y1993><TG4>
+Taikatana <P97><G14><SG4><T91><ST162><%70><Y2000><TG2>
+Ambersun <P98><G3><SG2><T239><ST47><%85><Y1992><TG4>
+Leonsheart <P98><G6><SG5><T47><ST162><%85><Y1993><TG4>
+Lords of Middlenight <P99><G4><SG3><T47><ST152><%80><Y1984><TG2>
+Silent U-Boat <P99><G7><SG4><T150><ST19><%80><Y1995><TG2>
