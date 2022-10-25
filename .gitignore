@@ -1,6 +1,10 @@
 .idea
 .vim
 .vscode
+.settings
+.classpath
+bin/
+.project
 build
 .gradle
 $HOME
