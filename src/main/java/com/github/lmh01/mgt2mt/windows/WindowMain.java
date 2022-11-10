@@ -184,12 +184,16 @@ public class WindowMain {
         JMenuItem m560ReanalyzeGameFiles = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.reanalyzeGameFiles"));
         m560ReanalyzeGameFiles.setToolTipText(I18n.INSTANCE.get("window.main.utilities.reanalyzeGameFiles.toolTip"));
         m560ReanalyzeGameFiles.addActionListener(actionEvent -> reanalyzeGameFiles());
+        JMenuItem m570GenerateHelpSheet = new JMenuItem(I18n.INSTANCE.get("Generate help sheet"));
+        m570GenerateHelpSheet.setToolTipText(I18n.INSTANCE.get("Generates a help sheet with the correct slider settings for the current game files"));
+        m570GenerateHelpSheet.addActionListener(actionEvent -> ThreadHandler.startModThread(HelpSheetGenerator::generate, "HelpSheetGenerator"));
         MB.add(M_5_UTIL);
         M_5_UTIL.add(m52OpenGitHubPage);
         M_5_UTIL.add(m53OpenMGT2Folder);
         M_5_UTIL.add(m54OpenSaveGameFolder);
         M_5_UTIL.add(m55OpenSettingsTomlFile);
         M_5_UTIL.add(m560ReanalyzeGameFiles);
+        M_5_UTIL.add(m570GenerateHelpSheet);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
