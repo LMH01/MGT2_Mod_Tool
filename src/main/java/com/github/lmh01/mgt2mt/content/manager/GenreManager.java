@@ -47,7 +47,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     public void removeContent(String name) throws ModProcessingException {
         ThemeManager.editGenreAllocation(getContentIdByName(name), false, null);
         GameplayFeatureManager.INSTANCE.removeGenreId(getContentIdByName(name));
-        PublisherManager.INSTANCE.removeGenre(name);
+        PublisherManager.removeGenre(name);
         NpcEngineManager.INSTANCE.removeGenre(name);
         NpcGameManager.INSTANCE.editNPCGames(getContentIdByName(name), false, 0);
         super.removeContent(name);

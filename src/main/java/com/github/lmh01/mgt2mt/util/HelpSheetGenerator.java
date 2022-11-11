@@ -14,7 +14,7 @@ public class HelpSheetGenerator {
      */
     public static void generate() throws ModProcessingException {
         BaseContentManager genreManager = GenreManager.INSTANCE;
-        ArrayList<Genre> genres = new ArrayList();
+        ArrayList<Genre> genres = new ArrayList<>();
         for (String genreName : genreManager.getContentByAlphabet()) {
             genres.add((Genre) genreManager.constructContentFromName(genreName));
         }

@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class Hardware extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
 

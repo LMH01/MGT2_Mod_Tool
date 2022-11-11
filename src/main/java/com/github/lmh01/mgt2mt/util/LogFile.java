@@ -19,7 +19,6 @@ public class LogFile {
     static {
         try {
             logFile = ModManagerPaths.MAIN.getPath().resolve(Utils.getCurrentDateTime() + ".log").toFile();
-            File mainFolder = ModManagerPaths.MAIN.getPath().toFile();
             if (!Files.exists(ModManagerPaths.MAIN.getPath())) {
                 Files.createDirectories(ModManagerPaths.MAIN.getPath());
             }

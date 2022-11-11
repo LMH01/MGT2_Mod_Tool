@@ -41,7 +41,7 @@ public class ContentEditor {
                             themeIds.add(ThemeManager.INSTANCE.getContentIdByName(string));
                         }
                         for (String string : genreList.getSelectedValuesList()) {
-                            ThemeManager.INSTANCE.editGenreAllocationAdvanced(GenreManager.INSTANCE.getContentIdByName(string), addGenre, themeIds, false);
+                            ThemeManager.editGenreAllocationAdvanced(GenreManager.INSTANCE.getContentIdByName(string), addGenre, themeIds, false);
                         }
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreThemeFit.success"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
                         break;

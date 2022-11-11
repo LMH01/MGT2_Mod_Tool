@@ -100,6 +100,7 @@ public class DefaultContentManager {
                     Scanner scanner = new Scanner(url.openStream());
                     final String NEWEST_VERSION = scanner.nextLine();
                     DebugHelper.debug(LOGGER, "Newest default content version: " + NEWEST_VERSION);
+                    scanner.close();
                     return isVersionNewer(currentVersion, NEWEST_VERSION);
                 } catch (IOException e) {
                     return DefaultContentStatus.UPDATE_CHECK_FAILED;
