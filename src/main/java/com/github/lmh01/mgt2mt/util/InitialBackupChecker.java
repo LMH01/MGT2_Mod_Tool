@@ -67,9 +67,11 @@ public class InitialBackupChecker {
         String line;
         while ((line = br.readLine()) != null) {
             if (line.contains("LastUpdated")) {
+                br.close();
                 return Integer.parseInt(line.replaceAll("[^0-9]", ""));
             }
         }
+        br.close();
         return 0;
     }
 }

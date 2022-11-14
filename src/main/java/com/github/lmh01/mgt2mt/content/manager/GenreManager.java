@@ -47,7 +47,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     public void removeContent(String name) throws ModProcessingException {
         ThemeManager.editGenreAllocation(getContentIdByName(name), false, null);
         GameplayFeatureManager.INSTANCE.removeGenreId(getContentIdByName(name));
-        PublisherManager.INSTANCE.removeGenre(name);
+        PublisherManager.removeGenre(name);
         NpcEngineManager.INSTANCE.removeGenre(name);
         NpcGameManager.INSTANCE.editNPCGames(getContentIdByName(name), false, 0);
         super.removeContent(name);
@@ -408,5 +408,28 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
             out.append(tg.getTypeName());
         }
         return out.toString();
+    }
+
+    /**
+     * @param mainGenre The main genre
+     * @param subGenre The sub genre
+     * @return Returns the optimal slider settings between mainGenre and subGenre (focus and align values).
+     */
+    public static ArrayList<Integer> getComboSliderSettings(Genre mainGenre, Genre subGenre) {
+        ArrayList<Integer> settings = new ArrayList<>();
+        ArrayList<Integer> mainGenreSettings = mainGenre.getSliderSettings();
+        ArrayList<Integer> subGenreSettings = subGenre.getSliderSettings();
+        for (int i = 0; i < mainGenreSettings.size(); i++) {
+            int mainGenreSetting = mainGenreSettings.get(i);
+            int subGenreSetting = subGenreSettings.get(i);
+            if (mainGenreSetting == subGenreSetting) {
+                settings.add(mainGenreSetting);
+            } else if (Math.abs(mainGenreSetting-subGenreSetting) == 1) {
+                settings.add(mainGenreSetting);
+            } else {
+                settings.add(mainGenreSetting/2 + subGenreSetting/2 + (mainGenreSetting%2 + subGenreSetting%2)/2);
+            }
+        }
+        return settings;
     }
 }

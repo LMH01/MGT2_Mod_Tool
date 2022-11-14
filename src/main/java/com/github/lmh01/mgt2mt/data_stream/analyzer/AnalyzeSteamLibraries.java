@@ -44,6 +44,7 @@ public class AnalyzeSteamLibraries {
                 LOGGER.info("Added entry to Steam Libraries Array: " + trim);
             }
         }
+        bf.close();
         return arrayListSteamLibraries;
     }
 }

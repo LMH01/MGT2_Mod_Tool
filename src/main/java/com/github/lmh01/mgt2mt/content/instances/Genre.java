@@ -232,4 +232,23 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         }
         return sb.toString();
     }
+
+    /**
+     * @return Returns the slider settings value as array (focus and algin values).
+     */
+    public ArrayList<Integer> getSliderSettings() {
+        ArrayList<Integer> settings = new ArrayList<>();
+        settings.add(focus0);
+        settings.add(focus1);
+        settings.add(focus2);
+        settings.add(focus3);
+        settings.add(focus4);
+        settings.add(focus5);
+        settings.add(focus6);
+        settings.add(focus7);
+        settings.add(align0);
+        settings.add(align1);
+        settings.add(align2);
+        return settings;
+    }
 }
