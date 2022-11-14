@@ -56,3 +56,12 @@ Advanced Physics [Level 3]
 Highly Advanced Physics [Level 1]
 Highly Advanced Physics [Level 2]
 Highly Advanced Physics [Level 3]
+Auri 3D 10.1
+Auri 3D 9.1
+Micro Voxel Graphic
+Superior AI [Level 1]
+Superior AI [Level 2]
+Superior AI [Level 3]
+Superior Physics [Level 1]
+Superior Physics [Level 2]
+Superior Physics [Level 3]
