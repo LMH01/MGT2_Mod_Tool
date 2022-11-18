@@ -89,7 +89,7 @@ public class I18n {
             return localisation;
         }
         String fallbackLocalisation = locale.get(fallbackLocale).getOrDefault(key, key);
-        LOGGER.info("Localisation for key [" + key + "] not found. Returning fallback local: " + fallbackLocalisation);
+        LOGGER.warn("Localisation for key [" + key + "] not found. Returning fallback local: " + fallbackLocalisation);
         return fallbackLocalisation;
     }
 }
