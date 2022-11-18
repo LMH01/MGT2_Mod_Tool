@@ -37,3 +37,4 @@ Polycount 3D
 Quest Factory
 RealTech Pro
 TitanCode 3D
+Singularity 3D
