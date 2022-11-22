@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2m2.mod;
 
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import org.junit.Before;
+//import org.junit.Before;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,10 +14,10 @@ public class AbstractAdvancedModTest {
     private Path testFolder = ModManagerPaths.MAIN.getPath().resolve("test");
     private Path testGameFile = testFolder.resolve("mod_game_file.txt");
 
-    @Before
-    public void main() {
-        setupModFile();
-    }
+   // @Before
+   // public void main() {
+   //     setupModFile();
+   // }
 
     private InputStream openFile(String filename) {
         return AbstractAdvancedModTest.class.getClassLoader().getResourceAsStream(filename);
