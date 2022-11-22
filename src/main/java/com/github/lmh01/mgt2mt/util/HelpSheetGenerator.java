@@ -3,11 +3,15 @@ package com.github.lmh01.mgt2mt.util;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import java.awt.Desktop;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +21,7 @@ import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 
 public class HelpSheetGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(HelpSheetGenerator.class);
@@ -160,8 +165,14 @@ public class HelpSheetGenerator {
             bw.write(sb.toString());
             bw.close();
             LOGGER.info("Cheat sheet has been generated successfully and is available here: " + path.toString());
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.helpSheetGenrated"), path.toString()));
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("file:///" + path));
+            }
         } catch (IOException e) {
             throw new ModProcessingException("Unable to generate cheat sheet", e);
+        } catch (URISyntaxException e) {
+            throw new ModProcessingException("Unable to open file in browser.");
         }
    } 
 

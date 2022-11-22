@@ -880,6 +880,7 @@ textArea.addedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich zu de
 textArea.removedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich aus der .txt Datei nach %s Sekunden entfernt!
 textArea.totalDuration|Gesamtdauer: %s Sekunden
 textArea.gameFileIntegrityCheckSuccessful|Integritätsprüfung der Spieldateien erfolgreich!
+textArea.helpSheetGenrated|Hilfsblatt wurde erfolgreich erstellt: %s
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Bist du dir sicher, dass du die vorhandenen Publisher durch die realen Publisher ersetzen möchtest?<br><br>Die realen Publisher müssen zuerst heruntergeladen werden,<br>dafür ist eine Internetverbindung erforderlich.<br><br>Wenn du fortfährst, wird die Publisher-Datei neu geschrieben.<br>Das Laden eines vorhandenen Speicherstandes oder das Zurücksetzen der Änderungen<br>kann zu Problemen beim Laden von Speicherständen führen.<br><br>Hinweis:<br>Die Firmenlogos wurden aus folgendem Guide genommen:<br><br>Real Publisher Names & Icons v0.2<br><br>Klicke auf OK, um fortzufahren.
 publisherHelper.replaceWithRealPublishers.zipFileAlreadyExists|<html>Die Publisher-Download-Dateien existieren bereits.<br><br>Sollen die Dateien noch einmal heruntergeladen werden?
