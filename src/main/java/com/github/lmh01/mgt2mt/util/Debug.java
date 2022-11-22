@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,10 @@ public class Debug {
     public static void test() {
         ThreadHandler.startModThread(() -> {
             Genre mainGenre = (Genre)GenreManager.INSTANCE.constructContentFromName("Adventure");
-            Genre subGenre = (Genre)GenreManager.INSTANCE.constructContentFromName("Sports Game");
+            Genre subGenre = (Genre)GenreManager.INSTANCE.constructContentFromName("Action");
             ArrayList<Integer> mainGenreSettings = mainGenre.getSliderSettings();
             ArrayList<Integer> subGenreSettings = subGenre.getSliderSettings();
-            ArrayList<Integer> combinedSettings = GenreManager.getComboSliderSettings(mainGenre, subGenre);
+            List<Integer> combinedSettings = GenreManager.getComboSliderSettings(mainGenre, subGenre);
             for (int i = 0; i< mainGenreSettings.size(); i++) {
                 System.out.printf("%2d - %2d -> %2d\n", mainGenreSettings.get(i), subGenreSettings.get(i), combinedSettings.get(i));
             }

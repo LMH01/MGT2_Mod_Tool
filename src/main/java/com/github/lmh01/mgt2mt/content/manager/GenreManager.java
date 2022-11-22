@@ -19,8 +19,10 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GenreManager extends AbstractAdvancedContentManager implements DependentContentManager {
 
@@ -415,21 +417,66 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
      * @param subGenre The sub genre
      * @return Returns the optimal slider settings between mainGenre and subGenre (focus and align values).
      */
-    public static ArrayList<Integer> getComboSliderSettings(Genre mainGenre, Genre subGenre) {
-        ArrayList<Integer> settings = new ArrayList<>();
+    public static List<Integer> getComboSliderSettings(Genre mainGenre, Genre subGenre) {
+        // The correct algorithm was figgured out by the user Ali
+        int[] focus = new int[8];
         ArrayList<Integer> mainGenreSettings = mainGenre.getSliderSettings();
         ArrayList<Integer> subGenreSettings = subGenre.getSliderSettings();
-        for (int i = 0; i < mainGenreSettings.size(); i++) {
-            int mainGenreSetting = mainGenreSettings.get(i);
-            int subGenreSetting = subGenreSettings.get(i);
-            if (mainGenreSetting == subGenreSetting) {
-                settings.add(mainGenreSetting);
-            } else if (Math.abs(mainGenreSetting-subGenreSetting) == 1) {
-                settings.add(mainGenreSetting);
-            } else {
-                settings.add(mainGenreSetting/2 + subGenreSetting/2 + (mainGenreSetting%2 + subGenreSetting%2)/2);
+        // Fill base settings (focus values)
+        for (int i = 0; i < focus.length; i++) {
+            focus[i] += mainGenreSettings.get(i);
+            focus[i] += subGenreSettings.get(i) / 2;
+            float num = (float)focus[i];
+            num /= 1.5f;
+            focus[i] = Math.round(num);
+        }
+        
+        int combinedValue = 0;
+        for (int i = 0; i < focus.length; i++) {
+            combinedValue += focus[i];
+        }
+
+        // Check if total is 40
+        combinedValue = 40 - combinedValue;
+        if (combinedValue > 0) {
+            // Fix total value to little
+            while (combinedValue > 0) {
+                for (int i = 0; i < focus.length; i++) {
+                    if (combinedValue > 0 && focus[i] < 10) {
+                        focus[i] += 1;
+                        combinedValue -= 1;
+                    }
+                }
             }
         }
-        return settings;
+
+        if (combinedValue < 0) {
+            // Fix total value to much
+            while (combinedValue < 0) {
+                for (int i = 0; i < focus.length; i++) {
+                    if (combinedValue < 0 && focus[i] > 0) {
+                        focus[i] -= 1;
+                        combinedValue += 1;
+                    }
+                }
+            }
+        }
+
+        // Fill align values
+        int[] align = new int[3];
+        int offset = 8;
+        for (int i = 0; i < align.length; i++) {
+            align[i] += mainGenreSettings.get(i + offset);
+            align[i] += subGenreSettings.get(i + offset) / 2;
+            float num = (float)align[i];
+            num /= 1.5f;
+            align[i] = Math.round(num);
+        }
+
+        int[] settings = new int[focus.length + align.length];
+        System.arraycopy(focus, 0, settings, 0, focus.length);
+        System.arraycopy(align, 0, settings, focus.length, align.length);
+
+        return Arrays.stream(settings).boxed().collect(Collectors.toList());
     }
 }
