@@ -964,6 +964,8 @@ window.main.utilities.openSettingsTomlFile|Open settings.toml file
 window.main.utilities.openSettingsTomlFile.toolTip|<html>Click here to open the Settings.toml file<br>This file contains all settings, including those<br>that cannot be changed via the settings window.<br>Please be careful when editing the file!
 window.main.utilities.reanalyzeGameFiles|Reanalyze game files
 window.main.utilities.reanalyzeGameFiles.toolTip|Click to reanalyze the game files
+window.main.utilities.generateHelpSheet|Generate help sheet
+window.main.utilities.generateHelpSheet.toolTip|<html>Creates a help sheet that contains the perfect game sliders and combinations.<br>Opens this automatically in the browser after creation.<br>Note: A plugin is required with which the browser can display Markdown files.
 window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added

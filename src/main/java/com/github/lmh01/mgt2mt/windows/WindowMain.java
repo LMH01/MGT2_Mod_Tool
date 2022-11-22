@@ -184,8 +184,8 @@ public class WindowMain {
         JMenuItem m560ReanalyzeGameFiles = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.reanalyzeGameFiles"));
         m560ReanalyzeGameFiles.setToolTipText(I18n.INSTANCE.get("window.main.utilities.reanalyzeGameFiles.toolTip"));
         m560ReanalyzeGameFiles.addActionListener(actionEvent -> reanalyzeGameFiles());
-        JMenuItem m570GenerateHelpSheet = new JMenuItem(I18n.INSTANCE.get("Generate help sheet"));
-        m570GenerateHelpSheet.setToolTipText(I18n.INSTANCE.get("Generates a help sheet with the correct slider settings for the current game files"));
+        JMenuItem m570GenerateHelpSheet = new JMenuItem(I18n.INSTANCE.get("window.main.utilities.generateHelpSheet"));
+        m570GenerateHelpSheet.setToolTipText(I18n.INSTANCE.get("window.main.utilities.generateHelpSheet.toolTip"));
         m570GenerateHelpSheet.addActionListener(actionEvent -> ThreadHandler.startModThread(HelpSheetGenerator::generate, "HelpSheetGenerator"));
         MB.add(M_5_UTIL);
         M_5_UTIL.add(m52OpenGitHubPage);

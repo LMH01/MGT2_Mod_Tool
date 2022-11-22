@@ -966,6 +966,8 @@ window.main.utilities.openSettingsTomlFile|Settings.toml-Datei öffnen
 window.main.utilities.openSettingsTomlFile.toolTip|<html>Klicke hier, um die Settings.toml-Datei zu öffnen<br>Diese Datei enthällt alle Einstellungen, auch solche,<br>die nicht über das Einstellungsfenster verändert werden können.<br>Bitte sei beim Bearbeiten der Datei vorsichtig!
 window.main.utilities.reanalyzeGameFiles|Spieldateien neu analysieren
 window.main.utilities.reanalyzeGameFiles.toolTip|Klicke, um die Spieldateien erneut zu analysieren
+window.main.utilities.generateHelpSheet|Hilfsblatt erstellen
+window.main.utilities.generateHelpSheet.toolTip|<html>Erstellt ein Hilfblatt, welches die perfekten Spielslider und Kombinationen beinhaltet.<br>Öffnet dieses nach erstellen automatisch im Browser.<br>Hinweis: Es wird ein Plugin benötigt, mit welchem der Browser Markdown Dateien anzeigen kann.
 window.main.actionAvailability.acceptMessageFirst|Deaktiviert -> Du musst erst akzeptieren, dass du die Nachricht gelesen hast!
 window.main.actionAvailability.noToExportAvailable|Deaktiviert -> Nichts zum exportieren verfügbar
 window.main.actionAvailability.exportAvailable|Klicke hier, um alles zu exportieren, was mit diesem Tool hinzugefügt wurde
