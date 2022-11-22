@@ -77,5 +77,8 @@ To restore a restore point navigate to ``Backup -> Mod restore point -> Restore 
     - It is possible to change the **language** of the tool. The supported languages are currently german and english.
 - **The Mad Games Tycoon 2 folder is set automatically**
     - When launching the application all Steam libraries will be searched if they contain Mad Games Tycoon 2. If they don't a prompt is displayed where the path can be entered.
+- **Generate help sheet**
+    - It is possible to generate a sheet with the perfect game sliders and genre combinations. This sheet is generated live from the game files so it is even supported to get help information for custom genres.
+    - To properly view the file a text editor with markdown support (like `VS Code`) or a browser plugin is required.
 - **Other**
     - You can open the MGT2 folder with the click of one button

@@ -2,6 +2,11 @@
 
 ## v4.5.0
 
+### New feature
+- A help sheet can now be generated that displayes the perfect game slider and genre combinations. This sheet is generated live from the game files so it is even supported to get help information for custom genres.
+  - This function can be found in the `utilities` menu.
+  - To properly view the file a text editor with markdown support or a browser plugin is required.
+
 ### Other
 - The component rating the hardware will receive is now displayed in the add hardware window. Thanks
 to `✗ Mehmet Ali` from the MGT2 discord for figuring out the formula.
