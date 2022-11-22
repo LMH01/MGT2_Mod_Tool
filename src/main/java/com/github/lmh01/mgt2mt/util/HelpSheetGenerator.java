@@ -29,46 +29,6 @@ public class HelpSheetGenerator {
      */
     public static void generate() throws ModProcessingException {
 
-        // Construct all genres
-        //ArrayList<Genre> genres = new ArrayList<>();
-        //for (String genreName : GenreManager.INSTANCE.getContentByAlphabet()) {
-        //    genres.add((Genre)GenreManager.INSTANCE.constructContentFromName(genreName));
-        //}
-        
-        // Generate html
-        //String html = body(
-        //    h1("Help sheet"),
-        //    div(
-        //        "Generated on " + Utils.getCurrentDateTime()
-        //    ),
-        //    h2("Genres"),
-        //    div(
-        //        genres.stream().map(genre -> 
-        //            div(
-        //                h3(genre.name),
-        //                table(
-        //                    tr(
-        //                        th(""),
-        //                        th("Value")
-        //                    ),
-        //                    // Target audience
-        //                    div(
-        //                        genre.targetGroups.stream().map(tg -> 
-        //                            div(
-
-        //                            )
-        //                        ).toArray(ContainerTag[]::new)
-        //                    ),
-        //                    tr(
-        //                        td("Target audience"),
-        //                        td("")
-        //                    )
-        //                )
-        //            )
-        //        ).toArray(ContainerTag[]::new)
-        //    )
-        //).toString();
-
         StringBuilder sb = new StringBuilder();
         sb.append("# Help sheet\n\n");
         sb.append("Generated on " + Utils.getCurrentDateTime() + "\n\n");
@@ -190,16 +150,6 @@ public class HelpSheetGenerator {
                 remainingGenres -= collums;
             }
         }
-
-        //Genre mainGenre = (Genre)GenreManager.INSTANCE.constructContentFromName("Adventure");
-        //Genre subGenre = (Genre)GenreManager.INSTANCE.constructContentFromName("Action");
-        //ArrayList<Integer> mainGenreSettings = mainGenre.getSliderSettings();
-        //ArrayList<Integer> subGenreSettings = subGenre.getSliderSettings();
-        //List<Integer> combinedSettings = GenreManager.getComboSliderSettings(mainGenre, subGenre);
-        //for (int i = 0; i< mainGenreSettings.size(); i++) {
-        //    System.out.printf("%2d - %2d -> %2d\n", mainGenreSettings.get(i), subGenreSettings.get(i), combinedSettings.get(i));
-        //}
-            
         
         try {
             Path path = ModManagerPaths.MAIN.getPath().resolve("help_sheet.md");
