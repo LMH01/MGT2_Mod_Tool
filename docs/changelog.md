@@ -7,6 +7,9 @@
 to `✗ Mehmet Ali` from the MGT2 discord for figuring out the formula.
 - Missing locale: Changed log message from `INFO` to `WARN`
 
+### Bug fixes
+- Fixed utility function `getCompatibleThemeIdsForGenreNew` not returning the correct theme ids
+
 ## [v4.4.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.4.0) (Latest Version)
 
 ### New feature

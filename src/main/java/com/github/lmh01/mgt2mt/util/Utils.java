@@ -315,7 +315,7 @@ public class Utils {
                 for (String s : entries) {
                     try {
                         if (Integer.parseInt(s) == genreId) {
-                            themeIds.add(Integer.parseInt(s));
+                            themeIds.add(ThemeManager.INSTANCE.getContentIdByName(ThemeManager.INSTANCE.getReplacedLine(currentLine)));
                         }
                     } catch (NumberFormatException ignored) {
 
