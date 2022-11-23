@@ -14,6 +14,7 @@
 - The component rating the hardware will receive is now displayed in the add hardware window. Thanks
 to `✗ Mehmet Ali` from the MGT2 discord for figuring out the formula.
 - Missing locale: Changed log message from `INFO` to `WARN`
+- Updated default content files
 
 ### Bug fixes
 - Fixed utility function `getCompatibleThemeIdsForGenreNew` not returning the correct theme ids
