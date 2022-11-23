@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.I18n;
 
 import javax.swing.*;
@@ -92,6 +93,18 @@ public class TranslationManager {
             map.put("DESC " + entry.getKey(), entry.getValue());
         }
         return map;
+    }
+
+    /**
+     * @return Returns the translated name for the current mod tool localization.
+     * @throws ModProcessingException The localization does not exist for the current mod tool locale.
+     */
+    public String getLocalizedName() throws ModProcessingException {
+        if (this.nameTranslations.containsKey(I18n.INSTANCE.getCurrentLocale().getGameLocale())) {
+            return this.nameTranslations.get(I18n.INSTANCE.getCurrentLocale().getGameLocale());
+        } else {
+            throw new ModProcessingException("Localized name does not exist!");
+        }
     }
 
     /**

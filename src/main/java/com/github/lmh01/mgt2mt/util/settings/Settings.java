@@ -108,9 +108,9 @@ public class Settings {
      */
     public static void setLanguage(String language) {
         if (language.equals("English")) {
-            I18n.INSTANCE.setCurrentLocale("en");
+            I18n.INSTANCE.setCurrentLocale(Locale.EN);
         } else if (language.equals("Deutsch")) {
-            I18n.INSTANCE.setCurrentLocale("de");
+            I18n.INSTANCE.setCurrentLocale(Locale.DE);
         }
         Settings.language = language;
     }

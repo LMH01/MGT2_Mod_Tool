@@ -85,6 +85,7 @@ To restore a restore point navigate to ``Backup -> Mod restore point -> Restore 
         - Typing something like this into the browsers url bar: `file:///PATH/TO/FILE.md` (Markdown view plugin is required)
         - Using `VS Code` or another text editor that supports markdown
     - The file is located in `%APPDATA%/LMH01/MGT2_Mod_Manager/help_sheet.md` (Windows) or `~/.local/share/mgt2_mod_tool/help_sheet.md` (Linux)
+    - The language in which the file is generated is the same as that of the mod tool.
     - [Example](media/help_sheet.md)
     - Big thanks goes out to ``Ali`` from the MGT2 discord who helped me figure out the formula on how the game calculates the design sliders between genre and sub-genre.
 - **Other**
