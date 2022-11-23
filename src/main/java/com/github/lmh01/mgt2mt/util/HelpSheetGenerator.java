@@ -46,6 +46,7 @@ public class HelpSheetGenerator {
 
         for (Genre genre : genres) {
             sb.append("### " + genre.name + "\n\n");
+            sb.append(I18n.INSTANCE.get("commonText.unlockDate") + ": " + genre.date + "\n\n");
             sb.append("| | Value|\n");
             sb.append("|-|------|\n");
             // Target group
