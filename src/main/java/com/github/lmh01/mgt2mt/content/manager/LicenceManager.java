@@ -19,7 +19,7 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
 
     public static final LicenceManager INSTANCE = new LicenceManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", MadGamesTycoon2ModTool.VERSION};
 
     private LicenceManager() {
         super("licence", "licence", "default_licences.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Licence.txt").toFile(), StandardCharsets.UTF_8);

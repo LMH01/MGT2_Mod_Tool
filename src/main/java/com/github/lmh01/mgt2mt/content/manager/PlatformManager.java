@@ -36,7 +36,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
 
     public static final PlatformManager INSTANCE = new PlatformManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", MadGamesTycoon2ModTool.VERSION};
 
     private PlatformManager() {
         super("platform", "platform", "default_platforms.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Platforms.txt").toFile(), StandardCharsets.UTF_8);

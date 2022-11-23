@@ -1,6 +1,6 @@
 # Changelog
 
-## v4.5.0
+## [v4.5.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.5.0) (Latest Version)
 
 ### New feature
 - A help sheet can now be generated that displayes the perfect game slider and genre combinations. This sheet is generated live from the game files, so it is even supported to get help information for custom genres.
@@ -19,7 +19,7 @@ to `✗ Mehmet Ali` from the MGT2 discord for figuring out the formula.
 ### Bug fixes
 - Fixed utility function `getCompatibleThemeIdsForGenreNew` not returning the correct theme ids
 
-## [v4.4.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.4.0) (Latest Version)
+## [v4.4.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.4.0)
 
 ### New feature
 - Exported content can now be marked to replace existing content. See the [documentation](documentation_for_mod_creators.md) for further details.
