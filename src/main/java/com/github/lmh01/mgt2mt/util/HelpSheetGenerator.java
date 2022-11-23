@@ -165,20 +165,17 @@ public class HelpSheetGenerator {
             BufferedWriter bw = new BufferedWriter(new FileWriter(path.toFile()));
             bw.write(sb.toString());
             bw.close();
-            LOGGER.info("Cheat sheet has been generated successfully and is available here: " + path.toString());
-            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.helpSheetGenrated"), path.toString()));
+            LOGGER.info("Cheat sheet has been generated successfully and is available here: " + path);
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.helpSheetGenrated"), path));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.helpSheetPage"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.helpSheetPage.copied"));
             Utils.copyToClipboard(sb.toString());
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                //Desktop.getDesktop().browse(new URI("file:///" + path));
                 Desktop.getDesktop().browse(path.toUri());
             }
         } catch (IOException e) {
             throw new ModProcessingException("Unable to generate cheat sheet", e);
-        } /*catch (URISyntaxException e) {
-            throw new ModProcessingException("Unable to open file in browser. Invalid URI.", e);
-        }*/
+        }
    } 
 
    /**
