@@ -880,7 +880,7 @@ textArea.addedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich zu de
 textArea.removedAllContents|Alle Inhalte (%d) des Typs %s wurden erfolgreich aus der .txt Datei nach %s Sekunden entfernt!
 textArea.totalDuration|Gesamtdauer: %s Sekunden
 textArea.gameFileIntegrityCheckSuccessful|Integritätsprüfung der Spieldateien erfolgreich!
-textArea.helpSheetGenrated|Hilfsblatt wurde erfolgreich erstellt: %s
+textArea.helpSheetGenerated|Hilfsblatt wurde erfolgreich erstellt: %s
 textArea.helpSheetPage|Du kannst den Inhalt der Datei auf https://markdownlivepreview.com/ einfügen, um ihn richtig formattiert zu sehen.
 textArea.helpSheetPage.copied|(Der Inhalt der Datei wurde bereits in die Zwischenablage kopiert.)
 

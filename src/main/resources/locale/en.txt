@@ -878,8 +878,8 @@ textArea.addedAllContents|All content (%d) of type %s has been successfully adde
 textArea.removedAllContents|All content (%d) of type %s has been successfully removed from .txt file after %s seconds!
 textArea.totalDuration|Total duration: %s seconds
 textArea.gameFileIntegrityCheckSuccessful|Game files integrity check successful!
-textArea.helpSheetGenrated|Help sheet was successfully generated: %s
-textArea.helpSheetPage|You can paste the contents of the file at https://markdownlivepreview.com/ to see it properly formatted.
+textArea.helpSheetGenerated|Help sheet was successfully generated: %s
+textArea.helpSheetPage|You can paste the contents of the file to https://markdownlivepreview.com/ to see it properly formatted.
 textArea.helpSheetPage.copied|(The contents of the file have already been copied to the clipboard.)
 
 publisherHelper.replaceWithRealPublishers.mainMessage|<html>Are you sure that you would like to replace the<br>existing publishers with the real life equivalents?<br><br>The real publishers will have to be downloaded<br>first so a internet connection is required.<br><br>When continuing the publisher file is reorganized.<br>Loading an existing save game or reverting the changes<br>might result in problems when loading save games.<br><br>Note:<br>The company logos have been taken from the<br>Real Publisher Names & Icons v0.2 guide from Steam.<br><br>Click okay to continue.
@@ -969,7 +969,7 @@ window.main.utilities.openSettingsTomlFile.toolTip|<html>Click here to open the 
 window.main.utilities.reanalyzeGameFiles|Reanalyze game files
 window.main.utilities.reanalyzeGameFiles.toolTip|Click to reanalyze the game files
 window.main.utilities.generateHelpSheet|Generate help sheet
-window.main.utilities.generateHelpSheet.toolTip|<html>Creates a help sheet that contains the perfect game sliders and combinations.<br>Opens this automatically in the default .md app after creation and<br>copies the files content to the clipboard.<br>Note: For further information visit the github features page.<br>(Utilities -> Open feature list)
+window.main.utilities.generateHelpSheet.toolTip|<html>Creates a help sheet that contains the perfect game sliders and combinations.<br>Opens this automatically in the default .md app after creation and<br>copies the files contents to the clipboard.<br>Note: For further information visit the github features page.<br>(Utilities -> Open feature list)
 window.main.actionAvailability.acceptMessageFirst|Disabled -> Accept that you have read the popup message first!
 window.main.actionAvailability.noToExportAvailable|Disabled -> Nothing to export available
 window.main.actionAvailability.exportAvailable|Click to export all publishers and genres that have been added

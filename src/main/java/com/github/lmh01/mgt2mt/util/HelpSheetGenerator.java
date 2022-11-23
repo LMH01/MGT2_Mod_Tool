@@ -166,7 +166,7 @@ public class HelpSheetGenerator {
             bw.write(sb.toString());
             bw.close();
             LOGGER.info("Cheat sheet has been generated successfully and is available here: " + path);
-            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.helpSheetGenrated"), path));
+            TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.helpSheetGenerated"), path));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.helpSheetPage"));
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.helpSheetPage.copied"));
             Utils.copyToClipboard(sb.toString());
