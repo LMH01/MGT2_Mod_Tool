@@ -1147,3 +1147,12 @@ month.september|September
 month.october|October
 month.november|November
 month.december|Dezember
+
+helpSheet|Hilfsblatt
+helpSheet.generatedOn|Generiert am
+helpSheet.value|Wert
+helpSheet.genreComb|Genre Kombinationen
+helpSheet.designSlider|Design Slider
+helpSheet.alignment|Ausrichtung
+helpSheet.priority|Priorität
+helpSheet.combinations|Kombinationen

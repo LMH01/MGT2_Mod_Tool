@@ -21,16 +21,16 @@ public class I18n {
 
     static {
         try {
-            INSTANCE.parseLocale("en", ClassLoader.getSystemResourceAsStream("locale/en.txt"));
-            INSTANCE.parseLocale("de", ClassLoader.getSystemResourceAsStream("locale/de.txt"));
+            INSTANCE.parseLocale(Locale.EN.name(), ClassLoader.getSystemResourceAsStream("locale/en.txt"));
+            INSTANCE.parseLocale(Locale.DE.name(), ClassLoader.getSystemResourceAsStream("locale/de.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     final Map<String, Map<String, String>> locale = new HashMap<>();
-    String currentLocale = "en";
-    String fallbackLocale = "en";
+    Locale currentLocale = Locale.EN;
+    Locale fallbackLocale = Locale.EN;
 
     /**
      * Reads a locale formatted like `key|value`
@@ -60,8 +60,8 @@ public class I18n {
      *
      * @param currentLocale the locale to use
      */
-    public void setCurrentLocale(String currentLocale) {
-        LOGGER.info("Localisation set: " + currentLocale);
+    public void setCurrentLocale(Locale currentLocale) {
+        LOGGER.info("Localisation set: " + currentLocale.name());
         this.currentLocale = currentLocale;
     }
 
@@ -70,8 +70,8 @@ public class I18n {
      *
      * @param fallbackLocale the locale to use
      */
-    public void setFallbackLocale(String fallbackLocale) {
-        LOGGER.info("Fallback localisation set: " + currentLocale);
+    public void setFallbackLocale(Locale fallbackLocale) {
+        LOGGER.info("Fallback localisation set: " + currentLocale.name());
         this.fallbackLocale = fallbackLocale;
     }
 
@@ -82,14 +82,21 @@ public class I18n {
      * @return the localized value
      */
     public String get(String key) {
-        Map<String, String> loc = locale.getOrDefault(currentLocale, locale.get(fallbackLocale));
+        Map<String, String> loc = locale.getOrDefault(currentLocale.name(), locale.get(fallbackLocale.name()));
         if (loc.containsKey(key)) {
             String localisation = loc.get(key);
             DebugHelper.debug(LOGGER, "Returned localisation: " + key + " | " + localisation);
             return localisation;
         }
-        String fallbackLocalisation = locale.get(fallbackLocale).getOrDefault(key, key);
+        String fallbackLocalisation = locale.get(fallbackLocale.name()).getOrDefault(key, key);
         LOGGER.warn("Localisation for key [" + key + "] not found. Returning fallback local: " + fallbackLocalisation);
         return fallbackLocalisation;
+    }
+
+    /**
+     * Returns the current locale
+     */
+    public Locale getCurrentLocale() {
+        return this.currentLocale;
     }
 }

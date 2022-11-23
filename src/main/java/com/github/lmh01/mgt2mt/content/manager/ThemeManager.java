@@ -10,6 +10,7 @@ import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.Locale;
 
 import javax.swing.*;
 import java.io.*;
@@ -325,6 +326,22 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     public boolean doesThemeExist(String name) throws ModProcessingException {
         ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(getContentByAlphabet()));
         return arrayList.contains(name);
+    }
+
+    /**
+     * Returns the translated name for the theme with the `id`.
+     * Translation is determined by current mod tool localisation.
+     * @throws ModProcessingException When the theme with the id does not exist.
+     */
+    public String getTranslatedNameForId(int id) throws ModProcessingException {
+        if (!I18n.INSTANCE.getCurrentLocale().equals(Locale.EN)) {
+            if (this.translations.containsKey(I18n.INSTANCE.getCurrentLocale().getGameLocale())) {
+                if (this.translations.get(I18n.INSTANCE.getCurrentLocale().getGameLocale()).containsKey(id)) {
+                    return this.getReplacedLine(this.translations.get(I18n.INSTANCE.getCurrentLocale().getGameLocale()).get(id));
+                }
+            }
+        }
+        return this.getContentNameById(id);
     }
 
     /**

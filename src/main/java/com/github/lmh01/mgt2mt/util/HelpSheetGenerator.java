@@ -35,9 +35,9 @@ public class HelpSheetGenerator {
     public static void generate() throws ModProcessingException {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("# Help sheet\n\n");
-        sb.append("Generated on " + Utils.getCurrentDateTime() + "\n\n");
-        sb.append("## Genres\n\n");
+        sb.append("# " + I18n.INSTANCE.get("helpSheet") + "\n\n");
+        sb.append(I18n.INSTANCE.get("helpSheet.generatedOn") + ": " + Utils.getCurrentDateTime() + "\n\n");
+        sb.append("## " + I18n.INSTANCE.get("commonText.genre.upperCase.plural") + "\n\n");
         // Construct all genres
         ArrayList<Genre> genres = new ArrayList<>();
         for (String genreName : GenreManager.INSTANCE.getContentByAlphabet()) {
@@ -45,15 +45,15 @@ public class HelpSheetGenerator {
         }
 
         for (Genre genre : genres) {
-            sb.append("### " + genre.name + "\n\n");
+            sb.append("### " + genre.getTranslatedName() + "\n\n");
             sb.append(I18n.INSTANCE.get("commonText.unlockDate") + ": " + genre.date + "\n\n");
-            sb.append("| | Value|\n");
+            sb.append("| | " + I18n.INSTANCE.get("helpSheet.value") + " |\n");
             sb.append("|-|------|\n");
             // Target group
             boolean first_tg = true;
             for (TargetGroup tg : genre.targetGroups) {
                 if (first_tg) {
-                    sb.append("| Traget audience | " + tg.getTypeName() + " |\n");
+                    sb.append("| " + I18n.INSTANCE.get("commonText.targetGroup") + " | " + tg.getTypeName() + " |\n");
                     first_tg = false;
                 } else {
                     sb.append("| | " + tg.getTypeName() + " |\n");
@@ -63,14 +63,14 @@ public class HelpSheetGenerator {
             boolean first_genre_comb = true;
             for (Integer genre_id : genre.compatibleGenres) {
                 if (first_genre_comb) {
-                    sb.append("| Genre combinations | " + GenreManager.INSTANCE.getContentNameById(genre_id) + " |\n");
+                    sb.append("| " + I18n.INSTANCE.get("helpSheet.genreComb") + " | " + GenreManager.INSTANCE.getContentNameById(genre_id) + " |\n");
                     first_genre_comb = false;
                 } else {
                     sb.append("| | " + GenreManager.INSTANCE.getContentNameById(genre_id) + " |\n");
                 }
             }
             // Design slider
-            sb.append("| Design slider | " + I18n.INSTANCE.get("commonText.gameLength") + ": " + genre.focus0 + " |\n");
+            sb.append("| " + I18n.INSTANCE.get("helpSheet.designSlider") + " | " + I18n.INSTANCE.get("commonText.gameLength") + ": " + genre.focus0 + " |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.gameDepth") + ": " + genre.focus1 + " |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.beginnerFriendliness") + ": " + genre.focus2 + " |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.innovation") + ": " + genre.focus3 + " |\n");
@@ -80,23 +80,23 @@ public class HelpSheetGenerator {
             sb.append("| | " + I18n.INSTANCE.get("commonText.missionDesign") + ": " + genre.focus7 + " |\n");
 
             // Alignment
-            sb.append("| Alignment | " + I18n.INSTANCE.get("commonText.coreGamersCasualGamers") + ": " + genre.align0 + " |\n");
+            sb.append("| " + I18n.INSTANCE.get("helpSheet.alignment") + " | " + I18n.INSTANCE.get("commonText.coreGamersCasualGamers") + ": " + genre.align0 + " |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.nonviolentExtremeViolent") + ": " + genre.align1 + " |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.easyHard") + ": " + genre.align2 + " |\n");
            
             // Priority
-            sb.append("| Priority | " + I18n.INSTANCE.get("commonText.gameplay") + ": " + genre.gameplay + "% |\n");
+            sb.append("| " + I18n.INSTANCE.get("helpSheet.priority") + " | " + I18n.INSTANCE.get("commonText.gameplay") + ": " + genre.gameplay + "% |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.graphic") + ": " + genre.graphic + "% |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.sound") + ": " + genre.sound + "% |\n");
             sb.append("| | " + I18n.INSTANCE.get("commonText.tech") + ": " + genre.control + "% |\n\n");
 
             // Themes
-            sb.append("#### Themes\n\n");
+            sb.append("#### " + I18n.INSTANCE.get("commonText.theme.upperCase.plural") + "\n\n");
             ArrayList<String> themeNames = new ArrayList<>();
             int counter = 0;
             boolean firstTheme = true;
             for (Integer themeId : genre.compatibleThemes) {
-                themeNames.add(ThemeManager.INSTANCE.getContentNameById(themeId));
+                themeNames.add(ThemeManager.INSTANCE.getTranslatedNameForId(themeId));
             }
             themeNames.sort(Comparator.naturalOrder());
             for (String theme : themeNames) {
@@ -120,10 +120,10 @@ public class HelpSheetGenerator {
             for (Genre comb : genres) {
                 if (comb != genre) {
                     combs.add(GenreManager.getComboSliderSettings(genre, comb));
-                    combNames.add(comb.name);
+                    combNames.add(comb.getTranslatedName());
                 }
             }
-            sb.append("#### " + genre.name +  " combinations\n\n");
+            sb.append("#### " + genre.getTranslatedName() +  " " + I18n.INSTANCE.get("helpSheet.combinations") + "\n\n");
             int remainingGenres = combs.size();
             int innerOffset = 0;
             while (remainingGenres > 0) {

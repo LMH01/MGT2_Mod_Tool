@@ -5,6 +5,8 @@ import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.util.I18n;
+import com.github.lmh01.mgt2mt.util.Locale;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -250,5 +252,22 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         settings.add(align1);
         settings.add(align2);
         return settings;
+    }
+
+    /**
+     * Returns the translated name for the genre.
+     * Translation is determined by current mod tool localisation.
+     */
+    public String getTranslatedName() {
+        if (!I18n.INSTANCE.getCurrentLocale().equals(Locale.EN)) {
+            try {
+                return this.translationManager.getLocalizedName();
+            } catch (ModProcessingException ignored) {
+
+            }
+        } else {
+
+        }
+        return this.name;
     }
 }
