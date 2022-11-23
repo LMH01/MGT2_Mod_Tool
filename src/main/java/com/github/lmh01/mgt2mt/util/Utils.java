@@ -31,6 +31,10 @@ import java.util.List;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+
 public class Utils {
 
     //These are the files inside the mgt2 file structure that are used inside this tool.
@@ -669,5 +673,14 @@ public class Utils {
         ProgressBarHelper.resetProgressBar();
         TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.constructingContents.duration"), th.getMeasuredTime() / 1000.0));
         return contents;
+    }
+
+    /**
+     * Copies the input text to the system clipoard.
+     */
+    public static void copyToClipboard(String text) {
+        StringSelection stringSelection = new StringSelection(text);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 }

@@ -166,6 +166,9 @@ public class HelpSheetGenerator {
             bw.close();
             LOGGER.info("Cheat sheet has been generated successfully and is available here: " + path.toString());
             TextAreaHelper.appendText(String.format(I18n.INSTANCE.get("textArea.helpSheetGenrated"), path.toString()));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.helpSheetPage"));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.helpSheetPage.copied"));
+            Utils.copyToClipboard(sb.toString());
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI("file:///" + path));
             }

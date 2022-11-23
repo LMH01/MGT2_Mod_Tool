@@ -79,8 +79,13 @@ To restore a restore point navigate to ``Backup -> Mod restore point -> Restore 
     - When launching the application all Steam libraries will be searched if they contain Mad Games Tycoon 2. If they don't a prompt is displayed where the path can be entered.
 - **Generate help sheet**
     - It is possible to generate a sheet with the perfect game sliders and genre combinations. This sheet is generated live from the game files so it is even supported to get help information for custom genres.
-    - To properly view the file a text editor with markdown support (like `VS Code`) or a browser plugin is required.
+    - The generated file is automatically opened in the default `.md` app and the files content is copied to the clipboard.
+    - Ways to open the markdown file 
+        - The **recommended way** is to visit [markdownlivepreview.com](https://markdownlivepreview.com/) and paste the files content. (Automatically copied to clipboard by generating the help sheet)
+        - Typing something like this into the browsers url bar: `file:///PATH/TO/FILE.md` (Markdown view plugin is required)
+        - Using `VS Code` or another text editor that supports markdown
+    - The file is located in `%APPDATA%/LMH01/MGT2_Mod_Manager/help_sheet.md` (Windows) or `~/.local/share/mgt2_mod_tool/help_sheet.md` (Linux)
     - [Example](media/help_sheet.md)
-  - Big thanks goes out to ``Ali`` from the MGT2 discord who helped me figure out the formula on how the game calculates the design sliders between genre and sub-genre.
+    - Big thanks goes out to ``Ali`` from the MGT2 discord who helped me figure out the formula on how the game calculates the design sliders between genre and sub-genre.
 - **Other**
     - You can open the MGT2 folder with the click of one button
