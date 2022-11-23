@@ -1,14 +1,16 @@
 # Help sheet
 
-Generated on 2022-NOVEMBER-23-0-28-15
+Generated on: 2022-NOVEMBER-24-0-31-21
 
 ## Genres
 
 ### Action
 
-| | Value|
+Unlock date: AUG 1979
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | Genre combinations | Skill Game |
 | | Adventure |
@@ -36,13 +38,13 @@ Generated on 2022-NOVEMBER-23-0-28-15
 
 #### Themes
 
-Agents, Airplanes, Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Angels, Animals, Anime, Ants, Apocalypse, Archery, Assassins, Asteroids, Astronauts, Atlantis, Aztecs, Barbarians, Bards, 
-Bounty Hunter, Boxing, Bunker, Castles, Climbing, Comedy, Conquest, Conspiracies, Contract Killer, Cowboys, Crime, Crocodiles, Cyberpunk, Cyberspace, Cyborgs, Demons, Desert, Detective, Devils, Dieselpunk, 
-Digging, Dinosaurs, Diving, Dolphins, Dragons, Drones, Dungeons, Dwarfs, Elves, End Times, Espionage, Fantasy, Fencing, Fire Department, Gangsters, Ghosts, Gladiators, Goblins, Gods, Graveyards, 
-Greek Mythology, Helicopters, Hell, Historical, Horror, Hunting, Ice Age, Inca, Insects, Jungle, Karate, Kickboxing, Knights, Kung Fu, Mafia, Magic, Martial Arts, Mecha, Mercenary, Middle Ages, 
-Military, Monkeys, Monster, Mountaineering, Mummies, Mutants, Ninjas, Oceans, Orcs, Paintball, Parallel Worlds, Parkour, Pets, Pirates, Planets, Plants, Police, Portals, Predators, Prison, 
-Puzzles, Radioactivity, Revolution, Robots, Roman Empire, Romans, Saboteurs, Samurai, Sewers, Skeletons, Skydiving, Space, Space Stations, Spaceships, Special Forces, Spiders, Squirrels, Steampunk, Stone Age, Stones, 
-Submarines, Super Villains, Superheroes, Survivalism, Tanks, Thieves, Time Travel, Treasure, Treasure Hunters, Trolls, UFOs, Vampires, Vikings, Viruses, Werewolves, Wild West, Witches, Wizards, World Wars, Worms, 
+Agents, Airplanes, Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Angels, Animals, Anime, Ants, Apocalypse, Archery, Assassins, Asteroids, Astronauts, Atlantis, Aztecs, Barbarians, Bards,
+Bounty Hunter, Boxing, Bunker, Castles, Climbing, Comedy, Conquest, Conspiracies, Contract Killer, Cowboys, Crime, Crocodiles, Cyberpunk, Cyberspace, Cyborgs, Demons, Desert, Detective, Devils, Dieselpunk,
+Digging, Dinosaurs, Diving, Dolphins, Dragons, Drones, Dungeons, Dwarfs, Elves, End Times, Espionage, Fantasy, Fencing, Fire Department, Gangsters, Ghosts, Gladiators, Goblins, Gods, Graveyards,
+Greek Mythology, Helicopters, Hell, Historical, Horror, Hunting, Ice Age, Inca, Insects, Jungle, Karate, Kickboxing, Knights, Kung Fu, Mafia, Magic, Martial Arts, Mecha, Mercenary, Middle Ages,
+Military, Monkeys, Monster, Mountaineering, Mummies, Mutants, Ninjas, Oceans, Orcs, Paintball, Parallel Worlds, Parkour, Pets, Pirates, Planets, Plants, Police, Portals, Predators, Prison,
+Puzzles, Radioactivity, Revolution, Robots, Roman Empire, Romans, Saboteurs, Samurai, Sewers, Skeletons, Skydiving, Space, Space Stations, Spaceships, Special Forces, Spiders, Squirrels, Steampunk, Stone Age, Stones,
+Submarines, Super Villains, Superheroes, Survivalism, Tanks, Thieves, Time Travel, Treasure, Treasure Hunters, Trolls, UFOs, Vampires, Vikings, Viruses, Werewolves, Wild West, Witches, Wizards, World Wars, Worms,
 Wrestling, Yakuza, Zeppelins, Zombies
 
 #### Action combinations
@@ -91,9 +93,11 @@ Easy/Hard | 9 | 9 | 7 | 7 |
 
 ### Adventure
 
-| | Value|
+Unlock date: JAN 1976
+
+| | Value |
 |-|------|
-| Traget audience | Adult |
+| Target group | Adult |
 | | Senior |
 | Genre combinations | Puzzle Game |
 | | Platformer |
@@ -118,10 +122,10 @@ Easy/Hard | 9 | 9 | 7 | 7 |
 
 #### Themes
 
-Agents, Ancient, Ancient Egypt, Androids, Angels, Anime, Apocalypse, Archaeology, Astronauts, Aztecs, Bards, Circus, Comedy, Court Case, Crime, Curses, Cyberpunk, Cyborgs, Dating, Deck Building, 
-Demons, Desert, Detective, Devils, Dieselpunk, Dragons, Dreams, Druids, Dungeons, Dwarfs, Elves, End Times, Erotica, Everyday Life, Expeditions, Fairies, Fantasy, Fencing, Ghosts, Goblins, 
-Gods, Graveyards, Greek Mythology, Hell, Hiking, Historical, Horror, Ice Age, Inca, Islands, Jungle, Kids, Knights, Labyrinth, Magic, Mermaids, Middle Ages, Monkeys, Monster, Mummies, 
-Noble Houses, Orcs, Parallel Worlds, Pharaohs, Photography, Pirates, Planets, Police, Radioactivity, Religion, Reporters, Roman Empire, Romance, Romans, Saboteurs, Secret Society, Sewers, Skeletons, Space, Steampunk, 
+Agents, Ancient, Ancient Egypt, Androids, Angels, Anime, Apocalypse, Archaeology, Astronauts, Aztecs, Bards, Circus, Comedy, Court Case, Crime, Curses, Cyberpunk, Cyborgs, Dating, Deck Building,
+Demons, Desert, Detective, Devils, Dieselpunk, Dragons, Dreams, Druids, Dungeons, Dwarfs, Elves, End Times, Erotica, Everyday Life, Expeditions, Fairies, Fantasy, Fencing, Ghosts, Goblins,
+Gods, Graveyards, Greek Mythology, Hell, Hiking, Historical, Horror, Ice Age, Inca, Islands, Jungle, Kids, Knights, Labyrinth, Magic, Mermaids, Middle Ages, Monkeys, Monster, Mummies,
+Noble Houses, Orcs, Parallel Worlds, Pharaohs, Photography, Pirates, Planets, Police, Radioactivity, Religion, Reporters, Roman Empire, Romance, Romans, Saboteurs, Secret Society, Sewers, Skeletons, Space, Steampunk,
 Stone Age, Super Villains, Thieves, Time Travel, Treasure, Treasure Hunters, Trolls, University, Vampires, Victorian Age, Vikings, Werewolves, Wild West, Witches, Wizards, World Wars
 
 #### Adventure combinations
@@ -170,9 +174,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 ### Building Game
 
-| | Value|
+Unlock date: NOV 1988
+
+| | Value |
 |-|------|
-| Traget audience | Adult |
+| Target group | Adult |
 | | Senior |
 | Genre combinations | Strategy |
 | | Economic Simulation |
@@ -195,11 +201,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 #### Themes
 
-Agriculture, Ancient, Ancient China, Ancient Egypt, Animals, Ants, Apocalypse, Atlantis, Aztecs, Barbarians, Building Blocks, Casinos, Castles, Cinema, Circus, Cities, Civilizations, Companies, Conquest, Cooking, 
-Cowboys, Crafting, Crime, Desert, Digging, Diplomacy, Doctors, Dungeons, Dwarfs, Economy, Education, Elves, End Times, Evolution, Expeditions, Factories, Fitness, Goblins, Gods, Graveyards, 
-Greek Mythology, Healthcare, Hell, Hospital, Hotels, Ice Age, Inca, Industrialization, Insects, Islands, Jungle, Knights, Learning, Magic, Middle Ages, Mining, Monster, Nature, Noble Houses, Oceans, 
-Orcs, Parlor Games, Pharaohs, Pirates, Planets, Plants, Police, Prison, Radioactivity, Raw Materials, Recycling, Renovation, Restaurants, Roman Empire, Romans, Sandbox, School, Ships, Showbiz, Space, 
-Space Stations, Stone Age, Stones, Survivalism, Television, Terraforming, Theme Parks, Tourism, Trains, Transportation, Treasure, Trucks, University, Vacation, Vikings, Villages, Viticulture, Wild West, World Wars, Zombies, 
+Agriculture, Ancient, Ancient China, Ancient Egypt, Animals, Ants, Apocalypse, Atlantis, Aztecs, Barbarians, Building Blocks, Casinos, Castles, Cinema, Circus, Cities, Civilizations, Companies, Conquest, Cooking,
+Cowboys, Crafting, Crime, Desert, Digging, Diplomacy, Doctors, Dungeons, Dwarfs, Economy, Education, Elves, End Times, Evolution, Expeditions, Factories, Fitness, Goblins, Gods, Graveyards,
+Greek Mythology, Healthcare, Hell, Hospital, Hotels, Ice Age, Inca, Industrialization, Insects, Islands, Jungle, Knights, Learning, Magic, Middle Ages, Mining, Monster, Nature, Noble Houses, Oceans,
+Orcs, Parlor Games, Pharaohs, Pirates, Planets, Plants, Police, Prison, Radioactivity, Raw Materials, Recycling, Renovation, Restaurants, Roman Empire, Romans, Sandbox, School, Ships, Showbiz, Space,
+Space Stations, Stone Age, Stones, Survivalism, Television, Terraforming, Theme Parks, Tourism, Trains, Transportation, Treasure, Trucks, University, Vacation, Vikings, Villages, Viticulture, Wild West, World Wars, Zombies,
 Zoo
 
 #### Building Game combinations
@@ -248,9 +254,11 @@ Easy/Hard | 7 | 7 | 5 | 5 |
 
 ### Economic Simulation
 
-| | Value|
+Unlock date: FEB 1983
+
+| | Value |
 |-|------|
-| Traget audience | Adult |
+| Target group | Adult |
 | | Senior |
 | Genre combinations | Strategy |
 | | Sports Game |
@@ -274,12 +282,12 @@ Easy/Hard | 7 | 7 | 5 | 5 |
 
 #### Themes
 
-Agriculture, American Football, Ancient, Animals, Art, Athletics, Baseball, Basketball, Bicycle, Boxing, Cabs, Candy, Cars, Casinos, Castles, Cinema, Circus, Cities, Civilizations, Colonization, 
-Companies, Conquest, Cooking, Crafting, Cricket, Crime, Curling, Digging, Diplomacy, Doctors, Dungeons, Economy, Education, End Times, Erotica, Everyday Life, Factories, Fashion, Fire Department, Fish, 
-Fitness, Food, Gambling, Game Development, Gangsters, Gladiators, Golf, Handball, Healthcare, Hell, Historical, Horses, Hospital, Hotels, Ice Age, Ice Hockey, Industrialization, Islands, Kart Racing, Kickboxing, 
-Knights, Kung Fu, Learning, Machines, Mafia, Make-up, Mathematics, Middle Ages, Mining, Motorcycles, Motorsports, Movies, Music, Nature, Noble Houses, Parties, Pharaohs, Pirates, Planets, Police, 
-Politics, Prison, Rallycross, Raw Materials, Recycling, Renovation, Restaurants, Riding, Rockstars, Roman Empire, Romans, Rugby, Sandbox, School, Science, Ships, Showbiz, Singing, Soccer, Space, 
-Sports, Squash, Steampunk, Stock Car, Stock Exchanges, Super Villains, Table Tennis, Television, Tennis, Theme Parks, Thieves, Tourism, Trains, Transportation, Treasure, Trucks, University, Vacation, Victorian Age, Villages, 
+Agriculture, American Football, Ancient, Animals, Art, Athletics, Baseball, Basketball, Bicycle, Boxing, Cabs, Candy, Cars, Casinos, Castles, Cinema, Circus, Cities, Civilizations, Colonization,
+Companies, Conquest, Cooking, Crafting, Cricket, Crime, Curling, Digging, Diplomacy, Doctors, Dungeons, Economy, Education, End Times, Erotica, Everyday Life, Factories, Fashion, Fire Department, Fish,
+Fitness, Food, Gambling, Game Development, Gangsters, Gladiators, Golf, Handball, Healthcare, Hell, Historical, Horses, Hospital, Hotels, Ice Age, Ice Hockey, Industrialization, Islands, Kart Racing, Kickboxing,
+Knights, Kung Fu, Learning, Machines, Mafia, Make-up, Mathematics, Middle Ages, Mining, Motorcycles, Motorsports, Movies, Music, Nature, Noble Houses, Parties, Pharaohs, Pirates, Planets, Police,
+Politics, Prison, Rallycross, Raw Materials, Recycling, Renovation, Restaurants, Riding, Rockstars, Roman Empire, Romans, Rugby, Sandbox, School, Science, Ships, Showbiz, Singing, Soccer, Space,
+Sports, Squash, Steampunk, Stock Car, Stock Exchanges, Super Villains, Table Tennis, Television, Tennis, Theme Parks, Thieves, Tourism, Trains, Transportation, Treasure, Trucks, University, Vacation, Victorian Age, Villages,
 Viticulture, Volleyball, Wild West, Wrestling, Yakuza, Zeppelins, Zoo
 
 #### Economic Simulation combinations
@@ -328,9 +336,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 ### Fighting Game
 
-| | Value|
+Unlock date: APR 1984
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | Genre combinations | Action |
 | | Platformer |
@@ -353,8 +363,8 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 #### Themes
 
-Ancient China, Androids, Animals, Assassins, Barbarians, Boxing, Contract Killer, Cyberpunk, Cyborgs, Demons, Dinosaurs, Fantasy, Fencing, Fire Department, Fitness, Gladiators, Goblins, Gods, Karate, Kickboxing, 
-Kung Fu, Martial Arts, Mecha, Monster, Mutants, Ninjas, Orcs, Pets, Predators, Robots, Roman Empire, Samurai, Skeletons, Space, Sports, Superheroes, Trolls, Vikings, Werewolves, Wrestling, 
+Ancient China, Androids, Animals, Assassins, Barbarians, Boxing, Contract Killer, Cyberpunk, Cyborgs, Demons, Dinosaurs, Fantasy, Fencing, Fire Department, Fitness, Gladiators, Goblins, Gods, Karate, Kickboxing,
+Kung Fu, Martial Arts, Mecha, Monster, Mutants, Ninjas, Orcs, Pets, Predators, Robots, Roman Empire, Samurai, Skeletons, Space, Sports, Superheroes, Trolls, Vikings, Werewolves, Wrestling,
 Yakuza
 
 #### Fighting Game combinations
@@ -403,9 +413,11 @@ Easy/Hard | 8 | 8 | 7 | 6 |
 
 ### First-Person Shooter
 
-| | Value|
+Unlock date: JUL 1991
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | Genre combinations | Skill Game |
 | | Adventure |
@@ -433,11 +445,11 @@ Easy/Hard | 8 | 8 | 7 | 6 |
 
 #### Themes
 
-Agents, Aliens, Ancient, Ancient Egypt, Androids, Angels, Apocalypse, Archery, Assassins, Aztecs, Barbarians, Bounty Hunter, Boxing, Bunker, Castles, Climbing, Conspiracies, Contract Killer, Cowboys, Crime, 
-Cyberpunk, Cyberspace, Cyborgs, Demons, Desert, Detective, Devils, Dinosaurs, Dragons, Druids, Dungeons, Dwarfs, Elves, End Times, Espionage, Fantasy, Fencing, Gangsters, Ghosts, Gladiators, 
-Goblins, Gods, Graveyards, Greek Mythology, Helicopters, Hell, Historical, Horror, Hunting, Ice Age, Inca, Insects, Jungle, Karate, Knights, Mafia, Magic, Martial Arts, Mecha, Mercenary, 
-Middle Ages, Military, Monster, Mountaineering, Mummies, Mutants, Ninjas, Oceans, Orcs, Parallel Worlds, Parkour, Pharaohs, Physics, Police, Portals, Predators, Prison, Puzzles, Radioactivity, Revolution, 
-Riding, Robots, Roman Empire, Romans, Saboteurs, Samurai, Sandbox, Secret Society, Sewers, Skeletons, Skydiving, Space, Space Stations, Spaceships, Special Forces, Spiders, Steampunk, Stone Age, Submarines, Super Villains, 
+Agents, Aliens, Ancient, Ancient Egypt, Androids, Angels, Apocalypse, Archery, Assassins, Aztecs, Barbarians, Bounty Hunter, Boxing, Bunker, Castles, Climbing, Conspiracies, Contract Killer, Cowboys, Crime,
+Cyberpunk, Cyberspace, Cyborgs, Demons, Desert, Detective, Devils, Dinosaurs, Dragons, Druids, Dungeons, Dwarfs, Elves, End Times, Espionage, Fantasy, Fencing, Gangsters, Ghosts, Gladiators,
+Goblins, Gods, Graveyards, Greek Mythology, Helicopters, Hell, Historical, Horror, Hunting, Ice Age, Inca, Insects, Jungle, Karate, Knights, Mafia, Magic, Martial Arts, Mecha, Mercenary,
+Middle Ages, Military, Monster, Mountaineering, Mummies, Mutants, Ninjas, Oceans, Orcs, Parallel Worlds, Parkour, Pharaohs, Physics, Police, Portals, Predators, Prison, Puzzles, Radioactivity, Revolution,
+Riding, Robots, Roman Empire, Romans, Saboteurs, Samurai, Sandbox, Secret Society, Sewers, Skeletons, Skydiving, Space, Space Stations, Spaceships, Special Forces, Spiders, Steampunk, Stone Age, Submarines, Super Villains,
 Superheroes, Survivalism, Tanks, Thieves, Time Travel, Treasure Hunters, Trolls, UFOs, Vampires, Vikings, Werewolves, Wild West, Witches, Wizards, World Wars, Yakuza, Zombies
 
 #### First-Person Shooter combinations
@@ -486,9 +498,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 ### Interactive Movie
 
-| | Value|
+Unlock date: FEB 1990
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | | Senior |
 | Genre combinations | Skill Game |
@@ -513,9 +527,9 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 #### Themes
 
-Agents, Aliens, Androids, Angels, Anime, Apocalypse, Bounty Hunter, Comedy, Conspiracies, Contract Killer, Court Case, Cowboys, Crime, Curses, Cyberpunk, Cyberspace, Cyborgs, Dancing, Dating, Demons, 
-Detective, Dragons, End Times, Erotica, Espionage, Everyday Life, Fantasy, Gangsters, Ghosts, Hacking, Horror, Kids, Knights, Mafia, Mermaids, Military, Movies, Music, Ninjas, Noble Houses, 
-Parallel Worlds, Photography, Prison, Reporters, Revolution, Robots, Romance, Saboteurs, Samurai, Skeletons, Spaceships, Super Villains, Superheroes, Time Travel, UFOs, University, Vampires, Werewolves, Wild West, Witches, 
+Agents, Aliens, Androids, Angels, Anime, Apocalypse, Bounty Hunter, Comedy, Conspiracies, Contract Killer, Court Case, Cowboys, Crime, Curses, Cyberpunk, Cyberspace, Cyborgs, Dancing, Dating, Demons,
+Detective, Dragons, End Times, Erotica, Espionage, Everyday Life, Fantasy, Gangsters, Ghosts, Hacking, Horror, Kids, Knights, Mafia, Mermaids, Military, Movies, Music, Ninjas, Noble Houses,
+Parallel Worlds, Photography, Prison, Reporters, Revolution, Robots, Romance, Saboteurs, Samurai, Skeletons, Spaceships, Super Villains, Superheroes, Time Travel, UFOs, University, Vampires, Werewolves, Wild West, Witches,
 Wizards, World Wars
 
 #### Interactive Movie combinations
@@ -564,9 +578,11 @@ Easy/Hard | 5 | 5 | 3 | 3 |
 
 ### Platformer
 
-| | Value|
+Unlock date: OCT 1980
+
+| | Value |
 |-|------|
-| Traget audience | Kid |
+| Target group | Kid |
 | | Teen |
 | Genre combinations | Skill Game |
 | | Puzzle Game |
@@ -592,13 +608,13 @@ Easy/Hard | 5 | 5 | 3 | 3 |
 
 #### Themes
 
-Agents, Ancient, Ancient China, Ancient Egypt, Androids, Angels, Animals, Anime, Ants, Archery, Assassins, Atlantis, Aztecs, Barbarians, Bards, Birds, Boxing, Building Blocks, Candy, Castles, 
-Cats, Chickens, Climbing, Comedy, Contract Killer, Cowboys, Crocodiles, Cyberpunk, Cyberspace, Cyborgs, Dancing, Demons, Detective, Devils, Digging, Dinosaurs, Dogs, Dolls, Dragons, Drawing, 
-Dreams, Druids, Dungeons, Dwarfs, Elements, Elves, End Times, Espionage, Everyday Life, Evolution, Extreme Sports, Fairies, Fantasy, Fencing, Fire Department, Fish, Fitness, Frogs, Fruit, Gangsters, 
-Ghosts, Gladiators, Goats, Goblins, Gods, Graveyards, Greek Mythology, Hedgehogs, Hell, Hiking, Horror, Horses, Hunting, Ice Age, Inca, Insects, Islands, Jungle, Karate, Kickboxing, 
-Kids, Knights, Kung Fu, Magic, Martial Arts, Mercenary, Mermaids, Middle Ages, Monkeys, Monster, Mountaineering, Mummies, Mushrooms, Music, Mutants, Ninjas, Octopus, Orcs, Paintball, Parallel Worlds, 
-Parkour, Pets, Pharaohs, Pinball, Pirates, Plants, Plumber, Police, Portals, Predators, Prison, Puzzles, Rabbits, Reporters, Revolution, Riding, Robots, Roman Empire, Romans, Saboteurs, 
-Samurai, School, Sewers, Sheep, Skateboards, Skeletons, Skiing, Skydiving, Space, Space Stations, Spaceships, Special Forces, Spiders, Squirrels, Steampunk, Stone Age, Stones, Stuffed Animals, Super Villains, Superheroes, 
+Agents, Ancient, Ancient China, Ancient Egypt, Androids, Angels, Animals, Anime, Ants, Archery, Assassins, Atlantis, Aztecs, Barbarians, Bards, Birds, Boxing, Building Blocks, Candy, Castles,
+Cats, Chickens, Climbing, Comedy, Contract Killer, Cowboys, Crocodiles, Cyberpunk, Cyberspace, Cyborgs, Dancing, Demons, Detective, Devils, Digging, Dinosaurs, Dogs, Dolls, Dragons, Drawing,
+Dreams, Druids, Dungeons, Dwarfs, Elements, Elves, End Times, Espionage, Everyday Life, Evolution, Extreme Sports, Fairies, Fantasy, Fencing, Fire Department, Fish, Fitness, Frogs, Fruit, Gangsters,
+Ghosts, Gladiators, Goats, Goblins, Gods, Graveyards, Greek Mythology, Hedgehogs, Hell, Hiking, Horror, Horses, Hunting, Ice Age, Inca, Insects, Islands, Jungle, Karate, Kickboxing,
+Kids, Knights, Kung Fu, Magic, Martial Arts, Mercenary, Mermaids, Middle Ages, Monkeys, Monster, Mountaineering, Mummies, Mushrooms, Music, Mutants, Ninjas, Octopus, Orcs, Paintball, Parallel Worlds,
+Parkour, Pets, Pharaohs, Pinball, Pirates, Plants, Plumber, Police, Portals, Predators, Prison, Puzzles, Rabbits, Reporters, Revolution, Riding, Robots, Roman Empire, Romans, Saboteurs,
+Samurai, School, Sewers, Sheep, Skateboards, Skeletons, Skiing, Skydiving, Space, Space Stations, Spaceships, Special Forces, Spiders, Squirrels, Steampunk, Stone Age, Stones, Stuffed Animals, Super Villains, Superheroes,
 Survivalism, Thieves, Time Travel, Toys, Treasure, Treasure Hunters, Trolls, Tubes, Vampires, Vikings, Werewolves, Wild West, Witches, Wizards, World Wars, Zombies
 
 #### Platformer combinations
@@ -647,9 +663,11 @@ Easy/Hard | 6 | 6 | 5 | 4 |
 
 ### Puzzle Game
 
-| | Value|
+Unlock date: JAN 1976
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | | Senior |
 | Genre combinations | Skill Game |
@@ -675,11 +693,11 @@ Easy/Hard | 6 | 6 | 5 | 4 |
 
 #### Themes
 
-Agriculture, Ancient, Ancient China, Animals, Archaeology, Art, Books, Building Blocks, Candy, Casinos, Chemistry, Circus, Cities, Conspiracies, Cooking, Crafting, Cyberpunk, Cyberspace, Dancing, Dating, 
-Deck Building, Detective, Dice Games, Dieselpunk, Digging, Diving, Dragons, Drawing, Dreams, Education, Elements, Erotica, Espionage, Everyday Life, Evolution, Expeditions, Fairies, Fantasy, Fashion, Fish, 
-Fitness, Food, Fruit, Gambling, Genetics, Ghosts, Goblins, Greek Mythology, Hacking, Hiking, Horror, Hospital, Kids, Labyrinth, Languages, Learning, Magic, Mathematics, Middle Ages, Mining, 
-Movies, Mummies, Music, Nature, Octopus, Parallel Worlds, Parlor Games, Pets, Pharaohs, Photography, Physics, Planets, Plants, Playing Cards, Plumber, Portals, Prison, Puzzles, Quiz Show, Recycling, 
-Rockstars, Romans, School, Science, Ships, Singing, Snowboarding, Space, Steampunk, Stone Age, Stones, Television, Terraforming, Theme Parks, Time Travel, Toys, Trains, Transportation, Treasure, Tubes, 
+Agriculture, Ancient, Ancient China, Animals, Archaeology, Art, Books, Building Blocks, Candy, Casinos, Chemistry, Circus, Cities, Conspiracies, Cooking, Crafting, Cyberpunk, Cyberspace, Dancing, Dating,
+Deck Building, Detective, Dice Games, Dieselpunk, Digging, Diving, Dragons, Drawing, Dreams, Education, Elements, Erotica, Espionage, Everyday Life, Evolution, Expeditions, Fairies, Fantasy, Fashion, Fish,
+Fitness, Food, Fruit, Gambling, Genetics, Ghosts, Goblins, Greek Mythology, Hacking, Hiking, Horror, Hospital, Kids, Labyrinth, Languages, Learning, Magic, Mathematics, Middle Ages, Mining,
+Movies, Mummies, Music, Nature, Octopus, Parallel Worlds, Parlor Games, Pets, Pharaohs, Photography, Physics, Planets, Plants, Playing Cards, Plumber, Portals, Prison, Puzzles, Quiz Show, Recycling,
+Rockstars, Romans, School, Science, Ships, Singing, Snowboarding, Space, Steampunk, Stone Age, Stones, Television, Terraforming, Theme Parks, Time Travel, Toys, Trains, Transportation, Treasure, Tubes,
 Victorian Age, Villages, Viruses, Wizards, Worms, Zoo
 
 #### Puzzle Game combinations
@@ -728,9 +746,11 @@ Easy/Hard | 8 | 8 | 7 | 6 |
 
 ### Racing
 
-| | Value|
+Unlock date: JAN 1976
+
+| | Value |
 |-|------|
-| Traget audience | Kid |
+| Target group | Kid |
 | | Teen |
 | | Adult |
 | | Senior |
@@ -756,7 +776,7 @@ Easy/Hard | 8 | 8 | 7 | 6 |
 
 #### Themes
 
-Airplanes, Bicycle, Cabs, Cars, Desert, Drones, Economy, Extreme Sports, Historical, Horses, Jet Ski, Kart Racing, Motorcycles, Motorsports, Physics, Police, Rallycross, Riding, Roman Empire, Sailing, 
+Airplanes, Bicycle, Cabs, Cars, Desert, Drones, Economy, Extreme Sports, Historical, Horses, Jet Ski, Kart Racing, Motorcycles, Motorsports, Physics, Police, Rallycross, Riding, Roman Empire, Sailing,
 Skateboards, Skiing, Skydiving, Spaceships, Sports, Stock Car, Surfing, Transportation, Trucks
 
 #### Racing combinations
@@ -805,9 +825,11 @@ Easy/Hard | 5 | 5 | 4 | 3 |
 
 ### Real-Time Strategy
 
-| | Value|
+Unlock date: JUN 1991
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | Genre combinations | Role-Playing Game |
 | | Strategy |
@@ -832,10 +854,10 @@ Easy/Hard | 5 | 5 | 4 | 3 |
 
 #### Themes
 
-Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Animals, Ants, Apocalypse, Atlantis, Aztecs, Bunker, Castles, Cities, Civilizations, Colonization, Companies, Conquest, Cowboys, Cyborgs, Deck Building, 
-Demons, Desert, Dieselpunk, Dinosaurs, Diplomacy, Dragons, Drones, Druids, Dungeons, Dwarfs, Economy, Elves, End Times, Espionage, Factories, Fantasy, Fencing, Fire Department, Goblins, Gods, 
-Greek Mythology, Helicopters, Historical, Ice Age, Inca, Industrialization, Insects, Jungle, Knights, Magic, Martial Arts, Mecha, Mercenary, Middle Ages, Military, Mining, Mutants, Noble Houses, Oceans, Orcs, 
-Pharaohs, Planets, Plants, Police, Radioactivity, Raw Materials, Robots, Roman Empire, Romans, Saboteurs, Sailing, Samurai, Science, Ships, Space, Space Stations, Spaceships, Special Forces, Steampunk, Stone Age, 
+Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Animals, Ants, Apocalypse, Atlantis, Aztecs, Bunker, Castles, Cities, Civilizations, Colonization, Companies, Conquest, Cowboys, Cyborgs, Deck Building,
+Demons, Desert, Dieselpunk, Dinosaurs, Diplomacy, Dragons, Drones, Druids, Dungeons, Dwarfs, Economy, Elves, End Times, Espionage, Factories, Fantasy, Fencing, Fire Department, Goblins, Gods,
+Greek Mythology, Helicopters, Historical, Ice Age, Inca, Industrialization, Insects, Jungle, Knights, Magic, Martial Arts, Mecha, Mercenary, Middle Ages, Military, Mining, Mutants, Noble Houses, Oceans, Orcs,
+Pharaohs, Planets, Plants, Police, Radioactivity, Raw Materials, Robots, Roman Empire, Romans, Saboteurs, Sailing, Samurai, Science, Ships, Space, Space Stations, Spaceships, Special Forces, Steampunk, Stone Age,
 Submarines, Tanks, Terraforming, Trains, Transportation, Trolls, UFOs, Victorian Age, Vikings, Villages, Wild West, Wizards, World Wars, Zeppelins
 
 #### Real-Time Strategy combinations
@@ -884,9 +906,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 ### Role-Playing Game
 
-| | Value|
+Unlock date: MAY 1977
+
+| | Value |
 |-|------|
-| Traget audience | Adult |
+| Target group | Adult |
 | | Senior |
 | Genre combinations | Puzzle Game |
 | | Adventure |
@@ -914,9 +938,9 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 #### Themes
 
-Ancient, Ancient China, Androids, Angels, Anime, Apocalypse, Barbarians, Bards, Castles, Curses, Cyberpunk, Cyborgs, Deck Building, Demons, Devils, Dragons, Druids, Dungeons, Dwarfs, Elves, 
-End Times, Fairies, Fantasy, Fencing, Ghosts, Goblins, Gods, Graveyards, Greek Mythology, Hell, Hunting, Islands, Knights, Labyrinth, Magic, Martial Arts, Middle Ages, Monster, Mutants, Noble Houses, 
-Orcs, Parallel Worlds, Pirates, Planets, Radioactivity, Romans, Samurai, Sandbox, Secret Society, Skeletons, Space, Space Stations, Spiders, Steampunk, Thieves, Time Travel, Treasure, Treasure Hunters, Trolls, Vampires, 
+Ancient, Ancient China, Androids, Angels, Anime, Apocalypse, Barbarians, Bards, Castles, Curses, Cyberpunk, Cyborgs, Deck Building, Demons, Devils, Dragons, Druids, Dungeons, Dwarfs, Elves,
+End Times, Fairies, Fantasy, Fencing, Ghosts, Goblins, Gods, Graveyards, Greek Mythology, Hell, Hunting, Islands, Knights, Labyrinth, Magic, Martial Arts, Middle Ages, Monster, Mutants, Noble Houses,
+Orcs, Parallel Worlds, Pirates, Planets, Radioactivity, Romans, Samurai, Sandbox, Secret Society, Skeletons, Space, Space Stations, Spiders, Steampunk, Thieves, Time Travel, Treasure, Treasure Hunters, Trolls, Vampires,
 Vikings, Werewolves, Witches, Wizards
 
 #### Role-Playing Game combinations
@@ -965,9 +989,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 ### Simulation
 
-| | Value|
+Unlock date: DEC 1981
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | Genre combinations | Strategy |
 | | Action |
@@ -993,10 +1019,10 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 #### Themes
 
-Agriculture, Airplanes, Animals, Archery, Asteroids, Astronauts, Bicycle, Cabs, Cars, Casinos, Cities, Cleaning, Climbing, Companies, Cooking, Crafting, Desert, Doctors, Dolphins, Drones, 
-Evolution, Extreme Sports, Fire Department, Fish, Fishing, Gambling, Graveyards, Healthcare, Helicopters, Hiking, Historical, Horses, Hotels, Hunting, Insects, Jet Ski, Kart Racing, Mecha, Mercenary, Military, 
-Mining, Motorcycles, Motorsports, Mountaineering, Nature, Paintball, Photography, Pinball, Planets, Police, Politics, Predators, Rallycross, Recycling, Renovation, Restaurants, Robots, Sailing, Sandbox, Sewers, 
-Ships, Skateboards, Skiing, Skydiving, Snowboarding, Soccer, Space, Space Stations, Spaceships, Sports, Stock Car, Submarines, Surfing, Survivalism, Swimming, Tanks, Terraforming, Theme Parks, Trains, Transportation, 
+Agriculture, Airplanes, Animals, Archery, Asteroids, Astronauts, Bicycle, Cabs, Cars, Casinos, Cities, Cleaning, Climbing, Companies, Cooking, Crafting, Desert, Doctors, Dolphins, Drones,
+Evolution, Extreme Sports, Fire Department, Fish, Fishing, Gambling, Graveyards, Healthcare, Helicopters, Hiking, Historical, Horses, Hotels, Hunting, Insects, Jet Ski, Kart Racing, Mecha, Mercenary, Military,
+Mining, Motorcycles, Motorsports, Mountaineering, Nature, Paintball, Photography, Pinball, Planets, Police, Politics, Predators, Rallycross, Recycling, Renovation, Restaurants, Robots, Sailing, Sandbox, Sewers,
+Ships, Skateboards, Skiing, Skydiving, Snowboarding, Soccer, Space, Space Stations, Spaceships, Sports, Stock Car, Submarines, Surfing, Survivalism, Swimming, Tanks, Terraforming, Theme Parks, Trains, Transportation,
 Trucks, UFOs, Vacation, Viticulture, World Wars, Wrestling, Zeppelins, Zoo
 
 #### Simulation combinations
@@ -1045,9 +1071,11 @@ Easy/Hard | 8 | 8 | 7 | 6 |
 
 ### Skill Game
 
-| | Value|
+Unlock date: JAN 1976
+
+| | Value |
 |-|------|
-| Traget audience | Kid |
+| Target group | Kid |
 | | Teen |
 | | Adult |
 | | Senior |
@@ -1073,13 +1101,13 @@ Easy/Hard | 8 | 8 | 7 | 6 |
 
 #### Themes
 
-Agriculture, Ancient, Ancient Egypt, Animals, Ants, Archaeology, Archery, Art, Asteroids, Athletics, Baseball, Basketball, Billiards, Birds, Bowling, Building Blocks, Candy, Cars, Casinos, Cats, 
-Chemistry, Chess, Chickens, Circus, Cities, Cleaning, Climbing, Cooking, Crafting, Curling, Cyberpunk, Cyberspace, Dancing, Darts, Deck Building, Dice Games, Dieselpunk, Digging, Diving, Dogs, 
-Dolphins, Dragons, Drawing, Dreams, Education, Elements, Espionage, Everyday Life, Evolution, Expeditions, Factories, Fairies, Fantasy, Fashion, Fencing, Fish, Fishing, Fitness, Food, Frogs, 
-Fruit, Gambling, Genetics, Ghosts, Goats, Goblins, Greek Mythology, Hacking, Handball, Healthcare, Hedgehogs, Hospital, Insects, Jet Ski, Kids, Labyrinth, Languages, Learning, Machines, Magic, 
-Make-up, Mathematics, Middle Ages, Mining, Mountaineering, Movies, Mummies, Mushrooms, Music, Musical Instrument, Nature, Oceans, Octopus, Orcs, Parallel Worlds, Parkour, Parlor Games, Parties, Pets, Pharaohs, 
-Physics, Pinball, Planets, Plants, Playing Cards, Plumber, Portals, Prison, Puzzles, Quiz Show, Rabbits, Recycling, Renovation, Riding, Rockstars, Sailing, School, Science, Sheep, Singing, 
-Skateboards, Skiing, Skydiving, Soccer, Space, Spiders, Sports, Squash, Steampunk, Stone Age, Stones, Stuffed Animals, Surfing, Swimming, Table Tennis, Tennis, Theme Parks, Thieves, Time Travel, Toys, 
+Agriculture, Ancient, Ancient Egypt, Animals, Ants, Archaeology, Archery, Art, Asteroids, Athletics, Baseball, Basketball, Billiards, Birds, Bowling, Building Blocks, Candy, Cars, Casinos, Cats,
+Chemistry, Chess, Chickens, Circus, Cities, Cleaning, Climbing, Cooking, Crafting, Curling, Cyberpunk, Cyberspace, Dancing, Darts, Deck Building, Dice Games, Dieselpunk, Digging, Diving, Dogs,
+Dolphins, Dragons, Drawing, Dreams, Education, Elements, Espionage, Everyday Life, Evolution, Expeditions, Factories, Fairies, Fantasy, Fashion, Fencing, Fish, Fishing, Fitness, Food, Frogs,
+Fruit, Gambling, Genetics, Ghosts, Goats, Goblins, Greek Mythology, Hacking, Handball, Healthcare, Hedgehogs, Hospital, Insects, Jet Ski, Kids, Labyrinth, Languages, Learning, Machines, Magic,
+Make-up, Mathematics, Middle Ages, Mining, Mountaineering, Movies, Mummies, Mushrooms, Music, Musical Instrument, Nature, Oceans, Octopus, Orcs, Parallel Worlds, Parkour, Parlor Games, Parties, Pets, Pharaohs,
+Physics, Pinball, Planets, Plants, Playing Cards, Plumber, Portals, Prison, Puzzles, Quiz Show, Rabbits, Recycling, Renovation, Riding, Rockstars, Sailing, School, Science, Sheep, Singing,
+Skateboards, Skiing, Skydiving, Soccer, Space, Spiders, Sports, Squash, Steampunk, Stone Age, Stones, Stuffed Animals, Surfing, Swimming, Table Tennis, Tennis, Theme Parks, Thieves, Time Travel, Toys,
 Trains, Transportation, Treasure, Tubes, Viruses, Volleyball, Wizards, Worms, Zoo
 
 #### Skill Game combinations
@@ -1128,9 +1156,11 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 ### Sports Game
 
-| | Value|
+Unlock date: JAN 1982
+
+| | Value |
 |-|------|
-| Traget audience | Kid |
+| Target group | Kid |
 | | Teen |
 | | Adult |
 | Genre combinations | Strategy |
@@ -1156,9 +1186,9 @@ Easy/Hard | 7 | 7 | 6 | 5 |
 
 #### Themes
 
-Airplanes, American Football, Ancient, Animals, Archery, Athletics, Baseball, Basketball, Bicycle, Billiards, Bowling, Boxing, Cars, Climbing, Companies, Cricket, Curling, Cyborgs, Dancing, Darts, 
-Desert, Diving, Economy, Extreme Sports, Fencing, Fish, Fishing, Fitness, Gladiators, Golf, Handball, Hiking, Historical, Horses, Ice Hockey, Jet Ski, Karate, Kart Racing, Kickboxing, Kids, 
-Knights, Kung Fu, Martial Arts, Motorcycles, Motorsports, Mountaineering, Oceans, Orcs, Paintball, Parkour, Rallycross, Romans, Rugby, Sailing, Ships, Skateboards, Skiing, Skydiving, Snowboarding, Soccer, 
+Airplanes, American Football, Ancient, Animals, Archery, Athletics, Baseball, Basketball, Bicycle, Billiards, Bowling, Boxing, Cars, Climbing, Companies, Cricket, Curling, Cyborgs, Dancing, Darts,
+Desert, Diving, Economy, Extreme Sports, Fencing, Fish, Fishing, Fitness, Gladiators, Golf, Handball, Hiking, Historical, Horses, Ice Hockey, Jet Ski, Karate, Kart Racing, Kickboxing, Kids,
+Knights, Kung Fu, Martial Arts, Motorcycles, Motorsports, Mountaineering, Oceans, Orcs, Paintball, Parkour, Rallycross, Romans, Rugby, Sailing, Ships, Skateboards, Skiing, Skydiving, Snowboarding, Soccer,
 Space Stations, Sports, Squash, Stock Car, Surfing, Swimming, Table Tennis, Tennis, Trucks, Vacation, Volleyball, Wrestling
 
 #### Sports Game combinations
@@ -1207,9 +1237,11 @@ Easy/Hard | 5 | 5 | 4 | 3 |
 
 ### Strategy
 
-| | Value|
+Unlock date: JUL 1978
+
+| | Value |
 |-|------|
-| Traget audience | Adult |
+| Target group | Adult |
 | | Senior |
 | Genre combinations | Role-Playing Game |
 | | Action |
@@ -1235,11 +1267,11 @@ Easy/Hard | 5 | 5 | 4 | 3 |
 
 #### Themes
 
-Agriculture, Airplanes, Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Apocalypse, Barbarians, Building Blocks, Bunker, Castles, Chemistry, Chess, Cinema, Cities, Civilizations, Colonization, Companies, Conquest, 
-Cooking, Crafting, Crime, Deck Building, Desert, Dice Games, Dieselpunk, Digging, Diplomacy, Dragons, Dwarfs, Economy, Education, Elements, End Times, Espionage, Everyday Life, Evolution, Expeditions, Factories, 
-Fantasy, Fire Department, Food, Gambling, Game Development, Gangsters, Gladiators, Goblins, Greek Mythology, Healthcare, Historical, Hospital, Industrialization, Jungle, Knights, Mafia, Magic, Mecha, Mercenary, Middle Ages, 
-Military, Mining, Mutants, Nature, Noble Houses, Oceans, Parlor Games, Pharaohs, Physics, Planets, Playing Cards, Police, Politics, Radioactivity, Raw Materials, Renovation, Revolution, Robots, Roman Empire, Romans, 
-Saboteurs, Sailing, Science, Space, Space Stations, Spaceships, Special Forces, Steampunk, Stones, Submarines, Tanks, Television, Terraforming, Theme Parks, Trains, Transportation, Trucks, UFOs, Vacation, Victorian Age, 
+Agriculture, Airplanes, Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Apocalypse, Barbarians, Building Blocks, Bunker, Castles, Chemistry, Chess, Cinema, Cities, Civilizations, Colonization, Companies, Conquest,
+Cooking, Crafting, Crime, Deck Building, Desert, Dice Games, Dieselpunk, Digging, Diplomacy, Dragons, Dwarfs, Economy, Education, Elements, End Times, Espionage, Everyday Life, Evolution, Expeditions, Factories,
+Fantasy, Fire Department, Food, Gambling, Game Development, Gangsters, Gladiators, Goblins, Greek Mythology, Healthcare, Historical, Hospital, Industrialization, Jungle, Knights, Mafia, Magic, Mecha, Mercenary, Middle Ages,
+Military, Mining, Mutants, Nature, Noble Houses, Oceans, Parlor Games, Pharaohs, Physics, Planets, Playing Cards, Police, Politics, Radioactivity, Raw Materials, Renovation, Revolution, Robots, Roman Empire, Romans,
+Saboteurs, Sailing, Science, Space, Space Stations, Spaceships, Special Forces, Steampunk, Stones, Submarines, Tanks, Television, Terraforming, Theme Parks, Trains, Transportation, Trucks, UFOs, Vacation, Victorian Age,
 Vikings, Villages, Wild West, Wizards, World Wars, Zeppelins, Zoo
 
 #### Strategy combinations
@@ -1288,9 +1320,11 @@ Easy/Hard | 7 | 8 | 7 | 6 |
 
 ### Survival Game
 
-| | Value|
+Unlock date: APR 1986
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | | Senior |
 | Genre combinations | Role-Playing Game |
@@ -1317,8 +1351,8 @@ Easy/Hard | 7 | 8 | 7 | 6 |
 
 #### Themes
 
-Agriculture, Aliens, Animals, Apocalypse, Archery, Astronauts, Bunker, Cities, Crafting, Demons, Desert, Digging, Dinosaurs, Diving, Dungeons, End Times, Expeditions, Fishing, Food, Hiking, 
-Horror, Hunting, Ice Age, Islands, Jungle, Middle Ages, Military, Monster, Mutants, Nature, Oceans, Parallel Worlds, Predators, Radioactivity, Raw Materials, Robots, Sandbox, Space, Stone Age, Survivalism, 
+Agriculture, Aliens, Animals, Apocalypse, Archery, Astronauts, Bunker, Cities, Crafting, Demons, Desert, Digging, Dinosaurs, Diving, Dungeons, End Times, Expeditions, Fishing, Food, Hiking,
+Horror, Hunting, Ice Age, Islands, Jungle, Middle Ages, Military, Monster, Mutants, Nature, Oceans, Parallel Worlds, Predators, Radioactivity, Raw Materials, Robots, Sandbox, Space, Stone Age, Survivalism,
 Terraforming, Vampires, Vikings, Viruses, Werewolves, Zombies
 
 #### Survival Game combinations
@@ -1367,9 +1401,11 @@ Easy/Hard | 7 | 8 | 7 | 6 |
 
 ### Third-Person Shooter
 
-| | Value|
+Unlock date: AUG 1996
+
+| | Value |
 |-|------|
-| Traget audience | Teen |
+| Target group | Teen |
 | | Adult |
 | Genre combinations | Skill Game |
 | | Adventure |
@@ -1399,12 +1435,12 @@ Easy/Hard | 7 | 8 | 7 | 6 |
 
 #### Themes
 
-Agents, Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Angels, Apocalypse, Archery, Assassins, Atlantis, Aztecs, Barbarians, Bards, Bounty Hunter, Boxing, Bunker, Castles, Climbing, Conquest, 
-Conspiracies, Contract Killer, Cowboys, Crime, Cyberpunk, Cyberspace, Cyborgs, Demons, Desert, Detective, Devils, Dieselpunk, Dinosaurs, Dragons, Druids, Dungeons, Dwarfs, Elves, End Times, Espionage, 
-Fantasy, Fencing, Fruit, Gangsters, Ghosts, Goblins, Gods, Graveyards, Greek Mythology, Helicopters, Hell, Hiking, Historical, Horror, Ice Age, Inca, Insects, Jungle, Karate, Knights, 
-Mafia, Magic, Martial Arts, Mecha, Mercenary, Middle Ages, Monster, Mummies, Mutants, Ninjas, Oceans, Orcs, Parallel Worlds, Parkour, Pets, Pharaohs, Physics, Police, Portals, Predators, 
-Prison, Puzzles, Radioactivity, Revolution, Riding, Robots, Roman Empire, Romans, Saboteurs, Sailing, Samurai, Sandbox, Secret Society, Sewers, Skeletons, Skydiving, Space, Space Stations, Spaceships, Special Forces, 
-Spiders, Steampunk, Stone Age, Submarines, Super Villains, Superheroes, Survivalism, Tanks, Thieves, Time Travel, Treasure Hunters, Trolls, UFOs, Vampires, Vikings, Werewolves, Wild West, Witches, Wizards, World Wars, 
+Agents, Aliens, Ancient, Ancient China, Ancient Egypt, Androids, Angels, Apocalypse, Archery, Assassins, Atlantis, Aztecs, Barbarians, Bards, Bounty Hunter, Boxing, Bunker, Castles, Climbing, Conquest,
+Conspiracies, Contract Killer, Cowboys, Crime, Cyberpunk, Cyberspace, Cyborgs, Demons, Desert, Detective, Devils, Dieselpunk, Dinosaurs, Dragons, Druids, Dungeons, Dwarfs, Elves, End Times, Espionage,
+Fantasy, Fencing, Fruit, Gangsters, Ghosts, Goblins, Gods, Graveyards, Greek Mythology, Helicopters, Hell, Hiking, Historical, Horror, Ice Age, Inca, Insects, Jungle, Karate, Knights,
+Mafia, Magic, Martial Arts, Mecha, Mercenary, Middle Ages, Monster, Mummies, Mutants, Ninjas, Oceans, Orcs, Parallel Worlds, Parkour, Pets, Pharaohs, Physics, Police, Portals, Predators,
+Prison, Puzzles, Radioactivity, Revolution, Riding, Robots, Roman Empire, Romans, Saboteurs, Sailing, Samurai, Sandbox, Secret Society, Sewers, Skeletons, Skydiving, Space, Space Stations, Spaceships, Special Forces,
+Spiders, Steampunk, Stone Age, Submarines, Super Villains, Superheroes, Survivalism, Tanks, Thieves, Time Travel, Treasure Hunters, Trolls, UFOs, Vampires, Vikings, Werewolves, Wild West, Witches, Wizards, World Wars,
 Yakuza, Zombies
 
 #### Third-Person Shooter combinations
@@ -1453,9 +1489,11 @@ Easy/Hard | 5 | 6 | 6 | 4 |
 
 ### Visual Novel
 
-| | Value|
+Unlock date: JUN 1992
+
+| | Value |
 |-|------|
-| Traget audience | Kid |
+| Target group | Kid |
 | | Teen |
 | | Adult |
 | | Senior |
@@ -1483,9 +1521,9 @@ Easy/Hard | 5 | 6 | 6 | 4 |
 
 #### Themes
 
-Androids, Angels, Anime, Art, Assassins, Birds, Books, Cats, Chickens, Comedy, Conspiracies, Contract Killer, Court Case, Cowboys, Curses, Cyberpunk, Dancing, Dating, Demons, Detective, 
-Doctors, Dogs, Dragons, Drawing, Elves, Erotica, Everyday Life, Fairies, Fantasy, Fashion, Ghosts, Gladiators, Goats, Horror, Hospital, Hunting, Kids, Magic, Make-up, Mermaids, 
-Middle Ages, Military, Mountaineering, Movies, Music, Ninjas, Noble Houses, Parties, Pets, Photography, Politics, Rabbits, Reporters, Romance, Samurai, School, Secret Society, Sheep, Showbiz, Singing, 
+Androids, Angels, Anime, Art, Assassins, Birds, Books, Cats, Chickens, Comedy, Conspiracies, Contract Killer, Court Case, Cowboys, Curses, Cyberpunk, Dancing, Dating, Demons, Detective,
+Doctors, Dogs, Dragons, Drawing, Elves, Erotica, Everyday Life, Fairies, Fantasy, Fashion, Ghosts, Gladiators, Goats, Horror, Hospital, Hunting, Kids, Magic, Make-up, Mermaids,
+Middle Ages, Military, Mountaineering, Movies, Music, Ninjas, Noble Houses, Parties, Pets, Photography, Politics, Rabbits, Reporters, Romance, Samurai, School, Secret Society, Sheep, Showbiz, Singing,
 Steampunk, Stuffed Animals, Super Villains, Superheroes, Theme Parks, Thieves, Toys, Treasure, University, Werewolves, Wild West, World Wars, Zombies, Zoo
 
 #### Visual Novel combinations
