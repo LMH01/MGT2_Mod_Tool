@@ -20,6 +20,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -123,9 +125,23 @@ public class Utils {
      * Opens the GitHub page for MGT2MT in the default browser.
      *
      * @throws IOException If the page could not be opened
+     * @throws URISyntaxException If the URL is invalid
      */
-    public static void openGithubPage() throws Exception {
+    public static void openGithubPage() throws IOException, URISyntaxException {
         Desktop.getDesktop().browse(new URL(GITHUB_URL).toURI());
+    }
+
+    /**
+     * Opens the features list in the default browser.
+     *
+     * @throws ModProcessingException If the page could not be opened or if the URL is invalid
+     */
+    public static void openFeatureList() throws ModProcessingException {
+        try {
+            Desktop.getDesktop().browse(new URI(GITHUB_URL + "/blob/master/docs/features.md"));
+        } catch (IOException | URISyntaxException e) {
+            throw new ModProcessingException("Unable to open feature list", e);
+        }
     }
 
     /**

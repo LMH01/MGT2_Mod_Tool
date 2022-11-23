@@ -6,7 +6,9 @@
 - A help sheet can now be generated that displayes the perfect game slider and genre combinations. This sheet is generated live from the game files, so it is even supported to get help information for custom genres.
   - This function can be found in the `utilities` menu.
   - To properly view the file a text editor with markdown support or a browser plugin is required.
+    - It is also possible to paste the files contents to [markdownlivepreview.com](https://markdownlivepreview.com/) (Content is automatically copied to clipboard)
   - Big thanks goes out to ``Ali`` from the MGT2 discord who helped me figure out the formula on how the game calculates the design sliders between genre and sub-genre.
+- Added new button to `Utilities` menu: Open feature list - This button opens the feature list located at https://github.com/LMH01/MGT2_Mod_Tool/blob/master/docs/features.md
 
 ### Other
 - The component rating the hardware will receive is now displayed in the add hardware window. Thanks

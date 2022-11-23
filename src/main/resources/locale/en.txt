@@ -960,6 +960,7 @@ window.main.backup.openBackupFolder|Open backup folder
 window.main.backup.openBackupFolder.toolTip|<html>Click to open the backup folder.<br>All backups that have been created are located here.<br>Use this if you do want to restore a backup manually.
 window.main.utilities|Utilities
 window.main.utilities.openGithubPage|Open Github page
+window.main.utilities.openFeatureList|Open feature list
 window.main.utilities.openMGT2Folder|Open MGT2 folder
 window.main.utilities.openSaveGameFolder|Open save game folder
 window.main.utilities.openSaveGameFolder.toolTip|Click to open the folder where the save games are stored
