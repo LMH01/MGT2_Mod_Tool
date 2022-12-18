@@ -1,10 +1,13 @@
 # Changelog
 
-## [v4.6.0]
+## [v4.6.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.6.0) (Latest Version)
 
 ### New feature
 - Gameplay features can now be marked to require internet (#110)
 - Gameplay features can now require another gameplay feature (#111)
+
+### Other
+- Updated default content files
 
 ### Bug fixes
 - Fixed #109 - New file format of NpcGames.txt is now read correctly
@@ -12,7 +15,7 @@
 ### Related game patchnotes
 - MODDING: Gameplay feature can now require other gameplay features (e.g. "Online Multiplayer" requires "Multiplayer Matchmaker") "[NEED_GPF]"
 
-## [v4.5.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.5.0) (Latest Version)
+## [v4.5.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.5.0)
 
 ### New feature
 - A help sheet can now be generated that displayes the perfect game slider and genre combinations. This sheet is generated live from the game files, so it is even supported to get help information for custom genres.
