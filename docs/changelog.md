@@ -2,6 +2,9 @@
 
 ## [v4.6.0]
 
+### New feature
+- Gameplay features can now be marked to require internet (#110)
+
 ### Buf fixes
 - Fixed #109 - New file format of NpcGames.txt is now read correctly
 

@@ -39,6 +39,10 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         if (map.containsKey("NO_MOBILE")) {
             mobile = false;
         }
+        boolean requiresInternet = false;
+        if (map.containsKey("INTERNET")) {
+            requiresInternet = true;
+        }
         ArrayList<Integer> badGameplayFeatures = new ArrayList<>();
         if (map.containsKey("BAD")) {
             badGameplayFeatures = Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("BAD")));
@@ -64,7 +68,8 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 badGameplayFeatures,
                 goodGameplayFeatures,
                 mobile,
-                arcade
+                arcade,
+                requiresInternet
         );
     }
 
@@ -85,6 +90,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         list.add(new DataLine("BAD", false, DataType.INT_LIST));
         list.add(new DataLine("NO_ARCADE", false, DataType.EMPTY));
         list.add(new DataLine("NO_MOBILE", false, DataType.EMPTY));
+        list.add(new DataLine("INTERNET", false, DataType.EMPTY));
         return list;
     }
 
@@ -114,6 +120,10 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         if (map.containsKey("NO_MOBILE")) {
             mobile = false;
         }
+        boolean requiresInternet = false;
+        if (map.containsKey("INTERNET")) {
+            requiresInternet = true;
+        }
         ArrayList<Integer> badGameplayFeatures = new ArrayList<>();
         if (map.containsKey("BAD")) {
             badGameplayFeatures = SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("BAD"));
@@ -139,7 +149,8 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                 badGameplayFeatures,
                 goodGameplayFeatures,
                 mobile,
-                arcade
+                arcade,
+                requiresInternet
         );
     }
 
@@ -232,7 +243,10 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         checkBoxCompatibleWithMobile.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip"));
         checkBoxCompatibleWithMobile.setSelected(true);
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerResearchCost, SpinnerType.RESEARCH_COST), WindowHelper.getSpinnerPanel(spinnerGameplay, SpinnerType.GAMEPLAY), WindowHelper.getSpinnerPanel(spinnerGraphic, SpinnerType.GRAPHIC), WindowHelper.getSpinnerPanel(spinnerSound, SpinnerType.SOUND), WindowHelper.getSpinnerPanel(spinnerTech, SpinnerType.TECH), buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile};
+        JCheckBox checkBoxRequiresInternet = new JCheckBox(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.requiresInternet"));
+        checkBoxRequiresInternet.setToolTipText(I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.requiresInternet.toolTip"));
+
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getDescriptionPanel(textFieldDescription), buttonAddDescriptionTranslations, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), WindowHelper.getSpinnerPanel(spinnerResearchPoints, SpinnerType.RESEARCH_POINT_COST), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerResearchCost, SpinnerType.RESEARCH_COST), WindowHelper.getSpinnerPanel(spinnerGameplay, SpinnerType.GAMEPLAY), WindowHelper.getSpinnerPanel(spinnerGraphic, SpinnerType.GRAPHIC), WindowHelper.getSpinnerPanel(spinnerSound, SpinnerType.SOUND), WindowHelper.getSpinnerPanel(spinnerTech, SpinnerType.TECH), buttonBadGenres, buttonGoodGenres, checkBoxCompatibleWithArcadeCabinets, checkBoxCompatibleWithMobile, checkBoxRequiresInternet};
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().isEmpty() && !textFieldName.getText().equals(I18n.INSTANCE.get("commonText.enterFeatureName")) && !textFieldDescription.getText().isEmpty() && !textFieldDescription.getText().equals(I18n.INSTANCE.get("commonText.enterDescription"))) {
@@ -267,7 +281,8 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
                                 badGenreIds[0],
                                 goodGenreIds[0],
                                 checkBoxCompatibleWithArcadeCabinets.isSelected(),
-                                checkBoxCompatibleWithMobile.isSelected()
+                                checkBoxCompatibleWithMobile.isSelected(),
+                                checkBoxRequiresInternet.isSelected()
                         );
                         boolean addFeature = Summaries.showSummary(gameplayFeature.getOptionPaneMessage(), I18n.INSTANCE.get("mod.gameplayFeature.addMod.title"));
                         if (addFeature) {

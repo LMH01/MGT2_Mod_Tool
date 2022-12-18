@@ -330,6 +330,8 @@ mod.gameplayFeature.addMod.components.button.selectGoodGenres.unableToSave|<html
 mod.gameplayFeature.addMod.components.button.selectGoodGenres.toolTip|Klicke, um auszuwählen, welche Genres mit dem Gameplay Feature gut funktionieren
 mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip|<html>Wähle diese Option, um die Kompatibilität mit Arcade-Automaten für diese Gameplay-Funktion zu aktivieren.<br>Wenn diese Gameplay-Funktion deaktiviert ist, funktioniert sie nicht für Arcade-Automaten.
 mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip|<html>Wähle diese Option, um die Kompatibilität mit Mobilgeräten für diese Gameplay-Funktion zu aktivieren.<br>Wenn diese Gameplay-Funktion deaktiviert ist, funktioniert sie auf Mobilgeräten nicht.
+mod.gameplayFeature.addMod.components.requiresInternet|Benötigt Internet
+mod.gameplayFeature.addMod.components.requiresInternet.toolTip|<html>Wähle diese Option, damit dieses Gameplay Feature Internet benötigt
 mod.theme.addTheme.unableToAddTheme|Thema kann nicht hinzugefügt werden:
 mod.theme.addTheme.unableToAddTheme.error1|Bitte wähle mindestens ein genre aus.
 mod.theme.addTheme.unableToAddTheme.error2|Bitte gebe den Namen für das Thema ein.

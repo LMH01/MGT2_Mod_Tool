@@ -29,6 +29,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
     final ArrayList<Integer> goodGenres;// Stores the ids of genres that fit bad with this gameplay feature
     final boolean arcade;
     final boolean mobile;
+    final boolean requiresInternet;
 
     public GameplayFeature(String name,
                            Integer id,
@@ -46,7 +47,8 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
                            ArrayList<Integer> badGenres,
                            ArrayList<Integer> goodGenres,
                            boolean arcade,
-                           boolean mobile) {
+                           boolean mobile,
+                           boolean requiresInternet) {
         super(GameplayFeatureManager.INSTANCE, name, id, translationManager);
         this.description = description;
         this.gameplayFeatureType = gameplayFeatureType;
@@ -62,6 +64,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         this.goodGenres = goodGenres;
         this.arcade = arcade;
         this.mobile = mobile;
+        this.requiresInternet = requiresInternet;
     }
 
     @Override
@@ -86,6 +89,9 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         }
         if (!mobile) {
             map.put("NO_MOBILE", "");
+        }
+        if (requiresInternet) {
+            map.put("INTERNET", "");
         }
         if (!badGenres.isEmpty()) {
             map.put("BAD", Utils.transformArrayListToString(badGenres));
@@ -134,7 +140,8 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
                 I18n.INSTANCE.get("commonText.sound") + ": " + sound + "\n" +
                 I18n.INSTANCE.get("commonText.tech") + ": " + tech + "\n" +
                 I18n.INSTANCE.get("commonText.arcadeCompatibility") + ": " + Utils.getTranslatedValueFromBoolean(arcade) + "\n" +
-                I18n.INSTANCE.get("commonText.mobileCompatibility") + ": " + Utils.getTranslatedValueFromBoolean(mobile) + "\n";
+                I18n.INSTANCE.get("commonText.mobileCompatibility") + ": " + Utils.getTranslatedValueFromBoolean(mobile) + "\n" +
+                I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.requiresInternet") + ": " + Utils.getTranslatedValueFromBoolean(requiresInternet) + "\n";
     }
 
     @Override
