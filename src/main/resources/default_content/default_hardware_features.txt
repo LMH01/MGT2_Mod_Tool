@@ -26,3 +26,5 @@ Gaming Suit Support
 Gaming Vest Support
 Quick Resume
 Quality & Performance Modes
+Multi-Monitor Support
+Support for adaptive devices

@@ -66,3 +66,12 @@ Gaming Suit Support
 Gaming Vest Support
 Quick Time Events
 Speech Recognition
+Drop in Drop Out Multiplayer
+E-Sport Mode
+Multi-Monitor Support
+Photo Mode
+Procedurally Created Game World
+Rewind Function
+Streaming Platform Integration
+Support for adaptive devices
+Multiplayer Matchmaker

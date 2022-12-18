@@ -480,7 +480,7 @@ Force Of The Slaves <5><12><14><16>
 Force of Wrath <4><5><13>
 Forgotten Blade <3><4><5>
 Forgotten Lands <5><12><14><16><18>
-Formula One Master Challenge <17>
+Formula Master Challenge <17>
 Forsaken Curse <3>
 Fortress of Doom <5><12><14><16>
 Freescape Driller <7>
@@ -566,7 +566,7 @@ Gun Paradise <5><14><16><18>
 Gunship Pilot <7>
 Gym Stars <8>
 Hard Future <5><12><14><16><18>
-Harry McGulgan Boxing <8>
+Harry McGulgan Boxing <8><10>
 Heart of Europe <4><13>
 Hearth of Salion <2><3><15>
 Heaven <9><11>
@@ -1235,7 +1235,7 @@ Tatrus <0><6>
 Teams and Trophies <8>
 Tek-Blade <10>
 Television Manager <9><11>
-Ten Secounds <0><6>
+Ten Seconds <0><6>
 Tenguen <1>
 Tennis Gold <8>
 Tentris <0><6>
