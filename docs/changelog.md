@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.6.0]
+
+### Buf fixes
+- Fixed #109 - New file format of NpcGames.txt is now read correctly
+
 ## [v4.5.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.5.0) (Latest Version)
 
 ### New feature
