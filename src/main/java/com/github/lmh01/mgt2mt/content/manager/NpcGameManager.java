@@ -11,6 +11,7 @@ import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 
 import javax.swing.*;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -168,5 +169,10 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while editing npcGames.txt file", e);
         }
+    }
+
+    @Override
+    public Charset getCharset() {
+        return StandardCharsets.UTF_8;
     }
 }
