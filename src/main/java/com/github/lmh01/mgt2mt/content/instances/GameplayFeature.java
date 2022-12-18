@@ -27,6 +27,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
     final int tech;
     final ArrayList<Integer> badGenres;// Stores the ids of genres that fit good with this gameplay feature
     final ArrayList<Integer> goodGenres;// Stores the ids of genres that fit bad with this gameplay feature
+    final ArrayList<Integer> requiredGameplayFeatures;/// Stores the ids of required gameplay features
     final boolean arcade;
     final boolean mobile;
     final boolean requiresInternet;
@@ -46,6 +47,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
                            int tech,
                            ArrayList<Integer> badGenres,
                            ArrayList<Integer> goodGenres,
+                           ArrayList<Integer> requiredGameplayFeatures,
                            boolean arcade,
                            boolean mobile,
                            boolean requiresInternet) {
@@ -62,9 +64,14 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         this.tech = tech;
         this.badGenres = badGenres;
         this.goodGenres = goodGenres;
+        this.requiredGameplayFeatures = requiredGameplayFeatures;
         this.arcade = arcade;
         this.mobile = mobile;
         this.requiresInternet = requiresInternet;
+        // Check if requiredGameplayFeatures only contains one id, because more are currently not supported by the game
+        if (requiredGameplayFeatures.size() > 1) {
+            throw new IllegalArgumentException("Unable to create new GameplayFeature: requiredGameplayFeatures contains more than one element. This is currently not supported by the game.");
+        }
     }
 
     @Override
@@ -99,6 +106,9 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         if (!goodGenres.isEmpty()) {
             map.put("GOOD", Utils.transformArrayListToString(goodGenres));
         }
+        if (requiredGameplayFeatures.size() == 1) {
+            map.put("NEED_GPF", requiredGameplayFeatures.get(0).toString());
+        }
         return map;
     }
 
@@ -124,6 +134,16 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
                 firstGoodGenre = false;
             }
         }
+        StringBuilder requiredGameplayFeatures = new StringBuilder();
+        boolean firstGameplayFeature = true;
+        for (Integer i : this.requiredGameplayFeatures) {
+            if (!firstGameplayFeature) {
+                requiredGameplayFeatures.append(", ");
+            } else {
+                firstGameplayFeature = true;
+            }
+            requiredGameplayFeatures.append(GameplayFeatureManager.INSTANCE.getContentNameById(i));
+        }
         return I18n.INSTANCE.get("mod.gameplayFeature.addMod.optionPaneMessage.firstPart") + "\n\n" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "\n" +
                 I18n.INSTANCE.get("commonText.description") + ": " + description + "\n" +
@@ -134,6 +154,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
                 I18n.INSTANCE.get("commonText.developmentCost") + ": " + devCosts + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.badGenres") + "*\n\n" + badGenresOut.toString() + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.goodGenres") + "*\n\n" + goodGenresOut.toString() + "\n" +
+                "\n*" + I18n.INSTANCE.get("mod.gameplayFeature.addMod.components.requiredGameplayFeatures") + "*\n\n" + requiredGameplayFeatures.toString() + "\n" +
                 "\n*" + I18n.INSTANCE.get("commonText.points") + "*\n\n" +
                 I18n.INSTANCE.get("commonText.gameplay") + ": " + gameplay + "\n" +
                 I18n.INSTANCE.get("commonText.graphic") + ": " + graphic + "\n" +

@@ -4,9 +4,13 @@
 
 ### New feature
 - Gameplay features can now be marked to require internet (#110)
+- Gameplay features can now require another gameplay feature (#111)
 
-### Buf fixes
+### Bug fixes
 - Fixed #109 - New file format of NpcGames.txt is now read correctly
+
+### Related game patchnotes
+- MODDING: Gameplay feature can now require other gameplay features (e.g. "Online Multiplayer" requires "Multiplayer Matchmaker") "[NEED_GPF]"
 
 ## [v4.5.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.5.0) (Latest Version)
 

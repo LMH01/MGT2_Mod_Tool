@@ -386,6 +386,20 @@ public class Utils {
      * @return Returns the selected entry names. If cancel is pressed null is returned.
      */
     public static List<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled) {
+        return getSelectedEntries(labelText, windowTile, stringArraySafetyFeaturesOn, stringArraySafetyFeaturesDisabled, true);
+    }
+    
+    /**
+     * Opens a window where the user can select entries from a list.
+     *
+     * @param labelText                         The text that should be displayed at the top of the window
+     * @param windowTile                        The window title that the window should get
+     * @param stringArraySafetyFeaturesOn       An array containing the list items when the safety features are on
+     * @param stringArraySafetyFeaturesDisabled An array containing the list items when the safety features are off
+     * @param multipleSelections                Determines if multiple elements should be made selectable
+     * @return Returns the selected entry names. If cancel is pressed null is returned.
+     */
+    public static List<String> getSelectedEntries(String labelText, String windowTile, String[] stringArraySafetyFeaturesOn, String[] stringArraySafetyFeaturesDisabled, boolean multipleSelections) {
         List<String> returnValues = new ArrayList<>();
         JLabel labelChooseEntry = new JLabel(labelText);
         String[] existingListContent;
@@ -395,7 +409,11 @@ public class Utils {
             existingListContent = stringArraySafetyFeaturesOn;
         }
         JList<String> listAvailableEntries = new JList<>(existingListContent);
-        listAvailableEntries.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (multipleSelections) {
+            listAvailableEntries.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        } else {
+            listAvailableEntries.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        }
         listAvailableEntries.setLayoutOrientation(JList.VERTICAL);
         listAvailableEntries.setVisibleRowCount(-1);
         JScrollPane scrollPaneAvailableEntries = new JScrollPane(listAvailableEntries);

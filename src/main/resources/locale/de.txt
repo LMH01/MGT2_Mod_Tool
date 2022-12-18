@@ -208,6 +208,7 @@ commonText.country|Land
 commonText.notSet|Nicht gesetzt
 commonText.female|Weiblich
 commonText.componentRating|Bauteilbewertung
+commonText.selected|ausgewählt
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien
@@ -332,6 +333,10 @@ mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip|<html>W
 mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip|<html>Wähle diese Option, um die Kompatibilität mit Mobilgeräten für diese Gameplay-Funktion zu aktivieren.<br>Wenn diese Gameplay-Funktion deaktiviert ist, funktioniert sie auf Mobilgeräten nicht.
 mod.gameplayFeature.addMod.components.requiresInternet|Benötigt Internet
 mod.gameplayFeature.addMod.components.requiresInternet.toolTip|<html>Wähle diese Option, damit dieses Gameplay Feature Internet benötigt
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures|Vorausgesetztes Gameplay Feature
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures.toolTip|<html>Wähle aus, welches Gameplay Feature<br>als Voraussetzung für dieses gelten soll.
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures.select|Wähle das Vorausgesetze Gameplay Feature aus:
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures.window|Vorausgesetztes Gameplay Feature auswählen
 mod.theme.addTheme.unableToAddTheme|Thema kann nicht hinzugefügt werden:
 mod.theme.addTheme.unableToAddTheme.error1|Bitte wähle mindestens ein genre aus.
 mod.theme.addTheme.unableToAddTheme.error2|Bitte gebe den Namen für das Thema ein.

@@ -209,6 +209,7 @@ commonText.country|Country
 commonText.notSet|Not set
 commonText.female|Female
 commonText.componentRating|Component rating
+commonText.selected|selected
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia
@@ -332,6 +333,10 @@ mod.gameplayFeature.addMod.components.arcadeCabinetCompatibility.toolTip|<html>S
 mod.gameplayFeature.addMod.components.mobileCompatibility.toolTip|<html>Select to enable compatibility with mobile devices for this gameplay feature.<br>If disabled this gameplay feature does not work on mobile devices.
 mod.gameplayFeature.addMod.components.requiresInternet|Requires internet
 mod.gameplayFeature.addMod.components.requiresInternet.toolTip|<html>Select to make the gameplay feature require internet
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures|Required gampelay feature
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures.toolTip|<html>Select which gameplay feature<br>should apply as a requirement for this one.
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures.select|Choose the required gameplay feature:
+mod.gameplayFeature.addMod.components.requiredGameplayFeatures.window|Choose the required gameplay feature
 mod.theme.addTheme.unableToAddTheme|Unable to add theme:
 mod.theme.addTheme.unableToAddTheme.error1|Please select at least one genre.
 mod.theme.addTheme.unableToAddTheme.error2|Please enter a name for your theme.
