@@ -515,7 +515,7 @@ Game Console Tycoon <9><11>
 Game of Witches <1>
 Game Over <10><18>
 Gargoyle Mission <2><3><15>
-Gate of Secret <2><3><15>
+Gate of Secrets <2><3><15>
 GAX Marines <4><13>
 Gen-V <1><18>
 General <4><13>
