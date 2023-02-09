@@ -327,9 +327,10 @@ public class Backup {
             createThemeFilesBackup(true, showTextAreaMessages);
             backupImages(forceImages);
             // Rewrite default content file to conain content that might not be marked as default content
+            ContentAdministrator.analyzeContents();
             DefaultContentManager.writeNewDefaultContentFile();
             return "";
-        } catch (IOException e) {
+        } catch (IOException | ModProcessingException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
             e.printStackTrace();
             return e.getMessage();
