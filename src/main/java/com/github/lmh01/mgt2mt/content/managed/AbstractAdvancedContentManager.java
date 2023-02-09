@@ -24,8 +24,8 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     private Map<String, Integer> contentIdsByNames;
     private Map<Integer, String> contentNamesByIds;
 
-    public AbstractAdvancedContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
-        super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
+    public AbstractAdvancedContentManager(String mainTranslationKey, String id, File gameFile, Charset gameFileCharset) {
+        super(mainTranslationKey, id, gameFile, gameFileCharset);
     }
 
     /**

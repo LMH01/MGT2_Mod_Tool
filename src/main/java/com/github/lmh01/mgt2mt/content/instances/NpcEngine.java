@@ -69,12 +69,12 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
         if (genre != -1) {
             ArrayList<String> genres = new ArrayList<>();
             genres.add(GenreManager.INSTANCE.getContentNameById(genre));
-            map.put(GenreManager.INSTANCE.getExportType(), genres);
+            map.put(GenreManager.INSTANCE.getId(), genres);
         }
         if (platform != -1) {
             ArrayList<String> platforms = new ArrayList<>();
             platforms.add(PlatformManager.INSTANCE.getContentNameById(platform));
-            map.put(PlatformManager.INSTANCE.getExportType(), platforms);
+            map.put(PlatformManager.INSTANCE.getId(), platforms);
         }
         return map;
     }

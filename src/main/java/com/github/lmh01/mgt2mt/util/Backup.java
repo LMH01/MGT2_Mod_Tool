@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -325,6 +326,8 @@ public class Backup {
             backupSaveGames(true);
             createThemeFilesBackup(true, showTextAreaMessages);
             backupImages(forceImages);
+            // Rewrite default content file to conain content that might not be marked as default content
+            DefaultContentManager.writeNewDefaultContentFile();
             return "";
         } catch (IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());

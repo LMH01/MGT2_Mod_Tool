@@ -58,7 +58,7 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
     @Override
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> dependencies = new HashMap<>();
-        dependencies.put(GenreManager.INSTANCE.getExportType(), SharingHelper.getExportNamesArray(GenreManager.INSTANCE, genres));
+        dependencies.put(GenreManager.INSTANCE.getId(), SharingHelper.getExportNamesArray(GenreManager.INSTANCE, genres));
         return dependencies;
     }
 

@@ -23,7 +23,7 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
     public static final String[] compatibleModToolVersions = new String[]{"4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", MadGamesTycoon2ModTool.VERSION};
 
     private DevLegendsManager() {
-        super("devLegend", "dev_legend", "default_devLegends.txt", MGT2Paths.TEXT_DATA.getPath().resolve("DevLegends.txt").toFile(), StandardCharsets.UTF_8);
+        super("devLegend", "dev_legend", MGT2Paths.TEXT_DATA.getPath().resolve("DevLegends.txt").toFile(), StandardCharsets.UTF_8);
     }
 
     @Override

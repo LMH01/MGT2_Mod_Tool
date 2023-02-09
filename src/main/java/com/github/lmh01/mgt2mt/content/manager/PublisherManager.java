@@ -43,7 +43,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     public static final Path defaultPublisherIcon = MGT2Paths.COMPANY_ICONS.getPath().resolve("87.png");
 
     private PublisherManager() {
-        super("publisher", "publisher", "default_publisher.txt", MGT2Paths.TEXT_DATA.getPath().resolve("Publisher.txt").toFile(), StandardCharsets.UTF_8);
+        super("publisher", "publisher", MGT2Paths.TEXT_DATA.getPath().resolve("Publisher.txt").toFile(), StandardCharsets.UTF_8);
     }
 
     @Override

@@ -106,16 +106,16 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         if (subGenre != null) {
             genres.add(GenreManager.INSTANCE.getContentNameById(subGenre));
         }
-        map.put(GenreManager.INSTANCE.getExportType(), genres);
+        map.put(GenreManager.INSTANCE.getId(), genres);
         Set<String> themes = new HashSet<>();
         themes.add(ThemeManager.INSTANCE.getContentNameById(theme));
         if (subTheme != null) {
             themes.add(ThemeManager.INSTANCE.getContentNameById(subTheme));
         }
-        map.put(ThemeManager.INSTANCE.getExportType(), themes);
+        map.put(ThemeManager.INSTANCE.getId(), themes);
         Set<String> publisher = new HashSet<>();
         publisher.add(PublisherManager.INSTANCE.getContentNameById(this.publisher));
-        map.put(PublisherManager.INSTANCE.getExportType(), publisher);
+        map.put(PublisherManager.INSTANCE.getId(), publisher);
         return map;
     }
 

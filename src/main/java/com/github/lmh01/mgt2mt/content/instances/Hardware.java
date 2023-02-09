@@ -114,7 +114,7 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
     @Override
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        map.put(GameplayFeatureManager.INSTANCE.getExportType(), SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, requiredGameplayFeatures));
+        map.put(GameplayFeatureManager.INSTANCE.getId(), SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, requiredGameplayFeatures));
         return map;
     }
 

@@ -95,7 +95,7 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
         if (badGenreId != null) {
             genres.add(GenreManager.INSTANCE.getContentNameById(badGenreId));
         }
-        map.put(GenreManager.INSTANCE.getExportType(), genres);
+        map.put(GenreManager.INSTANCE.getId(), genres);
         return map;
     }
 

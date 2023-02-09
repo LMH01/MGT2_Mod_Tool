@@ -51,7 +51,14 @@ public class ThreadHandler {
                 WindowMain.lockMenuItems(true);
             }
             UpdateChecker.checkForUpdates(false, false);
-            DefaultContentManager.performStartTasks();
+            if (!DefaultContentManager.DEFAULT_CONTENT_FILE.exists()) {
+                try {
+                    ContentAdministrator.analyzeContents();
+                    DefaultContentManager.writeNewDefaultContentFile();
+                } catch (ModProcessingException e) {
+                    LOGGER.error("Error while generating the default content file", e);
+                }
+            }
             deleteTempFolder();
             ContentAdministrator.initializeDefaultContents();
             try {

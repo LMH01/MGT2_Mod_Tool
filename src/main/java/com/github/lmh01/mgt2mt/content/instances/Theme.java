@@ -65,7 +65,7 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
         for (Integer integer : compatibleGenres) {
             genreNames.add(GenreManager.INSTANCE.getContentNameById(integer));
         }
-        map.put(GenreManager.INSTANCE.getExportType(), genreNames);
+        map.put(GenreManager.INSTANCE.getId(), genreNames);
         return map;
     }
 

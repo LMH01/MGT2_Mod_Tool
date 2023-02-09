@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.OperationHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
@@ -14,6 +15,10 @@ import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -24,9 +29,8 @@ import java.util.Map;
 
 public abstract class AbstractBaseContentManager implements BaseContentManager {
     private final String mainTranslationKey;
-    private final String defaultContentFileName;
     private String[] defaultContent;
-    private final String exportType;
+    private final String id;
     private final ArrayList<JMenuItem> modMenuItems;
     private final JMenuItem exportMenuItem;
     protected final File gameFile;
@@ -34,11 +38,10 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     private ImportHelperMap currentImportHelperMap;
     private int maxId = 0;
 
-    public AbstractBaseContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
+    public AbstractBaseContentManager(String mainTranslationKey, String id, File gameFile, Charset gameFileCharset) {
         this.mainTranslationKey = mainTranslationKey;
-        this.defaultContentFileName = defaultContentFileName;
         this.defaultContent = null;
-        this.exportType = exportType;
+        this.id = id;
         this.modMenuItems = getInitialModMenuItems();
         this.exportMenuItem = getInitialExportMenuItem();
         this.gameFile = gameFile;
@@ -104,15 +107,14 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     protected String[] getDefaultContentFromFiles() {
         try {
             if (this instanceof AbstractSimpleContentManager) {
-                return ReadDefaultContent.getDefault(defaultContentFileName, ((AbstractSimpleContentManager) this)::getReplacedLine);
+                return ReadDefaultContent.getDefault(id, ((AbstractSimpleContentManager) this)::getReplacedLine);
             } else {
-                return ReadDefaultContent.getDefault(defaultContentFileName);
+                return ReadDefaultContent.getDefault(id);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, String.format(I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles") + " " + e.getMessage()), I18n.INSTANCE.get("analyzer." + getMainTranslationKey() + ".getCustomContentString.errorWhileScanningDefaultFiles"), JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ignored) {
+            // Default content file does not exist, default content is set as empty string array.
         }
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -278,11 +280,6 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     }
 
     @Override
-    public String getDefaultContentFileName() {
-        return defaultContentFileName;
-    }
-
-    @Override
     public String[] getDefaultContent() {
         return defaultContent;
     }
@@ -329,8 +326,8 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     }
 
     @Override
-    public String getExportType() {
-        return exportType;
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -384,6 +381,6 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
 
     @Override
     public String getExportImageName(String identifier, String name) {
-        return getExportType().toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + name.toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + identifier;
+        return getId().toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + name.toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + identifier;
     }
 }

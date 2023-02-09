@@ -26,7 +26,7 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
     public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", MadGamesTycoon2ModTool.VERSION};
 
     private GameplayFeatureManager() {
-        super("gameplayFeature", "gameplay_feature", "default_gameplay_features.txt", MGT2Paths.TEXT_DATA.getPath().resolve("GameplayFeatures.txt").toFile(), StandardCharsets.UTF_8);
+        super("gameplayFeature", "gameplay_feature", MGT2Paths.TEXT_DATA.getPath().resolve("GameplayFeatures.txt").toFile(), StandardCharsets.UTF_8);
     }
 
     @Override

@@ -163,7 +163,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         for (Integer integer : requiredGameplayFeatures) {
             gameplayFeatures.add(GameplayFeatureManager.INSTANCE.getContentNameById(integer));
         }
-        map.put(GameplayFeatureManager.INSTANCE.getExportType(), gameplayFeatures);
+        map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
         return map;
     }
 

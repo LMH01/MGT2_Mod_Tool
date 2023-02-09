@@ -129,11 +129,6 @@ public interface BaseContentManager {
     void analyzeFile() throws ModProcessingException;
 
     /**
-     * Returns the default content file name
-     */
-    String getDefaultContentFileName();
-
-    /**
      * @return The default content for this content type represented as string array
      */
     String[] getDefaultContent();
@@ -174,9 +169,9 @@ public interface BaseContentManager {
     String getTypePlural();
 
     /**
-     * @return The export name of this content
+     * @return The unique id of this content
      */
-    String getExportType();
+    String getId();
 
     /**
      * Creates a backup of the text file for this content

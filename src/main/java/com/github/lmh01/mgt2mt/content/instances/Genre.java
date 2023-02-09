@@ -162,12 +162,12 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
     @Override
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
         Map<String, Object> map = new HashMap<>();
-        map.put(contentType.getExportType(), new HashSet<>(SharingHelper.getExportNamesArray(contentType, compatibleGenres)));
-        map.put(ThemeManager.INSTANCE.getExportType(), new HashSet<>(SharingHelper.getExportNamesArray(ThemeManager.INSTANCE, compatibleThemes)));
+        map.put(contentType.getId(), new HashSet<>(SharingHelper.getExportNamesArray(contentType, compatibleGenres)));
+        map.put(ThemeManager.INSTANCE.getId(), new HashSet<>(SharingHelper.getExportNamesArray(ThemeManager.INSTANCE, compatibleThemes)));
         Set<String> gameplayFeatures = new HashSet<>();
         gameplayFeatures.addAll(SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, goodGameplayFeatures));
         gameplayFeatures.addAll(SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, badGameplayFeatures));
-        map.put(GameplayFeatureManager.INSTANCE.getExportType(), gameplayFeatures);
+        map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
         return map;
     }
 

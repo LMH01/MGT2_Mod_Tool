@@ -2,28 +2,16 @@ package com.github.lmh01.mgt2mt.util.manager;
 
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
-import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
-import com.github.lmh01.mgt2mt.data_stream.ReadDefaultContent;
-import com.github.lmh01.mgt2mt.util.I18n;
-import com.github.lmh01.mgt2mt.util.LogFile;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.util.ModManagerPaths;
-import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
-import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
-import com.moandjiezana.toml.Toml;
+import com.github.lmh01.mgt2mt.util.Utils;
 import com.moandjiezana.toml.TomlWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DefaultContentManager {
@@ -33,178 +21,30 @@ public class DefaultContentManager {
      * This is the version in which the default content files are initially saved.
      * It indicates to what game update the default files correspond that ship with this tool.
      */
-    private static final String DEFAULT_CONTENT_VERSION = "BUILD 2023.01.07A";
-    private static final String NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL = "https://www.dropbox.com/s/hd7f7c2b9ybr5gt/newest_default_content_version.txt?dl=1";
-    private static final String NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL = "https://www.dropbox.com/s/7l89pg9x4venqje/newest_default_content.toml?dl=1";
     public static final File DEFAULT_CONTENT_FILE = ModManagerPaths.MAIN.getPath().resolve("default_content.toml").toFile();
 
     /**
-     * Analyzes the current default content file "%appdata%\LMH01\MGT2_Mod_Manager\default_content.toml" to
-     * determine if they are up-to-date.
-     * If the files are not up-to-date they will be updated.
-     * If they do not exist yet, they will be created from the default content files located in "src\main\resources\default_content
-     */
-    public static void performStartTasks() {
-        switch (analyzeCurrentContentVersion()) {
-            case FILE_UP_TO_DATE: {
-                LogFile.write("The current default content file is up-to-date.");
-            }
-            break;
-            case FILE_OUTDATED: {
-                LogFile.write("The current default content file is outdated.");
-                updateToml();
-            }
-            break;
-            case FILE_MISSING_OR_LOCALLY_OUTDATED: {
-                LogFile.write("The default content file has not yet been generated or is corrupted. A new file will be generated.");
-                if (Files.exists(DEFAULT_CONTENT_FILE.toPath())) {
-                    try {
-                        Files.delete(DEFAULT_CONTENT_FILE.toPath());
-                    } catch (IOException e) {
-                        DebugHelper.warn(DefaultContentManager.class, "Failed to delete the default content file.");
-                        e.printStackTrace();
-                    }
-                }
-                writeNewDefaultContentFile();
-                performStartTasks();
-            }
-            break;
-            case UPDATE_CHECK_FAILED: {
-                LogFile.write("Unable to check for default content update.");
-            }
-            break;
-        }
-    }
-
-    /**
-     * Analyzes if the default content files are up-to-date.
-     *
-     * @return Returns {@link DefaultContentStatus#FILE_MISSING_OR_LOCALLY_OUTDATED} if the default content file has not been created yet,
-     * is corrupt or the packaged default content file is newer than the file that already exists.
-     * Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
-     * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
-     * Returns {@link DefaultContentStatus#UPDATE_CHECK_FAILED} if the default content file exists but the update check has failed.
-     */
-    private static DefaultContentStatus analyzeCurrentContentVersion() {
-        try {
-            if (DEFAULT_CONTENT_FILE.exists()) {
-                Toml toml = new Toml().read(DefaultContentManager.DEFAULT_CONTENT_FILE);
-                String currentVersion = toml.getString("version");
-                // Check if currently packaged version is newer than the currently installed version
-                if (isVersionNewer(currentVersion, DEFAULT_CONTENT_VERSION).equals(DefaultContentStatus.FILE_OUTDATED)) {
-                    return DefaultContentStatus.FILE_MISSING_OR_LOCALLY_OUTDATED;
-                }
-                DebugHelper.debug(LOGGER, "default content version: " + currentVersion);
-                try {
-                    URL url = new URL(NEWEST_DEFAULT_CONTENT_VERSION_DOWNLOAD_URL);
-                    Scanner scanner = new Scanner(url.openStream());
-                    final String NEWEST_VERSION = scanner.nextLine();
-                    DebugHelper.debug(LOGGER, "Newest default content version: " + NEWEST_VERSION);
-                    scanner.close();
-                    return isVersionNewer(currentVersion, NEWEST_VERSION);
-                } catch (IOException e) {
-                    return DefaultContentStatus.UPDATE_CHECK_FAILED;
-                }
-            } else {
-                return DefaultContentStatus.FILE_MISSING_OR_LOCALLY_OUTDATED;
-            }
-        } catch (RuntimeException | ExceptionInInitializerError e) {
-            e.printStackTrace();
-            return DefaultContentStatus.FILE_MISSING_OR_LOCALLY_OUTDATED;
-        }
-    }
-
-    /**
-     * @param currentVersion The version of the default content file
-     * @param newestVersion  The version that has been downloaded from the internet
-     * @return Returns {@link DefaultContentStatus#FILE_OUTDATED} if the default content file is no longer up-to-date.
-     * Returns {@link DefaultContentStatus#FILE_UP_TO_DATE} if the default content file is up-to-date.
-     */
-    private static DefaultContentStatus isVersionNewer(String currentVersion, String newestVersion) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-        LocalDate currentVersionDate = LocalDate.parse(currentVersion.replace("BUILD ", "").replaceAll("[a-zA-Z]", ""), formatter);
-        LocalDate newestVersionDate = LocalDate.parse(newestVersion.replace("BUILD ", "").replaceAll("[a-zA-Z]", ""), formatter);
-        if (newestVersionDate.isAfter(currentVersionDate)) {
-            return DefaultContentStatus.FILE_OUTDATED;
-        } else if (newestVersionDate.equals(currentVersionDate)) {
-            Character a = currentVersion.charAt(currentVersion.length() - 1);
-            Character b = newestVersion.charAt(newestVersion.length() - 1);
-            if (a.compareTo(b) == 0 || a.compareTo(b) > 0) {
-                return DefaultContentStatus.FILE_UP_TO_DATE;
-            } else {
-                return DefaultContentStatus.FILE_OUTDATED;
-            }
-        } else {
-            return DefaultContentStatus.FILE_UP_TO_DATE;
-        }
-    }
-
-    /**
      * Writes a new default content file to the appdata mod tool directory.
-     * The values from "src/main/resources/default_content" are used to write that file.
+     * The content that exists in the game files is set as default content.
      * If the default content file already exists it is replaced.
      */
     public static void writeNewDefaultContentFile() {
         TomlWriter tomlWriter = new TomlWriter();
         Map<String, Object> map = new HashMap<>();
         try {
-            map.put("version", DEFAULT_CONTENT_VERSION);
-            for (String string : getDefaultContentNames()) {
-                map.put(string.replace(".txt", ""), getDefaultFromSystemResource(string));
+            map.put("generation_date", Utils.getCurrentDateTime());
+            for (BaseContentManager manager : ContentAdministrator.contentManagers) {
+                map.put(manager.getId(), manager.getContentByAlphabet());
+            }
+            if (Files.exists(DEFAULT_CONTENT_FILE.toPath())) {
+                Files.delete(DEFAULT_CONTENT_FILE.toPath());
             }
             tomlWriter.write(map, DEFAULT_CONTENT_FILE);
-            LOGGER.info("A new default content toml file has been created successfully!");
-        } catch (IOException e) {
+            LOGGER.info("A new default content file has been created successfully!");
+        } catch (IOException | ModProcessingException e) {
             LOGGER.info("A problem occurred while writing a new default content toml file: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    /**
-     * @return Returns a string containing the contents of the file. The file will be searched in "src/main/resources/default_content".
-     * Use {@link ReadDefaultContent#getDefault(String)} instead, if you would like to get the custom content that is saved in appdata.
-     */
-    private static String[] getDefaultFromSystemResource(String fileName) throws IOException {
-        DebugHelper.debug(LOGGER, "file name: " + fileName);
-        ArrayList<String> arrayList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default_content/" + fileName)), StandardCharsets.UTF_8));
-        String currentLine;
-        while ((currentLine = reader.readLine()) != null) {
-            arrayList.add(currentLine);
-        }
-        reader.close();
-        String[] strings = new String[arrayList.size()];
-        arrayList.toArray(strings);
-        return strings;
-    }
-
-    /**
-     * Downloads the newest toml file to this location "%appdata%\LMH01\MGT2_Mod_Manager\default_content.toml".
-     * The existing file will be replaced.
-     */
-    private static void updateToml() {
-        ProgressBarHelper.setText(I18n.INSTANCE.get("progressBar.initializingTool") + ": " + I18n.INSTANCE.get("progressBar.downloadingDefaultContentUpdate"));
-        LOGGER.info("Updating default content toml file...");
-        try {
-            File tomlDownload = ModManagerPaths.MAIN.getPath().resolve("default_content_update.toml").toFile();
-            DataStreamHelper.downloadFile(NEWEST_DEFAULT_CONTENT_DOWNLOAD_URL, tomlDownload);
-            Files.delete(DEFAULT_CONTENT_FILE.toPath());
-            Files.copy(Paths.get(tomlDownload.getPath()), Paths.get(DEFAULT_CONTENT_FILE.getPath()));
-            Files.delete(tomlDownload.toPath());
-            LogFile.write("The default_content.toml file has been updated successfully!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @return Returns an array list containing the filename of the default content files that should be read
-     */
-    private static ArrayList<String> getDefaultContentNames() {
-        ArrayList<String> strings = new ArrayList<>();
-        for (BaseContentManager manager : ContentAdministrator.contentManagers) {
-            strings.add(manager.getDefaultContentFileName());
-        }
-        return strings;
-    }
 }

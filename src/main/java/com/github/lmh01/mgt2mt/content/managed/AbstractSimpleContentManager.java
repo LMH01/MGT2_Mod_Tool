@@ -18,8 +18,8 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
     public Map<Integer, String> fileContent;
     private Map<String, Integer> contentIdsByNames;
 
-    public AbstractSimpleContentManager(String mainTranslationKey, String exportType, String defaultContentFileName, File gameFile, Charset gameFileCharset) {
-        super(mainTranslationKey, exportType, defaultContentFileName, gameFile, gameFileCharset);
+    public AbstractSimpleContentManager(String mainTranslationKey, String id, File gameFile, Charset gameFileCharset) {
+        super(mainTranslationKey, id, gameFile, gameFileCharset);
     }
 
     /**

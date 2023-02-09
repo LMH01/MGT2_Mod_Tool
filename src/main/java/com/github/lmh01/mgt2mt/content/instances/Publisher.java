@@ -109,7 +109,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         Map<String, Object> map = new HashMap<>();
         Set<String> genres = new HashSet<>();
         genres.add(GenreManager.INSTANCE.getContentNameById(genreId));
-        map.put(GenreManager.INSTANCE.getExportType(), genres);
+        map.put(GenreManager.INSTANCE.getId(), genres);
         return map;
     }
 

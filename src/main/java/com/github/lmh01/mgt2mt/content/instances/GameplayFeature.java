@@ -171,7 +171,7 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
         Set<String> set = new HashSet<>();
         set.addAll(SharingHelper.getExportNamesArray(GenreManager.INSTANCE, goodGenres));
         set.addAll(SharingHelper.getExportNamesArray(GenreManager.INSTANCE, badGenres));
-        map.put(GenreManager.INSTANCE.getExportType(), set);
+        map.put(GenreManager.INSTANCE.getId(), set);
         return map;
     }
 
