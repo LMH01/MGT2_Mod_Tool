@@ -326,11 +326,8 @@ public class Backup {
             backupSaveGames(true);
             createThemeFilesBackup(true, showTextAreaMessages);
             backupImages(forceImages);
-            // Rewrite default content file to conain content that might not be marked as default content
-            ContentAdministrator.analyzeContents();
-            DefaultContentManager.writeNewDefaultContentFile();
             return "";
-        } catch (IOException | ModProcessingException e) {
+        } catch (IOException e) {
             LOGGER.error("Unable to create initial backup: " + e.getMessage());
             e.printStackTrace();
             return e.getMessage();
@@ -475,6 +472,13 @@ public class Backup {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.createNewInitialBackup.backupError") + "<br><br>" + returnValue, I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            }
+            // Rewrite default content file to conain content that might not be marked as default content
+            try {
+                ContentAdministrator.analyzeContents();
+                DefaultContentManager.writeNewDefaultContentFile();
+            } catch (ModProcessingException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class ThreadHandler {
                 WindowMain.lockMenuItems(true);
             }
             UpdateChecker.checkForUpdates(false, false);
-            if (!DefaultContentManager.DEFAULT_CONTENT_FILE.exists()) {
+            if (!Files.exists(DefaultContentManager.DEFAULT_CONTENT_FILE.toPath())) {
                 try {
                     ContentAdministrator.analyzeContents();
                     DefaultContentManager.writeNewDefaultContentFile();
