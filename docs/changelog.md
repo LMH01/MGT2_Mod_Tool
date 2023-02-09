@@ -1,12 +1,12 @@
 # Changelog
 
-## [v4.7.0]
+## [v4.7.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.7.0) (Latest Version)
 
 ### Other
 - Default content is no longer shipped with the tool, instead the default content files are generated from the game files.
   - This way I will no longer have to upload fixed default content files when the game is updated.
 
-## [v4.6.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.6.0) (Latest Version)
+## [v4.6.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.6.0)
 
 ### New feature
 - Gameplay features can now be marked to require internet (#110)
