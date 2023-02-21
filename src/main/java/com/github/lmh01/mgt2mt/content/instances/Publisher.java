@@ -7,6 +7,7 @@ import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,7 +133,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
     @Override
     public void removePictures() throws IOException {
         //delete image only if it is not a standard game image
-        if (Integer.parseInt(icon.gameFile.getName().replaceAll("[^0-9]", "")) > 187) {
+        if (Integer.parseInt(icon.gameFile.getName().replaceAll("[^0-9]", "")) > Settings.maxPictureId) {
             Files.delete(icon.gameFile.toPath());
         }
     }

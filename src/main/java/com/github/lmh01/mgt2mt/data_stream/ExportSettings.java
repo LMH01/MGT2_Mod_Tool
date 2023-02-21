@@ -47,6 +47,7 @@ public class ExportSettings {
             map.put("enableExportStorage", Settings.enableExportStorage);
             map.put("enableInitialBackupCheck", Settings.enableInitialBackupCheck);
             map.put("writeTextAreaOutputToConsole", Settings.writeTextAreaOutputToConsole);
+            map.put("maxPictureId", Settings.maxPictureId);
             for (Map.Entry<SafetyFeature, Boolean> entry : Settings.safetyFeatures.entrySet()) {
                 map.put("safety_feature_" + entry.getKey().getIdentifier(), entry.getValue());
             }
