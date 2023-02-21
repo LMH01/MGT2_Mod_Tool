@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.7.1]
+
+### Bug fixes
+- Fixed #113 - Original image files where deleted by accident when original publishers where replaced
+
 ## [v4.7.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.7.0) (Latest Version)
 
 ### Other
