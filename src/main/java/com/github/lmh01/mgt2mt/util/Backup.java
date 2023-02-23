@@ -5,11 +5,14 @@ import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
+import com.github.lmh01.mgt2mt.data_stream.ExportSettings;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.ProgressBarHelper;
 import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.DefaultContentManager;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
+import com.github.lmh01.mgt2mt.util.settings.Settings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -480,6 +483,8 @@ public class Backup {
             } catch (ModProcessingException e) {
                 e.printStackTrace();
             }
+            // Update max icon id
+            updateMaxIconId();
         }
     }
 
@@ -524,5 +529,23 @@ public class Backup {
                 }
             }
         }
+    }
+
+    /**
+     * Checks the {@link MGT2Paths#COMPANY_ICONS} folder to determine what the max icon id is.
+     * The determined value is then written into the settings file.
+     * This function is only called when the initial backup is created.
+     */
+    private static void updateMaxIconId() {
+        ArrayList<File> files = DataStreamHelper.getFilesInFolderBlackList(MGT2Paths.COMPANY_ICONS.getPath(), ".meta");
+        int maxPictureId = -1;
+        for (File file : files) {
+            if (file.getPath().contains(".png")) {
+                maxPictureId += 1;
+            }
+        }
+        System.out.println("Max picture id: " + maxPictureId);
+        Settings.maxPictureId = maxPictureId;
+        ExportSettings.export(Settings.settingsFile);
     }
 }

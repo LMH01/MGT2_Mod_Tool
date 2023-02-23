@@ -203,7 +203,7 @@ public class DataStreamHelper {
 
     /**
      * @param path      The folder that should be searched for files.
-     * @param whiteList When the string entered here is found/equals the filename the file will be added to the arrayListFiles. All other files wont be added
+     * @param whiteList When the string entered here is found or equals the filename the file will be added to the arrayListFiles. All other files wont be added
      * @return Returns an array list containing all files inside the input folder
      */
     public static ArrayList<File> getFilesInFolderWhiteList(Path path, String whiteList) {

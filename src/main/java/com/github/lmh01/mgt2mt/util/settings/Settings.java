@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,10 +35,11 @@ public class Settings {
     public static boolean enableExportStorage = true; //If true each new export will be saved in a new folder.
     public static boolean enableInitialBackupCheck = true; //If true the user will be notified if the initial backup is outdated
     public static boolean writeTextAreaOutputToConsole = false;
-    public static int maxPictureId = 196;
+    public static int maxPictureId = 196;// Is automatically set when an intial backup is created, value is determined by checking how many icons are in the games directory
     public static Map<SafetyFeature, Boolean> safetyFeatures;
     public static String language = "English";
     public static UpdateBranch updateBranch = UpdateBranch.RELEASE;
+    public static final File settingsFile;
 
     public static void resetSettings() {
         setMGT2Folder(false);
@@ -60,6 +62,7 @@ public class Settings {
             }
         }
         safetyFeatures = SafetyFeature.getDefaults();
+        settingsFile = ModManagerPaths.MAIN.getPath().resolve("settings.toml").toFile();
     }
 
     /**

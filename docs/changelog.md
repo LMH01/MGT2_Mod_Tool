@@ -1,6 +1,9 @@
 # Changelog
 
-## [v4.7.1]
+## [v4.8.0]
+
+### Other
+- Number of default game icons is now automatically set (used when publishers are replaced) (#115)
 
 ### Bug fixes
 - Fixed #113 - Original image files where deleted by accident when original publishers where replaced
