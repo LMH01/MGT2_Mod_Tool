@@ -82,14 +82,8 @@ public class DataStreamHelper {
             if (firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);
                 if (currentLine.contains("EOF")) {
-                    //This is being put into the list when the file is empty except for the [EOF]
-                    //A dummy id and name are inserted
-                    mapCurrent.put("ID", "-1");
-                    mapCurrent.put("NAME EN", "Dummy");
-                    mapCurrent.put("PIC", "0");
-                    fileParts.add(mapCurrent);
                     reader.close();
-                    return fileParts;
+                    return new ArrayList<>();
                 }
                 firstLine = false;
             }
