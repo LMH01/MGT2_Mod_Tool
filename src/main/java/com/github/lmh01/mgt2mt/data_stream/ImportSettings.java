@@ -39,7 +39,6 @@ public class ImportSettings {
             Settings.enableExportStorage = toml.getBoolean("enableExportStorage");
             Settings.enableInitialBackupCheck = toml.getBoolean("enableInitialBackupCheck");
             Settings.writeTextAreaOutputToConsole = toml.getBoolean("writeTextAreaOutputToConsole");
-            Settings.maxPictureId = Integer.parseInt(toml.getString("maxPictureId"));
             Map<SafetyFeature, Boolean> safetyFeatures = new HashMap<>();
             for (SafetyFeature safetyFeature : SafetyFeature.values()) {
                 if (toml.getBoolean("safety_feature_" + safetyFeature.getIdentifier()) != null) {
@@ -50,6 +49,7 @@ public class ImportSettings {
                 }
             }
             Settings.safetyFeatures = safetyFeatures;
+            Settings.maxPictureId = Math.toIntExact(toml.getLong("maxPictureId"));
             return true;
         } catch (RuntimeException e) {
             LOGGER.info("Unable to import settings!:");
