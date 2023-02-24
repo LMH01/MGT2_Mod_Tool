@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.8.0]
+## [v4.8.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.8.0) (Latest Version)
 
 ### Other
 - Number of default game icons is now automatically set (used when publishers are replaced) (#115)
@@ -10,7 +10,7 @@
 - Fixed #113 - Original image files where deleted by accident when original publishers where replaced
 - Fixed #114 - Dummy content was written to game files when it should not have
 
-## [v4.7.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.7.0) (Latest Version)
+## [v4.7.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.7.0)
 
 ### Other
 - Default content is no longer shipped with the tool, instead the default content files are generated from the game files.

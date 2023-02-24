@@ -25,7 +25,7 @@ public class EngineFeatureManager extends AbstractAdvancedContentManager {
 
     public static final EngineFeatureManager INSTANCE = new EngineFeatureManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", MadGamesTycoon2ModTool.VERSION};
 
     private EngineFeatureManager() {
         super("engineFeature", "engine_feature", MGT2Paths.TEXT_DATA.getPath().resolve("EngineFeatures.txt").toFile(), StandardCharsets.UTF_8);
