@@ -209,6 +209,8 @@ commonText.notSet|Nicht gesetzt
 commonText.female|Weiblich
 commonText.componentRating|Bauteilbewertung
 commonText.selected|ausgewählt
+commonText.enableGamepass|Gamepass Eintrag aktivieren
+commonText.gamepassGames|Gemepass Eintrag Wert
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien
@@ -385,6 +387,8 @@ mod.platform.addPlatform.components.button.addPicture.actionListener.label.textA
 mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip|Dies ist das Jahr, in welchem das Bild aktiv wird
 mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded|<html>Plattform-Bilder wurden bereits hinzugefügt.<br>Möchtest du sie zurücksetzen und neue Bilder hinzufügen?<br><br>Warnung: Das kann nicht rückgängig gemacht werden!
 mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title|Bilder bereits hinzugefügt
+mod.platform.addPlatform.components.spinner.gamepassGames.toolTip|Gibt den Wert des GAMEPASS-Schlüssels an
+mod.platform.addPlatform.components.checkBox.enableGamepass.toolTip|<html>Aktivieren, damit der GAMEPASS-Schlüssel in die Spieldatei für diese Plattform gedruckt wird.<br>Aktuell bin ich mir nicht sicher, was der Wert für eine Auswirkung hat,<br>aber der Vollständigkeit halber kann man ihn dennoch setzen.<br>Meine Vermutung ist, dass es etwas mit der minimalen Anzahl an Spielen zu tun hat,<br>die für diese Plattform im Gamepass verfügbar gemacht werden sollen.
 mod.platform.addPlatform.title|Plattform hinzufügen
 mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Namen für den Hersteller ein!
 mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:

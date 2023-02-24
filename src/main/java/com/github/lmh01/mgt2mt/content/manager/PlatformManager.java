@@ -118,6 +118,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         if (map.containsKey("STARTPLATFORM")) {
             EditHelper.printLine("STARTPLATFORM", map, bw);
         }
+        EditHelper.printLine("GAMEPASS", map, bw);
         EditHelper.printLine("END", map, bw);
     }
 
@@ -159,6 +160,10 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 }
             }
         }
+        Integer gamepassGames = null;
+        if (map.get("GAMEPASS") != null) {
+            gamepassGames = Integer.parseInt(map.get("GAMEPASS"));
+        }
         return new Platform(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -176,7 +181,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt(map.get("COMPLEX")),
                 hasInternet,
                 PlatformType.getFromId(Integer.parseInt(map.get("TYP"))),
-                map.containsKey("STARTPLATFORM")
+                map.containsKey("STARTPLATFORM"),
+                gamepassGames
         );
     }
 
@@ -264,6 +270,10 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 }
             }
         }
+        Integer gamepassGames = null;
+        if (transformedMap.get("GAMEPASS") != null) {
+            gamepassGames = Integer.parseInt(transformedMap.get("GAMEPASS"));
+        }
         return new Platform(
                 transformedMap.get("NAME EN"),
                 getIdFromMap(transformedMap),
@@ -281,7 +291,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt(transformedMap.get("COMPLEX")),
                 hasInternet,
                 PlatformType.getFromId(Integer.parseInt(transformedMap.get("TYP"))),
-                transformedMap.containsKey("STARTPLATFORM")
+                transformedMap.containsKey("STARTPLATFORM"),
+                gamepassGames
         );
     }
 
@@ -362,6 +373,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         Map<Integer, File> pictureMap = new HashMap<>();//This map contains all the pictures that should be added for the platform
         JButton buttonAddPictures = new JButton(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture"));
         buttonAddPictures.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.button.addPicture.toolTip"));
+        
         buttonAddPictures.addActionListener(actionEvent -> {
             boolean continueWithMessage = false;
             if (picturesAdded.get()) {
@@ -468,7 +480,31 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         JCheckBox checkBoxStartplatform = new JCheckBox(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.startplatform"));
         checkBoxStartplatform.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.startplatform.toolTip"));
 
-        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType), WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL), WindowHelper.getSpinnerPanel(spinnerComplexity, SpinnerType.COMPLEXITY), WindowHelper.getSpinnerPanel(spinnerUnits, SpinnerType.UNITS), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost, SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerDevKitCost, SpinnerType.PRICE), checkBoxInternet, checkBoxStartplatform, labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures};
+        JSpinner spinnerGamepassGames = WindowHelper.getBaseSpinner("mod.platform.addPlatform.components.spinner.gamepassGames.toolTip", 10, 1, 30, 1);
+        spinnerGamepassGames.setEnabled(false);
+        JLabel labelGamepassGames = new JLabel(I18n.INSTANCE.get("commonText.gamepassGames") + ": ");
+        labelGamepassGames.setEnabled(false);
+        JCheckBox chkbxEnableGamepass = new JCheckBox(I18n.INSTANCE.get("commonText.enableGamepass"));
+        chkbxEnableGamepass.setToolTipText(I18n.INSTANCE.get("mod.platform.addPlatform.components.checkBox.enableGamepass.toolTip"));
+        chkbxEnableGamepass.addActionListener(actionEvent -> {
+            if (chkbxEnableGamepass.isSelected()) {
+                spinnerGamepassGames.setEnabled(true);
+                labelGamepassGames.setEnabled(true);
+            } else {
+                spinnerGamepassGames.setEnabled(false);
+                labelGamepassGames.setEnabled(false);
+            }
+        });
+        JPanel panelGamepass = new JPanel();
+        panelGamepass.add(labelGamepassGames);
+        panelGamepass.add(spinnerGamepassGames);
+
+        Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType),
+            WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL),
+            WindowHelper.getSpinnerPanel(spinnerComplexity, SpinnerType.COMPLEXITY), WindowHelper.getSpinnerPanel(spinnerUnits, SpinnerType.UNITS), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost,
+            SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerDevKitCost, SpinnerType.PRICE), checkBoxInternet, checkBoxStartplatform, chkbxEnableGamepass, panelGamepass,
+            labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures,
+        };
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 if (!textFieldName.getText().equals(I18n.INSTANCE.get("mod.platform.addPlatform.components.textFieldName.initialValue"))) {
@@ -544,6 +580,11 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     pT = platformType;
                                 }
                             }
+
+                            Integer gpg = null;
+                            if (chkbxEnableGamepass.isSelected()) {
+                                gpg = Integer.parseInt(spinnerGamepassGames.getValue().toString());
+                            }
                             Platform platform = new Platform(
                                     textFieldName.getText(),
                                     null,
@@ -561,7 +602,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     Integer.parseInt(spinnerComplexity.getValue().toString()),
                                     checkBoxInternet.isSelected(),
                                     pT,
-                                    checkBoxStartplatform.isSelected()
+                                    checkBoxStartplatform.isSelected(),
+                                    gpg
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);

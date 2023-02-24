@@ -210,6 +210,8 @@ commonText.notSet|Not set
 commonText.female|Female
 commonText.componentRating|Component rating
 commonText.selected|selected
+commonText.enableGamepass|Enable gamepass entry
+commonText.gamepassGames|Gemepass key value
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia
@@ -386,6 +388,8 @@ mod.platform.addPlatform.components.button.addPicture.actionListener.label.textA
 mod.platform.addPlatform.components.button.addPicture.actionListener.button.addPicture.actionListener.spinnerChangeYear.toolTip|This is the year in which the image becomes active
 mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded|<html>Platform pictures have already been added.<br>Would you like to reset them and add new pictures?<br><br>Warning: This can not be undone!
 mod.platform.addPlatform.components.button.addPicture.actionListener.pictureAlreadyAdded.title|Pictures already added
+mod.platform.addPlatform.components.spinner.gamepassGames.toolTip|Specifies the value of the GAMEPASS key
+mod.platform.addPlatform.components.checkBox.enableGamepass.toolTip|<html>Check to enable the print of the GAMEPASS key to the games file for this platform<br>I'm currently not sure what the impact of this key is,<br>but for the sake of completeness this key and it's value can be set.<br>My guess is that it correlates to the minimum amount of games<br>that should be made available in that platform's gamepass,<br>but that is not yet confirmed.
 mod.platform.addPlatform.title|Add platform
 mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the manufacturer first!
 mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:

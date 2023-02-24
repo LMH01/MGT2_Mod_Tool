@@ -4,6 +4,7 @@
 
 ### Other
 - Number of default game icons is now automatically set (used when publishers are replaced) (#115)
+- The value for the GAMEPASS key in the publisher file can now be set, even tough I don't quite know yet what it does
 
 ### Bug fixes
 - Fixed #113 - Original image files where deleted by accident when original publishers where replaced

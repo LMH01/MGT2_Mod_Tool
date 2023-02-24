@@ -29,6 +29,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
     final boolean hasInternet;
     final PlatformType type;
     final boolean startPlatform;
+    final Integer gamepassGames;
 
     public Platform(String name,
                     Integer id,
@@ -46,7 +47,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                     Integer complexity,
                     boolean hasInternet,
                     PlatformType type,
-                    boolean startPlatform) throws ModProcessingException {
+                    boolean startPlatform,
+                    Integer gamepassGames) throws ModProcessingException {
         super(PlatformManager.INSTANCE, name, id, translationManager);
         this.manufacturer = manufacturer;
         this.manufacturerTranslations = manufacturerTranslations;
@@ -62,6 +64,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         this.hasInternet = hasInternet;
         this.type = type;
         this.startPlatform = startPlatform;
+        this.gamepassGames = gamepassGames;
         // Check if platform images are valid
         ArrayList<Integer> assignedIds = new ArrayList<>();
         for (PlatformImage image : platformImages) {
@@ -120,6 +123,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         if (startPlatform) {
             map.put("STARTPLATFORM", "");
         }
+        if (gamepassGames != null && gamepassGames > 0) {
+            map.put("GAMEPASS", gamepassGames.toString());
+        }
         return map;
     }
 
@@ -139,6 +145,15 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
             }
             requiredGameplayFeaturesString.append(GameplayFeatureManager.INSTANCE.getContentNameById(integer));
         }
+        boolean enableGamepass = false;
+        if (gamepassGames != null && gamepassGames > 0) {
+            enableGamepass = true;
+        }
+        StringBuilder gpg = new StringBuilder();
+        gpg.append(I18n.INSTANCE.get("commonText.enableGamepass")).append(": ").append(Utils.getTranslatedValueFromBoolean(enableGamepass));
+        if (enableGamepass) {
+            gpg.append(", ").append(I18n.INSTANCE.get("commonText.gamepassGames")).append(": ").append(gamepassGames);
+        }
         return "<html>" +
                 I18n.INSTANCE.get("mod.platform.addPlatform.optionPaneMessage.firstPart") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
@@ -153,8 +168,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 I18n.INSTANCE.get("commonText.complexity") + ": " + complexity + "<br>" +
                 I18n.INSTANCE.get("commonText.internet") + ": " + Utils.getTranslatedValueFromBoolean(hasInternet) + "<br>" +
                 I18n.INSTANCE.get("commonText.type") + ": " + type.getTypeName() + "<br>" +
-                I18n.INSTANCE.get("commonText.startplatform") + ": " + Utils.getTranslatedValueFromBoolean(startPlatform);
-    }
+                I18n.INSTANCE.get("commonText.startplatform") + ": " + Utils.getTranslatedValueFromBoolean(startPlatform) + "<br>" +
+                gpg.toString();
+}
 
     @Override
     public Map<String, Object> getDependencyMap() throws ModProcessingException {
