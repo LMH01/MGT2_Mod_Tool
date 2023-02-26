@@ -1002,7 +1002,11 @@ public class SharingManager {
             manager.initializeImportHelperMap();
             for (Map<String, Object> map : mods) {
                 if (map.get("mod_type").equals(manager.getId())) {
-                    manager.getImportHelperMap().addEntry(map.get("NAME EN").toString());
+                    if (map.containsKey("forced_id")) {
+                        manager.getImportHelperMap().addEntry(map.get("NAME EN").toString(), Integer.parseInt(map.get("forced_id").toString()));
+                    } else {
+                        manager.getImportHelperMap().addEntry(map.get("NAME EN").toString());
+                    }
                 }
             }
             ProgressBarHelper.increment();
@@ -1035,7 +1039,9 @@ public class SharingManager {
             for (Map<String, Object> map : contents) {
                 if (map.get("mod_type").equals(manager.getId())) {
                     try {
-                        baseContents.add(manager.constructContentFromImportMap(map, Paths.get((String) map.get("assets_folder"))));
+                        AbstractBaseContent content = manager.constructContentFromImportMap(map, Paths.get((String) map.get("assets_folder")));
+                        content.id = manager.getImportHelperMap().getContentIdByName(content.name);
+                        baseContents.add(content);
                     } catch (ModProcessingException e) {
                         TextAreaHelper.printStackTrace(e);
                         int result = JOptionPane.showConfirmDialog(null, String.format(I18n.INSTANCE.get("textArea.importAll.errorConstructingContent"), map.get("NAME EN"), manager.getType()), I18n.INSTANCE.get("frame.title.error"), JOptionPane.YES_NO_OPTION);
@@ -1262,6 +1268,8 @@ public class SharingManager {
                             // Change assets folder entry
                             exportMap.replace("assets_folder", imagePath.toString());
                         }
+                        // Set forced id
+                        exportMap.put("forced_id", content.id);
                         modifiedContents.add(exportMap);
                     } catch (ModProcessingException e) {
                         throw new ModProcessingException("Unable to modify import map!", e);

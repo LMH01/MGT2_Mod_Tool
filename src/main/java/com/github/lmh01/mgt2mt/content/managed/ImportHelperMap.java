@@ -48,6 +48,17 @@ public class ImportHelperMap {
     }
 
     /**
+     * Adds a new entry to the helper map.
+     * The name will be linked to the input id.
+     * Should only be used when content is replaced or modified.
+     * @param name The name that should be added
+     * @param forcedId The id for this content
+     */
+    public void addEntry(String name, int forcedId) {
+        helperMap.put(name, forcedId);
+    }
+
+    /**
      * Searches the helperMap for the name and returns the corresponding id.
      *
      * @throws ModProcessingException When the id was not found
