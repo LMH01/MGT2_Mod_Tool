@@ -641,7 +641,7 @@ public class SharingManager {
         List<String> invalidAssetFolders = new ArrayList<>();
         for (Map<String, Object> map : mods) {
             Path path = Paths.get(map.get("assets_folder").toString());
-            if (!Files.exists(path) && map.get("requires_pictures").equals(true)) {
+            if (!Files.exists(path) && map.containsKey("requires_pictures") && map.get("requires_pictures").equals(true)) {
                 if (!invalidAssetFolders.contains(path.toString())) {
                     invalidAssetFolders.add(path.toString());
                 }
