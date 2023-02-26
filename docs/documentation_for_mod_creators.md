@@ -100,7 +100,7 @@ file is located. This folder contains all images that are required by the mods i
 work if the images are missing.
 
 ### requires_pictures key
-Mods that require pictures will have the `requires_pictures` key set to `true`. This way the mod tool knows that it should check if
+Mods that require pictures will have the `requires_pictures` key set to `true` by default (this should not be changed). This way the mod tool knows that it should check if
 the assets folder for that mod exists. If this key is missing, the import might fail after a "save stage" when pictures are missing.
 "Save stage" meaning that game files might already be changed when the import failes. This usually means that the initial backup
 will have to be restored.
