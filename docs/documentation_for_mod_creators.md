@@ -18,6 +18,9 @@ especially helpful for mod creators.
 5. [Mark a mod as replacement](#mark-a-mod-as-replacement)
    1. [Example](#example)
    2. [Limitations](#limitations)
+6. [Mark a mod to modify already existing content](#mark-a-mod-to-modify-already-existing-content)
+   1. [Example](#example-1)
+   2. [Limitations](#limitations-1)
 
 ## Toml file format
 This tool uses the ``.toml`` file format to store exported mods.
