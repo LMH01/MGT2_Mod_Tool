@@ -235,10 +235,36 @@ When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams`
 
 ## Mark a mod to modify already existing content
 
-The dependencies section has to be correct!
+Mods can be marked to modify already existing content by adding the following line to the toml-section of the content:
+```toml
+modifies = "CONTENT_TO_MODIFY"
+```
+This way one can for example just change the picture and the name of an publisher. The advantage against the `replaces` tag is
+that only specific keys can be changed which helps to keep the mod compatible with new game versions as the mod will not have to be
+modified again.
+
+### Example
+
+This is the data entry for the publisher Williams which will modify Microarts:
+```toml
+[mods.publisher.williams]
+modifies = "Microarts"
+"NAME EN" = "Williams"
+"NAME GE" = "Williams"
+iconName = "williams.png"
+
+[mods.publisher.williams.dependencies]
+genre = ["Action"] 
+```
+With this entry Microarts is modified in the following way:
+- English name is changed to "Williams"
+- German name is changed to "Williams"
+- The ingame icon is changed to the icon `williams.png` which is located in the assets folder
+
+Everything else remains the same.
 
 ### Limitations
-- Missing dependencies are not checked so make sure that everything exists
+- Missing dependencies are not checked so it is **important** to make sure that the dependencies filed is complete
     - When dependencies are missing the result can be a crashed import or a bugged game
 - Only content of the same type can be modified
 - When original content is modified the mod tool might not pickup that something has been modified
