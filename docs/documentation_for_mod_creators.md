@@ -232,3 +232,11 @@ When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams`
 ### Limitations
 - Only content of the same type can be replaced
 - The original content can only be restored by restoring the initial backup
+
+## Mark a mod to modify already existing content
+
+### Limitations
+- Missing dependencies are not checked so make sure that everything exists
+    - When dependencies are missing the result can be a crashed import or a bugged game
+- Only content of the same type can be modified
+- The original content can only be restored by restoring the initial backup

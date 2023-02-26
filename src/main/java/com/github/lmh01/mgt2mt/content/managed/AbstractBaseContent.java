@@ -10,6 +10,8 @@ public abstract class AbstractBaseContent {
     public final AbstractBaseContentManager contentType;
     public final String name;
     public Integer id;
+    // Used to store if this content is used to modify/replace another content. If yes this value is set and contains the name of the content that is touched.
+    public String touches = null;
 
     public AbstractBaseContent(AbstractBaseContentManager contentType, String name, Integer id) {
         this.contentType = contentType;

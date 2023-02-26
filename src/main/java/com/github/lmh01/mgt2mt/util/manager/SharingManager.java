@@ -113,7 +113,10 @@ public class SharingManager {
         }
 
         // Check if some mods where found that replace default content
-        int contentToReplace = contentToReplace(modMaps);
+        int contentToReplace = countKeyOccurances(modMaps, "replaces");
+        
+        // Check if some mods where found that overwrite default content
+        int contentToOverwrite = countKeyOccurances(modMaps, "modifies");
 
         // Display summary of what mods have been found
         JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
@@ -167,10 +170,22 @@ public class SharingManager {
             return;
         }
 
+        // Check if some mods will replace or overwrite the same mod, if yes abort import
+        // Construct content that should be replaced
+        ArrayList<AbstractBaseContent> replacedContent = getReplacedContent(importMap);
+        // Construct content that should be modified
+        ArrayList<AbstractBaseContent> contentToModify = getContentToModify(importMap);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingConflicts"));
+        ArrayList<String> importConflicts = getImportConflicts(contentToModify, replacedContent);
+        if (!importConflicts.isEmpty()) {
+            //TODO add import conflict message
+            LOGGER.error("Unable to import, conflict");
+            return;
+        }
+
+        // Remove content that 
         if (allowReplacement.isSelected()) {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.replaceModsFound.removing"));
-            // Construct content that should be replaced
-            ArrayList<AbstractBaseContent> replacedContent = getReplacedContent(importMap);
             // Remove content that will be replaced
             for (AbstractBaseContent content : replacedContent) {
                 content.contentType.removeContent(content.name);
@@ -183,6 +198,9 @@ public class SharingManager {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
             return;
         }
+
+        // Check if all content that should be overwritten exists
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingOverwritten"));
 
         // Set the new mod ids
         setImportHelperMaps(modsChecked);
@@ -680,6 +698,10 @@ public class SharingManager {
         Map<BaseContentManager, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
         boolean showMissingDependencyDialog = true;
         for (Map<String, Object> parentMap : mods) {// parentMap is the current mod map
+            // Skip check when mod overwrites another mod TODO check if this check can be removed and modified content can be checked for missing dependencies
+            if (parentMap.containsKey("modifies")) {
+                continue;
+            }
             for (BaseContentManager parent : ContentAdministrator.contentManagers) {//The parent is the content the map belongs to
                 if (!parent.getId().equals(parentMap.get("mod_type").toString())) {
                     continue;
@@ -1103,13 +1125,12 @@ public class SharingManager {
     }
 
     /**
-     * Counts how many mods are included in the mod map that would replace a default content.
-     * @return Return the amount of default content that will be replaced
+     * Counts how many times `key` occures in the set of maps`.
      */
-    private static int contentToReplace(Set<Map<String, Object>> modMaps) {
+    private static int countKeyOccurances(Set<Map<String, Object>> modMaps, String key) {
         int amount = 0;
         for (Map<String, Object> map : modMaps) {
-            String replaces = (String) map.get("replaces");
+            String replaces = (String) map.get(key);
             if (replaces == null) {
                 continue;
             }
@@ -1125,22 +1146,64 @@ public class SharingManager {
      * @return An ArrayList containing all the content that will be replaced.
      */
     private static ArrayList<AbstractBaseContent> getReplacedContent(Set<Map<String, Object>> modMaps) {
+        return getSpecificContent(modMaps, "replaces");
+    }
+
+    /**
+     * Checks the input map for content that modifies content and returns an array list containing the content that should be modified.
+     * @param modMaps The map containing the content that should be checked.
+     * @return An ArrayList containing all the content tht will be replaced.
+     */
+    private static ArrayList<AbstractBaseContent> getContentToModify(Set<Map<String, Object>> modMaps) {
+        return getSpecificContent(modMaps, "modifies");
+    }
+
+    /**
+     * Builds content for all values behind the key in the maps
+     * @param modMaps The maps that contain mod data
+     * @param mapKey The key under wich the entry can be found
+     * @return An ArrayList containing all the specified content
+     */
+    private static ArrayList<AbstractBaseContent> getSpecificContent(Set<Map<String, Object>> modMaps, String mapKey) {
         ArrayList<AbstractBaseContent> contents = new ArrayList<>();
         for (Map<String, Object> map : modMaps) {
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 if (map.get("mod_type").equals(manager.getId())) {
                     try {
-                        if (map.get("replaces") == null) {
+                        if (map.get(mapKey) == null && map.get(mapKey) != "") {
                             continue;
                         }
-                        contents.add(manager.constructContentFromName((String) map.get("replaces")));
+                        AbstractBaseContent c = manager.constructContentFromName((String) map.get(mapKey));
+                        c.touches = (String) map.get(mapKey);
+                        contents.add(c);
                     } catch (ModProcessingException e) {
-                        DebugHelper.warn(SharingManager.class, "Could not construct content that should be replaced, name is invalid: " + e.getMessage());
+                        if (mapKey == "replaces") {
+                            DebugHelper.warn(SharingManager.class, "Could not construct content that should be replaced, name is invalid: " + e.getMessage());
+                        } else {
+                            //TODO Add error message that import can not continue because content that should be modifies is missing (Or implement check before this function is called)
+                            DebugHelper.warn(SharingManager.class, "Could not construct content that should be modified, name is invalid: " + e.getMessage());
+                        }
                     }
                 }
             }
         }
         return contents;
+    }
+
+    /**
+     * Checks if content that should be modified and content that should be replaced have mutual entries.
+     * @return ArrayList that contains conflicts, empty if no conflics are found.
+     */
+    private static ArrayList<String> getImportConflicts(ArrayList<AbstractBaseContent> contentToModify, ArrayList<AbstractBaseContent> replacedContent) {
+        ArrayList<String> conflicts = new ArrayList<>();
+        for (AbstractBaseContent c1 : contentToModify) {
+            for (AbstractBaseContent c2: replacedContent) {
+                if (c1.contentType == c2.contentType && c1.touches.equals(c2.touches)) {
+                    conflicts.add(c1.contentType.getType() + " - " + c1.touches);
+                }
+            }
+        }
+        return conflicts;
     }
 
     /**
