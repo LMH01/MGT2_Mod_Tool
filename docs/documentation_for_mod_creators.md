@@ -235,6 +235,8 @@ When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams`
 
 ## Mark a mod to modify already existing content
 
+The dependencies section has to be correct!
+
 ### Limitations
 - Missing dependencies are not checked so make sure that everything exists
     - When dependencies are missing the result can be a crashed import or a bugged game

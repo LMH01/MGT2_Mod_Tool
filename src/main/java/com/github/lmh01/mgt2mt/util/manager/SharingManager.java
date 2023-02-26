@@ -27,6 +27,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class SharingManager {
     //This class contains functions with which it is easy to export/import things
@@ -746,7 +747,13 @@ public class SharingManager {
                             continue;
                         }
                         DebugHelper.debug(LOGGER, I18n.INSTANCE.get("textArea.importAll.requiresDependencies") + ": " + parentMap.get("mod_type") + " - " + parentMap.get("NAME EN") + " - " + parentMap.get("dependencies"));
-                        ArrayList<String> arrayList = (ArrayList<String>) entry.getValue();
+                        ArrayList<String> arrayList;
+                        if (entry.getValue() instanceof ArrayList) {
+                            arrayList = (ArrayList<String>)entry.getValue();
+                        } else {
+                            HashSet<String> hs = (HashSet<String>) entry.getValue();
+                            arrayList = (ArrayList<String>)hs.stream().collect(Collectors.toList());
+                        }
                         for (String childName : arrayList) {
                             if (doesModExist(childName, child.getId()) || doesMapContainMod(mods, childName, child.getId())) {
                                 continue;
@@ -1245,7 +1252,6 @@ public class SharingManager {
                             }
                             exportMap.replace(entry.getKey(), entry.getValue());
                         }
-                        //exportMap.put("mod_type", content.contentType.getId());
                         modifiedContents.add(exportMap);
                     } catch (ModProcessingException e) {
                         throw new ModProcessingException("Unable to modify import map!", e);
