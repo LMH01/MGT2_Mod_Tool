@@ -127,7 +127,6 @@ public class SharingManager {
         JCheckBox allowReplacement = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox"));
         allowReplacement.setToolTipText("<html>" + I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox.toolTip"));
 
-        //TODO add translations
         JLabel label3 = new JLabel(String.format("<html><br>" + I18n.INSTANCE.get("textArea.importAll.modificationsFound"), amountContentToModify));
         JCheckBox chkBxAllowModification = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.modificationsFound.checkBox"));
         chkBxAllowModification.setToolTipText("<html>" + I18n.INSTANCE.get("textArea.importAll.modificationsFound.checkBox.toolTip"));
@@ -1205,7 +1204,7 @@ public class SharingManager {
                         if (mapKey == "replaces") {
                             DebugHelper.warn(SharingManager.class, "Could not construct content that should be replaced, name is invalid: " + e.getMessage());
                         } else {
-                            //TODO Add error message that import can not continue because content that should be modifies is missing (Or implement check before this function is called)
+                            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.contentToModifyMissing") + "<br><br>" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                             DebugHelper.warn(SharingManager.class, "Could not construct content that should be modified, name is invalid: " + e.getMessage());
                             throw new ModProcessingException("Unable to construct content that should be modified!", e);
                         }

@@ -612,6 +612,7 @@ dialog.sharingManager.importAll.assetsFoldersMissing|The following assets folder
 dialog.sharingManager.importAll.missingPictures|The following pictures where not found:
 dialog.sharingManager.importall.importConflics|<html>A failure occured during import:<br><br>The following mods should be modified and replaced simultaneously, which is not possible!:
 dialog.sharingManager.importall.importConflics.title|Conflict while importing
+dialog.sharingManager.importAll.contentToModifyMissing|The following content should be modified but is missing:
 dialog.sharingManager.analyzeReturnValue.alreadyExists|already exists
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Supported versions:
 dialog.sharingManager.importThings.error.firstPart|Unable to import:

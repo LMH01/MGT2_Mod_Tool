@@ -610,8 +610,9 @@ dialog.sharingManager.importAll.errorWhileImportingMod.firstPart|<html>Fehler be
 dialog.sharingManager.importAll.errorWhileImportingMod.secondPart|Soll mit dem Import der anderen Mods fortgefahren werden?<br>Warnung: Dies kann zu Problemen führen, da Abhängigkeiten fehlen könnten.
 dialog.sharingManager.importAll.assetsFoldersMissing|Die folgenden Assets-Ordner wurden nicht gefunden:
 dialog.sharingManager.importAll.missingPictures|Die folgenden Bilder fehlen:
-dialog.sharingManager.importall.importConflics|<html>Beim Importieren ist ein Fehler aufgetreten:<br><br>Die folgenden Mods sollen gleichzeitig<br>bearbeitet und ersetzt werden, was nicht geht!:
-dialog.sharingManager.importall.importConflics.title|Konflikt beim Importieren
+dialog.sharingManager.importAll.importConflics|<html>Beim Importieren ist ein Fehler aufgetreten:<br><br>Die folgenden Mods sollen gleichzeitig<br>bearbeitet und ersetzt werden, was nicht geht!:
+dialog.sharingManager.importAll.importConflics.title|Konflikt beim Importieren
+dialog.sharingManager.importAll.contentToModifyMissing|Der folgende Inhalt soll modifizert werden, es gibt ihn aber nicht:
 dialog.sharingManager.analyzeReturnValue.alreadyExists|existiert bereits
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Unterstützte Versionen:
 dialog.sharingManager.importThings.error.firstPart|Import unmöglich:
