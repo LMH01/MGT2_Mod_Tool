@@ -196,10 +196,13 @@ public class SharingManager {
             return;
         }
 
-        // Edit import map to contain the maps for the modified contents
+        // Edit import map to contain the maps for the modified contents.
+        // If modification is not allowed, the modification instructions are removed without adding the modified content. 
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.editingImportMap"));
         if (chkBxAllowModification.isSelected()) {
-            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.editingImportMap"));
-            editImportMap(importMap, contentToModify);
+            editImportMap(importMap, contentToModify, true);
+        } else {
+            editImportMap(importMap, contentToModify, false);
         }
 
         // Remove content that is modified
@@ -1181,7 +1184,6 @@ public class SharingManager {
         return getSpecificContent(modMaps, "modifies");
     }
 
-
     /**
      * Builds content for all values behind the key in the maps
      * @param modMaps The maps that contain mod data
@@ -1220,8 +1222,10 @@ public class SharingManager {
      * the map of the modifed content, ready to be added to the game.
      * @param importMaps The set containg all maps that contain content that should be imported
      * @param contentToModify A list of contents that should be modified, used to build the export map that is modified
+     * @param addContents If true the contents that have been constructed will be added to the set of import maps. If this is
+     *                    not set, only the construction manual is removed.
      */
-    private static void editImportMap(Set<Map<String, Object>> importMaps, ArrayList<AbstractBaseContent> contentToModify) throws ModProcessingException {
+    private static void editImportMap(Set<Map<String, Object>> importMaps, ArrayList<AbstractBaseContent> contentToModify, boolean addContents) throws ModProcessingException {
         Set<Map<String, Object>> modifiedContents = new HashSet<>();
         Set<Map<String, Object>> modificationInstructions = new HashSet<>();
         for (Map<String, Object> map : importMaps) {
@@ -1254,7 +1258,9 @@ public class SharingManager {
             importMaps.remove(map);
         }
         // Add modified contents to importMap
-        importMaps.addAll(modifiedContents);
+        if (addContents) {
+            importMaps.addAll(modifiedContents);
+        }
     }
 
     /**
