@@ -1,6 +1,9 @@
 # Changelog
 
-## [v4.9.0]
+## [v4.9.0-alpha1]
+
+### New feature
+- Exported content can now be marked to modify existing content. See the [documentation](documentation_for_mod_creators.md) for further details. (#86)
 
 ### Other
 - `PIC` entry is no longer added to export toml file as this was redundant and could caused confusion
