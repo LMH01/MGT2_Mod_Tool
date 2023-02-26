@@ -1252,9 +1252,21 @@ public class SharingManager {
                             }
                             exportMap.replace(entry.getKey(), entry.getValue());
                         }
+                        if (content instanceof RequiresPictures) {
+                            // Copy original images to temp folder
+                            Path imagePath = ModManagerPaths.TEMP.getPath().resolve("import_" + Utils.getCurrentDateTime());
+                            Files.createDirectories(imagePath);
+                            ((RequiresPictures)content).exportPictures(imagePath);
+                            // Copy new images to temp folder
+                            DataStreamHelper.copyDirectory(Paths.get((String)map.get("assets_folder")), imagePath);
+                            // Change assets folder entry
+                            exportMap.replace("assets_folder", imagePath.toString());
+                        }
                         modifiedContents.add(exportMap);
                     } catch (ModProcessingException e) {
                         throw new ModProcessingException("Unable to modify import map!", e);
+                    } catch (IOException e) {
+                        throw new ModProcessingException("Unable to copy pictures to temp folder!", e);
                     }
                 }
             }
