@@ -212,6 +212,10 @@ commonText.componentRating|Component rating
 commonText.selected|selected
 commonText.enableGamepass|Enable gamepass entry
 commonText.gamepassGames|Gemepass key value
+commonText.replaces|replaces
+commonText.replace|Replace
+commonText.modifies|modifies
+commonText.modify|Modify
 
 commonText.country.argentina|Argentina
 commonText.country.armenia|Armenia

@@ -211,6 +211,10 @@ commonText.componentRating|Bauteilbewertung
 commonText.selected|ausgewählt
 commonText.enableGamepass|Gamepass Eintrag aktivieren
 commonText.gamepassGames|Gemepass Eintrag Wert
+commonText.replaces|ersetzt
+commonText.replace|Ersetzen
+commonText.modifies|modifiziert
+commonText.modify|Modifizieren
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien

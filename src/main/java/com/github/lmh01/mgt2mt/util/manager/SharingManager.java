@@ -118,6 +118,10 @@ public class SharingManager {
         
         // Check if some mods where found that overwrite default content
         int amountContentToModify = countKeyOccurances(modMaps, "modifies");
+        
+        TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.replace") + ": " + contentToReplace);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.modify") + ": " + amountContentToModify);
+        TextAreaHelper.appendText(I18n.INSTANCE.get("commonText.add.upperCase") + ": " + (modMaps.size()-contentToReplace-amountContentToModify));
 
         // Display summary of what mods have been found
         JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
@@ -288,7 +292,18 @@ public class SharingManager {
             List<String> modNames = new ArrayList<>();
             for (Map<String, Object> map : set) {
                 if (map.get("mod_type").equals(manager.getId())) {
-                    modNames.add(map.get("NAME EN").toString());
+                    StringBuilder name = new StringBuilder();
+                    name.append(map.get("NAME EN").toString());
+                    if (map.containsKey("replaces")) {
+                        name.append(" - ").append(I18n.INSTANCE.get("commonText.replaces"))
+                            .append(" ")
+                            .append(map.get("replaces"));
+                    } else if (map.containsKey("modifies")) {
+                        name.append(" - ").append(I18n.INSTANCE.get("commonText.modifies"))
+                            .append(" ")
+                            .append(map.get("modifies"));
+                    }
+                    modNames.add(name.toString());
                 }
             }
             selectedMods.put(manager, new AtomicReference<>(modNames));
