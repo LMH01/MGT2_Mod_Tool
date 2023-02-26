@@ -133,14 +133,14 @@ public class SharingManager {
         chkBxAllowModification.setToolTipText("<html>" + I18n.INSTANCE.get(""));
 
         JComponent[] components;
-        if (contentToReplace == 0) {
-            components = new JComponent[]{label, checkBox};
+        if (contentToReplace > 0 && amountContentToModify > 0) {
+            components = new JComponent[]{label, checkBox, label2, allowReplacement, label3, chkBxAllowModification};
         } else if (contentToReplace > 0 && amountContentToModify == 0){
             components = new JComponent[]{label, checkBox, label2, allowReplacement};
         } else if (contentToReplace == 0 && amountContentToModify > 0) {
             components = new JComponent[]{label, checkBox, label3, chkBxAllowModification};
         } else {
-            components = new JComponent[]{label, checkBox, label2, allowReplacement, label3, chkBxAllowModification};
+            components = new JComponent[]{label, checkBox};
         }
         boolean continueImport = false;
         if (importType.equals(ImportType.RESTORE_POINT) || importType.equals(ImportType.REAL_PUBLISHERS)) {
@@ -724,10 +724,6 @@ public class SharingManager {
         Map<BaseContentManager, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
         boolean showMissingDependencyDialog = true;
         for (Map<String, Object> parentMap : mods) {// parentMap is the current mod map
-            // Skip check when mod overwrites another mod TODO check if this check can be removed and modified content can be checked for missing dependencies
-            if (parentMap.containsKey("modifies")) {
-                continue;
-            }
             for (BaseContentManager parent : ContentAdministrator.contentManagers) {//The parent is the content the map belongs to
                 if (!parent.getId().equals(parentMap.get("mod_type").toString())) {
                     continue;
@@ -1171,7 +1167,7 @@ public class SharingManager {
      * @param modMaps The map containing the content that should be checked.
      * @return An ArrayList containing all the content that will be replaced.
      */
-    private static ArrayList<AbstractBaseContent> getReplacedContent(Set<Map<String, Object>> modMaps) {
+    private static ArrayList<AbstractBaseContent> getReplacedContent(Set<Map<String, Object>> modMaps) throws ModProcessingException {
         return getSpecificContent(modMaps, "replaces");
     }
 
@@ -1180,7 +1176,7 @@ public class SharingManager {
      * @param modMaps The map containing the content that should be checked.
      * @return An ArrayList containing all the content tht will be replaced.
      */
-    private static ArrayList<AbstractBaseContent> getContentToModify(Set<Map<String, Object>> modMaps) {
+    private static ArrayList<AbstractBaseContent> getContentToModify(Set<Map<String, Object>> modMaps) throws ModProcessingException {
         return getSpecificContent(modMaps, "modifies");
     }
 
@@ -1191,7 +1187,7 @@ public class SharingManager {
      * @param mapKey The key under wich the entry can be found
      * @return An ArrayList containing all the specified content
      */
-    private static ArrayList<AbstractBaseContent> getSpecificContent(Set<Map<String, Object>> modMaps, String mapKey) {
+    private static ArrayList<AbstractBaseContent> getSpecificContent(Set<Map<String, Object>> modMaps, String mapKey) throws ModProcessingException {
         ArrayList<AbstractBaseContent> contents = new ArrayList<>();
         for (Map<String, Object> map : modMaps) {
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
@@ -1209,6 +1205,7 @@ public class SharingManager {
                         } else {
                             //TODO Add error message that import can not continue because content that should be modifies is missing (Or implement check before this function is called)
                             DebugHelper.warn(SharingManager.class, "Could not construct content that should be modified, name is invalid: " + e.getMessage());
+                            throw new ModProcessingException("Unable to construct content that should be modified!", e);
                         }
                     }
                 }
@@ -1236,12 +1233,14 @@ public class SharingManager {
                     modificationInstructions.add(map);
                     try {
                         Map<String, Object> exportMap = content.getExportMap();
+                        exportMap.putAll(map);
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
                             if (!exportMap.containsKey(entry.getKey())) {
                                 continue;
                             }
                             exportMap.replace(entry.getKey(), entry.getValue());
                         }
+                        //exportMap.put("mod_type", content.contentType.getId());
                         modifiedContents.add(exportMap);
                     } catch (ModProcessingException e) {
                         throw new ModProcessingException("Unable to modify import map!", e);
