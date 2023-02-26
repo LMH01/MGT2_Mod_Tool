@@ -232,4 +232,18 @@ public interface BaseContentManager {
      * @param name       The name of the content
      */
     String getExportImageName(String identifier, String name);
+    
+    /**
+     * Used to get the name of the import image.
+     * This should be used to read the image name from the import map.
+     * Reads whole input including file extension.
+     * If the key does not exist `name` and `identifier` are used to construct the default image name.
+     * 
+     * @param key The map key under which the file name can be found
+     * @param map The map that contains the content
+     * @param identifier The identifier of this image. Will be appended to the end of the file
+     * @param name The name of the content
+     * @return The name of the image file that should be imported
+     */
+    String getImportImageName(String key, Map<String, String> map, String identifier, String name);
 }

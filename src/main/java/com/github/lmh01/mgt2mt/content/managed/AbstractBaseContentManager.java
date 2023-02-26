@@ -383,4 +383,12 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
     public String getExportImageName(String identifier, String name) {
         return getId().toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + name.toLowerCase().replaceAll(" ", "_").replaceAll("/", "").replaceAll("[^0-9a-zA-Z]", "") + "_" + identifier;
     }
+
+    @Override
+    public String getImportImageName(String key, Map<String, String> map, String identifier, String name) {
+        if (map.containsKey(key)) {
+            return map.get(key);
+        }
+        return getExportImageName(identifier, name);
+    }
 }
