@@ -116,7 +116,7 @@ public class SharingManager {
         int contentToReplace = countKeyOccurances(modMaps, "replaces");
         
         // Check if some mods where found that overwrite default content
-        int contentToOverwrite = countKeyOccurances(modMaps, "modifies");
+        int amountContentToModify = countKeyOccurances(modMaps, "modifies");
 
         // Display summary of what mods have been found
         JLabel label = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part1") + ": " + modMaps.size() + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.modsFound.part2"));
@@ -127,11 +127,20 @@ public class SharingManager {
         JCheckBox allowReplacement = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox"));
         allowReplacement.setToolTipText("<html>" + I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox.toolTip"));
 
+        //TODO add translations
+        JLabel label3 = new JLabel(String.format("<html><br>" + I18n.INSTANCE.get(""), amountContentToModify));
+        JCheckBox chkBxAllowModification = new JCheckBox(I18n.INSTANCE.get(""));
+        chkBxAllowModification.setToolTipText("<html>" + I18n.INSTANCE.get(""));
+
         JComponent[] components;
         if (contentToReplace == 0) {
             components = new JComponent[]{label, checkBox};
-        } else {
+        } else if (contentToReplace > 0 && amountContentToModify == 0){
             components = new JComponent[]{label, checkBox, label2, allowReplacement};
+        } else if (contentToReplace == 0 && amountContentToModify > 0) {
+            components = new JComponent[]{label, checkBox, label3, chkBxAllowModification};
+        } else {
+            components = new JComponent[]{label, checkBox, label2, allowReplacement, label3, chkBxAllowModification};
         }
         boolean continueImport = false;
         if (importType.equals(ImportType.RESTORE_POINT) || importType.equals(ImportType.REAL_PUBLISHERS)) {
@@ -183,10 +192,23 @@ public class SharingManager {
             return;
         }
 
-        // Remove content that 
+        // Edit import map to contain the maps for the modified contents
+        if (chkBxAllowModification.isSelected()) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get(""));
+            editImportMap(importMap, contentToModify);
+        }
+
+        // Remove content that is modified
+        if (chkBxAllowModification.isSelected()) {
+            TextAreaHelper.appendText(I18n.INSTANCE.get(""));
+            for (AbstractBaseContent content : contentToModify) {
+                content.contentType.removeContent(content.name);
+            }
+        } 
+
+        // Remove content that should be replaced
         if (allowReplacement.isSelected()) {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.replaceModsFound.removing"));
-            // Remove content that will be replaced
             for (AbstractBaseContent content : replacedContent) {
                 content.contentType.removeContent(content.name);
             }
@@ -550,7 +572,9 @@ public class SharingManager {
                 map = removeQuoteSymbol(map);
                 DebugHelper.debug(LOGGER, "single mod instance found!: " + map.get("name"));
                 if (isModToolVersionSupported(map)) {
-                    if (doesMapContainMod(mods, map.get("name").toString(), map.get("mod_type").toString())) {
+                    if (!map.containsKey("NAME EN") && (map.containsKey("replaces") || map.containsKey("modifies"))) {
+                        mods.add(map);
+                    } else if (doesMapContainMod(mods, map.get("name").toString(), map.get("mod_type").toString())) {
                         modsDuplicated++;
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + map.get("mod_type") + " - " + map.get("name"));
                     } else if (doesModExist((String) map.get("name"), (String) map.get("mod_type"))) {
@@ -589,7 +613,9 @@ public class SharingManager {
                                 if (isModToolVersionSupported(manager.getId(), (String) map.get("mod_tool_version"))) {
                                     singleModMap.put("mod_type", manager.getId());
                                     singleModMap.put("assets_folder", map.get("assets_folder"));
-                                    if (doesMapContainMod(mods, singleModMap.get("NAME EN").toString(), manager.getId())) {
+                                    if (!singleModMap.containsKey("NAME EN") && (singleModMap.containsKey("replaces") || singleModMap.containsKey("modifies"))) {
+                                        mods.add(singleModMap);
+                                    } else if (doesMapContainMod(mods, singleModMap.get("NAME EN").toString(), manager.getId())) {
                                         modsDuplicated++;
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + manager.getId() + " - " + singleModMap.get("NAME EN"));
                                     } else if (doesModExist((String) singleModMap.get("NAME EN"), manager.getId())) {
@@ -1158,6 +1184,7 @@ public class SharingManager {
         return getSpecificContent(modMaps, "modifies");
     }
 
+
     /**
      * Builds content for all values behind the key in the maps
      * @param modMaps The maps that contain mod data
@@ -1188,6 +1215,46 @@ public class SharingManager {
             }
         }
         return contents;
+    }
+
+    /**
+     * Removes the instructions on how content should be modified from the importMap and adds
+     * the map of the modifed content, ready to be added to the game.
+     * @param importMaps The set containg all maps that contain content that should be imported
+     * @param contentToModify A list of contents that should be modified, used to build the export map that is modified
+     */
+    private static void editImportMap(Set<Map<String, Object>> importMaps, ArrayList<AbstractBaseContent> contentToModify) throws ModProcessingException {
+        Set<Map<String, Object>> modifiedContents = new HashSet<>();
+        Set<Map<String, Object>> modificationInstructions = new HashSet<>();
+        for (Map<String, Object> map : importMaps) {
+            for (AbstractBaseContent content : contentToModify) {
+                if (!map.containsKey("modifies")) {
+                    continue;
+                }
+                if (map.get("modifies").equals(content.name)) {
+                    // Content to modify found
+                    modificationInstructions.add(map);
+                    try {
+                        Map<String, Object> exportMap = content.getExportMap();
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (!exportMap.containsKey(entry.getKey())) {
+                                continue;
+                            }
+                            exportMap.replace(entry.getKey(), entry.getValue());
+                        }
+                        modifiedContents.add(exportMap);
+                    } catch (ModProcessingException e) {
+                        throw new ModProcessingException("Unable to modify import map!", e);
+                    }
+                }
+            }
+        }
+        // Remove modification instructions from importMaps
+        for (Map<String, Object> map : modificationInstructions) {
+            importMaps.remove(map);
+        }
+        // Add modified contents to importMap
+        importMaps.addAll(modifiedContents);
     }
 
     /**
