@@ -109,7 +109,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 getIdFromMap(map),
                 new TranslationManager(map),
                 (String) map.get("DATE"),
-                new Image(assetsFolder.resolve(getImportImageName("publisher_icon", transformedMap, "publisher_icon.png", (String) map.get("NAME EN"))).toFile(), MGT2Paths.COMPANY_ICONS.getPath().resolve(String.valueOf(CompanyLogoAnalyzer.getFreeLogoNumber() + ".png")).toFile()),
+                new Image(assetsFolder.resolve(getImportImageName("iconName", transformedMap, "publisher_icon.png", (String) map.get("NAME EN"))).toFile(), MGT2Paths.COMPANY_ICONS.getPath().resolve(String.valueOf(CompanyLogoAnalyzer.getFreeLogoNumber() + ".png")).toFile()),
                 Boolean.parseBoolean((String) map.get("DEVELOPER")),
                 Boolean.parseBoolean((String) map.get("PUBLISHER")),
                 Integer.parseInt((String) map.get("MARKET")),
