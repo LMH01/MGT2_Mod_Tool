@@ -2,6 +2,9 @@
 
 ## [v4.9.0]
 
+### Other
+- `PIC` entry is no longer added to export toml file as this was redundant and could caused confusion
+
 ### Bug fixes
 - Fixed NullPointException when no `requires_pictures` key was set in any mod map inside the `.toml` file when mods where imported
 - Fixed #118 - The customized publisher icon was not used when publishers where imported, instead the default icon name was used

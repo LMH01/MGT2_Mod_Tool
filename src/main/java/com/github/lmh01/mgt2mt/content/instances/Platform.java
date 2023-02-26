@@ -191,6 +191,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 changedValues.put(entry.getKey(), GameplayFeatureManager.INSTANCE.getContentNameById(Integer.parseInt(entry.getValue())));
             }
         }
+        map.remove("PIC-1");
+        map.remove("PIC-2");
         Utils.replaceMapEntries(map, changedValues);
     }
 

@@ -36,6 +36,7 @@ public abstract class AbstractBaseContent {
             Map<String, Object> map = new HashMap<>();
             Map<String, String> baseMap = getMap();
             baseMap.remove("ID");
+            baseMap.remove("PIC");
             if (this instanceof RequiresPictures) {
                 // Adds the images that should be exported to the export map
                 try {
