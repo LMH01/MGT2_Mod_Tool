@@ -99,6 +99,12 @@ When a mod is exported that requires pictures, an assets' folder is created in t
 file is located. This folder contains all images that are required by the mods in the ``.toml`` file. Import will not
 work if the images are missing.
 
+### requires_pictures key
+Mods that require pictures will have the `requires_pictures` key set to `true`. This way the mod tool knows that it should check if
+the assets folder for that mod exists. If this key is missing, the import might fail after a "save stage" when pictures are missing.
+"Save stage" meaning that game files might already be changed when the import failes. This usually means that the initial backup
+will have to be restored.
+
 ## Exporting mods
 
 Mods can be exported by navigating to ``Share -> Export``.
@@ -159,7 +165,8 @@ can select if all mods should be added or if only selected mods should be added 
 Once the user made a selection it is checked if all assets folders are available and if all **dependencies** are satisfied.
 
 If every check is passed the **mods are constructed** to be added to the game. This step can **fail** when
-specific data entries are missing from the mod file. Failing means that the whole import process is canceled.
+specific data entries are missing from the mod file or when pictures are not found in the assets folder.
+Failing means that the whole import process is canceled.
 
 If everything went properly the mods have been added to the game.
 
