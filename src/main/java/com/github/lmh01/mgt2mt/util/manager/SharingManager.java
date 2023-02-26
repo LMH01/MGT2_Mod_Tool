@@ -128,9 +128,9 @@ public class SharingManager {
         allowReplacement.setToolTipText("<html>" + I18n.INSTANCE.get("textArea.importAll.replaceModsFound.checkBox.toolTip"));
 
         //TODO add translations
-        JLabel label3 = new JLabel(String.format("<html><br>" + I18n.INSTANCE.get(""), amountContentToModify));
-        JCheckBox chkBxAllowModification = new JCheckBox(I18n.INSTANCE.get(""));
-        chkBxAllowModification.setToolTipText("<html>" + I18n.INSTANCE.get(""));
+        JLabel label3 = new JLabel(String.format("<html><br>" + I18n.INSTANCE.get("textArea.importAll.modificationsFound"), amountContentToModify));
+        JCheckBox chkBxAllowModification = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.modificationsFound.checkBox"));
+        chkBxAllowModification.setToolTipText("<html>" + I18n.INSTANCE.get("textArea.importAll.modificationsFound.checkBox.toolTip"));
 
         JComponent[] components;
         if (contentToReplace > 0 && amountContentToModify > 0) {
@@ -187,20 +187,25 @@ public class SharingManager {
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingConflicts"));
         ArrayList<String> importConflicts = getImportConflicts(contentToModify, replacedContent);
         if (!importConflicts.isEmpty()) {
-            //TODO add import conflict message
+            JPanel panelImportConflicts = new JPanel();
+            panelImportConflicts.setLayout(new BoxLayout(panelImportConflicts, BoxLayout.Y_AXIS));
+            JLabel labelImportConflicts = new JLabel(I18n.INSTANCE.get("dialog.sharingManager.importall.importConflics"));
+            panelImportConflicts.add(labelImportConflicts);
+            panelImportConflicts.add(WindowHelper.getScrollPane(WindowHelper.getList(Utils.convertArrayListToArray(importConflicts), false)));
+            JOptionPane.showMessageDialog(null, panelImportConflicts, I18n.INSTANCE.get("dialog.sharingManager.importall.importConflics.title"), JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Unable to import, conflict");
             return;
         }
 
         // Edit import map to contain the maps for the modified contents
         if (chkBxAllowModification.isSelected()) {
-            TextAreaHelper.appendText(I18n.INSTANCE.get(""));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.editingImportMap"));
             editImportMap(importMap, contentToModify);
         }
 
         // Remove content that is modified
         if (chkBxAllowModification.isSelected()) {
-            TextAreaHelper.appendText(I18n.INSTANCE.get(""));
+            TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.removeModifiedContent"));
             for (AbstractBaseContent content : contentToModify) {
                 content.contentType.removeContent(content.name);
             }
@@ -220,9 +225,6 @@ public class SharingManager {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.cancel"));
             return;
         }
-
-        // Check if all content that should be overwritten exists
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingOverwritten"));
 
         // Set the new mod ids
         setImportHelperMaps(modsChecked);

@@ -610,6 +610,8 @@ dialog.sharingManager.importAll.errorWhileImportingMod.firstPart|<html>Error whi
 dialog.sharingManager.importAll.errorWhileImportingMod.secondPart|Would you like to continue to import the other mods?<br>Warning: This can lead to problems because dependencies could be missing.
 dialog.sharingManager.importAll.assetsFoldersMissing|The following assets folders were not found:
 dialog.sharingManager.importAll.missingPictures|The following pictures where not found:
+dialog.sharingManager.importall.importConflics|<html>A failure occured during import:<br><br>The following mods should be modified and replaced simultaneously, which is not possible!:
+dialog.sharingManager.importall.importConflics.title|Conflict while importing
 dialog.sharingManager.analyzeReturnValue.alreadyExists|already exists
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Supported versions:
 dialog.sharingManager.importThings.error.firstPart|Unable to import:
@@ -847,6 +849,12 @@ textArea.importAll.replaceModsFound|Found %s mod(s) that will replace existing c
 textArea.importAll.replaceModsFound.checkBox|Replace existing content
 textArea.importAll.replaceModsFound.checkBox.toolTip|Enable to replace the content.<br>If this option is not selected, the mod is added without replacing the content.
 textArea.importAll.replaceModsFound.removing|Removing content that will be replaced
+textArea.importAll.modificationsFound|Found %s mod(s) that will modify existing content.<br><br>Note:<br>Original game content can only be restored by restoring the initial backup
+textArea.importAll.modificationsFound.checkBox|Modify existing content
+textArea.importAll.modificationsFound.checkBox.toolTip|Enable to modifiy the content.<br>If this option is not selected, the content will not be modified.
+textArea.importAll.checkingConflicts|Checking for conflicts
+textArea.importAll.editingImportMap|Editing import map
+textArea.importAll.removeModifiedContent|Removing content that will be modified
 textArea.unzip.firstPart|Preparing to unzip folder
 textArea.unzip.secondPart|Indexing files to unzip: This might take a while
 textArea.unzip.thirdPart|to

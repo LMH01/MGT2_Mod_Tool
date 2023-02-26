@@ -239,4 +239,5 @@ When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams`
 - Missing dependencies are not checked so make sure that everything exists
     - When dependencies are missing the result can be a crashed import or a bugged game
 - Only content of the same type can be modified
+- When original content is modified the mod tool might not pickup that something has been modified
 - The original content can only be restored by restoring the initial backup
