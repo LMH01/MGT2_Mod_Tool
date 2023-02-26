@@ -1,51 +1,50 @@
-mod_tool_version = "4.4.0-dev"
+mod_tool_version = "4.9.0-dev"
 type = "export_bundled"
 
 [mods.licence.licencename]
-"RELEASE YEAR" = "1976"
-"NAME EN" = "LicenceName"
-"BAD GENRE" = "Adventure"
-"GOOD GENRE" = "Building Game"
+"NAME EN" = "licensename"
+"BAD GENRE" = "Action"
+"GOOD GENRE" = "Adventure"
 "LICENCE TYP" = "BOARD"
 requires_pictures = false
 
 [mods.licence.licencename.dependencies]
-genre = ["Building Game", "Adventure"]
+genre = ["Action", "Adventure"]
 
 [mods.dev_legend.devlegendname]
 TYP = "D"
-"NAME EN" = "DevLegendName"
+"NAME EN" = "devlegendname"
 requires_pictures = false
 WOMAN = "false"
 
 [mods.anti_cheat.anticheatname]
 DATE = "JAN 1976"
-"NAME EN" = "AntiCheatName"
+"NAME EN" = "anticheatname"
 PRICE = "30000"
 requires_pictures = false
 "DEV COSTS" = "35000"
 
 [mods.npc_game.npcgamename]
-"NAME EN" = "NpcGameName"
-GENRES = "<Adventure><Action><Economic Simulation><Building Game>"
+"NAME EN" = "npcgamename"
+GENRES = "<Adventure><Economic Simulation><Building Game>"
 requires_pictures = false
 
 [mods.npc_game.npcgamename.dependencies]
-genre = ["Adventure", "Action", "Economic Simulation", "Building Game"]
+genre = ["Adventure", "Economic Simulation", "Building Game"]
 
 [mods.hardware_feature.hardwarefeaturename]
 DATE = "JAN 1976"
-"NAME EN" = "HardwareFeatureName"
+"NAME EN" = "hardwarefeaturename"
 "RES POINTS" = "500"
 QUALITY = "2"
 PRICE = "30000"
 ONLY_STATIONARY = ""
 requires_pictures = false
 "DEV COSTS" = "35000"
-"DESC EN" = "HardwareFeatureDescription"
+"DESC EN" = "hardwarefeaturedescription"
 
 [mods.npc_ip.npcipname]
-"NAME EN" = "NpcIpName"
+"NAME EN" = "npcipname"
 sub_theme = "Agents"
 sub_genre = "Adventure"
 genre = "Action"
@@ -59,18 +58,17 @@ requires_pictures = false
 [mods.npc_ip.npcipname.dependencies]
 genre = ["Action", "Adventure"]
 publisher = ["3D Reality"]
-theme = ["Agents", "Agriculture"]
+theme = ["Agents"]
 
 [mods.engine_feature.enginefeaturename]
 "RES POINTS" = "500"
 PRICE = "50000"
 GRAPHIC = "100"
 TYP = "0"
-PIC = ""
-"DESC EN" = "EngineFeatureDescription"
+"DESC EN" = "enginefeaturedescription"
 DATE = "JAN 1976"
 TECH = "100"
-"NAME EN" = "EngineFeatureName"
+"NAME EN" = "enginefeaturename"
 GAMEPLAY = "100"
 SOUND = "100"
 requires_pictures = false
@@ -82,30 +80,32 @@ STARTPLATFORM = ""
 COMPLEX = "0"
 PRICE = "50000"
 INTERNET = "1"
-PIC-1 = "PlatformName_pic_1.png"
 TYP = "0"
 DATE = "JAN 1976"
-"NAME EN" = "PlatformName"
+"PIC-2 YEAR" = "1977"
+"NAME EN" = "platformname"
 platform_image_1 = "platform_platformname_platform_image_1.png"
-"MANUFACTURER EN" = "PlatformManufacturer"
-"MANUFACTURER MANUFACTURER EN" = "PlatformManufacturer"
-NEED-1 = "Day-Night Cycle"
+platform_image_2 = "platform_platformname_platform_image_2.png"
+"MANUFACTURER EN" = "platformdescription"
+"MANUFACTURER MANUFACTURER EN" = "platformdescription"
+NEED-3 = "Adjustable Censoring"
+NEED-1 = "Adjustable Controls"
+GAMEPASS = "10"
 requires_pictures = true
 "DEV COSTS" = "35000"
 TECHLEVEL = "1"
 UNITS = "1000000"
-"DATE END" = "JAN 1977"
+NEED-2 = "Adjustable HUD"
 
 [mods.platform.platformname.dependencies]
-gameplay_feature = ["Day-Night Cycle"]
+gameplay_feature = ["Adjustable HUD", "Adjustable Controls", "Adjustable Censoring"]
 
 [mods.genre.genrename]
-"RES POINTS" = "1100"
-"GAMEPLAYFEATURE BAD" = "<Augmented-Reality-Support><Arcade Joystick Support>"
+"RES POINTS" = "900"
+"GAMEPLAYFEATURE BAD" = ""
+"screenshot_1.png" = "genre_genrename_screenshot_1.png"
 GRAPHIC = "25"
-"screenshot_genre_genrename_1.png" = "genre_genrename_screenshot_genre_genrename_1.png"
-"DESC EN" = "GenreDescription"
-"screenshot_genre_genrename_2.png" = "genre_genrename_screenshot_genre_genrename_2.png"
+"DESC EN" = "genredescription"
 FOCUS4 = "5"
 ALIGN1 = "5"
 FOCUS5 = "5"
@@ -113,77 +113,75 @@ ALIGN2 = "5"
 FOCUS6 = "5"
 FOCUS7 = "5"
 FOCUS0 = "5"
-"GENRE COMB" = "<Adventure><Building Game><Economic Simulation><Fighting Game>"
+"GENRE COMB" = "<Action><Adventure><Building Game><Economic Simulation><Fighting Game>"
 FOCUS1 = "5"
 FOCUS2 = "5"
+"screenshot_4.png" = "genre_genrename_screenshot_4.png"
 FOCUS3 = "5"
 ALIGN0 = "5"
 GAMEPLAY = "25"
 SOUND = "25"
-"DEV COSTS" = "7000"
-PRICE = "12000"
+"DEV COSTS" = "6000"
+PRICE = "5000"
 iconName = "genre_genrename_icon.png"
-PIC = "iconGenreName.png"
-"screenshot_genre_genrename_3.png" = "genre_genrename_screenshot_genre_genrename_3.png"
+"screenshot_3.png" = "genre_genrename_screenshot_3.png"
 TGROUP = "<KID><TEEN><ADULT><OLD>"
+"screenshot_2.png" = "genre_genrename_screenshot_2.png"
 DATE = "JAN 1976"
-"GAMEPLAYFEATURE GOOD" = "<Adjustable HUD><Adjustable Controls>"
-"THEME COMB" = "<Boxing><Building Blocks><Assassins><Art><Bicycle><Bunker><Barbarians><Angels><Bounty Hunter><Animals><Anime><Basketball><Baseball><Birds><Apocalypse><Archaeology><Androids><Billiards><Athletics><Bowling><Archery><Ancient><Asteroids><ThemeName>"
-"NAME EN" = "GenreName"
-"screenshot_genre_genrename_4.png" = "genre_genrename_screenshot_genre_genrename_4.png"
+"GAMEPLAYFEATURE GOOD" = ""
+"THEME COMB" = ""
+"NAME EN" = "genrename"
 requires_pictures = true
-"screenshot_genre_genrename_0.png" = "genre_genrename_screenshot_genre_genrename_0.png"
 CONTROL = "25"
 
 [mods.genre.genrename.dependencies]
-genre = ["Adventure", "Building Game", "Economic Simulation", "Fighting Game"]
-theme = ["Colonization"]
-gameplay_feature = ["Adjustable HUD", "Adjustable Controls", "Augmented-Reality-Support", "Arcade Joystick Support"]
+genre = ["Action", "Adventure", "Building Game", "Economic Simulation", "Fighting Game"]
+theme = []
+gameplay_feature = []
 
 [mods.publisher.publishername]
 PUBLISHER = "true"
 DEVELOPER = "true"
 MARKET = "50"
-GENRE = "Racing"
-PIC = "87"
+GENRE = "Adventure"
 ONLYMOBILE = "true"
 SHARE = "5"
 SPEED = "3"
 DATE = "JAN 1976"
 COMVAL = "10000000"
-"NAME EN" = "PublisherName"
+"NAME EN" = "publishername"
 NOTFORSALE = "true"
 publisher_icon = "publisher_publishername_publisher_icon.png"
-COUNTRY = "2"
+COUNTRY = "0"
 requires_pictures = true
 
 [mods.publisher.publishername.dependencies]
-genre = ["Racing"]
+genre = ["Adventure"]
 
 [mods.theme.themename]
-"NAME CZ" = "ThemeName"
-"NAME JA" = "ThemeName"
-GENRES = "<Fighting Game><First-Person Shooter><GenreName>"
-"NAME PB" = "ThemeName"
-"NAME AR" = "ThemeName"
-"NAME CT" = "ThemeName"
-"NAME FR" = "ThemeName"
-"NAME IT" = "ThemeName"
-"NAME ES" = "ThemeName"
-"NAME HU" = "ThemeName"
-"NAME EN" = "ThemeName"
-"NAME KO" = "ThemeName"
-"NAME RU" = "ThemeName"
-"NAME CH" = "ThemeName"
-"NAME TU" = "ThemeName"
-"NAME PL" = "ThemeName"
+"NAME CZ" = "themename"
+"NAME JA" = "themename"
+GENRES = "<Adventure><Adventure>"
+"NAME PB" = "themename"
+"NAME AR" = "themename"
+"NAME CT" = "themename"
+"NAME FR" = "themename"
+"NAME IT" = "themename"
+"NAME ES" = "themename"
+"NAME HU" = "themename"
+"NAME EN" = "themename"
+"NAME KO" = "themename"
+"NAME RU" = "themename"
+"NAME CH" = "themename"
+"NAME TU" = "themename"
+"NAME PL" = "themename"
 requires_pictures = false
-"NAME GE" = "ThemeName <10><14><18>"
-"NAME RO" = "ThemeName"
+"NAME GE" = "themename <2> <2>"
+"NAME RO" = "themename"
 AGE = "0"
 
 [mods.theme.themename.dependencies]
-genre = ["First-Person Shooter", "GenreName", "Fighting Game"]
+genre = ["Adventure"]
 
 [mods.gameplay_feature.gameplayfeaturename]
 "RES POINTS" = "500"
@@ -191,49 +189,50 @@ PRICE = "50000"
 BAD = "<Action>"
 GRAPHIC = "30"
 TYP = "4"
-PIC = ""
-"DESC EN" = "GameplayFeatureDescription"
+"DESC EN" = "gameplayfeaturedescription"
 DATE = "JAN 1976"
 TECH = "30"
-"NAME EN" = "GameplayFeatureName"
+"NAME EN" = "gameplayfeaturename"
 GAMEPLAY = "30"
 SOUND = "30"
-GOOD = "<Strategy>"
+GOOD = "<Adventure>"
 requires_pictures = false
 "DEV COSTS" = "35000"
 
 [mods.gameplay_feature.gameplayfeaturename.dependencies]
-genre = ["Action", "Strategy"]
+genre = ["Action", "Adventure"]
 
-[mods.npc_engine.npcenginename]
-PLATFORM = "Game Mate"
+[mods.npc_engine.npcengine]
+PLATFORM = "Personal Computer"
 DATE = "JAN 1976"
-"NAME EN" = "NpcEngineName"
+"NAME EN" = "npcengine"
 PRICE = "30000"
-GENRE = "Action"
+GENRE = "Adventure"
 SHARE = "5"
 requires_pictures = false
 
-[mods.npc_engine.npcenginename.dependencies]
-genre = ["Action"]
-platform = ["Game Mate"]
+[mods.npc_engine.npcengine.dependencies]
+genre = ["Adventure"]
+platform = ["Personal Computer"]
 
-[mods.copy_protect.copyprotectname]
+[mods.copy_protect.copyprotection]
 DATE = "JAN 1976"
-"NAME EN" = "CopyProtectName"
+"NAME EN" = "copyprotection"
 PRICE = "30000"
 requires_pictures = false
 "DEV COSTS" = "35000"
 
 [mods.hardware.hardwarename]
 DATE = "JAN 1976"
-"NAME EN" = "HardwareName"
+ONLY_HANDHELD = ""
+"NAME EN" = "hardwarename"
 "RES POINTS" = "500"
 PRICE = "500000"
+platform_icon = "hardware_hardwarename_platform_icon.png"
 TYP = "0"
 requires_pictures = true
 "DEV COSTS" = "1000000"
-TECHLEVEL = "1"
+TECHLEVEL = "7"
 
 [mods.hardware.hardwarename.dependencies]
 gameplay_feature = []
