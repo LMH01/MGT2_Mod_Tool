@@ -47,6 +47,11 @@ public class ThreadHandler {
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.1"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.2"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.3") + ": " + ModManagerPaths.MAIN.getPath());
+            } else if (Utils.isBeta()) {
+                Settings.updateBranch = UpdateBranch.BETA;
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningBetaVersion.1"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.2"));
+                TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.runningAlphaVersion.3") + ": " + ModManagerPaths.MAIN.getPath());
             }
             if (Settings.mgt2FolderIsCorrect) {
                 WindowMain.lockMenuItems(true);

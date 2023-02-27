@@ -24,6 +24,7 @@ public class UpdateChecker {
     public static boolean updateAvailable = false;
     private static final String RELEASE_UPDATE_URL = "https://www.dropbox.com/s/7dut2h3tqdc92xz/mgt2mtNewestVerion.txt?dl=1";
     private static final String ALPHA_UPDATE_URL = "https://www.dropbox.com/s/16lk6kyc1wdpw43/mgt2mtNewestAlphaVersion.txt?dl=1";
+    private static final String BETA_UPDATE_URL = "https://www.dropbox.com/s/um3ecnm9yb303yg/mgt2mtNewestBetaVersion.txt?dl=1";
     private static final String COMPATIBILITY_CHECK_URL = "https://www.dropbox.com/s/8bbob53h13dvspj/mgt2mtCompatibleWithLatestVersion.txt?dl=1";
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
 
@@ -46,9 +47,12 @@ public class UpdateChecker {
                 if (Settings.updateBranch.equals(UpdateBranch.RELEASE)) {
                     url = new URL(RELEASE_UPDATE_URL);
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver1") + " ";
-                } else {
+                } else if (Settings.updateBranch.equals(UpdateBranch.ALPHA)){
                     url = new URL(ALPHA_UPDATE_URL);
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver2") + " ";
+                } else {
+                    url = new URL(BETA_UPDATE_URL);
+                    versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver3") + " ";
                 }
                 Scanner scanner = new Scanner(url.openStream());
                 String currentLine = scanner.nextLine();

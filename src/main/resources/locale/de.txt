@@ -644,6 +644,7 @@ dialog.updateChecker.updateAvailable|<html>Es wird empfohlen, immer die neueste 
 dialog.updateChecker.updateAvailable.title|Neue Version verfügbar
 dialog.updateChecker.updateAvailable.versionType.ver1|Eine neue Version ist verfügbar:
 dialog.updateChecker.updateAvailable.versionType.ver2|Eine neue Alpha-Version ist verfügbar:
+dialog.updateChecker.updateAvailable.versionType.ver3|Eine neue Beta-Version ist verfügbar:
 dialog.updateChecker.updateFailed|Prüfen nach Updates fehlgeschlagen: Keine Verbindung zum Internet
 dialog.updateChecker.latestGameVersionNotCompatible|<html>Warnung:<br><br>Dieses Tool ist nicht mit der aktuellen Spielversion kompatibel!<br>Du kannst das Tool trotzdem verwenden, aber einige Dinge könnten möglicherweise nicht richtig funkionieren.<br><br>Ich werde mein bestes geben, um das Tool so schnell wie möglich wieder mit dem Spiel kompatibel zu machen.<br><br>Grund für die Inkompatibilität:
 
@@ -897,6 +898,7 @@ textArea.export.warningExportMapNotChangedProperly|WARNUNG: Die Export-Map wurde
 textArea.runningAlphaVersion.1|Vielen Dank für das Testen dieser Alpha-Version
 textArea.runningAlphaVersion.2|Bitte melde Probleme, die auftreten auf der Github-Seite (Nützliches -> Github Seite öffnen)
 textArea.runningAlphaVersion.3|Die Konfigurationsdateien für diese Version werden hier gespeichert
+textArea.runningBetaVersion.1|Vielen Dank für das Testen dieser Beta-Version
 textArea.constructingContents.duration|Inhaltserstellung dauerte %.2f Sekunden!
 textArea.copyingImages|Kopiere Bilder des Inhaltes %s
 textArea.deletingImages|Lösche Bilder des Inhaltes %s
@@ -1078,8 +1080,8 @@ window.settings.mgt2location.automaticSelected.folderNotFound|<html>Die Suche na
 window.settings.reset.label|Zurücksetzen
 window.settings.reset.button.toolTip|<html>Klicke, um den ordner zurückzusetzen.<br>Das wird den standard Ordner wiederherstellen.
 window.settings.updateChannel.label|Update Kanal:
-window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
-window.settings.updateChannel.disabled|<html>Deaktiviert: Kann nicht zum Release-Kanal wechseln, da die derzeit laufende Mod-Tool-Version Alpha ist
+window.settings.updateChannel.toolTip|<html>Wähle aus, auf welchem Kanal nach Updates gesucht werden soll, wenn das Tool nach Updates sucht.<br>Alpha: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Alpha-Version verfügbar ist.<br>Beta: Wähle diese Option, um Benachrichtigungen zu erhalten, wenn eine neue Beta-Version verfügbar ist.<br>Release: Wähle diese Option, wenn du nur benachrichtigt werden möchtest, wenn eine neue Release-Version ist verfügbar ist.
+window.settings.updateChannel.disabled|<html>Deaktiviert: Kann nicht zum Release-Kanal wechseln, da die derzeit laufende Mod-Tool-Version Alpha/Beta ist
 window.settings.windowTitle|Einstellungen
 window.settings.checkBox.saveLogs|Logs speichern
 window.settings.checkBox.saveLogs.toolTip|<html>Aktiviere diese box, damit alle Logs abgespeichert werden.<br>Wenn deaktiviert, wird nur der letzte Log abgespeichert.

@@ -316,12 +316,19 @@ public class WindowSettings extends JFrame {
             comboBoxLanguage.setModel(new DefaultComboBoxModel<>(new String[]{"Deutsch", "English"}));
         }
         if (Settings.updateBranch.equals(UpdateBranch.RELEASE)) {
-            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.RELEASE.getName(), UpdateBranch.ALPHA.getName()}));
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.RELEASE.getName(), UpdateBranch.ALPHA.getName(), UpdateBranch.BETA.getName()}));
+        } else if (Settings.updateBranch.equals(UpdateBranch.BETA)) {
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.BETA.getName(), UpdateBranch.ALPHA.getName(), UpdateBranch.RELEASE.getName()}));
         } else {
-            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.ALPHA.getName(), UpdateBranch.RELEASE.getName()}));
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{UpdateBranch.ALPHA.getName(), UpdateBranch.BETA.getName(), UpdateBranch.RELEASE.getName()}));
         }
         if (Utils.isAlpha()) {
-            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Release"}));
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Alpha", "Beta", "Release"}));
+            comboBoxUpdateChannel.setEnabled(false);
+            comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.disabled"));
+        }
+        if (Utils.isBeta()) {
+            comboBoxUpdateChannel.setModel(new DefaultComboBoxModel<>(new String[]{"Beta", "Alpha", "Release"}));
             comboBoxUpdateChannel.setEnabled(false);
             comboBoxUpdateChannel.setToolTipText(I18n.INSTANCE.get("window.settings.updateChannel.disabled"));
         }

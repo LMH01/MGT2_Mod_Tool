@@ -1,7 +1,7 @@
 package com.github.lmh01.mgt2mt.util;
 
 public enum UpdateBranch {
-    RELEASE("Release"), ALPHA("Alpha");
+    RELEASE("Release"), ALPHA("Alpha"), BETA("Beta");
 
     final String name;
 
@@ -23,6 +23,8 @@ public enum UpdateBranch {
     public static UpdateBranch getUpdateBranch(String name) {
         if (name.equals(UpdateBranch.ALPHA.getName())) {
             return UpdateBranch.ALPHA;
+        } else if(name.equals(UpdateBranch.BETA.getName())) {
+            return UpdateBranch.BETA;
         } else {
             return UpdateBranch.RELEASE;
         }

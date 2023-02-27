@@ -51,12 +51,16 @@ public class Settings {
         if (MadGamesTycoon2ModTool.isWindows()) {
             if (Utils.isAlpha()) {
                 MGT2_MOD_MANAGER_PATH = Paths.get(System.getenv("APPDATA") + "/LMH01/MGT2_Mod_Manager/alpha");
+            } else if (Utils.isBeta()){
+                MGT2_MOD_MANAGER_PATH = Paths.get(System.getenv("APPDATA") + "/LMH01/MGT2_Mod_Manager/beta");
             } else {
                 MGT2_MOD_MANAGER_PATH = Paths.get(System.getenv("APPDATA") + "/LMH01/MGT2_Mod_Manager");
             }
         } else {
             if (Utils.isAlpha()) {
                 MGT2_MOD_MANAGER_PATH = Paths.get(System.getProperty("user.home") + "/.local/share/mgt2_mod_tool/alpha");
+            } else if (Utils.isBeta()) {
+                MGT2_MOD_MANAGER_PATH = Paths.get(System.getProperty("user.home") + "/.local/share/mgt2_mod_tool/beta");
             } else {
                 MGT2_MOD_MANAGER_PATH = Paths.get(System.getProperty("user.home") + "/.local/share/mgt2_mod_tool");
             }

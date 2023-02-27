@@ -628,11 +628,16 @@ public class Utils {
      * @return True if the version is alpha. False otherwise.
      */
     public static boolean isAlpha() {
-        if (MadGamesTycoon2ModTool.VERSION.contains("alpha")) {
-            return true;
-        } else {
-            return false;
-        }
+        return MadGamesTycoon2ModTool.VERSION.contains("alpha");
+    }
+
+    /**
+     * Checks if the curent running mod tool version is an beta version.
+     * 
+     * @return True if the version is beta, false otherwise
+     */
+    public static boolean isBeta() {
+        return MadGamesTycoon2ModTool.VERSION.contains("beta");
     }
 
     /**

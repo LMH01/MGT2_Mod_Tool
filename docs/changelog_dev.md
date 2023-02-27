@@ -1,10 +1,11 @@
 # Changelog
 
-## [v4.9.0-alpha2]
+## [v4.9.0-beta1]
 
 ### Other
 - Assets folders are now only copied once to the temp folder
 - Documentation improvements
+- Added new update channel: Beta
 
 ### Bug fixes
 - Fixed #120 - Image files should now be found under Linux

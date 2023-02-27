@@ -644,6 +644,7 @@ dialog.updateChecker.updateAvailable|<html>It is recommended to always use the n
 dialog.updateChecker.updateAvailable.title|New version available
 dialog.updateChecker.updateAvailable.versionType.ver1|A new release is available:
 dialog.updateChecker.updateAvailable.versionType.ver2|A new alpha version is available:
+dialog.updateChecker.updateAvailable.versionType.ver3|A new beta version is available:
 dialog.updateChecker.updateFailed|Update check failed: No internet connection
 dialog.updateChecker.latestGameVersionNotCompatible|<html>Warning:<br><br>This tool is not compatible with the current game version!<br>You can choose to use the tool anyway but some things might not work properly.<br><br>I will do my best to make this tool compatible again as quickly as possible.<br><br>Reason for the incompatibility:
 
@@ -895,6 +896,7 @@ textArea.export.warningExportMapNotChangedProperly|WARNING: The export map was n
 textArea.runningAlphaVersion.1|Thank you for testing this alpha version
 textArea.runningAlphaVersion.2|Please report problems that occur on the Github page (Utilities -> Open Github page)
 textArea.runningAlphaVersion.3|The configuration files for this version will be saved in
+textArea.runningBetaVersion.1|Thank you for testing this beta version
 textArea.constructingContents.duration|Content construction took %.2f seconds!
 textArea.copyingImages|Copying images for content %s
 textArea.deletingImages|Deleting images for content %s
@@ -1076,8 +1078,8 @@ window.settings.mgt2location.automaticSelected.folderNotFound|<html>The search f
 window.settings.reset.label|Reset
 window.settings.reset.button.toolTip|<html>Click to reset the custom folder.<br>This will restore the default folder.
 window.settings.updateChannel.label|Update channel:
-window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Release: Select this, when you only want to be notified when a new release version is available
-window.settings.updateChannel.disabled|<html>Disabled: Can not change to release channel because the current running mod tool version is alpha
+window.settings.updateChannel.toolTip|<html>Select what channel should be searched for updates when the tool searches for updates<br>Alpha: Select to receive notifications when a new alpha version is available<br>Beta: Select to receive notifications when a new beta version is available<br>Release: Select this, when you only want to be notified when a new release version is available
+window.settings.updateChannel.disabled|<html>Disabled: Can not change to release channel because the current running mod tool version is alpha/beta
 window.settings.windowTitle|Settings
 window.settings.checkBox.saveLogs|Save logs
 window.settings.checkBox.saveLogs.toolTip|<html>Check this box to save all logs.<br>If disabled only the last log is saved.
