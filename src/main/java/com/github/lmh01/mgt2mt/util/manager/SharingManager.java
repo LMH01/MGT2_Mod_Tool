@@ -294,15 +294,15 @@ public class SharingManager {
                 if (map.get("mod_type").equals(manager.getId())) {
                     StringBuilder name = new StringBuilder();
                     name.append(map.get("NAME EN").toString());
-                    if (map.containsKey("replaces")) {
-                        name.append(" - ").append(I18n.INSTANCE.get("commonText.replaces"))
-                            .append(" ")
-                            .append(map.get("replaces"));
-                    } else if (map.containsKey("modifies")) {
-                        name.append(" - ").append(I18n.INSTANCE.get("commonText.modifies"))
-                            .append(" ")
-                            .append(map.get("modifies"));
-                    }
+                    //if (map.containsKey("replaces")) {
+                    //    name.append(" - ").append(I18n.INSTANCE.get("commonText.replaces"))
+                    //        .append(" ")
+                    //        .append(map.get("replaces"));
+                    //} else if (map.containsKey("modifies")) {
+                    //    name.append(" - ").append(I18n.INSTANCE.get("commonText.modifies"))
+                    //        .append(" ")
+                    //        .append(map.get("modifies"));
+                    //}
                     modNames.add(name.toString());
                 }
             }
@@ -339,9 +339,12 @@ public class SharingManager {
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 for (Map<String, Object> map : set) {
                     for (String string : selectedMods.get(manager).get()) {
-                        if (map.get("NAME EN").equals(string)) {
+                        if (string.contains((String)map.get("NAME EN"))) {
                             modMap.add(map);
                         }
+                        //if (map.get("NAME EN").equals(string)) {
+                        //    modMap.add(map);
+                        //}
                     }
                 }
             }

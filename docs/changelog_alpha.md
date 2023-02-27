@@ -9,6 +9,7 @@
 ### Bug fixes
 - Fixed #120 - Image files should now be found under Linux
 - Npc_ips can now be modified, throws no longer NullPointerException
+- Fixed problem that caused customized import to not work
 
 ## [v4.9.0-alpha1]
 
