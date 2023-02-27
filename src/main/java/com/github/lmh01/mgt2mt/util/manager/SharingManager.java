@@ -1256,6 +1256,7 @@ public class SharingManager {
     private static void editImportMap(Set<Map<String, Object>> importMaps, ArrayList<AbstractBaseContent> contentToModify, boolean addContents) throws ModProcessingException {
         Set<Map<String, Object>> modifiedContents = new HashSet<>();
         Set<Map<String, Object>> modificationInstructions = new HashSet<>();
+        HashMap<Path, Path> copiedAssetsFolders = new HashMap<>();
         for (Map<String, Object> map : importMaps) {
             for (AbstractBaseContent content : contentToModify) {
                 if (!map.containsKey("modifies")) {
@@ -1275,13 +1276,20 @@ public class SharingManager {
                         }
                         if (content instanceof RequiresPictures) {
                             // Copy original images to temp folder
-                            Path imagePath = ModManagerPaths.TEMP.getPath().resolve("import_" + Utils.getCurrentDateTime());
-                            Files.createDirectories(imagePath);
-                            ((RequiresPictures)content).exportPictures(imagePath);
-                            // Copy new images to temp folder
-                            DataStreamHelper.copyDirectory(Paths.get((String)map.get("assets_folder")), imagePath);
+                            Path source = Paths.get((String)map.get("assets_folder"));
+                            Path destination;
+                            if (copiedAssetsFolders.containsKey(source)) {
+                                destination = copiedAssetsFolders.get(source);
+                            } else {
+                                destination = ModManagerPaths.TEMP.getPath().resolve("import_" + Utils.getCurrentDateTime());
+                                copiedAssetsFolders.put(source, destination);
+                                Files.createDirectories(destination);
+                                // Copy new images to temp folder
+                                DataStreamHelper.copyDirectory(Paths.get((String)map.get("assets_folder")), destination);
+                            }
+                            ((RequiresPictures)content).exportPictures(destination);
                             // Change assets folder entry
-                            exportMap.replace("assets_folder", imagePath.toString());
+                            exportMap.replace("assets_folder", destination.toString());
                         }
                         // Set forced id
                         exportMap.put("forced_id", content.id);
