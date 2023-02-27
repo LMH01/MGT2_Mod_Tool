@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.PlatformManager;
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -11,6 +12,7 @@ import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Platform extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
@@ -206,7 +208,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
     @Override
     public void removePictures() throws IOException {
         for (PlatformImage image : platformImages) {
-            Files.delete(image.image.gameFile.toPath());
+            Path path = DataStreamHelper.getImageFromFolder(image.image.gameFile.toPath().getParent(), image.image.gameFile.getName());
+            Files.delete(path);
         }
     }
 

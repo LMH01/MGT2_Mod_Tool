@@ -3,8 +3,11 @@ package com.github.lmh01.mgt2mt.content.managed;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
+
+import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 
 public interface RequiresPictures {
     /**
@@ -35,7 +38,14 @@ public interface RequiresPictures {
             }
             Map<String, Image> images = getImageMap();
             for (Map.Entry<String, Image> entry : images.entrySet()) {
-                Files.copy(entry.getValue().gameFile.toPath(), exportPath.resolve(Objects.requireNonNull(entry.getValue().extern).toPath()));
+                if (Files.exists(entry.getValue().gameFile.toPath())) {
+                    Files.copy(entry.getValue().gameFile.toPath(), exportPath.resolve(Objects.requireNonNull(entry.getValue().extern).toPath()));
+                } else {
+                    // workaround for linux because the image name in the content can deviate from the actuall file name
+                    Path path = DataStreamHelper.getImageFromFolder(entry.getValue().gameFile.toPath().getParent(), entry.getValue().gameFile.getName());
+                    System.out.println(path);
+                    Files.copy(path, exportPath.resolve(Objects.requireNonNull(entry.getValue().extern).toPath()));
+                }
             }
         } catch (IOException | NullPointerException e) {
             throw new ModProcessingException("Exception while exporting pictures", e);
