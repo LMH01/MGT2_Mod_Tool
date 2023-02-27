@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.9.0-alpha1]
+## Comming in [v4.9.0]
 
 ### New feature
 - Exported content can now be marked to modify existing content. See the [documentation](documentation_for_mod_creators.md) for further details. (#86)

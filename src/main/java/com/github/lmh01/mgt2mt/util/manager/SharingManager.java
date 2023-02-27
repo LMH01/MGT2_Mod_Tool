@@ -1291,8 +1291,10 @@ public class SharingManager {
                             // Change assets folder entry
                             exportMap.replace("assets_folder", destination.toString());
                         }
-                        // Set forced id
-                        exportMap.put("forced_id", content.id);
+                        // Set forced id only if content is advanced content
+                        if (content instanceof AbstractAdvancedContent) {
+                            exportMap.put("forced_id", content.id);
+                        }
                         modifiedContents.add(exportMap);
                     } catch (ModProcessingException e) {
                         throw new ModProcessingException("Unable to modify import map!", e);
