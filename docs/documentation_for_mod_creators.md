@@ -20,7 +20,8 @@ especially helpful for mod creators.
    2. [Limitations](#limitations)
 6. [Mark a mod to modify already existing content](#mark-a-mod-to-modify-already-existing-content)
    1. [Example](#example-1)
-   2. [Limitations](#limitations-1)
+   2. [Dependencies](#dependencies-1)
+   3. [Limitations](#limitations-1)
 
 ## Toml file format
 This tool uses the ``.toml`` file format to store exported mods.
@@ -266,8 +267,30 @@ With this entry Microarts is modified in the following way:
 
 Everything else remains the same.
 
+### Dependencies
+The dependencies section needs to contain all dependencies of the content that is modified, including new dependencies that might be added.
+Dependencies that are no longer needed should not be included.
+
+This is the data entry for the genre GenreReplacement which will modify Action:
+```toml
+[mods.genre.action_replacement]
+modifies = "Action"
+"NAME EN" = "GenreReplacement"
+iconName = "arch.png"
+"GENRE COMB" = "<Skill Game><Adventure>"
+
+[mods.genre.action_replacement.dependencies]
+genre = ["Skill Game", "Adventure"]
+theme = ["World Wars", "Werewolves", "Superheroes", "Fencing", "Helicopters", "Middle Ages", "Castles", "Bounty Hunter", "Romans", "Monkeys", "Wild West", "Bards", "Thieves", "Wrestling", "End Times", "Treasure Hunters", "Contract Killer", "Trolls", "Ancient China", "Espionage", "Wizards", "Comedy", "Parallel Worlds", "Space", "Fire Department", "Oceans", "Conquest", "Mountaineering", "Dieselpunk", "Plants", "Space Stations", "Survivalism", "Atlantis", "Skydiving", "Special Forces", "Dwarfs", "Crime", "Jungle", "Conspiracies", "Kung Fu", "Androids", "Dolphins", "Martial Arts", "Inca", "Knights", "Climbing", "Viruses", "Devils", "Digging", "Vikings", "Prison", "Yakuza", "Paintball", "Ancient", "Asteroids", "Monster", "Super Villains", "Bunker", "Ninjas", "Puzzles", "Robots", "Worms", "Barbarians", "Military", "Radioactivity", "Dinosaurs", "Tanks", "Zombies", "Ancient Egypt", "Sewers", "Witches", "Kickboxing", "Assassins", "Spaceships", "Detective", "Squirrels", "Greek Mythology", "Mutants", "Pets", "UFOs", "Mercenary", "Planets", "Cowboys", "Cyberpunk", "Mummies", "Vampires", "Steampunk", "Time Travel", "Revolution", "Hell", "Dungeons", "Treasure", "Goblins", "Elves", "Apocalypse", "Mecha", "Pirates", "Skeletons", "Predators", "Anime", "Ants", "Orcs", "Dragons", "Archery", "Gangsters", "Angels", "Ice Age", "Submarines", "Mafia", "Aliens", "Aztecs", "Boxing", "Samurai", "Saboteurs", "Crocodiles", "Insects", "Spiders", "Gods", "Fantasy", "Zeppelins", "Portals", "Airplanes", "Demons", "Gladiators", "Cyberspace", "Graveyards", "Cyborgs", "Karate", "Diving", "Stone Age", "Hunting", "Horror", "Magic", "Agents", "Roman Empire", "Police", "Ghosts", "Animals", "Parkour", "Stones", "Astronauts", "Desert", "Historical", "Drones"]
+gameplay_feature = ["E-Sport Mode", "Secrets", "Quick Time Events", "Gaming Suit Support", "Arcade Joystick Support", "Adjustable Censoring", "Cheat Codes", "Multi-Monitor Support", "Pause Function", "Online Leaderboards", "Streaming Platform Integration", "Lightgun Support", "Local High Scores", "Wheel Support", "Sandbox Mode", "Force Feedback", "Rewind Function", "Dynamic Music", "Modern Controller Support", "Check Points", "Achievements", "Controller Support", "Instrument Support", "Dance pad support", "Gaming Vest Support", "New Game Plus"]
+```
+As you can see the dependencies section also includes things that are not modified.
+The genre dependencies however are changed from `["Survival Game", "Adventure", "First-Person Shooter", "Third-Person Shooter", "Role-Playing Game", "Skill Game", "Platformer", "Fighting Game"]` to
+only include `["Skill Game", "Adventure"]`.
+The other dependencies are no longer needed because the `GENRE COMB` has been modified.
+
 ### Limitations
-- Missing dependencies are not checked so it is **important** to make sure that the dependencies filed is complete
+- The dependencies section needs to contain all dependencies of the contnt that is modified, including new dependencies that might be added
     - When dependencies are missing the result can be a crashed import or a bugged game
 - Only content of the same type can be modified
 - When original content is modified the mod tool might not pickup that something has been modified
