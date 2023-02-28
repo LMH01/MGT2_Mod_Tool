@@ -4,6 +4,7 @@
 
 ### Other
 - Dependency replacement now contains content that is currently being imported (fr #124)
+- Added info message to explain that NoSuchFileExceptions that occurred when restoring the initial backup can be ignored
 
 ## [v4.9.0-beta2]
 

@@ -546,6 +546,7 @@ dialog.backup.backupFailedTitle|Backup fehlgeschlagen
 dialog.backup.unableToCreateBackup|Backup kann nicht erstellt werden.
 dialog.backup.unableToCreateBackup.fileNotFound|Datei nicht gefunden: Bitte überprüfe, ob der mgt2-Ordner richtig eingestellt ist.
 dialog.backup.restoreBackup.initialBackup.restored|Das Initiale-Backup wurde wiederhergestellt.
+dialog.backup.restoreBackup.initialBackup.restored.note|Hinweis: Falls NoSuchFileExceptions aufgetreten sind können diese ignoriert werden.
 dialog.backup.restoreBackup.latestBackup.restored|Das neueste Backup wurde wiederhergestellt.
 dialog.backup.restoreBackup.initialBackup.notRestored|<html>Das Initiale-Backup konnte nicht wiederhergestellt werden:<br>Die Backupdatei(en) fehlen.
 dialog.backup.restoreBackup.latestBackup.notRestored|<html>Die letzte Sicherung konnte nicht wiederhergestellt werden:<br>Die Backupdatei(en) fehlen.

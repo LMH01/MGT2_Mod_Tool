@@ -10,6 +10,7 @@
 - Added new update channel: Beta
 - The dependencies section is no longer required when contents are imported, this cleans up .toml files immensely and makes it easier to modify and replace content
 - Dependency replacement now contains content that is currently being imported (fr #124)
+- Added info message to explain that NoSuchFileExceptions that occurred when restoring the initial backup can be ignored
 
 ### Bug fixes
 - Fixed NullPointException when no `requires_pictures` key was set in any mod map inside the `.toml` file when mods where imported

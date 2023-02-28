@@ -149,6 +149,7 @@ public class Backup {
                 restoreImages();
                 if (showMessages) {
                     TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"));
+                    TextAreaHelper.appendText(I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored.note"));
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.backup.restoreBackup.initialBackup.restored"), I18n.INSTANCE.get("dialog.backup.restoreBackup.restored"), JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
