@@ -3,7 +3,7 @@
 ## [v4.9.0-beta2]
 
 ### Other
-- The dependencies section is no longer required when contents are imported
+- The dependencies section is no longer required when contents are imported, this cleans up .toml files immensely and makes it easier to modify and replace content
 
 ## [v4.9.0-beta1]
 
