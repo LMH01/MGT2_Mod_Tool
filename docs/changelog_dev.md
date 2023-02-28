@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.9.0-beta2]
+
+### Other
+- The dependencies section is no longer required when contents are imported
+
 ## [v4.9.0-beta1]
 
 ### Other

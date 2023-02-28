@@ -756,8 +756,6 @@ public class SharingManager {
                 if (!(parent instanceof DependentContentManager)) {
                     continue;
                 }
-                // At this point the new method could create the dependencies map
-                //Map<String, Object> dependencies = (Map<String, Object>) parentMap.get("dependencies");
                 Map<String, Object> dependencies = ((DependentContentManager)parent).getDependencyMapFromImport(parentMap);
                 if (dependencies == null) {
                     DebugHelper.warn(LOGGER, "dependency map of " + parent.getType() + " - " + parentMap.get("NAME EN") + " does not exist");

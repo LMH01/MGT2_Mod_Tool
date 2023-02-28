@@ -8,7 +8,6 @@ especially helpful for mod creators.
    1. [Toml file types](#toml-file-types)
    2. [Mod types](#mod-types)
    3. [Data fields](#data-fields)
-   4. [Dependencies](#dependencies)
 2. [Assets' folder](#assets-folder)
 3. [Exporting mods](#exporting-mods)
 4. [Importing mods](#importing-mods)
@@ -20,8 +19,7 @@ especially helpful for mod creators.
    2. [Limitations](#limitations)
 6. [Mark a mod to modify already existing content](#mark-a-mod-to-modify-already-existing-content)
    1. [Example](#example-1)
-   2. [Dependencies](#dependencies-1)
-   3. [Limitations](#limitations-1)
+   2. [Limitations](#limitations-1)
 
 ## Toml file format
 This tool uses the ``.toml`` file format to store exported mods.
@@ -40,9 +38,6 @@ type = "export_bundled" # the type of which this toml file is
 
 # [mods.MOD_TYPE.MOD_NAME]
 # SPECIFIC DATA FIELDS (Content specific)
-#
-# [mods.MOD_TYPE.MOD_NAME.dependencies]
-# DEPENDENCY_MOD_TYPE = ["DEPENDENCY_NAME"]
 ```
 ### Toml file types
 - ``export_bundled`` 
@@ -78,26 +73,6 @@ In addition to these fields most content (all content that can be translated) su
 ```
 The language keys are the same the game uses for the localisation directories.
 
-### Dependencies
-This section contains all the content that this mod depends on. This can be content that is already added to the game
-or content that will be added to the game when this content is added (e.g. a mod that is standing in the same file).
-
-Even if this content is missing the mod import will not fail because the tool checks if dependencies are missing.
-If they are missing the user is notified and can replace these missing dependencies with a content that is available.
-
-The ``DEPENDENCY_MOD_TYPE`` is the type the dependency is of, one of [these](#mod-types).
-
-The ``DEPENDENCY_NAME`` is the name of the dependency, multiple dependencies of the same type can be chained like this:
-```toml
-[mods.MOD_TYPE.MOD_NAME.dependencies]
-DEPENDENCY_MOD_TYPE = ["DEPENDENCY_NAME_1", "DEPENDENCY_NAME_2", "DEPENDENCY_NAME_3", "...", "DEPENDENCY_NAME_N"]
-```
-If the mod depends on two or more different types of dependencies they can be set in the following way:
-```toml
-DEPENDENCY_MOD_TYPE_1 = ["DEPENDENCY_NAME_1", "DEPENDENCY_NAME_2", "...", "DEPENDENCY_NAME_N"]
-DEPENDENCY_MOD_TYPE_2 = ["DEPENDENCY_NAME_1", "...", "DEPENDENCY_NAME_N"]
-DEPENDENCY_MOD_TYPE_3 = ["DEPENDENCY_NAME_1", "...", "DEPENDENCY_NAME_N"]
-```
 ## Assets' folder
 When a mod is exported that requires pictures, an assets' folder is created in the directory where the ``export.toml``
 file is located. This folder contains all images that are required by the mods in the ``.toml`` file. Import will not
@@ -202,9 +177,6 @@ COUNTRY = "0"
 "NAME TU" = "Williams"
 requires_pictures = true
 "NAME GE" = "Williams"
-
-[mods.publisher.williams.dependencies]
-genre = ["Simulation"]
 ```
 After adding the ``replaces`` tag the entry looks like this:
 ```toml
@@ -226,9 +198,6 @@ COUNTRY = "0"
 requires_pictures = true
 "NAME GE" = "Williams"
 replaces = "Minisoft"
-
-[mods.publisher.williams.dependencies]
-genre = ["Simulation"]
 ```
 When the mod is imported now the mod tool notices the ``replaces`` tag and notifies the user that content will be replaced.
 
@@ -256,9 +225,6 @@ modifies = "Microarts"
 "NAME EN" = "Williams"
 "NAME GE" = "Williams"
 iconName = "williams.png"
-
-[mods.publisher.williams.dependencies]
-genre = ["Action"] 
 ```
 With this entry Microarts is modified in the following way:
 - English name is changed to "Williams"
@@ -267,31 +233,7 @@ With this entry Microarts is modified in the following way:
 
 Everything else remains the same.
 
-### Dependencies
-The dependencies section needs to contain all dependencies of the content that is modified, including new dependencies that might be added.
-Dependencies that are no longer needed should not be included.
-
-This is the data entry for the genre GenreReplacement which will modify Action:
-```toml
-[mods.genre.action_replacement]
-modifies = "Action"
-"NAME EN" = "GenreReplacement"
-iconName = "arch.png"
-"GENRE COMB" = "<Skill Game><Adventure>"
-
-[mods.genre.action_replacement.dependencies]
-genre = ["Skill Game", "Adventure"]
-theme = ["World Wars", "Werewolves", "Superheroes", "Fencing", "Helicopters", "Middle Ages", "Castles", "Bounty Hunter", "Romans", "Monkeys", "Wild West", "Bards", "Thieves", "Wrestling", "End Times", "Treasure Hunters", "Contract Killer", "Trolls", "Ancient China", "Espionage", "Wizards", "Comedy", "Parallel Worlds", "Space", "Fire Department", "Oceans", "Conquest", "Mountaineering", "Dieselpunk", "Plants", "Space Stations", "Survivalism", "Atlantis", "Skydiving", "Special Forces", "Dwarfs", "Crime", "Jungle", "Conspiracies", "Kung Fu", "Androids", "Dolphins", "Martial Arts", "Inca", "Knights", "Climbing", "Viruses", "Devils", "Digging", "Vikings", "Prison", "Yakuza", "Paintball", "Ancient", "Asteroids", "Monster", "Super Villains", "Bunker", "Ninjas", "Puzzles", "Robots", "Worms", "Barbarians", "Military", "Radioactivity", "Dinosaurs", "Tanks", "Zombies", "Ancient Egypt", "Sewers", "Witches", "Kickboxing", "Assassins", "Spaceships", "Detective", "Squirrels", "Greek Mythology", "Mutants", "Pets", "UFOs", "Mercenary", "Planets", "Cowboys", "Cyberpunk", "Mummies", "Vampires", "Steampunk", "Time Travel", "Revolution", "Hell", "Dungeons", "Treasure", "Goblins", "Elves", "Apocalypse", "Mecha", "Pirates", "Skeletons", "Predators", "Anime", "Ants", "Orcs", "Dragons", "Archery", "Gangsters", "Angels", "Ice Age", "Submarines", "Mafia", "Aliens", "Aztecs", "Boxing", "Samurai", "Saboteurs", "Crocodiles", "Insects", "Spiders", "Gods", "Fantasy", "Zeppelins", "Portals", "Airplanes", "Demons", "Gladiators", "Cyberspace", "Graveyards", "Cyborgs", "Karate", "Diving", "Stone Age", "Hunting", "Horror", "Magic", "Agents", "Roman Empire", "Police", "Ghosts", "Animals", "Parkour", "Stones", "Astronauts", "Desert", "Historical", "Drones"]
-gameplay_feature = ["E-Sport Mode", "Secrets", "Quick Time Events", "Gaming Suit Support", "Arcade Joystick Support", "Adjustable Censoring", "Cheat Codes", "Multi-Monitor Support", "Pause Function", "Online Leaderboards", "Streaming Platform Integration", "Lightgun Support", "Local High Scores", "Wheel Support", "Sandbox Mode", "Force Feedback", "Rewind Function", "Dynamic Music", "Modern Controller Support", "Check Points", "Achievements", "Controller Support", "Instrument Support", "Dance pad support", "Gaming Vest Support", "New Game Plus"]
-```
-As you can see the dependencies section also includes things that are not modified.
-The genre dependencies however are changed from `["Survival Game", "Adventure", "First-Person Shooter", "Third-Person Shooter", "Role-Playing Game", "Skill Game", "Platformer", "Fighting Game"]` to
-only include `["Skill Game", "Adventure"]`.
-The other dependencies are no longer needed because the `GENRE COMB` has been modified.
-
 ### Limitations
-- The dependencies section needs to contain all dependencies of the contnt that is modified, including new dependencies that might be added
-    - When dependencies are missing the result can be a crashed import or a bugged game
 - Only content of the same type can be modified
 - When original content is modified the mod tool might not pickup that something has been modified
 - The original content can only be restored by restoring the initial backup
