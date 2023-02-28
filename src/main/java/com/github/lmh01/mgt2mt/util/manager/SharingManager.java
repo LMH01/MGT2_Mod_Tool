@@ -74,6 +74,11 @@ public class SharingManager {
      * @throws ModProcessingException When something went wrong.
      */
     public static void importAll(ImportType importType, Set<Path> paths) throws ModProcessingException {
+        // Make sure that temporary files are cleared
+        if (ModManagerPaths.TEMP.toFile().exists()) {
+            ThreadHandler.startThread(ThreadHandler.runnableDeleteTempFolder, "runnableDeleteTempFolder");
+        }
+        
         TimeHelper timeHelper = new TimeHelper();
         CompanyLogoAnalyzer.analyzeLogoNumbers();
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.start"));
