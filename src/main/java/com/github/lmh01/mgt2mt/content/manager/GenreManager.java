@@ -20,8 +20,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GenreManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -247,6 +250,18 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         arrayList.add(GameplayFeatureManager.INSTANCE);
         arrayList.add(GenreManager.INSTANCE);
         return arrayList;
+    }
+
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        map.put(GenreManager.INSTANCE.getId(), new HashSet<>(Utils.getEntriesFromString((String)importMap.get("GENRE COMB"))));
+        map.put(ThemeManager.INSTANCE.getId(), new HashSet<>(Utils.getEntriesFromString((String)importMap.get("THEME COMB"))));
+        Set<String> gameplayFeatures = new HashSet<>();
+        gameplayFeatures.addAll(Utils.getEntriesFromString((String)importMap.get("GAMEPLAYFEATURE GOOD")));
+        gameplayFeatures.addAll(Utils.getEntriesFromString((String)importMap.get("GAMEPLAYFEATURE BAD")));
+        map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
+        return map;
     }
 
     public static GenreHelper currentGenreHelper;

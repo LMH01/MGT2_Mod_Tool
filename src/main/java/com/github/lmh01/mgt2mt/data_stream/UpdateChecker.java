@@ -127,7 +127,7 @@ public class UpdateChecker {
                     LOGGER.info(currentLine);
                     stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
                 }
-                if (!latestGameVersionCompatible && !Utils.isAlpha() && !MadGamesTycoon2ModTool.VERSION.contains("dev")) {
+                if (!latestGameVersionCompatible && !Utils.isAlpha() && !Utils.isBeta() && !MadGamesTycoon2ModTool.VERSION.contains("dev")) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible") + "\n" + stringBuilder, I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
                 }
             } catch (IOException e) {

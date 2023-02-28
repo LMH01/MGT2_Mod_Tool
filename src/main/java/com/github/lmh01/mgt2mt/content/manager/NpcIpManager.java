@@ -12,8 +12,11 @@ import javax.swing.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class NpcIpManager extends AbstractSimpleContentManager implements DependentContentManager {
 
@@ -246,5 +249,26 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         arrayList.add(ThemeManager.INSTANCE);
         arrayList.add(PublisherManager.INSTANCE);
         return arrayList;
+    }
+
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genres = new HashSet<>();
+        genres.add((String)importMap.get("genre"));
+        if (importMap.containsKey("sub_genre")) {
+            genres.add((String)importMap.get("sub_genre"));
+        }
+        map.put(GenreManager.INSTANCE.getId(), genres);
+        Set<String> themes = new HashSet<>();
+        themes.add((String)importMap.get("theme"));
+        if (importMap.containsKey("sub_theme")) {
+            genres.add((String)importMap.get("sub_theme"));
+        }
+        map.put(ThemeManager.INSTANCE.getId(), themes);
+        Set<String> publisher = new HashSet<>();
+        publisher.add((String)importMap.get("publisher"));
+        map.put(PublisherManager.INSTANCE.getId(), publisher);
+        return map;
     }
 }

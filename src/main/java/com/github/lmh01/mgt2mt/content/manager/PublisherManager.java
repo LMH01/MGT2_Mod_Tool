@@ -26,9 +26,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -294,6 +297,15 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         ArrayList<BaseContentManager> list = new ArrayList<>();
         list.add(GenreManager.INSTANCE);
         return list;
+    }
+
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> map) {
+        Map<String, Object> dependencies = new HashMap<>();
+        Set<String> genres = new HashSet<>();
+        genres.add((String)map.get("GENRE"));
+        dependencies.put(GenreManager.INSTANCE.getId(), genres);
+        return dependencies;
     }
 
     /**

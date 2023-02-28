@@ -384,6 +384,19 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
         return arrayList;
     }
 
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> gameplayFeatures = new HashSet<>();
+        for (Map.Entry<String, Object> entry : importMap.entrySet()) {
+            if (entry.getKey().contains("NEED-")) {
+                gameplayFeatures.add((String)entry.getValue());
+            }
+        }
+        map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
+        return map;
+    }
+
     /**
      * Calculates the component rating that the component will receive
      */

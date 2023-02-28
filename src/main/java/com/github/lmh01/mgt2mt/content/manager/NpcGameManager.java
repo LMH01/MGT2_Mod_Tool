@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -132,6 +133,13 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
     public ArrayList<BaseContentManager> getDependencies() {
         ArrayList<BaseContentManager> dependencies = new ArrayList<>();
         dependencies.add(GenreManager.INSTANCE);
+        return dependencies;
+    }
+
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> dependencies = new HashMap<>();
+        dependencies.put(GenreManager.INSTANCE.getId(), Utils.getEntriesFromString((String)importMap.get("GENRES")));
         return dependencies;
     }
 

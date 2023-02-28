@@ -641,6 +641,19 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         return dependencies;
     }
 
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> gameplayFeatures = new HashSet<>();
+        for (Map.Entry<String, Object> entry : importMap.entrySet()) {
+            if (entry.getKey().contains("NEED-")) {
+                gameplayFeatures.add((String)entry.getValue());
+            }
+        }
+        map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
+        return map;
+    }
+
     private void setEndYearSpinner(JSpinner spinnerUnlockYear, JSpinner spinnerEndYear) {
         if (Settings.safetyFeatures.get(SafetyFeature.UNLOCK_SPINNERS)) {
             spinnerEndYear.setToolTipText("<html>[" + I18n.INSTANCE.get("commonText.range") + ": 1976 - 2999]<br>" + I18n.INSTANCE.get("mod.platform.addPlatform.components.spinner.endYear.toolTip"));

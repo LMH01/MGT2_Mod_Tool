@@ -201,6 +201,18 @@ public class NpcEngineManager extends AbstractAdvancedContentManager implements 
         return dependencies;
     }
 
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genres = new HashSet<>();
+        genres.add((String)importMap.get("GENRE"));
+        Set<String> platforms = new HashSet<>();
+        platforms.add((String)importMap.get("PLATFORM"));
+        map.put(GenreManager.INSTANCE.getId(), genres);
+        map.put(PlatformManager.INSTANCE.getId(), platforms);
+        return map;
+    }
+
     /**
      * @return An ArrayList containing the engine names without the genre names
      */

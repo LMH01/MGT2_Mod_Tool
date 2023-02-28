@@ -242,4 +242,18 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
         arrayList.add(GenreManager.INSTANCE);
         return arrayList;
     }
+
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genres = new HashSet<>();
+        if (importMap.containsKey("BAD GENRE")) {
+            genres.add((String)importMap.get("BAD GENRE"));
+        }
+        if (importMap.containsKey("GOOD GENRE")) {
+            genres.add((String)importMap.get("GOOD GENRES"));
+        }
+        map.put(GenreManager.INSTANCE.getId(), genres);
+        return map;
+    }
 }

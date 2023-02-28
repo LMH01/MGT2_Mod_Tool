@@ -33,4 +33,14 @@ public interface DependentContentManager {
             mod.analyzeFile();
         }
     }
+
+    /**
+     * Returns a map containing all dependencies of the content.
+     * Dependencies are taken from the map. The map is used to import
+     * the content.
+     * @param importMap Map that contains the data of the mod that should be imported, used to parse dependencies.
+     * @return Map that contains all dependencies.
+     * @throws NullPointerException When an entry that is needed does not exist in the map.
+     */
+    Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException;
 }

@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.util.manager;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.data_stream.analyzer.CompanyLogoAnalyzer;
 import com.github.lmh01.mgt2mt.util.*;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -754,7 +756,9 @@ public class SharingManager {
                 if (!(parent instanceof DependentContentManager)) {
                     continue;
                 }
-                Map<String, Object> dependencies = (Map<String, Object>) parentMap.get("dependencies");
+                // At this point the new method could create the dependencies map
+                //Map<String, Object> dependencies = (Map<String, Object>) parentMap.get("dependencies");
+                Map<String, Object> dependencies = ((DependentContentManager)parent).getDependencyMapFromImport(parentMap);
                 if (dependencies == null) {
                     DebugHelper.warn(LOGGER, "dependency map of " + parent.getType() + " - " + parentMap.get("NAME EN") + " does not exist");
                     continue;

@@ -349,6 +349,16 @@ public class GameplayFeatureManager extends AbstractAdvancedContentManager imple
         return list;
     }
 
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> set = new HashSet<>();
+        set.addAll(Utils.getEntriesFromString((String)importMap.get("GOOD")));
+        set.addAll(Utils.getEntriesFromString((String)importMap.get("BAD")));
+        map.put(GenreManager.INSTANCE.getId(), set);
+        return map;
+    }
+
     /**
      * Edits the GameplayFeatures.txt file to add genre id to the input gameplay feature
      *

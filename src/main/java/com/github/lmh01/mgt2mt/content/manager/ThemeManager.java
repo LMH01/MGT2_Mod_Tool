@@ -288,6 +288,17 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
         return list;
     }
 
+    @Override
+    public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
+        Map<String, Object> map = new HashMap<>();
+        Set<String> genreNames = new HashSet<>();
+        for (String string : Utils.getEntriesFromString((String)importMap.get("GENRES"))) {
+            genreNames.add(string);
+        }
+        map.put(GenreManager.INSTANCE.getId(), genreNames);
+        return map;
+    }
+
     /**
      * This function writes the theme file that is being analyzed by the theme mod.
      * The file is being written in a way that the theme name is english but that the data is still preserved.
