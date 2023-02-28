@@ -1,15 +1,13 @@
-mod_tool_version = "4.9.0-dev"
+mod_tool_version = "4.9.0-beta2"
 type = "export_bundled"
 
-[mods.licence.licencename]
-"NAME EN" = "licensename"
-"BAD GENRE" = "Action"
-"GOOD GENRE" = "Adventure"
+[mods.licence.license_name]
+"RELEASE YEAR" = "1976"
+"NAME EN" = "license name"
 "LICENCE TYP" = "BOARD"
+"BAD GENRE" = "Economic Simulation"
 requires_pictures = false
-
-[mods.licence.licencename.dependencies]
-genre = ["Action", "Adventure"]
+"GOOD GENRE" = "Fighting Game"
 
 [mods.dev_legend.devlegendname]
 TYP = "D"
@@ -25,12 +23,9 @@ requires_pictures = false
 "DEV COSTS" = "35000"
 
 [mods.npc_game.npcgamename]
-"NAME EN" = "npcgamename"
-GENRES = "<Adventure><Economic Simulation><Building Game>"
 requires_pictures = false
-
-[mods.npc_game.npcgamename.dependencies]
-genre = ["Adventure", "Economic Simulation", "Building Game"]
+GENRES = "<Building Game>"
+"NAME EN" = "npcgamename"
 
 [mods.hardware_feature.hardwarefeaturename]
 DATE = "JAN 1976"
@@ -45,20 +40,15 @@ requires_pictures = false
 
 [mods.npc_ip.npcipname]
 "NAME EN" = "npcipname"
-sub_theme = "Agents"
-sub_genre = "Adventure"
-genre = "Action"
+sub_theme = "Angels"
+sub_genre = "Sports Game"
+genre = "Adventure"
 release_year = "1976"
 rating = "50"
-publisher = "3D Reality"
-theme = "Agents"
+publisher = "Mintendu"
+theme = "Angels"
 target_group = "ALL"
 requires_pictures = false
-
-[mods.npc_ip.npcipname.dependencies]
-genre = ["Action", "Adventure"]
-publisher = ["3D Reality"]
-theme = ["Agents"]
 
 [mods.engine_feature.enginefeaturename]
 "RES POINTS" = "500"
@@ -88,24 +78,21 @@ platform_image_1 = "platform_platformname_platform_image_1.png"
 platform_image_2 = "platform_platformname_platform_image_2.png"
 "MANUFACTURER EN" = "platformdescription"
 "MANUFACTURER MANUFACTURER EN" = "platformdescription"
-NEED-3 = "Adjustable Censoring"
-NEED-1 = "Adjustable Controls"
+NEED-1 = "Arcade Joystick Support"
 GAMEPASS = "10"
 requires_pictures = true
 "DEV COSTS" = "35000"
 TECHLEVEL = "1"
 UNITS = "1000000"
-NEED-2 = "Adjustable HUD"
-
-[mods.platform.platformname.dependencies]
-gameplay_feature = ["Adjustable HUD", "Adjustable Controls", "Adjustable Censoring"]
+"DATE END" = "JAN 2034"
 
 [mods.genre.genrename]
-"RES POINTS" = "900"
-"GAMEPLAYFEATURE BAD" = ""
-"screenshot_1.png" = "genre_genrename_screenshot_1.png"
+"RES POINTS" = "0"
+"GAMEPLAYFEATURE BAD" = "<Instrument Support><In-App Purchases><Gaming Vest Support>"
 GRAPHIC = "25"
+"screenshot_genre_genrename_1.png" = "genre_genrename_screenshot_genre_genrename_1.png"
 "DESC EN" = "genredescription"
+"screenshot_genre_genrename_2.png" = "genre_genrename_screenshot_genre_genrename_2.png"
 FOCUS4 = "5"
 ALIGN1 = "5"
 FOCUS5 = "5"
@@ -113,37 +100,31 @@ ALIGN2 = "5"
 FOCUS6 = "5"
 FOCUS7 = "5"
 FOCUS0 = "5"
-"GENRE COMB" = "<Action><Adventure><Building Game><Economic Simulation><Fighting Game>"
+"GENRE COMB" = "<Building Game><Economic Simulation><Fighting Game><First-Person Shooter><Interactive Movie>"
 FOCUS1 = "5"
 FOCUS2 = "5"
-"screenshot_4.png" = "genre_genrename_screenshot_4.png"
 FOCUS3 = "5"
 ALIGN0 = "5"
 GAMEPLAY = "25"
 SOUND = "25"
-"DEV COSTS" = "6000"
-PRICE = "5000"
+"DEV COSTS" = "0"
+PRICE = "0"
 iconName = "genre_genrename_icon.png"
-"screenshot_3.png" = "genre_genrename_screenshot_3.png"
-TGROUP = "<KID><TEEN><ADULT><OLD>"
-"screenshot_2.png" = "genre_genrename_screenshot_2.png"
+"screenshot_genre_genrename_3.png" = "genre_genrename_screenshot_genre_genrename_3.png"
+TGROUP = "<ADULT>"
 DATE = "JAN 1976"
-"GAMEPLAYFEATURE GOOD" = ""
-"THEME COMB" = ""
+"GAMEPLAYFEATURE GOOD" = "<Adjustable HUD><Augmented-Reality-Support><Arcade Joystick Support>"
+"THEME COMB" = "<Bicycle><Birds><Billiards><Books>"
 "NAME EN" = "genrename"
 requires_pictures = true
+"screenshot_genre_genrename_0.png" = "genre_genrename_screenshot_genre_genrename_0.png"
 CONTROL = "25"
-
-[mods.genre.genrename.dependencies]
-genre = ["Action", "Adventure", "Building Game", "Economic Simulation", "Fighting Game"]
-theme = []
-gameplay_feature = []
 
 [mods.publisher.publishername]
 PUBLISHER = "true"
 DEVELOPER = "true"
 MARKET = "50"
-GENRE = "Adventure"
+GENRE = "Racing"
 ONLYMOBILE = "true"
 SHARE = "5"
 SPEED = "3"
@@ -155,13 +136,10 @@ publisher_icon = "publisher_publishername_publisher_icon.png"
 COUNTRY = "0"
 requires_pictures = true
 
-[mods.publisher.publishername.dependencies]
-genre = ["Adventure"]
-
 [mods.theme.themename]
 "NAME CZ" = "themename"
 "NAME JA" = "themename"
-GENRES = "<Adventure><Adventure>"
+GENRES = "<Adventure><Building Game><Economic Simulation><Fighting Game><First-Person Shooter>"
 "NAME PB" = "themename"
 "NAME AR" = "themename"
 "NAME CT" = "themename"
@@ -176,17 +154,14 @@ GENRES = "<Adventure><Adventure>"
 "NAME TU" = "themename"
 "NAME PL" = "themename"
 requires_pictures = false
-"NAME GE" = "themename <2> <2>"
+"NAME GE" = "themename <2><11><9><10><14><M3>"
 "NAME RO" = "themename"
-AGE = "0"
-
-[mods.theme.themename.dependencies]
-genre = ["Adventure"]
+AGE = "3"
 
 [mods.gameplay_feature.gameplayfeaturename]
 "RES POINTS" = "500"
 PRICE = "50000"
-BAD = "<Action>"
+BAD = "<Building Game><Economic Simulation><Fighting Game><First-Person Shooter>"
 GRAPHIC = "30"
 TYP = "4"
 "DESC EN" = "gameplayfeaturedescription"
@@ -195,29 +170,22 @@ TECH = "30"
 "NAME EN" = "gameplayfeaturename"
 GAMEPLAY = "30"
 SOUND = "30"
-GOOD = "<Adventure>"
+GOOD = "<Sports Game><Strategy><Survival Game><Third-Person Shooter>"
 requires_pictures = false
 "DEV COSTS" = "35000"
 
-[mods.gameplay_feature.gameplayfeaturename.dependencies]
-genre = ["Action", "Adventure"]
-
-[mods.npc_engine.npcengine]
+[mods.npc_engine.npcenginename]
 PLATFORM = "Personal Computer"
 DATE = "JAN 1976"
-"NAME EN" = "npcengine"
+"NAME EN" = "npcenginename"
 PRICE = "30000"
 GENRE = "Adventure"
 SHARE = "5"
 requires_pictures = false
 
-[mods.npc_engine.npcengine.dependencies]
-genre = ["Adventure"]
-platform = ["Personal Computer"]
-
-[mods.copy_protect.copyprotection]
+[mods.copy_protect.copyprotectionname]
 DATE = "JAN 1976"
-"NAME EN" = "copyprotection"
+"NAME EN" = "copyprotectionname"
 PRICE = "30000"
 requires_pictures = false
 "DEV COSTS" = "35000"
@@ -232,7 +200,4 @@ platform_icon = "hardware_hardwarename_platform_icon.png"
 TYP = "0"
 requires_pictures = true
 "DEV COSTS" = "1000000"
-TECHLEVEL = "7"
-
-[mods.hardware.hardwarename.dependencies]
-gameplay_feature = []
+TECHLEVEL = "1"
