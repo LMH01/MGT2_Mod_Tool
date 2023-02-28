@@ -263,7 +263,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         Set<String> themes = new HashSet<>();
         themes.add((String)importMap.get("theme"));
         if (importMap.containsKey("sub_theme")) {
-            genres.add((String)importMap.get("sub_theme"));
+            themes.add((String)importMap.get("sub_theme"));
         }
         map.put(ThemeManager.INSTANCE.getId(), themes);
         Set<String> publisher = new HashSet<>();

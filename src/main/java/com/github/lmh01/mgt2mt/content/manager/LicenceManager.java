@@ -251,7 +251,7 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
             genres.add((String)importMap.get("BAD GENRE"));
         }
         if (importMap.containsKey("GOOD GENRE")) {
-            genres.add((String)importMap.get("GOOD GENRES"));
+            genres.add((String)importMap.get("GOOD GENRE"));
         }
         map.put(GenreManager.INSTANCE.getId(), genres);
         return map;
