@@ -86,20 +86,6 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
     }
 
     @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        Set<String> genres = new HashSet<>();
-        if (goodGenreId != null) {
-            genres.add(GenreManager.INSTANCE.getContentNameById(goodGenreId));
-        }
-        if (badGenreId != null) {
-            genres.add(GenreManager.INSTANCE.getContentNameById(badGenreId));
-        }
-        map.put(GenreManager.INSTANCE.getId(), genres);
-        return map;
-    }
-
-    @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         // Nothing has to be done here, everything has been completed in getMap
     }

@@ -166,16 +166,6 @@ public class GameplayFeature extends AbstractAdvancedContent implements Dependen
     }
 
     @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        Set<String> set = new HashSet<>();
-        set.addAll(SharingHelper.getExportNamesArray(GenreManager.INSTANCE, goodGenres));
-        set.addAll(SharingHelper.getExportNamesArray(GenreManager.INSTANCE, badGenres));
-        map.put(GenreManager.INSTANCE.getId(), set);
-        return map;
-    }
-
-    @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         if (map.containsKey("GOOD")) {
             map.replace("GOOD", SharingHelper.getExportNamesString(GenreManager.INSTANCE, Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(map.get("GOOD")))));

@@ -112,13 +112,6 @@ public class Hardware extends AbstractAdvancedContent implements DependentConten
     }
 
     @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        map.put(GameplayFeatureManager.INSTANCE.getId(), SharingHelper.getExportNamesArray(GameplayFeatureManager.INSTANCE, requiredGameplayFeatures));
-        return map;
-    }
-
-    @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         Map<String, String> modifications = new HashMap<>(map);
         for (Map.Entry<String, String> entry : map.entrySet()) {

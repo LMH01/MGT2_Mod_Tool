@@ -172,17 +172,6 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 I18n.INSTANCE.get("commonText.type") + ": " + type.getTypeName() + "<br>" +
                 I18n.INSTANCE.get("commonText.startplatform") + ": " + Utils.getTranslatedValueFromBoolean(startPlatform) + "<br>" +
                 gpg.toString();
-}
-
-    @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        Set<String> gameplayFeatures = new HashSet<>();
-        for (Integer integer : requiredGameplayFeatures) {
-            gameplayFeatures.add(GameplayFeatureManager.INSTANCE.getContentNameById(integer));
-        }
-        map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
-        return map;
     }
 
     @Override

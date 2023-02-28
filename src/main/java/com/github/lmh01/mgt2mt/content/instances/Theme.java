@@ -59,17 +59,6 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
     }
 
     @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        Set<String> genreNames = new HashSet<>();
-        for (Integer integer : compatibleGenres) {
-            genreNames.add(GenreManager.INSTANCE.getContentNameById(integer));
-        }
-        map.put(GenreManager.INSTANCE.getId(), genreNames);
-        return map;
-    }
-
-    @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         map.replace("GENRES", SharingHelper.getExportNamesString(GenreManager.INSTANCE, compatibleGenres));
     }

@@ -64,22 +64,6 @@ public class NpcEngine extends AbstractAdvancedContent implements DependentConte
     }
 
     @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        if (genre != -1) {
-            ArrayList<String> genres = new ArrayList<>();
-            genres.add(GenreManager.INSTANCE.getContentNameById(genre));
-            map.put(GenreManager.INSTANCE.getId(), genres);
-        }
-        if (platform != -1) {
-            ArrayList<String> platforms = new ArrayList<>();
-            platforms.add(PlatformManager.INSTANCE.getContentNameById(platform));
-            map.put(PlatformManager.INSTANCE.getId(), platforms);
-        }
-        return map;
-    }
-
-    @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         if (genre != -1) {
             map.replace("GENRE", GenreManager.INSTANCE.getContentNameById(genre));

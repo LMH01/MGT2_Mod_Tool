@@ -106,15 +106,6 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
     }
 
     @Override
-    public Map<String, Object> getDependencyMap() throws ModProcessingException {
-        Map<String, Object> map = new HashMap<>();
-        Set<String> genres = new HashSet<>();
-        genres.add(GenreManager.INSTANCE.getContentNameById(genreId));
-        map.put(GenreManager.INSTANCE.getId(), genres);
-        return map;
-    }
-
-    @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         map.replace("GENRE", GenreManager.INSTANCE.getContentNameById(genreId));
     }
