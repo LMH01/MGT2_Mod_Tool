@@ -744,6 +744,7 @@ public class SharingManager {
     @SuppressWarnings("unchecked")
     private static Set<Map<String, Object>> checkDependencies(Set<Map<String, Object>> mods) throws ModProcessingException {
         ContentAdministrator.analyzeContents();
+        Map<BaseContentManager, List<String>> contentNames = getContentNames(mods);
         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         ProgressBarHelper.initializeProgressBar(0, mods.size(), I18n.INSTANCE.get("textArea.importAll.checkingDependencies"));
         Map<BaseContentManager, Map<String, String>> alreadyReplacedDependencies = new HashMap<>();
@@ -785,7 +786,7 @@ public class SharingManager {
                             }
                             // Ask the user with which content the missing dependency should be replaced
                             JLabel label1 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part1") + ":<br><br>" + child.getTypeUpperCase() + " - " + childName + "<br><br>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part2"));
-                            JList<String> list = WindowHelper.getList(child.getContentByAlphabet(), false);
+                            JList<String> list = WindowHelper.getList(Utils.convertArrayListToArray(contentNames.get(child)), false);
                             JScrollPane scrollPane = WindowHelper.getScrollPane(list);
                             JLabel label2 = new JLabel("<html>" + I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.part3"));
                             JCheckBox checkBox = new JCheckBox(I18n.INSTANCE.get("textArea.importAll.dependencyCheck.optionPane.checkBox"));
@@ -923,6 +924,26 @@ public class SharingManager {
 
             }
         }
+    }
+
+    /**
+     * @param mods All maps for the new contents.
+     * @return Map that contains all content names for the specific content. Includes new content as well as already added content.
+     */
+    private static Map<BaseContentManager, List<String>> getContentNames(Set<Map<String, Object>> mods) throws ModProcessingException {
+        Map<BaseContentManager, List<String>> contentNames = new HashMap<>();
+        for (BaseContentManager contentManager : ContentAdministrator.contentManagers) {
+            List<String> names = new ArrayList<>();
+            for (Map<String, Object> map : mods) {
+                if (map.get("mod_type").equals(contentManager.getId())) {
+                    names.add((String)map.get("NAME EN"));
+                }
+            }
+            names.addAll(Arrays.asList(contentManager.getContentByAlphabet()));
+            names.sort(String::compareTo);
+            contentNames.put(contentManager, names);
+        }
+        return contentNames;
     }
 
     /**

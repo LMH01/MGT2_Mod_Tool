@@ -526,7 +526,7 @@ public class Utils {
      * @param arrayList The array list that should be converted
      * @return Returns a string array
      */
-    public static String[] convertArrayListToArray(ArrayList<String> arrayList) {
+    public static String[] convertArrayListToArray(List<String> arrayList) {
         String[] strings = new String[arrayList.size()];
         strings = arrayList.toArray(strings);
         return strings;

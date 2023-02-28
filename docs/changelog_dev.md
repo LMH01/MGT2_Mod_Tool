@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.9.0-beta3]
+
+### Other
+- Dependency replacement now contains content that is currently being imported (fr #124)
+
 ## [v4.9.0-beta2]
 
 ### Other
