@@ -973,7 +973,12 @@ public class SharingManager {
      */
     private static boolean doesMapContainMod(Set<Map<String, Object>> mods, String name, String mod_type) {
         for (Map<String, Object> map : mods) {
-            if (map.get("NAME EN").equals(name) && map.get("mod_type").equals(mod_type)) {
+            if (!map.get("mod_type").equals(mod_type)) {
+                continue;
+            }
+            if (map.containsKey("NAME EN") && map.get("NAME EN").equals(mod_type)) {
+                return true;
+            } else if (map.containsKey("modifies") && map.get("modifies").equals(mod_type)){
                 return true;
             }
         }

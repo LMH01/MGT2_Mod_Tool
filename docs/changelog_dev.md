@@ -4,6 +4,7 @@
 
 ### Bug fixes
 - Fixed NullPointerException when content was imported that modifes content and the import was customized
+- Fixed NullPointerException that caused content that can be imported to not show up
 
 ## [v4.9.0-beta3]
 
