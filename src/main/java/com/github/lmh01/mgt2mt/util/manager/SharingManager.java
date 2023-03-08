@@ -350,12 +350,11 @@ public class SharingManager {
             for (BaseContentManager manager : ContentAdministrator.contentManagers) {
                 for (Map<String, Object> map : set) {
                     for (String string : selectedMods.get(manager).get()) {
-                        if (string.contains((String)map.get("NAME EN"))) {
+                        if (map.containsKey("NAME EN") && string.contains((String)map.get("NAME EN"))) {
+                            modMap.add(map);
+                        } else if (map.containsKey("modifies") && string.contains((String)map.get("modifies"))) {
                             modMap.add(map);
                         }
-                        //if (map.get("NAME EN").equals(string)) {
-                        //    modMap.add(map);
-                        //}
                     }
                 }
             }

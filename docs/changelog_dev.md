@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.9.0-beta5]
+
+### Bug fixes
+- Fixed #126 - Import failed when content was modified and the import was costomized
+
 ## [v4.9.0-beta4]
 
 ### Other
