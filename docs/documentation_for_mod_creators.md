@@ -205,6 +205,7 @@ When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams`
 ### Limitations
 - Only content of the same type can be replaced
 - The original content can only be restored by restoring the initial backup
+- Only content that is already added to the game can be replaced
 
 ## Mark a mod to modify already existing content
 
@@ -237,3 +238,4 @@ Everything else remains the same.
 - Only content of the same type can be modified
 - When original content is modified the mod tool might not pickup that something has been modified
 - The original content can only be restored by restoring the initial backup
+- Only content that is already added to the game can be modified
