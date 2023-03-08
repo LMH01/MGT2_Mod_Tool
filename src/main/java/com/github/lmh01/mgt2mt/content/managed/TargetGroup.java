@@ -50,6 +50,9 @@ public enum TargetGroup implements TypeEnum {
                 return tg;
             }
         }
+        if (Objects.equals(name, "SENIOR")) {
+            return OLD;
+        }
         throw new IllegalArgumentException("Unable to resolve target group: Input string is invalid. Was: " + name);
     }
 }

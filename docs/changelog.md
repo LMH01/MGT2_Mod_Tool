@@ -12,6 +12,7 @@
 - Dependency replacement now contains content that is currently being imported (fr #124)
 - Added info message to explain that NoSuchFileExceptions that occurred when restoring the initial backup can be ignored
 - Temp folder is now also deleted before import process is started (could cause issues if previous import was canceled)
+- Target group name SENIOR can now be resolved, even though OLD would be the correct type name
 
 ### Bug fixes
 - Fixed NullPointException when no `requires_pictures` key was set in any mod map inside the `.toml` file when mods where imported
