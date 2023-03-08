@@ -5,6 +5,7 @@
 ### Other
 - (Import) Added missing text area message that notifies user when mod has been found that modifies or replaces content
 - Target group name SENIOR can now be resolved, even though OLD would be the correct type name
+- Improved error message when content that should be modified is missing from the game
 
 ### Bug fixes
 - Fixed NullPointerException when content was imported that modifes content and the import was customized

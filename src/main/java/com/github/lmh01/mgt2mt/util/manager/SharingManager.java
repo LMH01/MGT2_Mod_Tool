@@ -1282,7 +1282,7 @@ public class SharingManager {
                         if (mapKey == "replaces") {
                             DebugHelper.warn(SharingManager.class, "Could not construct content that should be replaced, name is invalid: " + e.getMessage());
                         } else {
-                            JOptionPane.showMessageDialog(null, "<html>" + I18n.INSTANCE.get("dialog.sharingManager.importAll.contentToModifyMissing") + "<br><br>" + e.getMessage(), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "<html>" + String.format(I18n.INSTANCE.get("dialog.sharingManager.importAll.contentToModifyMissing"), manager.getType() + " - " + e.getName()), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                             DebugHelper.warn(SharingManager.class, "Could not construct content that should be modified, name is invalid: " + e.getMessage());
                             throw new ModProcessingException("Unable to construct content that should be modified!", e);
                         }

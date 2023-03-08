@@ -617,7 +617,7 @@ dialog.sharingManager.importAll.assetsFoldersMissing|Die folgenden Assets-Ordner
 dialog.sharingManager.importAll.missingPictures|Die folgenden Bilder fehlen:
 dialog.sharingManager.importAll.importConflics|<html>Beim Importieren ist ein Fehler aufgetreten:<br><br>Die folgenden Mods sollen gleichzeitig<br>bearbeitet und ersetzt werden, was nicht geht!:
 dialog.sharingManager.importAll.importConflics.title|Konflikt beim Importieren
-dialog.sharingManager.importAll.contentToModifyMissing|Der folgende Inhalt soll modifizert werden, es gibt ihn aber nicht:
+dialog.sharingManager.importAll.contentToModifyMissing|Der folgende Inhalt soll modifizert werden, es gibt ihn aber nicht: %s<br>Das liegt vermutlich daran, dass der Inhalt<br>der modifiziert werden soll nicht im Spiel existiert.
 dialog.sharingManager.analyzeReturnValue.alreadyExists|existiert bereits
 dialog.sharingManager.analyzeReturnValue.supportedVersions|Unterstützte Versionen:
 dialog.sharingManager.importThings.error.firstPart|Import unmöglich:

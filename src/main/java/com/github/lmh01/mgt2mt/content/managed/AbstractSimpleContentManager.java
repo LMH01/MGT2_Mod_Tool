@@ -156,7 +156,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
         if (contentIdsByNames.containsKey(name)) {
             return contentIdsByNames.get(name);
         } else {
-            throw new ModProcessingException("Unable to find id for name " + name + ": This name does not exist in the map!");
+            throw new ModProcessingException("Unable to find id for name " + name + ": This name does not exist in the map!", name);
         }
     }
 
