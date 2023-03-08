@@ -2,6 +2,10 @@
 
 ## [v4.9.0-beta4]
 
+### Other
+- (Import) Added missing text area message that notifies user when mod has been found that modifies or replaces content
+- Target group name SENIOR can now be resolved, even though OLD would be the correct type name
+
 ### Bug fixes
 - Fixed NullPointerException when content was imported that modifes content and the import was customized
 - Fixed NullPointerException that caused content that can be imported to not show up
