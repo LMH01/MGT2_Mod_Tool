@@ -4,6 +4,7 @@
 
 ### Bug fixes
 - Fixed #126 - Import failed when content was modified and the import was costomized
+- Fixed #128 - False image files where deleted when platforms where deleted
 
 ## [v4.9.0-beta4]
 
