@@ -300,7 +300,11 @@ public class SharingManager {
             for (Map<String, Object> map : set) {
                 if (map.get("mod_type").equals(manager.getId())) {
                     StringBuilder name = new StringBuilder();
-                    name.append(map.get("NAME EN").toString());
+                    if (map.containsKey("NAME EN")) {
+                        name.append(map.get("NAME EN").toString());
+                    } else if (map.containsKey("modifies")) {
+                        name.append(map.get("modifies").toString());
+                    }
                     //if (map.containsKey("replaces")) {
                     //    name.append(" - ").append(I18n.INSTANCE.get("commonText.replaces"))
                     //        .append(" ")

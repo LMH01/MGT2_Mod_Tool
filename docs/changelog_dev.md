@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.9.0-beta4]
+
+### Bug fixes
+- Fixed NullPointerException when content was imported that modifes content and the import was customized
+
 ## [v4.9.0-beta3]
 
 ### Other
