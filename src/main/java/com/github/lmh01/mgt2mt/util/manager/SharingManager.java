@@ -602,8 +602,12 @@ public class SharingManager {
                 map = removeQuoteSymbol(map);
                 DebugHelper.debug(LOGGER, "single mod instance found!: " + map.get("name"));
                 if (isModToolVersionSupported(map)) {
-                    if (!map.containsKey("NAME EN") && (map.containsKey("replaces") || map.containsKey("modifies"))) {
+                    if (!map.containsKey("NAME EN") && map.containsKey("replaces")) {
                         mods.add(map);
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modReplaces") + ": " + map.get("replaces"));
+                    } else if (!map.containsKey("NAME EN") && map.containsKey("modifies")) {
+                        mods.add(map);
+                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modModifies") + ": " + map.get("modifies"));
                     } else if (doesMapContainMod(mods, map.get("name").toString(), map.get("mod_type").toString())) {
                         modsDuplicated++;
                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + map.get("mod_type") + " - " + map.get("name"));
@@ -643,8 +647,12 @@ public class SharingManager {
                                 if (isModToolVersionSupported(manager.getId(), (String) map.get("mod_tool_version"))) {
                                     singleModMap.put("mod_type", manager.getId());
                                     singleModMap.put("assets_folder", map.get("assets_folder"));
-                                    if (!singleModMap.containsKey("NAME EN") && (singleModMap.containsKey("replaces") || singleModMap.containsKey("modifies"))) {
+                                    if (!singleModMap.containsKey("NAME EN") && singleModMap.containsKey("replaces")) {
                                         mods.add(singleModMap);
+                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modReplaces") + ": " + singleModMap.get("mod_type") + " - " + singleModMap.get("replaces"));
+                                    } else if (!singleModMap.containsKey("NAME EN") && singleModMap.containsKey("modifies")) {
+                                        mods.add(singleModMap);
+                                        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modModifies") + ": " + singleModMap.get("mod_type") + " - " + singleModMap.get("modifies"));
                                     } else if (doesMapContainMod(mods, singleModMap.get("NAME EN").toString(), manager.getId())) {
                                         modsDuplicated++;
                                         TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.importAll.modsDuplicated") + ": " + manager.getId() + " - " + singleModMap.get("NAME EN"));

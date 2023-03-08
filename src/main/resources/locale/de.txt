@@ -816,6 +816,8 @@ textArea.importAll.bundledMods|Gebündelte Mod-Dateien
 textArea.importAll.searchingFilesForMods|Durchsuche Dateien nach mods
 textArea.importAll.noCompatibleTomlFilesFound|Es wurden keine Dateien gefunden, die mods enthalten.
 textArea.importAll.modCompatible|Mod gefunden
+textArea.importAll.modModifies|Mod gefunden der folgenden Inhalt modifiziert
+textArea.importAll.modReplaced|Mod gefunden der folgenden Inhalt ersetzt
 textArea.importAll.modNotCompatible.firstPart|Nicht kompatiblen Mod gefunden
 textArea.importAll.modNotCompatible.secondPart|Exportiert in Version
 textArea.importAll.modNotCompatible.thirdPart|Benötigte Version

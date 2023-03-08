@@ -813,6 +813,8 @@ textArea.importAll.bundledMods|Bundled mod files
 textArea.importAll.searchingFilesForMods|Searching files for mods
 textArea.importAll.noCompatibleTomlFilesFound|No files were found that contain mods.
 textArea.importAll.modCompatible|Found mod
+textArea.importAll.modModifies|Found mod that modifies the following content
+textArea.importAll.modReplaced|Found mod that replaces the following content
 textArea.importAll.modNotCompatible.firstPart|Found incompatible mod
 textArea.importAll.modNotCompatible.secondPart|Mod was exported in version
 textArea.importAll.modNotCompatible.thirdPart|Required version
