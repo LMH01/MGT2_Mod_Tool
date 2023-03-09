@@ -168,13 +168,13 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         StringBuilder backwardsCompatiblePlatforms = new StringBuilder(I18n.INSTANCE.get("commonText.backwardsCompatiblePlatforms") + ": ");
         if (this.backwardsCompatiblePlatforms != null && this.backwardsCompatiblePlatforms.size() > 0) {
             boolean firstPlatform = true;
-            for (Integer integer : requiredGameplayFeatures) {
+            for (Integer integer : this.backwardsCompatiblePlatforms) {
                 if (firstPlatform) {
                     firstPlatform = false;
                 } else {
                     backwardsCompatiblePlatforms.append(", ");
                 }
-                backwardsCompatiblePlatforms.append(GameplayFeatureManager.INSTANCE.getContentNameById(integer));
+                backwardsCompatiblePlatforms.append(PlatformManager.INSTANCE.getContentNameById(integer));
             }
         } else {
             backwardsCompatiblePlatforms.append(I18n.INSTANCE.get("commonText.no"));

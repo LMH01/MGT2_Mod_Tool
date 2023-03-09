@@ -545,14 +545,17 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         panelGamepass.add(labelGamepassGames);
         panelGamepass.add(spinnerGamepassGames);
 
-        AtomicReference<ArrayList<Integer>> publisherId = new AtomicReference<>();
+        AtomicReference<ArrayList<Integer>> publisherId = new AtomicReference<>(new ArrayList<>());
         JPanel panelPublisher = ContentUtils.getContentSelectionPanel(PublisherManager.INSTANCE, publisherId, "commonText.publisher.upperCase", "commonText.notSet", "mod.platform.addPlatform.components.buttonSelectPublisher.toolTip", false);
+
+        AtomicReference<ArrayList<Integer>> platformIds = new AtomicReference<>();
+        JPanel panelPlatforms = ContentUtils.getContentSelectionPanel(PlatformManager.INSTANCE, platformIds, "commonText.backwardsCompatiblePlatforms", "commonText.notSet", "mod.platform.addPlatform.components.buttonSelectPlatforms.toolTip", true);
 
         Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType),
             WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL),
             WindowHelper.getSpinnerPanel(spinnerComplexity, SpinnerType.COMPLEXITY), WindowHelper.getSpinnerPanel(spinnerUnits, SpinnerType.UNITS), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost,
             SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerDevKitCost, SpinnerType.PRICE), checkBoxInternet, checkBoxStartplatform, chkbxEnableGamepass, panelGamepass,
-            labelGameplayFeatureList, scrollPaneAvailableGenres, panelPublisher, buttonAddPictures,
+            labelGameplayFeatureList, scrollPaneAvailableGenres, panelPublisher, panelPlatforms, buttonAddPictures,
         };
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
@@ -634,6 +637,10 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                             if (chkbxEnableGamepass.isSelected()) {
                                 gpg = Integer.parseInt(spinnerGamepassGames.getValue().toString());
                             }
+                            Integer pid = null;
+                            if (publisherId.get().size() > 0) {
+                                pid = publisherId.get().get(0);
+                            }
                             Platform platform = new Platform(
                                     textFieldName.getText(),
                                     null,
@@ -653,8 +660,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     pT,
                                     checkBoxStartplatform.isSelected(),
                                     gpg,
-                                    publisherId.get().get(0),
-                                    null
+                                    pid,
+                                    platformIds.get()
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);

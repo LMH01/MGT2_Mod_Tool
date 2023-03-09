@@ -5,6 +5,7 @@
 ### New feature
 - Exported content can now be marked to modify existing content. See the [documentation](documentation_for_mod_creators.md) for further details. (#86)
 - Platform adding: The publisher that has developed a platform can now be set (#130)
+- Platform adding: Backwards compatible platforms can now be selected (limited to 4)(#131)
 
 ### Other
 - `PIC` entry is no longer added to export toml file as this was redundant and could caused confusion
