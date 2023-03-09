@@ -150,8 +150,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt(map.get("PRICE")),
                 Integer.parseInt(map.get("DEV COSTS")),
                 Integer.parseInt(map.get("TECHLEVEL")),
-                map.containsKey("ONLY_HANDHELD"),
-                map.containsKey("ONLY_STATIONARY"),
+                map.containsKey("ONLY_HANDHELD") && !map.get("ONLY_HANDHELD").equals("false"),
+                map.containsKey("ONLY_STATIONARY") && !map.get("ONLY_STATIONARY").equals("false"),
                 requiredGenres,
                 icon
         );
@@ -215,8 +215,8 @@ public class HardwareManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt((String) map.get("PRICE")),
                 Integer.parseInt((String) map.get("DEV COSTS")),
                 Integer.parseInt((String) map.get("TECHLEVEL")),
-                map.containsKey("ONLY_HANDHELD"),
-                map.containsKey("ONLY_STATIONARY"),
+                map.containsKey("ONLY_HANDHELD") && !map.get("ONLY_HANDHELD").equals("false"),
+                map.containsKey("ONLY_STATIONARY") && !map.get("ONLY_STATIONARY").equals("false"),
                 requiredGenres,
                 icon
         );
