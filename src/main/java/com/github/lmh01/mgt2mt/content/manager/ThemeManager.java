@@ -98,8 +98,8 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                     }
                 }
                 if (action.equals(ContentAction.ADD_MOD)) {
-                    bw.write("\r\n");
                     for (AbstractBaseContent content : contents) {
+                        bw.write("\r\n");
                         if (content instanceof Theme) {
                             if (string.equals("GE")) {
                                 bw.write(((Theme) content).getLine());

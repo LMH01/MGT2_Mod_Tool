@@ -28,6 +28,7 @@
 - Hardware Feature: need internet was not applied when hardware feature was added
 - Hardware Feature import/export: NEEDINTERNET parameter was not properly read
 - Platform import/export: STARTPLATFORM parameter was not properly read
+- Theme import: When multiple themes where imported simultaneously they where all written in the same line in the german theme file
 
 ## [v4.8.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.8.0) (Latest Version)
 
