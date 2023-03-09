@@ -154,7 +154,7 @@ GENRES = "<Adventure><Building Game><Economic Simulation><Fighting Game><First-P
 "NAME TU" = "themename"
 "NAME PL" = "themename"
 requires_pictures = false
-"NAME GE" = "themename <2><11><9><10><14><M3>"
+"NAME GE" = "themename <2><11><9><10><14><M3> <2><11><9><10><14><M3>"
 "NAME RO" = "themename"
 AGE = "3"
 
