@@ -41,8 +41,8 @@ public class HardwareFeatureManager extends AbstractAdvancedContentManager {
                 Integer.parseInt(map.get("PRICE")),
                 Integer.parseInt(map.get("DEV COSTS")),
                 Integer.parseInt(map.get("QUALITY")),
-                map.containsKey("ONLY_STATIONARY"),
-                map.containsKey("NEEDINTERNET")
+                map.containsKey("ONLY_STATIONARY") && !map.get("ONLY_STATIONARY").equals("false"),
+                map.containsKey("NEEDINTERNET") && !map.get("NEEDINTERNET").equals("false")
         );
     }
 
@@ -103,7 +103,7 @@ public class HardwareFeatureManager extends AbstractAdvancedContentManager {
                                 Integer.parseInt(spinnerDevelopmentCost.getValue().toString()),
                                 Integer.parseInt(spinnerQuality.getValue().toString()),
                                 checkBoxOnlyStationary.isSelected(),
-                                checkBoxNeedsInternet.isBorderPaintedFlat()
+                                checkBoxNeedsInternet.isSelected()
                         );
                         if (JOptionPane.showConfirmDialog(null, hardwareFeature.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                             addContent(hardwareFeature);
