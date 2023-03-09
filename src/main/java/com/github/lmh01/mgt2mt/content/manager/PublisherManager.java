@@ -118,10 +118,10 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 Integer.parseInt((String) map.get("MARKET")),
                 Integer.parseInt((String) map.get("SHARE")),
                 GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String) map.get("GENRE")),
-                map.containsKey("ONLYMOBILE"),
+                map.containsKey("ONLYMOBILE") && map.get("ONLYMOBILE").equals("true"),
                 Integer.parseInt((String) map.get("SPEED")),
                 Integer.parseInt((String) map.get("COMVAL")),
-                map.containsKey("NOTFORSALE"),
+                map.containsKey("NOTFORSALE") && map.get("NOTFORSALE").equals("true"),
                 CountryType.getFromId(Integer.parseInt(transformedMap.get("COUNTRY"))));
     }
 
