@@ -50,13 +50,13 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
 
     @Override
     public void addContents(List<AbstractBaseContent> contents) throws ModProcessingException {
+        super.addContents(contents);
         for (AbstractBaseContent content : contents) {
             Genre genre = (Genre)content;
             ThemeManager.editGenreAllocation(genre.id, true, genre.compatibleThemes);
             GameplayFeatureManager.INSTANCE.addGenreId(genre.badGameplayFeatures, genre.id, false);
             GameplayFeatureManager.INSTANCE.addGenreId(genre.goodGameplayFeatures, genre.id, true);
         }
-        super.addContents(contents);
     }
 
     @Override
