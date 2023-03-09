@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.9.0-beta7]
+
+### Bug fixes
+- Fixed #132 - Genre import: Good/bad gameplay features, and good themes where not imported correctly
+
 ## [v4.9.0-beta6]
 
 ### New feature

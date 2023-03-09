@@ -49,6 +49,17 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     }
 
     @Override
+    public void addContents(List<AbstractBaseContent> contents) throws ModProcessingException {
+        for (AbstractBaseContent content : contents) {
+            Genre genre = (Genre)content;
+            ThemeManager.editGenreAllocation(genre.id, true, genre.compatibleThemes);
+            GameplayFeatureManager.INSTANCE.addGenreId(genre.badGameplayFeatures, genre.id, false);
+            GameplayFeatureManager.INSTANCE.addGenreId(genre.goodGameplayFeatures, genre.id, true);
+        }
+        super.addContents(contents);
+    }
+
+    @Override
     public void removeContent(String name) throws ModProcessingException {
         ThemeManager.editGenreAllocation(getContentIdByName(name), false, null);
         GameplayFeatureManager.INSTANCE.removeGenreId(getContentIdByName(name));
@@ -56,6 +67,18 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         NpcEngineManager.INSTANCE.removeGenre(name);
         NpcGameManager.INSTANCE.editNPCGames(getContentIdByName(name), false, 0);
         super.removeContent(name);
+    }
+
+    @Override
+    public void removeContents(List<AbstractBaseContent> contents) throws ModProcessingException {
+        for (AbstractBaseContent content : contents) {
+            ThemeManager.editGenreAllocation(content.id, false, null);
+            GameplayFeatureManager.INSTANCE.removeGenreId(content.id);
+            PublisherManager.removeGenre(content.name);
+            NpcEngineManager.INSTANCE.removeGenre(content.name);
+            NpcGameManager.INSTANCE.editNPCGames(content.id, false, 0);
+        }
+        super.removeContents(contents);
     }
 
     @Override

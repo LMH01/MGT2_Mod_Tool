@@ -19,7 +19,7 @@ import java.util.Locale;
 public class MadGamesTycoon2ModTool {
     public static final OSType OS_TYPE;
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
-    public static final String VERSION = "4.9.0-beta6";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
+    public static final String VERSION = "4.9.0-dev";//Version numbers that include "dev" are not checked for updates / tool will notify if update is available
     public static final String CURRENT_RELEASE_VERSION = "4.8.0";//When this version number has been detected as the newest release version the update available message is held back
 
     static {
