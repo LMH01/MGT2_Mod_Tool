@@ -180,9 +180,9 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
         } else {
             goodGenreId = GenreManager.INSTANCE.getImportHelperMap().getContentIdByName((String) map.get("GOOD GENRE"));
         }
-        Integer year = (Integer) map.get("year");
-        if (map.get("RELEASE YEAR") == null) {
-            year = null;
+        Integer year = null;
+        if (map.containsKey("RELEASE YEAR")) {
+            year = Integer.parseInt((String)map.get("RELEASE YEAR"));
         }
         return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")), badGenreId, goodGenreId, year);
     }
