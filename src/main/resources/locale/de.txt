@@ -159,6 +159,7 @@ commonText.followingImageFilesHaveBeenAdded.firstPart|<html>Die folgenden Bildda
 commonText.isThisCorrect|Ist das richtig und möchtest du weiter machen?
 commonText.browse|Durchsuchen
 commonText.multipleFilesSelected|Mehrere Dateien ausgewählt
+commonText.multiplePSelected|Mehrere %s ausgewählt
 commonText.add|hinzufügen
 commonText.add.upperCase|Hinzufügen
 commonText.remove|entfernen
@@ -216,6 +217,7 @@ commonText.replaces|ersetzt
 commonText.replace|Ersetzen
 commonText.modifies|modifiziert
 commonText.modify|Modifizieren
+commonText.backwardsCompatiblePlatforms|Abwärtskompatibile Platformen
 
 commonText.country.argentina|Argentinien
 commonText.country.armenia|Armenien

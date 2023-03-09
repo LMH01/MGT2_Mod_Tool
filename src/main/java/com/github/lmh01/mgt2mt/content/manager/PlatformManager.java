@@ -89,9 +89,13 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         }
         try {
             ArrayList<Integer> gameplayFeatureIds = new ArrayList<>();
+            ArrayList<Integer> platformIds = new ArrayList<>();
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (entry.getKey().contains("NEED")) {
                     gameplayFeatureIds.add(Integer.parseInt(entry.getValue()));
+                }
+                if (entry.getKey().contains("BACKCOMP")) {
+                    platformIds.add(Integer.parseInt(entry.getValue()));
                 }
             }
             int numberOfRunsB = 1;
@@ -100,16 +104,32 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 bw.write("\r\n");
                 numberOfRunsB++;
             }
+            numberOfRunsB = 1;
+            for (Integer integer : platformIds) {
+                bw.write("[BACKCOMP-" + numberOfRunsB + "]" + integer);
+                bw.write("\r\n");
+                numberOfRunsB++;
+            }
         } catch (NumberFormatException e) {
             ArrayList<String> gameplayFeatureNames = new ArrayList<>();
+            ArrayList<String> platformIds = new ArrayList<>();
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 if (entry.getKey().contains("NEED")) {
                     gameplayFeatureNames.add(entry.getValue());
+                }
+                if (entry.getKey().contains("BACKCOMP")) {
+                    platformIds.add(entry.getValue());
                 }
             }
             int numberOfRunsB = 1;
             for (String string : gameplayFeatureNames) {
                 bw.write("[NEED-" + numberOfRunsB + "]" + string);
+                bw.write("\r\n");
+                numberOfRunsB++;
+            }
+            numberOfRunsB = 1;
+            for (String string : platformIds) {
+                bw.write("[BACKCOMP-" + numberOfRunsB + "]" + string);
                 bw.write("\r\n");
                 numberOfRunsB++;
             }
@@ -133,10 +153,15 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         }
         ArrayList<PlatformImage> platformImages = new ArrayList<>();
         ArrayList<Integer> requiredGameplayFeatures = new ArrayList<>();
+        ArrayList<Integer> platformIds = new ArrayList<>();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             // Add required gameplay features
             if (entry.getKey().contains("NEED-")) {
                 requiredGameplayFeatures.add(Integer.parseInt(entry.getValue()));
+            }
+            // Add backwards compatible platforms
+            if (entry.getKey().contains("BACKCOMP-")) {
+                platformIds.add(Integer.parseInt(entry.getValue()));
             }
             // Add platform images
             if (entry.getKey().contains("PIC-") && !entry.getKey().contains("YEAR")) {
@@ -190,7 +215,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 PlatformType.getFromId(Integer.parseInt(map.get("TYP"))),
                 map.containsKey("STARTPLATFORM"),
                 gamepassGames,
-                publisher
+                publisher,
+                platformIds
         );
     }
 
@@ -249,10 +275,15 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         }
         ArrayList<PlatformImage> platformImages = new ArrayList<>();
         ArrayList<Integer> requiredGameplayFeatures = new ArrayList<>();
+        ArrayList<Integer> platformIds = new ArrayList<>();
         for (Map.Entry<String, String> entry : transformedMap.entrySet()) {
             // Add required gameplay features
             if (entry.getKey().contains("NEED-")) {
                 requiredGameplayFeatures.add(GameplayFeatureManager.INSTANCE.getImportHelperMap().getContentIdByName(entry.getValue()));
+            }
+            // Add backwards compatible platforms
+            if (entry.getKey().contains("BACKCOMP")) {
+                platformIds.add(PlatformManager.INSTANCE.getImportHelperMap().getContentIdByName(entry.getValue()));
             }
             // Add platform images
             if (entry.getKey().contains("platform_image_")) {
@@ -306,7 +337,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 PlatformType.getFromId(Integer.parseInt(transformedMap.get("TYP"))),
                 transformedMap.containsKey("STARTPLATFORM") && !transformedMap.get("STARTPLATFORM").equals("false"),
                 gamepassGames,
-                publisher
+                publisher,
+                platformIds
         );
     }
 
@@ -513,8 +545,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         panelGamepass.add(labelGamepassGames);
         panelGamepass.add(spinnerGamepassGames);
 
-        AtomicInteger publisherId = new AtomicInteger();
-        JPanel panelPublisher = ContentUtils.getContentSelectionPanel(PublisherManager.INSTANCE, publisherId, "commonText.publisher.upperCase", "commonText.notSet", "mod.platform.addPlatform.components.buttonSelectPublisher.toolTip");
+        AtomicReference<ArrayList<Integer>> publisherId = new AtomicReference<>();
+        JPanel panelPublisher = ContentUtils.getContentSelectionPanel(PublisherManager.INSTANCE, publisherId, "commonText.publisher.upperCase", "commonText.notSet", "mod.platform.addPlatform.components.buttonSelectPublisher.toolTip", false);
 
         Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType),
             WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL),
@@ -621,7 +653,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     pT,
                                     checkBoxStartplatform.isSelected(),
                                     gpg,
-                                    publisherId.get() //TODO implement correctly
+                                    publisherId.get().get(0),
+                                    null
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);
@@ -649,6 +682,9 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             if (entry.getKey().contains("NEED")) {
                 replaceMapEntry(map, missingDependency, replacement, entry.getKey());
             }
+            if (entry.getKey().contains("BACKCOMP")) {
+                replaceMapEntry(map, missingDependency, replacement, entry.getKey());
+            }
         }
         replaceMapEntry(map, missingDependency, replacement, "PUB");
     }
@@ -658,6 +694,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         ArrayList<BaseContentManager> dependencies = new ArrayList<>();
         dependencies.add(GameplayFeatureManager.INSTANCE);
         dependencies.add(PublisherManager.INSTANCE);
+        dependencies.add(PlatformManager.INSTANCE);
         return dependencies;
     }
 
@@ -665,12 +702,17 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
     public Map<String, Object> getDependencyMapFromImport(Map<String, Object> importMap) throws NullPointerException {
         Map<String, Object> map = new HashMap<>();
         Set<String> gameplayFeatures = new HashSet<>();
+        Set<String> platforms = new HashSet<>();
         for (Map.Entry<String, Object> entry : importMap.entrySet()) {
             if (entry.getKey().contains("NEED-")) {
                 gameplayFeatures.add((String)entry.getValue());
             }
+            if (entry.getKey().contains("BACKCOMP-")) {
+                platforms.add((String)entry.getValue());
+            }
         }
         map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
+        map.put(PlatformManager.INSTANCE.getId(), platforms);
         Set<String> publishers = new HashSet<>();
         if (importMap.containsKey("PUB")) {
             publishers.add((String)importMap.get("PUB"));

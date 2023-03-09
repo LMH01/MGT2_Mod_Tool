@@ -34,6 +34,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
     final boolean startPlatform;
     final Integer gamepassGames;
     final Integer publisher; // The publisher that released this console
+    final ArrayList<Integer> backwardsCompatiblePlatforms; // Contains the ids of platforms that this platform is backwards compatible to
 
     public Platform(String name,
                     Integer id,
@@ -53,7 +54,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                     PlatformType type,
                     boolean startPlatform,
                     Integer gamepassGames,
-                    Integer publisher) throws ModProcessingException {
+                    Integer publisher,
+                    ArrayList<Integer> backwardsCompatiblePlatforms) throws ModProcessingException {
         super(PlatformManager.INSTANCE, name, id, translationManager);
         this.manufacturer = manufacturer;
         this.manufacturerTranslations = manufacturerTranslations;
@@ -71,6 +73,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         this.startPlatform = startPlatform;
         this.gamepassGames = gamepassGames;
         this.publisher = publisher;
+        this.backwardsCompatiblePlatforms = backwardsCompatiblePlatforms;
+
         // Check if platform images are valid
         ArrayList<Integer> assignedIds = new ArrayList<>();
         for (PlatformImage image : platformImages) {
@@ -135,6 +139,13 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         if (publisher != null) {
             map.put("PUB", publisher.toString());
         }
+        if (backwardsCompatiblePlatforms != null && backwardsCompatiblePlatforms.size() > 0) {
+            int backwardsCompNumber = 1;
+            for (Integer integer : backwardsCompatiblePlatforms) {
+                map.put("BACKCOMP-" + backwardsCompNumber, integer.toString());
+                backwardsCompNumber += 1;
+            }
+        }
         return map;
     }
 
@@ -153,6 +164,20 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 requiredGameplayFeaturesString.append(", ");
             }
             requiredGameplayFeaturesString.append(GameplayFeatureManager.INSTANCE.getContentNameById(integer));
+        }
+        StringBuilder backwardsCompatiblePlatforms = new StringBuilder(I18n.INSTANCE.get("commonText.backwardsCompatiblePlatforms") + ": ");
+        if (this.backwardsCompatiblePlatforms != null && this.backwardsCompatiblePlatforms.size() > 0) {
+            boolean firstPlatform = true;
+            for (Integer integer : requiredGameplayFeatures) {
+                if (firstPlatform) {
+                    firstPlatform = false;
+                } else {
+                    backwardsCompatiblePlatforms.append(", ");
+                }
+                backwardsCompatiblePlatforms.append(GameplayFeatureManager.INSTANCE.getContentNameById(integer));
+            }
+        } else {
+            backwardsCompatiblePlatforms.append(I18n.INSTANCE.get("commonText.no"));
         }
         boolean enableGamepass = false;
         if (gamepassGames != null && gamepassGames > 0) {
@@ -184,6 +209,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 I18n.INSTANCE.get("commonText.complexity") + ": " + complexity + "<br>" +
                 I18n.INSTANCE.get("commonText.internet") + ": " + Utils.getTranslatedValueFromBoolean(hasInternet) + "<br>" +
                 I18n.INSTANCE.get("commonText.type") + ": " + type.getTypeName() + "<br>" +
+                backwardsCompatiblePlatforms.toString() + "<br>" +
                 I18n.INSTANCE.get("commonText.startplatform") + ": " + Utils.getTranslatedValueFromBoolean(startPlatform) + "<br>" +
                 publ.toString() + "<br>" +
                 gpg.toString();
@@ -195,6 +221,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().contains("NEED-")) {
                 changedValues.put(entry.getKey(), GameplayFeatureManager.INSTANCE.getContentNameById(Integer.parseInt(entry.getValue())));
+            }
+            if (entry.getKey().contains("BACKCOMP-")) {
+                changedValues.put(entry.getKey(), PlatformManager.INSTANCE.getContentNameById(Integer.parseInt(entry.getValue())));
             }
         }
         map.remove("PIC-1");

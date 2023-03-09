@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,10 +23,10 @@ public class ContentUtils {
 
     /**
      * @param manager The content manager of which the content is that should be selected
-     * @param id Atomic integer that stores the selected content id
+     * @param ids Atomic reference to array list that stores the selected values
      * @return A panel that contains a button that, when clicked opens a selection window where the user can select one content entry. The selected value is stored in id.
      */
-    public static JPanel getContentSelectionPanel(BaseContentManager manager, AtomicInteger id, String labelTextTK, String buttonTextTK, String buttonToolTipTK) {
+    public static JPanel getContentSelectionPanel(BaseContentManager manager, AtomicReference<ArrayList<Integer>> ids, String labelTextTK, String buttonTextTK, String buttonToolTipTK, boolean multipleSelections) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel(I18n.INSTANCE.get(labelTextTK) + ":");
         JButton buttonSelect = new JButton("        " + I18n.INSTANCE.get(buttonTextTK) + "        ");
@@ -33,7 +36,11 @@ public class ContentUtils {
                 manager.analyzeFile();
                 JLabel labelChoose = new JLabel(I18n.INSTANCE.get("commonText.select") + " " + manager.getType() + ":");
                 JList<String> listAvailableContent = new JList<>(manager.getContentByAlphabet());
-                listAvailableContent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                if (multipleSelections) {
+                    listAvailableContent.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                } else {
+                    listAvailableContent.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                }
                 listAvailableContent.setLayoutOrientation(JList.VERTICAL);
                 listAvailableContent.setVisibleRowCount(-1);
                 JScrollPane scrollPaneAvailableGenres = new JScrollPane(listAvailableContent);
@@ -42,9 +49,16 @@ public class ContentUtils {
                 Object[] params = {labelChoose, scrollPaneAvailableGenres};
 
                 if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("commonText.select") + " " + manager.getType(), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-                    String currentGenre = listAvailableContent.getSelectedValue();
-                    id.set(manager.getContentIdByName(currentGenre));
-                    buttonSelect.setText(currentGenre);
+                    java.util.List<String> selection = listAvailableContent.getSelectedValuesList();
+                    ids.set(new ArrayList<>());
+                    for (String string : selection) {
+                        ids.get().add(manager.getContentIdByName(string));
+                    }
+                    if (multipleSelections && ids.get().size() >= 1) {
+                        buttonSelect.setText(String.format(I18n.INSTANCE.get("commonText.multiplePSelected"), manager.getTypePlural()));
+                    } else {
+                        buttonSelect.setText(listAvailableContent.getSelectedValue());
+                    }
                 }
             } catch (ModProcessingException e) {
                 ContentAdministrator.showException(e);
