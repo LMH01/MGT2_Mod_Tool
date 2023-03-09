@@ -5,6 +5,7 @@
 ### Bug fixes
 - Fixed #132 - Genre import: Good/bad gameplay features, and good themes where not imported correctly
 - Fixed #133 - Licence import/export: Release year was not read properly
+- Fixed #135 - It could happen that too many data entries where written to the german theme file when themes where imported
 - Theme import: When multiple themes where imported simultaneously they where all written in the same line in the german theme file
 
 ## [v4.9.0-beta6]

@@ -246,7 +246,11 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
         String line = getLineByName(name);
         Map<String, String> translations = new HashMap<>();
         for (String string : TranslationManager.TRANSLATION_KEYS) {
-            translations.put(string, this.translations.get(string).get(getContentIdByName(name)));
+            if (string.equals("GE")) {
+                translations.put(string, this.getReplacedLine(this.translations.get(string).get(getContentIdByName(name))));
+            } else {
+                translations.put(string, this.translations.get(string).get(getContentIdByName(name)));
+            }
         }
         ArrayList<Integer> genres = new ArrayList<>();
         int violenceLevel = 0;

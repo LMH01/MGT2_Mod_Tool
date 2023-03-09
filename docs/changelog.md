@@ -24,6 +24,7 @@
 - Fixed #129 - NOTFORSALE and ONLYMOBILE parameters are now read correctly when publishers are imported
 - Fixed #132 - Genre import: Good/bad gameplay features, and good themes where not imported correctly
 - Fixed #133 - Licence import/export: Release year was not read properly
+- Fixed #135 - It could happen that too many data entries where written to the german theme file when themes where imported
 - Hardware import/export: ONLY_STATIONARY and ONLY_HANDHELD parameters where not properly read
 - Hardware Feature: need internet was not applied when hardware feature was added
 - Hardware Feature import/export: NEEDINTERNET parameter was not properly read
