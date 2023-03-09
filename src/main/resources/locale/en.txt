@@ -209,6 +209,7 @@ commonText.country|Country
 commonText.notSet|Not set
 commonText.female|Female
 commonText.componentRating|Component rating
+commonText.select|Select
 commonText.selected|selected
 commonText.enableGamepass|Enable gamepass entry
 commonText.gamepassGames|Gemepass key value
@@ -397,6 +398,7 @@ mod.platform.addPlatform.components.checkBox.enableGamepass.toolTip|<html>Check 
 mod.platform.addPlatform.title|Add platform
 mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the manufacturer first!
 mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:
+mod.platform.addPlatform.components.buttonSelectPublisher.toolTip|Select what publisher developed this platform.
 mod.platform.removeImageFiles.failed|Failed to remove platform image file
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Add this npc engine?
 mod.npcEngine.addMod.components.textFieldName.initialValue|ENTER NPC ENGINE NAME

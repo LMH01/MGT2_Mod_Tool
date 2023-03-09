@@ -8,6 +8,7 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.managed.types.SpinnerType;
+import com.github.lmh01.mgt2mt.util.ContentUtils;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Months;
@@ -512,11 +513,14 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         panelGamepass.add(labelGamepassGames);
         panelGamepass.add(spinnerGamepassGames);
 
+        AtomicInteger publisherId = new AtomicInteger();
+        JPanel panelPublisher = ContentUtils.getContentSelectionPanel(PublisherManager.INSTANCE, publisherId, "commonText.publisher.upperCase", "commonText.notSet", "mod.platform.addPlatform.components.buttonSelectPublisher.toolTip");
+
         Object[] params = {WindowHelper.getNamePanel(textFieldName), buttonAddNameTranslations, WindowHelper.getManufacturerPanel(textFieldManufacturer), buttonAddManufacturerTranslation, WindowHelper.getTypePanel(comboBoxFeatureType),
             WindowHelper.getUnlockDatePanel(comboBoxUnlockMonth, spinnerUnlockYear), checkBoxEnableEndDate, panelEndDate, WindowHelper.getSpinnerPanel(spinnerTechLevel, SpinnerType.TECH_LEVEL),
             WindowHelper.getSpinnerPanel(spinnerComplexity, SpinnerType.COMPLEXITY), WindowHelper.getSpinnerPanel(spinnerUnits, SpinnerType.UNITS), WindowHelper.getSpinnerPanel(spinnerDevelopmentCost,
             SpinnerType.DEVELOPMENT_COST), WindowHelper.getSpinnerPanel(spinnerDevKitCost, SpinnerType.PRICE), checkBoxInternet, checkBoxStartplatform, chkbxEnableGamepass, panelGamepass,
-            labelGameplayFeatureList, scrollPaneAvailableGenres, buttonAddPictures,
+            labelGameplayFeatureList, scrollPaneAvailableGenres, panelPublisher, buttonAddPictures,
         };
         while (true) {
             if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("mod.platform.addPlatform.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
@@ -617,7 +621,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     pT,
                                     checkBoxStartplatform.isSelected(),
                                     gpg,
-                                    null //TODO implement correctly
+                                    publisherId.get() //TODO implement correctly
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);

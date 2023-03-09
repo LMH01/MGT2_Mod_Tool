@@ -208,6 +208,7 @@ commonText.country|Land
 commonText.notSet|Nicht gesetzt
 commonText.female|Weiblich
 commonText.componentRating|Bauteilbewertung
+commonText.select|Auswählen
 commonText.selected|ausgewählt
 commonText.enableGamepass|Gamepass Eintrag aktivieren
 commonText.gamepassGames|Gemepass Eintrag Wert
@@ -396,6 +397,7 @@ mod.platform.addPlatform.components.checkBox.enableGamepass.toolTip|<html>Aktivi
 mod.platform.addPlatform.title|Plattform hinzufügen
 mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Namen für den Hersteller ein!
 mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:
+mod.platform.addPlatform.components.buttonSelectPublisher.toolTip|Wähle aus, welcher Publisher diese Platform entwickelt hat.
 mod.platform.removeImageFiles.failed|Fehler beim Entfernen des Plattformbildes
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Diese Npc Engine hinzufügen?
 mod.npcEngine.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC ENGINE EIN
