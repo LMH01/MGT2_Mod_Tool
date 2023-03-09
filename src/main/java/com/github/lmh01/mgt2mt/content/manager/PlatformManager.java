@@ -2,6 +2,7 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.instances.Platform;
+import com.github.lmh01.mgt2mt.content.instances.Publisher;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
@@ -119,6 +120,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             EditHelper.printLine("STARTPLATFORM", map, bw);
         }
         EditHelper.printLine("GAMEPASS", map, bw);
+        EditHelper.printLine("PUB", map, bw);
         EditHelper.printLine("END", map, bw);
     }
 
@@ -164,6 +166,10 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         if (map.get("GAMEPASS") != null) {
             gamepassGames = Integer.parseInt(map.get("GAMEPASS"));
         }
+        Integer publisher = null;
+        if (map.containsKey("PUB")) {
+            publisher = Integer.parseInt(map.get("PUB"));
+        }
         return new Platform(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -182,7 +188,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 hasInternet,
                 PlatformType.getFromId(Integer.parseInt(map.get("TYP"))),
                 map.containsKey("STARTPLATFORM"),
-                gamepassGames
+                gamepassGames,
+                publisher
         );
     }
 
@@ -197,6 +204,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         line.add(new DataLine("UNITS", true, DataType.INT));
         line.add(new DataLine("COMPLEX", true, DataType.INT));
         line.add(new DataLine("TYP", true, DataType.INT));
+        line.add(new DataLine("PUB", false, DataType.INT));
         line.add(new DataLine("END", false, DataType.UNCHECKED));
         return line;
     }
@@ -274,6 +282,10 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         if (transformedMap.get("GAMEPASS") != null) {
             gamepassGames = Integer.parseInt(transformedMap.get("GAMEPASS"));
         }
+        Integer publisher = null;
+        if (transformedMap.containsKey("PUB")) {
+            publisher = PublisherManager.INSTANCE.getImportHelperMap().getContentIdByName(transformedMap.get("PUB"));
+        }
         return new Platform(
                 transformedMap.get("NAME EN"),
                 getIdFromMap(transformedMap),
@@ -292,7 +304,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 hasInternet,
                 PlatformType.getFromId(Integer.parseInt(transformedMap.get("TYP"))),
                 transformedMap.containsKey("STARTPLATFORM") && !transformedMap.get("STARTPLATFORM").equals("false"),
-                gamepassGames
+                gamepassGames,
+                publisher
         );
     }
 
@@ -603,7 +616,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     checkBoxInternet.isSelected(),
                                     pT,
                                     checkBoxStartplatform.isSelected(),
-                                    gpg
+                                    gpg,
+                                    null //TODO implement correctly
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);
@@ -632,12 +646,14 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 replaceMapEntry(map, missingDependency, replacement, entry.getKey());
             }
         }
+        replaceMapEntry(map, missingDependency, replacement, "PUB");
     }
 
     @Override
     public ArrayList<BaseContentManager> getDependencies() {
         ArrayList<BaseContentManager> dependencies = new ArrayList<>();
         dependencies.add(GameplayFeatureManager.INSTANCE);
+        dependencies.add(PublisherManager.INSTANCE);
         return dependencies;
     }
 
@@ -651,6 +667,11 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             }
         }
         map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
+        Set<String> publishers = new HashSet<>();
+        if (importMap.containsKey("PUB")) {
+            publishers.add((String)importMap.get("PUB"));
+        }
+        map.put(PublisherManager.INSTANCE.getId(), publishers);
         return map;
     }
 

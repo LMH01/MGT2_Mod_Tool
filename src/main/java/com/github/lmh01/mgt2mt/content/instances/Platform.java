@@ -4,10 +4,10 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.PlatformManager;
+import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
-import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
 import java.io.File;
@@ -33,6 +33,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
     final PlatformType type;
     final boolean startPlatform;
     final Integer gamepassGames;
+    final Integer publisher; // The publisher that released this console
 
     public Platform(String name,
                     Integer id,
@@ -51,7 +52,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                     boolean hasInternet,
                     PlatformType type,
                     boolean startPlatform,
-                    Integer gamepassGames) throws ModProcessingException {
+                    Integer gamepassGames,
+                    Integer publisher) throws ModProcessingException {
         super(PlatformManager.INSTANCE, name, id, translationManager);
         this.manufacturer = manufacturer;
         this.manufacturerTranslations = manufacturerTranslations;
@@ -68,6 +70,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         this.type = type;
         this.startPlatform = startPlatform;
         this.gamepassGames = gamepassGames;
+        this.publisher = publisher;
         // Check if platform images are valid
         ArrayList<Integer> assignedIds = new ArrayList<>();
         for (PlatformImage image : platformImages) {
@@ -129,6 +132,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         if (gamepassGames != null && gamepassGames > 0) {
             map.put("GAMEPASS", gamepassGames.toString());
         }
+        if (publisher != null) {
+            map.put("PUB", publisher.toString());
+        }
         return map;
     }
 
@@ -157,6 +163,13 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         if (enableGamepass) {
             gpg.append(", ").append(I18n.INSTANCE.get("commonText.gamepassGames")).append(": ").append(gamepassGames);
         }
+        StringBuilder publ = new StringBuilder();
+        publ.append(I18n.INSTANCE.get("commonText.publisher.upperCase") + ": ");
+        if (publisher != null) {
+            publ.append(PublisherManager.INSTANCE.getContentNameById(publisher));
+        } else {
+            publ.append(I18n.INSTANCE.get("commonText.no"));
+        }
         return "<html>" +
                 I18n.INSTANCE.get("mod.platform.addPlatform.optionPaneMessage.firstPart") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + name + "<br>" +
@@ -172,6 +185,7 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 I18n.INSTANCE.get("commonText.internet") + ": " + Utils.getTranslatedValueFromBoolean(hasInternet) + "<br>" +
                 I18n.INSTANCE.get("commonText.type") + ": " + type.getTypeName() + "<br>" +
                 I18n.INSTANCE.get("commonText.startplatform") + ": " + Utils.getTranslatedValueFromBoolean(startPlatform) + "<br>" +
+                publ.toString() + "<br>" +
                 gpg.toString();
     }
 
@@ -185,6 +199,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         }
         map.remove("PIC-1");
         map.remove("PIC-2");
+        if (map.containsKey("PUB")) {
+            changedValues.put("PUB", PublisherManager.INSTANCE.getContentNameById(Integer.parseInt(map.get("PUB"))));
+        }
         Utils.replaceMapEntries(map, changedValues);
     }
 
