@@ -1,5 +1,21 @@
 # Changelog
 
+## [v4.9.0-beta6]
+
+### New feature
+- Platform adding: The publisher that has developed a platform can now be set (#130)
+- Platform adding: Backwards compatible platforms can now be selected (limited to 4)(#131)
+
+### Other
+- Small documentation improvements
+
+### Bug fixes
+- Fixed #129 - NOTFORSALE and ONLYMOBILE parameters are now read correctly when publishers are imported
+- Hardware import/export: ONLY_STATIONARY and ONLY_HANDHELD parameters where not properly read
+- Hardware Feature: need internet was not applied when hardware feature was added
+- Hardware Feature import/export: NEEDINTERNET parameter was not properly read
+- Platform import/export: STARTPLATFORM parameter was not properly read
+
 ## [v4.9.0-beta5]
 
 ### Bug fixes
