@@ -400,7 +400,7 @@ mod.platform.addPlatform.title|Plattform hinzufügen
 mod.platform.addPlatform.manufacturer.enterNameFirst|Bitte gebe zu erst einen Namen für den Hersteller ein!
 mod.platform.addPlatform.components.selectGameplayFeatures|Wähle Gameplay Features aus, die für die Plattform<br>benötigt werden, damit ein Spiel für sie erstellt werden kann:
 mod.platform.addPlatform.components.buttonSelectPublisher.toolTip|Wähle aus, welcher Publisher diese Platform entwickelt hat.
-mod.platform.addPlatform.components.buttonSelectPlatforms.toolTip|Wähle aus, mit welchen Platformen diese Platform abwärtskompatibel sein soll.
+mod.platform.addPlatform.components.buttonSelectPlatforms.toolTip|Wähle aus, mit welchen Platformen diese Platform abwärtskompatibel sein soll.<br>Hinweis: nur die ersten 4 Platformen werden als abwärtskompatibel eingestellt.<br>Dies ist eine Limitierung des Spiels.
 mod.platform.removeImageFiles.failed|Fehler beim Entfernen des Plattformbildes
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Diese Npc Engine hinzufügen?
 mod.npcEngine.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC ENGINE EIN

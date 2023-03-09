@@ -30,7 +30,7 @@ public class ContentUtils {
         JPanel panel = new JPanel();
         JLabel label = new JLabel(I18n.INSTANCE.get(labelTextTK) + ":");
         JButton buttonSelect = new JButton("        " + I18n.INSTANCE.get(buttonTextTK) + "        ");
-        buttonSelect.setToolTipText(I18n.INSTANCE.get(buttonToolTipTK));
+        buttonSelect.setToolTipText("<html>" + I18n.INSTANCE.get(buttonToolTipTK));
         buttonSelect.addActionListener(actionEvent -> {
             try {
                 manager.analyzeFile();

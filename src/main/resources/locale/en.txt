@@ -401,7 +401,7 @@ mod.platform.addPlatform.title|Add platform
 mod.platform.addPlatform.manufacturer.enterNameFirst|Please enter a name for the manufacturer first!
 mod.platform.addPlatform.components.selectGameplayFeatures|Select gameplay features that have to be<br>required in order to create a game for this platform:
 mod.platform.addPlatform.components.buttonSelectPublisher.toolTip|Select what publisher developed this platform.
-mod.platform.addPlatform.components.buttonSelectPlatforms.toolTip|Select with which platforms this platform should be backwards compatible.
+mod.platform.addPlatform.components.buttonSelectPlatforms.toolTip|Select with which platforms this platform should be backwards compatible.<br>Note: Only the first 4 selected platforms will be applied to be backwards compatible.<br>This is a limitation from the game.
 mod.platform.removeImageFiles.failed|Failed to remove platform image file
 mod.npcEngine.addMod.optionPaneMessage.firstPart|Add this npc engine?
 mod.npcEngine.addMod.components.textFieldName.initialValue|ENTER NPC ENGINE NAME
