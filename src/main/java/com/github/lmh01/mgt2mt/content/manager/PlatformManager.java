@@ -291,7 +291,7 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 Integer.parseInt(transformedMap.get("COMPLEX")),
                 hasInternet,
                 PlatformType.getFromId(Integer.parseInt(transformedMap.get("TYP"))),
-                transformedMap.containsKey("STARTPLATFORM"),
+                transformedMap.containsKey("STARTPLATFORM") && !transformedMap.get("STARTPLATFORM").equals("false"),
                 gamepassGames
         );
     }

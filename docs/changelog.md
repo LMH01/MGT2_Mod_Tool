@@ -20,6 +20,7 @@
 - Fixed #120 - Image files should now be found under Linux
 - Fixed #128 - Sometimes the false platform image where deleted
 - Fixed #129 - NOTFORSALE and ONLYMOBILE parameters are now read correctly when publishers are imported
+- Platform import/export: STARTPLATFORM parameter was not properly used
 
 ## [v4.8.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.8.0) (Latest Version)
 
