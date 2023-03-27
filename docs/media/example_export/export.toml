@@ -1,4 +1,4 @@
-mod_tool_version = "4.9.0-dev"
+mod_tool_version = "4.9.0"
 type = "export_bundled"
 
 [mods.licence.licencename]
