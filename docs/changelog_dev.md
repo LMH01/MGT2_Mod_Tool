@@ -74,4 +74,4 @@
 
 ### Bug fixes
 - Fixed NullPointException when no `requires_pictures` key was set in any mod map inside the `.toml` file when mods where imported
-- Fixed #118 - The customized publisher icon was not used when publishers where imported, instead the default icon name was usedgitui
+- Fixed #118 - The customized publisher icon was not used when publishers where imported, instead the default icon name was used

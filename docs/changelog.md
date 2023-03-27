@@ -1,6 +1,6 @@
 # Changelog
 
-## Comming in [v4.9.0]
+## [v4.9.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.9.0) (Latest Version)
 
 ### New feature
 - Exported content can now be marked to modify existing content. See the [documentation](documentation_for_mod_creators.md) for further details. (#86)
@@ -18,9 +18,9 @@
 
 ### Bug fixes
 - Fixed NullPointException when no `requires_pictures` key was set in any mod map inside the `.toml` file when mods where imported
-- Fixed #118 - The customized publisher icon was not used when publishers where imported, instead the default icon name was usedgitui
+- Fixed #118 - The customized publisher icon was not used when publishers where imported, instead the default icon name was used
 - Fixed #120 - Image files should now be found under Linux
-- Fixed #128 - Sometimes the false platform image where deleted
+- Fixed #128 - Sometimes the false platform images where deleted
 - Fixed #129 - NOTFORSALE and ONLYMOBILE parameters are now read correctly when publishers are imported
 - Fixed #132 - Genre import: Good/bad gameplay features, and good themes where not imported correctly
 - Fixed #133 - Licence import/export: Release year was not read properly
@@ -31,7 +31,7 @@
 - Platform import/export: STARTPLATFORM parameter was not properly read
 - Theme import: When multiple themes where imported simultaneously they where all written in the same line in the german theme file
 
-## [v4.8.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.8.0) (Latest Version)
+## [v4.8.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.8.0)
 
 ### Other
 - Number of default game icons is now automatically set (used when publishers are replaced) (#115)
