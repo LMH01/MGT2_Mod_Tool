@@ -216,7 +216,7 @@ modifies = "CONTENT_TO_MODIFY"
 ```
 This way one can for example just change the picture and the name of an publisher. The advantage against the `replaces` tag is
 that only specific keys can be changed which helps to keep the mod compatible with new game versions as the mod will not have to be
-modified again.
+modified again. To see which keys can be changed for each type of content take a look at the [example toml file](media/example_export/export.toml).
 
 ### Example
 
@@ -240,5 +240,5 @@ Everything else remains the same.
 - When original content is modified the mod tool might not pickup that something has been modified
 - The original content can only be restored by restoring the initial backup
 - Only content that is already added to the game can be modified
-- When a restore point is created while content is modified, the original game content will be restored when the restore point is restored. In addition to that the will the modified content exist in the game.
+- When a restore point is created while content is modified, the original game content will be restored when the restore point is restored. In addition to that the modified content will exist in the game.
    - When the modification does not change the name, the modified content might not be restored.
