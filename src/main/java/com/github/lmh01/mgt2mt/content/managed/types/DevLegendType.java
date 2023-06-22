@@ -4,44 +4,43 @@ import com.github.lmh01.mgt2mt.util.I18n;
 
 public enum DevLegendType implements TypeEnum {
 
-    GRAPHIC("graphic"),
+    GAME_DESIGNER("gameDesigner", 'D'),
 
-    SOUND("sound"),
+    PROGRAMMER("programmer", 'P'),
 
-    PROGRAMMING("programming"),
+    SOUND_DESIGNER("soundDesigner", 'S'),
 
-    DESIGN("design"),
+    GRAPHIC_DESIGNER("graphicDesigner", 'G'),
 
-    TECHNOLOGY("tech");
+    TECHNICIAN("technician", 'T'),
+
+    RESEARCHER("researcher", 'R'),
+
+    GAME_TESTER("gameTester", 'Q'),
+
+    OFFICE_WORKER("officeWorker", 'O');
 
     private final String translationKey;
 
-    DevLegendType(String translationKey) {
+    private final Character tagId;
+
+    DevLegendType(String translationKey, char tagId) {
         this.translationKey = translationKey;
+        this.tagId = tagId;
     }
 
     /**
      * @return The translated name of the platform type
      */
     public String getTypeName() {
-        return I18n.INSTANCE.get("commonText." + translationKey);
+        return I18n.INSTANCE.get("mod.devLegend.type." + translationKey);
     }
 
     /**
      * Returns the identifier for the licence type
      */
     public String getIdentifier() {
-        if (this == DevLegendType.GRAPHIC) {
-            return "G";
-        } else if (this == DevLegendType.SOUND) {
-            return "S";
-        } else if (this == DevLegendType.PROGRAMMING){
-            return "P";
-        } else if (this == DevLegendType.DESIGN){
-            return "D";
-        } else {
-            return "T";
-        }
+        return tagId.toString();
     }
 
     /**
@@ -50,17 +49,11 @@ public enum DevLegendType implements TypeEnum {
      * @throws IllegalArgumentException If the identifier is invalid
      */
     public static DevLegendType getTypeByIdentifier(String identifier) throws IllegalArgumentException {
-        switch (identifier) {
-            case "G":
-                return DevLegendType.GRAPHIC;
-            case "S":
-                return DevLegendType.SOUND;
-            case "P":
-                return DevLegendType.PROGRAMMING;
-            case "D":
-                return DevLegendType.DESIGN;
-            case "T":
-                return DevLegendType.TECHNOLOGY;
+        for (DevLegendType dlp : DevLegendType.values()) {
+            String s = dlp.tagId.toString();
+            if (dlp.tagId.toString().equals(identifier)) {
+                return dlp;
+            }
         }
         throw new IllegalArgumentException("Dev-legend type identifier is invalid: " + identifier);
     }

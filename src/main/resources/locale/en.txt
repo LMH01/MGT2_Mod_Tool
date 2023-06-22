@@ -509,6 +509,14 @@ mod.npcIp.addMod.somethingNotSelected|<html>At least one of the following fields
 
 mod.devLegend.components.spinner.type.toolTip|Select what the specialization of the dev-legend should be
 mod.devLegend.components.checkBox.female.toolTip|Enable to make this dev-legend a female
+mod.devLegend.type.gameDesigner|Game Designer
+mod.devLegend.type.programmer|Programmer
+mod.devLegend.type.soundDesigner|Sound Designer
+mod.devLegend.type.graphicDesigner|Graphic Designer
+mod.devLegend.type.technician|Technician
+mod.devLegend.type.researcher|Researcher
+mod.devLegend.type.gameTester|Game Tester
+mod.devLegend.type.officeWorker|Office Worker
 
 mod.addMod.optionPaneMessage.firstPart|Add this %s?
 

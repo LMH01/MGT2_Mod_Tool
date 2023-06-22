@@ -2,6 +2,9 @@
 
 ## v4.10.0
 
+### Important
+- **Previously exported Dev Legends will not work together with this release!**
+
 ### Other
 - Updated tech level spinner max value to 9 (fr #137)
 - New fields (T, ST, TG, ARA, ROM) are now recognized in `NpcGame.txt`, even though they can't be set by gui yet (fr #140)
@@ -9,6 +12,7 @@
 - New fields (ARA and ROM) are now recognized in `NpcIPs.txt`, even though they can't be set by gui yet (fr #143)
 - Predecessors and successors are now recognized in `Platforms.txt`, even though they can't be set by gui yet (fr #144)
 - New field (EXCLUSIVE) is now recognized in `Publishers.txt`, even though it can't be set by gui yet (fr #145)
+- All dev legend types are now supported (fr #146, #136)
 
 ### Game compatibility
 - Fixed theme handling, the place where genres that match themes are saved was changed (fr #141)

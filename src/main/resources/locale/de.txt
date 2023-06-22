@@ -509,6 +509,14 @@ mod.npcIp.addMod.somethingNotSelected|<html>Mindestens eines der folgenden Felde
 
 mod.devLegend.components.spinner.type.toolTip|Wähle aus, was die Spezialisierung der Entwicker-Legende sein soll
 mod.devLegend.components.checkBox.female.toolTip|Aktivieren, um die Entwickler-Legende weiblich zu machen
+mod.devLegend.type.gameDesigner|Gamedesigner
+mod.devLegend.type.programmer|Programmierer
+mod.devLegend.type.soundDesigner|Sounddesigner
+mod.devLegend.type.graphicDesigner|Grafikdesigner
+mod.devLegend.type.technician|Techniker
+mod.devLegend.type.researcher|Forscher
+mod.devLegend.type.gameTester|Spieltester
+mod.devLegend.type.officeWorker|Büroarbeiter
 
 mod.addMod.optionPaneMessage.firstPart|Diese(s) %s hinzufügen?
 

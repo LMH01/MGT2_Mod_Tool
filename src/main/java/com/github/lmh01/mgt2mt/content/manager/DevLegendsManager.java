@@ -20,7 +20,7 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
 
     public static final DevLegendsManager INSTANCE = new DevLegendsManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.10.0", MadGamesTycoon2ModTool.VERSION};
 
     private DevLegendsManager() {
         super("devLegend", "dev_legend", MGT2Paths.TEXT_DATA.getPath().resolve("DevLegends.txt").toFile(), StandardCharsets.UTF_8);
@@ -40,13 +40,22 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
         if (line.contains("<P>")) {
             availableTags++;
         }
-        if (line.contains("<T>")) {
-            availableTags++;
-        }
         if (line.contains("<S>")) {
             availableTags++;
         }
         if (line.contains("<G>")) {
+            availableTags++;
+        }
+        if (line.contains("<T>")) {
+            availableTags++;
+        }
+        if (line.contains("<R>")) {
+            availableTags++;
+        }
+        if (line.contains("<Q>")) {
+            availableTags++;
+        }
+        if (line.contains("<O>")) {
             availableTags++;
         }
         if (availableTags < 1) {
@@ -113,17 +122,12 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
         DevLegendType type = null;
         boolean woman = false;
         for (String string : data) {
-            if (string.equals("D")) {
-                type = DevLegendType.DESIGN;
-            } else if (string.equals("P")) {
-                type = DevLegendType.PROGRAMMING;
-            } else if (string.equals("T")) {
-                type = DevLegendType.TECHNOLOGY;
-            } else if (string.equals("S")) {
-                type = DevLegendType.SOUND;
-            } else if (string.equals("G")) {
-                type = DevLegendType.GRAPHIC;
-            } else if (string.equals("f")) {
+            try {
+                type = DevLegendType.getTypeByIdentifier(string);
+            } catch (IllegalArgumentException ignored) {
+
+            }
+            if (string.equals("f")) {
                 woman = true;
             }
         }
