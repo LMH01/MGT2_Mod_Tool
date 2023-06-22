@@ -7,12 +7,13 @@
 
 ### Other
 - Updated tech level spinner max value to 9 (fr #137)
-- New fields (T, ST, TG, ARA, ROM) are now recognized in `NpcGame.txt`, even though they can't be set by gui yet (fr #140)
-- License quality in `Licences.txt` is now recognized, even tough it can't be set by gui yet (fr #142)
-- New fields (ARA and ROM) are now recognized in `NpcIPs.txt`, even though they can't be set by gui yet (fr #143)
-- Predecessors and successors are now recognized in `Platforms.txt`, even though they can't be set by gui yet (fr #144)
-- New field (EXCLUSIVE) is now recognized in `Publishers.txt`, even though it can't be set by gui yet (fr #145)
 - All dev legend types are now supported (fr #146, #136)
+- Added recognition for many new data fields in the games files (note that it is not possible to edit all of those fields with the gui yet), these include:
+    - `Q` in `Licences.txt` (fr #142)
+    - `T, ST, TG, ARA, ROM` in `NpcGames.txt` (fr #140)
+    - `ARA, ROM` in `NpcIPs.txt` (fr #143)
+    - `PRE, SUC` in `Platforms.txt` (fr #144)
+    - `EXCLUSIVE` in `Publishers.txt` (fr #145)
 
 ### Game compatibility
 - Fixed theme handling, the place where genres that match themes are saved was changed (fr #141)
