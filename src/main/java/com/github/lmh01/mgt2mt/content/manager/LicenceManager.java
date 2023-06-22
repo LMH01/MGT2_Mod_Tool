@@ -229,9 +229,9 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
                 }
             } else if (string.startsWith("Q")) {
                 try {
-                    releaseYear = Integer.parseInt(string.replace("Y", ""));
+                    releaseYear = Integer.parseInt(string.replace("Q", ""));
                 } catch (NumberFormatException e) {
-                    throw new ModProcessingException("Unable to construct content: Release year is not a number!");
+                    throw new ModProcessingException("Unable to construct content: Quality is not a number!");
                 }
             } else {
                 licenceType = LicenceType.getTypeByIdentifier(string);
