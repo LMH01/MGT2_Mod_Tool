@@ -251,7 +251,7 @@ public class WindowHelper {
      * @return Returns a new spinner set with the values for the tech level spinner. The following is already initialized: Min/max value, step size and tooltip.
      */
     public static JSpinner getTechLevelSpinner() {
-        return getBaseSpinner("commonText.techLevel.spinner.toolTip", 1, 1, 8, 1);
+        return getBaseSpinner("commonText.techLevel.spinner.toolTip", 1, 1, 9, 1);
     }
 
     /**

@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.10.0
+
+- Updated tech level spinner max value to 9 (fr #137)
+
 ## [v4.9.0-beta7]
 
 ### Bug fixes
