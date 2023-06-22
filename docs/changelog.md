@@ -1,6 +1,25 @@
 # Changelog
 
-## [v4.9.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.9.0) (Latest Version)
+## [v4.10.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.10.0) (Latest Version)
+
+### Important
+- **Previously exported Dev Legends will not work together with this release!**
+
+### Other
+- Updated tech level spinner max value to 9 (fr #137)
+- All dev legend types are now supported (fr #146, #136)
+- Added recognition for many new data fields in the games files (note that it is not possible to edit all of those fields with the gui yet), these include:
+    - `Q` in `Licences.txt` (fr #142)
+    - `T, ST, TG, ARA, ROM` in `NpcGames.txt` (fr #140)
+    - `ARA, ROM` in `NpcIPs.txt` (fr #143)
+    - `PRE, SUC` in `Platforms.txt` (fr #144)
+    - `EXCLUSIVE` in `Publishers.txt` (fr #145)
+
+### Game compatibility
+- Fixed theme handling, the place where genres that match themes are saved was changed (fr #141)
+- Updated file reader to recognize // as commented line, this fixes the issue that the game files could no longer be analyzed (fr #139)
+
+## [v4.9.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.9.0)
 
 ### New feature
 - Exported content can now be marked to modify existing content. See the [documentation](documentation_for_mod_creators.md) for further details. (#86)

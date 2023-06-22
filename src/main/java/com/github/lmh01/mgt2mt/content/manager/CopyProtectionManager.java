@@ -23,7 +23,7 @@ public class CopyProtectionManager extends AbstractAdvancedContentManager {
 
     public static final CopyProtectionManager INSTANCE = new CopyProtectionManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", "4.10.0", MadGamesTycoon2ModTool.VERSION};
 
     private CopyProtectionManager() {
         super("copyProtect", "copy_protect", MGT2Paths.TEXT_DATA.getPath().resolve("CopyProtect.txt").toFile(), StandardCharsets.UTF_8);
