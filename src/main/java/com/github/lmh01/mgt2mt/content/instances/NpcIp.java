@@ -4,6 +4,7 @@ import com.github.lmh01.mgt2mt.content.managed.AbstractSimpleContent;
 import com.github.lmh01.mgt2mt.content.managed.DependentContent;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
 import com.github.lmh01.mgt2mt.content.managed.TargetGroup;
+import com.github.lmh01.mgt2mt.content.managed.types.SequelNumeration;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.NpcIpManager;
 import com.github.lmh01.mgt2mt.content.manager.PublisherManager;
@@ -26,6 +27,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
     public Integer publisher;
     public int releaseYear;
     public int rating;
+    public SequelNumeration sn;
 
     /**
      * Construct a new npcIp.
@@ -41,7 +43,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
      * @param releaseYear The release year
      * @param rating      The rating in percent 0-100%
      */
-    public NpcIp(String name, Integer id, int genre, Integer subGenre, int theme, Integer subTheme, TargetGroup targetGroup, int publisher, int releaseYear, int rating) throws IllegalArgumentException {
+    public NpcIp(String name, Integer id, int genre, Integer subGenre, int theme, Integer subTheme, TargetGroup targetGroup, int publisher, int releaseYear, int rating, SequelNumeration sn) throws IllegalArgumentException {
         super(NpcIpManager.INSTANCE, name, id);
         if (rating < 0 || rating > 100) {
             throw new IllegalArgumentException("Unable to construct new NpcIp: The rating entered is invalid!");
@@ -54,6 +56,7 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         this.publisher = publisher;
         this.releaseYear = releaseYear;
         this.rating = rating;
+        this.sn = sn;
     }
 
     @Override
@@ -72,6 +75,9 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         exportMap.put("publisher", PublisherManager.INSTANCE.getContentNameById(publisher));
         exportMap.put("release_year", Integer.toString(releaseYear));
         exportMap.put("rating", Integer.toString(rating));
+        if (sn != null && sn != SequelNumeration.NONE) {
+            exportMap.put("SEQUEL_NUMERATION", sn.name());
+        }
         return exportMap;
     }
 
@@ -116,6 +122,9 @@ public class NpcIp extends AbstractSimpleContent implements DependentContent {
         }
         sb.append("<%").append(rating)
                         .append("><Y").append(releaseYear).append("><TG").append(targetGroup.getId()).append(">");
+        if (sn != null && sn != SequelNumeration.NONE) {
+            sb.append("<").append(sn.name()).append(">");
+        }
         return sb.toString();
     }
 }

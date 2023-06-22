@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.content.manager;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.instances.NpcIp;
 import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.types.SequelNumeration;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -150,7 +151,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                     subTheme = ThemeManager.INSTANCE.getContentIdByName(listSubTheme.getSelectedValue());
                 }
                 analyzeFile();
-                NpcIp npcIp = new NpcIp(textFieldName.getText(), null, mainGenre, subGenre, mainTheme, subTheme, TargetGroup.getTargetGroup((String) comboBoxTargetGroup.getSelectedItem()), publisher, Integer.parseInt(spinnerReleaseYear.getValue().toString()), Integer.parseInt(spinnerRating.getValue().toString()));
+                NpcIp npcIp = new NpcIp(textFieldName.getText(), null, mainGenre, subGenre, mainTheme, subTheme, TargetGroup.getTargetGroup((String) comboBoxTargetGroup.getSelectedItem()), publisher, Integer.parseInt(spinnerReleaseYear.getValue().toString()), Integer.parseInt(spinnerRating.getValue().toString()), null);
                 if (JOptionPane.showConfirmDialog(null, npcIp.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     addContent(npcIp);
                     ContentAdministrator.modAdded(textFieldName.getText(), I18n.INSTANCE.get("commonText.npcIp.upperCase"));
@@ -174,6 +175,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         Integer releaseYear = null;
         Integer rating = null;
         TargetGroup targetGroup = null;
+        SequelNumeration sn = null;
         for (String d : data) {
             if (d.startsWith("P")) {
                 publisher = Integer.parseInt(d.replaceAll("[^0-9]", ""));
@@ -196,12 +198,16 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                 releaseYear = Integer.parseInt(d.replaceAll("[^0-9]", ""));
             } else if (d.startsWith("%")) {
                 rating = Integer.parseInt(d.replaceAll("%", ""));
+            } else if (d.equals("ROM")) {
+                sn = SequelNumeration.ROM;
+            } else if (d.equals("ARA")) {
+                sn = SequelNumeration.ARA;
             }
         }
         if (genre == null || theme == null || publisher == null || releaseYear == null || rating == null) {
             throw new ModProcessingException("Unable to construct content named " + name + ". Reason: missing data.");
         }
-        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);
+        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating, sn);
     }
 
     @Override
@@ -221,7 +227,11 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         int publisher = SharingHelper.getContentIdByNameFromImport(PublisherManager.INSTANCE, (String) map.get("publisher"));
         int releaseYear = Integer.parseInt((String) map.get("release_year"));
         int rating = Integer.parseInt((String) map.get("rating"));
-        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating);
+        SequelNumeration sn = SequelNumeration.NONE;
+        if (map.containsKey("SEQUEL_NUMERATION")) {
+            sn = SequelNumeration.getSequelNumeration(map.get("SEQUEL_NUMERATION").toString());
+        }
+        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating, sn);
     }
 
     @Override
