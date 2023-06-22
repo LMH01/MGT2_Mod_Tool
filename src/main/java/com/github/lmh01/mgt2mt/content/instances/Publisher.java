@@ -31,6 +31,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
     final Integer comVal;
     final boolean notForSale;
     final CountryType country;
+    final Boolean exclusive;
 
     public Publisher(String name,
                      Integer id,
@@ -46,7 +47,8 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
                      Integer speed,
                      Integer comVal,
                      boolean notForSale,
-                     CountryType country) {
+                     CountryType country,
+                     Boolean exclusive) {
         super(PublisherManager.INSTANCE, name, id, translationManager);
         this.date = date;
         this.icon = icon;
@@ -60,6 +62,7 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
         this.comVal = comVal;
         this.notForSale = notForSale;
         this.country = country;
+        this.exclusive = exclusive;
     }
 
     @Override
@@ -84,6 +87,9 @@ public class Publisher extends AbstractAdvancedContent implements DependentConte
             map.put("NOTFORSALE", "true");
         }
         map.put("COUNTRY", Integer.toString(country.getId()));
+        if (exclusive != null) {
+            map.put("EXCLUSIVE", exclusive.toString());
+        }
         return map;
     }
 

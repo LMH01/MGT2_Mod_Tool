@@ -8,6 +8,7 @@
 - License quality in `Licences.txt` is now recognized, even tough it can't be set by gui yet (fr #142)
 - New fields (ARA and ROM) are now recognized in `NpcIPs.txt`, even though they can't be set by gui yet (fr #143)
 - Predecessors and successors are now recognized in `Platforms.txt`, even though they can't be set by gui yet (fr #144)
+- New field (EXCLUSIVE) is now recognized in `Publishers.txt`, even though it can't be set by gui yet (fr #145)
 
 ### Game compatibility
 - Fixed theme handling, the place where genres that match themes are saved was changed (fr #141)

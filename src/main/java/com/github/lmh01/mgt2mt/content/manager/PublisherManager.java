@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
+
 import java.awt.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -56,6 +58,10 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
 
     @Override
     public AbstractBaseContent constructContentFromMap(Map<String, String> map) {
+        Boolean exclusive = null;
+        if (map.containsKey("EXCLUSIVE") && map.get("EXCLUSIVE").equals("true")) {
+            exclusive = true;
+        }
         return new Publisher(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -71,7 +77,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 Integer.parseInt(map.get("SPEED")),
                 Integer.parseInt(map.get("COMVAL")),
                 map.containsKey("NOTFORSALE"),
-                CountryType.getFromId(Integer.parseInt(map.get("COUNTRY"))));
+                CountryType.getFromId(Integer.parseInt(map.get("COUNTRY"))),
+                exclusive);
     }
 
     @Override
@@ -89,6 +96,7 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
         list.add(new DataLine("COMVAL", true, DataType.INT));
         list.add(new DataLine("NOTFORSALE", false, DataType.BOOLEAN));
         list.add(new DataLine("COUNTRY", true, DataType.INT));
+        list.add(new DataLine("EXCLUSIVE", false, DataType.BOOLEAN));
         return list;
     }
 
@@ -107,6 +115,10 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
         Map<String, String> transformedMap = Utils.transformObjectMapToStringMap(map);
+        Boolean exclusive = null;
+        if (transformedMap.containsKey("EXCLUSIVE") && transformedMap.get("EXCLUSIVE").equals("true")) {
+            exclusive = true;
+        }
         return new Publisher(
                 (String) map.get("NAME EN"),
                 getIdFromMap(map),
@@ -122,7 +134,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                 Integer.parseInt((String) map.get("SPEED")),
                 Integer.parseInt((String) map.get("COMVAL")),
                 map.containsKey("NOTFORSALE") && map.get("NOTFORSALE").equals("true"),
-                CountryType.getFromId(Integer.parseInt(transformedMap.get("COUNTRY"))));
+                CountryType.getFromId(Integer.parseInt(transformedMap.get("COUNTRY"))),
+                exclusive);
     }
 
     @Override
@@ -273,7 +286,8 @@ public class PublisherManager extends AbstractAdvancedContentManager implements 
                             Integer.parseInt(speed.getValue().toString()),
                             Integer.parseInt(comVal.getValue().toString()),
                             notForSale.isSelected(),
-                            CountryType.getFromName(Objects.requireNonNull(country.getSelectedItem()).toString())
+                            CountryType.getFromName(Objects.requireNonNull(country.getSelectedItem()).toString()),
+                            null
                     );
                     if (JOptionPane.showConfirmDialog(null, publisher.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, resizedImageIcon) == JOptionPane.YES_OPTION) {
                         addContent(publisher);
