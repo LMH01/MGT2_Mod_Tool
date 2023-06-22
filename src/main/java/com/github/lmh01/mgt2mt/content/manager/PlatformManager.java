@@ -142,7 +142,9 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         }
         EditHelper.printLine("GAMEPASS", map, bw);
         EditHelper.printLine("PUB", map, bw);
-        EditHelper.printLine("END", map, bw);
+        EditHelper.printLine("PRE", map, bw);
+        EditHelper.printLine("SUC", map, bw);
+        bw.write("[END]\n");
     }
 
     @Override
@@ -196,6 +198,14 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         if (map.containsKey("PUB")) {
             publisher = Integer.parseInt(map.get("PUB"));
         }
+        Integer predecessorId = null;
+        if (map.containsKey("PRE")) {
+            predecessorId = Integer.parseInt(map.get("PRE"));
+        }
+        Integer successorId = null;
+        if (map.containsKey("SUC")) {
+            successorId = Integer.parseInt(map.get("SUC"));
+        }
         return new Platform(
                 map.get("NAME EN"),
                 getIdFromMap(map),
@@ -216,7 +226,9 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 map.containsKey("STARTPLATFORM"),
                 gamepassGames,
                 publisher,
-                platformIds
+                platformIds,
+                predecessorId,
+                successorId
         );
     }
 
@@ -232,6 +244,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         line.add(new DataLine("COMPLEX", true, DataType.INT));
         line.add(new DataLine("TYP", true, DataType.INT));
         line.add(new DataLine("PUB", false, DataType.INT));
+        line.add(new DataLine("PRE", true, DataType.INT));
+        line.add(new DataLine("SUC", true, DataType.INT));
         line.add(new DataLine("END", false, DataType.UNCHECKED));
         return line;
     }
@@ -318,6 +332,14 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
         if (transformedMap.containsKey("PUB")) {
             publisher = PublisherManager.INSTANCE.getImportHelperMap().getContentIdByName(transformedMap.get("PUB"));
         }
+        Integer predecessorId = null;
+        if (transformedMap.containsKey("PRE") && !transformedMap.get("PRE").equals("-1")) {
+            predecessorId = PlatformManager.INSTANCE.getImportHelperMap().getContentIdByName(transformedMap.get("PRE"));
+        }
+        Integer successorId = null;
+        if (transformedMap.containsKey("SUC") && !transformedMap.get("PRE").equals("-1")) {
+            successorId = PlatformManager.INSTANCE.getImportHelperMap().getContentIdByName(transformedMap.get("SUC"));
+        }
         return new Platform(
                 transformedMap.get("NAME EN"),
                 getIdFromMap(transformedMap),
@@ -338,7 +360,9 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                 transformedMap.containsKey("STARTPLATFORM") && !transformedMap.get("STARTPLATFORM").equals("false"),
                 gamepassGames,
                 publisher,
-                platformIds
+                platformIds,
+                predecessorId,
+                successorId
         );
     }
 
@@ -661,7 +685,9 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     checkBoxStartplatform.isSelected(),
                                     gpg,
                                     pid,
-                                    platformIds.get()
+                                    platformIds.get(),
+                                    null,
+                                    null
                             );
                             if (JOptionPane.showConfirmDialog(null, platform.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(platform);
@@ -692,6 +718,12 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             if (entry.getKey().contains("BACKCOMP")) {
                 replaceMapEntry(map, missingDependency, replacement, entry.getKey());
             }
+            if (entry.getKey().contains("PRE")) {
+                replaceMapEntry(map, missingDependency, replacement, entry.getKey());
+            }
+            if (entry.getKey().contains("SUC")) {
+                replaceMapEntry(map, missingDependency, replacement, entry.getKey());
+            }
         }
         replaceMapEntry(map, missingDependency, replacement, "PUB");
     }
@@ -717,6 +749,12 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
             if (entry.getKey().contains("BACKCOMP-")) {
                 platforms.add((String)entry.getValue());
             }
+        }
+        if (importMap.containsKey("PRE") && !importMap.get("PRE").equals("-1")) {
+            platforms.add((String)importMap.get("PRE"));
+        }
+        if (importMap.containsKey("SUC") && !importMap.get("PRE").equals("-1")) {
+            platforms.add((String)importMap.get("SUC"));
         }
         map.put(GameplayFeatureManager.INSTANCE.getId(), gameplayFeatures);
         map.put(PlatformManager.INSTANCE.getId(), platforms);

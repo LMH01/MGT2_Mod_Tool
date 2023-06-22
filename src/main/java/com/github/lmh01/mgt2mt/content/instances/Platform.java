@@ -1,6 +1,19 @@
 package com.github.lmh01.mgt2mt.content.instances;
 
-import com.github.lmh01.mgt2mt.content.managed.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.github.lmh01.mgt2mt.content.managed.AbstractAdvancedContent;
+import com.github.lmh01.mgt2mt.content.managed.DependentContent;
+import com.github.lmh01.mgt2mt.content.managed.Image;
+import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
+import com.github.lmh01.mgt2mt.content.managed.PlatformImage;
+import com.github.lmh01.mgt2mt.content.managed.RequiresPictures;
 import com.github.lmh01.mgt2mt.content.managed.types.PlatformType;
 import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.PlatformManager;
@@ -9,12 +22,6 @@ import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
 
 public class Platform extends AbstractAdvancedContent implements DependentContent, RequiresPictures {
 
@@ -35,6 +42,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
     final Integer gamepassGames;
     final Integer publisher; // The publisher that released this console
     final ArrayList<Integer> backwardsCompatiblePlatforms; // Contains the ids of platforms that this platform is backwards compatible to
+    final Integer predecessorId;
+    final Integer successorId;
 
     public Platform(String name,
                     Integer id,
@@ -55,7 +64,9 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                     boolean startPlatform,
                     Integer gamepassGames,
                     Integer publisher,
-                    ArrayList<Integer> backwardsCompatiblePlatforms) throws ModProcessingException {
+                    ArrayList<Integer> backwardsCompatiblePlatforms,
+                    Integer predecessorId,
+                    Integer successorId) throws ModProcessingException {
         super(PlatformManager.INSTANCE, name, id, translationManager);
         this.manufacturer = manufacturer;
         this.manufacturerTranslations = manufacturerTranslations;
@@ -74,6 +85,8 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         this.gamepassGames = gamepassGames;
         this.publisher = publisher;
         this.backwardsCompatiblePlatforms = backwardsCompatiblePlatforms;
+        this.predecessorId = predecessorId;
+        this.successorId = successorId;
 
         // Check if platform images are valid
         ArrayList<Integer> assignedIds = new ArrayList<>();
@@ -145,6 +158,16 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
                 map.put("BACKCOMP-" + backwardsCompNumber, integer.toString());
                 backwardsCompNumber += 1;
             }
+        }
+        if (predecessorId != null) {
+            map.put("PRE", predecessorId.toString());
+        } else {
+            map.put("PRE", "-1");
+        }
+        if (successorId != null) {
+            map.put("SUC", successorId.toString());
+        } else {
+            map.put("SUC", "-1");
         }
         return map;
     }
@@ -230,6 +253,12 @@ public class Platform extends AbstractAdvancedContent implements DependentConten
         map.remove("PIC-2");
         if (map.containsKey("PUB")) {
             changedValues.put("PUB", PublisherManager.INSTANCE.getContentNameById(Integer.parseInt(map.get("PUB"))));
+        }
+        if (map.containsKey("PRE") && !map.get("PRE").equals("-1")) {
+            changedValues.put("PRE", PlatformManager.INSTANCE.getContentNameById(Integer.parseInt(map.get("PRE"))));
+        }
+        if (map.containsKey("SUC") && !map.get("PRE").equals("-1")) {
+            changedValues.put("SUC", PlatformManager.INSTANCE.getContentNameById(Integer.parseInt(map.get("SUC"))));
         }
         Utils.replaceMapEntries(map, changedValues);
     }
