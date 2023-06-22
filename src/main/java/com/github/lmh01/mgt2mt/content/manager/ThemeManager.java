@@ -36,7 +36,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", MadGamesTycoon2ModTool.VERSION};
 
     private ThemeManager() {
-        super("theme", "theme", ModManagerPaths.MAIN.getPath().resolve("themes_2.txt").toFile(), StandardCharsets.UTF_16LE);
+        super("theme", "theme", MGT2Paths.TEXT.getPath().resolve("EN/Themes_EN.txt").toFile(), StandardCharsets.UTF_16LE);
     }
 
     @Override
@@ -101,14 +101,10 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                     for (AbstractBaseContent content : contents) {
                         bw.write("\r\n");
                         if (content instanceof Theme) {
-                            if (string.equals("GE")) {
+                            if (string.equals("EN")) {
                                 bw.write(((Theme) content).getLine());
                             } else {
-                                String line = ((Theme) content).translations.get(string);
-                                if (line == null) {
-                                    line = content.name;
-                                }
-                                bw.write(line);
+                                bw.write(((Theme) content).name);
                             }
                         }
                     }
@@ -141,7 +137,6 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
 
     @Override
     public void analyzeFile() throws ModProcessingException {
-        writeCustomThemeFile();
         super.analyzeFile();
         // Set the theme translations
         Map<String, Map<Integer, String>> map = new HashMap<>();
@@ -246,7 +241,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
         String line = getLineByName(name);
         Map<String, String> translations = new HashMap<>();
         for (String string : TranslationManager.TRANSLATION_KEYS) {
-            if (string.equals("GE")) {
+            if (string.equals("EN")) {
                 translations.put(string, this.getReplacedLine(this.translations.get(string).get(getContentIdByName(name))));
             } else {
                 translations.put(string, this.translations.get(string).get(getContentIdByName(name)));
@@ -301,36 +296,6 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
         }
         map.put(GenreManager.INSTANCE.getId(), genreNames);
         return map;
-    }
-
-    /**
-     * This function writes the theme file that is being analyzed by the theme mod.
-     * The file is being written in a way that the theme name is english but that the data is still preserved.
-     */
-    public void writeCustomThemeFile() throws ModProcessingException {
-        try {
-            if (Files.exists(gameFile.toPath())) {
-                Files.delete(gameFile.toPath());
-            }
-            Files.createFile(gameFile.toPath());
-            Map<Integer, String> ger = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("GE", "Themes_GE.txt")).toFile(), StandardCharsets.UTF_16LE);
-            Map<Integer, String> eng = DataStreamHelper.getContentFromFile(MGT2Paths.TEXT.getPath().resolve(Paths.get("EN", "Themes_EN.txt")).toFile(), StandardCharsets.UTF_16LE);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(gameFile), getCharset()));
-            boolean firstLine = true;
-            for (int i = 0; i < ger.size(); i++) {
-                String name = eng.get(i);
-                String data = ger.get(i).replace(getReplacedLine(ger.get(i)), "").replaceAll("\\s+", "");
-                if (firstLine) {
-                    firstLine = false;
-                } else {
-                    bw.write("\r\n");
-                }
-                bw.write(name + " " + data);
-            }
-            bw.close();
-        } catch (IOException e) {
-            throw new ModProcessingException("The custom theme file could not be generated", e);
-        }
     }
 
     /**

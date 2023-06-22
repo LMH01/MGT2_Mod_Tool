@@ -48,12 +48,6 @@ public class MadGamesTycoon2ModTool {
         WindowMain.createFrame();
         Settings.validateMGT2Folder();
         if (Settings.mgt2FolderIsCorrect) {
-            try {
-                ThemeManager.INSTANCE.writeCustomThemeFile();
-            } catch (ModProcessingException e) {
-                TextAreaHelper.printStackTrace(e);
-                e.printStackTrace();
-            }
             Backup.createInitialBackup();//Creates an initial backup when it does not already exist.
         } else {
             LOGGER.info("Initial backups where not created/completed because the mgt2 folder is invalid");

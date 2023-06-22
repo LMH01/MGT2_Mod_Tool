@@ -68,7 +68,7 @@ public class Theme extends AbstractSimpleContent implements DependentContent {
      */
     @Override
     public String getLine() {
-        StringBuilder line = new StringBuilder(translations.get("GE") + " " + Utils.transformArrayListToString(compatibleGenres));
+        StringBuilder line = new StringBuilder(this.name + " " + Utils.transformArrayListToString(compatibleGenres));
         if (ageNumber > 0) {
             line.append("<").append("M").append(ageNumber).append(">");
         }

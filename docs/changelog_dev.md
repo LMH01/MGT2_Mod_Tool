@@ -4,8 +4,11 @@
 
 ### Other
 - Updated tech level spinner max value to 9 (fr #137)
-- Updated file reader to recognize // as commented line, this fixes the issue that the game files could no longer be analyzed (fr #139)
 - New fields (T, ST, TG, ARA, ROM) in `NpcGame.txt` are now recognized, even though they can't be set by gui yet (fr #140)
+
+### Game compatibility
+- Fixed theme handling, the place where genres that match themes are saved was changed (fr #141)
+- Updated file reader to recognize // as commented line, this fixes the issue that the game files could no longer be analyzed (fr #139)
 
 ## [v4.9.0-beta7]
 
