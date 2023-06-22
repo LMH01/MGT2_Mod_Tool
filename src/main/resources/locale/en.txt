@@ -1129,8 +1129,7 @@ verifyContentIntegrity.licenceInvalid.goodGenreIdNotNumber|The integrity of game
 verifyContentIntegrity.licenceInvalid.badGenreIdNotNumber|The integrity of game file Licence.txt is invalid. Reason: The bad genre id of licence named %s  is not a number: %s.
 verifyContentIntegrity.licenceInvalid.yearNotNumber|The integrity of game file Licence.txt is invalid. Reason: The year of licence named %s is not a number: %s.
 
-verifyContentIntegrity.npcGameInvalid.formatInvalid|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s contains invalid genre ids: %s.
-verifyContentIntegrity.npcGameInvalid.noGenreIds|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s does not contain genre ids.
+verifyContentIntegrity.npcGameInvalid.formatInvalid|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s contains at least one invalid entry: %s.
 
 verifyContentIntegrity.npcIpInvalid.formatInvalid|The integrity of game file NpcIps.txt is invalid. Reason: NpcIP %s is missing one of the tags P, G, T, Y or TG.
 verifyContentIntegrity.npcIpInvalid.invalidNumber|The integrity of game file NpcIps.txt is invalid. Reason: For the NpcIP %s one of the tags is not a number: %s.

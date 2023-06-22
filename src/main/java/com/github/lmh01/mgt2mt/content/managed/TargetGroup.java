@@ -55,4 +55,16 @@ public enum TargetGroup implements TypeEnum {
         }
         throw new IllegalArgumentException("Unable to resolve target group: Input string is invalid. Was: " + name);
     }
+
+    /**
+     * Returns the corresponding target group for the id
+     */
+    public static TargetGroup getTargetGroupById(int id) throws IllegalArgumentException {
+        for (TargetGroup tg : TargetGroup.values()) {
+            if (tg.id == id) {
+                return tg;
+            }
+        }
+        throw new IllegalArgumentException("Unable to resolve target group: Input id is invalid. Was: " + id);
+    }
 }

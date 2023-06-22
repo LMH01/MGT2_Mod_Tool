@@ -3,6 +3,7 @@ package com.github.lmh01.mgt2mt.content.manager;
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.instances.NpcGame;
 import com.github.lmh01.mgt2mt.content.managed.*;
+import com.github.lmh01.mgt2mt.content.managed.types.SequelNumeration;
 import com.github.lmh01.mgt2mt.util.Backup;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
@@ -49,12 +50,19 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
     @Override
     protected String isLineValid(String line) {
         try {
-            Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(line));
-        } catch (NumberFormatException e) {
+            for (String entry : Utils.getEntriesFromString(line)) {
+                if (entry.startsWith("TG")) {
+                    TargetGroup.getTargetGroupById(Integer.parseInt(entry.replace("TG", "")));
+                } else if (entry.startsWith("ST")) {
+                    Integer.parseInt(entry.replace("ST", ""));
+                } else if (entry.startsWith("T")) {
+                    Integer.parseInt(entry.replace("T", ""));
+                } else if (!entry.equals("ROM") && !entry.equals("ARA")) {
+                    Integer.parseInt(entry);
+                }
+            }
+        } catch (IllegalArgumentException e) {
             return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcGameInvalid.formatInvalid"), line, e.getMessage());
-        }
-        if (Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(line)).isEmpty()) {
-            return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcGameInvalid.noGenreIds"), line);
         }
         return "";
     }
@@ -87,7 +95,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
                                 genreIds.add(GenreManager.INSTANCE.getContentIdByName(string));
                             }
                             Collections.sort(genreIds);
-                            NpcGame npcGame = new NpcGame(textFieldName.getText(), null, genreIds);
+                            NpcGame npcGame = new NpcGame(textFieldName.getText(), null, genreIds ,null, null, null, null);//TODO Add collection of remaining values
                             if (JOptionPane.showConfirmDialog(null, npcGame.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(npcGame);
                                 ContentAdministrator.modAdded(npcGame.name, getType());
@@ -111,12 +119,36 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
     @Override
     public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
         String data = getDataForName(name);
-        return new NpcGame(name, getContentIdByName(name), Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(data)));
+        ArrayList<Integer> genreIds = new ArrayList<>();
+        Integer theme = null;
+        Integer subTheme = null;
+        TargetGroup tg = null;
+        SequelNumeration sn = SequelNumeration.NONE;
+        for (String entry : Utils.getEntriesFromString(data)) {
+            if (entry.startsWith("TG")) {
+                tg = TargetGroup.getTargetGroupById(Integer.parseInt(entry.replace("TG", "")));
+            } else if (entry.startsWith("ST")) {
+                subTheme = Integer.parseInt(entry.replace("ST", ""));
+            } else if (entry.startsWith("T")) {
+                theme = Integer.parseInt(entry.replace("T", ""));
+            } else if (entry.equals("ROM")) {
+                sn = SequelNumeration.ROM;
+            } else if (entry.equals("ARA")) {
+                sn = SequelNumeration.ARA;
+            } else {
+                genreIds.add(Integer.parseInt(entry));
+            }
+        }
+        return new NpcGame(name, getContentIdByName(name), genreIds, theme, subTheme, tg, sn);
     }
 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
-        return new NpcGame((String) map.get("NAME EN"), null, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GENRES")));
+        return new NpcGame((String) map.get("NAME EN"), null, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GENRES")),
+            SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, map.get("THEME").toString()),
+            SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, map.get("SUB_THEME").toString()),
+            TargetGroup.getTargetGroup(map.get("TARGET_GROUP").toString()),
+            SequelNumeration.getSequelNumeration(map.get("SEQUEL_NUMERATION").toString()));
     }
 
     @Override
