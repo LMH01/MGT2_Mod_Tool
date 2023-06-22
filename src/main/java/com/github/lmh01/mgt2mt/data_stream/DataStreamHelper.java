@@ -89,7 +89,8 @@ public class DataStreamHelper {
             }
             if (currentLine.equals("////////////////////////////////////////////////////////////////////")) {
                 reader.readLine();//This if/else is included so that the analyzing of the hardware.txt file works properly
-            } else {
+            }else if (!currentLine.startsWith("//")) {
+                // If line contains // at start it is commented and should be ignored (response to file description in recent game update)
                 if (currentLine.isEmpty()) {
                     if (!mapCurrent.isEmpty()) {
                         // Add new map only when the current map is not empty and if a new line is detected
@@ -159,13 +160,16 @@ public class DataStreamHelper {
         Map<Integer, String> mapCurrent = new HashMap<>();
         int currentLineNumber = 0;
         while ((currentLine = br.readLine()) != null) {
-            if (currentLine.isEmpty()) {
-                DebugHelper.warn(DataStreamHelper.class, "Empty line found in file " + file.getPath());
-                continue;
-            }
             if (firstLine) {
                 currentLine = Utils.removeUTF8BOM(currentLine);
                 firstLine = false;
+            }
+            if (currentLine.isEmpty()) {
+                DebugHelper.warn(DataStreamHelper.class, "Empty line found in file " + file.getPath());
+                continue;
+            } else if (currentLine.startsWith("//")) {
+                // If line contains // at start it is commented and should be ignored (response to file description in recent game update)
+                continue;
             }
             mapCurrent.put(currentLineNumber, currentLine);
             currentLineNumber++;
