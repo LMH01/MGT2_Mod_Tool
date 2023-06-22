@@ -5,6 +5,7 @@
 ### Other
 - Updated tech level spinner max value to 9 (fr #137)
 - New fields (T, ST, TG, ARA, ROM) in `NpcGame.txt` are now recognized, even though they can't be set by gui yet (fr #140)
+- License quality in `Licences.txt` is now recognized, even tough it can't be set by gui yet (fr #142)
 
 ### Game compatibility
 - Fixed theme handling, the place where genres that match themes are saved was changed (fr #141)

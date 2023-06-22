@@ -1126,7 +1126,8 @@ verifyContentIntegrity.variation6|The integrity of game file %s is not valid. Re
 verifyContentIntegrity.licenceInvalid.tagMissing|The integrity of game file Licence.txt is invalid. Reason: The license named %s does not contain a type tag.
 verifyContentIntegrity.licenceInvalid.tooManyTags|The integrity of game file Licence.txt is invalid. Reason: The license named %s contains more than one type tag.
 verifyContentIntegrity.licenceInvalid.goodGenreIdNotNumber|The integrity of game file Licence.txt is invalid. Reason: The good genre id of licence named %s is not a number: %s.
-verifyContentIntegrity.licenceInvalid.badGenreIdNotNumber|The integrity of game file Licence.txt is invalid. Reason: The bad genre id of licence named %s  is not a number: %s.
+verifyContentIntegrity.licenceInvalid.badGenreIdNotNumber|The integrity of game file Licence.txt is invalid. Reason: The bad genre id of licence named %s is not a number: %s.
+verifyContentIntegrity.licenceInvalid.qualityNotNumber|The integrity of game file Licence.txt is invalid. Reason: The quality of licence named %s is not a number: %s.
 verifyContentIntegrity.licenceInvalid.yearNotNumber|The integrity of game file Licence.txt is invalid. Reason: The year of licence named %s is not a number: %s.
 
 verifyContentIntegrity.npcGameInvalid.formatInvalid|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s contains at least one invalid entry: %s.

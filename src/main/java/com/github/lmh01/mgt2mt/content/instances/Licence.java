@@ -19,13 +19,15 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
     final Integer goodGenreId;
     final Integer badGenreId;
     final Integer releaseYear;
+    final Integer quality;
 
-    public Licence(String name, Integer id, LicenceType licenceType, Integer badGenreId, Integer goodGenreId, Integer releaseYear) {
+    public Licence(String name, Integer id, LicenceType licenceType, Integer badGenreId, Integer goodGenreId, Integer releaseYear, Integer quality) {
         super(LicenceManager.INSTANCE, name, id);
         this.licenceType = licenceType;
         this.badGenreId = badGenreId;
         this.goodGenreId = goodGenreId;
         this.releaseYear = releaseYear;
+        this.quality = quality;
     }
 
     @Override
@@ -38,6 +40,9 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
         }
         if (goodGenreId != null) {
             map.put("GOOD GENRE", GenreManager.INSTANCE.getContentNameById(goodGenreId));
+        }
+        if (quality != null) {
+            map.put("QUALITY", quality.toString());
         }
         map.put("RELEASE YEAR", String.valueOf(releaseYear));
         return map;
@@ -81,6 +86,9 @@ public class Licence extends AbstractSimpleContent implements DependentContent {
         }
         if (badGenreId != null) {
             sb.append("<G-").append(badGenreId).append(">");
+        }
+        if (quality != null) {
+            sb.append("<Q").append(quality).append(">");
         }
         return sb.toString();
     }

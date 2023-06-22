@@ -79,6 +79,12 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
                     } catch (NumberFormatException e) {
                         return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.yearNotNumber"), getReplacedLine(line), string.replace("Y", ""));
                     }
+                } else if (string.startsWith("Q")) {
+                    try {
+                        Integer.parseInt(string.replace("Q", ""));
+                    } catch (NumberFormatException e) {
+                        return String.format(I18n.INSTANCE.get("verifyContentIntegrity.licenceInvalid.qualityNotNumber"), getReplacedLine(line), string.replace("G", ""));
+                    }
                 }
             }
         }
@@ -141,7 +147,8 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
                     Licence licence = new Licence(textFieldName.getText(), null, lt,
                             badGenreId,
                             goodGenreId,
-                            (Integer) spinnerReleaseYear.getValue());
+                            (Integer) spinnerReleaseYear.getValue(),
+                            null);
                     boolean licenceAlreadyExists = false;
                     for (Map.Entry<Integer, String> entry : fileContent.entrySet()) {
                         if (entry.getValue().equals(licence.getLine())) {
@@ -184,7 +191,11 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
         if (map.containsKey("RELEASE YEAR")) {
             year = Integer.parseInt((String)map.get("RELEASE YEAR"));
         }
-        return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")), badGenreId, goodGenreId, year);
+        Integer quality = null;
+        if (map.containsKey("QUALITY")) {
+            quality = Integer.parseInt(map.get("QUALITY").toString());
+        }
+        return new Licence((String) map.get("NAME EN"), null, LicenceType.getTypeByIdentifier((String) map.get("LICENCE TYP")), badGenreId, goodGenreId, year, quality);
     }
 
     @Override
@@ -193,6 +204,7 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
         Integer goodGenreId = null;
         Integer badGenreId = null;
         Integer releaseYear = null;
+        Integer quality = null;
         ArrayList<String> data = Utils.getEntriesFromString(fileContent.get(getContentIdByName(name)));
         for (String string : data) {
             if (string.startsWith("G")) {
@@ -215,14 +227,20 @@ public class LicenceManager extends AbstractSimpleContentManager implements Depe
                 } catch (NumberFormatException e) {
                     throw new ModProcessingException("Unable to construct content: Release year is not a number!");
                 }
-            } else if (!string.contains("Q")) {
+            } else if (string.startsWith("Q")) {
+                try {
+                    releaseYear = Integer.parseInt(string.replace("Y", ""));
+                } catch (NumberFormatException e) {
+                    throw new ModProcessingException("Unable to construct content: Release year is not a number!");
+                }
+            } else {
                 licenceType = LicenceType.getTypeByIdentifier(string);
             }
         }
         if (licenceType == null) {
             throw new ModProcessingException("Unable to construct content: licence type not found!");
         }
-        return new Licence(name, null, licenceType, badGenreId, goodGenreId, releaseYear);
+        return new Licence(name, null, licenceType, badGenreId, goodGenreId, releaseYear, quality);
     }
 
     @Override
