@@ -1,5 +1,6 @@
 package com.github.lmh01.mgt2mt.util.handler;
 
+import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.content.managed.ModAction;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
@@ -56,7 +57,11 @@ public class ThreadHandler {
             if (Settings.mgt2FolderIsCorrect) {
                 WindowMain.lockMenuItems(true);
             }
-            UpdateChecker.checkForUpdates(false, false);
+            if (MadGamesTycoon2ModTool.VERSION.contains("dev")) {
+                TextAreaHelper.appendText("Version check has been skipped because this is a development version");
+            } else {
+                UpdateChecker.checkForUpdates(false, false);
+            }
             if (!Files.exists(DefaultContentManager.DEFAULT_CONTENT_FILE.toPath())) {
                 try {
                     ContentAdministrator.analyzeContents();
