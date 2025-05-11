@@ -1,15 +1,28 @@
 # Changelog
 
-## v5.0.0-beta2
+## v5.0.0
+
+### Important
+- **This release requires Java 21 it will not run with older java versions!**
+
+### Other
+- Fixed spelling mistakes
 
 ### Game compatibility
 - The descriptions in the game files what specific settings in them do are no longer removed when the game file is modified
+- Fixed compatibitily with NpcIps, the integraty of the game file is no longer shown as violated
+- Fixed compatibitily with NpcGames, the integraty of the game file is no longer shown as violated
+- Added recognition for these data fields (note that it is not possible to edit these fields with the gui):
+    - `NpcGames.txt` - `NOSPIN`
+    - `NpcIPs.txt` - `PL(ID), PLSTATIC, EX, MMO, F2P, NOSPIN` (fr #156)
 
 ### Bug fixes
 - Fixed NpcGames lists function not working properly
 - Fixed adding of genres failing when tool was restarted
 - When genres are added to the NpcGames list, ids are only added when the line does not already contain them
 - Add genre: fixed translations already added popup showing up even though translations where not added yet
+- Fixed NpcGame import failing if the NpcGame did not contain the fields `THEME`, `SUB_THEME`, `TARGET_GROUP` and `SEQUEL_NUMERATION`
+- Fixed potential memory leaks
 
 ## v5.0.0-beta1
 
