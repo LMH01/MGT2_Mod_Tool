@@ -1,7 +1,6 @@
 package com.github.lmh01.mgt2mt.content.instances;
 
 import com.github.lmh01.mgt2mt.content.managed.*;
-import com.github.lmh01.mgt2mt.content.manager.GameplayFeatureManager;
 import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.content.manager.ThemeManager;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;

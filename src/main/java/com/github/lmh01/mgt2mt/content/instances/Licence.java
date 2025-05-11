@@ -9,9 +9,7 @@ import com.github.lmh01.mgt2mt.content.manager.LicenceManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Licence extends AbstractSimpleContent implements DependentContent {
 

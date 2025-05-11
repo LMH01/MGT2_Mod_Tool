@@ -1,8 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.JButton;

@@ -9,7 +9,6 @@ import com.github.lmh01.mgt2mt.content.manager.PlatformManager;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

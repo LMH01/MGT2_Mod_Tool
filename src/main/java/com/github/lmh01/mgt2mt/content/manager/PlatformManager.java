@@ -2,7 +2,6 @@ package com.github.lmh01.mgt2mt.content.manager;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
 import com.github.lmh01.mgt2mt.content.instances.Platform;
-import com.github.lmh01.mgt2mt.content.instances.Publisher;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DataType;
