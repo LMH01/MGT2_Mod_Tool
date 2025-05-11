@@ -57,7 +57,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
                     Integer.parseInt(entry.replace("ST", ""));
                 } else if (entry.startsWith("T")) {
                     Integer.parseInt(entry.replace("T", ""));
-                } else if (!entry.equals("ROM") && !entry.equals("ARA")) {
+                } else if (!entry.equals("ROM") && !entry.equals("NOSPIN") && !entry.equals("ARA")) {
                     Integer.parseInt(entry);
                 }
             }
@@ -95,7 +95,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
                                 genreIds.add(GenreManager.INSTANCE.getContentIdByName(string));
                             }
                             Collections.sort(genreIds);
-                            NpcGame npcGame = new NpcGame(textFieldName.getText(), null, genreIds ,null, null, null, null);//TODO Add collection of remaining values
+                            NpcGame npcGame = new NpcGame(textFieldName.getText(), null, genreIds ,null, null, null, null, null);//TODO Add collection of remaining values
                             if (JOptionPane.showConfirmDialog(null, npcGame.getOptionPaneMessage(), I18n.INSTANCE.get("commonText.add.upperCase") + ": " + getType(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 addContent(npcGame);
                                 ContentAdministrator.modAdded(npcGame.name, getType());
@@ -123,6 +123,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
         Integer theme = null;
         Integer subTheme = null;
         TargetGroup tg = null;
+        Boolean noSpin = false;
         SequelNumeration sn = SequelNumeration.NONE;
         for (String entry : Utils.getEntriesFromString(data)) {
             if (entry.startsWith("TG")) {
@@ -135,20 +136,39 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
                 sn = SequelNumeration.ROM;
             } else if (entry.equals("ARA")) {
                 sn = SequelNumeration.ARA;
+            } else if (entry.equals("NOSPIN")) {
+                noSpin = true;
             } else {
                 genreIds.add(Integer.parseInt(entry));
             }
         }
-        return new NpcGame(name, getContentIdByName(name), genreIds, theme, subTheme, tg, sn);
+        return new NpcGame(name, getContentIdByName(name), genreIds, theme, subTheme, tg, sn, noSpin);
     }
 
     @Override
     public AbstractBaseContent constructContentFromImportMap(Map<String, Object> map, Path assetsFolder) throws ModProcessingException {
+        Integer themeId = null;
+        Integer subThemeId = null;
+        TargetGroup tg = null;
+        SequelNumeration sn = null;
+        if (map.containsKey("THEME")) {
+            themeId = SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, map.get("THEME").toString());
+        }
+        if (map.containsKey("SUB_THEME")) {
+            subThemeId = SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, map.get("SUB_THEME").toString());
+        }
+        if (map.containsKey("TARGET_GROUP")) {
+            tg = TargetGroup.getTargetGroup(map.get("TARGET_GROUP").toString());
+        }
+        if (map.containsKey("SEQUEL_NUMERATION")) {
+            sn = SequelNumeration.getSequelNumeration(map.get("SEQUEL_NUMERATION").toString());
+        }
         return new NpcGame((String) map.get("NAME EN"), null, SharingHelper.transformContentNamesToIds(GenreManager.INSTANCE, (String) map.get("GENRES")),
-            SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, map.get("THEME").toString()),
-            SharingHelper.getContentIdByNameFromImport(ThemeManager.INSTANCE, map.get("SUB_THEME").toString()),
-            TargetGroup.getTargetGroup(map.get("TARGET_GROUP").toString()),
-            SequelNumeration.getSequelNumeration(map.get("SEQUEL_NUMERATION").toString()));
+            themeId,
+            subThemeId,
+            tg,
+            sn,
+            SharingHelper.getBoolean(map.get("NOSPIN")));
     }
 
     @Override

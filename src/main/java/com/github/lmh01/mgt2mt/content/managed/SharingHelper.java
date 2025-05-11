@@ -62,4 +62,14 @@ public class SharingHelper {
         }
         return names;
     }
+
+    /**
+     * Tries to parse the input object to string and create a boolean from that. Returs its value.
+     */
+    public static Boolean getBoolean(Object object) {
+        if (object == null) {
+            return false;
+        }
+        return Boolean.valueOf(object.toString());
+    }
 }

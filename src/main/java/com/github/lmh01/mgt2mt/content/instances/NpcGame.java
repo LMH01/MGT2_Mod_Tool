@@ -23,14 +23,16 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
     final Integer subTheme;
     final TargetGroup targetGroup;
     final SequelNumeration sn;
+    final Boolean noSpin;
 
-    public NpcGame(String name, Integer id, ArrayList<Integer> genres, Integer themeId, Integer subThemeId, TargetGroup tg, SequelNumeration sn) {
+    public NpcGame(String name, Integer id, ArrayList<Integer> genres, Integer themeId, Integer subThemeId, TargetGroup tg, SequelNumeration sn, Boolean noSpin) {
         super(NpcGameManager.INSTANCE, name, id);
         this.genres = genres;
         this.theme = themeId;
         this.subTheme = subThemeId;
         this.targetGroup = tg;
         this.sn = sn;
+        this.noSpin = noSpin;
     }
 
     @Override
@@ -49,6 +51,9 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
         }
         if (sn != SequelNumeration.NONE) {
             map.put("SEQUEL_NUMERATION", sn.name());
+        }
+        if (noSpin != null) {
+            map.put("NOSPIN", "true");
         }
         return map;
     }
@@ -81,8 +86,12 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
     @Override
     public void changeExportMap(Map<String, String> map) throws ModProcessingException {
         map.replace("GENRES", SharingHelper.getExportNamesString(GenreManager.INSTANCE, genres));
-        map.replace("THEME", ThemeManager.INSTANCE.getContentNameById(this.theme));
-        map.replace("SUB_THEME", ThemeManager.INSTANCE.getContentNameById(this.subTheme));
+        if (map.containsKey("THEME")) {
+            map.replace("THEME", ThemeManager.INSTANCE.getContentNameById(this.theme));
+        }
+        if (map.containsKey("SUB_THEME")) {
+            map.replace("SUB_THEME", ThemeManager.INSTANCE.getContentNameById(this.subTheme));
+        }
     }
 
     @Override
@@ -100,6 +109,9 @@ public class NpcGame extends AbstractSimpleContent implements DependentContent {
         }
         if (this.sn !=null && this.sn != SequelNumeration.NONE) {
             sb.append("<").append(this.sn.name()).append(">");
+        }
+        if (this.noSpin !=null && this.noSpin) {
+            sb.append("<NOSPIN>");
         }
         return sb.toString();
     }

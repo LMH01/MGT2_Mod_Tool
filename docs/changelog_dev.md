@@ -10,6 +10,12 @@
 
 ### Game compatibility
 - Fixed compatibitily with NpcIps, the integraty of the game file is no longer shown as violated
+- Fixed compatibitily with NpcGames, the integraty of the game file is no longer shown as violated
+- Added recognition for these data fields (note that it is not possible to edit these fields with the gui):
+    - `NpcGames.txt` - `NOSPIN`
+
+### Bug fixes
+- Fixed NpcGame import failing if the NpcGame did not contain the fields `THEME`, `SUB_THEME`, `TARGET_GROUP` and `SEQUEL_NUMERATION`
 
 ## v4.10.0
 
