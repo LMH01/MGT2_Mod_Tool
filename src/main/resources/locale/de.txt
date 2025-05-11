@@ -490,7 +490,7 @@ mod.npcIp.addMod.optionPaneMessage.firstPart|Diese Npc IP hinzufügen?
 mod.npcIp.addMod.components.textFieldName.initialValue|GIB EINEN NAMEN FÜR DIE NPC IP EIN
 mod.npcIp.addMod.components.spinner.rating|Spiel Bewertung in %
 mod.npcIp.addMod.components.spinner.rating.toolTip|Gibt an, welche Bewertung alle Spiele dieser IP ungefähr erhalten sollen
-mod.npcIp.addMod.components.label.releaseYear|Erscheinungsjahr
+mod.npcIp.addMod.components.label.releaseYear|Frühestes Erscheinungsjahr
 mod.npcIp.addMod.components.button.mainGenre|Hauptgenre
 mod.npcIp.addMod.components.button.mainGenre.initial|Hauptgenre auswählen
 mod.npcIp.addMod.components.button.mainGenre.genreAlreadySelected|<html>Dieses Genre wurde bereits als Untergenre ausgewählt.<br>Wähle bitte ein anderes Genre aus.
