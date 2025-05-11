@@ -218,7 +218,10 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
                 if (addGenreID) {
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 100);
                     if (randomNum > (100 - chance)) {
-                        bw.write(currentLine + "<" + genreID + ">" + "\r\n");
+                        if (!currentLine.contains(new StringBuilder("<").append(genreID).append(">").toString())) {
+                            // only add genre id to the line when the id is not already contained in the line
+                            bw.write(currentLine + "<" + genreID + ">" + "\r\n");
+                        }
                     } else {
                         bw.write(currentLine + "\r\n");
                     }
