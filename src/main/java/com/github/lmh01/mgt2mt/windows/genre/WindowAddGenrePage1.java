@@ -63,11 +63,10 @@ public class WindowAddGenrePage1 extends JFrame {
         buttonAddNameTranslations.addActionListener(actionEvent -> {
             if (!nameTranslationsAdded) {
                 addNameTranslations();
-                nameTranslationsAdded = true;
             } else {
                 if (JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION) {
+                    nameTranslationsAdded = false;
                     addNameTranslations();
-                    nameTranslationsAdded = true;
                 }
             }
         });
@@ -75,11 +74,10 @@ public class WindowAddGenrePage1 extends JFrame {
         buttonAddDescriptionTranslations.addActionListener(actionEvent -> {
             if (!descriptionTranslationsAdded) {
                 addDescriptionTranslations();
-                descriptionTranslationsAdded = true;
             } else {
                 if (JOptionPane.showConfirmDialog(null, "<html>" + I18n.INSTANCE.get("commonText.translationsAlreadyAdded")) == JOptionPane.OK_OPTION) {
+                    descriptionTranslationsAdded = false;
                     addDescriptionTranslations();
-                    descriptionTranslationsAdded = true;
                 }
             }
         });
@@ -183,7 +181,9 @@ public class WindowAddGenrePage1 extends JFrame {
         }
         if (continueWithTranslations) {
             mapNameTranslations = TranslationManager.getTranslationsMap();
-            nameTranslationsAdded = true;
+            if (mapNameTranslations != null) {
+                nameTranslationsAdded = true;
+            }
         }
     }
 
@@ -205,6 +205,9 @@ public class WindowAddGenrePage1 extends JFrame {
         }
         if (continueWithTranslations) {
             mapDescriptionTranslations = TranslationManager.getTranslationsMap();
+            if (mapDescriptionTranslations != null) {
+                descriptionTranslationsAdded = true;
+            }
         }
     }
 }

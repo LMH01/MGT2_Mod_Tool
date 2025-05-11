@@ -110,6 +110,7 @@ public class TranslationManager {
     /**
      * @return A map containing the translations for each language.
      * Does not contain the translation of english.
+     * Returns null when translation process was canceled.
      */
     public static Map<String, String> getTranslationsMap() {
         Map<String, String> map = new HashMap<>();
@@ -127,7 +128,7 @@ public class TranslationManager {
                         textFieldTranslation.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("translationManager.canceled"));
-                        breakLoop = true;
+                        return null;
                     }
                 }
             }

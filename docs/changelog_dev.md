@@ -9,6 +9,7 @@
 - Fixed NpcGames lists function not working properly
 - Fixed adding of genres failing when tool was restarted
 - When genres are added to the NpcGames list, ids are only added when the line does not already contain them
+- Add genre: fixed translations already added popup showing up even though translations where not added yet
 
 ## v5.0.0-beta1
 
