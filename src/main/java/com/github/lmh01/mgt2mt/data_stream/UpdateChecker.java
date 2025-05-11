@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 
 public class UpdateChecker {
@@ -45,13 +46,13 @@ public class UpdateChecker {
                 java.net.URL url;
                 String versionType;
                 if (Settings.updateBranch.equals(UpdateBranch.RELEASE)) {
-                    url = new URL(RELEASE_UPDATE_URL);
+                    url = new URI(RELEASE_UPDATE_URL).toURL();
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver1") + " ";
                 } else if (Settings.updateBranch.equals(UpdateBranch.ALPHA)){
-                    url = new URL(ALPHA_UPDATE_URL);
+                    url = new URI(ALPHA_UPDATE_URL).toURL();
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver2") + " ";
                 } else {
-                    url = new URL(BETA_UPDATE_URL);
+                    url = new URI(BETA_UPDATE_URL).toURL();
                     versionType = I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.versionType.ver3") + " ";
                 }
                 Scanner scanner = new Scanner(url.openStream());
@@ -67,6 +68,7 @@ public class UpdateChecker {
                     LOGGER.info(currentLine);
                     stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
                 }
+                scanner.close();
                 newestVersionKeyFeatures = stringBuilder.toString();
                 if (!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)) {
                     if (!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)) {
@@ -75,7 +77,7 @@ public class UpdateChecker {
                         LOGGER.info("Key features:");
                         if (JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0) {
                             try {
-                                Desktop.getDesktop().browse(new URL(Utils.GITHUB_URL + "/releases/tag/v" + newestVersion).toURI());
+                                Desktop.getDesktop().browse(new URI(Utils.GITHUB_URL + "/releases/tag/v" + newestVersion));
                             } catch (Exception e) {
                                 Utils.showErrorMessage(2, e);
                                 e.printStackTrace();
@@ -89,7 +91,7 @@ public class UpdateChecker {
                         JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.noUpdateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.noUpdateAvailable.title"), JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
                 if (showNoUpdateAvailableDialog) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.updateFailed"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
@@ -112,7 +114,7 @@ public class UpdateChecker {
     public static void checkForVersionCompatibility() {
         Thread compatibilityCheck = new Thread(() -> {
             try {
-                Scanner scanner = new Scanner(new URL(COMPATIBILITY_CHECK_URL).openStream());
+                Scanner scanner = new Scanner(new URI(COMPATIBILITY_CHECK_URL).toURL().openStream());
                 String currentLine = scanner.nextLine();
                 StringBuilder stringBuilder = new StringBuilder();
                 if (currentLine.equals("true")) {
@@ -127,10 +129,11 @@ public class UpdateChecker {
                     LOGGER.info(currentLine);
                     stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
                 }
+                scanner.close();
                 if (!latestGameVersionCompatible && !Utils.isAlpha() && !Utils.isBeta() && !MadGamesTycoon2ModTool.VERSION.contains("dev")) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible") + "\n" + stringBuilder, I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (IOException e) {
+            } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
         });

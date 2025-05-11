@@ -22,7 +22,6 @@ import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -128,7 +127,7 @@ public class Utils {
      * @throws URISyntaxException If the URL is invalid
      */
     public static void openGithubPage() throws IOException, URISyntaxException {
-        Desktop.getDesktop().browse(new URL(GITHUB_URL).toURI());
+        Desktop.getDesktop().browse(new URI(GITHUB_URL));
     }
 
     /**
@@ -150,7 +149,7 @@ public class Utils {
      * @throws IOException If the page could not be opened
      */
     public static void openMoreModsPage() throws Exception {
-        Desktop.getDesktop().browse(new URL(MORE_MODS_URL).toURI());
+        Desktop.getDesktop().browse(new URI(MORE_MODS_URL));
     }
 
     /**

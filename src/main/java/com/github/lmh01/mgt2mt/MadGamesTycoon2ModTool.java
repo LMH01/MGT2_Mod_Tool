@@ -31,10 +31,10 @@ public class MadGamesTycoon2ModTool {
     public static void main(String[] args) {
         Settings.importSettings();
         if (Settings.language.equals("English")) {
-            Locale locale = new Locale("en", "US");//Sets the language to english
+            Locale locale = new Locale.Builder().setLanguage("en").setRegion("US").build();//Sets the language to english
             JOptionPane.setDefaultLocale(locale);
         } else if (Settings.language.equals("Deutsch")) {
-            Locale locale = new Locale("de", "DE");//Sets the language to english
+            Locale locale = new Locale.Builder().setLanguage("de").setRegion("DE").build();//Sets the language to english
             JOptionPane.setDefaultLocale(locale);
         }
         LogFile.startLogging();
