@@ -7,7 +7,6 @@ bin/
 .project
 build
 .gradle
-gradle/
 $HOME
 bin
 
