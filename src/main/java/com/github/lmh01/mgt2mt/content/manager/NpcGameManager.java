@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -204,11 +205,14 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
      */
     public void editNPCGames(int genreID, boolean addGenreID, int chance) throws ModProcessingException {
         try {
-            File fileNpcGamesTemp = MGT2Paths.TEXT_DATA.getPath().resolve("NpcGames.txt.temp").toFile();
-            Files.createFile(fileNpcGamesTemp.toPath());
+            Path fileNpcGamesTemp = MGT2Paths.TEXT_DATA.getPath().resolve("NpcGames.txt.temp");
+            if (Files.exists(fileNpcGamesTemp, LinkOption.NOFOLLOW_LINKS)) {
+                Files.delete(fileNpcGamesTemp);
+            }
+            Files.createFile(fileNpcGamesTemp);
             Backup.createBackup(NpcGameManager.INSTANCE.getGameFile());
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(NpcGameManager.INSTANCE.getGameFile()), StandardCharsets.UTF_16LE));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileNpcGamesTemp), StandardCharsets.UTF_16LE));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(NpcGameManager.INSTANCE.getGameFile()), StandardCharsets.UTF_8));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileNpcGamesTemp.toFile()), StandardCharsets.UTF_8));
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 if (addGenreID) {
@@ -225,7 +229,7 @@ public class NpcGameManager extends AbstractSimpleContentManager implements Depe
             br.close();
             bw.close();
             Files.delete(NpcGameManager.INSTANCE.getGameFile().toPath());
-            Files.move(fileNpcGamesTemp.toPath(), NpcGameManager.INSTANCE.getGameFile().toPath());
+            Files.move(fileNpcGamesTemp, NpcGameManager.INSTANCE.getGameFile().toPath());
         } catch (IOException e) {
             throw new ModProcessingException("Something went wrong while editing npcGames.txt file", e);
         }
