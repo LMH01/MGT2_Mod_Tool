@@ -17,6 +17,7 @@
 
 ### Bug fixes
 - Fixed NpcGame import failing if the NpcGame did not contain the fields `THEME`, `SUB_THEME`, `TARGET_GROUP` and `SEQUEL_NUMERATION`
+- Fixed potential memory leak
 
 ## v4.10.0
 

@@ -641,10 +641,8 @@ public class PlatformManager extends AbstractAdvancedContentManager implements D
                                     requiredGameplayFeatures.add(59);
                                 }
                             } else {
-                                int currentNeededGameplayFeatureNumber = 1;
                                 for (String string : listAvailableGameplayFeatures.getSelectedValuesList()) {
                                     requiredGameplayFeatures.add(GameplayFeatureManager.INSTANCE.getContentIdByName(string));
-                                    currentNeededGameplayFeatureNumber++;
                                 }
                             }
 

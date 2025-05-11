@@ -10,6 +10,7 @@ import com.github.lmh01.mgt2mt.util.manager.SharingManager;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -37,7 +38,7 @@ public class ImportFromURLHelper {
                 } else {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("textArea.importAll.noTomlFilesFound"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (IOException e) {
+            } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
                 String errorMessageToDisplay;
                 if (e.getMessage().equals("www.dropbox.com")) {

@@ -50,7 +50,6 @@ public enum DevLegendType implements TypeEnum {
      */
     public static DevLegendType getTypeByIdentifier(String identifier) throws IllegalArgumentException {
         for (DevLegendType dlp : DevLegendType.values()) {
-            String s = dlp.tagId.toString();
             if (dlp.tagId.toString().equals(identifier)) {
                 return dlp;
             }

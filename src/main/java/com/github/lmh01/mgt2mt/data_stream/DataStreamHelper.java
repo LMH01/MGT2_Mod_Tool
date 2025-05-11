@@ -10,7 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.channels.Channels;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -31,13 +32,13 @@ public class DataStreamHelper {
      * @param destination The destination where the file should be downloaded to.
      * @throws IOException If the file cannot be downloaded or files can not be opened.
      */
-    public static void downloadFile(String URL, File destination) throws IOException {
+    public static void downloadFile(String URL, File destination) throws IOException, URISyntaxException {
         if (Files.exists(destination.toPath())) {
             Files.delete(destination.toPath());
         }
         Files.createDirectories(destination.toPath().getParent());
 
-        BufferedInputStream in = new BufferedInputStream(new URL(URL).openStream());
+        BufferedInputStream in = new BufferedInputStream(new URI(URL).toURL().openStream());
         FileOutputStream fileOutputStream = new FileOutputStream(destination);
         byte[] dataBuffer = new byte[1024];
         int bytesRead;
@@ -52,18 +53,21 @@ public class DataStreamHelper {
      * Downloads the specified zip file to the destination.
      * Prints message to text area.
      *
-     * @param URL         The URL of the file to be downloaded.
+     * @param URI         The URL of the file to be downloaded.
      * @param destination The destination where the file should be downloaded to.
      * @throws IOException If the file cannot be downloaded or files can not be opened.
+     * @throws URISyntaxException URI could not be parsed as URL.
      */
-    public static void downloadZip(String URL, Path destination) throws IOException {
+    public static void downloadZip(String URI, Path destination) throws IOException, URISyntaxException {
         if (Files.exists(destination)) {
             Files.delete(destination);
         }
         Files.createDirectories(destination.getParent());
-        new FileOutputStream(destination.toFile()).getChannel().transferFrom(Channels.newChannel(new URL(URL).openStream()), 0, Long.MAX_VALUE);
-        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.downloadZip.downloadSuccess") + " " + URL + " -> " + destination);
-        LOGGER.info("The zip file from " + URL + " has been successfully downloaded to " + destination);
+        FileOutputStream fs = new FileOutputStream(destination.toFile());
+        fs.getChannel().transferFrom(Channels.newChannel(new URI(URI).toURL().openStream()), 0, Long.MAX_VALUE);
+        fs.close();
+        TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.downloadZip.downloadSuccess") + " " + URI + " -> " + destination);
+        LOGGER.info("The zip file from " + URI + " has been successfully downloaded to " + destination);
     }
 
     /**
@@ -249,12 +253,14 @@ public class DataStreamHelper {
             TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.unzip.unzippedFile") + " " + newFile.getPath());
             if (zipEntry.isDirectory()) {
                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
+                    zis.close();
                     throw new IOException(I18n.INSTANCE.get("dialog.dataStreamHelper.newFile.failedToCreateDirectory") + " " + newFile);
                 }
             } else {
                 // fix for Windows-created archives
                 File parent = newFile.getParentFile();
                 if (!parent.isDirectory() && !parent.mkdirs()) {
+                    zis.close();
                     throw new IOException(I18n.INSTANCE.get("dialog.dataStreamHelper.newFile.failedToCreateDirectory") + " " + parent);
                 }
 
@@ -412,9 +418,11 @@ public class DataStreamHelper {
         DirectoryStream<Path> stream = Files.newDirectoryStream(folder);
         for (Path file : stream) {
             if (file.getFileName().toString().equalsIgnoreCase(name)) {
+                stream.close();
                 return file;
             }
         }
+        stream.close();
         return null;
     }
 
