@@ -7,6 +7,7 @@
 
 ### Bug fixes
 - Fixed NpcGames lists function not working properly
+- Fixed adding of genres failing when tool was restarted
 - When genres are added to the NpcGames list, ids are only added when the line does not already contain them
 
 ## v5.0.0-beta1
