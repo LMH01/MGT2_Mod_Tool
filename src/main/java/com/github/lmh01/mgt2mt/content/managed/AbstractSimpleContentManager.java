@@ -16,6 +16,9 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
     final Logger LOGGER = LoggerFactory.getLogger(AbstractSimpleContentManager.class);
 
     public Map<Integer, String> fileContent;
+    // Contains the documentation on what the contents of the game file mean
+    // thas is written in the games files before the actual content starts.
+    private List<String> fileDocumentationContent;
     private Map<String, Integer> contentIdsByNames;
 
     public AbstractSimpleContentManager(String mainTranslationKey, String id, File gameFile, Charset gameFileCharset) {
@@ -65,6 +68,12 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
             if (charset.equals(StandardCharsets.UTF_8)) {
                 bw.write("\ufeff");
             }
+
+            for (String s : this.fileDocumentationContent) {
+                bw.write(s);
+                bw.write("\r\n");
+            }
+
             boolean firstLine = true;
             for (int i = 0; i < fileContent.size(); i++) {
                 if (action.equals(ContentAction.ADD_MOD)) {
@@ -123,6 +132,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
     @Override
     public void analyzeFile() throws ModProcessingException {
         try {
+            fileDocumentationContent = DataStreamHelper.extractDocumentationContent(this.gameFile.toPath(), getCharset());
             fileContent = DataStreamHelper.getContentFromFile(gameFile, getCharset());
             setMaxId(fileContent.size() - 1);
             Map<String, Integer> contentIdsByName = new HashMap<>();
@@ -133,6 +143,11 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze game file for mod " + getType(), e);
         }
+    }
+
+    @Override
+    public String[] getDocumentationContent() {
+        return fileDocumentationContent.toArray(new String[0]);
     }
 
     @Override

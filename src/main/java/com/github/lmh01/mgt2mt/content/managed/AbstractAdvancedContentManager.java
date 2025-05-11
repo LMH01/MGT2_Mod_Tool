@@ -21,6 +21,9 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     final Logger LOGGER = LoggerFactory.getLogger(AbstractAdvancedContentManager.class);
 
     public List<Map<String, String>> fileContent;
+    // Contains the documentation on what the contents of the game file mean
+    // thas is written in the games files before the actual content starts.
+    private List<String> fileDocumentationContent;
     private Map<String, Integer> contentIdsByNames;
     private Map<Integer, String> contentNamesByIds;
 
@@ -178,6 +181,15 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                 if (charset.equals(StandardCharsets.UTF_8)) {
                     bw.write("\ufeff");
                 }
+                for (String s : this.fileDocumentationContent) {
+                    bw.write(s);
+                    bw.write("\r\n");
+                }
+                // add extra empty line to delimit documentation from actual content (because this is what the original game files do)
+                // only do so, if at least one documentation line was written
+                if (!this.fileDocumentationContent.isEmpty()) {
+                    bw.write("\r\n");
+                }
                 for (Map<String, String> fileContent : fileContent) {
                     printValues(fileContent, bw);
                     bw.write("\r\n");
@@ -208,6 +220,12 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                 if (charset.equals(StandardCharsets.UTF_8)) {
                     bw.write("\ufeff");
                 }
+                for (String s : this.fileDocumentationContent) {
+                    bw.write(s);
+                    bw.write("\r\n");
+                }
+                // add extra empty line to delimit documentation from actual content (because this is what the original game files do)
+                bw.write("\r\n");
                 for (Map<String, String> fileContent : fileContent) {
                     if (!idsToRemove.contains(Integer.parseInt(fileContent.get("ID")))) {
                         printValues(fileContent, bw);
@@ -240,6 +258,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         contentNamesByIds = new HashMap<>();
         contentIdsByNames = new HashMap<>();
         try {
+            fileDocumentationContent = DataStreamHelper.extractDocumentationContent(this.gameFile.toPath(), getCharset());
             fileContent = DataStreamHelper.parseDataFile(gameFile);
             int currentMaxId = 0;
             for (Map<String, String> map : fileContent) {
@@ -262,6 +281,11 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze game file for mod " + getType(), e);
         }
+    }
+
+    @Override
+    public String[] getDocumentationContent() {
+        return fileDocumentationContent.toArray(new String[0]);
     }
 
     @Override

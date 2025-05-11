@@ -2,6 +2,9 @@
 
 ## v5.0.0-beta2
 
+### Game compatibility
+- The descriptions in the game files what specific settings in them do are no longer removed when the game file is modified
+
 ### Bug fixes
 - Fixed NpcGames lists function not working properly
 - When genres are added to the NpcGames list, ids are only added when the line does not already contain them

@@ -134,6 +134,11 @@ public interface BaseContentManager {
     String[] getDefaultContent();
 
     /**
+     * @return All content of the files documentation (meaning all lines that start with // and empfy lines in the game files before tha actuall content starts).
+     */
+    String[] getDocumentationContent();
+
+    /**
      * @return The custom content for this content type represented as string array
      */
     String[] getCustomContentString() throws ModProcessingException;

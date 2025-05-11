@@ -426,4 +426,31 @@ public class DataStreamHelper {
         return null;
     }
 
+    /**
+     * @param gameFilePath The path to the file.
+     * @return Returns all lines in the file that start with // until an empty line is found or a file is found that does not start with //.
+     */
+    public static List<String> extractDocumentationContent(Path gameFilePath, Charset charSet) throws IOException { 
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(gameFilePath.toFile()), charSet));
+        String currentLine;
+        List<String> documentationContent = new ArrayList<>();
+        Boolean firstLine = true;
+        while ((currentLine = br.readLine()) != null) {
+            if (firstLine) {
+                if (charSet == StandardCharsets.UTF_8) {
+                    currentLine = Utils.removeUTF8BOM(currentLine);
+                };
+                firstLine = false;
+            }
+            if (currentLine.startsWith("//")) {
+                documentationContent.add(currentLine);
+            } else {
+                // all relevant lines are collected
+                break;
+            }
+        }
+        br.close();
+        return documentationContent;
+    }
+
 }
