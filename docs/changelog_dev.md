@@ -5,6 +5,9 @@
 ### Important
 - **This release requires Java 21 it will not run with older java versions!**
 
+### Other
+- Fixed spelling mistakes
+
 ## v4.10.0
 
 ### Important
