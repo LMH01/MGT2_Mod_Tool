@@ -23,21 +23,27 @@ configurations {
     integrationTestRuntime.extendsFrom testRuntime
 }
 
-dependencies {
-    implementation 'org.slf4j:slf4j-simple:1.7.36'
-    implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
-    implementation 'org.jetbrains:annotations:23.0.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    integrationTestCompile group: 'junit', name: 'junit', version: '4.13.2'
-    integrationTestCompile 'org.slf4j:slf4j-api:1.7.36'
-    integrationTestCompile 'org.slf4j:slf4j-simple:1.7.36'
-    integrationTestCompile 'com.moandjiezana.toml:toml4j:0.7.2'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+dependencies {
+    implementation 'org.slf4j:slf4j-simple:_'
+    implementation 'org.slf4j:slf4j-api:_'
+    implementation 'com.moandjiezana.toml:toml4j:_'
+    implementation 'org.jetbrains:annotations:_'
+    integrationTestCompile group: 'junit', name: 'junit', version: '4.13.2'
+    integrationTestCompile 'org.slf4j:slf4j-api:_'
+    integrationTestCompile 'org.slf4j:slf4j-simple:_'
+    integrationTestCompile 'com.moandjiezana.toml:toml4j:_'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+sourceCompatibility = 1.21
+targetCompatibility = 1.21
 project.version = "4.10.0" //remember to change version in main class
 archivesBaseName = "MGT2_Mod_Tool"
 
@@ -51,6 +57,8 @@ jar {
     }
 
     archiveVersion = ""
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
