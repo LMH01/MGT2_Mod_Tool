@@ -6,7 +6,6 @@ import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.MGT2Paths;
-import com.github.lmh01.mgt2mt.util.ModManagerPaths;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.WindowHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
@@ -17,7 +16,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -375,7 +373,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     public static void editGenreAllocationAdvanced(int genreID, boolean addGenreID, ArrayList<Integer> themeIds, boolean removeIdFromWholeFile) throws ModProcessingException {
         ThemeManager.INSTANCE.analyzeFile();
         try {
-            File file = MGT2Paths.TEXT.getPath().resolve("GE/Themes_GE.txt").toFile();
+            File file = MGT2Paths.TEXT.getPath().resolve("EN/Themes_EN.txt").toFile();
             Map<Integer, String> mapGer = DataStreamHelper.getContentFromFile(file, StandardCharsets.UTF_16LE);
             if (Files.exists(file.toPath())) {
                 Files.delete(file.toPath());
