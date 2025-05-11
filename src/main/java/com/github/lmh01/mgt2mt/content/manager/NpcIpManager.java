@@ -151,7 +151,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                     subTheme = ThemeManager.INSTANCE.getContentIdByName(listSubTheme.getSelectedValue());
                 }
                 analyzeFile();
-                NpcIp npcIp = new NpcIp(textFieldName.getText(), null, mainGenre, subGenre, mainTheme, subTheme, TargetGroup.getTargetGroup((String) comboBoxTargetGroup.getSelectedItem()), publisher, Integer.parseInt(spinnerReleaseYear.getValue().toString()), Integer.parseInt(spinnerRating.getValue().toString()), null);
+                NpcIp npcIp = new NpcIp(textFieldName.getText(), null, mainGenre, subGenre, mainTheme, subTheme, TargetGroup.getTargetGroup((String) comboBoxTargetGroup.getSelectedItem()), publisher, Integer.parseInt(spinnerReleaseYear.getValue().toString()), Integer.parseInt(spinnerRating.getValue().toString()), null, null, null, null, null, null, null);
                 if (JOptionPane.showConfirmDialog(null, npcIp.getOptionPaneMessage(), I18n.INSTANCE.get("frame.title.isThisCorrect"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     addContent(npcIp);
                     ContentAdministrator.modAdded(textFieldName.getText(), I18n.INSTANCE.get("commonText.npcIp.upperCase"));
@@ -176,8 +176,14 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         Integer rating = null;
         TargetGroup targetGroup = null;
         SequelNumeration sn = null;
+        Integer platformId = null;
+        Boolean staticPlatform = null;
+        Boolean exclusiveGame = null;
+        Boolean mmo = null;
+        Boolean f2p = null;
+        Boolean nospin = null;
         for (String d : data) {
-            if (d.startsWith("P") && !d.equals("PLSTATIC")) {
+            if (d.startsWith("P") && !d.equals("PLSTATIC") && !d.startsWith("PL")) {
                 publisher = Integer.parseInt(d.replaceAll("[^0-9]", ""));
             } else if (d.startsWith("G")) {
                 genre = Integer.parseInt(d.replaceAll("[^0-9]", ""));
@@ -202,12 +208,24 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
                 sn = SequelNumeration.ROM;
             } else if (d.equals("ARA")) {
                 sn = SequelNumeration.ARA;
+            } else if (d.startsWith("PL") && !d.equals("PLSTATIC")) {
+                platformId = Integer.parseInt(d.replaceAll("[^0-9]", ""));
+            } else if (d.equals("PLSTATIC")) {
+                staticPlatform = true;
+            } else if (d.equals("EX")) {
+                exclusiveGame = true;
+            } else if (d.equals("MMO")) {
+                mmo = true;
+            } else if (d.equals("F2P")) {
+                f2p = true;
+            } else if (d.equals("NOSPIN")) {
+                nospin = true;
             }
         }
         if (genre == null || theme == null || publisher == null || releaseYear == null || rating == null) {
             throw new ModProcessingException("Unable to construct content named " + name + ". Reason: missing data.");
         }
-        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating, sn);
+        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating, sn, platformId, staticPlatform, exclusiveGame, mmo, f2p, nospin);
     }
 
     @Override
@@ -231,7 +249,31 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         if (map.containsKey("SEQUEL_NUMERATION")) {
             sn = SequelNumeration.getSequelNumeration(map.get("SEQUEL_NUMERATION").toString());
         }
-        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating, sn);
+        Integer platformId = null;
+        Boolean staticPlatform = null;
+        Boolean exclusiveGame = null;
+        Boolean mmo = null;
+        Boolean f2p = null;
+        Boolean nospin = null;
+        if (map.containsKey("platform_id")) {
+            platformId = Integer.parseInt(map.get("platform_id").toString());
+        }
+        if (map.containsKey("static_platform")) {
+            staticPlatform = SharingHelper.getBoolean(map.get("static_platform"));
+        }
+        if (map.containsKey("exclusive_game")) {
+            exclusiveGame = SharingHelper.getBoolean(map.get("exclusive_game"));
+        }
+        if (map.containsKey("mmo")) {
+            mmo = SharingHelper.getBoolean(map.get("mmo"));
+        }
+        if (map.containsKey("f2p")) {
+            f2p = SharingHelper.getBoolean(map.get("f2p"));
+        }
+        if (map.containsKey("nospin")) {
+            nospin = SharingHelper.getBoolean(map.get("nospin"));
+        }
+        return new NpcIp(name, null, genre, subGenre, theme, subTheme, targetGroup, publisher, releaseYear, rating, sn, platformId, staticPlatform, exclusiveGame, mmo, f2p, nospin);
     }
 
     @Override
