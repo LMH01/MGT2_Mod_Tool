@@ -8,6 +8,9 @@
 ### Other
 - Fixed spelling mistakes
 
+### Game compatibility
+- Fixed compatibitily with NpcIps, the integraty of the game file is no longer shown as violated
+
 ## v4.10.0
 
 ### Important

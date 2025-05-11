@@ -177,7 +177,7 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
         TargetGroup targetGroup = null;
         SequelNumeration sn = null;
         for (String d : data) {
-            if (d.startsWith("P")) {
+            if (d.startsWith("P") && !d.equals("PLSTATIC")) {
                 publisher = Integer.parseInt(d.replaceAll("[^0-9]", ""));
             } else if (d.startsWith("G")) {
                 genre = Integer.parseInt(d.replaceAll("[^0-9]", ""));
