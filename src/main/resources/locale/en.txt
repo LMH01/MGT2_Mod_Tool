@@ -1141,6 +1141,7 @@ verifyContentIntegrity.licenceInvalid.yearNotNumber|The integrity of game file L
 verifyContentIntegrity.npcGameInvalid.formatInvalid|The integrity of game file NpcGames.txt is invalid. Reason: The npc game named %s contains at least one invalid entry: %s.
 
 verifyContentIntegrity.npcIpInvalid.formatInvalid|The integrity of game file NpcIps.txt is invalid. Reason: NpcIP %s is missing one of the tags P, G, T, Y or TG.
+verifyContentIntegrity.npcIpInvalid.MMOAndF2P|The integrity of game file NpcIps.txt is invalid. Reason: NpcIP %s has booth F2P and MMO tags set. 
 verifyContentIntegrity.npcIpInvalid.invalidNumber|The integrity of game file NpcIps.txt is invalid. Reason: For the NpcIP %s one of the tags is not a number: %s.
 verifyContentIntegrity.npcIpInvalid.unknownError|The integrity of game file NpcIps.txt is invalid. Reason: An unknown error occurred during parsing: %s.
 

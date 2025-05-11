@@ -1142,9 +1142,10 @@ verifyContentIntegrity.licenceInvalid.yearNotNumber|Die Integrität der Spieldat
 
 verifyContentIntegrity.npcGameInvalid.formatInvalid|Die Integrität der Spieldatei NpcGames.txt ist ungültig. Grund: Das Npc-Spiel namens %s enthält ungültige einträge: %s.
 
-verifyContentIntegrity.npcIpInvalid.formatInvalid|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Bei der NpcIP %s fehlt einer der Tags P, G, T, Y oder TG.
-verifyContentIntegrity.npcIpInvalid.invalidNumber|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Bei der NpcIP %s ist einer der Tags keine Nummer: %s.
-verifyContentIntegrity.npcIpInvalid.unknownError|Die Integrität der Spieldatei NpcIps.txt ist ungültig. Grund: Ein unbekannter Fehler ist beim Analysieren aufgetreten: %s.
+verifyContentIntegrity.npcIpInvalid.formatInvalid|Die Integrität der Spieldatei NpcIPs.txt ist ungültig. Grund: Bei der NpcIP %s fehlt einer der Tags P, G, T, Y oder TG.
+verifyContentIntegrity.npcIpInvalid.MMOAndF2P|Die Integrität der Spieldatei NpcIPs.txt ist ungültig. Grund: Tags MMO und F2P sind beide gesetzt.
+verifyContentIntegrity.npcIpInvalid.invalidNumber|Die Integrität der Spieldatei NpcIPs.txt ist ungültig. Grund: Bei der NpcIP %s ist einer der Tags keine Nummer: %s.
+verifyContentIntegrity.npcIpInvalid.unknownError|Die Integrität der Spieldatei NpcIPs.txt ist ungültig. Grund: Ein unbekannter Fehler ist beim Analysieren aufgetreten: %s.
 
 verifyContentIntegrity.devLegendInvalid.tagMissing|Die Integrität der Spieldatei DevLegends.txt ist ungültig. Grund: Die Entwicker-Legende namens %s enthält keinen typ-Tag.
 verifyContentIntegrity.devLegendInvalid.tooManyTags|Die Integrität der Spieldatei DevLegends.txt ist ungültig. Grund: Die Entwicker-Legende namens %s enthält mehr als einen typ-Tag.

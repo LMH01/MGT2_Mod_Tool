@@ -38,7 +38,10 @@ public class NpcIpManager extends AbstractSimpleContentManager implements Depend
     protected String isLineValid(String line) {
         if (line.contains("P") && line.contains("G") && line.contains("T") && line.contains("Y") && line.contains("TG")) {
             try {
-                constructContentFromName(getReplacedLine(line));
+                NpcIp content = (NpcIp) constructContentFromName(getReplacedLine(line));
+                if (content.mmo != null && content.mmo && content.f2p != null && content.f2p) {
+                    return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcIpInvalid.MMOAndF2P"), getReplacedLine(line));
+                }
             } catch (ModProcessingException | NumberFormatException | NullPointerException e) {
                 if (e instanceof NumberFormatException) {
                     return String.format(I18n.INSTANCE.get("verifyContentIntegrity.npcIpInvalid.invalidNumber"), line, e.getMessage());
