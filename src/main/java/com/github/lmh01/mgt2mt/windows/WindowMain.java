@@ -260,7 +260,7 @@ public class WindowMain {
                 }
                 if (GenreManager.INSTANCE.getCustomContentString().length > 0) {
                     M_22_NPC_GAMES_LIST.setEnabled(true);
-                    M_22_NPC_GAMES_LIST.setToolTipText("");
+                    M_22_NPC_GAMES_LIST.setToolTipText(null);
                 } else {
                     M_22_NPC_GAMES_LIST.setEnabled(false);
                     M_22_NPC_GAMES_LIST.setToolTipText(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod.toolTip"), GenreManager.INSTANCE.getType()));
@@ -284,7 +284,7 @@ public class WindowMain {
                 if (noModRestorePointSet) {
                     M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(I18n.INSTANCE.get("window.main.backup.modRestorePoint.restoreModRestorePoint.notAvailableToolTip"));
                 } else {
-                    M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText("");
+                    M_432_RESTORE_MOD_RESTORE_POINT.setToolTipText(null);
                 }
                 if (Settings.enableDisclaimerMessage) {
                     M_21_IMPORT.setEnabled(false);
@@ -303,12 +303,12 @@ public class WindowMain {
                     M_21_IMPORT.setEnabled(true);
                     for (JMenu menu : MOD_MENUS) {
                         menu.setEnabled(true);
-                        menu.setToolTipText("");
+                        menu.setToolTipText(null);
                     }
                     M_23_ADD_COMPANY_ICON.setEnabled(true);
                     M_233_CHANGE_GENRE_THEME_FIT.setEnabled(true);
-                    M_21_IMPORT.setToolTipText("");
-                    M_23_ADD_COMPANY_ICON.setToolTipText("");
+                    M_21_IMPORT.setToolTipText(null);
+                    M_23_ADD_COMPANY_ICON.setToolTipText(null);
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit.toolTip"));
                 }
             } catch (IndexOutOfBoundsException | ModProcessingException e) {
@@ -341,11 +341,11 @@ public class WindowMain {
             M_4_BACKUP.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
             M_5_UTIL.setToolTipText(I18n.INSTANCE.get("window.main.lockMenuItems"));
         } else {
-            M_1_FILE.setToolTipText("");
-            M_2_MODS.setToolTipText("");
-            M_3_SHARE.setToolTipText("");
-            M_4_BACKUP.setToolTipText("");
-            M_5_UTIL.setToolTipText("");
+            M_1_FILE.setToolTipText(null);
+            M_2_MODS.setToolTipText(null);
+            M_3_SHARE.setToolTipText(null);
+            M_4_BACKUP.setToolTipText(null);
+            M_5_UTIL.setToolTipText(null);
         }
     }
 
@@ -362,12 +362,12 @@ public class WindowMain {
         M_4_BACKUP.setEnabled(folderAvailable);
         M_5_UTIL.setEnabled(folderAvailable);
         if (folderAvailable) {
-            M_12_UPDATE_CHECK.setToolTipText("");
-            M_13_UNINSTALL.setToolTipText("");
-            M_2_MODS.setToolTipText("");
-            M_3_SHARE.setToolTipText("");
-            M_4_BACKUP.setToolTipText("");
-            M_5_UTIL.setToolTipText("");
+            M_12_UPDATE_CHECK.setToolTipText(null);
+            M_13_UNINSTALL.setToolTipText(null);
+            M_2_MODS.setToolTipText(null);
+            M_3_SHARE.setToolTipText(null);
+            M_4_BACKUP.setToolTipText(null);
+            M_5_UTIL.setToolTipText(null);
         } else {
             M_12_UPDATE_CHECK.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));
             M_13_UNINSTALL.setToolTipText(I18n.INSTANCE.get("window.main.mgt2FolderNotFound.toolTip"));

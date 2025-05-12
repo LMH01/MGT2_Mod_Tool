@@ -259,7 +259,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
             if (menuItem.getText().replace("R", "r").replace("A", "a").contains(I18n.INSTANCE.get("commonText.remove"))) {
                 if (customContentString.length > 0 || Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
                     menuItem.setEnabled(true);
-                    menuItem.setToolTipText("");
+                    menuItem.setToolTipText(null);
                 } else {
                     menuItem.setEnabled(false);
                     menuItem.setToolTipText(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod.toolTip"), getType()));
@@ -268,7 +268,7 @@ public abstract class AbstractBaseContentManager implements BaseContentManager {
         }
         if (customContentString.length > 0 || Settings.safetyFeatures.get(SafetyFeature.INCLUDE_ORIGINAL_CONTENTS_IN_LISTS)) {
             getExportMenuItem().setEnabled(true);
-            getExportMenuItem().setToolTipText("");
+            getExportMenuItem().setToolTipText(null);
         } else {
             getExportMenuItem().setEnabled(false);
             getExportMenuItem().setToolTipText(String.format(I18n.INSTANCE.get("modManager.windowMain.modButton.removeMod.toolTip"), getType()));

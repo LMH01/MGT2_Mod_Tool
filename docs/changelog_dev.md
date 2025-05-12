@@ -23,6 +23,7 @@
 - Add genre: fixed translations already added popup showing up even though translations where not added yet
 - Fixed NpcGame import failing if the NpcGame did not contain the fields `THEME`, `SUB_THEME`, `TARGET_GROUP` and `SEQUEL_NUMERATION`
 - Fixed potential memory leaks
+- Fixed empty tooltip texts shown in UI
 
 ## v5.0.0-beta1
 
