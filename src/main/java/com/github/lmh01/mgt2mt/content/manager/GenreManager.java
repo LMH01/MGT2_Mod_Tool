@@ -358,11 +358,14 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
      * @throws ModProcessingException When something went wrong while adding the genre
      */
     public void addGenre(Genre genre, boolean showMessages) throws ModProcessingException {
-        TextAreaHelper.appendDebug(String.format("Map of new genre: %s", Arrays.toString(genre.getMap().entrySet().toArray())));
-        TextAreaHelper.appendDebug(String.format("New genre compatible themes: %s", Arrays.toString(genre.compatibleThemes.toArray())));
-        TextAreaHelper.appendDebug(String.format("New genre compatible genres: %s", Arrays.toString(genre.compatibleGenres.toArray())));
-        TextAreaHelper.appendDebug(String.format("New genre bad gameplay features: %s", Arrays.toString(genre.badGameplayFeatures.toArray())));
-        TextAreaHelper.appendDebug(String.format("New genre good gameplay features: %s", Arrays.toString(genre.goodGameplayFeatures.toArray())));
+        if (LOGGER.isDebugEnabled()) {
+            TextAreaHelper.appendDebug(String.format("The following warning 'The id for mod %s of type Genre has not been set' can be ignored", genre.name));
+            TextAreaHelper.appendDebug(String.format("Map of new genre: %s", Arrays.toString(genre.getMap().entrySet().toArray())));
+            TextAreaHelper.appendDebug(String.format("New genre compatible themes: %s", Arrays.toString(genre.compatibleThemes.toArray())));
+            TextAreaHelper.appendDebug(String.format("New genre compatible genres: %s", Arrays.toString(genre.compatibleGenres.toArray())));
+            TextAreaHelper.appendDebug(String.format("New genre bad gameplay features: %s", Arrays.toString(genre.badGameplayFeatures.toArray())));
+            TextAreaHelper.appendDebug(String.format("New genre good gameplay features: %s", Arrays.toString(genre.goodGameplayFeatures.toArray())));
+        }
         ImageIcon resizedImageIcon = Utils.getSmallerImageIcon(new ImageIcon(genre.icon.extern.getPath()));
         JLabel labelFirstPart = new JLabel("<html>" + I18n.INSTANCE.get("dialog.genreManager.addGenre.mainBody.genreIsReady") + "<br><br>" +
                 I18n.INSTANCE.get("commonText.name") + ": " + genre.name + "<br>" +
