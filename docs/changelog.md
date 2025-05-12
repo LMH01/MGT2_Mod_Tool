@@ -3,7 +3,7 @@
 ## [v5.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.0.0) (Latest Version)
 
 ### Important
-- **This release requires Java 21 it will not run with older java versions!**
+- **(Breaking) This release requires Java 21 it will not run with older java versions!**
 
 ### Other
 - Fixed spelling mistakes

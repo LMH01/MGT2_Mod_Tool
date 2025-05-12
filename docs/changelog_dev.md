@@ -3,7 +3,7 @@
 ## v5.0.0
 
 ### Important
-- **This release requires Java 21 it will not run with older java versions!**
+- **(Breaking) This release requires Java 21 it will not run with older java versions!**
 
 ### Other
 - Fixed spelling mistakes
@@ -29,7 +29,7 @@
 ## v5.0.0-beta1
 
 ### Important
-- **This release requires Java 21 it will not run with older java versions!**
+- **(Breaking) This release requires Java 21 it will not run with older java versions!**
 
 ### Other
 - Fixed spelling mistakes
