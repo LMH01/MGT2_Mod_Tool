@@ -2,6 +2,8 @@ package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,6 +146,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze game file for mod " + getType(), e);
         }
+        TextAreaHelper.appendDebug(String.format("Content of type %s in game files (contentIdsByNames):\n%s", this.getType(), Arrays.toString(contentIdsByNames.entrySet().toArray())));
     }
 
     @Override

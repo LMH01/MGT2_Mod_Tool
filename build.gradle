@@ -42,6 +42,11 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
+// comment in if log level should be temporarily set to debug
+//run {
+//    jvmArgs = ['-Dorg.slf4j.simpleLogger.defaultLogLevel=debug']
+//}
+
 sourceCompatibility = 1.21
 targetCompatibility = 1.21
 project.version = "5.0.0" //remember to change version in main class

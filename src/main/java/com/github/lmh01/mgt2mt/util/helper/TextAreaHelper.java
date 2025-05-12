@@ -27,6 +27,13 @@ public class TextAreaHelper {
         writeText(warning);
     }
 
+    public static void appendDebug(String debug) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(debug);
+            writeText("[Debug] " + debug);
+        }
+    }
+
     /**
      * Prints the stacktrace of the exception into the text area and into the console
      *

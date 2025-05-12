@@ -6,6 +6,7 @@ import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.Utils;
 import com.github.lmh01.mgt2mt.util.helper.DebugHelper;
 import com.github.lmh01.mgt2mt.util.helper.EditHelper;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 import com.github.lmh01.mgt2mt.util.manager.TranslationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -282,6 +283,8 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         } catch (IOException e) {
             throw new ModProcessingException("Unable to analyze game file for mod " + getType(), e);
         }
+        TextAreaHelper.appendDebug(String.format("Content of type %s in game files (contentNamesByIds):\n%s", this.getType(), Arrays.toString(contentNamesByIds.entrySet().toArray())));
+        TextAreaHelper.appendDebug(String.format("Content of type %s in game files (contentIdsByNames):\n%s", this.getType(), Arrays.toString(contentIdsByNames.entrySet().toArray())));
     }
 
     @Override
