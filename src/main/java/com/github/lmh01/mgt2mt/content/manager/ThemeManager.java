@@ -402,6 +402,11 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_16LE));
             Map<Integer, String> map = ThemeManager.INSTANCE.fileContent;
             boolean firstLine = true;
+            // write file documentation if we are in the english file
+            for (String s : ThemeManager.INSTANCE.getDocumentationContent()) {
+                 bw.write(s);
+                 bw.write("\r\n");
+            }
             for (Integer i : map.keySet()) {
                 if (addGenreID) {
                     if (themeIds.contains(i)) {
