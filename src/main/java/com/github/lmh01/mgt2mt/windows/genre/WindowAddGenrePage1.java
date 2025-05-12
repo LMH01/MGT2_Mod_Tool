@@ -210,4 +210,13 @@ public class WindowAddGenrePage1 extends JFrame {
             }
         }
     }
+
+    /**
+     * Clears the variables that store if translations where added.
+     * Does not clear the translations themselfs.
+     */
+    public static void clearTranslationsAdded() {
+        WindowAddGenrePage1.nameTranslationsAdded = false;
+        WindowAddGenrePage1.descriptionTranslationsAdded = false;
+    }
 }

@@ -296,6 +296,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         GenreManager.INSTANCE.analyzeFile();
         GenreManager.INSTANCE.createBackup(false);
         currentGenreHelper = new GenreHelper();
+        WindowAddGenrePage1.clearTranslationsAdded();
         openStepWindow(1);
     }
 
