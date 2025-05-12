@@ -24,6 +24,7 @@
 - Fixed NpcGame import failing if the NpcGame did not contain the fields `THEME`, `SUB_THEME`, `TARGET_GROUP` and `SEQUEL_NUMERATION`
 - Fixed potential memory leaks
 - Fixed empty tooltip texts shown in UI
+- Fixed update available message not showing linebreaks
 
 ## [v4.10.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v4.10.0)
 
