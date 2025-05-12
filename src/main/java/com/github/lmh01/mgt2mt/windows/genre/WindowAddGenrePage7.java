@@ -110,8 +110,6 @@ public class WindowAddGenrePage7 extends JFrame {
             currentFeature += 1;
         }
 
-        System.out.println("selected features: " + gameplayFeaturesSelected.size());
-
         //Converts ArrayList to int[]
         final int[] selectedIndices = new int[gameplayFeaturesSelected.size()];
         int index = 0;
