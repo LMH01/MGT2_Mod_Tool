@@ -293,6 +293,11 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
     }
 
     @Override
+    public Map<String, Integer> getContentIdsByNames() {
+        return contentIdsByNames;
+    }
+
+    @Override
     public String[] getContentByAlphabet() throws ModProcessingException {
         try {
             ArrayList<String> arrayListAvailableThingsSorted = new ArrayList<>();

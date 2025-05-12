@@ -27,6 +27,14 @@ public class TextAreaHelper {
         writeText(warning);
     }
 
+    /**
+     * Will append the input text to the text area. Will also write a errior output in the console.
+     */
+    public static void appendError(String error) {
+        LOGGER.error("[Error] " + error);
+        writeText(error);
+    }
+
     public static void appendDebug(String debug) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(debug);

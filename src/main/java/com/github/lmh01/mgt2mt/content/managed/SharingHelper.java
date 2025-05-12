@@ -1,8 +1,11 @@
 package com.github.lmh01.mgt2mt.content.managed;
 
 import com.github.lmh01.mgt2mt.util.Utils;
+import com.github.lmh01.mgt2mt.util.helper.TextAreaHelper;
 
+import java.awt.TextArea;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -57,8 +60,14 @@ public class SharingHelper {
      */
     public static ArrayList<String> getExportNamesArray(BaseContentManager contentManager, ArrayList<Integer> ids) throws ModProcessingException {
         ArrayList<String> names = new ArrayList<>();
+        TextAreaHelper.appendDebug(String.format("Trying to get export names array for type %s with the following ids: %s", contentManager.getType(), Arrays.toString(ids.toArray())));
         for (Integer integer : ids) {
-            names.add(contentManager.getContentNameById(integer));
+            try {
+                names.add(contentManager.getContentNameById(integer));
+            } catch (ModProcessingException e) {
+                TextAreaHelper.appendError(String.format("Content of contentManager (type %s) where the error occurred: %s", contentManager.getType(), Arrays.toString(contentManager.getContentIdsByNames().entrySet().toArray())));
+                throw e;
+            }
         }
         return names;
     }
