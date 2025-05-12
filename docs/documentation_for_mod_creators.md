@@ -206,7 +206,7 @@ When the user accepts the publisher ``Minisoft`` will be replaced by ``Williams`
 - Only content of the same type can be replaced
 - The original content can only be restored by restoring the initial backup
 - Only content that is already added to the game can be replaced
-- When a restore point is created while content is replaced, the original game content will be restored when the restore point is restored. In addition to that the will the replaced content exist in the game.
+- When a restore point is created while content is replaced, the original game content will be restored when the restore point is restored. In addition to that the replaced content will exist in the game.
 
 ## Mark a mod to modify already existing content
 
