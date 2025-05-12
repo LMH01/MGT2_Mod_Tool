@@ -437,7 +437,7 @@ public class DataStreamHelper {
         Boolean firstLine = true;
         while ((currentLine = br.readLine()) != null) {
             if (firstLine) {
-                if (charSet == StandardCharsets.UTF_8) {
+                if (charSet == StandardCharsets.UTF_8 || charSet == StandardCharsets.UTF_16LE) {
                     currentLine = Utils.removeUTF8BOM(currentLine);
                 };
                 firstLine = false;

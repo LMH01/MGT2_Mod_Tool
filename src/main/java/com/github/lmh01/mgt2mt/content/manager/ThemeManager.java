@@ -32,6 +32,10 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
     public static final ThemeManager INSTANCE = new ThemeManager();
 
     public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", "4.10.0", "5.0.0-beta1", MadGamesTycoon2ModTool.VERSION};
+    
+    // Contains the documentation on what the contents of the game file mean
+    // thas is written in the games files before the actual content starts.
+    private List<String> fileDocumentationContent;
 
     private ThemeManager() {
         super("theme", "theme", MGT2Paths.TEXT.getPath().resolve("EN/Themes_EN.txt").toFile(), StandardCharsets.UTF_16LE);
@@ -52,12 +56,12 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
             for (AbstractBaseContent sc : contents) {
                 contentIds.add(sc.id);
             }
-            for (String string : TranslationManager.TRANSLATION_KEYS) {
-                File themeFile = Utils.getThemeFile(string);
+            for (String key : TranslationManager.TRANSLATION_KEYS) {
+                File themeFile = Utils.getThemeFile(key);
                 Map<Integer, String> currentThemeFileContent;
-                if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)) {
+                if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(key)) {
                     currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_8);
-                } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
+                } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(key)) {
                     currentThemeFileContent = DataStreamHelper.getContentFromFile(themeFile, StandardCharsets.UTF_16LE);
                 } else {
                     throw new ModProcessingException("Unable to determine what charset to use");
@@ -67,13 +71,20 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                 }
                 Files.createFile(themeFile.toPath());
                 BufferedWriter bw;
-                if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(string)) {
+                if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_8_BOM).contains(key)) {
                     bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_8));
                     bw.write("\ufeff");//Makes the file UTF8 BOM
-                } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(string)) {
+                } else if (Arrays.asList(TranslationManager.LANGUAGE_KEYS_UTF_16_LE).contains(key)) {
                     bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(themeFile), StandardCharsets.UTF_16LE));
                 } else {
                     throw new ModProcessingException("Unable to determine what charset to use");
+                }
+                // write file documentation if we are in the english file
+                if (key.equals("EN")) {
+                    for (String s : this.getDocumentationContent()) {
+                        bw.write(s);
+                        bw.write("\r\n");
+                    }
                 }
                 boolean firstLine = true;
                 for (Map.Entry<Integer, String> entry : currentThemeFileContent.entrySet()) {
@@ -99,7 +110,7 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                     for (AbstractBaseContent content : contents) {
                         bw.write("\r\n");
                         if (content instanceof Theme) {
-                            if (string.equals("EN")) {
+                            if (key.equals("EN")) {
                                 bw.write(((Theme) content).getLine());
                             } else {
                                 bw.write(((Theme) content).name);
@@ -149,11 +160,20 @@ public class ThemeManager extends AbstractSimpleContentManager implements Depend
                     throw new ModProcessingException("Unable to determine what charset to use");
                 }
                 map.put(key, content);
+                if (key.equals("EN")) {
+                    // The english file contains the documentation
+                    fileDocumentationContent = DataStreamHelper.extractDocumentationContent(this.gameFile.toPath(), getCharset());
+                }
             } catch (IOException e) {
                 throw new ModProcessingException("Error reading files", e);
             }
         }
         this.translations = map;
+    }
+
+    @Override
+    public String[] getDocumentationContent() {
+        return fileDocumentationContent.toArray(new String[0]);
     }
 
     @Override

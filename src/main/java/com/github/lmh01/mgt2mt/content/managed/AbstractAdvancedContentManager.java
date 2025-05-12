@@ -181,6 +181,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
                 if (charset.equals(StandardCharsets.UTF_8)) {
                     bw.write("\ufeff");
                 }
+                // write file documentation
                 for (String s : this.fileDocumentationContent) {
                     bw.write(s);
                     bw.write("\r\n");

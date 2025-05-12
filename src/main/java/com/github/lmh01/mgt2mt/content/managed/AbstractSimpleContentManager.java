@@ -69,6 +69,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
                 bw.write("\ufeff");
             }
 
+            // write file documentation
             for (String s : this.fileDocumentationContent) {
                 bw.write(s);
                 bw.write("\r\n");
