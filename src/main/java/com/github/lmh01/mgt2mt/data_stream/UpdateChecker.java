@@ -62,20 +62,19 @@ public class UpdateChecker {
                     ProgressBarHelper.increment();
                 }
 
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder newestVersionKeyFeaturesGui = new StringBuilder();
                 while (scanner.hasNextLine()) {
                     currentLine = scanner.nextLine();
                     LOGGER.info(currentLine);
-                    stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
+                    newestVersionKeyFeaturesGui.append(currentLine).append("<br>");
                 }
                 scanner.close();
-                newestVersionKeyFeatures = stringBuilder.toString();
                 if (!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)) {
                     if (!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)) {
                         updateAvailable = true;
                         LOGGER.info("New version found: " + newestVersion);
                         LOGGER.info("Key features:");
-                        if (JOptionPane.showConfirmDialog(null, versionType + newestVersion + "\n" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "\n" + newestVersionKeyFeatures + "\n" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable"), I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0) {
+                        if (JOptionPane.showConfirmDialog(null, "<html>" + versionType + newestVersion + "<br>" + I18n.INSTANCE.get("dialog.updateChecker.keyFeatures") + "<br>" + newestVersionKeyFeaturesGui.toString() + "<br>" + I18n.INSTANCE.get("dialog.updateChecker.updateAvailable") + "</html>", I18n.INSTANCE.get("dialog.updateChecker.updateAvailable.title"), JOptionPane.YES_NO_OPTION) == 0) {
                             try {
                                 Desktop.getDesktop().browse(new URI(Utils.GITHUB_URL + "/releases/tag/v" + newestVersion));
                             } catch (Exception e) {
