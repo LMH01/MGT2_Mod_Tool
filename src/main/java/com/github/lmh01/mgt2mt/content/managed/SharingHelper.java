@@ -65,7 +65,7 @@ public class SharingHelper {
             try {
                 names.add(contentManager.getContentNameById(integer));
             } catch (ModProcessingException e) {
-                TextAreaHelper.appendError(String.format("Content of contentManager (type %s) where the error occurred: %s", contentManager.getType(), Arrays.toString(contentManager.getContentIdsByNames().entrySet().toArray())));
+                TextAreaHelper.appendError(String.format("Content of contentManager (type %s) where the error (%s) occurred: %s", contentManager.getType(), e.getMessage(), Arrays.toString(contentManager.getContentIdsByNames().entrySet().toArray())));
                 throw e;
             }
         }
