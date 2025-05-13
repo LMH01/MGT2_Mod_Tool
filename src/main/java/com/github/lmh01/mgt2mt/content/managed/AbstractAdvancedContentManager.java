@@ -322,7 +322,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         if (contentIdsByNames.containsKey(name)) {
             return contentIdsByNames.get(name);
         } else {
-            throw new ModProcessingException("The id for sub-mod '" + name + "' of type " + getType() + " was not found.");
+            throw new ModProcessingException(String.format("The id for sub-mod '%s' of type %s was not found. Existing ids (contentIdsByName): %s", name, getType(), Arrays.toString(contentIdsByNames.entrySet().toArray())));
         }
     }
 
@@ -331,7 +331,7 @@ public abstract class AbstractAdvancedContentManager extends AbstractBaseContent
         if (contentNamesByIds.containsKey(id)) {
             return contentNamesByIds.get(id);
         } else {
-            throw new ModProcessingException("The name of sub-mod with id " + id + " for type " + getType() + " could not be returned. The id is invalid.");
+            throw new ModProcessingException(String.format("The name of sub-mod with id %d for type %s could not be returned. The id does not exist. Existing ids (contentNamesByIds): %s", id, getType(), Arrays.toString(contentNamesByIds.entrySet().toArray())));
         }
     }
 

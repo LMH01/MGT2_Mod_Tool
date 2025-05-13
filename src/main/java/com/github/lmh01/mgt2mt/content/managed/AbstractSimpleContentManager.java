@@ -180,7 +180,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
         if (contentIdsByNames.containsKey(name)) {
             return contentIdsByNames.get(name);
         } else {
-            throw new ModProcessingException("Unable to find id for name " + name + ": This name does not exist in the map!", name);
+            throw new ModProcessingException(String.format("The id for sub-mod '%s' of type %s was not found. Existing ids (contentIdsByName): %s", name, getType(), Arrays.toString(contentIdsByNames.entrySet().toArray())));
         }
     }
 
@@ -189,7 +189,7 @@ public abstract class AbstractSimpleContentManager extends AbstractBaseContentMa
         if (fileContent.containsKey(id)) {
             return getReplacedLine(fileContent.get(id));
         }
-        throw new ModProcessingException("Unable to find name for id " + id + ": This id does not exist in the map!");
+        throw new ModProcessingException(String.format("Unable to find name for id %s: This id does not exist in the map! Map content: %s", id, Arrays.toString(fileContent.entrySet().toArray())));
     }
 
     @Override

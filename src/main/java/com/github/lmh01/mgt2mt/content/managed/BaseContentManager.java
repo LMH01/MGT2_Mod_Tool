@@ -138,7 +138,6 @@ public interface BaseContentManager {
      */
     String[] getDocumentationContent();
 
-
     /**
      * @return All content for this content type matched id with names.
      */
