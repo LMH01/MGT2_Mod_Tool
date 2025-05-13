@@ -778,7 +778,6 @@ progressBar.copyDirectory.title|Kopiere Ordner
 progressBar.moveOldInitialBackupFiles|Verschiebe altes Initial-Backup
 progressBar.creatingInitialBackup|Initial-Backup wird erstellt
 progressBar.initializingTool|Initialisiere Tool
-progressBar.downloadingDefaultContentUpdate|Lade Update für die "default_content" Datei herunter
 progressBar.export.creatingExportMap|Erstelle export map
 progressBar.constructingContent|Baue Inhalte vom Typ %s
 progressBar.constructingImportContent|Baue Inhalte
