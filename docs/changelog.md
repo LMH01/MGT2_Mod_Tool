@@ -1,5 +1,11 @@
 # Changelog
 
+## [v5.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.0.1) (Latest Version)
+
+### Bug fixes
+- Add genre: fixed error when no themes or compatible genres where selected
+- Probably fixed rare error when adding genres (#161)
+
 ## [v5.0.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.0.0) (Latest Version)
 
 ### Important

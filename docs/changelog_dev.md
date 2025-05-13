@@ -3,7 +3,8 @@
 ## v5.0.1
 
 ### Bug fixes
-- Add genre: fixed error when no themes or compatible genres where selected 
+- Add genre: fixed error when no themes or compatible genres where selected
+- Probably fixed rare error when adding genres #161
 
 ## v5.0.0
 
