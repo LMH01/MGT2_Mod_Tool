@@ -1,5 +1,10 @@
 # Changelog
 
+## v5.0.1
+
+### Bug fixes
+- Add genre: fixed error when no themes or compatible genres where selected 
+
 ## v5.0.0
 
 ### Important

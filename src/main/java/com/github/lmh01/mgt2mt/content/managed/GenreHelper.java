@@ -24,8 +24,8 @@ public class GenreHelper {
     public int graphic = 25;
     public int sound = 25;
     public int control = 25;
-    public ArrayList<Integer> compatibleGenres;
-    public ArrayList<Integer> compatibleThemes;
+    public ArrayList<Integer> compatibleGenres = new ArrayList<>();
+    public ArrayList<Integer> compatibleThemes = new ArrayList<>();
     public ArrayList<Integer> badGameplayFeatures = new ArrayList<>();
     public ArrayList<Integer> goodGameplayFeatures = new ArrayList<>();
     public int focus0 = 5;
