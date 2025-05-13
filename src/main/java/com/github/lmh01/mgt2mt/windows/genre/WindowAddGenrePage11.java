@@ -93,9 +93,9 @@ public class WindowAddGenrePage11 extends JFrame {
                     GenreManager.currentGenreHelper.align1,
                     GenreManager.currentGenreHelper.align2
             );
+            WindowMain.checkActionAvailability();
             ThreadHandler.startModThread(() -> GenreManager.INSTANCE.addGenre(genre, true), "AddGenre");
             FRAME.dispose();
-            WindowMain.checkActionAvailability();
         }, "WindowAddGenrePage11ButtonNext"));
         buttonPrevious.addActionListener(actionEvent -> {
             GenreManager.openStepWindow(10);
