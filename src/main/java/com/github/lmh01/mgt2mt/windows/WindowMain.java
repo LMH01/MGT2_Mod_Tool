@@ -241,6 +241,9 @@ public class WindowMain {
     /**
      * Checks if specific actions are available. If they are the buttons will be enabled
      * The following things are also done: Progress bar is reset, auto scrolling gets disabled and menu items are unlocked.
+     * 
+     * # Important
+     * Do not call this function after another thread was started that needs quick access to the games content. Doing so might result in a race condition.
      */
     public static void checkActionAvailability() {
         if (Settings.mgt2FolderIsCorrect) {
