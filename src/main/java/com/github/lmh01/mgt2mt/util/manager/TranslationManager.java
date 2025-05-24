@@ -15,9 +15,9 @@ import java.util.Map;
  * English is not stored as translation.
  */
 public class TranslationManager {
-    public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "JA", "KO", "PB", "PL", "RO", "RU", "TU"};
-    public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Portuguese", "Polish", "Romanian", "Russian", "Turkish"};
-    public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR", "CH", "CT", "IT", "ES", "RO", "JA", "RU", "TU", "PB", "PL"};
+    public static final String[] TRANSLATION_KEYS = {"AR", "CH", "CT", "CZ", "EN", "ES", "FR", "GE", "HU", "IT", "JA", "KO", "LA", "PB", "PL", "RO", "RU", "TH", "TU", "UA"};
+    public static final String[] TRANSLATION_NAMES = {"Arabic", "Chinese simplified", "Chinese traditional", "Czech", "English", "Spanish", "French", "German", "Hungarian", "Italian", "Japanese", "Korean", "Spanish (Latin American)", "Portuguese", "Polish", "Romanian", "Russian", "Thailändisch", "Turkish", "Ukrainisch"};
+    public static final String[] LANGUAGE_KEYS_UTF_8_BOM = {"AR", "CH", "CT", "IT", "ES", "RO", "JA", "LA", "RU", "TH", "TU", "PB", "PL", "UA"};
     public static final String[] LANGUAGE_KEYS_UTF_16_LE = {"CZ", "EN", "FR", "GE", "HU", "KO"};
 
     /**
