@@ -1,6 +1,9 @@
 package com.github.lmh01.mgt2mt.util;
 
+import com.github.lmh01.mgt2mt.content.manager.GenreManager;
 import com.github.lmh01.mgt2mt.util.handler.ThreadHandler;
+
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +16,12 @@ public class Debug {
 
     public static void test() {
         ThreadHandler.startModThread(() -> {
-            HelpSheetGenerator.generate();
+            ArrayList<Integer> subGenreIds = new ArrayList<>();
+            subGenreIds.add(2);
+            ArrayList<Integer> mainGenreIds = new ArrayList<>();
+            mainGenreIds.add(0);
+            GenreManager.editSubGenres(mainGenreIds, subGenreIds, true);
+            //HelpSheetGenerator.generate();
         }, "Debug");
     }
 }

@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class GenreManager extends AbstractAdvancedContentManager implements DependentContentManager {
@@ -532,5 +533,50 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         System.arraycopy(align, 0, settings, focus.length, align.length);
 
         return Arrays.stream(settings).boxed().collect(Collectors.toList());
+    }
+
+    /**
+     * Adds/removes all `mainGenreIds` from the `[GENRE COMB]` field of all Genres with ids in `subGenreIds`.
+     * 
+     * Anaylses the game file
+     * 
+     * Warning: Completely rewrites the `Genres.txt` file with the new information.
+     * 
+     * @param add Set to `true` when `mainGenreId` should be added to the `[GENRE COMB]` field,
+     *            Set to `false` to remove `mainGenreId` from the `[GENRE COMB]` field.
+     */
+    public static void editSubGenres(List<Integer> mainGenreIds, List<Integer> subGenreIds, Boolean add) throws ModProcessingException {
+        GenreManager.INSTANCE.analyzeFile();
+
+        // construct all genres
+        HashMap<Integer, Genre> genres = new HashMap<>();
+        for (Entry<String, Integer> entry : GenreManager.INSTANCE.getContentIdsByNames().entrySet()) {
+            genres.put(entry.getValue(), (Genre) GenreManager.INSTANCE.constructContentFromName(entry.getKey()));
+        }
+
+        for (Integer subGenreId : subGenreIds) {
+            if (add) {
+                for (Integer mainGenreId : mainGenreIds) {
+                    if (!genres.get(subGenreId).compatibleGenres.contains(mainGenreId)) {
+                        // only add genre if it does not yet exist
+                        genres.get(subGenreId).compatibleGenres.add(mainGenreId);
+                    }
+                    genres.get(subGenreId).compatibleGenres.sort((a, b) -> {return a.compareTo(b);});
+                }
+            } else {
+                for (Integer mainGenreId : mainGenreIds) {
+                    genres.get(subGenreId).compatibleGenres.remove(mainGenreId);
+                }
+            }
+        }
+
+        // remove all content from the game
+        GenreManager.INSTANCE.editTextFiles(new ArrayList<>(genres.values()), ContentAction.REMOVE_MOD);
+
+        // Reset file content so that the removed genres are not added again (without being modified)
+        GenreManager.INSTANCE.fileContent = new ArrayList<>();
+
+        // add all content
+        GenreManager.INSTANCE.editTextFiles(new ArrayList<>(genres.values()), ContentAction.ADD_MOD);
     }
 }
