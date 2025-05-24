@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.windows;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.Version;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ContentAdministrator;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
@@ -200,7 +200,7 @@ public class WindowMain {
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
-        JLabel labelVersion = new JLabel("v" + MadGamesTycoon2ModTool.VERSION);
+        JLabel labelVersion = new JLabel("v" + Version.getVersion());
         JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.quit"));
         buttonQuit.addActionListener(actionEvent -> {
             if (ThreadHandler.getThreadsRunning() > 0) {
@@ -417,7 +417,7 @@ public class WindowMain {
     }
 
     private static void openGithubPage() {
-        if (MadGamesTycoon2ModTool.VERSION.contains("dev")) {
+        if (Version.getVersion().contains("dev")) {
             Debug.test();
         } else {
             if (JOptionPane.showConfirmDialog(null, "Open Github page?", "Open page?", JOptionPane.YES_NO_OPTION) == 0) {

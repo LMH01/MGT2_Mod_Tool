@@ -19,6 +19,7 @@ Before downloading please read [this information](docs/important.md) carefully.
 - [Adding a new genre](docs/adding_a_genre.md)
 - [Changelog](docs/changelog.md)
 - [Pictures](docs/features.md)
+- [Developer documentation](docs/dev.md)
 - Mod creators might want to check out the [Documentation for Mod Creators](docs/documentation_for_mod_creators.md).
 
 ## Getting Mods

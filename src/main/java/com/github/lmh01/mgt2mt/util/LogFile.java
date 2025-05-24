@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.Version;
 import com.github.lmh01.mgt2mt.util.settings.SafetyFeature;
 import com.github.lmh01.mgt2mt.util.settings.Settings;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class LogFile {
     public static void startLogging() {
         try {
             LOGGER.info("Logging to file is now active!");
-            bw.write("Mod tool version: " + MadGamesTycoon2ModTool.VERSION);
+            bw.write("Mod tool version: " + Version.getVersion());
             bw.write(System.getProperty("line.separator"));
             bw.write("OS: " + System.getProperty("os.name"));
             bw.write(System.getProperty("line.separator"));

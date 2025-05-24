@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util.manager;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.Version;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.Image;
 import com.github.lmh01.mgt2mt.data_stream.DataStreamHelper;
@@ -1391,7 +1391,7 @@ public class SharingManager {
             try {
                 Files.createDirectories(path);
                 Map<String, Object> map = content.getExportMap();
-                map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
+                map.put("mod_tool_version", Version.getVersion());
                 map.put("type", ExportType.ALL_SINGLE.getTypeName());
                 map.put("mod_type", content.contentType.getId());
                 map.put("name", content.name);
@@ -1520,7 +1520,7 @@ public class SharingManager {
                     }
                 }
                 map.put("mods", mods);
-                map.put("mod_tool_version", MadGamesTycoon2ModTool.VERSION);
+                map.put("mod_tool_version", Version.getVersion());
                 ProgressBarHelper.setText(I18n.INSTANCE.get("textArea.export_compact.writing_toml"));
                 TextAreaHelper.appendText(I18n.INSTANCE.get("textArea.export_compact.writing_toml") + ": " + path.resolve(tomlName + ".toml"));
                 try {

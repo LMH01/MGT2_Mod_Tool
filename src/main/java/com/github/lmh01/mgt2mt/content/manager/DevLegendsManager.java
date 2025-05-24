@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.content.manager;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.Version;
 import com.github.lmh01.mgt2mt.content.instances.DevLegend;
 import com.github.lmh01.mgt2mt.content.managed.*;
 import com.github.lmh01.mgt2mt.content.managed.types.DevLegendType;
@@ -20,7 +20,7 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
 
     public static final DevLegendsManager INSTANCE = new DevLegendsManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.10.0", "5.0.0-beta1", "5.0.0", "5.0.1", MadGamesTycoon2ModTool.VERSION};
+    public static final String[] compatibleModToolVersions = new String[]{"4.10.0", "5.0.0-beta1", "5.0.0", "5.0.1", Version.getVersion()};
 
     private DevLegendsManager() {
         super("devLegend", "dev_legend", MGT2Paths.TEXT_DATA.getPath().resolve("DevLegends.txt").toFile(), StandardCharsets.UTF_8);

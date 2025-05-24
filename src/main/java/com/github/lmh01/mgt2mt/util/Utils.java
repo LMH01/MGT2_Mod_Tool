@@ -1,6 +1,6 @@
 package com.github.lmh01.mgt2mt.util;
 
-import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.Version;
 import com.github.lmh01.mgt2mt.content.managed.AbstractBaseContent;
 import com.github.lmh01.mgt2mt.content.managed.BaseContentManager;
 import com.github.lmh01.mgt2mt.content.managed.ModProcessingException;
@@ -627,7 +627,7 @@ public class Utils {
      * @return True if the version is alpha. False otherwise.
      */
     public static boolean isAlpha() {
-        return MadGamesTycoon2ModTool.VERSION.contains("alpha");
+        return Version.getVersion().contains("alpha");
     }
 
     /**
@@ -636,7 +636,7 @@ public class Utils {
      * @return True if the version is beta, false otherwise
      */
     public static boolean isBeta() {
-        return MadGamesTycoon2ModTool.VERSION.contains("beta");
+        return Version.getVersion().contains("beta");
     }
 
     /**

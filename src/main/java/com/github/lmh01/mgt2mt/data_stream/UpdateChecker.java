@@ -1,6 +1,7 @@
 package com.github.lmh01.mgt2mt.data_stream;
 
 import com.github.lmh01.mgt2mt.MadGamesTycoon2ModTool;
+import com.github.lmh01.mgt2mt.Version;
 import com.github.lmh01.mgt2mt.util.I18n;
 import com.github.lmh01.mgt2mt.util.UpdateBranch;
 import com.github.lmh01.mgt2mt.util.Utils;
@@ -69,7 +70,7 @@ public class UpdateChecker {
                     newestVersionKeyFeaturesGui.append(currentLine).append("<br>");
                 }
                 scanner.close();
-                if (!newestVersion.equals(MadGamesTycoon2ModTool.VERSION)) {
+                if (!newestVersion.equals(Version.getVersion())) {
                     if (!newestVersion.equals(MadGamesTycoon2ModTool.CURRENT_RELEASE_VERSION)) {
                         updateAvailable = true;
                         LOGGER.info("New version found: " + newestVersion);
@@ -129,7 +130,7 @@ public class UpdateChecker {
                     stringBuilder.append(currentLine).append(System.getProperty("line.separator"));
                 }
                 scanner.close();
-                if (!latestGameVersionCompatible && !Utils.isAlpha() && !Utils.isBeta() && !MadGamesTycoon2ModTool.VERSION.contains("dev")) {
+                if (!latestGameVersionCompatible && !Utils.isAlpha() && !Utils.isBeta() && !Version.getVersion().contains("dev")) {
                     JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.updateChecker.latestGameVersionNotCompatible") + "\n" + stringBuilder, I18n.INSTANCE.get("frame.title.warning"), JOptionPane.WARNING_MESSAGE);
                 }
             } catch (IOException | URISyntaxException e) {
