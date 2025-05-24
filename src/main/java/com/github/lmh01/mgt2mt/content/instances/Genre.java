@@ -50,6 +50,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
     public final Integer suitability_handheld;
     public final Integer suitability_phone;
     public final Integer suitability_arcade;
+    public final Boolean successor_year;
 
     public Genre(String name,
                  Integer id,
@@ -85,8 +86,8 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
                  Integer suitability_console,
                  Integer suitability_handheld,
                  Integer suitability_phone,
-                 Integer suitability_arcade
-                 ) {
+                 Integer suitability_arcade,
+                 Boolean successor_year) {
         super(GenreManager.INSTANCE, name, id, translationManager);
         this.description = description;
         this.date = date;
@@ -120,6 +121,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         this.suitability_handheld = suitability_handheld;
         this.suitability_phone = suitability_phone;
         this.suitability_arcade = suitability_arcade;
+        this.successor_year = successor_year;
     }
 
     /**
@@ -185,6 +187,9 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
             map.put("P_ARCADE", Integer.toString(100));
         } else {
             map.put("P_ARCADE", Integer.toString(suitability_arcade));
+        }
+        if (successor_year != null) {
+            map.put("SUC YEAR", Boolean.toString(successor_year));
         }
         map.putAll(translationManager.toMap());
         return map;

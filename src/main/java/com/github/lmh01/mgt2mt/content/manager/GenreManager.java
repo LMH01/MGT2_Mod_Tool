@@ -109,6 +109,10 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         ArrayList<Integer> compatibleThemes = Utils.getCompatibleThemeIdsForGenreNew(id);
         ArrayList<Integer> badGameplayFeatures = Utils.getContentIdsFromString(GameplayFeatureManager.INSTANCE, Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));
         ArrayList<Integer> goodGameplayFeatures = Utils.getContentIdsFromString(GameplayFeatureManager.INSTANCE, Utils.getCompatibleGameplayFeatureIdsForGenre(id, true));
+        Boolean successor_year = null;
+        if (map.containsKey("SUC YEAR")) {
+            successor_year = Boolean.parseBoolean(map.get("SUC YEAR"));
+        }
         return new Genre(
                 map.get("NAME EN"),
                 id,
@@ -144,7 +148,8 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(map.get("P_CONSOLE")),
                 Integer.parseInt(map.get("P_HANDHELD")),
                 Integer.parseInt(map.get("P_PHONE")),
-                Integer.parseInt(map.get("P_ARCADE"))
+                Integer.parseInt(map.get("P_ARCADE")),
+                successor_year
         );
     }
 
@@ -155,6 +160,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         list.add(new DataLine("RES POINTS", true, DataType.INT));
         list.add(new DataLine("PRICE", true, DataType.INT));
         list.add(new DataLine("DEV COSTS", true, DataType.INT));
+        list.add(new DataLine("SUC YEAR", false, DataType.BOOLEAN));
         list.add(new DataLine("PIC", true, DataType.UNCHECKED));
         list.add(new DataLine("TGROUP", true, DataType.UNCHECKED));
         list.add(new DataLine("GAMEPLAY", true, DataType.INT));
@@ -265,7 +271,8 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(String.valueOf(map.get("P_CONSOLE"))),
                 Integer.parseInt(String.valueOf(map.get("P_HANDHELD"))),
                 Integer.parseInt(String.valueOf(map.get("P_PHONE"))),
-                Integer.parseInt(String.valueOf(map.get("P_ARCADE")))
+                Integer.parseInt(String.valueOf(map.get("P_ARCADE"))),
+                Boolean.parseBoolean(String.valueOf(map.get("SUC YEAR")))
         );
     }
 

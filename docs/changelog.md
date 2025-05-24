@@ -1,14 +1,5 @@
 # Changelog
 
-## [v5.1.0]
-
-TODO Als nächstes schauen, warum immer noch so viele Zeilen in der Genres.txt fehlen, nachdem ich das Genre/Subgenre fit angepasst habe (diff auf webseite dafür anschauen), vermutlich liegt es an einer fehlenden Übersetzung.
-
-### Game compatibility
-- Added recognition for these data fields (note that it is not possible to edit these fields with the gui):
-    - `Genres.txt` - `P_PC, P_CONSOLE, P_HANDHELD, P_PHONE, P_ARCADE`
-- Added support for translations `LA`, `TH` and `UA`
-
 ## [v5.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.0.1) (Latest Version)
 
 ### Bug fixes
