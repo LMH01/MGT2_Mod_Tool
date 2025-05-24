@@ -707,6 +707,15 @@ dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Bist du dir sicher, 
 dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Bitte wähle mindestens ein Thema/Genre aus, um fortzufahren!
 dialog.contentEditor.editGenreThemeFit.success|Die Genre/Themen Kombination wurde erfolgreich bearbeitet!
 
+dialog.contentEditor.editGenreSubGenreFit.message.title|Genre/Untergenre Kombination bearbeiten
+dialog.contentEditor.editGenreSubGenreFit.message|<html>Hier können die Genre/Untergenre Kombinationen bearbeitet werden.<br>Wähle dazu die Genres aus, die miteinander kombiniert werden sollen.<br>Die Kombinationen können auch rückgängig gemacht werden,<br>indem entfernen anstatt hinzufügen ausgewählt wird.
+dialog.contentEditor.editGenreSubGenreFit.themeLabel|Wähle die Genres aus, die als kompatibles Untergenre hinzugefügt/entfernt werden sollen:
+dialog.contentEditor.editGenreSubGenreFit.genreLabel|Wähle die Genres aus, für die die oben auswählen Genres als kompatibles Untergenre hinzugefügt/entfernt werden sollen:
+dialog.contentEditor.editGenreSubGenreFit.comboBox.toolTip|<html>Wähle aus, was gemacht werden soll:<br>Hinzufügen: Die in der ersten Tabelle ausgewählten Genres werden als kompatibles Untergenres der in der zweiten Tabelle ausgewählten Genres gesetzt.<br>Entfernen: Die in der ersten Tabelle ausgewählten Genres werden von den kompatibles Untergenres der in der zweiten Tabelle ausgewählten Genres entfernt.
+dialog.contentEditor.editGenreSubGenreFit.confirmMessage|<html>Bist du dir sicher, dass die ausgewählten Genres/Untergenres<br>miteinander kombiniert/von einander entfernt werden sollen?
+dialog.contentEditor.editGenreSubGenreFit.selectThemeGenre|Bitte wähle mindestens ein Genre in beiden Tabellen aus, um fortzufahren!
+dialog.contentEditor.editGenreSubGenreFit.success|Die Genre/Untergenre Kombination(en) wurde erfolgreich bearbeitet!
+
 dialog.startTasks.initialBackupOutdated|<html>Warnung:<br><br>Das Initial-Backup ist nicht mehr aktuell.<br>Dies kann zu Problemen führen.<br><br>Erstelle bitte ein neues!<br>(Backup -> Backup erstellen -> Neues Initial-Backup erstellen)<br><br>Dieser Check kann in der settings.toml-Datei ausgeschaltet werden.
 
 disclaimer.disclaimerText|<html>Wichtige Informationen:<br><br>- Backups werden automatisch erstellt, aber erstelle bitte deine eigene<br>Sicherheitskopie, falls bei den von diesem Tool erstellten Backups ein Fehler auftritt.<br>- Erstelle bitte immer, wenn das Spiel aktualisiert wurde ein neues Initial-Backup um Probleme zu verhindern<br>- Die Spielstände sind zu finden, indem du auf "Spielstand Ordner Öffnen" im Nützliches-Menü klickst.<br>- Installierte Mods werden möglicherweise erst dann wirksam, wenn ein neues Spiel gestartet wird.<br>- Wenn Mods später wieder entfernt werden, werden sie nicht unbedingt aus den Spielständen entfernt.<br>- Die meisten Spinner sind gesperrt, um die Eingabe von Werten zu verhindern, die das Spielgleichgewicht beeinträchtigen könnten.<br>Dies kann umgangen werden, indem die Option "Spinner entsperren"<br>im "Sicherheitsfunktionen konfigurieren" Menü in den Einstellungen aktiviert wird.<br>- Falls du nicht weißt, was ein Eingabefeld macht, kannst du mit der Maus darüber hovern, dann wird ein Hinweis angezeigt.<br>- Wenn ein Fehler auftritt, melde ihn bitte, damit ich ihn beheben kann.<br><br>Wenn weitere Hilfe gebraucht wird, kann die README.md Datei gelesen werden, die im Github-Repository zu finden ist.<br>Das Github-Repository kann durch Klicken auf „Nützliches“ -> „Github Seite Öffnen“, geöffnet werden.<br><br>Wenn du auf OK klickst, akzeptierst du, dass du diese Information gelesen und verstanden hast.
@@ -961,6 +970,8 @@ window.main.mods.import.getMoreMods.confirmDialog|Soll die Webseite geöffnet we
 window.main.mods.import.getMoreMods.confirmDialog.title|Seite öffnen?
 window.main.mods.themes.changeGenreThemeFit|Genre/Thema Kombination bearbeiten
 window.main.mods.themes.changeGenreThemeFit.toolTip|Klicke hier, um die Genre/Thema Kombinationen zu bearbeiten
+window.main.mods.themes.changeGenreSubGenreFit|Genre/Untergenre Kombination bearbeiten
+window.main.mods.themes.changeGenreSubGenreFit.toolTip|Klicke hier, um die Genre/Unterthema Kombinationen zu bearbeiten
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click, um eine genre id zu der NPC_Games_list hinzuzufügen.
 window.main.mods.addCompanyIcon|Firmenbild hinzufügen

@@ -3,6 +3,8 @@
 ## v5.1.0
 
 ### Feature
+- Added menu `Mods -> Genres -> Edit genre/subgenre fit`
+    - This menu can be used to edit what genre/subgenre combinations should be allowed.
 - Added field `MUTUAL COMPATIBLE GENRES` to genre exports with the following behaviour:
     - Field is missing: When genres are imported the imported genre is now automatically set as comptible subgenre for all its compatible subgenres
     - Field is present: The genre will only be set as compatible subgenre for genres defined in here

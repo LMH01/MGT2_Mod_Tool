@@ -52,4 +52,43 @@ public class ContentEditor {
             }
         }
     }
+
+    public static void editGenreSubGenreFit() throws ModProcessingException {
+        JLabel labelExplanation = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.message"));
+        JLabel labelGenresThemes = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.themeLabel"));
+        JList<String> genreList = WindowHelper.getList(GenreManager.INSTANCE.getContentByAlphabet(), true);
+        JScrollPane scrollPaneThemes = WindowHelper.getScrollPane(genreList);
+        JLabel labelSubGenres = new JLabel(I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.genreLabel"));
+        JList<String> subGenreList = WindowHelper.getList(GenreManager.INSTANCE.getContentByAlphabet(), true);
+        JScrollPane scrollPaneGenres = WindowHelper.getScrollPane(subGenreList);
+        JComboBox<String> comboBoxOperation = new JComboBox<>();
+        comboBoxOperation.setToolTipText(I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.comboBox.toolTip"));
+        comboBoxOperation.setModel(new DefaultComboBoxModel<>(new String[]{I18n.INSTANCE.get("commonText.add.upperCase"), I18n.INSTANCE.get("commonText.remove.upperCase")}));
+        comboBoxOperation.setSelectedItem(I18n.INSTANCE.get("commonText.add.upperCase"));
+        Object[] params = {labelExplanation, labelGenresThemes, scrollPaneThemes, labelSubGenres, scrollPaneGenres, comboBoxOperation};
+        while (true) {
+            if (JOptionPane.showConfirmDialog(null, params, I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.message.title"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                if (genreList.getSelectedValuesList().isEmpty() || subGenreList.getSelectedValuesList().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.selectThemeGenre"), I18n.INSTANCE.get("frame.title.error"), JOptionPane.ERROR_MESSAGE);
+                } else {
+                    if (JOptionPane.showConfirmDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.confirmMessage"), I18n.INSTANCE.get("frame.title.areYouSure"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        boolean addGenre = !Objects.requireNonNull(comboBoxOperation.getSelectedItem()).toString().equals(I18n.INSTANCE.get("commonText.remove.upperCase"));
+                        ArrayList<Integer> genreIds = new ArrayList<>();
+                        for (String string : genreList.getSelectedValuesList()) {
+                            genreIds.add(GenreManager.INSTANCE.getContentIdByName(string));
+                        }
+                        ArrayList<Integer> subGenreIds = new ArrayList<>();
+                        for (String string : subGenreList.getSelectedValuesList()) {
+                            subGenreIds.add(GenreManager.INSTANCE.getContentIdByName(string));
+                        }
+                        GenreManager.editSubGenres(genreIds, subGenreIds, addGenre);
+                        JOptionPane.showMessageDialog(null, I18n.INSTANCE.get("dialog.contentEditor.editGenreSubGenreFit.success"), I18n.INSTANCE.get("frame.title.success"), JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+    }
 }

@@ -42,6 +42,7 @@ public class WindowMain {
     private static final JMenuItem M_13_UNINSTALL = new JMenuItem(I18n.INSTANCE.get("window.main.file.uninstall"));
     private static final JMenu M_21_IMPORT = new JMenu(I18n.INSTANCE.get("window.main.mods.import"));
     private static final JMenuItem M_233_CHANGE_GENRE_THEME_FIT = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit"));
+    private static final JMenuItem M_243_CHANGE_GENRE_SUB_GENRE_FIT = new JMenuItem(I18n.INSTANCE.get("window.main.mods.themes.changeGenreSubGenreFit"));
     private static final JMenuItem M_211_IMPORT_FROM_FILE_SYSTEM = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromFileSystem"));
     private static final JMenuItem M_212_IMPORT_FROM_URL = new JMenuItem(I18n.INSTANCE.get("window.main.mods.import.importFromURL"));
     private static final JMenuItem M_22_NPC_GAMES_LIST = new JMenuItem(I18n.INSTANCE.get("window.main.mods.npcGamesList"));
@@ -119,6 +120,7 @@ public class WindowMain {
         M_2_MODS.add(M_23_ADD_COMPANY_ICON);
         M_2_MODS.add(m210ShowActiveMods);
         M_233_CHANGE_GENRE_THEME_FIT.addActionListener(actionEvent -> ThreadHandler.startModThread(ContentEditor::editGenreThemeFit, "EditGenreThemeFit"));
+        M_243_CHANGE_GENRE_SUB_GENRE_FIT.addActionListener(actionEvent -> ThreadHandler.startModThread(ContentEditor::editGenreSubGenreFit, "EditGenreSubGenreFit"));
         M_31_EXPORT.add(M_317_EXPORT_ALL);
         M_31_EXPORT.add(M_318_EXPORT_SELECTED);
         M_317_EXPORT_ALL.addActionListener(actionEvent -> ThreadHandler.startModThread(SharingManager::displayExportModsWindow, "ExportAll"));
@@ -298,10 +300,12 @@ public class WindowMain {
                     M_22_NPC_GAMES_LIST.setEnabled(false);
                     M_23_ADD_COMPANY_ICON.setEnabled(false);
                     M_233_CHANGE_GENRE_THEME_FIT.setEnabled(false);
+                    M_243_CHANGE_GENRE_SUB_GENRE_FIT.setEnabled(false);
                     M_21_IMPORT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_22_NPC_GAMES_LIST.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_23_ADD_COMPANY_ICON.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
+                    M_243_CHANGE_GENRE_SUB_GENRE_FIT.setToolTipText(I18n.INSTANCE.get("window.main.actionAvailability.acceptMessageFirst"));
                 } else {
                     M_21_IMPORT.setEnabled(true);
                     for (JMenu menu : MOD_MENUS) {
@@ -310,9 +314,11 @@ public class WindowMain {
                     }
                     M_23_ADD_COMPANY_ICON.setEnabled(true);
                     M_233_CHANGE_GENRE_THEME_FIT.setEnabled(true);
+                    M_243_CHANGE_GENRE_SUB_GENRE_FIT.setEnabled(true);
                     M_21_IMPORT.setToolTipText(null);
                     M_23_ADD_COMPANY_ICON.setToolTipText(null);
                     M_233_CHANGE_GENRE_THEME_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreThemeFit.toolTip"));
+                    M_243_CHANGE_GENRE_SUB_GENRE_FIT.setToolTipText(I18n.INSTANCE.get("window.main.mods.themes.changeGenreSubGenreFit.toolTip"));
                 }
             } catch (IndexOutOfBoundsException | ModProcessingException e) {
                 TextAreaHelper.printStackTrace(e);
@@ -405,6 +411,9 @@ public class WindowMain {
                 }
                 if (manager instanceof ThemeManager) {
                     menu.add(M_233_CHANGE_GENRE_THEME_FIT);
+                }
+                if (manager instanceof GenreManager) {
+                    menu.add(M_243_CHANGE_GENRE_SUB_GENRE_FIT);
                 }
                 MOD_MENUS.add(menu);
                 M_31_EXPORT.add(manager.getExportMenuItem());

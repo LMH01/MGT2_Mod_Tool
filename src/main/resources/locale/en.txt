@@ -696,13 +696,23 @@ dialog.utils.imageFileAdded|Image file has been added.
 dialog.utils.imageFilesAdded|Image files have been added.
 
 dialog.contentEditor.editGenreThemeFit.message.title|Edit genre/theme fit
-dialog.contentEditor.editGenreThemeFit.message|<html>Here you can edit the genre/theme fit.<br>Select the themes and genres that are to be combined with each other.<br>The combinations can also be undone by selecting remove instead of add.
+dialog.contentEditor.editGenreThemeFit.message|<html>Here you can edit the genre/theme fit.<br>Select the themes and genres that are to be combined with each other.The combinations can also be undone by selecting remove instead of add.
 dialog.contentEditor.editGenreThemeFit.themeLabel|Select the themes that should be edited:
 dialog.contentEditor.editGenreThemeFit.genreLabel|Select the genres that should be added/removed:
 dialog.contentEditor.editGenreThemeFit.comboBox.toolTip|<html>Choose what should be done:<br>Add: The selected genre/themes will be made compatible with each other<br>Remove: The selected genre/themes will no longer be compatible with each other
 dialog.contentEditor.editGenreThemeFit.confirmMessage|<html>Are you sure that the selected genres/themes<br>should be combined/removed from each other?
 dialog.contentEditor.editGenreThemeFit.selectThemeGenre|Please select at least one genre/theme to continue!
 dialog.contentEditor.editGenreThemeFit.success|The genre/theme fit has been edited successfully!
+
+dialog.contentEditor.editGenreSubGenreFit.message.title|Edit genre/subgenre Combination
+dialog.contentEditor.editGenreSubGenreFit.message|<html>You can edit the genre/subgenre combinations here.<br>Select the genres that should be combined with each other.<br>You can also undo combinations by selecting remove instead of add.
+dialog.contentEditor.editGenreSubGenreFit.themeLabel|Select the genres to be added/removed as compatible subgenres:
+dialog.contentEditor.editGenreSubGenreFit.genreLabel|Select the genres for which the above selected genres should be added/removed as compatible subgenres:
+dialog.contentEditor.editGenreSubGenreFit.comboBox.toolTip|<html>Select what should be done:<br>Add: The genres selected in the first table will be set as compatible subgenres of the genres selected in the second table.<br>Remove: The genres selected in the first table will be removed from the compatible subgenres of the genres selected in the second table.
+dialog.contentEditor.editGenreSubGenreFit.confirmMessage|<html>Are you sure that the selected genres/subgenres<br>should be combined/removed from each other?
+dialog.contentEditor.editGenreSubGenreFit.selectThemeGenre|Please select at least one genre in both tables to proceed!
+dialog.contentEditor.editGenreSubGenreFit.success|The genre/subgenre combination(s) were successfully updated!
+
 
 dialog.startTasks.initialBackupOutdated|<html>Warning:<br><br>The initial backup is no longer up-to-date.<br>This can result in problems.<br><br>Please create a new one!<br>(Backup -> Create backup -> Create new initial backup)<br><br>This check can be disabled in the settings.toml file.
 
@@ -959,6 +969,8 @@ window.main.mods.import.getMoreMods.confirmDialog|Open the page where you can ge
 window.main.mods.import.getMoreMods.confirmDialog.title|Open page?
 window.main.mods.themes.changeGenreThemeFit|Edit genre/theme fit
 window.main.mods.themes.changeGenreThemeFit.toolTip|Click here to edit the genre/theme fit
+window.main.mods.themes.changeGenreSubGenreFit|Edit genre/subgenre fit
+window.main.mods.themes.changeGenreSubGenreFit.toolTip|Click here to edit the genre/sub-genre fit
 window.main.mods.npcGamesList|NPC_Games_List
 window.main.mods.npcGamesList.toolTip|Click to add a genre id to the NPC_Games_list.
 window.main.mods.addCompanyIcon|Add company icon
