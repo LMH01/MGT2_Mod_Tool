@@ -97,6 +97,7 @@ public class WindowAddGenrePage11 extends JFrame {
                     null,
                     null,
                     null,
+                    null,
                     null
             );
             WindowMain.checkActionAvailability();

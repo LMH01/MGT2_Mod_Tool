@@ -61,7 +61,8 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         super.addContents(contents);
         for (AbstractBaseContent content : contents) {
             Genre genre = (Genre)content;
-            ThemeManager.editGenreAllocation(genre.id, true, genre.compatibleThemes);
+            ThemeManager.editGenreAllocation(genre.id, true, genre.mutualCompatibleGenres);
+            GenreManager.editSubGenres(new ArrayList<>(Arrays.asList(genre.id)), genre.compatibleGenres, true);
             GameplayFeatureManager.INSTANCE.addGenreId(genre.badGameplayFeatures, genre.id, false);
             GameplayFeatureManager.INSTANCE.addGenreId(genre.goodGameplayFeatures, genre.id, true);
         }
@@ -69,7 +70,10 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
 
     @Override
     public void removeContent(String name) throws ModProcessingException {
-        ThemeManager.editGenreAllocation(getContentIdByName(name), false, null);
+        Genre genre = (Genre) constructContentFromName(name);
+        ThemeManager.editGenreAllocation(genre.id, false, null);
+        GenreManager.editSubGenres(new ArrayList<>(Arrays.asList(genre.id)), genre.compatibleGenres, false);
+        GenreManager.editSubGenres(new ArrayList<>(Arrays.asList(genre.id)), genre.mutualCompatibleGenres, false);
         GameplayFeatureManager.INSTANCE.removeGenreId(getContentIdByName(name));
         PublisherManager.removeGenre(name);
         NpcEngineManager.INSTANCE.removeGenre(name);
@@ -113,6 +117,10 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         if (map.containsKey("SUC YEAR")) {
             successor_year = Boolean.parseBoolean(map.get("SUC YEAR"));
         }
+        ArrayList<Integer> mutualCompatibleGenres = new ArrayList<>();
+        if (map.containsKey("MUTUAL COMPATIBLE GENRES")) {
+            mutualCompatibleGenres.addAll(SharingHelper.transformContentNamesToIds(this, String.valueOf(map.get("MUTUAL COMPATIBLE GENRES"))));
+        }
         return new Genre(
                 map.get("NAME EN"),
                 id,
@@ -149,7 +157,8 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(map.get("P_HANDHELD")),
                 Integer.parseInt(map.get("P_PHONE")),
                 Integer.parseInt(map.get("P_ARCADE")),
-                successor_year
+                successor_year,
+                mutualCompatibleGenres
         );
     }
 
@@ -236,6 +245,35 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         ArrayList<Integer> compatibleThemes = SharingHelper.transformContentNamesToIds(ThemeManager.INSTANCE, String.valueOf(map.get("THEME COMB")));
         ArrayList<Integer> badGameplayFeatures = SharingHelper.transformContentNamesToIds(GameplayFeatureManager.INSTANCE, String.valueOf(map.get("GAMEPLAYFEATURE BAD")));
         ArrayList<Integer> goodGameplayFeatures = SharingHelper.transformContentNamesToIds(GameplayFeatureManager.INSTANCE, String.valueOf(map.get("GAMEPLAYFEATURE GOOD")));
+        ArrayList<Integer> mutualCompatibleGenres = new ArrayList<>();
+        if (map.containsKey("MUTUAL COMPATIBLE GENRES")) {
+            mutualCompatibleGenres.addAll(SharingHelper.transformContentNamesToIds(this, String.valueOf(map.get("MUTUAL COMPATIBLE GENRES"))));
+        }
+         
+        Integer suitability_pc = 100;
+        if (map.containsKey("P_PC")) {
+            suitability_pc = Integer.parseInt(String.valueOf(map.get("P_PC")));
+        }
+        Integer suitability_console = 100;
+        if (map.containsKey("P_CONSOLE")) {
+            suitability_console = Integer.parseInt(String.valueOf(map.get("P_CONSOLE")));
+        }
+        Integer suitability_handheld = 100;
+        if (map.containsKey("P_HANDHELD")) {
+            suitability_handheld = Integer.parseInt(String.valueOf(map.get("P_HANDHELD")));
+        }
+        Integer suitability_phone = 100;
+        if (map.containsKey("P_PHONE")) {
+            suitability_phone = Integer.parseInt(String.valueOf(map.get("P_PHONE")));
+        }
+        Integer suitability_arcade = 100;
+        if (map.containsKey("P_ARCADE")) {
+            suitability_arcade = Integer.parseInt(String.valueOf(map.get("P_ARCADE")));
+        }
+        Boolean successYear = false;
+        if (map.containsKey("SUC YEAR")) {
+            successYear = Boolean.parseBoolean(String.valueOf(map.get("SUC YEAR")));
+        }
         return new Genre(
                 String.valueOf(map.get("NAME EN")),
                 getIdFromMap(map),
@@ -267,12 +305,13 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(String.valueOf(map.get("ALIGN0"))),
                 Integer.parseInt(String.valueOf(map.get("ALIGN1"))),
                 Integer.parseInt(String.valueOf(map.get("ALIGN2"))),
-                Integer.parseInt(String.valueOf(map.get("P_PC"))),
-                Integer.parseInt(String.valueOf(map.get("P_CONSOLE"))),
-                Integer.parseInt(String.valueOf(map.get("P_HANDHELD"))),
-                Integer.parseInt(String.valueOf(map.get("P_PHONE"))),
-                Integer.parseInt(String.valueOf(map.get("P_ARCADE"))),
-                Boolean.parseBoolean(String.valueOf(map.get("SUC YEAR")))
+                suitability_pc,
+                suitability_console,
+                suitability_handheld,
+                suitability_phone,
+                suitability_arcade,
+                successYear,
+                mutualCompatibleGenres
         );
     }
 

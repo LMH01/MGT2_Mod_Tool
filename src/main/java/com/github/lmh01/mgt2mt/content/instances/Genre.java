@@ -51,6 +51,8 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
     public final Integer suitability_phone;
     public final Integer suitability_arcade;
     public final Boolean successor_year;
+    // Contains genres where this genre should be set as compatible subgenre.
+    public final ArrayList<Integer> mutualCompatibleGenres;
 
     public Genre(String name,
                  Integer id,
@@ -87,7 +89,8 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
                  Integer suitability_handheld,
                  Integer suitability_phone,
                  Integer suitability_arcade,
-                 Boolean successor_year) {
+                 Boolean successor_year,
+                 ArrayList<Integer> mutualCompatibleGenres) {
         super(GenreManager.INSTANCE, name, id, translationManager);
         this.description = description;
         this.date = date;
@@ -122,6 +125,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         this.suitability_phone = suitability_phone;
         this.suitability_arcade = suitability_arcade;
         this.successor_year = successor_year;
+        this.mutualCompatibleGenres = mutualCompatibleGenres;
     }
 
     /**
@@ -210,6 +214,7 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         map.put("THEME COMB", ThemeManager.getCompatibleThemeIdsForGenre(id));
         map.put("GAMEPLAYFEATURE GOOD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, true));
         map.put("GAMEPLAYFEATURE BAD", Utils.getCompatibleGameplayFeatureIdsForGenre(id, false));
+        map.put("MUTUAL COMPATIBLE GENRES", SharingHelper.getExportNamesString(GenreManager.INSTANCE, mutualCompatibleGenres));
     }
 
     @Override
