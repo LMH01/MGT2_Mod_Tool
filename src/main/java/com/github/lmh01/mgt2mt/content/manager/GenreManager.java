@@ -61,8 +61,8 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         super.addContents(contents);
         for (AbstractBaseContent content : contents) {
             Genre genre = (Genre)content;
-            ThemeManager.editGenreAllocation(genre.id, true, genre.mutualCompatibleGenres);
-            GenreManager.editSubGenres(new ArrayList<>(Arrays.asList(genre.id)), genre.compatibleGenres, true);
+            ThemeManager.editGenreAllocation(genre.id, true, genre.compatibleGenres);
+            GenreManager.editSubGenres(new ArrayList<>(Arrays.asList(genre.id)), genre.mutualCompatibleGenres, true);
             GameplayFeatureManager.INSTANCE.addGenreId(genre.badGameplayFeatures, genre.id, false);
             GameplayFeatureManager.INSTANCE.addGenreId(genre.goodGameplayFeatures, genre.id, true);
         }
