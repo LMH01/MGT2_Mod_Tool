@@ -139,7 +139,12 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(map.get("FOCUS7")),
                 Integer.parseInt(map.get("ALIGN0")),
                 Integer.parseInt(map.get("ALIGN1")),
-                Integer.parseInt(map.get("ALIGN2"))
+                Integer.parseInt(map.get("ALIGN2")),
+                Integer.parseInt(map.get("P_PC")),
+                Integer.parseInt(map.get("P_CONSOLE")),
+                Integer.parseInt(map.get("P_HANDHELD")),
+                Integer.parseInt(map.get("P_PHONE")),
+                Integer.parseInt(map.get("P_ARCADE"))
         );
     }
 
@@ -168,6 +173,11 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         list.add(new DataLine("ALIGN0", true, DataType.INT));
         list.add(new DataLine("ALIGN1", true, DataType.INT));
         list.add(new DataLine("ALIGN2", true, DataType.INT));
+        list.add(new DataLine("P_PC", true, DataType.INT));
+        list.add(new DataLine("P_CONSOLE", true, DataType.INT));
+        list.add(new DataLine("P_HANDHELD", true, DataType.INT));
+        list.add(new DataLine("P_PHONE", true, DataType.INT));
+        list.add(new DataLine("P_ARCADE", true, DataType.INT));
         return list;
     }
 
@@ -250,7 +260,12 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(String.valueOf(map.get("FOCUS7"))),
                 Integer.parseInt(String.valueOf(map.get("ALIGN0"))),
                 Integer.parseInt(String.valueOf(map.get("ALIGN1"))),
-                Integer.parseInt(String.valueOf(map.get("ALIGN2")))
+                Integer.parseInt(String.valueOf(map.get("ALIGN2"))),
+                Integer.parseInt(String.valueOf(map.get("P_PC"))),
+                Integer.parseInt(String.valueOf(map.get("P_CONSOLE"))),
+                Integer.parseInt(String.valueOf(map.get("P_HANDHELD"))),
+                Integer.parseInt(String.valueOf(map.get("P_PHONE"))),
+                Integer.parseInt(String.valueOf(map.get("P_ARCADE")))
         );
     }
 

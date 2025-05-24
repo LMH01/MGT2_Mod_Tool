@@ -45,6 +45,11 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
     public final int align0;
     public final int align1;
     public final int align2;
+    public final Integer suitability_pc;
+    public final Integer suitability_console;
+    public final Integer suitability_handheld;
+    public final Integer suitability_phone;
+    public final Integer suitability_arcade;
 
     public Genre(String name,
                  Integer id,
@@ -75,7 +80,13 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
                  int focus7,
                  int align0,
                  int align1,
-                 int align2) {
+                 int align2,
+                 Integer suitability_pc,
+                 Integer suitability_console,
+                 Integer suitability_handheld,
+                 Integer suitability_phone,
+                 Integer suitability_arcade
+                 ) {
         super(GenreManager.INSTANCE, name, id, translationManager);
         this.description = description;
         this.date = date;
@@ -104,6 +115,11 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         this.align0 = align0;
         this.align1 = align1;
         this.align2 = align2;
+        this.suitability_pc = suitability_pc;
+        this.suitability_console = suitability_console;
+        this.suitability_handheld = suitability_handheld;
+        this.suitability_phone = suitability_phone;
+        this.suitability_arcade = suitability_arcade;
     }
 
     /**
@@ -145,6 +161,31 @@ public class Genre extends AbstractAdvancedContent implements RequiresPictures, 
         map.put("ALIGN0", Integer.toString(align0));
         map.put("ALIGN1", Integer.toString(align1));
         map.put("ALIGN2", Integer.toString(align2));
+        if (suitability_pc == null) {
+            map.put("P_PC", Integer.toString(100));
+        } else {
+            map.put("P_PC", Integer.toString(suitability_pc));
+        }
+        if (suitability_console == null) {
+            map.put("P_CONSOLE", Integer.toString(100));
+        } else {
+            map.put("P_CONSOLE", Integer.toString(suitability_console));
+        }
+        if (suitability_handheld == null) {
+            map.put("P_HANDHELD", Integer.toString(100));
+        } else {
+            map.put("P_HANDHELD", Integer.toString(suitability_handheld));
+        }
+        if (suitability_phone == null) {
+            map.put("P_PHONE", Integer.toString(100));
+        } else {
+            map.put("P_PHONE", Integer.toString(suitability_phone));
+        }
+        if (suitability_arcade == null) {
+            map.put("P_ARCADE", Integer.toString(100));
+        } else {
+            map.put("P_ARCADE", Integer.toString(suitability_arcade));
+        }
         map.putAll(translationManager.toMap());
         return map;
     }
