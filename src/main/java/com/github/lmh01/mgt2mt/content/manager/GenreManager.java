@@ -333,6 +333,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
     @Override
     public void replaceMissingDependency(Map<String, Object> map, String missingDependency, String replacement) {
         replaceMapEntry(map, missingDependency, replacement, "GENRE COMB");
+        replaceMapEntry(map, missingDependency, replacement, "MUTUAL COMPATIBLE GENRES");
         replaceMapEntry(map, missingDependency, replacement, "THEME COMB");
         replaceMapEntry(map, missingDependency, replacement, "GAMEPLAYFEATURE BAD");
         replaceMapEntry(map, missingDependency, replacement, "GAMEPLAYFEATURE GOOD");
@@ -352,6 +353,9 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         Map<String, Object> map = new HashMap<>();
         map.put(GenreManager.INSTANCE.getId(), new HashSet<>(Utils.getEntriesFromString((String)importMap.get("GENRE COMB"))));
         map.put(ThemeManager.INSTANCE.getId(), new HashSet<>(Utils.getEntriesFromString((String)importMap.get("THEME COMB"))));
+        if (importMap.containsKey("MUTUAL COMPATIBLE GENRES")) {
+            map.put(GenreManager.INSTANCE.getId(), new HashSet<>(Utils.getEntriesFromString((String)importMap.get("MUTUAL COMPATIBLE GENRES"))));
+        }
         Set<String> gameplayFeatures = new HashSet<>();
         gameplayFeatures.addAll(Utils.getEntriesFromString((String)importMap.get("GAMEPLAYFEATURE GOOD")));
         gameplayFeatures.addAll(Utils.getEntriesFromString((String)importMap.get("GAMEPLAYFEATURE BAD")));
