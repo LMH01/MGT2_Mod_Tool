@@ -7,6 +7,9 @@
     - `Genres.txt` - `P_PC`, `P_CONSOLE`, `P_HANDHELD`, `P_PHONE`, `P_ARCADE`, `SUC YEAR`
 - Added support for translations `LA`, `TH` and `UA`
 
+### Other
+- About window now includes build date/time and git rev
+
 ## v5.0.1
 
 ### Bug fixes

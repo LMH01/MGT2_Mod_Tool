@@ -13,6 +13,8 @@ public class About {
         if (UpdateChecker.updateAvailable) {
             stringBuilder.append("Newest version: ").append(UpdateChecker.newestVersion).append(System.getProperty("line.separator"));
         }
+        stringBuilder.append("Build on: " + Version.getBuildDate()).append(System.getProperty("line.separator"));
+        stringBuilder.append("Git rev: " + Version.getBuildGitHash());
         JOptionPane.showMessageDialog(null, stringBuilder.toString(), I18n.INSTANCE.get("frame.title.about"), JOptionPane.INFORMATION_MESSAGE);
     }
 }

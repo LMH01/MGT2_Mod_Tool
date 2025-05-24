@@ -125,6 +125,10 @@ task generateVersionFile {
                 public static String getBuildGitHash() {
                     return "${gitHash}";
                 }
+
+                public static String getBuildDate() {
+                    return "${timestamp}";
+                }
             }
         """.stripIndent()
     }
