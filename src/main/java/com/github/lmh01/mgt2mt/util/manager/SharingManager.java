@@ -1005,6 +1005,8 @@ public class SharingManager {
                 for (String string : manager.getCompatibleModToolVersions()) {
                     if (modToolVersion.equals(string)) {
                         return true;
+                    } else if (Version.getVersion().contains("dev") && modToolVersion.contains(string)) {
+                        return true;
                     }
                 }
             }
