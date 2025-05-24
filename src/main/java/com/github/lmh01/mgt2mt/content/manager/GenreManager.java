@@ -119,7 +119,7 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         }
         ArrayList<Integer> mutualCompatibleGenres = new ArrayList<>();
         if (map.containsKey("MUTUAL COMPATIBLE GENRES")) {
-            mutualCompatibleGenres.addAll(SharingHelper.transformContentNamesToIds(this, String.valueOf(map.get("MUTUAL COMPATIBLE GENRES"))));
+            mutualCompatibleGenres.addAll(Utils.transformStringArrayToIntegerArray(Utils.getEntriesFromString(String.valueOf(map.get("MUTUAL COMPATIBLE GENRES")))));
         }
         return new Genre(
                 map.get("NAME EN"),
@@ -160,6 +160,22 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 successor_year,
                 mutualCompatibleGenres
         );
+    }
+
+    @Override
+    public AbstractBaseContent constructContentFromName(String name) throws ModProcessingException {
+        Map<String, String> genreMap = getSingleContentMap(name);
+        Integer genreId = Integer.parseInt(genreMap.get("ID"));
+        // collect MUTUAL COMPATIBLE GENRES
+        StringBuilder sb = new StringBuilder();
+        for (Map<String, String> map : fileContent) {
+            if (map.get("GENRE COMB").contains(genreId.toString())) {
+                sb.append("<").append(Integer.parseInt(map.get("ID"))).append(">");
+            }
+        }
+        // set MUTUAL COMPATIBLE GENRES
+        genreMap.put("MUTUAL COMPATIBLE GENRES", sb.toString());
+        return constructContentFromMap(genreMap);
     }
 
     @Override
