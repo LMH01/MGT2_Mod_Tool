@@ -73,6 +73,16 @@ In addition to these fields most content (all content that can be translated) su
 ```
 The language keys are the same the game uses for the localisation directories.
 
+#### Type specific fields
+
+##### Genre
+
+The genre section supports these special fields:
+
+- `MUTUAL COMPATIBLE GENRES` with the following behaviour:
+    - Field is missing: When genres are imported the imported genre is now automatically set as comptible subgenre for all its compatible subgenres
+    - Field is present: The genre will only be set as compatible subgenre for genres defined in here
+
 ## Assets' folder
 When a mod is exported that requires pictures, an assets' folder is created in the directory where the ``export.toml``
 file is located. This folder contains all images that are required by the mods in the ``.toml`` file. Import will not

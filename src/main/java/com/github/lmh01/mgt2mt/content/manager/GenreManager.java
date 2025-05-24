@@ -248,6 +248,9 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
         ArrayList<Integer> mutualCompatibleGenres = new ArrayList<>();
         if (map.containsKey("MUTUAL COMPATIBLE GENRES")) {
             mutualCompatibleGenres.addAll(SharingHelper.transformContentNamesToIds(this, String.valueOf(map.get("MUTUAL COMPATIBLE GENRES"))));
+        } else {
+            // import map does not contain MUTUAL COMPATIBLE GENRES so everything from GENRE COMB is set as mutual compatible genres
+            mutualCompatibleGenres.addAll(SharingHelper.transformContentNamesToIds(this, String.valueOf(map.get("GENRE COMB"))));
         }
          
         Integer suitability_pc = 100;

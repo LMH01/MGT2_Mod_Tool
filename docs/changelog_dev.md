@@ -2,6 +2,12 @@
 
 ## v5.1.0
 
+### Feature
+- Added field `MUTUAL COMPATIBLE GENRES` to genre exports with the following behaviour:
+    - Field is missing: When genres are imported the imported genre is now automatically set as comptible subgenre for all its compatible subgenres
+    - Field is present: The genre will only be set as compatible subgenre for genres defined in here
+    - For future exports this field is automatically generated from the game files 
+
 ### Game compatibility
 - Added recognition for these data fields (note that it is not possible to edit these fields with the gui):
     - `Genres.txt` - `P_PC`, `P_CONSOLE`, `P_HANDHELD`, `P_PHONE`, `P_ARCADE`, `SUC YEAR`
