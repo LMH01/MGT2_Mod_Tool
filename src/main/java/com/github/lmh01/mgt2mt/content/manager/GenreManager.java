@@ -152,11 +152,11 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(map.get("ALIGN0")),
                 Integer.parseInt(map.get("ALIGN1")),
                 Integer.parseInt(map.get("ALIGN2")),
-                Integer.parseInt(map.get("P_PC")),
-                Integer.parseInt(map.get("P_CONSOLE")),
-                Integer.parseInt(map.get("P_HANDHELD")),
-                Integer.parseInt(map.get("P_PHONE")),
-                Integer.parseInt(map.get("P_ARCADE")),
+                Integer.parseInt(map.getOrDefault("P_PC", "100")),
+                Integer.parseInt(map.getOrDefault("P_CONSOLE", "100")),
+                Integer.parseInt(map.getOrDefault("P_HANDHELD", "100")),
+                Integer.parseInt(map.getOrDefault("P_PHONE", "100")),
+                Integer.parseInt(map.getOrDefault("P_ARCADE", "100")),
                 successor_year,
                 mutualCompatibleGenres
         );
@@ -269,26 +269,6 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
             mutualCompatibleGenres.addAll(SharingHelper.transformContentNamesToIds(this, String.valueOf(map.get("GENRE COMB"))));
         }
          
-        Integer suitability_pc = 100;
-        if (map.containsKey("P_PC")) {
-            suitability_pc = Integer.parseInt(String.valueOf(map.get("P_PC")));
-        }
-        Integer suitability_console = 100;
-        if (map.containsKey("P_CONSOLE")) {
-            suitability_console = Integer.parseInt(String.valueOf(map.get("P_CONSOLE")));
-        }
-        Integer suitability_handheld = 100;
-        if (map.containsKey("P_HANDHELD")) {
-            suitability_handheld = Integer.parseInt(String.valueOf(map.get("P_HANDHELD")));
-        }
-        Integer suitability_phone = 100;
-        if (map.containsKey("P_PHONE")) {
-            suitability_phone = Integer.parseInt(String.valueOf(map.get("P_PHONE")));
-        }
-        Integer suitability_arcade = 100;
-        if (map.containsKey("P_ARCADE")) {
-            suitability_arcade = Integer.parseInt(String.valueOf(map.get("P_ARCADE")));
-        }
         Boolean successYear = false;
         if (map.containsKey("SUC YEAR")) {
             successYear = Boolean.parseBoolean(String.valueOf(map.get("SUC YEAR")));
@@ -324,11 +304,11 @@ public class GenreManager extends AbstractAdvancedContentManager implements Depe
                 Integer.parseInt(String.valueOf(map.get("ALIGN0"))),
                 Integer.parseInt(String.valueOf(map.get("ALIGN1"))),
                 Integer.parseInt(String.valueOf(map.get("ALIGN2"))),
-                suitability_pc,
-                suitability_console,
-                suitability_handheld,
-                suitability_phone,
-                suitability_arcade,
+                Integer.parseInt(String.valueOf(map.getOrDefault("P_PC", "100"))),
+                Integer.parseInt(String.valueOf(map.getOrDefault("P_CONSOLE", "100"))),
+                Integer.parseInt(String.valueOf(map.getOrDefault("P_HANDHELD", "100"))),
+                Integer.parseInt(String.valueOf(map.getOrDefault("P_PHONE", "100"))),
+                Integer.parseInt(String.valueOf(map.getOrDefault("P_ARCADE", "100"))),
                 successYear,
                 mutualCompatibleGenres
         );
