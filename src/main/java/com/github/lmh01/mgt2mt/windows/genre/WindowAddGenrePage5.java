@@ -20,6 +20,7 @@ public class WindowAddGenrePage5 extends JFrame {
     final JButton buttonNext = new JButton(I18n.INSTANCE.get("button.next"));
     final JButton buttonPrevious = new JButton(I18n.INSTANCE.get("button.previous"));
     final JButton buttonQuit = new JButton(I18n.INSTANCE.get("button.cancel"));
+    final JCheckBox CHECK_BOX_SET_AS_SUBGENRES = new JCheckBox(I18n.INSTANCE.get("mod.genre.genreComb.checkBox"));
     final JList<String> LIST_AVAILABLE_GENRES = new JList<>();
     final JScrollPane SCROLL_PANE_AVAILABLE_GENRES = new JScrollPane(LIST_AVAILABLE_GENRES);
 
@@ -38,7 +39,7 @@ public class WindowAddGenrePage5 extends JFrame {
 
     public WindowAddGenrePage5() {
         buttonNext.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
-            if (saveInputs(LIST_AVAILABLE_GENRES)) {
+            if (saveInputs(LIST_AVAILABLE_GENRES, CHECK_BOX_SET_AS_SUBGENRES)) {
                 GenreManager.openStepWindow(6);
                 FRAME.dispose();
             } else {
@@ -50,7 +51,7 @@ public class WindowAddGenrePage5 extends JFrame {
             }
         }, "WindowAddGenrePage5ButtonNext"));
         buttonPrevious.addActionListener(actionEvent -> ThreadHandler.startModThread(() -> {
-            saveInputs(LIST_AVAILABLE_GENRES);
+            saveInputs(LIST_AVAILABLE_GENRES, CHECK_BOX_SET_AS_SUBGENRES);
             GenreManager.openStepWindow(4);
             FRAME.dispose();
         }, "WindowAddGenrePage5ButtonPrevious"));
@@ -63,7 +64,7 @@ public class WindowAddGenrePage5 extends JFrame {
 
     private void setGuiComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 360, 260);
+        setBounds(100, 100, 360, 290);
         setResizable(false);
         setTitle(I18n.INSTANCE.get("mod.genre.page.title.5"));
 
@@ -79,15 +80,20 @@ public class WindowAddGenrePage5 extends JFrame {
         labelSelectGenre2.setBounds(10, 15, 300, 23);
         contentPane.add(labelSelectGenre2);
 
-        buttonNext.setBounds(240, 200, 100, 23);
+        CHECK_BOX_SET_AS_SUBGENRES.setBounds(10, 200, 340, 23);
+        CHECK_BOX_SET_AS_SUBGENRES.setToolTipText(I18n.INSTANCE.get("mod.genre.genreComb.checkBox.toolTip"));
+        CHECK_BOX_SET_AS_SUBGENRES.setSelected(true);
+        contentPane.add(CHECK_BOX_SET_AS_SUBGENRES);
+
+        buttonNext.setBounds(240, 225, 100, 23);
         buttonNext.setToolTipText(I18n.INSTANCE.get("mod.genre.button.next.toolTip"));
         contentPane.add(buttonNext);
 
-        buttonPrevious.setBounds(10, 200, 100, 23);
+        buttonPrevious.setBounds(10, 225, 100, 23);
         buttonPrevious.setToolTipText(I18n.INSTANCE.get("mod.genre.button.previous.toolTip"));
         contentPane.add(buttonPrevious);
 
-        buttonQuit.setBounds(120, 200, 110, 23);
+        buttonQuit.setBounds(120, 225, 110, 23);
         buttonQuit.setToolTipText(I18n.INSTANCE.get("mod.genre.button.quit.toolTip"));
         contentPane.add(buttonQuit);
     }
@@ -129,7 +135,7 @@ public class WindowAddGenrePage5 extends JFrame {
      * @param listAvailableGenres the Jlist containing the selected genres
      * @return Returns true when at least on genre has been selected from the list
      */
-    private static boolean saveInputs(JList<String> listAvailableGenres) throws ModProcessingException {
+    private static boolean saveInputs(JList<String> listAvailableGenres, JCheckBox checkBoxSetAsSubgenres) throws ModProcessingException {
         if (listAvailableGenres.getSelectedValuesList().size() > 0) {
             LOGGER.info("Cleared array list with compatible genres.");
             ArrayList<Integer> compatibleGenres = new ArrayList<>();
@@ -137,6 +143,7 @@ public class WindowAddGenrePage5 extends JFrame {
                 compatibleGenres.add(GenreManager.INSTANCE.getContentIdByName(string));
             }
             GenreManager.currentGenreHelper.compatibleGenres = compatibleGenres;
+            GenreManager.currentGenreHelper.setAsCompatibleSubGenreForCompatibleGenres = checkBoxSetAsSubgenres.isSelected();
             return true;
         } else {
             return false;

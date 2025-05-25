@@ -438,6 +438,8 @@ mod.genre.genreComb.noSelectionMessage|Bist du dir sicher, dass kein Kompatibles
 mod.genre.genreComb.noSelectionMessage.title|Kein kompatibles Genre hinzufügen?
 mod.genre.themeComb.noSelectionMessage|Bist du dir sicher, dass kein Kompatibles Thema hinzugefügt werden soll?
 mod.genre.themeComb.noSelectionMessage.title|Kein kompatibles Thema hinzufügen?
+mod.genre.genreComb.checkBox|Als Untergenre setzen
+mod.genre.genreComb.checkBox.toolTip|Aktivieren, um dieses Genre als kompatibles Untergenre für die in der Liste ausgewählten Genres zu setzen.
 mod.genre.button.next.toolTip|Klicke hier, um mit dem nächsten Schritt fortzufahren.
 mod.genre.button.previous.toolTip|Klicke hier, um zur vorherigen Seite zurückzukehren.
 mod.genre.button.quit.toolTip|Klicke hier, um diese Schritt-für-Schritt-Anleitung zu beenden

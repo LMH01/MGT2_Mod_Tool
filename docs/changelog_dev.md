@@ -3,6 +3,8 @@
 ## v5.1.0
 
 ### Feature
+- Added `set as subgenre` checkbox to add genre window 5
+    - When selected the new genre is automatically set as compatible subgenre for all its compatible subgenres
 - Added menu `Mods -> Genres -> Edit genre/subgenre fit`
     - This menu can be used to edit what genre/subgenre combinations should be allowed.
 - Added field `MUTUAL COMPATIBLE GENRES` to genre exports with the following behaviour:

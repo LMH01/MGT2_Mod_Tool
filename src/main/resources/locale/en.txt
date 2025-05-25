@@ -439,6 +439,8 @@ mod.genre.genreComb.noSelectionMessage|Are you sure that you don't want to add a
 mod.genre.genreComb.noSelectionMessage.title|Don't add compatible genre?
 mod.genre.themeComb.noSelectionMessage|Are you sure that you don't want to add a compatible theme?
 mod.genre.themeComb.noSelectionMessage.title|Don't add compatible theme?
+mod.genre.genreComb.checkBox|Set as subgenre
+mod.genre.genreComb.checkBox.toolTip|Select to set this genre as compatible subgenre for all genres selected in the list.
 mod.genre.button.next.toolTip|Click to continue to the next step.
 mod.genre.button.previous.toolTip|Click to return to the previous page.
 mod.genre.button.quit.toolTip|Click to quit this step by step guide
