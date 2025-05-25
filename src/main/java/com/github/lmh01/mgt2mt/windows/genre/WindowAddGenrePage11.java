@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class WindowAddGenrePage11 extends JFrame {
     static final WindowAddGenrePage11 FRAME = new WindowAddGenrePage11();
@@ -61,6 +62,10 @@ public class WindowAddGenrePage11 extends JFrame {
                     GenreManager.currentGenreHelper.icon = new Image(genreIcon, MGT2Paths.GENRE_ICONS.getPath().resolve("icon" + GenreManager.currentGenreHelper.name.replaceAll(" ", "_") + ".png").toFile());
                 }
             }
+            ArrayList<Integer> mutualCompatibleGenres = new ArrayList<>();
+            if (GenreManager.currentGenreHelper.setAsCompatibleSubGenreForCompatibleGenres) {
+                mutualCompatibleGenres.addAll(GenreManager.currentGenreHelper.compatibleGenres);
+            }
             Genre genre = new Genre(
                     GenreManager.currentGenreHelper.name,
                     null,
@@ -98,7 +103,7 @@ public class WindowAddGenrePage11 extends JFrame {
                     null,
                     null,
                     null,
-                    null
+                    mutualCompatibleGenres
             );
             WindowMain.checkActionAvailability();
             ThreadHandler.startModThread(() -> GenreManager.INSTANCE.addGenre(genre, true), "AddGenre");

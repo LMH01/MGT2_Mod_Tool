@@ -39,4 +39,5 @@ public class GenreHelper {
     public int align0 = 5;
     public int align1 = 5;
     public int align2 = 5;
+    public Boolean setAsCompatibleSubGenreForCompatibleGenres = false;
 }
