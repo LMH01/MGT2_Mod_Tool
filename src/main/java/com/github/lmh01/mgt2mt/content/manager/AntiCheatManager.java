@@ -23,7 +23,7 @@ public class AntiCheatManager extends AbstractAdvancedContentManager {
 
     public static final AntiCheatManager INSTANCE = new AntiCheatManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", "4.10.0", "5.0.0-beta1", "5.0.0", "5.0.1", Version.getVersion()};
+    public static final String[] compatibleModToolVersions = new String[]{"4.0.0", "4.1.0", "4.2.0", "4.2.1", "4.2.2", "4.3.0", "4.3.1", "4.4.0", "4.5.0", "4.6.0", "4.7.0", "4.8.0", "4.9.0-alpha1", "4.9.0-beta1",  "4.9.0-beta2",  "4.9.0-beta3", "4.9.0-beta4", "4.9.0-beta5", "4.9.0-beta6", "4.9.0-beta7", "4.9.0", "4.10.0", "5.0.0-beta1", "5.0.0", "5.0.1", "5.1.0", Version.getVersion()};
 
     private AntiCheatManager() {
         super("antiCheat", "anti_cheat", MGT2Paths.TEXT_DATA.getPath().resolve("AntiCheat.txt").toFile(), StandardCharsets.UTF_8);

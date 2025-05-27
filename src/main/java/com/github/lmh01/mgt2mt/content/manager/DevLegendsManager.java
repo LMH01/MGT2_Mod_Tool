@@ -20,7 +20,7 @@ public class DevLegendsManager extends AbstractSimpleContentManager {
 
     public static final DevLegendsManager INSTANCE = new DevLegendsManager();
 
-    public static final String[] compatibleModToolVersions = new String[]{"4.10.0", "5.0.0-beta1", "5.0.0", "5.0.1", Version.getVersion()};
+    public static final String[] compatibleModToolVersions = new String[]{"4.10.0", "5.0.0-beta1", "5.0.0", "5.0.1", "5.1.0", Version.getVersion()};
 
     private DevLegendsManager() {
         super("devLegend", "dev_legend", MGT2Paths.TEXT_DATA.getPath().resolve("DevLegends.txt").toFile(), StandardCharsets.UTF_8);

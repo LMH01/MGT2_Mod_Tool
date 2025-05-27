@@ -49,7 +49,7 @@ dependencies {
 
 sourceCompatibility = 1.21
 targetCompatibility = 1.21
-project.version = "5.0.1-dev" //Version numbers that include "dev" are not checked for updates / tool will notify if update is available
+project.version = "5.1.0" //Version numbers that include "dev" are not checked for updates / tool will notify if update is available
 archivesBaseName = "MGT2_Mod_Tool"
 
 group = "com.github.lmh01"

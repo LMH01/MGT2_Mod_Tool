@@ -1,6 +1,26 @@
 # Changelog
 
-## [v5.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.0.1) (Latest Version)
+## [v5.1.0](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.1.0) (Latest Version)
+
+### Feature
+- Added `set as subgenre` checkbox to add genre window 5
+    - When selected the new genre is automatically set as compatible subgenre for all its compatible subgenres
+- Added menu `Mods -> Genres -> Edit genre/subgenre fit`
+    - This menu can be used to edit what genre/subgenre combinations should be allowed.
+- Added field `MUTUAL COMPATIBLE GENRES` to genre exports with the following behaviour:
+    - Field is missing: When genres are imported the imported genre is now automatically set as comptible subgenre for all its compatible subgenres
+    - Field is present: The genre will only be set as compatible subgenre for genres defined in here
+    - For future exports this field is automatically generated from the game files 
+
+### Game compatibility
+- Added recognition for these data fields (note that it is not possible to edit these fields with the gui):
+    - `Genres.txt` - `P_PC`, `P_CONSOLE`, `P_HANDHELD`, `P_PHONE`, `P_ARCADE`, `SUC YEAR`
+- Added support for translations `LA`, `TH` and `UA`
+
+### Other
+- About window now includes build date/time and git rev
+
+## [v5.0.1](https://github.com/LMH01/MGT2_Mod_Tool/releases/tag/v5.0.1)
 
 ### Bug fixes
 - Add genre: fixed error when no themes or compatible genres where selected

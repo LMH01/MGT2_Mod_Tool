@@ -16,7 +16,7 @@ import java.util.Locale;
 public class MadGamesTycoon2ModTool {
     public static final OSType OS_TYPE;
     private static final Logger LOGGER = LoggerFactory.getLogger(MadGamesTycoon2ModTool.class);
-    public static final String CURRENT_RELEASE_VERSION = "5.0.1";//When this version number has been detected as the newest release version the update available message is held back
+    public static final String CURRENT_RELEASE_VERSION = "5.1.0";//When this version number has been detected as the newest release version the update available message is held back
 
     static {
         if (System.getProperty("os.name").contains("Linux")) {
